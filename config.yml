@@ -1,0 +1,9 @@
+web:
+  signIn: "//a[text() = 'Sign in']"
+  emailInput: "//input[@type='email']"
+  passwordInput: "//input[@type='password']"
+  signInButton: "//button[@tabindex=0]"
+  signInMessage: "//h1"
+api:
+  signIn: "/sign-in"
+  base: "https://my.appcurator.com"
