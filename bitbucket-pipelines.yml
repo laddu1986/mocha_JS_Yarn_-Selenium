@@ -11,5 +11,5 @@ pipelines:
     - step:
         script:
           - npm install
-          - docker run -p 4444:4444 selenium/standalone-chrome
+          - docker run -d -p 4444:4444 selenium/standalone-chrome
           - docker run --rm -ti qa-automation npm start
