@@ -10,6 +10,6 @@ pipelines:
   default:
     - step:
         script:
-          - docker run --rm -ti qa-automation npm start
           - npm install
           - docker run -p 4444:4444 selenium/standalone-chrome
+          - docker run --rm -ti qa-automation npm start
