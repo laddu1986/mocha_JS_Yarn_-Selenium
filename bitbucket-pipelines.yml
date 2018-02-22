@@ -3,14 +3,13 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: docker
+image: node:8.9.1
 options:
   docker: true
 pipelines:
-  branches:
-    master: 
-      - step:
-          name: Build and Test
-          script: # Push to docker hub
-            - docker-compose build
-            - docker-compose up
+  default:
+    - step:
+        script:
+          - npm install
+          - docker run -d -p 4444:4444 selenium/standalone-chrome
+          - docker run --rm -ti qa-automation npm start
