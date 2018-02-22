@@ -1,43 +1,44 @@
-import HomePage from '../page_objects/homePage.js';
-import SignInPage from '../page_objects/signInPage.js';
+import Home from '../page_objects/homePage.js';
+import SignIn from '../page_objects/signInPage.js';
 const config = require('config-yml');
-import common from '../lib/common';
 
 
 describe('Open Sign in page', () => {
 
-    before('On the Amazon home page...', () => {
+  before('On the Amazon home page...', () => {
 
-      console.log(config.api.signIn);
-      SignInPage.open(config.api.signIn);
+    console.log(config.api.signIn);
+    SignIn.open(config.api.signIn);
 
-    });
+  });
 
-    it('Enters email and password', () => {
+  it('Enters email and password', () => {
 
-      SignInPage.emailInput.waitForExist();
-      SignInPage.emailInput.waitForVisible();
-      SignInPage.emailInput.setValue(common.random +"@dummy.com");
-     
-      SignInPage.passwordInput.waitForExist();
-      SignInPage.passwordInput.waitForVisible();
-      SignInPage.passwordInput.setValue(common.random);
+    SignIn.emailInput.waitForExist();
+    SignIn.emailInput.waitForVisible();
+    SignIn.emailInput.setValue('avi.pardu.nash3@gmail.com');
 
-      SignInPage.signInButton.waitForExist();
-      SignInPage.signInButton.waitForVisible();
-      SignInPage.signInButton.click();
+    SignIn.passwordInput.waitForExist();
+    SignIn.passwordInput.waitForVisible();
+    SignIn.passwordInput.setValue('Mob@1234');
 
-    });
+    SignIn.signInButton.waitForExist();
+    SignIn.signInButton.waitForVisible();
+    SignIn.signInButton.click();
 
-    // it('Shows a positive number of results', () => {
+  });
 
-    //   // SignInPage.signInMessage.waitForExist();
-    //   // SignInPage.signInMessage.waitForVisible();
-    //   // console.log(SignInPage.signInMessage.getText());
-    //   // let actual = SignInPage.signInMessage.getText();
-    //   // expect(actual).to.equal('Thank you for signing in.');
-    //   // browser.pause(2000);
+  it('Shows a positive number of results', () => {
 
-    // });
+    SignIn.signInMessage.waitForExist();
+    SignIn.signInMessage.waitForVisible();
+    let actual = SignIn.signInMessage.getText();
+    // Results.resultsCount.waitForExist();
+    // Results.resultsCount.waitForVisible();
+    // //regex drags nums out of results text and pushes to an array
+    // const regex = /\d\s*\-\s*(\d+){1}\s*(?:of)?(\s*\d+)?\s*.*/g
+    // const nums = regex.exec(Results.resultsCount.getText());
+    expect(actual).to.equal('Thank you for signing in.');
+  });
 
 });
