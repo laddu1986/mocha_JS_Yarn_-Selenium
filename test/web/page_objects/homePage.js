@@ -1,6 +1,6 @@
 import Page from './page';
 const config = require('config-yml');
-class Home extends Page {
+class HomePage extends Page {
 
     get navbar()  { return browser.element('#navbar'); }
     get signIn()  { return browser.element(config.web.signIn); }
@@ -14,4 +14,4 @@ class Home extends Page {
 
 }
 
-export default new Home();
+export default new HomePage();
