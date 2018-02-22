@@ -6,15 +6,14 @@ let brow, services, user, key, capabilities
 
 (argv.browser) ? (brow = argv.browser) : (brow = 'chrome');
 
-services = ['selenium-standalone'],
-  capabilities = [{
+services = capabilities = [{
     browserName: brow,
     chromeOptions: { args: ['disable-infobars'] }
   }]
 
 exports.config = {
-  
   services,
+
   updateJob: false,
   specs: [
     './test/web/specs/*.js'
@@ -67,7 +66,7 @@ exports.config = {
   // =====
   // Gets executed before all workers get launched.
   onPrepare() {
-    
+    console.log("what is the");
   },
 
   // Gets executed before test execution begins. At this point you will have access to all global
@@ -77,7 +76,7 @@ exports.config = {
     global.expect = chai.expect;
     chai.Should();
 
-    
+    // const config = require('config-yml');   
 
   },
 

@@ -4,6 +4,11 @@ web:
   passwordInput: "//input[@type='password']"
   signInButton: "//button[@tabindex=0]"
   signInMessage: "//h1"
+  nameInput: "//input[@autocomplete='name']"  
+  organisationInput: "//input[@autocomplete='organisation']"
+  createAccountButton: "//button[@type='submit']"
 api:
   signIn: "/sign-in"
+  signedIn: "/signed-in"
+  createAccount: "/join"
   base: "https://my.appcurator.com"

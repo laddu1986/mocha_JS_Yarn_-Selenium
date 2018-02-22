@@ -1,12 +1,14 @@
 import Page from './page';
 const config = require('config-yml');
-class SignInPage extends Page {
+class CreateAccountPage extends Page {
 
     get emailInput ()  { return browser.element(config.web.emailInput); }
     get passwordInput()  { return browser.element(config.web.passwordInput); }
-    get signInButton()  { return browser.element(config.web.signInButton); }
+    get nameInput()  { return browser.element(config.web.nameInput); }
+    get organisationInput()  { return browser.element(config.web.organisationInput); }
+    get createAccountButton()  { return browser.element(config.web.createAccountButton); }
     get signInMessage()  { return browser.element(config.web.signInMessage); }
-
+    
     open(e) {
         console.log(e);
         super.open(e);
@@ -15,4 +17,4 @@ class SignInPage extends Page {
 
 }
 
-export default new SignInPage();
+export default new CreateAccountPage();
