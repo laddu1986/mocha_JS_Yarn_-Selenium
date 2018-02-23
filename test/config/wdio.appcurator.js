@@ -6,10 +6,10 @@ let brow, services, user, key, capabilities
 
 (argv.browser) ? (brow = argv.browser) : (brow = 'chrome');
 
-services = capabilities = [{
-    browserName: brow,
-    chromeOptions: { args: ['disable-infobars'] }
-  }]
+services = ['selenium-standalone'], capabilities = [{
+  browserName: brow,
+  chromeOptions: { args: ['disable-infobars'] }
+}]
 
 exports.config = {
   services,
