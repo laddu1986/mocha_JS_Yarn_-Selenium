@@ -15,3 +15,4 @@ api:
   organizations: "http://ad94f3f9c0d6511e88a490a50eecb260-2119754876.ap-southeast-2.elb.amazonaws.com/"
   memberships: "http://adfe68990105811e89a1e067230e5e2d-1425011611.ap-southeast-2.elb.amazonaws.com/"
   identities: "http://aa568e86c0d5311e89a1e067230e5e2d-632874240.ap-southeast-2.elb.amazonaws.com/"
+  membershipspost: base + 'api/memberships'
