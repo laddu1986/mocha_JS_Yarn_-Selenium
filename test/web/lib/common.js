@@ -11,7 +11,7 @@ class Common {
             var rnum = Math.floor(Math.random() * allowedChars.length);
             randomstring += allowedChars.substring(rnum, rnum + 1);
         }
-        return randomstring; 
+        return randomstring;
     }
 
     waitForExistAndVisible(ev){
