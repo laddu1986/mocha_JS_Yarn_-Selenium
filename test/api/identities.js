@@ -13,7 +13,7 @@ describe('POST /identities', () => {
     console.log(postIdentityRequestURL);
 
     var postData = {
-        "fullname": fullname,
+        "fullName": fullname,
         "email": email,
         "password": password
     }
@@ -26,7 +26,7 @@ describe('POST /identities', () => {
             expect(response).not.to.have.status(500),
             expect(response).to.have.header('content-type', 'application/json; charset=utf-8'),
             expect(response).to.comprise.of.json({
-                "fullname": fullname,
+                "fullName": fullname,
                 "email": email
             })
         ])

@@ -15,6 +15,8 @@ describe('POST /organizations', () => {
         "id": uuid
     }
 
+    
+
     it('should validate all the HTTP responses of POST Organizations', function () {
         const response = chakram.post(postOrgRequestURL, postData)
         return chakram.wait([
@@ -32,6 +34,10 @@ describe('POST /organizations', () => {
 
 describe('GET /organizations', () => {
     const getOrgRequestURL = baseURL + 'api/v1/organizations'
+    // var response;
+    // before(function () {
+    //     response = chakram.get(getOrgRequestURL);
+    // })
 
     it('should validate all the HTTP responses of GET Organizations', function () {
         const response = chakram.get(getOrgRequestURL)
