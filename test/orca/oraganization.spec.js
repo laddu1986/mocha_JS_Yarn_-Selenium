@@ -32,15 +32,17 @@ describe('organization service', () => {
 
     const name = faker.name.findName()
     const email = faker.internet.email()
-    const password = 'Password@1234'
+    const password = "Password@1234"
     const organizationName = faker.company.companyName()
+
+    //{ console.log(name + '\n' + email + '\n' + password + '\n' + organizationName) }
+
 
     const response = await axios.post('http://localhost:3001/', {
       query: `
         mutation {
           createAccount(input: {fields:
-            ${console.log(name + '\n' + email + '\n' + password + '\n' + organizationName)}
-            {name: ${name} , email: ${email}, password: ${password}, organizationName: ${organizationName}}}) {
+            {name: "${name}" , email: "${email}", password: "${password}", organizationName: "${organizationName}"}}) {
             account {
               name
               email
@@ -53,16 +55,8 @@ describe('organization service', () => {
       `
     })
 
-    //console.log(query)
-
-
-    // const response = await axios({
-    //   method: 'post',
-    //   url: 'http://localhost:3001/',
-    //   data: {}
-    // })
-
     const { data } = response
+    //console.log(JSON.stringify(data))
 
     expect(data).toMatchObject({
       "data": {
