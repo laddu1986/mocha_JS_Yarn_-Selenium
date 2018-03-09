@@ -1,7 +1,7 @@
 import Home from '../page_objects/homePage.js';
-import SignIn from '../page_objects/signInPage.js';
-const config = require('config-yml');
-
+import SignIn from '../page_objects/signInPage.js';//test/web/page_objects/createAccountPage.js
+// const config = require('config-yml');
+import { config } from '/Users/avinash.eediga/Documents/appcurator/qa-automation/test/lib/common.js';
 
 describe('Open Sign in page', () => {
 
