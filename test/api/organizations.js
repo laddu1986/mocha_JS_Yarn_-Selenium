@@ -1,10 +1,11 @@
 //import chakram from '../../../node_modules/chakram/lib/chakram'
+import faker from '../../node_modules/faker/'
 var chakram = require('chakram'),
     expect = chakram.expect
 const config = require('config-yml')
 const baseURL = config.api.organizations
 
-var faker = require('faker')
+//var faker = require('faker')
 const companyName = faker.company.companyName()
 const uuid = faker.random.uuid()
 
@@ -15,7 +16,7 @@ describe('POST /organizations', () => {
         "id": uuid
     }
 
-    
+
 
     it('should validate all the HTTP responses of POST Organizations', function () {
         const response = chakram.post(postOrgRequestURL, postData)
