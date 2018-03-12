@@ -1,8 +1,7 @@
 import CreateAccountPage from '../page_objects/createAccountPage';
 import Common from '../lib/common';
-import config from '../../../node_modules/config-yml/index';
-//  const config = require('config-yml');
-
+// import {config} from '../common.js';
+import { config } from '/Users/avinash.eediga/Documents/appcurator/qa-automation/test/lib/common.js';
 
 describe('Open Sign in page', () => {
 
