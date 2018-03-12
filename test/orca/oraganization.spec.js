@@ -3,7 +3,7 @@ import faker from 'faker'
 
 describe('organization service', () => {
   test('getOrganizationById', async () => {
-    const response = await axios.post('http://localhost:3001/', {
+    const response = await axios.post('https://api.appcurator.com/', {
       query: `
         query{
           getOrganization(id: "08d57439-b12f-4e40-6f6d-9c469998d446") {
@@ -32,13 +32,12 @@ describe('organization service', () => {
 
     const name = faker.name.findName()
     const email = faker.internet.email()
-    const password = "Password@1234"
+    const password = 'Password@1234'
     const organizationName = faker.company.companyName()
 
     //{ console.log(name + '\n' + email + '\n' + password + '\n' + organizationName) }
 
-
-    const response = await axios.post('http://localhost:3001/', {
+    const response = await axios.post('https://api.appcurator.com/', {
       query: `
         mutation {
           createAccount(input: {fields:
