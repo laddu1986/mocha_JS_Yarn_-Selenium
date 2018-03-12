@@ -8,14 +8,15 @@ exports.config = {
   services: ['selenium-standalone'],
   capabilities: [{
     browserName: brow,
-    chromeOptions: { args: ['disable-infobars'] },
+    // chromeOptions: { args: ['disable-infobars'] },
+    chromeOptions: {
+          args: ['--headless', '--disable-gpu', '--window-size=1200,700']
+      },
   }],
 
   updateJob: false,
   specs: [
-    //'./test/web/specs/*.js',
-    './test/api/organizations.js'
-
+    './test/api/specs/*Test.js',
   ],
   // Patterns to exclude.
   exclude: [
@@ -67,17 +68,17 @@ exports.config = {
   // Gets executed before all workers get launched.
   onPrepare() {
     console.log('what is the');
-    const config = require('config-yml');
   },
 
   // Gets executed before test execution begins. At this point you will have access to all global
   // variables like `browser`. It is the perfect place to define custom commands.
   before() {
-    const chai = require('chai');
+    // const chai = require('chai');
+    // global.expect = chai.expect;
+    // chai.Should();
 
-    global.expect = chai.expect;
-    chai.Should();
-
+    // var chakram = require('chakram');
+    // global.expect = chakram.expect;
     // const config = require('config-yml');
   },
 
