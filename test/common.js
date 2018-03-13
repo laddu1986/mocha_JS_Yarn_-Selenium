@@ -1,11 +1,11 @@
 
-import assertions from '/Users/avinash.eediga/Documents/appcurator/qa-automation/test/api/actions/assertions.js';
-import del from '/Users/avinash.eediga/Documents/appcurator/qa-automation/test/api/actions/delete.js';
-import post from '/Users/avinash.eediga/Documents/appcurator/qa-automation/test/api/actions/post.js';
+import assertions from './api/actions/assertions';
+import del from './api/actions/delete';
+import post from './api/actions/post';
 
-const chakram = require('chakram');
+const server = require('chakram');
 
-global.expect = chakram.expect;
+global.expect = server.expect;
 const mysql = require('mysql');
 const config = require('config-yml');
 const faker = require('faker');
@@ -44,4 +44,4 @@ function end() {
 
 // con.end();
 
-export { assertions, faker, config, chakram, del, post, connection, end };
+export { assertions, faker, config, server, del, post, connection, end };
