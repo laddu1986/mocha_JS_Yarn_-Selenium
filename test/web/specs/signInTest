@@ -10,8 +10,7 @@ describe('Open Sign in page', () => {
   });
 
   it('Enters email and password', () => {
-    SignIn.emailInput.waitForExist();
-    SignIn.emailInput.waitForVisible();
+    
     SignIn.emailInput.setValue('avi.pardu.nash3@gmail.com');
 
     SignIn.passwordInput.waitForExist();
