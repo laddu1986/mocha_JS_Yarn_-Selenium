@@ -1,4 +1,4 @@
-import * as lib from '/Users/avinash.eediga/Documents/appcurator/qa-automation/test/common';
+import * as lib from '../../common';
 
 const fullname = lib.faker.name.findName();
 const email = lib.faker.internet.email();

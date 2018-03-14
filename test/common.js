@@ -1,7 +1,7 @@
 
-import assertions from '/Users/avinash.eediga/Documents/appcurator/qa-automation/test/api/actions/assertions.js';
-import del from '/Users/avinash.eediga/Documents/appcurator/qa-automation/test/api/actions/delete.js';
-import post from '/Users/avinash.eediga/Documents/appcurator/qa-automation/test/api/actions/post.js';
+import assertions from './api/actions/assertions';
+import del from './api/actions/delete';
+import post from './api/actions/post';
 
 const chakram = require('chakram');
 
@@ -17,7 +17,7 @@ function connection(params) {
     con = mysql.createConnection(params);
     con.connect((err) => {
       if (err) throw err;
-      console.log('Connected!');
+      console.log('Connected to Database!');
     });
   }
   return con;
@@ -26,7 +26,7 @@ function connection(params) {
 function end() {
   con.end((err) => {
     if (err) throw err;
-    console.log('Disconnected!');
+    console.log('Disconnected from Database!');
   });
 }
 
