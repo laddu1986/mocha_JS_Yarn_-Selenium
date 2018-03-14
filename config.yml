@@ -5,7 +5,7 @@ web:
   signInButton: "//button[@tabindex=0]"
   signInMessage: "//h1"
   nameInput: "//input[@autocomplete='name']"  
-  organisationInput: "//input[@autocomplete='organisation']"
+  organizationInput: "//input[@autocomplete='organisation']"
   createAccountButton: "//button[@type='submit']"
 api:
   signIn: "/sign-in"
