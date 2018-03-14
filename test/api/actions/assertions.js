@@ -1,4 +1,4 @@
-import { chakram } from '/Users/avinash.eediga/Documents/appcurator/qa-automation/test/common.js';
+import { chakram } from '../../common';
 
 class Assertions {
   statuscheck200(params) {

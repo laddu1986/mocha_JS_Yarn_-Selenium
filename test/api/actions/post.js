@@ -1,4 +1,4 @@
-import { chakram } from '/Users/avinash.eediga/Documents/appcurator/qa-automation/test/common.js';
+import { chakram } from '../../common';
 class Post  {
     
     //returns delete response object
