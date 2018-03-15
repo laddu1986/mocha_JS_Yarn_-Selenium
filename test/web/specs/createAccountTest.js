@@ -1,6 +1,5 @@
 import CreateAccountPage from '../page_objects/createAccountPage';
 import * as lib from '../../common';
-import * as helper from '../lib/helper';
 
 function name(params) {
   let text = '';
@@ -16,37 +15,39 @@ const email = lib.faker.internet.email();
 const password = lib.faker.internet.password();
 const testData = [
   {
-    name: '', email: '', organization: '', password: '', actual: false, expected: false,
+    name: ' ',
+    email: ' ',
+    organization: ' ',
+    password: ' ',
+    title: 'Adding empty data to create an account',
+    expected: false,
   },
   {
-    name: name(201), email:'~!#$%^&*_+@massive.co', organization: name(201), password:'Password', actual: false, expected: false,
+    name: name(201),
+    email: '~!#$%^&*_+@massive.co',
+    organization: name(201),
+    password: 'Password 123',
+    title: 'Adding exceptional data to create an account',
+    expected: false,
   },
   {
-    name: fullname, email: '', organization: fullname, password, actual: false, expected: false,
+    name: '~!@#$%^&*()_+',
+    email: '~!#$%^&*_+@massive.co',
+    organization: '~!@#$%^&*()_+',
+    password: 'Pa~1!@#$%^&*()_+',
+    title: 'Adding all special characters to create an account',
+    expected: false,
   },
   {
-    name: fullname, email, organization: fullname, password: '', actual: false, expected: false,
-  },
-  {
-    name: ' ', email: ' ', organization: ' ', password: ' ', actual: false, expected: false,
-  },
-  {
-    name: '~!@#$%^&*()_+', email: '~!#$%^&*_+@massive.co', organization: '~!@#$%^&*()_+', password, actual: false, expected: false,
-  },
-  {
-    name: fullname, email, organization: ' ', password: ' ', actual: false, expected: false,
-  },
-  {
-    name: fullname, email, organization: fullname, password, actual: false, expected: false,
+    name: fullname,
+    email,
+    organization: fullname,
+    password,
+    title: 'Adding proper data to create an account',
+    expected: true,
   },
 ];
 
-const idata = {
-  fullname,
-  email,
-  password,
-};
-const data = [];
 lib.connection({
   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
   user: 'rouser',
@@ -54,85 +55,66 @@ lib.connection({
   database: 'IdentityTest',
 });
 
-describe('Open Sign in page', () => {
+function assertion(e, data) {
+//   console.log(e);
+  e.forEach((expected) => {
+    expect(expected).to.equal(data);
+  });
+}
+
+function waitForElement(wfe) {
+  wfe.waitForExist();
+  wfe.waitForVisible();
+}
+
+function setValue(sv, data) {
+  sv.setValue(data);
+}
+
+function click(c) {
+  c.click();
+}
+
+describe('Open create an account page', () => {
   before('Open create account page', () => {
     console.log(lib.config.api.createAccount);
     CreateAccountPage.open(lib.config.api.createAccount);
   });
 
-
-  it('Enter empty values in all fields', () => {
-    click(CreateAccountPage.createAccountButton);
-    const d = browser.getText('(//input[@type=\'text\']/parent::div/parent::div/span)[1]');
-    expect(d).to.contain('This is a required field');
-    helper.check();
-    // console.log(idata.fullname);
-    // click(CreateAccountPage.createAccountButton);
-    // waitForElement(CreateAccountPage.nameInput);
-    // setValue(CreateAccountPage.nameInput, '');
-    // browser.element('//input[@type=\'text\']/parent::div/parent::div/span[text()="This is a required field"]');
-    console.log(browser.getText('(//input[@type=\'text\']/parent::div/parent::div/span)[1]'));
-    // setValue(CreateAccountPage.emailInput, '');
-    // setValue(CreateAccountPage.organizationInput, '');
-    // setValue(CreateAccountPage.passwordInput, '');
-
-    // browser.element('//input[@type=\'email\']/parent::div/parent::div/span').waitForExist();
-    // browser.element('//h1').waitForVisible();
-    // browser.getText('//h1').includes('welcome');
-  });
-
   testData.forEach((test) => {
-    it(`correctly adds ${test.name.length} args`, () => {
+    it(`Title ${test.title}  Data ${test.name}`, () => {
+      console.log(test.name + test.email);
       waitForElement(CreateAccountPage.nameInput);
       setValue(CreateAccountPage.nameInput, test.name);
+
+      waitForElement(CreateAccountPage.emailInput);
       setValue(CreateAccountPage.emailInput, test.email);
+
+      waitForElement(CreateAccountPage.organizationInput);
       setValue(CreateAccountPage.organizationInput, test.organization);
+
+      waitForElement(CreateAccountPage.passwordInput);
       setValue(CreateAccountPage.passwordInput, test.password);
+
+      const elements = [
+        CreateAccountPage.emailValidIconDiv,
+        CreateAccountPage.nameValidIconDiv,
+        CreateAccountPage.organizationValidIconDiv,
+        CreateAccountPage.passwordValidIconDiv,
+      ];
+      assertion(elements, test.expected);
+
+      waitForElement(CreateAccountPage.createAccountButton);
       click(CreateAccountPage.createAccountButton);
     });
   });
-
-  it('Enter email', () => {
-    // waitForElement(CreateAccountPage.nameInput);
-    // setValue(CreateAccountPage.nameInput, idata.fullname);
-    // setValue(CreateAccountPage.emailInput, idata.email);
-    // setValue(CreateAccountPage.organizationInput, idata.fullname);
-    // setValue(CreateAccountPage.passwordInput, idata.password);
-    // click(CreateAccountPage.createAccountButton);
-  });
-
-  //   it('Enter organisation', () => {
-  //     waitForElement(CreateAccountPage.nameInput);
-  //     setValue(CreateAccountPage.nameInput, ' ');
-  //     setValue(CreateAccountPage.emailInput, ' ');
-  //     setValue(CreateAccountPage.organizationInput, ' ');
-  //     setValue(CreateAccountPage.passwordInput, ' ');
-  //     click(CreateAccountPage.createAccountButton);
-  //   });
-
-  //   it('Enter password', () => {
-  //     waitForElement(CreateAccountPage.nameInput);
-  //     setValue(CreateAccountPage.nameInput, ' ');
-  //     setValue(CreateAccountPage.emailInput, ' ');
-  //     setValue(CreateAccountPage.organizationInput, ' ');
-  //     setValue(CreateAccountPage.passwordInput, ' ');
-  //     click(CreateAccountPage.createAccountButton);
-  //   });
-
-  //   it('Click on create an account button', () => {
-  //     waitForElement(CreateAccountPage.nameInput);
-  //     setValue(CreateAccountPage.nameInput, ' ');
-  //     setValue(CreateAccountPage.emailInput, ' ');
-  //     setValue(CreateAccountPage.organizationInput, ' ');
-  //     setValue(CreateAccountPage.passwordInput, ' ');
-  //     click(CreateAccountPage.createAccountButton);
-  //   });
-
+  
   it('Signin message', () => {
-    // browser.element('//h1').waitForExist();
-    // browser.element('//h1').waitForVisible();
+    browser.element('//h1').waitForExist();
+    browser.element('//h1').waitForVisible();
+    let d =browser.getText('//h1');
     // browser.getText('//h1').includes('welcome');
-
+    expect(d).to.equal('You did it, you logged in, welcome!');
     // browser.element("//button[@type='button']").waitForExist();
     // browser.element("//button[@type='button']").waitForVisible();
     // browser.element("//button[@type='button']").click();
@@ -154,39 +136,18 @@ describe('Open Sign in page', () => {
     //   }, 20000);
     // browser.pause(10000);
     // console.log('The solution is: ', idata.fullname);
-    // lib.connection().query({
-    //   sql: 'SELECT * FROM `AspNetUsers` WHERE `Name` = ?',
-    //   timeout: 40000, // 40s
-    //   values: [idata.fullname],
-    // }, (error, results) => {
-    //   if (error) throw error;
-    //   console.log('The solution is: ', results);
-    // });
+    lib.connection().query({
+      sql: 'SELECT * FROM `AspNetUsers` WHERE `Name` = ?',
+      timeout: 40000, // 40s
+      values: [testData.fullname],
+    }, (error, results) => {
+      if (error) throw error;
+      console.log('The solution is: ', results);
+    });
   });
 
   after('End message', () => {
     lib.end();
   });
 });
-// // e element and data required
-// function createAccount(e, data) {
-//   waitForElement(CreateAccountPage.nameInput);
-//   setValue(CreateAccountPage.nameInput, ' ');
-//   setValue(CreateAccountPage.emailInput, ' ');
-//   setValue(CreateAccountPage.organizationInput, ' ');
-//   setValue(CreateAccountPage.passwordInput, ' ');
-//   click(CreateAccountPage.createAccountButton);
-// }
 
-function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
-}
-
-function setValue(sv, data) {
-  sv.setValue(data);
-}
-
-function click(c) {
-  c.click();
-}
