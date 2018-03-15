@@ -1,7 +1,7 @@
 import CreateAccountPage from '../page_objects/createAccountPage';
 import Common from '../lib/common';
 // import {config} from '../common.js';
-import { config } from '/Users/avinash.eediga/Documents/appcurator/qa-automation/test/lib/common.js';
+import { config } from '../../common';
 
 describe('Open Sign in page', () => {
 
@@ -14,17 +14,17 @@ describe('Open Sign in page', () => {
 
     it('Enters name', () => {
 
-        Common.waitForExistAndVisible(CreateAccountPage.nameInput);        
+        Common.waitForExistAndVisible(CreateAccountPage.nameInput);
         CreateAccountPage.nameInput.setValue(Common.random);
 
-        
+
     });
 
     it('Enter email', () => {
 
         Common.waitForExistAndVisible(CreateAccountPage.emailInput);
-        CreateAccountPage.emailInput.setValue(Common.random +"@dummy.com");
-        console.log(Common.random +"@dummy.com");
+        CreateAccountPage.emailInput.setValue(Common.random + "@dummy.com");
+        console.log(Common.random + "@dummy.com");
     });
 
     it('Enter organisation', () => {
@@ -53,13 +53,13 @@ describe('Open Sign in page', () => {
     //     browser.waitUntil(function() {
     //     return browser.getText('body').includes('account');
     //     }, 20000);
-        
+
     //     // CreateAccountPage.signInMessage.waitForExist();
     //     // CreateAccountPage.signInMessage.waitForVisible();
     //     // console.log(CreateAccountPage.signInMessage.getText());
     //     // let actual = CreateAccountPage.signInMessage.getText();
     //     // expect(actual).to.equal('Thank you for signing in.');
-        
+
 
     // });
 

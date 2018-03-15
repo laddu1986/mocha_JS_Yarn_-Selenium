@@ -78,7 +78,7 @@ describe('Orca Query Tests', function () {
     })
 
     return chakram.waitFor([
-      expect(request).to.have.status(200),
+      expect(request).to.have.status(200),//Response from Orca
       expect(request).to.have.json('data.getAccount.name', 'Paul'),
       expect(request).to.have.json('data.getAccount.email', 'jonwick13ab@max.co'),
       expect(request).to.have.json('data.getAccount.organizations[0].id', '08d589af-1572-0648-aaa0-2427e3b1903a'),
@@ -105,7 +105,7 @@ describe('Orca Query Tests', function () {
     })
 
     return chakram.waitFor([
-      expect(request).to.have.status(200),
+      expect(request).to.have.status(200), //Response from Orca
       expect(request).to.have.json('errors[0].status', 404), //Response from Microservice
       expect(request).to.have.json('errors[0].type', 'ServiceError'),
       expect(request).to.have.json('errors[0].message', 'User with Id invalid-id not found'),
