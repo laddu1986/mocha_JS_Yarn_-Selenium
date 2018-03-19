@@ -108,13 +108,13 @@ describe('Open create an account page', () => {
       click(CreateAccountPage.createAccountButton);
     });
   });
-  
+
   it('Signin message', () => {
-    browser.element('//h1').waitForExist();
-    browser.element('//h1').waitForVisible();
-    let d =browser.getText('//h1');
+    browser.element('//h2').waitForExist();
+    browser.element('//h2').waitForVisible();
+    const d = browser.getText('//h2');
     // browser.getText('//h1').includes('welcome');
-    expect(d).to.equal('You did it, you logged in, welcome!');
+    expect(d).to.equal('Select an organisation');
     // browser.element("//button[@type='button']").waitForExist();
     // browser.element("//button[@type='button']").waitForVisible();
     // browser.element("//button[@type='button']").click();
@@ -135,11 +135,11 @@ describe('Open create an account page', () => {
     //   return browser.getText('body').includes('account');
     //   }, 20000);
     // browser.pause(10000);
-    // console.log('The solution is: ', idata.fullname);
+    console.log('The solution is: ', testData.name);
     lib.connection().query({
       sql: 'SELECT * FROM `AspNetUsers` WHERE `Name` = ?',
       timeout: 40000, // 40s
-      values: [testData.fullname],
+      values: [testData.name],
     }, (error, results) => {
       if (error) throw error;
       console.log('The solution is: ', results);
