@@ -110,11 +110,11 @@ describe('Open create an account page', () => {
   });
 
   it('Signin message', () => {
-    browser.element('//h2').waitForExist();
-    browser.element('//h2').waitForVisible();
-    const d = browser.getText('//h2');
+    browser.element('//h1').waitForExist();
+    browser.element('//h1').waitForVisible();
+    const d = browser.getText('//h1');
     // browser.getText('//h1').includes('welcome');
-    expect(d).to.equal('Select an organisation');
+    expect(d).to.equal(`Welcome to ${ testData[3].organization}!`);
     // browser.element("//button[@type='button']").waitForExist();
     // browser.element("//button[@type='button']").waitForVisible();
     // browser.element("//button[@type='button']").click();
@@ -131,19 +131,16 @@ describe('Open create an account page', () => {
     // browser.element("//button[@type='submit']").waitForVisible();
     // browser.element("//button[@type='submit']").click();
 
-    //   browser.waitUntil(function() {
-    //   return browser.getText('body').includes('account');
-    //   }, 20000);
-    // browser.pause(10000);
-    console.log('The solution is: ', testData.name);
-    lib.connection().query({
-      sql: 'SELECT * FROM `AspNetUsers` WHERE `Name` = ?',
-      timeout: 40000, // 40s
-      values: [testData.name],
-    }, (error, results) => {
-      if (error) throw error;
-      console.log('The solution is: ', results);
-    });
+
+    console.log('The solution is: ', testData[3].name);
+    // lib.connection().query({
+    //   sql: 'SELECT * FROM `AspNetUsers` WHERE `Name` = ?',
+    //   timeout: 40000, // 40s
+    //   values: [testData.name],
+    // }, (error, results) => {
+    //   if (error) throw error;
+    //   console.log('The solution is: ', results);
+    // });
   });
 
   after('End message', () => {
