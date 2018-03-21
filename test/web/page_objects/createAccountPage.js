@@ -7,7 +7,7 @@ class CreateAccountPage extends Page {
   get passwordInput() { return browser.element(config.web.passwordInput); }
   get nameInput() { return browser.element(config.web.nameInput); }
   get organizationInput() { return browser.element(config.web.organizationInput); }
-  get createAccountButton() { return browser.element(config.web.createAccountButton); }
+  get submit() { return browser.element(config.web.submit); }
   get signInMessage() { return browser.element(config.web.signInMessage); }
   get organizationErrorMessageSpan() { return browser.element('(//input[@id=\'organisation\']/parent::div/parent::div/span)[1]'); }
   get nameErrorMessageSpan() { return browser.element('(//input[@id=\'name\']/parent::div/parent::div/span)[1]'); }
