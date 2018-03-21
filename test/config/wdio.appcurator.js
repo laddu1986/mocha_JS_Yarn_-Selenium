@@ -13,12 +13,18 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/*.js',
+    './test/web/specs/updateOrganizationName.js',
+    // './test/web/specs/viewOrganizationDashboard.js',
   ],
   // Patterns to exclude.
   exclude: [
-    // './test/specs/amazonSearchTest.js',
-    // './test/specs/amazonShoppingCart.js'
+    // './test/specs/autoSignInTest.js',
+    // './test/specs/createAccountTest.js',
+    // './test/specs/signInTest.js',
+    // './test/specs/signOutTest.js',
+    // './test/web/specs/LinktoHelppagefromSideNavTest.js',
+    // './test/web/specs/viewOrganizationSettings.js',
+    // './test/web/specs/viewOrganizationDashboard.js',
   ],
 
   logLevel: 'silent',
@@ -41,7 +47,7 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['allure','spec'],
+  reporters: ['allure', 'spec'],
   reporterOptions: {
     allure: {
       outputDir: 'allure-results',
