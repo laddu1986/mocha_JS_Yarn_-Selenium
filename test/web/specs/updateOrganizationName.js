@@ -8,8 +8,8 @@ describe('Update Organization name', () => {
     browser.element('//*[@class=\'h3\']').waitForExist();
     browser.element('//*[@class=\'h3\']').waitForVisible();
     const organizationName2 = browser.getText('//*[@class=\'h3\']');
-    console.log(`${organizationName2 };;;;;;;;`);
-    console.log(`${organizationName1};;;;;;;;`);
+    // console.log(`${organizationName2 };;;;;;;;`);
+    // console.log(`${organizationName1};;;;;;;;`);
     expect(organizationName1).to.equal(organizationName2);
   });
 
@@ -23,8 +23,8 @@ describe('Update Organization name', () => {
     browser.element('//*[@class=\'h3\']').waitForVisible();
     const organizationName1 = browser.getValue('//input[@name=\'organization-name\']');
     const organizationName2 = browser.getText('//*[@class=\'h3\']');
-    console.log(`${organizationName2};;;;;;;;`);
-    console.log(`${organizationName1};;;;;;;;`);
+    // console.log(`${organizationName2};;;;;;;;`);
+    //console.log(`${organizationName1};;;;;;;;`);
     expect(organizationName1).to.equal(organizationName2);
   });
 
@@ -39,8 +39,8 @@ describe('Update Organization name', () => {
 
     const organizationName1 = browser.getValue('//input[@name=\'organization-name\']');
     const organizationName2 = browser.getText('//*[@class=\'h3\']');
-    console.log(`${organizationName2 };;;;;;;;`);
-    console.log(`${organizationName1};;;;;;;;`);
+    // console.log(`${organizationName2 };;;;;;;;`);
+    // console.log(`${organizationName1};;;;;;;;`);
     expect(organizationName2).to.equal(organizationName1);
   });
 });

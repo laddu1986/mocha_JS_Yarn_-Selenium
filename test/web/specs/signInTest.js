@@ -72,7 +72,7 @@ describe('Sign in page', () => {
     //   database: 'membership_test',
     // });
 
-    console.log(lib.config.api.createAccount);
+    // console.log(lib.config.api.createAccount);
     SignInPage.open(lib.config.api.signIn);
   });
 
@@ -95,9 +95,9 @@ describe('Sign in page', () => {
       try {
         expect(test.expected).to.not.equal(st1);
         expect(test.expected).to.not.equal(st2);
-        console.log(' not entered ${err}');
+        // console.log(' not entered ${err}');
       } catch(err) {
-        console.log(' entered ${err}');
+        // console.log(' entered ${err}');
       }
     });
   });
@@ -133,7 +133,7 @@ describe('Sign in page', () => {
     browser.element('(//a[contains(@href,\'/org\')])[1]').waitForExist();
     browser.element('(//a[contains(@href,\'/org\')])[1]').waitForVisible();
     const success = browser.isVisible('(//a[contains(@href,\'/org\')])[1]');
-    console.log(success);
+    // console.log(success);
     expect(true).to.equal(success);
 
     // waitForElement(SignInPage.successMessage);

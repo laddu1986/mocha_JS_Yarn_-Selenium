@@ -102,7 +102,7 @@ describe('Open create an account page', () => {
       password: 'R34d0nlyK3y',
       database: 'membership_test',
     });
-    console.log(lib.config.api.createAccount);
+    // console.log(lib.config.api.createAccount);
     CreateAccountPage.open(lib.config.api.createAccount);
   });
 
@@ -132,7 +132,7 @@ describe('Open create an account page', () => {
       waitForElement(CreateAccountPage.submit);
       click(CreateAccountPage.submit);
 
-      const st1 = browser.isVisible('(//span[contains(@class,\'visible\')])[1]');
+      const st1 = lib.driver.isVisible('(//span[contains(@class,\'visible\')])[1]');
       const st2 = browser.isVisible('(//span[contains(@class,\'visible\')])[2]');
       const st3 = browser.isVisible('(//span[contains(@class,\'visible\')])[3]');
       const st4 = browser.isVisible('(//span[contains(@class,\'visible\')])[4]');
@@ -164,7 +164,7 @@ describe('Open create an account page', () => {
 
     waitForElement(CreateAccountPage.submit);
     click(CreateAccountPage.submit);
-    console.log(`${email }::${ password }::${ organization }::${ name}`);
+    // console.log(`${email }::${ password }::${ organization }::${ name}`);
     browser.element('(//*[contains(@href,\'/org\')])[1]').waitForExist();
     browser.element('(//*[contains(@href,\'/org\')])[1]').waitForVisible();
     const success = browser.isVisible('(//*[contains(@href,\'/org\')])[1]');
@@ -175,15 +175,16 @@ describe('Open create an account page', () => {
   it('Checking org creation in database', () => {
     const url = browser.getUrl();
     const parts = url.split('/');
-    console.log(parts + url );
+    // console.log(parts + url );
     // console.log('The solution is: ', testData[3].name);
     lib.connection().query({
+      
       sql: 'select * from `Organizations` where id = ?',
       timeout: 40000, // 40s
       values: [parts[parts.length - 1]],
     }, (error, results) => {
       if (error) throw error;
-      console.log('The solution is: ', results);
+      // console.log('The solution is: ', results);
     });
   });
 
