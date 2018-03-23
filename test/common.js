@@ -3,7 +3,12 @@ import assertions from './api/actions/assertions';
 import del from './api/actions/delete';
 import post from './api/actions/post';
 
+<<<<<<< HEAD
 const server = require('chakram');
+=======
+const chakram = require('chakram');
+var cookieParser = require('cookie-parser');
+>>>>>>> 0d0d9f47265e965904031d8f79bde1953bcceaeb
 
 global.expect = server.expect;
 const mysql = require('mysql');
@@ -17,7 +22,7 @@ function connection(params) {
     con = mysql.createConnection(params);
     con.connect((err) => {
       if (err) throw err;
-      console.log('Connected!');
+      console.log('Connected to Database!');
     });
   }
   return con;
@@ -26,7 +31,7 @@ function connection(params) {
 function end() {
   con.end((err) => {
     if (err) throw err;
-    console.log('Disconnected!');
+    console.log('Disconnected from Database!');
   });
 }
 
@@ -44,4 +49,8 @@ function end() {
 
 // con.end();
 
+<<<<<<< HEAD
 export { assertions, faker, config, server, del, post, connection, end };
+=======
+export { assertions, faker, config, chakram, del, post, connection, end, cookieParser };
+>>>>>>> 0d0d9f47265e965904031d8f79bde1953bcceaeb
