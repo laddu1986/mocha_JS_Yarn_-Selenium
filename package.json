@@ -53,6 +53,7 @@
         "chakram": "^1.5.0",
         "faker": "^4.1.0",
         "jest": "^22.4.2",
+        "js-cookie": "^2.2.0",
         "json-server": "^0.12.1",
         "lodash": "^4.17.4",
         "mocha": "^5.0.4",
@@ -62,6 +63,7 @@
         "start": "node_modules/.bin/wdio test/config/wdio.appcurator.js",
 <<<<<<< HEAD
         "api": "mocha test/api/*.js",
+<<<<<<< HEAD
         "orca": "jest test/orca/*.js",
         "test": "./node_modules/mocha/bin/mocha test/api/specs/deleteMembershipTest.js --require babel-register"
 =======
@@ -69,6 +71,10 @@
         "test": "./node_modules/mocha/bin/mocha test/api/specs/*Test.js --require babel-register",
         "report": "allure generate allure-results --clean -o allure-report && allure open allure-report"
 >>>>>>> 1899602be93b9438d4b50d4bbd81be86a17688a2
+=======
+        "orca": "mocha test/orca/*.js --require babel-register",
+        "test": "./node_modules/mocha/bin/mocha test/api/specs/Test.js --require babel-register"
+>>>>>>> 0d0d9f47265e965904031d8f79bde1953bcceaeb
     },
     "repository": {
         "type": "git",
