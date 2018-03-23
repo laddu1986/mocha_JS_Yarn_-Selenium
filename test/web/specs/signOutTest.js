@@ -1,4 +1,4 @@
-import SignOutPage from '../specs/signInTest';
+import SignInPage from '../specs/signInTest';
 
 
 describe('Sign out', () => {

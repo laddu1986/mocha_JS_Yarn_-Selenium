@@ -13,7 +13,7 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/updateOrganizationName.js',
+    './test/web/specs/createOrganization.js',
     // './test/web/specs/viewOrganizationDashboard.js',
   ],
   // Patterns to exclude.
@@ -68,8 +68,8 @@ exports.config = {
   // =====
   // Gets executed before all workers get launched.
   onPrepare() {
-    console.log('what is the');
-    const config = require('config-yml');
+    // console.log('what is the');
+    // const config = require('config-yml');
   },
 
   // Gets executed before test execution begins. At this point you will have access to all global
