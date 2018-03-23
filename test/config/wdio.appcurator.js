@@ -43,15 +43,13 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['dot', 'spec'
-    /*, 'sumologic'*/
-    // reporterOptions: {
-    //     sumologic: {
-    //       syncInterval: 100,
-    //       sourceAddress: process.env.SUMO_SOURCE_ADDRESS
-    //     }
-    // },
-  ],
+  reporters: ['allure','spec'],
+  reporterOptions: {
+    allure: {
+      outputDir: 'allure-results',
+      disableWebdriverStepsReporting: true,
+    },
+  },
 
 
   mochaOpts: {

@@ -1,23 +1,15 @@
 /* The following block generates a random string */
-
+import * as lib from '../../common';
 
 class Common {
+  get fullname() { return lib.faker.name.findName(); }
+  get email() { return lib.faker.internet.email(); }
+  get password() { return lib.faker.internet.password(); }
 
-    get random()  { 
-        let allowedChars = "abcdefghiklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        let stringLength = 8;
-        let randomstring = '';
-        for (var i = 0; i < stringLength; i++) {
-            var rnum = Math.floor(Math.random() * allowedChars.length);
-            randomstring += allowedChars.substring(rnum, rnum + 1);
-        }
-        return randomstring;
-    }
-
-    waitForExistAndVisible(ev){
-        ev.waitForExist();
-        ev.waitForVisible();
-    }
+  lib() {
+    return lib;
+  }
+  
 }
 
-export default new Common();
+export default Common;
