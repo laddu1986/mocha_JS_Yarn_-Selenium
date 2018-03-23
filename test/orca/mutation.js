@@ -106,7 +106,7 @@ describe('Orca Mutation Tests', function () {
       expect(request).to.have.json('errors[0].status', 400), //Response from Microservice
       expect(request).to.have.json('errors[0].type', 'ServiceError'),
       expect(request).to.have.json('errors[0].data.validationErrors.email',
-        'Error:InvalidData, ErrorCode:4002, Message: Email address is invalid'
+        'Error:InvalidData, ErrorCode:4002, Message: Fullname address is invalid'
       )
     ])
   })
