@@ -27,11 +27,7 @@
         "mysql": "^2.15.0",
         "node-resemble-js": "0.0.5",
         "npm": "^5.7.1",
-<<<<<<< HEAD
-        "selenium-standalone": "^6.12.0",
-=======
         "selenium-standalone": "^6.13.0",
->>>>>>> 1899602be93b9438d4b50d4bbd81be86a17688a2
         "underscore": "^1.8.3",
         "wdio-browserstack-service": "^0.1.3",
         "wdio-mocha-framework": "^0.2.11",
@@ -61,20 +57,9 @@
     },
     "scripts": {
         "start": "node_modules/.bin/wdio test/config/wdio.appcurator.js",
-<<<<<<< HEAD
-        "api": "mocha test/api/*.js",
-<<<<<<< HEAD
-        "orca": "jest test/orca/*.js",
-        "test": "./node_modules/mocha/bin/mocha test/api/specs/deleteMembershipTest.js --require babel-register"
-=======
-        "api": "node_modules/.bin/wdio test/config/wdio.appcurator.api.js",
-        "test": "./node_modules/mocha/bin/mocha test/api/specs/*Test.js --require babel-register",
-        "report": "allure generate allure-results --clean -o allure-report && allure open allure-report"
->>>>>>> 1899602be93b9438d4b50d4bbd81be86a17688a2
-=======
+        "report": "allure generate allure-results --clean -o allure-report && allure open allure-report",
         "orca": "mocha test/orca/*.js --require babel-register",
         "test": "./node_modules/mocha/bin/mocha test/api/specs/Test.js --require babel-register"
->>>>>>> 0d0d9f47265e965904031d8f79bde1953bcceaeb
     },
     "repository": {
         "type": "git",
