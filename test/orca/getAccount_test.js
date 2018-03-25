@@ -25,10 +25,6 @@ describe('Orca Query Tests', function () {
     ]).then(function (responsebody) {
       // [ 'name=whatever', 'other=foo' ]
       const cookies = (responsebody.response.headers['set-cookie'].map(v => v.split(';')[0])).join('; ');
-      //console.log(cookies.join('; '))
-
-      //let newCookies = cookies;
-
       return responsebody
     })
 
@@ -36,6 +32,7 @@ describe('Orca Query Tests', function () {
 
 
   it('should get Account details of the loggedin User', function () {
+    console.log(cookies)
     var options = {
       headers: {
         "cookie": "acid=s%3AeyJhbGciOiJSUzI1NiIsImtpZCI6IjQ2Q0Q5RDY1MTczNDU2NTk2MkM0NzMxRTZFNTYyMjk1RTNGMUMxMjEiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJSczJkWlJjMFZsbGl4SE1lYmxZaWxlUHh3U0UifQ.eyJuYmYiOjE1MjE3MjA0NTUsImV4cCI6MTUyMTcyNDA1NSwiaXNzIjoiaHR0cDovL2FiOGIxMmViYzFjMzIxMWU4YmU2ODAyYWIzMTQwNjE3LTEwMTUxNzYyODMuYXAtc291dGhlYXN0LTIuZWxiLmFtYXpvbmF3cy5jb20iLCJhdWQiOlsiaHR0cDovL2FiOGIxMmViYzFjMzIxMWU4YmU2ODAyYWIzMTQwNjE3LTEwMTUxNzYyODMuYXAtc291dGhlYXN0LTIuZWxiLmFtYXpvbmF3cy5jb20vcmVzb3VyY2VzIiwiYmFja2VuZF9zZXJ2aWNlIl0sImNsaWVudF9pZCI6ImZyb250ZW5kX3NlcnZpY2UiLCJzdWIiOiJjMTJjMzhlNC1kMTE4LTRmYmYtYjBhYy1iZDQ1N2IxM2M5NDciLCJhdXRoX3RpbWUiOjE1MjE3MjA0NTUsImlkcCI6ImxvY2FsIiwic2NvcGUiOlsiYmFja2VuZF9zZXJ2aWNlIiwib2ZmbGluZV9hY2Nlc3MiXSwiYW1yIjpbInB3ZCJdfQ.C5t-aqNqebqFto51Ch0AULVxDgMPgCLGo6k_zO2SLHnnBvA8euZeQ6kqoBrl3N_Wn-cnCimbc_Llj3ROW2ukk0YznkISFpyR0Fnrs7uxbq8DeFwuqzK5fcTx2GeSE0wK7CX4WKLVdCJgc70QbVNzEVI420psnJL-Uf5kB_XLfQU6nZAuEelmldN_woXNdAFjT6D2mWE6lUZdIDbGuRfL9DlGQaasCUoTYxsdYWeebNyBqHtRSz0eKJ8-kqKJe3qhCH02a-iFwSYajkChbarpW8huqU4mrLB6rBeLSa9l_UNEEaqaxfpreTyKsDEOmhw3kCrKuVaSVstS6JGzB98z6aGMb1Ozc4oO9OBTrOeAiKsr4p5VBYo_bVIERsm9taAzpvFpq_cUuiOSod8pYSjE6uYKm4bX3n0iynwTPnUMtT0PeGC00kvBCSoUNZgjpu5-OMZTXG_FLRgYHv0QqyQJZFIk2MIZTjdehyz-FPUELHeTiP_ygWm9975duyk8_9M7cOi2uwsutf_KmrsrukuWhfBcj9tUqXstmOONyDraskBMxamHV_EvVEeEStfKIE3Kg8Qjgh_GcE0IUD8A8n-s6UohDmy2EdIRtPy9zo_LgChh8hyG1nzjRnzZJZ1k8xXiDSB-JuFdK_PuxyonmpLN28mC8EolQVjXcR5MtSSW20c.cG9uLFUseLLMXURmoPamt%2B2QWRZw1%2Bcjb1G0NtaXfhg; acsi=1"
