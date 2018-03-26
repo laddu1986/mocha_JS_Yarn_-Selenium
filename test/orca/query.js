@@ -1,12 +1,14 @@
-//import axios from 'axios'
-//import faker from 'faker'
 import { chakram, faker } from '../common';
+import Cookies from './getAccountToken'
 
 var name = faker.name.findName()
 var email = faker.internet.email()
 var password = 'Password@1234'
 var organizationName = faker.company.companyName()
-
+//console.log(Cookies.cookies)
+function getCookies() {
+  console.log(Cookies.cookies)
+}
 describe('Orca Query Tests', function () {
 
   it('getOrganization + Should GET an Organization with valid Id', function () {
@@ -61,6 +63,13 @@ describe('Orca Query Tests', function () {
   })
 
   it('getAccount + Should GET an Account by valid Id', function () {
+    console.log(Cookies.cookies)
+
+    // var options = {
+    //   headers: {
+    //     "cookie": cookies
+    //   }
+    // }
 
     var request = chakram.post('https://api.appcurator.com/', {
       query: `
