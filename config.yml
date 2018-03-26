@@ -15,3 +15,7 @@ api:
   organizations: "http://a31e2a5f81c1c11e89f7706893e2f881-1946902899.ap-southeast-2.elb.amazonaws.com/api/v1/organizations/"
   identities: "http://ab8b12ebc1c3211e8be6802ab3140617-1015176283.ap-southeast-2.elb.amazonaws.com/api/v1/identities/"
   memberships: "http://a37f920111c2d11e89f7706893e2f881-620225296.ap-southeast-2.elb.amazonaws.com/api/memberships/"
+orca:
+  email: test@mass.co
+  password: Test1234
+  remember: true

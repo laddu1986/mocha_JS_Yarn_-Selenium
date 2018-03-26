@@ -4,7 +4,6 @@ import del from './api/actions/delete';
 import post from './api/actions/post';
 
 const chakram = require('chakram');
-var cookieParser = require('cookie-parser');
 
 global.expect = chakram.expect;
 const mysql = require('mysql');
@@ -45,4 +44,4 @@ function end() {
 
 // con.end();
 
-export { assertions, faker, config, chakram, del, post, connection, end, cookieParser };
+export { assertions, faker, config, chakram, del, post, connection, end };
