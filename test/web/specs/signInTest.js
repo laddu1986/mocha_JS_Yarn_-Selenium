@@ -1,4 +1,5 @@
 import SignInPage from '../page_objects/signInPage';
+
 import * as lib from '../../common';
 
 // function name(params) {
@@ -44,7 +45,7 @@ const testData = [
 
 
 function assertion(e, data) {
-//   console.log(e);
+  //   console.log(e);
   e.forEach((expected) => {
     expect(expected).to.equal(data);
   });
@@ -73,7 +74,7 @@ describe('Sign in page', () => {
     // });
 
     // console.log(lib.config.api.createAccount);
-    SignInPage.open(lib.config.api.signIn);
+    SignInPage.open(lib.config.api.base);
   });
 
   testData.forEach((test) => {
@@ -89,14 +90,17 @@ describe('Sign in page', () => {
       waitForElement(SignInPage.submit);
       click(SignInPage.submit);
 
-      const st1 = browser.isVisible('(//span[contains(@class,\'visible\')])[1]');
-      const st2 = browser.isVisible('(//span[contains(@class,\'visible\')])[2]');
+      // const st1 = browser.isVisible('(//span[contains(@class,\'visible\')])[1]');
+      // const st2 = browser.isVisible('(//span[contains(@class,\'visible\')])[2]');
+
+      const st1 = browser.isVisible("//*[@data-qa='input:email']//*[@data-qa='input:error']");
+      const st2 = browser.isVisible("//*[@data-qa='input:password']//*[@data-qa='input-error']");
 
       try {
         expect(test.expected).to.not.equal(st1);
         expect(test.expected).to.not.equal(st2);
         // console.log(' not entered ${err}');
-      } catch(err) {
+      } catch (err) {
         // console.log(' entered ${err}');
       }
     });
@@ -109,15 +113,15 @@ describe('Sign in page', () => {
     waitForElement(SignInPage.passwordInput);
     setValue(SignInPage.passwordInput, password);
 
-    waitForElement(SignInPage.submit);
-    click(SignInPage.submit);
+    waitForElement(SignInPage.signInButton);
+    click(SignInPage.signInButton);
 
     // waitForElement(SignInPage.successMessage);
-    browser.element('//p[contains(@class,\'caption\')]').waitForExist();
-    browser.element('//p[contains(@class,\'caption\')]').waitForVisible();
-    const message = browser.getText('//p[contains(@class,\'caption\')]');
-    // console.log(message);
-    expect(message).to.include('incorrect');
+    browser.element("//*[@data-qa='form:error']").waitForExist();
+    browser.element("//*[@data-qa='form:error']").waitForVisible();
+    const signInErrMsg = browser.getText("//*[@data-qa='form:error']");
+    //console.log(signInErrMsg);
+    expect(signInErrMsg).to.include('incorrect');
   });
 
   it('Checking successful signin', () => {
@@ -127,13 +131,14 @@ describe('Sign in page', () => {
     waitForElement(SignInPage.passwordInput);
     setValue(SignInPage.passwordInput, 'Mob@1234');
 
-    waitForElement(SignInPage.submit);
-    click(SignInPage.submit);
+    waitForElement(SignInPage.signInButton);
+    click(SignInPage.signInButton);
 
     browser.element('(//a[contains(@href,\'/org\')])[1]').waitForExist();
     browser.element('(//a[contains(@href,\'/org\')])[1]').waitForVisible();
     const success = browser.isVisible('(//a[contains(@href,\'/org\')])[1]');
-    // console.log(success);
+    const signInSuccessMsg = browser.getText('(//a[contains(@href,\'/org\')])[1]');
+    console.log(signInSuccessMsg);
     expect(true).to.equal(success);
 
     // waitForElement(SignInPage.successMessage);
