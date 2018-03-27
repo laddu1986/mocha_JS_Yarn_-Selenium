@@ -1,17 +1,43 @@
 web:
-  signIn: "//a[text() = 'Sign in']"
-  emailInput: "//input[@type='email']"
-  passwordInput: "//input[@type='password']"
-  signInButton: "//button[@tabindex=0]"
-  signInMessage: "//h1"
-  nameInput: "//input[@autocomplete='name']"  
-  organisationInput: "//input[@autocomplete='organisation']"
-  createAccountButton: "//button[@type='submit']"
+  #SignIn Page
+
+  createAccountLink: "//*[@data-qa='link:register\"']"
+
+  emailInput: "//*[@data-qa='input:email']//*[@data-qa='input:text']"
+  emailError: "//*[@data-qa='input:email']//*[@data-qa='input:error']"
+  
+  passwordInput: "//*[@data-qa='input:password']//*[@data-qa='input:text']"
+  passwordError: "//*[@data-qa='input:password']//*[@data-qa='input-error']"
+  
+  signInButton: "//*[@data-qa='btn:submit']"
+  signInSuccessMessage: "//h1"
+  signInErrorMessage: "//*[@data-qa='form:error']"
+
+  forgotPasswordLink: "//*[@data-qa='link:forgot-pw']"
+  emailSentMsg: "//h2"
+  backToSignIn: "//*[@data-qa='link:sign-in']"
+  
+  #Create Account Page
+  nameInput: "//*[@data-qa='input:name']//*[@data-qa='input:text']"
+  nameErr: "//*[@data-qa='input:name']//*[@data-qa='input:error']"
+
+  orgInput: "//*[@data-qa='input:org']//*[@data-qa='input:text']"
+  orgErr: "//*[@data-qa='input:org']//*[@data-qa='input:error']"
+  
+  createAccountButton: "//*[@data-qa='btn:submit']"
+
+  #Home Page
+  profileMenu: "//*[@data-qa='menu:profile']"
+  navMenu: "//*[@data-qa='nav:menu']"
+
+  helpMenu: "//*[@data-qa='menu:help']"
+
 api:
   signIn: "/sign-in"
   signedIn: "/signed-in"
   createAccount: "/join"
-  base: "https://my.appcurator.com"
-  organizations: "http://a31e2a5f81c1c11e89f7706893e2f881-1946902899.ap-southeast-2.elb.amazonaws.com/"
-  identities: "http://ab8b12ebc1c3211e8be6802ab3140617-1015176283.ap-southeast-2.elb.amazonaws.com/"
-  memberships: "http://a37f920111c2d11e89f7706893e2f881-620225296.ap-southeast-2.elb.amazonaws.com/"
+  #base: "https://my.appcurator.com"
+  base: "https://feature-qa-org.web.appcurator.qa" #QA
+  organizations: "http://a89ec28cc219b11e8a04b0a484309a38-57129668.ap-southeast-2.elb.amazonaws.com/api/v1/organizations/"
+  identities: "http://a4f0950b62e5911e88381023cadbc14f-1304735737.ap-southeast-2.elb.amazonaws.com/api/identities/"
+  memberships: "http://a16d8d03c2e2c11e88381023cadbc14f-1270623244.ap-southeast-2.elb.amazonaws.com/api/memberships/"
