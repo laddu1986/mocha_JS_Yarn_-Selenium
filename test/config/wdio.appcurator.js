@@ -13,7 +13,7 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/createOrganization.js',
+    './test/web/specs/forgotPassword.js',
     // './test/web/specs/viewOrganizationDashboard.js',
   ],
   // Patterns to exclude.
@@ -30,8 +30,8 @@ exports.config = {
   logLevel: 'silent',
   coloredLogs: true,
   screenshotPath: './errScreens',
-  baseUrl: 'https://my.appcurator.com/',
-  waitforTimeout: 20000,
+  baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
+  waitforTimeout: 10000,
   // maxInstances: 3,
 
   plugins: {

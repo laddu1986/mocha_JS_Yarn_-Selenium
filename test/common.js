@@ -30,6 +30,13 @@ function end() {
   });
 }
 
+function assertion(e, data) {
+  //   console.log(e);
+  e.forEach((expected) => {
+    expect(expected).to.equal(data);
+  });
+}
+
 // const con = mysql.createConnection({
 //   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
 //   user: 'rouser',

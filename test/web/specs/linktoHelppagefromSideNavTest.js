@@ -1,15 +1,19 @@
-import SignInPage from '../specs/signInTest';
+import SignInPage from '../specs/validSignIn_PreReq';
+import HomePage from '../page_objects/homePage';
+import { homedir } from 'os';
 
 
 describe('Link to \'Help\' page from Side Nav', () => {
   it('Checking FAQ visibility', () => {
-    browser.element('(//div[contains(@class,\'css-1rq2b0h\')])[1]').waitForExist();
-    browser.element('(//div[contains(@class,\'css-1rq2b0h\')])[1]').waitForVisible();
+    HomePage.helpMenu.waitForExist();
+    //browser.element('(//div[contains(@class,\'css-1rq2b0h\')])[1]').waitForVisible();
+    HomePage.helpMenu.waitForVisible();
 
-    const faqVisibility = browser.isVisible('(//div[contains(@class,\'css-1rq2b0h\')])[1]');
+    //const faqVisibility = browser.isVisible("//*[@data-qa='menu:help']");
+    const faqVisibility = HomePage.helpMenu.isVisible();
     // console.log(faqVisibility);
     expect(true).to.equal(faqVisibility);
-    browser.element('(//div[contains(@class,\'css-1rq2b0h\')])[1]').click();
+    browser.element("//*[@data-qa='menu:help']").click();
   });
 
   it('Checking help center visibility', () => {
