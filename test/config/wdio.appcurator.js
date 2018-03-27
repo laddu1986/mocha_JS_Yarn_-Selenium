@@ -13,21 +13,25 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    //'./test/web/specs/*.js',
-    './test/web/specs/*.js'
-
+    './test/web/specs/forgotPassword.js',
+    // './test/web/specs/viewOrganizationDashboard.js',
   ],
   // Patterns to exclude.
   exclude: [
-    // './test/specs/amazonSearchTest.js',
-    // './test/specs/amazonShoppingCart.js'
+    // './test/specs/autoSignInTest.js',
+    // './test/specs/createAccountTest.js',
+    // './test/specs/signInTest.js',
+    // './test/specs/signOutTest.js',
+    // './test/web/specs/LinktoHelppagefromSideNavTest.js',
+    // './test/web/specs/viewOrganizationSettings.js',
+    // './test/web/specs/viewOrganizationDashboard.js',
   ],
 
   logLevel: 'silent',
   coloredLogs: true,
   screenshotPath: './errScreens',
-  baseUrl: 'https://my.appcurator.com/',
-  waitforTimeout: 20000,
+  baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
+  waitforTimeout: 10000,
   // maxInstances: 3,
 
   plugins: {
@@ -43,7 +47,7 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['allure','spec'],
+  reporters: ['allure', 'spec'],
   reporterOptions: {
     allure: {
       outputDir: 'allure-results',
@@ -64,8 +68,8 @@ exports.config = {
   // =====
   // Gets executed before all workers get launched.
   onPrepare() {
-    console.log('what is the');
-    const config = require('config-yml');
+    // console.log('what is the');
+    // const config = require('config-yml');
   },
 
   // Gets executed before test execution begins. At this point you will have access to all global

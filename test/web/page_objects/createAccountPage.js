@@ -3,10 +3,11 @@ import Page from './page';
 const config = require('config-yml');
 
 class CreateAccountPage extends Page {
+  get createAccountLink() { return browser.element(config.web.createAccountLink) }
   get emailInput() { return browser.element(config.web.emailInput); }
   get passwordInput() { return browser.element(config.web.passwordInput); }
   get nameInput() { return browser.element(config.web.nameInput); }
-  get organizationInput() { return browser.element(config.web.organizationInput); }
+  get organizationInput() { return browser.element(config.web.orgInput); }
   get createAccountButton() { return browser.element(config.web.createAccountButton); }
   get signInMessage() { return browser.element(config.web.signInMessage); }
   get organizationErrorMessageSpan() { return browser.element('(//input[@id=\'organisation\']/parent::div/parent::div/span)[1]'); }
@@ -21,7 +22,7 @@ class CreateAccountPage extends Page {
   get nameInValidIconDiv() { return browser.isVisible('//input[@id=\'name\']/following-sibling::div[contains(@class, \'invalid\')]'); }
   get emailInValidIconDiv() { return browser.isVisible('//input[@id=\'email\']/following-sibling::div[contains(@class, \'invalid\')]'); }
   get passwordInValidIconDiv() { return browser.isVisible('//input[@id=\'password\']/following-sibling::div[contains(@class, \'invalid\')]'); }
-    
+
   open(e) {
     console.log(e);
     super.open(e);
