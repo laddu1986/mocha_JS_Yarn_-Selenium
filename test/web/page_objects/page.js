@@ -1,11 +1,12 @@
 const config = require('config-yml');
+
 class Page {
-	
-	open(path) {
-		let base = config.api.base;
-		console.log(base + path);
-		browser.url(path);
-	}
+  open(path) {
+    const base = config.api.base;
+    //console.log('path =  ' + base + path);
+    //browser.url(base + path);
+    browser.url(base)
+  }
 }
 
 export default Page;

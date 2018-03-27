@@ -8,30 +8,27 @@ exports.config = {
   services: ['selenium-standalone'],
   capabilities: [{
     browserName: brow,
-    chromeOptions: { args: ['disable-infobars'] },
+    // chromeOptions: { args: ['disable-infobars'] },
+    chromeOptions: {
+          args: ['--headless', '--disable-gpu', '--window-size=1200,700']
+      },
   }],
 
   updateJob: false,
   specs: [
-    './test/web/specs/forgotPassword.js',
-    // './test/web/specs/viewOrganizationDashboard.js',
+    './test/api/specs/*Test.js',
   ],
   // Patterns to exclude.
   exclude: [
-    // './test/specs/autoSignInTest.js',
-    // './test/specs/createAccountTest.js',
-    // './test/specs/signInTest.js',
-    // './test/specs/signOutTest.js',
-    // './test/web/specs/LinktoHelppagefromSideNavTest.js',
-    // './test/web/specs/viewOrganizationSettings.js',
-    // './test/web/specs/viewOrganizationDashboard.js',
+    // './test/specs/amazonSearchTest.js',
+    // './test/specs/amazonShoppingCart.js'
   ],
 
   logLevel: 'silent',
   coloredLogs: true,
   screenshotPath: './errScreens',
-  baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
-  waitforTimeout: 10000,
+  baseUrl: 'https://my.appcurator.com/',
+  waitforTimeout: 20000,
   // maxInstances: 3,
 
   plugins: {
@@ -47,13 +44,15 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['allure', 'spec'],
-  reporterOptions: {
-    allure: {
-      outputDir: 'allure-results',
-      disableWebdriverStepsReporting: true,
-    },
-  },
+  reporters: ['dot', 'spec'
+    /*, 'sumologic'*/
+    // reporterOptions: {
+    //     sumologic: {
+    //       syncInterval: 100,
+    //       sourceAddress: process.env.SUMO_SOURCE_ADDRESS
+    //     }
+    // },
+  ],
 
 
   mochaOpts: {
@@ -68,18 +67,18 @@ exports.config = {
   // =====
   // Gets executed before all workers get launched.
   onPrepare() {
-    // console.log('what is the');
-    // const config = require('config-yml');
+    console.log('what is the');
   },
 
   // Gets executed before test execution begins. At this point you will have access to all global
   // variables like `browser`. It is the perfect place to define custom commands.
   before() {
-    const chai = require('chai');
+    // const chai = require('chai');
+    // global.expect = chai.expect;
+    // chai.Should();
 
-    global.expect = chai.expect;
-    chai.Should();
-
+    // var chakram = require('chakram');
+    // global.expect = chakram.expect;
     // const config = require('config-yml');
   },
 
