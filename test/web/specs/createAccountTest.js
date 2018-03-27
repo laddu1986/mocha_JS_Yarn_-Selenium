@@ -1,4 +1,5 @@
 import CreateAccountPage from '../page_objects/createAccountPage';
+<<<<<<< HEAD
 import * as lib from '../../common';
 import createAccountPage from '../page_objects/createAccountPage';
 
@@ -74,6 +75,49 @@ const testData = [
   // },
 ];
 
+<<<<<<< HEAD
+lib.connection({
+  host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
+  user: 'rouser',
+  password: 'R34d0nlyK3y',
+  database: 'IdentityTest',
+});
+=======
+import Common from '../lib/common';
+// import {config} from '../common.js';
+import { config } from '../../common';
+
+describe('Open Sign in page', () => {
+
+    before('Open create account page', () => {
+
+        console.log(config.api.createAccount);
+        CreateAccountPage.open(config.api.createAccount);
+
+    });
+
+    it('Enters name', () => {
+
+        Common.waitForExistAndVisible(CreateAccountPage.nameInput);
+        CreateAccountPage.nameInput.setValue(Common.random);
+
+
+    });
+
+    it('Enter email', () => {
+
+        Common.waitForExistAndVisible(CreateAccountPage.emailInput);
+        CreateAccountPage.emailInput.setValue(Common.random + "@dummy.com");
+        console.log(Common.random + "@dummy.com");
+    });
+
+    it('Enter organisation', () => {
+
+        Common.waitForExistAndVisible(CreateAccountPage.organisationInput);
+        CreateAccountPage.organisationInput.setValue(Common.random);
+>>>>>>> 0d0d9f47265e965904031d8f79bde1953bcceaeb
+=======
+>>>>>>> master
 
 function assertion(e, data) {
   //   console.log(e);
@@ -194,8 +238,33 @@ describe('Open create an account page', () => {
     });
   });
 
+<<<<<<< HEAD
   after('End message', () => {
     lib.end();
   });
+=======
+    it('Click on create an account button', () => {
+
+        Common.waitForExistAndVisible(CreateAccountPage.createAccountButton);
+        CreateAccountPage.createAccountButton.click();
+
+    });
+
+    // it('Signin message', () => {
+
+    //     browser.waitUntil(function() {
+    //     return browser.getText('body').includes('account');
+    //     }, 20000);
+
+    //     // CreateAccountPage.signInMessage.waitForExist();
+    //     // CreateAccountPage.signInMessage.waitForVisible();
+    //     // console.log(CreateAccountPage.signInMessage.getText());
+    //     // let actual = CreateAccountPage.signInMessage.getText();
+    //     // expect(actual).to.equal('Thank you for signing in.');
+
+
+    // });
+
+>>>>>>> 0d0d9f47265e965904031d8f79bde1953bcceaeb
 });
 
