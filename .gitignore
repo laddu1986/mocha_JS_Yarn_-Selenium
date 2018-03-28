@@ -3,3 +3,10 @@ package-lock.json
 allure-report
 allure-results
 errScreens/*
+.vscode
+.dockerignore
+.env
+Dockerfile
+docker-compose.yml
+yarn.lock
+.babelrc
