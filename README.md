@@ -41,22 +41,28 @@ update *config.yml* with the URLs that you want to run tests against
 
 
 Install dependencies
-```js
+
+`
 npm install 
-```
+`
 
 Run Front End Tests
-```js
+
+`
 npm run start
-```
+`
+
 Run Orca Tests
-```js
+
+`
 npm run orca
-```
+`
+
 Run API Tests
-```js
+
+`
 npm run api
-```
+`
 
 
 
