@@ -1,4 +1,4 @@
-import SignInPage from '../specs/signInTest';
+import SignInPage from '../specs/validSignIn_PreReq';
 import HomePage from '../page_objects/homePage';
 
 
@@ -24,43 +24,40 @@ import HomePage from '../page_objects/homePage';
 //   });
 // });
 
-function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
-}
+// function waitForElement(wfe) {
+//   wfe.waitForExist();
+//   wfe.waitForVisible();
+// }
 
-function setValue(sv, data) {
-  sv.setValue(data);
-}
+// function setValue(sv, data) {
+//   sv.setValue(data);
+// }
 
-function click(c) {
-  c.click();
-}
+// function click(c) {
+//   c.click();
+// }
 
 describe('Sign out', () => {
   it('Checking sign out', () => {
-    //browser.element('(//div[contains(@class,\'css-1rq2b0h\')])[2]').waitForExist();
-    waitForElement(HomePage.profileMenu);
-    //browser.element('(//div[contains(@class,\'css-1rq2b0h\')])[2]').waitForVisible();
-    //waitForVisible(Homepage.profileMenu);
-    //browser.element('(//div[contains(@class,\'css-1rq2b0h\')])[2]').click();
-    click(HomePage.profileMenu)
-    waitForElement(HomePage.navMenu);
+    HomePage.profileMenu.waitForExist();
+    HomePage.profileMenu.waitForVisible();
+    HomePage.profileMenu.click();
 
-    const profileVisibility = (HomePage.profileMenu).isVisible();
-    console.log(profileVisibility)
-    expect(true).to.equal(profileVisibility);
-    browser.element('//*[contains(text(),\'Sign out\')]').waitForExist();
-    browser.element('//*[contains(text(),\'Sign out\')]').waitForVisible();
-    browser.element('//*[contains(text(),\'Sign out\')]').click();
-    const signOutVisibility = browser.isVisible('//*[contains(text(),\'Sign out\')]');
-    expect(true).to.equal(signOutVisibility);
+    HomePage.signOut.waitForExist();
+    HomePage.signOut.waitForVisible();
+    HomePage.signOut.click();
+    browser.pause(5000)
+
   });
 
   it('Checking redirect to sign in page', () => {
-    browser.element('//h2').waitForExist();
-    browser.element('//h2').waitForVisible();
-    const success = browser.isVisible('//h2');
-    expect(true).to.equal(success);
+    const url = browser.getUrl();
+    console.log(url)
+    SignInPage.waitForVisible(SignInPage.emailInput)
+
+    const emailInputVisible = SignInPage.emailInput.isVisible();
+
+    expect(emailInputVisible).to.equal(true);
+    console.log(emailInputVisible)
   });
 });

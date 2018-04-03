@@ -13,7 +13,7 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/forgotPassword.js',
+    './test/web/specs/signOutTest.js',
     // './test/web/specs/viewOrganizationDashboard.js',
   ],
   // Patterns to exclude.
