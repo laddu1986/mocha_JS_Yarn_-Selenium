@@ -28,7 +28,7 @@ The library offers a BDD testing style and fully exploits javascript promises - 
 ### Getting Started
 
 #### Pre-Req
-Java (JDK 1.8 or above) needs to be installed before downloading or running this repo
+Java (JDK 1.8 or above) needs to be installed before working with this repo
 
 #### Installation
 `master` always contains the latest code from all three layers
@@ -63,7 +63,10 @@ Run API Tests
 `
 npm run api
 `
+#
 
+###  Help !
+For any queries contact [Avinash](avinash.eediga@massive.co) or [Abhi](abhijeet.daspatnaik@massive.co)
 
 
 

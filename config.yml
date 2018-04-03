@@ -32,6 +32,8 @@ web:
 
   helpMenu: "//*[@data-qa='menu:help']"
 
+  signOut: "//*[@data-qa='menu:profile']//*[@data-qa='nav:sign-out']"
+
 api:
   signIn: "/sign-in"
   signedIn: "/signed-in"

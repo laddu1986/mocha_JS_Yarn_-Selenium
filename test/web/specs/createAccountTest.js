@@ -1,6 +1,6 @@
-import CreateAccountPage from '../page_objects/createAccountPage';
-<<<<<<< HEAD
 import * as lib from '../../common';
+import Common from '../lib/common';
+import { config } from '../../common';
 import createAccountPage from '../page_objects/createAccountPage';
 
 function bigName(params) {
@@ -75,196 +75,177 @@ const testData = [
   // },
 ];
 
-<<<<<<< HEAD
-lib.connection({
-  host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
-  user: 'rouser',
-  password: 'R34d0nlyK3y',
-  database: 'IdentityTest',
-});
-=======
-import Common from '../lib/common';
-// import {config} from '../common.js';
-import { config } from '../../common';
+
 
 describe('Open Sign in page', () => {
 
-    before('Open create account page', () => {
-
-        console.log(config.api.createAccount);
-        CreateAccountPage.open(config.api.createAccount);
-
-    });
-
-    it('Enters name', () => {
-
-        Common.waitForExistAndVisible(CreateAccountPage.nameInput);
-        CreateAccountPage.nameInput.setValue(Common.random);
-
-
-    });
-
-    it('Enter email', () => {
-
-        Common.waitForExistAndVisible(CreateAccountPage.emailInput);
-        CreateAccountPage.emailInput.setValue(Common.random + "@dummy.com");
-        console.log(Common.random + "@dummy.com");
-    });
-
-    it('Enter organisation', () => {
-
-        Common.waitForExistAndVisible(CreateAccountPage.organisationInput);
-        CreateAccountPage.organisationInput.setValue(Common.random);
->>>>>>> 0d0d9f47265e965904031d8f79bde1953bcceaeb
-=======
->>>>>>> master
-
-function assertion(e, data) {
-  //   console.log(e);
-  e.forEach((expected) => {
-    expect(expected).to.equal(data);
-  });
-}
-
-function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
-}
-
-function setValue(sv, data) {
-  sv.setValue(data);
-}
-
-function click(c) {
-  c.click();
-}
-
-describe('Open create an account page', () => {
   before('Open create account page', () => {
-    lib.connection({
-      host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
-      user: 'rouser',
-      password: 'R34d0nlyK3y',
-      database: 'membership_test',
-    });
-    // console.log(lib.config.api.createAccount);
-    CreateAccountPage.open(lib.config.api.base);
-    waitForElement(createAccountPage.createAccountLink)
-    //browser.pause(5000)
-    click(createAccountPage.createAccountLink)
+
+    console.log(config.api.createAccount);
+    CreateAccountPage.open(config.api.createAccount);
+
   });
 
+  it('Enters name', () => {
 
-  testData.forEach((test) => {
-    // it(`${test.title} with ${test.name}`, () => {
-    it(`${test.title}`, () => {
-      // console.log(test.name + test.email);
-      waitForElement(CreateAccountPage.nameInput);
-      setValue(CreateAccountPage.nameInput, test.name);
+    Common.waitForExistAndVisible(CreateAccountPage.nameInput);
+    CreateAccountPage.nameInput.setValue(Common.random);
 
-      waitForElement(CreateAccountPage.emailInput);
-      setValue(CreateAccountPage.emailInput, test.email);
 
-      waitForElement(CreateAccountPage.organizationInput);
-      setValue(CreateAccountPage.organizationInput, test.organization);
-
-      waitForElement(CreateAccountPage.passwordInput);
-      setValue(CreateAccountPage.passwordInput, test.password);
-
-      // const elements = [
-      //   CreateAccountPage.emailValidIconDiv,
-      //   CreateAccountPage.nameValidIconDiv,
-      //   CreateAccountPage.organizationValidIconDiv,
-      //   CreateAccountPage.passwordValidIconDiv,
-      // ];
-      // assertion(elements, test.expected);
-
-      waitForElement(CreateAccountPage.createAccountButton);
-      click(CreateAccountPage.createAccountButton);
-
-      const st1 = browser.isVisible("//*[@data-qa='input:name']//*[@data-qa='input:error']");
-      const st2 = browser.isVisible("//*[@data-qa='input:email']//*[@data-qa='input:error']");
-      const st3 = browser.isVisible("//*[@data-qa='input:org']//*[@data-qa='input:error']");
-      const st4 = browser.isVisible("//*[@data-qa='input:password']//*[@data-qa='input:error']");
-
-      expect(test.expected).to.not.equal(st1);
-      expect(test.expected).to.not.equal(st2);
-      expect(test.expected).to.not.equal(st3);
-      expect(test.expected).to.not.equal(st4);
-      // browser.element('//h1').waitForExist();
-      // browser.element('//h1').waitForVisible();
-      // const d = browser.getText('//h1');
-      // // browser.getText('//h1').includes('welcome');
-      // expect(d).to.equal(`Welcome to ${testData.organization}!`);
-    });
   });
 
-  it('Checking logo to confirm user logged in', () => {
-    waitForElement(CreateAccountPage.nameInput);
-    setValue(CreateAccountPage.nameInput, name);
+  it('Enter email', () => {
 
-    waitForElement(CreateAccountPage.emailInput);
-    setValue(CreateAccountPage.emailInput, email);
-
-    waitForElement(CreateAccountPage.organizationInput);
-    setValue(CreateAccountPage.organizationInput, organization);
-
-    waitForElement(CreateAccountPage.passwordInput);
-    setValue(CreateAccountPage.passwordInput, password);
-
-    waitForElement(CreateAccountPage.createAccountButton);
-    click(CreateAccountPage.createAccountButton);
-    // console.log(`${email }::${ password }::${ organization }::${ name}`);
-    browser.element('(//*[contains(@href,\'/org\')])[1]').waitForExist();
-    browser.element('(//*[contains(@href,\'/org\')])[1]').waitForVisible();
-    const success = browser.isVisible('(//*[contains(@href,\'/org\')])[1]');
-    expect(true).to.equal(success);
-    browser.element('(//*[contains(@href,\'/org\')])[1]').click();
+    Common.waitForExistAndVisible(CreateAccountPage.emailInput);
+    CreateAccountPage.emailInput.setValue(Common.random + "@dummy.com");
+    console.log(Common.random + "@dummy.com");
   });
 
-  it('Checking org creation in database', () => {
-    const url = browser.getUrl();
-    const parts = url.split('/');
-    // console.log(parts + url );
-    // console.log('The solution is: ', testData[3].name);
-    lib.connection().query({
+  it('Enter organisation', () => {
 
-      sql: 'select * from `Organizations` where id = ?',
-      timeout: 40000, // 40s
-      values: [parts[parts.length - 1]],
-    }, (error, results) => {
-      if (error) throw error;
-      // console.log('The solution is: ', results);
-    });
-  });
+    Common.waitForExistAndVisible(CreateAccountPage.organisationInput);
+    CreateAccountPage.organisationInput.setValue(Common.random);
 
-<<<<<<< HEAD
-  after('End message', () => {
-    lib.end();
-  });
-=======
-    it('Click on create an account button', () => {
+
+    function assertion(e, data) {
+      e.forEach((expected) => {
+        expect(expected).to.equal(data);
+      });
+    }
+
+    function waitForElement(wfe) {
+      wfe.waitForExist();
+      wfe.waitForVisible();
+    }
+
+    function setValue(sv, data) {
+      sv.setValue(data);
+    }
+
+    function click(c) {
+      c.click();
+    }
+
+    describe('Open create an account page', () => {
+      before('Open create account page', () => {
+        lib.connection({
+          host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
+          user: 'rouser',
+          password: 'R34d0nlyK3y',
+          database: 'membership_test',
+        });
+        // console.log(lib.config.api.createAccount);
+        CreateAccountPage.open(lib.config.api.base);
+        waitForElement(createAccountPage.createAccountLink)
+        //browser.pause(5000)
+        click(createAccountPage.createAccountLink)
+      });
+
+
+      testData.forEach((test) => {
+        // it(`${test.title} with ${test.name}`, () => {
+        it(`${test.title}`, () => {
+          // console.log(test.name + test.email);
+          waitForElement(CreateAccountPage.nameInput);
+          setValue(CreateAccountPage.nameInput, test.name);
+
+          waitForElement(CreateAccountPage.emailInput);
+          setValue(CreateAccountPage.emailInput, test.email);
+
+          waitForElement(CreateAccountPage.organizationInput);
+          setValue(CreateAccountPage.organizationInput, test.organization);
+
+          waitForElement(CreateAccountPage.passwordInput);
+          setValue(CreateAccountPage.passwordInput, test.password);
+
+          // const elements = [
+          //   CreateAccountPage.emailValidIconDiv,
+          //   CreateAccountPage.nameValidIconDiv,
+          //   CreateAccountPage.organizationValidIconDiv,
+          //   CreateAccountPage.passwordValidIconDiv,
+          // ];
+          // assertion(elements, test.expected);
+
+          waitForElement(CreateAccountPage.createAccountButton);
+          click(CreateAccountPage.createAccountButton);
+
+          const st1 = browser.isVisible("//*[@data-qa='input:name']//*[@data-qa='input:error']");
+          const st2 = browser.isVisible("//*[@data-qa='input:email']//*[@data-qa='input:error']");
+          const st3 = browser.isVisible("//*[@data-qa='input:org']//*[@data-qa='input:error']");
+          const st4 = browser.isVisible("//*[@data-qa='input:password']//*[@data-qa='input:error']");
+
+          expect(test.expected).to.not.equal(st1);
+          expect(test.expected).to.not.equal(st2);
+          expect(test.expected).to.not.equal(st3);
+          expect(test.expected).to.not.equal(st4);
+          // browser.element('//h1').waitForExist();
+          // browser.element('//h1').waitForVisible();
+          // const d = browser.getText('//h1');
+          // // browser.getText('//h1').includes('welcome');
+          // expect(d).to.equal(`Welcome to ${testData.organization}!`);
+        });
+      });
+
+      it('Checking logo to confirm user logged in', () => {
+        waitForElement(CreateAccountPage.nameInput);
+        setValue(CreateAccountPage.nameInput, name);
+
+        waitForElement(CreateAccountPage.emailInput);
+        setValue(CreateAccountPage.emailInput, email);
+
+        waitForElement(CreateAccountPage.organizationInput);
+        setValue(CreateAccountPage.organizationInput, organization);
+
+        waitForElement(CreateAccountPage.passwordInput);
+        setValue(CreateAccountPage.passwordInput, password);
+
+        waitForElement(CreateAccountPage.createAccountButton);
+        click(CreateAccountPage.createAccountButton);
+        // console.log(`${email }::${ password }::${ organization }::${ name}`);
+        browser.element('(//*[contains(@href,\'/org\')])[1]').waitForExist();
+        browser.element('(//*[contains(@href,\'/org\')])[1]').waitForVisible();
+        const success = browser.isVisible('(//*[contains(@href,\'/org\')])[1]');
+        expect(true).to.equal(success);
+        browser.element('(//*[contains(@href,\'/org\')])[1]').click();
+      });
+
+      it('Checking org creation in database', () => {
+        const url = browser.getUrl();
+        const parts = url.split('/');
+        // console.log(parts + url );
+        // console.log('The solution is: ', testData[3].name);
+        lib.connection().query({
+
+          sql: 'select * from `Organizations` where id = ?',
+          timeout: 40000, // 40s
+          values: [parts[parts.length - 1]],
+        }, (error, results) => {
+          if (error) throw error;
+          // console.log('The solution is: ', results);
+        });
+      });
+
+      it('Click on create an account button', () => {
 
         Common.waitForExistAndVisible(CreateAccountPage.createAccountButton);
         CreateAccountPage.createAccountButton.click();
 
+      });
+
+      // it('Signin message', () => {
+
+      //     browser.waitUntil(function() {
+      //     return browser.getText('body').includes('account');
+      //     }, 20000);
+
+      //     // CreateAccountPage.signInMessage.waitForExist();
+      //     // CreateAccountPage.signInMessage.waitForVisible();
+      //     // console.log(CreateAccountPage.signInMessage.getText());
+      //     // let actual = CreateAccountPage.signInMessage.getText();
+      //     // expect(actual).to.equal('Thank you for signing in.');
+
+
+      // });
+
     });
-
-    // it('Signin message', () => {
-
-    //     browser.waitUntil(function() {
-    //     return browser.getText('body').includes('account');
-    //     }, 20000);
-
-    //     // CreateAccountPage.signInMessage.waitForExist();
-    //     // CreateAccountPage.signInMessage.waitForVisible();
-    //     // console.log(CreateAccountPage.signInMessage.getText());
-    //     // let actual = CreateAccountPage.signInMessage.getText();
-    //     // expect(actual).to.equal('Thank you for signing in.');
-
-
-    // });
-
->>>>>>> 0d0d9f47265e965904031d8f79bde1953bcceaeb
-});
 

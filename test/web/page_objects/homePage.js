@@ -9,6 +9,8 @@ class HomePage extends Page {
     get profileMenu() { return browser.element(config.web.profileMenu) }
 
     get helpMenu() { return browser.element(config.web.helpMenu) }
+    get signOut() { return browser.element(config.web.signOut) }
+
 
     open() {
         super.open();
