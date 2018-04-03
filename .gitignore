@@ -5,7 +5,6 @@ allure-results
 errScreens/*
 .vscode
 .dockerignore
-.env
 Dockerfile
 docker-compose.yml
 yarn.lock
