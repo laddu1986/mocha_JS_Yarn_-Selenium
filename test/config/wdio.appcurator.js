@@ -13,7 +13,7 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/validSignIn_PreReq.js',
+    './test/web/specs/createAccountTest.js',
     // './test/web/specs/viewOrganizationDashboard.js',
   ],
   // Patterns to exclude.

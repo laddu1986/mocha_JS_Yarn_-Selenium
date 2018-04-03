@@ -1,7 +1,7 @@
 web:
   #SignIn Page
 
-  createAccountLink: "//*[@data-qa='link:register']"
+  createAccountLink: "//*[@data-qa='link:register\"']"
 
   emailInput: "//*[@data-qa='input:email']//*[@data-qa='input:text']"
   emailError: "//*[@data-qa='input:email']//*[@data-qa='input:error']"
