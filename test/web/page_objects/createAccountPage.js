@@ -10,6 +10,12 @@ class CreateAccountPage extends Page {
   get organizationInput() { return browser.element(config.web.orgInput); }
   get createAccountButton() { return browser.element(config.web.createAccountButton); }
   get signInMessage() { return browser.element(config.web.signInMessage); }
+  get welcomeMsg() { return browser.element("//h1") }
+  get logo() { return browser.element("//*[@data-qa='nav:logo']"); }
+
+
+
+
   get organizationErrorMessageSpan() { return browser.element('(//input[@id=\'organisation\']/parent::div/parent::div/span)[1]'); }
   get nameErrorMessageSpan() { return browser.element('(//input[@id=\'name\']/parent::div/parent::div/span)[1]'); }
   get emailErrorMessageSpan() { return browser.element('(//input[@id=\'email\']/parent::div/parent::div/span)[1]'); }

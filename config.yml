@@ -1,7 +1,7 @@
 web:
   #SignIn Page
 
-  createAccountLink: "//*[@data-qa='link:register\"']"
+  createAccountLink: "//*[@data-qa='link:register']"
 
   emailInput: "//*[@data-qa='input:email']//*[@data-qa='input:text']"
   emailError: "//*[@data-qa='input:email']//*[@data-qa='input:error']"
@@ -29,6 +29,10 @@ web:
   #Home Page
   profileMenu: "//*[@data-qa='menu:profile']"
   navMenu: "//*[@data-qa='nav:menu']"
+  createOrg: "//*[@data-qa='nav:create-org']"
+
+  createOrgName: "//*[@data-qa='input:org-name']//*[@data-qa='input:text']"
+  createOrgErr: "//*[@data-qa='input:org-name']//*[@data-qa='input:error']"
 
   helpMenu: "//*[@data-qa='menu:help']"
 
@@ -38,10 +42,8 @@ api:
   signIn: "/sign-in"
   signedIn: "/signed-in"
   createAccount: "/join"
-  #DEV-URL
-  base: "https://my.appcurator.com" 
-  #QA-URL
-  #base: "https://feature-qa-org.web.appcurator.qa"
+  #base: "https://my.appcurator.com" #(DEV-URL)
+  base: "https://feature-qa-org.web.appcurator.qa" #(QA-URL)
   organizations: "http://a89ec28cc219b11e8a04b0a484309a38-57129668.ap-southeast-2.elb.amazonaws.com/api/v1/organizations/"
   identities: "http://a4f0950b62e5911e88381023cadbc14f-1304735737.ap-southeast-2.elb.amazonaws.com/api/identities/"
   memberships: "http://a16d8d03c2e2c11e88381023cadbc14f-1270623244.ap-southeast-2.elb.amazonaws.com/api/memberships/"

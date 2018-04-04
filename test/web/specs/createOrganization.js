@@ -1,4 +1,26 @@
-import SignInTest from '../specs/signInTest';
+import SignInPage from '../specs/validSignIn_PreReq';
+import HomePage from '../page_objects/homePage';
+
+
+function assertion(e, data) {
+  //   console.log(e);
+  e.forEach((expected) => {
+    expect(expected).to.equal(data);
+  });
+}
+
+function waitForElement(wfe) {
+  wfe.waitForExist();
+  wfe.waitForVisible();
+}
+
+function setValue(sv, data) {
+  sv.setValue(data);
+}
+
+function click(c) {
+  c.click();
+}
 
 describe('View Organization setings', () => {
   it('Checking FAQ visibility', () => {
@@ -20,10 +42,10 @@ describe('View Organization setings', () => {
     // console.log(settingsVisibility + ';;;;;;;;');
     expect(settingsVisibility).to.equal(true);
     browser.element('//*[contains(@class,\'nested\')]').click();
-    
+
   });
   it('Checking general visibility', () => {
-    
+
     browser.element('//*[contains(@href,\'/create\')]').waitForExist();
     browser.element('//*[contains(@href,\'/create\')]').waitForVisible();
     const generalVisibility = browser.isVisible('//*[contains(@href,\'/create\')]');
@@ -33,7 +55,7 @@ describe('View Organization setings', () => {
     browser.pause(5000);
   });
   it('Checking create org', () => {
-    
+
     browser.element('//*[@type=\'text\']').waitForExist();
     browser.element('//*[@type=\'text\']').waitForVisible();
     const generalVisibility = browser.isVisible('//*[@type=\'text\']');
@@ -41,6 +63,6 @@ describe('View Organization setings', () => {
     expect(generalVisibility).to.equal(true);
     browser.element('//*[@type=\'text\']').setValue('test2');
     browser.element('//*[@type=\'submit\']').click();
-  
+
   });
 });
