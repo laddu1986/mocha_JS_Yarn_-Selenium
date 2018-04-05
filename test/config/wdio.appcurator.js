@@ -8,12 +8,16 @@ exports.config = {
   services: ['selenium-standalone'],
   capabilities: [{
     browserName: brow,
-    chromeOptions: { args: ['disable-infobars'] },
+    chromeOptions: {
+      args: ['disable-infobars']
+    }
+    //, '--headless', '--disable-gpu', '--window-size=1200, 700'] }
+    ,
   }],
 
   updateJob: false,
   specs: [
-    './test/web/specs/createAccountTest.js',
+    './test/web/specs/organizationPageTest.js',
     // './test/web/specs/viewOrganizationDashboard.js',
   ],
   // Patterns to exclude.

@@ -2,6 +2,7 @@ import * as lib from '../../common';
 import createAccountPage from '../page_objects/createAccountPage'
 import homePage from '../page_objects/homePage';
 import signInPage from '../page_objects/signInPage';
+import { create } from 'domain';
 
 function bigName(params) {
   let text = '';
@@ -14,8 +15,7 @@ function bigName(params) {
 
 const name = lib.faker.name.findName();
 const email = lib.faker.internet.email();
-const password = lib.faker.internet.password();
-const organization = lib.faker.name.findName();
+const organization = lib.faker.company.companyName();
 const testData = [
   {
     name: ' ',
@@ -132,10 +132,10 @@ describe('Open create an account page', () => {
       waitForElement(createAccountPage.createAccountButton);
       click(createAccountPage.createAccountButton);
 
-      const st1 = browser.isVisible("//*[@data-qa='input:name']//*[@data-qa='input:error']");
-      const st2 = browser.isVisible("//*[@data-qa='input:email']//*[@data-qa='input:error']");
-      const st3 = browser.isVisible("//*[@data-qa='input:org']//*[@data-qa='input:error']");
-      const st4 = browser.isVisible("//*[@data-qa='input:password']//*[@data-qa='input:error']");
+      const nameErrMsg = createAccountPage.nameInputErr.isVisible();
+      const emailErrMsg = createAccountPage.emailInputErr.isVisible();
+      const organizationErrMsg = createAccountPage.organizationInputErr.isVisible();
+      const passwordErrMsg = createAccountPage.passwordInputErr.isVisible();
 
       // expect(test.expected).to.not.equal(st1);
       // expect(test.expected).to.not.equal(st2);
@@ -169,18 +169,18 @@ describe('Open create an account page', () => {
     // browser.element('(//*[contains(@href,\'/org\')])[1]').click();
 
 
-    createAccountPage.logo.waitForExist();
-    createAccountPage.logo.waitForVisible();
-    const logoPresent = createAccountPage.logo.isVisible();
+    homePage.logo.waitForExist();
+    homePage.logo.waitForVisible();
+    const logoPresent = homePage.logo.isVisible();
     expect(true).to.equal(logoPresent);
     //createAccountPage.logo.click();
   });
 
   it('Validate Landing page with Created Org Name', () => {
-    createAccountPage.welcomeMsg.waitForExist();
-    createAccountPage.welcomeMsg.waitForVisible();
+    homePage.welcomeMsg.waitForExist();
+    homePage.welcomeMsg.waitForVisible();
 
-    const actualHeading = createAccountPage.welcomeMsg.getText();
+    const actualHeading = homePage.welcomeMsg.getText();
     const expectedHeading = 'Welcome to ' + `${organization}`
     // console.log('actualHeading      ' + actualHeading)
     // console.log('expectedHeading    ' + expectedHeading)

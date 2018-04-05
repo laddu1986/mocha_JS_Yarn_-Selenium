@@ -1,6 +1,6 @@
 const config = require('config-yml');
 
-class Page {
+class page {
   open(path) {
     const base = config.api.base;
     //console.log('path =  ' + base + path);
@@ -9,4 +9,4 @@ class Page {
   }
 }
 
-export default Page;
+export default page;
