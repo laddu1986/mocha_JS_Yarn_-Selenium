@@ -1,4 +1,4 @@
-import SignInPage from '../page_objects/signInPage';
+import signInPage from '../page_objects/signInPage';
 
 import * as lib from '../../common';
 
@@ -74,21 +74,21 @@ describe('Sign in page', () => {
     // });
 
     // console.log(lib.config.api.createAccount);
-    SignInPage.open(lib.config.api.base);
+    signInPage.open(lib.config.api.base);
   });
 
   testData.forEach((test) => {
     it(`${test.title} with ${test.email} ::::: ${test.password} `, () => {
       // console.log(test.name + test.email);
 
-      waitForElement(SignInPage.emailInput);
-      setValue(SignInPage.emailInput, test.email);
+      waitForElement(signInPage.emailInput);
+      setValue(signInPage.emailInput, test.email);
 
-      waitForElement(SignInPage.passwordInput);
-      setValue(SignInPage.passwordInput, test.password);
+      waitForElement(signInPage.passwordInput);
+      setValue(signInPage.passwordInput, test.password);
 
-      waitForElement(SignInPage.submit);
-      click(SignInPage.submit);
+      waitForElement(signInPage.submit);
+      click(signInPage.submit);
 
       // const st1 = browser.isVisible('(//span[contains(@class,\'visible\')])[1]');
       // const st2 = browser.isVisible('(//span[contains(@class,\'visible\')])[2]');
@@ -107,16 +107,16 @@ describe('Sign in page', () => {
   });
 
   it('Checking with wrong details', () => {
-    waitForElement(SignInPage.emailInput);
-    setValue(SignInPage.emailInput, email);
+    waitForElement(signInPage.emailInput);
+    setValue(signInPage.emailInput, email);
 
-    waitForElement(SignInPage.passwordInput);
-    setValue(SignInPage.passwordInput, password);
+    waitForElement(signInPage.passwordInput);
+    setValue(signInPage.passwordInput, password);
 
-    waitForElement(SignInPage.signInButton);
-    click(SignInPage.signInButton);
+    waitForElement(signInPage.signInButton);
+    click(signInPage.signInButton);
 
-    // waitForElement(SignInPage.successMessage);
+    // waitForElement(signInPage.successMessage);
     browser.element("//*[@data-qa='form:error']").waitForExist();
     browser.element("//*[@data-qa='form:error']").waitForVisible();
     const signInErrMsg = browser.getText("//*[@data-qa='form:error']");
@@ -125,14 +125,14 @@ describe('Sign in page', () => {
   });
 
   it('Checking successful signin', () => {
-    waitForElement(SignInPage.emailInput);
-    setValue(SignInPage.emailInput, 'aa@a.com');
+    waitForElement(signInPage.emailInput);
+    setValue(signInPage.emailInput, 'aa@a.com');
 
-    waitForElement(SignInPage.passwordInput);
-    setValue(SignInPage.passwordInput, 'Mob@1234');
+    waitForElement(signInPage.passwordInput);
+    setValue(signInPage.passwordInput, 'Mob@1234');
 
-    waitForElement(SignInPage.signInButton);
-    click(SignInPage.signInButton);
+    waitForElement(signInPage.signInButton);
+    click(signInPage.signInButton);
 
     browser.element('(//a[contains(@href,\'/org\')])[1]').waitForExist();
     browser.element('(//a[contains(@href,\'/org\')])[1]').waitForVisible();
@@ -141,7 +141,7 @@ describe('Sign in page', () => {
     console.log(signInSuccessMsg);
     expect(true).to.equal(success);
 
-    // waitForElement(SignInPage.successMessage);
+    // waitForElement(signInPage.successMessage);
     // const successMessage = browser.getText('//h1');
     // console.log(successMessage);
     // expect(successMessage).to.include('Welcome to');

@@ -38,6 +38,11 @@ web:
 
   signOut: "//*[@data-qa='menu:profile']//*[@data-qa='nav:sign-out']"
 
+orca: 
+  email: "lab@mass.co"
+  password : "Pass1234"
+  remember : true  
+
 api:
   signIn: "/sign-in"
   signedIn: "/signed-in"
