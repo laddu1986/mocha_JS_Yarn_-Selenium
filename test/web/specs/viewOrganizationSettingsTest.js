@@ -21,10 +21,8 @@ describe('View Organization setings', () => {
     // console.log(settingsVisibility + ';;;;;;;;');
     expect(settingsVisibility).to.equal(true);
     browser.element('//*[contains(text(),\'Settings\')]').click();
-    
   });
   it('Checking general visibility', () => {
-    
     browser.element('//a[contains(text(),\'General\')]').waitForExist();
     browser.element('//a[contains(text(),\'General\')]').waitForVisible();
     const generalVisibility = browser.isVisible('//a[contains(text(),\'General\')]');
