@@ -1,5 +1,6 @@
 import CreateAccountPage from '../page_objects/createAccountPage';
 import * as lib from '../../common';
+import createAccountPage from '../page_objects/createAccountPage';
 
 function bigName(params) {
   let text = '';
@@ -75,7 +76,7 @@ const testData = [
 
 
 function assertion(e, data) {
-//   console.log(e);
+  //   console.log(e);
   e.forEach((expected) => {
     expect(expected).to.equal(data);
   });
@@ -103,11 +104,16 @@ describe('Open create an account page', () => {
       database: 'membership_test',
     });
     // console.log(lib.config.api.createAccount);
-    CreateAccountPage.open(lib.config.api.createAccount);
+    CreateAccountPage.open(lib.config.api.base);
+    waitForElement(createAccountPage.createAccountLink)
+    //browser.pause(5000)
+    click(createAccountPage.createAccountLink)
   });
 
+
   testData.forEach((test) => {
-    it(`${test.title} with ${test.name}`, () => {
+    // it(`${test.title} with ${test.name}`, () => {
+    it(`${test.title}`, () => {
       // console.log(test.name + test.email);
       waitForElement(CreateAccountPage.nameInput);
       setValue(CreateAccountPage.nameInput, test.name);
@@ -129,13 +135,13 @@ describe('Open create an account page', () => {
       // ];
       // assertion(elements, test.expected);
 
-      waitForElement(CreateAccountPage.submit);
-      click(CreateAccountPage.submit);
+      waitForElement(CreateAccountPage.createAccountButton);
+      click(CreateAccountPage.createAccountButton);
 
-      const st1 = lib.driver.isVisible('(//span[contains(@class,\'visible\')])[1]');
-      const st2 = browser.isVisible('(//span[contains(@class,\'visible\')])[2]');
-      const st3 = browser.isVisible('(//span[contains(@class,\'visible\')])[3]');
-      const st4 = browser.isVisible('(//span[contains(@class,\'visible\')])[4]');
+      const st1 = browser.isVisible("//*[@data-qa='input:name']//*[@data-qa='input:error']");
+      const st2 = browser.isVisible("//*[@data-qa='input:email']//*[@data-qa='input:error']");
+      const st3 = browser.isVisible("//*[@data-qa='input:org']//*[@data-qa='input:error']");
+      const st4 = browser.isVisible("//*[@data-qa='input:password']//*[@data-qa='input:error']");
 
       expect(test.expected).to.not.equal(st1);
       expect(test.expected).to.not.equal(st2);
@@ -162,8 +168,8 @@ describe('Open create an account page', () => {
     waitForElement(CreateAccountPage.passwordInput);
     setValue(CreateAccountPage.passwordInput, password);
 
-    waitForElement(CreateAccountPage.submit);
-    click(CreateAccountPage.submit);
+    waitForElement(CreateAccountPage.createAccountButton);
+    click(CreateAccountPage.createAccountButton);
     // console.log(`${email }::${ password }::${ organization }::${ name}`);
     browser.element('(//*[contains(@href,\'/org\')])[1]').waitForExist();
     browser.element('(//*[contains(@href,\'/org\')])[1]').waitForVisible();
@@ -178,7 +184,7 @@ describe('Open create an account page', () => {
     // console.log(parts + url );
     // console.log('The solution is: ', testData[3].name);
     lib.connection().query({
-      
+
       sql: 'select * from `Organizations` where id = ?',
       timeout: 40000, // 40s
       values: [parts[parts.length - 1]],
