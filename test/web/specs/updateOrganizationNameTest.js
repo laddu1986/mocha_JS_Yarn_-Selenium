@@ -1,4 +1,4 @@
-import OrganizationSettingsPage from '../specs/viewOrganizationSettings';
+import OrganizationSettingsPage from '../specs/viewOrganizationSettingsTest';
 
 describe('Update Organization name', () => {
   it('Checking organization name is similar across fields before edit', () => {

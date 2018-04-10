@@ -1,6 +1,5 @@
 import CreateAccountPage from '../page_objects/createAccountPage';
 import * as lib from '../../common';
-import createAccountPage from '../page_objects/createAccountPage';
 
 function bigName(params) {
   let text = '';
@@ -105,9 +104,9 @@ describe('Open create an account page', () => {
     });
     // console.log(lib.config.api.createAccount);
     CreateAccountPage.open(lib.config.api.base);
-    waitForElement(createAccountPage.createAccountLink)
-    //browser.pause(5000)
-    click(createAccountPage.createAccountLink)
+    waitForElement(CreateAccountPage.createAccountLink);
+    // browser.pause(5000)
+    click(CreateAccountPage.createAccountLink);
   });
 
 
