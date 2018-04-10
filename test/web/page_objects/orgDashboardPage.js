@@ -1,16 +1,17 @@
 import Page from './page';
 const config = require('config-yml');
-class orgDashboardPage extends Page {
+class OrgDashboardPage extends Page {
 
 
-  get welcomeMsg() { return browser.element("//h1") }
+  get welcomeMsg() { return browser.element("//*[@data-qa='page:org-dashboard']//h2") }
+  get currentOrgName() { return browser.element("//div[@data-qa='page:org-dashboard']/div[2]/p")}
 
 
-  open() {
-    super.open();
+  open(e) {
+    super.open(e);
   }
 
 
 }
 
-export default new orgDashboardPage();
+export default new OrgDashboardPage();

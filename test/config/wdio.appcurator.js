@@ -17,7 +17,7 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/organizationPageTest.js',
+    './test/web/specs/helpPageTest.js',
     // './test/web/specs/viewOrganizationDashboard.js',
   ],
   // Patterns to exclude.
@@ -63,7 +63,7 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     compilers: ['js:babel-register'],
-    timeout: 60000,
+    timeout: 10000,
   },
 
   //

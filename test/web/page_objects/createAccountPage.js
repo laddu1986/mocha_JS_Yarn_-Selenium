@@ -2,7 +2,7 @@ import Page from './page';
 
 const config = require('config-yml');
 
-class createAccountPage extends page {
+class CreateAccountPage extends Page {
   get createAccountLink() { return browser.element("//*[@data-qa='link:register']") }
 
   //Input Fields
@@ -25,4 +25,4 @@ class createAccountPage extends page {
   }
 }
 
-export default new createAccountPage();
+export default new CreateAccountPage();
