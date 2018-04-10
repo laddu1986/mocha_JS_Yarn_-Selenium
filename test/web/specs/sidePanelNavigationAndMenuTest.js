@@ -1,1 +1,1 @@
-import OrganizationSettingsPage from '../specs/viewOrganizationSettings';
+import OrganizationSettingsPage from '../specs/viewOrganizationSettingsTest';

@@ -2,8 +2,8 @@ import CreateAccountPage from '../specs/createAccountTest';
 
 
 describe('View Organization setings', () => {
-  it('Checking FAQ visibility', () => {
-    browser.element('(//div[contains(@class,\'css-1rq2b0h\')])[2]').waitForExist();
+  it('Checking Profile visibility', () => {
+    browser.element('//*[@data-qa=\'menu:profile\']').waitForExist();
     browser.element('(//div[contains(@class,\'css-1rq2b0h\')])[2]').waitForVisible();
 
     const profileVisibility = browser.isVisible('(//div[contains(@class,\'css-1rq2b0h\')])[2]');

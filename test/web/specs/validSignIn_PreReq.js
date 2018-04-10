@@ -2,13 +2,6 @@ import SignInPage from '../page_objects/signInPage';
 
 import * as lib from '../../common';
 
-function assertion(e, data) {
-  //   console.log(e);
-  e.forEach((expected) => {
-    expect(expected).to.equal(data);
-  });
-}
-
 function waitForElement(wfe) {
   wfe.waitForExist();
   wfe.waitForVisible();
