@@ -1,8 +1,10 @@
 import * as lib from '../../common';
-import createAccountPage from '../page_objects/createAccountPage'
-import homePage from '../page_objects/homePage';
-import signInPage from '../page_objects/signInPage';
+import CreateAccountPage from '../page_objects/createAccountPage'
+import HomePage from '../page_objects/homePage';
+import SignInPage from '../page_objects/signInPage';
 import { create } from 'domain';
+import { wait } from 'chakram';
+import OrgDashboardPage from '../page_objects/orgDashboardPage';
 
 function bigName(params) {
   let text = '';
@@ -15,7 +17,7 @@ function bigName(params) {
 
 const name = lib.faker.name.findName();
 const email = lib.faker.internet.email();
-const organization = lib.faker.company.companyName();
+const organization = lib.faker.company.companyName() + ' ' + lib.faker.company.companySuffix();
 const testData = [
   {
     name: ' ',
@@ -105,10 +107,10 @@ describe('Open create an account page', () => {
       database: 'membership_test',
     });
     // console.log(lib.config.api.createAccount);
-    createAccountPage.open(lib.config.api.base);
-    waitForElement(createAccountPage.createAccountLink)
+    CreateAccountPage.open(lib.config.api.base);
+    waitForElement(CreateAccountPage.createAccountLink)
     //browser.pause(5000)
-    click(createAccountPage.createAccountLink)
+    click(CreateAccountPage.createAccountLink)
   });
 
 
@@ -116,26 +118,26 @@ describe('Open create an account page', () => {
     // it(`${test.title} with ${test.name}`, () => {
     it(`${test.title}`, () => {
       // console.log(test.name + test.email);
-      waitForElement(createAccountPage.nameInput);
-      setValue(createAccountPage.nameInput, test.name);
+      waitForElement(CreateAccountPage.nameInput);
+      setValue(CreateAccountPage.nameInput, test.name);
 
-      waitForElement(createAccountPage.emailInput);
-      setValue(createAccountPage.emailInput, test.email);
+      waitForElement(CreateAccountPage.emailInput);
+      setValue(CreateAccountPage.emailInput, test.email);
 
-      waitForElement(createAccountPage.organizationInput);
-      setValue(createAccountPage.organizationInput, test.organization);
+      waitForElement(CreateAccountPage.organizationInput);
+      setValue(CreateAccountPage.organizationInput, test.organization);
 
-      waitForElement(createAccountPage.passwordInput);
-      setValue(createAccountPage.passwordInput, test.password);
+      waitForElement(CreateAccountPage.passwordInput);
+      setValue(CreateAccountPage.passwordInput, test.password);
 
 
-      waitForElement(createAccountPage.createAccountButton);
-      click(createAccountPage.createAccountButton);
+      waitForElement(CreateAccountPage.createAccountButton);
+      click(CreateAccountPage.createAccountButton);
 
-      const nameErrMsg = createAccountPage.nameInputErr.isVisible();
-      const emailErrMsg = createAccountPage.emailInputErr.isVisible();
-      const organizationErrMsg = createAccountPage.organizationInputErr.isVisible();
-      const passwordErrMsg = createAccountPage.passwordInputErr.isVisible();
+      const nameErrMsg = CreateAccountPage.nameInputErr.isVisible();
+      const emailErrMsg = CreateAccountPage.emailInputErr.isVisible();
+      const organizationErrMsg = CreateAccountPage.organizationInputErr.isVisible();
+      const passwordErrMsg = CreateAccountPage.passwordInputErr.isVisible();
 
       // expect(test.expected).to.not.equal(st1);
       // expect(test.expected).to.not.equal(st2);
@@ -145,21 +147,21 @@ describe('Open create an account page', () => {
   });
 
   it('Checking logo to confirm user logged in', () => {
-    waitForElement(createAccountPage.nameInput);
-    setValue(createAccountPage.nameInput, name);
+    waitForElement(CreateAccountPage.nameInput);
+    setValue(CreateAccountPage.nameInput, name);
 
-    waitForElement(createAccountPage.emailInput);
-    setValue(createAccountPage.emailInput, email);
+    waitForElement(CreateAccountPage.emailInput);
+    setValue(CreateAccountPage.emailInput, email);
 
-    waitForElement(createAccountPage.organizationInput);
-    setValue(createAccountPage.organizationInput, organization);
+    waitForElement(CreateAccountPage.organizationInput);
+    setValue(CreateAccountPage.organizationInput, organization);
 
-    waitForElement(createAccountPage.passwordInput);
-    setValue(createAccountPage.passwordInput, 'Pass1234');
+    waitForElement(CreateAccountPage.passwordInput);
+    setValue(CreateAccountPage.passwordInput, 'Pass1234');
 
-    waitForElement(createAccountPage.createAccountButton);
-    click(createAccountPage.createAccountButton);
-    console.log('Create Account Data ===' + `${name}::::${email}::::${organization}::::${password}`);
+    waitForElement(CreateAccountPage.createAccountButton);
+    click(CreateAccountPage.createAccountButton);
+    console.log('Create Account Data ===' + `${name}::::${email}::::${organization}::::Pass1234`);
     browser.pause(5000)
 
     // browser.element('(//*[contains(@href,\'/org\')])[1]').waitForExist();
@@ -169,19 +171,17 @@ describe('Open create an account page', () => {
     // browser.element('(//*[contains(@href,\'/org\')])[1]').click();
 
 
-    homePage.logo.waitForExist();
-    homePage.logo.waitForVisible();
-    const logoPresent = homePage.logo.isVisible();
+    waitForElement(HomePage.logo)
+    const logoPresent = HomePage.logo.isVisible();
     expect(true).to.equal(logoPresent);
-    //createAccountPage.logo.click();
+    //CreateAccountPage.logo.click();
   });
 
   it('Validate Landing page with Created Org Name', () => {
-    homePage.welcomeMsg.waitForExist();
-    homePage.welcomeMsg.waitForVisible();
+    waitForElement(OrgDashboardPage.welcomeMsg);
 
-    const actualHeading = homePage.welcomeMsg.getText();
-    const expectedHeading = 'Welcome to ' + `${organization}`
+    const actualHeading = OrgDashboardPage.welcomeMsg.getText();
+    const expectedHeading = 'Welcome ' + `${name}`
     // console.log('actualHeading      ' + actualHeading)
     // console.log('expectedHeading    ' + expectedHeading)
     expect(actualHeading).to.equal(expectedHeading)
@@ -206,30 +206,29 @@ describe('Open create an account page', () => {
 
 
   it('Sign Out', () => {
-    homePage.profileMenu.click();
-    homePage.signOut.click();
-    waitForElement(signInPage.signInButton);
-    const signOutSuccess = signInPage.signInButton.isVisible();
+    HomePage.profileMenu.click();
+    HomePage.signOut.click();
+    waitForElement(SignInPage.signInButton);
+    const signOutSuccess = SignInPage.signInButton.isVisible();
     expect(signOutSuccess).to.equal(true);
   })
 
   it('Sign In and Validate user lands in last created Org', () => {
-    waitForElement(signInPage.emailInput);
-    setValue(signInPage.emailInput, email);
+    waitForElement(SignInPage.emailInput);
+    setValue(SignInPage.emailInput, email);
 
-    waitForElement(signInPage.passwordInput);
-    setValue(signInPage.passwordInput, 'Pass1234');
+    waitForElement(SignInPage.passwordInput);
+    setValue(SignInPage.passwordInput, 'Pass1234');
 
-    waitForElement(signInPage.signInButton);
-    click(signInPage.signInButton);
+    waitForElement(SignInPage.signInButton);
+    click(SignInPage.signInButton);
 
-    createAccountPage.welcomeMsg.waitForExist();
-    createAccountPage.welcomeMsg.waitForVisible();
+    waitForElement(OrgDashboardPage.welcomeMsg);
 
-    const actualHeading = createAccountPage.welcomeMsg.getText();
-    const expectedHeading = 'Welcome to ' + `${organization}`
-    // console.log('actualHeading      ' + actualHeading)
-    // console.log('expectedHeading    ' + expectedHeading)
+    const actualHeading = OrgDashboardPage.welcomeMsg.getText();
+    const expectedHeading = 'Welcome ' + `${name}`
+    console.log('actualHeading      ' + actualHeading)
+    console.log('expectedHeading    ' + expectedHeading)
 
     expect(actualHeading).to.equal(expectedHeading)
   })

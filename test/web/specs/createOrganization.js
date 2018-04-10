@@ -1,41 +1,43 @@
-import signInPage from '../specs/validSignIn_PreReq';
-import homePage from '../page_objects/homePage';
+//Create Organization, sign out, sign back in to validate user lands in the created Org
+import SignInPage from '../specs/validSignIn_PreReq'
+import HomePage from '../page_objects/homePage'
+import OrgDashboardPage from '../page_objects/orgDashboardPage';
 
 
 function assertion(e, data) {
-  //   console.log(e);
+  //   console.log(e)
   e.forEach((expected) => {
-    expect(expected).to.equal(data);
-  });
+    expect(expected).to.equal(data)
+  })
 }
 
 function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
+  wfe.waitForExist()
+  wfe.waitForVisible()
 }
 
 function setValue(sv, data) {
-  sv.setValue(data);
+  sv.setValue(data)
 }
 
 function click(c) {
-  c.click();
+  c.click()
 }
 
 function bigName(params) {
-  let text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let text = ''
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
-  for (let i = 0; i < params; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
+  for (let i = 0; i < params; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)) }
 
-  return text;
+  return text
 }
 const testData = [
-  {
-    organization: ' ',
-    title: 'Input blank Organization Name',
-    accepted: false,
-  },
+  // {
+  //   organization: ' ',
+  //   title: 'Do not allow blank Organization Name',
+  //   accepted: false,
+  // },
   // {
   //   organization: '~!@#$%^&*()_+ ',
   //   title: 'Input special characters',
@@ -47,101 +49,105 @@ const testData = [
   //   accepted: false,
   // },
   {
-    organization: 'TestOrg13',
-    title: 'Create with OrgName = TestOrg13',
+    organization: 'ORG-QA',
+    title: 'Create with OrgName = ORG-QA',
     accepted: true,
   }]
 
 
 describe('Create an Organization', () => {
   it('Click Profile Icon', () => {
-    waitForElement(homePage.profileMenu)
+    waitForElement(HomePage.profileMenu)
 
-    const profileVisibility = homePage.profileMenu.isVisible();
-    expect(true).to.equal(profileVisibility);
-    click(homePage.profileMenu)
-  });
+    const profileVisibility = HomePage.profileMenu.isVisible()
+    expect(true).to.equal(profileVisibility)
+    click(HomePage.profileMenu)
+  })
 
   it('Click Switch or Create Org Menu', () => {
-    waitForElement(homePage.switchOrCreateOrganizations)
+    waitForElement(HomePage.switchOrCreateOrganizations)
 
-    const createOrgVisibility = homePage.switchOrCreateOrganizations.isVisible();
-    expect(true).to.equal(createOrgVisibility);
-    click(homePage.switchOrCreateOrganizations)
-  });
+    const createOrgVisibility = HomePage.switchOrCreateOrganizations.isVisible()
+    expect(true).to.equal(createOrgVisibility)
+    click(HomePage.switchOrCreateOrganizations)
+  })
 
   it('Click Create Organization Link', () => {
-    waitForElement(homePage.createOrg)
+    waitForElement(HomePage.createOrg)
 
-    const createOrgLink = homePage.createOrg.isVisible();
-    expect(true).to.equal(createOrgLink);
-    click(homePage.createOrg)
-  });
+    const createOrgLink = HomePage.createOrg.isVisible()
+    expect(true).to.equal(createOrgLink)
+    click(HomePage.createOrg)
 
+    waitForElement(HomePage.createOrgInput)
+    HomePage.createOrgInput.clearElement()
 
-  //it('Enter Organization Name', () => {
-  // waitForElement(homePage.createOrgInput)
+    HomePage.submit.waitForExist()
+    expect(HomePage.submit.isEnabled()).to.equal(false)
 
-  // const createOrgInput = homePage.createOrgInput.isVisible();
-  // console.log('createOrgInput' + createOrgInput);
-  // expect(true).to.equal(createOrgInput);
+  })
 
 
   testData.forEach((test) => {
     // it(`${test.title} with ${test.name}`, () => {
     it(`${test.title}`, () => {
-      // console.log(test.name + test.email);
-      waitForElement(homePage.createOrgInput)
-      setValue(homePage.createOrgInput, test.organization);
+      // console.log(test.name + test.email)
+      waitForElement(HomePage.createOrgInput)
+      setValue(HomePage.createOrgInput, test.organization)
 
-      waitForElement(homePage.submit);
-      click(homePage.submit);
+      waitForElement(HomePage.submit)
+      click(HomePage.submit)
+      browser.pause(100000)
 
-      const errVisible = homePage.createOrgErr.isVisible();
+      const errVisible = HomePage.createOrgErr.isVisible()
       //console.log("errVisible" + errVisible)
-      expect(test.accepted).to.not.equal(errVisible);
+      expect(test.accepted).to.not.equal(errVisible)
       if (errVisible == false) {
         browser.pause(5000)
-
       }
+    })
+  })
 
-    });
+
+  it('Should Sign Out successfully', () => {
+    if (signInSuccess === true) {
+      waitForElement(HomePage.profileMenu)
+      HomePage.profileMenu.click()
+
+      waitForElement(HomePage.signOut)
+      HomePage.signOut.click()
+
+      waitForElement(SignInPage.signInButton)
+      expect(SignInPage.signInButton.isVisible()).to.equal(true)
+    } else {
+      console.log('User not Signed in')
+    }
+  })
+
+  it('Should Sign back in Successfully', () => {
+    waitForElement(SignInPage.emailInput)
+    setValue(SignInPage.emailInput, 'aa@a.com')
+
+    waitForElement(SignInPage.passwordInput)
+    setValue(SignInPage.passwordInput, 'Mob@1234')
+
+    waitForElement(SignInPage.signInButton)
+    click(SignInPage.signInButton)
+
+    waitForElement(HomePage.logo)
+
+    signInSuccess = HomePage.logo.isVisible()
+    expect(signInSuccess).to.equal(true)
+  })
+
+  it('Should be re-directed to last created Org', () => {
+    waitForElement(OrgDashboardPage.currentOrgName)
 
 
-  });
+    console.log(OrgDashboardPage.currentOrgName.getText())
+
+  })
 
 })
-
-  // it('Checking settings visibility', () => {
-  //   browser.element('//*[contains(@class,\'nested\')]').waitForExist();
-  //   browser.element('//*[contains(@class,\'nested\')]').waitForVisible();
-  //   // const helpCenterUrl = browser.getAttribute('//*[contains(text(),\'Help Center\')]/parent::a', 'href');
-  //   // expect('https://help.appcurator.com/').to.equal(helpCenterUrl);
-  //   const settingsVisibility = browser.isVisible('//*[contains(@class,\'nested\')]');
-  //   // console.log(settingsVisibility + ';;;;;;;;');
-  //   expect(settingsVisibility).to.equal(true);
-  //   browser.element('//*[contains(@class,\'nested\')]').click();
-
-  // });
-  // it('Checking general visibility', () => {
-
-  //   browser.element('//*[contains(@href,\'/create\')]').waitForExist();
-  //   browser.element('//*[contains(@href,\'/create\')]').waitForVisible();
-  //   const generalVisibility = browser.isVisible('//*[contains(@href,\'/create\')]');
-  //   // console.log(generalVisibility + ';;;;;;;;');
-  //   expect(generalVisibility).to.equal(true);
-  //   browser.element('//*[contains(@href,\'/create\')]').click();
-  //   browser.pause(5000);
-  // });
-  // it('Checking create org', () => {
-
-  //   browser.element('//*[@type=\'text\']').waitForExist();
-  //   browser.element('//*[@type=\'text\']').waitForVisible();
-  //   const generalVisibility = browser.isVisible('//*[@type=\'text\']');
-  //   // console.log(generalVisibility + ';;;;;;;;');
-  //   expect(generalVisibility).to.equal(true);
-  //   browser.element('//*[@type=\'text\']').setValue('test2');
-  //   browser.element('//*[@type=\'submit\']').click();
-
 
 

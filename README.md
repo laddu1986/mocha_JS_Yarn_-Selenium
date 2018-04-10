@@ -28,7 +28,7 @@ The library offers a BDD testing style and fully exploits javascript promises - 
 ### Getting Started
 
 #### Pre-Req
-Java (JDK 1.8 or above) needs to be installed before working with this repo
+[Java Development Kit 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or higher
 
 #### Installation
 `master` always contains the latest code from all three layers
@@ -49,7 +49,7 @@ npm install
 Run Front End Tests
 
 `
-npm run start
+npm run web
 `
 
 Run Orca Tests
