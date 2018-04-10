@@ -5,20 +5,19 @@ const config = require('config-yml');
 class SignInPage extends Page {
 
 
-  get emailInput() { return browser.element(config.web.emailInput); }
-  get emailError() { return browser.element(config.web.emailError) }
+  get emailInput() { return browser.element("//*[@data-qa='input:email']//*[@data-qa='input:text']") }
+  get emailError() { return browser.element("//*[@data-qa='input:email']//*[@data-qa='input:error']") }
 
-  get passwordInput() { return browser.element(config.web.passwordInput); }
-  get passwordError() { return browser.element(config.web.passwordError) }
+  get passwordInput() { return browser.element("//*[@data-qa='input:password']//*[@data-qa='input:text']") }
+  get passwordError() { return browser.element("//*[@data-qa='input:password']//*[@data-qa='input:error']") }
 
-  //get submit() { return browser.element(config.web.submit); }
-  get signInButton() { return browser.element(config.web.signInButton) }
-  get successMessage() { return browser.element(config.web.successMessage); }
-  get errorMessage() { return browser.element(config.web.errorMessage); }
+  get signInButton() { return browser.element("//*[@data-qa='btn:submit']") }
 
-  get forgotPassword() { return browser.element(config.web.forgotPasswordLink) }
-  get emailSentConfirmation() { return browser.element(config.web.emailSentMsg) }
-  get backToSignIn() { return browser.element(config.web.backToSignIn) }
+  get incorrectDetails() { return browser.element("//*[@data-qa='form:error']") }
+
+  get forgotPassword() { return browser.element("//*[@data-qa='link:forgot-pw']") }
+  get emailSentConfirmation() { return browser.element("//h2") }
+  get backToSignIn() { return browser.element("//*[@data-qa='link:sign-in']") }
 
   open(e) {
     console.log(e);

@@ -8,12 +8,20 @@ exports.config = {
   services: ['selenium-standalone'],
   capabilities: [{
     browserName: brow,
-    chromeOptions: { args: ['disable-infobars'] },
+    chromeOptions: {
+      args: ['disable-infobars']
+    }
+    //, '--headless', '--disable-gpu', '--window-size=1200, 700'] }
+    ,
   }],
 
   updateJob: false,
   specs: [
+<<<<<<< HEAD
     './test/web/specs/*Test.js',
+=======
+    './test/web/specs/helpPageTest.js',
+>>>>>>> 0328ab6be65081fb5c940da459c6cbcc0fff2138
     // './test/web/specs/viewOrganizationDashboard.js',
   ],
   // Patterns to exclude.
@@ -59,7 +67,7 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     compilers: ['js:babel-register'],
-    timeout: 60000,
+    timeout: 10000,
   },
 
   //

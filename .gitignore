@@ -3,3 +3,5 @@ package-lock.json
 allure-report
 allure-results
 errScreens/*
+.vscode
+yarn.lock

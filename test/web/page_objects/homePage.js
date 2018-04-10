@@ -1,4 +1,5 @@
 import Page from './page';
+<<<<<<< HEAD
 
 const config = require('config-yml');
 
@@ -8,6 +9,35 @@ class HomePage extends Page {
   get submitSearch() { return browser.element('#nav-search > form > div.nav-right > div > input'); }
   get shoppingCart() { return browser.element('#nav-cart > span.nav-cart-icon.nav-sprite'); }
   get profileMenu() { return browser.element(config.web.profileMenu); }
+=======
+const config = require('config-yml');
+class HomePage extends Page {
+
+    get navbar() { return browser.element('#navbar'); }
+    get profileMenu() { return browser.element("//*[@data-qa='menu:profile']") }
+    get switchOrCreateOrganizations() { return browser.element("//*[@data-qa='nav:menu']") }
+    get createOrg() { return browser.element("//*[@data-qa='nav:create-org']") }
+    get createOrgInput() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:text']") }
+    get createOrgErr() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:error']") }
+    get submit() { return browser.element("//*[@data-qa='btn:submit']") }
+    get logo() { return browser.element("//*[@data-qa='nav:logo']"); }
+    get orgListFromNavMenu() { return browser.elements("//*[@data-qa='nav:menu']//li") }
+    get chooseOrgOnHomePage() { return browser.element("//*[@data-qa='page:choose-org']") }
+    get orgCardsOnHomePage() { return browser.elements("//*[@data-qa='org:card']") }
+
+    get helpMenu() { return browser.element("//*[@data-qa='menu:help']") }
+    get helpCenter() { return browser.element("//*[contains(text(),'Help Center')]") }
+    get devPortal() { return browser.element("//*[contains(text(),'Developer Portal')]") }
+    get apiPortal() { return browser.element("//*[contains(text(),'API Portal')]") }
+    get sysStatus() { return browser.element("//*[contains(text(),'System Status')]") }
+
+    get signOut() { return browser.element("//*[@data-qa='nav:sign-out']") }
+
+
+    open(e) {
+        super.open(e);
+    }
+>>>>>>> 0328ab6be65081fb5c940da459c6cbcc0fff2138
 
   get helpMenu() { return browser.element(config.web.helpMenu); }
 
