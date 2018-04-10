@@ -1,5 +1,13 @@
-import CreateAccountPage from '../page_objects/createAccountPage';
 import * as lib from '../../common';
+<<<<<<< HEAD:test/web/specs/createAccountTest.js
+=======
+import CreateAccountPage from '../page_objects/createAccountPage'
+import HomePage from '../page_objects/homePage';
+import SignInPage from '../page_objects/signInPage';
+import { create } from 'domain';
+import { wait } from 'chakram';
+import OrgDashboardPage from '../page_objects/orgDashboardPage';
+>>>>>>> 0328ab6be65081fb5c940da459c6cbcc0fff2138:test/web/specs/createAccount.js
 
 function bigName(params) {
   let text = '';
@@ -12,8 +20,7 @@ function bigName(params) {
 
 const name = lib.faker.name.findName();
 const email = lib.faker.internet.email();
-const password = lib.faker.internet.password();
-const organization = lib.faker.name.findName();
+const organization = lib.faker.company.companyName() + ' ' + lib.faker.company.companySuffix();
 const testData = [
   {
     name: ' ',
@@ -44,7 +51,7 @@ const testData = [
     email: '~!#$%^&*_+@massive.co',
     organization: bigName(201),
     password: 'Massive',
-    title: 'Checking password length with 7 character',
+    title: 'Checking password length with 7 characters',
     expected: false,
   },
   {
@@ -104,9 +111,15 @@ describe('Open create an account page', () => {
     });
     // console.log(lib.config.api.createAccount);
     CreateAccountPage.open(lib.config.api.base);
+<<<<<<< HEAD:test/web/specs/createAccountTest.js
     waitForElement(CreateAccountPage.createAccountLink);
     // browser.pause(5000)
     click(CreateAccountPage.createAccountLink);
+=======
+    waitForElement(CreateAccountPage.createAccountLink)
+    //browser.pause(5000)
+    click(CreateAccountPage.createAccountLink)
+>>>>>>> 0328ab6be65081fb5c940da459c6cbcc0fff2138:test/web/specs/createAccount.js
   });
 
 
@@ -126,31 +139,19 @@ describe('Open create an account page', () => {
       waitForElement(CreateAccountPage.passwordInput);
       setValue(CreateAccountPage.passwordInput, test.password);
 
-      // const elements = [
-      //   CreateAccountPage.emailValidIconDiv,
-      //   CreateAccountPage.nameValidIconDiv,
-      //   CreateAccountPage.organizationValidIconDiv,
-      //   CreateAccountPage.passwordValidIconDiv,
-      // ];
-      // assertion(elements, test.expected);
 
       waitForElement(CreateAccountPage.createAccountButton);
       click(CreateAccountPage.createAccountButton);
 
-      const st1 = browser.isVisible("//*[@data-qa='input:name']//*[@data-qa='input:error']");
-      const st2 = browser.isVisible("//*[@data-qa='input:email']//*[@data-qa='input:error']");
-      const st3 = browser.isVisible("//*[@data-qa='input:org']//*[@data-qa='input:error']");
-      const st4 = browser.isVisible("//*[@data-qa='input:password']//*[@data-qa='input:error']");
+      const nameErrMsg = CreateAccountPage.nameInputErr.isVisible();
+      const emailErrMsg = CreateAccountPage.emailInputErr.isVisible();
+      const organizationErrMsg = CreateAccountPage.organizationInputErr.isVisible();
+      const passwordErrMsg = CreateAccountPage.passwordInputErr.isVisible();
 
-      expect(test.expected).to.not.equal(st1);
-      expect(test.expected).to.not.equal(st2);
-      expect(test.expected).to.not.equal(st3);
-      expect(test.expected).to.not.equal(st4);
-      // browser.element('//h1').waitForExist();
-      // browser.element('//h1').waitForVisible();
-      // const d = browser.getText('//h1');
-      // // browser.getText('//h1').includes('welcome');
-      // expect(d).to.equal(`Welcome to ${testData.organization}!`);
+      // expect(test.expected).to.not.equal(st1);
+      // expect(test.expected).to.not.equal(st2);
+      // expect(test.expected).to.not.equal(st3);
+      // expect(test.expected).to.not.equal(st4);
     });
   });
 
@@ -165,17 +166,36 @@ describe('Open create an account page', () => {
     setValue(CreateAccountPage.organizationInput, organization);
 
     waitForElement(CreateAccountPage.passwordInput);
-    setValue(CreateAccountPage.passwordInput, password);
+    setValue(CreateAccountPage.passwordInput, 'Pass1234');
 
     waitForElement(CreateAccountPage.createAccountButton);
     click(CreateAccountPage.createAccountButton);
-    // console.log(`${email }::${ password }::${ organization }::${ name}`);
-    browser.element('(//*[contains(@href,\'/org\')])[1]').waitForExist();
-    browser.element('(//*[contains(@href,\'/org\')])[1]').waitForVisible();
-    const success = browser.isVisible('(//*[contains(@href,\'/org\')])[1]');
-    expect(true).to.equal(success);
-    browser.element('(//*[contains(@href,\'/org\')])[1]').click();
+    console.log('Create Account Data ===' + `${name}::::${email}::::${organization}::::Pass1234`);
+    browser.pause(5000)
+
+    // browser.element('(//*[contains(@href,\'/org\')])[1]').waitForExist();
+    // browser.element('(//*[contains(@href,\'/org\')])[1]').waitForVisible();
+    // const success = browser.isVisible('(//*[contains(@href,\'/org\')])[1]');
+    // expect(true).to.equal(success);
+    // browser.element('(//*[contains(@href,\'/org\')])[1]').click();
+
+
+    waitForElement(HomePage.logo)
+    const logoPresent = HomePage.logo.isVisible();
+    expect(true).to.equal(logoPresent);
+    //CreateAccountPage.logo.click();
   });
+
+  it('Validate Landing page with Created Org Name', () => {
+    waitForElement(OrgDashboardPage.welcomeMsg);
+
+    const actualHeading = OrgDashboardPage.welcomeMsg.getText();
+    const expectedHeading = 'Welcome ' + `${name}`
+    // console.log('actualHeading      ' + actualHeading)
+    // console.log('expectedHeading    ' + expectedHeading)
+    expect(actualHeading).to.equal(expectedHeading)
+
+  })
 
   it('Checking org creation in database', () => {
     const url = browser.getUrl();
@@ -192,6 +212,35 @@ describe('Open create an account page', () => {
       // console.log('The solution is: ', results);
     });
   });
+
+
+  it('Sign Out', () => {
+    HomePage.profileMenu.click();
+    HomePage.signOut.click();
+    waitForElement(SignInPage.signInButton);
+    const signOutSuccess = SignInPage.signInButton.isVisible();
+    expect(signOutSuccess).to.equal(true);
+  })
+
+  it('Sign In and Validate user lands in last created Org', () => {
+    waitForElement(SignInPage.emailInput);
+    setValue(SignInPage.emailInput, email);
+
+    waitForElement(SignInPage.passwordInput);
+    setValue(SignInPage.passwordInput, 'Pass1234');
+
+    waitForElement(SignInPage.signInButton);
+    click(SignInPage.signInButton);
+
+    waitForElement(OrgDashboardPage.welcomeMsg);
+
+    const actualHeading = OrgDashboardPage.welcomeMsg.getText();
+    const expectedHeading = 'Welcome ' + `${name}`
+    console.log('actualHeading      ' + actualHeading)
+    console.log('expectedHeading    ' + expectedHeading)
+
+    expect(actualHeading).to.equal(expectedHeading)
+  })
 
   after('End message', () => {
     lib.end();

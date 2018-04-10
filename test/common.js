@@ -3,9 +3,9 @@ import assertions from './api/actions/assertions';
 import del from './api/actions/delete';
 import post from './api/actions/post';
 
-const server = require('chakram');
+const chakram = require('chakram');
 
-global.expect = server.expect;
+global.expect = chakram.expect;
 const mysql = require('mysql');
 const config = require('config-yml');
 const faker = require('faker');
@@ -17,7 +17,7 @@ function connection(params) {
     con = mysql.createConnection(params);
     con.connect((err) => {
       if (err) throw err;
-      console.log('Connected!');
+      console.log('Connected to Database!');
     });
   }
   return con;
@@ -26,7 +26,7 @@ function connection(params) {
 function end() {
   con.end((err) => {
     if (err) throw err;
-    console.log('Disconnected!');
+    console.log('Disconnected from Database!');
   });
 }
 
@@ -51,4 +51,4 @@ function assertion(e, data) {
 
 // con.end();
 
-export { assertions, faker, config, server, del, post, connection, end };
+export { assertions, faker, config, chakram, del, post, connection, end };

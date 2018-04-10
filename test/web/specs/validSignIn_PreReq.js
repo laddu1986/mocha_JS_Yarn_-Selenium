@@ -1,60 +1,56 @@
-import SignInPage from '../page_objects/signInPage';
+import SignInPage from '../page_objects/signInPage'
+import HomePage from '../page_objects/homePage'
 
-import * as lib from '../../common';
+import * as lib from '../../common'
 
+<<<<<<< HEAD
+=======
+function assertion(e, data) {
+  //   console.log(e)
+  e.forEach((expected) => {
+    expect(expected).to.equal(data)
+  })
+}
+
+>>>>>>> 0328ab6be65081fb5c940da459c6cbcc0fff2138
 function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
+  wfe.waitForExist()
+  wfe.waitForVisible()
 }
 
 function setValue(sv, data) {
-  sv.setValue(data);
+  sv.setValue(data)
 }
 
 function click(c) {
-  c.click();
+  c.click()
 }
+
+var signInSuccess
 
 describe('Sign in page', () => {
   before('Open App URL', () => {
-    // lib.connection({
-    //   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
-    //   user: 'rouser',
-    //   password: 'R34d0nlyK3y',
-    //   database: 'membership_test',
-    // });
+    SignInPage.open(lib.config.api.base)
+  })
 
-    // console.log(lib.config.api.createAccount);
-    SignInPage.open(lib.config.api.base);
-  });
+  it('Should Sign In Successfully with Correct credentials', () => {
+    waitForElement(SignInPage.emailInput)
+    setValue(SignInPage.emailInput, 'aa@a.com')
 
+    waitForElement(SignInPage.passwordInput)
+    setValue(SignInPage.passwordInput, 'Mob@1234')
 
-  it('Checking Successful SignIn', () => {
-    waitForElement(SignInPage.emailInput);
-    setValue(SignInPage.emailInput, 'aa@a.com');
+    waitForElement(SignInPage.signInButton)
+    click(SignInPage.signInButton)
 
-    waitForElement(SignInPage.passwordInput);
-    setValue(SignInPage.passwordInput, 'Mob@1234');
+    waitForElement(HomePage.logo)
 
-    waitForElement(SignInPage.signInButton);
-    click(SignInPage.signInButton);
-    //browser.pause(5000)
-
-    browser.element('(//a[contains(@href,\'/org\')])[1]').waitForExist();
-    browser.element('(//a[contains(@href,\'/org\')])[1]').waitForVisible();
-    const success = browser.isVisible('(//a[contains(@href,\'/org\')])[1]');
-    const signInSuccessMsg = browser.getText('(//a[contains(@href,\'/org\')])[1]');
-    expect(true).to.equal(success);
-
-    // waitForElement(SignInPage.successMessage);
-    // const successMessage = browser.getText('//h1');
-    // console.log(successMessage);
-    // expect(successMessage).to.include('Welcome to');
-  });
-
+    signInSuccess = HomePage.logo.isVisible()
+    expect(signInSuccess).to.equal(true)
+  })
 
   after('End message', () => {
-    // lib.end();
-  });
-});
+    console.log('Signed In')
+  })
+})
 
