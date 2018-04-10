@@ -2,8 +2,6 @@ import * as lib from '../../common';
 import CreateAccountPage from '../page_objects/createAccountPage'
 import HomePage from '../page_objects/homePage';
 import SignInPage from '../page_objects/signInPage';
-import { create } from 'domain';
-import { wait } from 'chakram';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
 
 function bigName(params) {

@@ -1,15 +1,15 @@
-import Page from './page';
-const config = require('config-yml');
+import Page from './page'
+const config = require('config-yml')
 class HomePage extends Page {
 
-    get navbar() { return browser.element('#navbar'); }
+    get navbar() { return browser.element('#navbar') }
     get profileMenu() { return browser.element("//*[@data-qa='menu:profile']") }
     get switchOrCreateOrganizations() { return browser.element("//*[@data-qa='nav:menu']") }
     get createOrg() { return browser.element("//*[@data-qa='nav:create-org']") }
     get createOrgInput() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:text']") }
     get createOrgErr() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:error']") }
     get submit() { return browser.element("//*[@data-qa='btn:submit']") }
-    get logo() { return browser.element("//*[@data-qa='nav:logo']"); }
+    get logo() { return browser.element("//*[@data-qa='nav:logo']") }
     get orgListFromNavMenu() { return browser.elements("//*[@data-qa='nav:menu']//li") }
     get chooseOrgOnHomePage() { return browser.element("//*[@data-qa='page:choose-org']") }
     get orgCardsOnHomePage() { return browser.elements("//*[@data-qa='org:card']") }
@@ -24,10 +24,10 @@ class HomePage extends Page {
 
 
     open(e) {
-        super.open(e);
+        super.open(e)
     }
 
 
 }
 
-export default new HomePage();
+export default new HomePage()
