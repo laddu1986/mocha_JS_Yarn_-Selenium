@@ -6,13 +6,16 @@ const brow = 'chrome';
 
 exports.config = {
   services: ['selenium-standalone'],
+  //services: ['chromedriver', 'devtools'],
+  enableNetwork: true,
   capabilities: [{
     browserName: brow,
     chromeOptions: {
-      args: ['disable-infobars']
+      args: ['disable-infobars'],
     }
     //, '--headless', '--disable-gpu', '--window-size=1200, 700'] }
     ,
+
   }],
 
   updateJob: false,
@@ -22,16 +25,9 @@ exports.config = {
   ],
   // Patterns to exclude.
   exclude: [
-    // './test/specs/autoSignInTest.js',
-    // './test/specs/createAccountTest.js',
-    // './test/specs/signInTest.js',
-    // './test/specs/signOutTest.js',
-    // './test/web/specs/LinktoHelppagefromSideNavTest.js',
-    // './test/web/specs/viewOrganizationSettings.js',
-    // './test/web/specs/viewOrganizationDashboard.js',
   ],
 
-  logLevel: 'silent',
+  logLevel: 'verbose',
   coloredLogs: true,
   screenshotPath: './errScreens',
   baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
@@ -40,6 +36,7 @@ exports.config = {
 
   plugins: {
     'wdio-screenshot': {},
+    'webdriverajax': {},
     // webdrivercss: {
     //     screenshotRoot: 'my-shots',
     //     failedComparisonsRoot: 'diffs',
@@ -63,7 +60,7 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     compilers: ['js:babel-register'],
-    timeout: 10000,
+    timeout: 3000,
   },
 
   //
@@ -72,8 +69,6 @@ exports.config = {
   // =====
   // Gets executed before all workers get launched.
   onPrepare() {
-    // console.log('what is the');
-    // const config = require('config-yml');
   },
 
   // Gets executed before test execution begins. At this point you will have access to all global
@@ -96,6 +91,6 @@ exports.config = {
   // Gets executed after all workers got shut down and the process is about to exit. It is not
   // possible to defer the end of the process using a promise.
   onComplete() {
-    // do something
+
   },
 };

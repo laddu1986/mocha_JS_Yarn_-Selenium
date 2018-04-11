@@ -1,13 +1,12 @@
-import * as lib from '../../common';
+import * as lib from '../../common'
 import CreateAccountPage from '../page_objects/createAccountPage'
 import HomePage from '../page_objects/homePage'
 import SignInPage from '../page_objects/signInPage'
 import OrgDashboardPage from '../page_objects/orgDashboardPage'
-import { wait } from 'chakram';
 
-const name = lib.faker.name.findName();
-const email = lib.faker.internet.email();
-const organization = lib.faker.company.companyName() + ' ' + lib.faker.company.companySuffix();
+const name = lib.faker.name.findName()
+const email = lib.faker.internet.email()
+const organization = lib.faker.company.companyName()
 const password = 'Pass1234'
 
 function assertion(e, data) {
@@ -35,31 +34,32 @@ let signedIn
 
 describe('Sign in page', () => {
   before('Open App URL', () => {
-    CreateAccountPage.open(lib.config.api.base);
+    CreateAccountPage.open(lib.config.api.base)
     waitForElement(CreateAccountPage.createAccountLink)
     click(CreateAccountPage.createAccountLink)
   })
 
   it('Create Account and Sign In', () => {
-    waitForElement(CreateAccountPage.nameInput);
-    setValue(CreateAccountPage.nameInput, name);
+    waitForElement(CreateAccountPage.nameInput)
+    setValue(CreateAccountPage.nameInput, name)
 
-    waitForElement(CreateAccountPage.emailInput);
-    setValue(CreateAccountPage.emailInput, email);
+    waitForElement(CreateAccountPage.emailInput)
+    setValue(CreateAccountPage.emailInput, email)
 
-    waitForElement(CreateAccountPage.organizationInput);
-    setValue(CreateAccountPage.organizationInput, organization);
+    waitForElement(CreateAccountPage.organizationInput)
+    setValue(CreateAccountPage.organizationInput, organization)
 
-    waitForElement(CreateAccountPage.passwordInput);
-    setValue(CreateAccountPage.passwordInput, password);
+    waitForElement(CreateAccountPage.passwordInput)
+    setValue(CreateAccountPage.passwordInput, password)
 
-    waitForElement(CreateAccountPage.createAccountButton);
-    click(CreateAccountPage.createAccountButton);
+    waitForElement(CreateAccountPage.createAccountButton)
+    click(CreateAccountPage.createAccountButton)
 
-    console.log('name = ' + name + '\n' +
+    console.log('Account Created with' + '\n' +
+      'name = ' + name + '\n' +
       'email = ' + email + '\n' +
       'organization = ' + organization + '\n' +
-      'password = ' + password);
+      'password = ' + password)
   })
 
   it('Validate user lands in the Created account', () => {
@@ -70,12 +70,7 @@ describe('Sign in page', () => {
     expect(organization).to.include(currentOrgName)
     console.log(currentOrgName)
     console.log(OrgDashboardPage.welcomeMsg.getText())
-
-
+    browser.pause(10000)
   })
-
-
-
-
 
 })
