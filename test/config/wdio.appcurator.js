@@ -20,14 +20,14 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/deleteOrganizationTest.js',
+    './test/web/specs/leaveOrganizationTest.js',
     // './test/web/specs/viewOrganizationDashboard.js',
   ],
   // Patterns to exclude.
   exclude: [
   ],
 
-  logLevel: 'verbose',
+  logLevel: 'silent',
   coloredLogs: true,
   screenshotPath: './errScreens',
   baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
@@ -60,7 +60,7 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     compilers: ['js:babel-register'],
-    timeout: 3000,
+    timeout: 20000,
   },
 
   //

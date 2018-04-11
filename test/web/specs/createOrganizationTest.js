@@ -97,14 +97,11 @@ describe('Create an Organization', () => {
 
       waitForElement(HomePage.submit)
       click(HomePage.submit)
-      browser.pause(100000)
 
       const errVisible = HomePage.createOrgErr.isVisible()
       //console.log("errVisible" + errVisible)
       expect(test.accepted).to.not.equal(errVisible)
-      if (errVisible == false) {
-        browser.pause(5000)
-      }
+
     })
   })
 

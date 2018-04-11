@@ -7,10 +7,12 @@ class SettingsPage {
 
   get leaveOrgButton() { return browser.element("//*[@data-qa='btn:leave-org']"); }
 
-//   open(e) {
-//     // console.log(e);
-//     super.open(e);
-//   }
+  get orgSettingsPage() { return browser.element("//*[@data-qa='page:org-settings']") }
+
+  //   open(e) {
+  //     // console.log(e);
+  //     super.open(e);
+  //   }
 }
 
 export default new SettingsPage();

@@ -1,4 +1,4 @@
-import { api } from "config-yml";
+const config = require('config-yml');
 
 class Page {
   open(path) {
