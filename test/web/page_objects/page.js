@@ -6,7 +6,6 @@ class Page {
     //console.log('path =  ' + base + path);
     //browser.url(base + path);
     browser.url(base)
-
   }
 }
 

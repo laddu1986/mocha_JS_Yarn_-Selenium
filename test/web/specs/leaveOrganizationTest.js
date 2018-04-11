@@ -172,26 +172,33 @@ describe('Leaving Org One re-directs to No Orgs page', () => {
 })
 
 function gotoOrgSettings() {
-  waitForElement(HomePage.profileMenu)
-  click(HomePage.profileMenu)
+  HomePage.profileMenu.waitForExist()
+  HomePage.profileMenu.waitForVisible()
+  HomePage.profileMenu.click()
 
-  waitForElement(OrgDashboardPage.orgSettingsNavMenu)
-  click(OrgDashboardPage.orgSettingsNavMenu)
-
-  waitForElement(SettingsPage.orgSettingsPage)
+  OrgDashboardPage.orgSettingsNavMenu.waitForExist()
+  OrgDashboardPage.orgSettingsNavMenu.waitForVisible()
+  OrgDashboardPage.orgSettingsNavMenu.click()
+  browser.pause(200)
 }
 
 function clickLeaveOrganization() {
-  waitForElement(SettingsPage.leaveOrgButton)
-  SettingsPage.leaveOrgButton.waitForEnabled()
-  click(SettingsPage.leaveOrgButton)
+  SettingsPage.orgSettingsPage.waitForExist()
+
+  SettingsPage.leaveOrgButton.waitForExist()
+  SettingsPage.leaveOrgButton.waitForVisible()
+
+  SettingsPage.leaveOrgButton.click()
 
   browser.alertAccept()
 }
 
 function viewOrgDashboard() {
-  waitForElement(OrgDashboardPage.currentOrgName)
-  waitForElement(OrgDashboardPage.welcomeMsg)
+  OrgDashboardPage.currentOrgName.waitForExist()
+  OrgDashboardPage.currentOrgName.waitForVisible()
+
+  OrgDashboardPage.welcomeMsg.waitForExist()
+  OrgDashboardPage.welcomeMsg.waitForVisible()
 }
 
 function assertion(e, data) {
