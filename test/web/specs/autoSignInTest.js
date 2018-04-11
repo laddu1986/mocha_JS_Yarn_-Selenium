@@ -1,1 +1,1 @@
-import AutoSignInPage from '../specs/signInTest';
+import AutoSignInPage from '../specs/signInAndOutTest';
