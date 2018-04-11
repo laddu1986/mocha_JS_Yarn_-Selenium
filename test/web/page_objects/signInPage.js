@@ -1,7 +1,5 @@
 import Page from './page';
 
-const config = require('config-yml');
-
 class SignInPage extends Page {
 
 

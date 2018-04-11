@@ -3,8 +3,6 @@ import HomePage from '../page_objects/homePage'
 
 import * as lib from '../../common'
 
-<<<<<<< HEAD
-=======
 function assertion(e, data) {
   //   console.log(e)
   e.forEach((expected) => {
@@ -12,7 +10,6 @@ function assertion(e, data) {
   })
 }
 
->>>>>>> 0328ab6be65081fb5c940da459c6cbcc0fff2138
 function waitForElement(wfe) {
   wfe.waitForExist()
   wfe.waitForVisible()
