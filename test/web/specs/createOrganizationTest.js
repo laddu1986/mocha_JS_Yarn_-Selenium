@@ -89,9 +89,7 @@ describe('Create an Organization', () => {
 
 
   testData.forEach((test) => {
-    // it(`${test.title} with ${test.name}`, () => {
     it(`${test.title}`, () => {
-      // console.log(test.name + test.email)
       waitForElement(HomePage.createOrgInput)
       setValue(HomePage.createOrgInput, test.organization)
 
@@ -99,7 +97,6 @@ describe('Create an Organization', () => {
       click(HomePage.submit)
 
       const errVisible = HomePage.createOrgErr.isVisible()
-      //console.log("errVisible" + errVisible)
       expect(test.accepted).to.not.equal(errVisible)
 
     })

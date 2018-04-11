@@ -4,6 +4,7 @@ import HomePage from '../page_objects/homePage'
 import SignInPage from '../page_objects/signInPage'
 import OrgDashboardPage from '../page_objects/orgDashboardPage'
 import SettingsPage from '../page_objects/settingsPage'
+import Page from '../page_objects/page';
 
 const name = lib.faker.name.findName()
 const email = lib.faker.internet.email()
@@ -69,7 +70,7 @@ describe('Leave Organization Test', () => {
   describe('Create two more Orgs', () => {
 
     testData.forEach((test) => {
-      it(`${test.title}`, () => {
+      it(` ${test.title}`, () => {
 
         waitForElement(HomePage.profileMenu)
 
@@ -114,6 +115,10 @@ describe('Leaving Org Three re-directs to choose org page', () => {
 
   it('Goto Organization Settings of Org Three', () => {
     gotoOrgSettings()
+
+    browser.waitUntil(function () {
+      return SettingsPage.orgInput.getValue() === 'Org Three'
+    }, 10000, 'Org Three doesnt exist');
   })
 
   it('Click Leave Organization - Org Three', () => {
@@ -128,6 +133,10 @@ describe('Leaving Org Three re-directs to choose org page', () => {
     expect(orgCount.length).to.have.equal(2)
   })
 
+  it('Validate URL to end with /organizations', () => {
+    expect(browser.getUrl()).to.equal(lib.config.api.base + 'organizations')
+  })
+
 })
 
 
@@ -138,6 +147,9 @@ describe('Leaving Org Two re-directs to Org One', () => {
 
   it('Goto Organization Settings of Org Two', () => {
     gotoOrgSettings()
+    browser.waitUntil(function () {
+      return SettingsPage.orgInput.getValue() === 'Org Two'
+    }, 10000, 'Org Two doesnt exist');
   })
 
   it('Click Leave Organization - Org Two', () => {
@@ -147,7 +159,6 @@ describe('Leaving Org Two re-directs to Org One', () => {
   it('Validate re-direction to Org One dashboard', () => {
     viewOrgDashboard()
     expect(OrgDashboardPage.currentOrgName.getText()).to.include('One')
-
   })
 })
 
@@ -155,6 +166,9 @@ describe('Leaving Org Two re-directs to Org One', () => {
 describe('Leaving Org One re-directs to No Orgs page', () => {
   it('Goto Organization Settings of Org One', () => {
     gotoOrgSettings()
+    browser.waitUntil(function () {
+      return SettingsPage.orgInput.getValue() === 'Org One'
+    }, 10000, 'Org One doesnt exist');
   })
 
   it('Click Leave Organization - Org One', () => {
@@ -167,27 +181,30 @@ describe('Leaving Org One re-directs to No Orgs page', () => {
 
     const createOrgButtonEnabled = HomePage.createOrgButton.isEnabled()
     expect(createOrgButtonEnabled).to.equal(true)
+
+  })
+
+  it('Validate URL to end with /organizations', () => {
+    expect(browser.getUrl()).to.equal(lib.config.api.base + 'organizations')
   })
 
 })
 
 function gotoOrgSettings() {
   HomePage.profileMenu.waitForExist()
-  HomePage.profileMenu.waitForVisible()
+  HomePage.profileMenu.waitForValue()
   HomePage.profileMenu.click()
 
   OrgDashboardPage.orgSettingsNavMenu.waitForExist()
   OrgDashboardPage.orgSettingsNavMenu.waitForVisible()
   OrgDashboardPage.orgSettingsNavMenu.click()
-  browser.pause(200)
 }
 
 function clickLeaveOrganization() {
-  SettingsPage.orgSettingsPage.waitForExist()
+  SettingsPage.orgSettingsPage.waitForExist(5000)
 
   SettingsPage.leaveOrgButton.waitForExist()
   SettingsPage.leaveOrgButton.waitForVisible()
-
   SettingsPage.leaveOrgButton.click()
 
   browser.alertAccept()

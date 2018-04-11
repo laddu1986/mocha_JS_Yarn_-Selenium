@@ -113,7 +113,7 @@ describe('Open create an account page', () => {
 
 
   testData.forEach((test) => {
-    // it(`${test.title} with ${test.name}`, () => {
+    // it(`C817468 ${test.title} with ${test.name}`, () => {
     it(`${test.title}`, () => {
       // console.log(test.name + test.email);
       waitForElement(CreateAccountPage.nameInput);
@@ -187,7 +187,7 @@ describe('Open create an account page', () => {
 
   it('Checking org creation in database', () => {
     const url = browser.getUrl();
-    const parts = url.split('/');
+    const parts = url.split('C817473 /');
     // console.log(parts + url );
     // console.log('The solution is: ', testData[3].name);
     lib.connection().query({
