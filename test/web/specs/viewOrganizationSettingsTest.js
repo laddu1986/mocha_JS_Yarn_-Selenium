@@ -7,7 +7,7 @@ describe('View Organization setings', () => {
     HomePage.profileMenu.waitForVisible();
     const profileVisibility = HomePage.profileMenu.isVisible();
     // console.log(faqVisibility);
-    expect(true).to.equal(profileVisibility);
+    expect(profileVisibility).to.equal(true);
     HomePage.profileMenu.click();
   });
 

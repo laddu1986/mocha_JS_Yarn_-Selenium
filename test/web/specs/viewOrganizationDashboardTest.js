@@ -1,10 +1,11 @@
 import CreateAccountPage from '../specs/createAccountTest';
-
+import OrgDashboardPage from '../page_objects/orgDashboardPage';
 describe('Organization Dashboard', () => {
   it('Checking Organization welcome Dashboard message', () => {
-    browser.element('//h2').waitForExist();
-    browser.element('//h2').waitForVisible();
-    const success = browser.getText('//h2');
-    expect(success).to.include('Welcome');
+    const actualHeading = OrgDashboardPage.welcomeMsg.getText();
+    const expectedHeading = 'Welcome';
+    // console.log('actualHeading      ' + actualHeading)
+    // console.log('expectedHeading    ' + expectedHeading)
+    expect(actualHeading).to.include(expectedHeading);
   });
 });
