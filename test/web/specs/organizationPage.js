@@ -4,7 +4,6 @@ import HomePage from '../page_objects/homePage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
 
 
-
 function assertion(e, data) {
   //   console.log(e);
   e.forEach((expected) => {
@@ -26,15 +25,12 @@ function click(c) {
 }
 
 describe('Organization Page Test', () => {
-
   before('Open SignIn Page', () => {
-
     SignInPage.open(lib.config.api.base);
-
   });
 
-  // 
-  //DO NOT DELETE 
+  //
+  // DO NOT DELETE
   //
   // it('Upon SignIn Re-direct to the Org if User has only One Org ', () => {
   //   waitForElement(SignInPage.emailInput);
@@ -58,8 +54,8 @@ describe('Organization Page Test', () => {
 
   // });
 
-   // 
-  //DO NOT DELETE 
+  //
+  // DO NOT DELETE
   //
 
   it('Upon SignIn Re-direct to the last accessed Org if User has multiple Orgs', () => {
@@ -82,11 +78,11 @@ describe('Organization Page Test', () => {
     console.log(HomePage.orgList.getText().length);
 
 
-    var maxOrgs = HomePage.orgList.getText().length >= 6 ? 5 : HomePage.orgList.getText().length;
-    var arr = HomePage.orgList.getText().slice(0, maxOrgs);
+    const maxOrgs = HomePage.orgList.getText().length >= 6 ? 5 : HomePage.orgList.getText().length;
+    // const arr = HomePage.orgList.getText().slice(0, maxOrgs);
 
-    var createOrg = HomePage.orgList.getText()[HomePage.orgList.getText().length - 1];
-    console.log(createOrg)
+    const createOrg = HomePage.orgList.getText()[HomePage.orgList.getText().length - 1];
+    // console.log(createOrg);
 
     /*
     for (org of arr) {
@@ -102,7 +98,7 @@ describe('Organization Page Test', () => {
       // break; continue;
     }
     for (let i = 0; i < arr.length; i++) {
-      
+
     }
     const altered = arr.map(org => {
       org.something = 'blah';
@@ -112,12 +108,7 @@ describe('Organization Page Test', () => {
     });
     arr.reduce(org => { return true })
     */
-    //console.log(HomePage.orgList.getText());
-
+    // console.log(HomePage.orgList.getText());
   });
-})
-
-
-
-
+});
 

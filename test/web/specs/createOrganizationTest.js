@@ -1,36 +1,38 @@
-//Create Organization, sign out, sign back in to validate user lands in the created Org
-import SignInPage from '../specs/validSignIn_PreReq'
-import HomePage from '../page_objects/homePage'
+// Create Organization, sign out, sign back in to validate user lands in the created Org
+// import pre from '../specs/validSignIn_PreReq';
+import CreateAccount from '../specs/createAccountTest';
+// import SignInPage from '../page_objects/signInPage';
+import HomePage from '../page_objects/homePage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
 
 
 function assertion(e, data) {
   //   console.log(e)
   e.forEach((expected) => {
-    expect(expected).to.equal(data)
-  })
+    expect(expected).to.equal(data);
+  });
 }
 
 function waitForElement(wfe) {
-  wfe.waitForExist()
-  wfe.waitForVisible()
+  wfe.waitForExist();
+  wfe.waitForVisible();
 }
 
 function setValue(sv, data) {
-  sv.setValue(data)
+  sv.setValue(data);
 }
 
 function click(c) {
-  c.click()
+  c.click();
 }
 
 function bigName(params) {
-  let text = ''
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  let text = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-  for (let i = 0; i < params; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)) }
+  for (let i = 0; i < params; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
 
-  return text
+  return text;
 }
 const testData = [
   // {
@@ -52,96 +54,75 @@ const testData = [
     organization: 'ORG-QA',
     title: 'Create with OrgName = ORG-QA',
     accepted: true,
-  }]
+  }];
 
 
 describe('Create an Organization', () => {
-  it('Click Profile Icon', () => {
-    waitForElement(HomePage.profileMenu)
+  let i;
+  for (i = 0; i < 2; i++) {
+    it('Checking profile visibility', () => {
+      waitForElement(HomePage.profileMenu);
+      const profileVisibility = HomePage.profileMenu.isVisible();
+      expect(profileVisibility).to.equal(true);
+      click(HomePage.profileMenu);
+    });
 
-    const profileVisibility = HomePage.profileMenu.isVisible()
-    expect(true).to.equal(profileVisibility)
-    click(HomePage.profileMenu)
-  })
+    it('Click Switch or Create Org', () => {
+      waitForElement(HomePage.switchOrCreateOrganizations);
+      const createOrgVisibility = HomePage.switchOrCreateOrganizations.isVisible();
+      expect(createOrgVisibility).to.equal(true);
+      click(HomePage.switchOrCreateOrganizations);
+    });
 
-  it('Click Switch or Create Org Menu', () => {
-    waitForElement(HomePage.switchOrCreateOrganizations)
+    it('Click Create Organization Link', () => {
+      waitForElement(HomePage.createOrg);
 
-    const createOrgVisibility = HomePage.switchOrCreateOrganizations.isVisible()
-    expect(true).to.equal(createOrgVisibility)
-    click(HomePage.switchOrCreateOrganizations)
-  })
+      const createOrgLink = HomePage.createOrg.isVisible();
+      expect(createOrgLink).to.equal(true);
+      click(HomePage.createOrg);
 
-  it('Click Create Organization Link', () => {
-    waitForElement(HomePage.createOrg)
+      waitForElement(HomePage.createOrgInput);
+      setValue(HomePage.createOrgInput, bigName(10));
+      waitForElement(HomePage.submit);
+      HomePage.submit.waitForEnabled();
+      // if (HomePage.submit.isEnabled()) {
 
-    const createOrgLink = HomePage.createOrg.isVisible()
-    expect(true).to.equal(createOrgLink)
-    click(HomePage.createOrg)
+      click(HomePage.submit);
+      OrgDashboardPage.changeOrgAnchor.waitForExist();
+      OrgDashboardPage.changeOrgAnchor.waitForVisible();
+    });
+  }
 
-    waitForElement(HomePage.createOrgInput)
-    HomePage.createOrgInput.clearElement()
+  // it('Checking org count', () => {
+  //   OrgDashboardPage.changeOrgAnchor.click();
 
-    HomePage.submit.waitForExist()
-    expect(HomePage.submit.isEnabled()).to.equal(false)
+  //   OrgDashboardPage.orgCardAnchor.waitForExist();
+  //   OrgDashboardPage.orgCardAnchor.waitForVisible();
+  //   const count = OrgDashboardPage.orgCardAnchor;
+  //   console.log(count);
+  //   console.log(count.length);
+  //   expect(count).to.equal(5);
+  // });
 
-  })
+  // it('Should Sign back in Successfully', () => {
+  //   waitForElement(SignInPage.emailInput);
+  //   setValue(SignInPage.emailInput, 'aa@a.com');
 
+  //   waitForElement(SignInPage.passwordInput);
+  //   setValue(SignInPage.passwordInput, 'Mob@1234');
 
-  testData.forEach((test) => {
-    it(`${test.title}`, () => {
-      waitForElement(HomePage.createOrgInput)
-      setValue(HomePage.createOrgInput, test.organization)
+  //   waitForElement(SignInPage.signInButton);
+  //   click(SignInPage.signInButton);
 
-      waitForElement(HomePage.submit)
-      click(HomePage.submit)
+  //   waitForElement(HomePage.logo);
 
-      const errVisible = HomePage.createOrgErr.isVisible()
-      expect(test.accepted).to.not.equal(errVisible)
+  //   const signInSuccess = HomePage.logo.isVisible();
+  //   expect(signInSuccess).to.equal(true);
+  // });
 
-    })
-  })
-
-
-  it('Should Sign Out successfully', () => {
-    if (signInSuccess === true) {
-      waitForElement(HomePage.profileMenu)
-      HomePage.profileMenu.click()
-
-      waitForElement(HomePage.signOut)
-      HomePage.signOut.click()
-
-      waitForElement(SignInPage.signInButton)
-      expect(SignInPage.signInButton.isVisible()).to.equal(true)
-    } else {
-      console.log('User not Signed in')
-    }
-  })
-
-  it('Should Sign back in Successfully', () => {
-    waitForElement(SignInPage.emailInput)
-    setValue(SignInPage.emailInput, 'aa@a.com')
-
-    waitForElement(SignInPage.passwordInput)
-    setValue(SignInPage.passwordInput, 'Mob@1234')
-
-    waitForElement(SignInPage.signInButton)
-    click(SignInPage.signInButton)
-
-    waitForElement(HomePage.logo)
-
-    signInSuccess = HomePage.logo.isVisible()
-    expect(signInSuccess).to.equal(true)
-  })
-
-  it('Should be re-directed to last created Org', () => {
-    waitForElement(OrgDashboardPage.currentOrgName)
-
-
-    console.log(OrgDashboardPage.currentOrgName.getText())
-
-  })
-
-})
-
+  // it('Should be re-directed to last created Org', () => {
+  //   // waitForElement(OrgDashboardPage.currentOrgName);
+  //   // console.log(OrgDashboardPage.currentOrgName.getText());
+  // });
+});
 
