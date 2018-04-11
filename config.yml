@@ -47,7 +47,11 @@ api:
   signIn: "/sign-in"
   signedIn: "/signed-in"
   createAccount: "/join"
+<<<<<<< HEAD
   #base: "https://my.appcurator.com" #(DEV-URL)
+=======
+>>>>>>> 0328ab6be65081fb5c940da459c6cbcc0fff2138
+>>>>>>> 376520977c9fd8771474b0570199afdf4318b824
   base: "https://develop.web.appcurator.qa/" #(QA-URL)
   organizations: "http://a89ec28cc219b11e8a04b0a484309a38-57129668.ap-southeast-2.elb.amazonaws.com/api/v1/organizations/"
   identities: "http://a4f0950b62e5911e88381023cadbc14f-1304735737.ap-southeast-2.elb.amazonaws.com/api/identities/"
