@@ -59,7 +59,7 @@ const testData = [
 
 describe('Create an Organization', () => {
   let i;
-  for (i = 0; i < 3; i++) {
+  for (i = 0; i < 2; i++) {
     it('Checking profile visibility', () => {
       waitForElement(HomePage.profileMenu);
       const profileVisibility = HomePage.profileMenu.isVisible();
@@ -84,45 +84,24 @@ describe('Create an Organization', () => {
       waitForElement(HomePage.createOrgInput);
       setValue(HomePage.createOrgInput, bigName(10));
       waitForElement(HomePage.submit);
+      HomePage.submit.waitForEnabled();
+      // if (HomePage.submit.isEnabled()) {
+
       click(HomePage.submit);
-      expect(HomePage.submit.isEnabled()).to.equal(false);
+      OrgDashboardPage.changeOrgAnchor.waitForExist();
+      OrgDashboardPage.changeOrgAnchor.waitForVisible();
     });
   }
 
+  // it('Checking org count', () => {
+  //   OrgDashboardPage.changeOrgAnchor.click();
 
-  // testData.forEach((test) => {
-  //   // it(`${test.title} with ${test.name}`, () => {
-  //   it(`${test.title}`, () => {
-  //     // console.log(test.name + test.email)
-  //     waitForElement(HomePage.createOrgInput);
-  //     setValue(HomePage.createOrgInput, test.organization);
-
-  //     waitForElement(HomePage.submit);
-  //     click(HomePage.submit);
-
-  //     const errVisible = HomePage.createOrgErr.isVisible();
-  //     // console.log("errVisible" + errVisible)
-  //     expect(test.accepted).to.not.equal(errVisible);
-  //     // if (errVisible == false) {
-  //     //   browser.pause(5000);
-  //     // }
-  //   });
-  // });
-
-
-  // it('Should Sign Out successfully', () => {
-  //   // if (signInSuccess === true) {
-  //   // waitForElement(HomePage.profileMenu);
-  //   HomePage.profileMenu.click();
-
-  //   waitForElement(HomePage.signOut);
-  //   HomePage.signOut.click();
-
-  //   waitForElement(SignInPage.signInButton);
-  //   expect(SignInPage.signInButton.isVisible()).to.equal(true);
-  //   // } else {
-  //   // console.log('User not Signed in');
-  //   // }
+  //   OrgDashboardPage.orgCardAnchor.waitForExist();
+  //   OrgDashboardPage.orgCardAnchor.waitForVisible();
+  //   const count = OrgDashboardPage.orgCardAnchor;
+  //   console.log(count);
+  //   console.log(count.length);
+  //   expect(count).to.equal(5);
   // });
 
   // it('Should Sign back in Successfully', () => {
@@ -141,9 +120,9 @@ describe('Create an Organization', () => {
   //   expect(signInSuccess).to.equal(true);
   // });
 
-  it('Should be re-directed to last created Org', () => {
-    waitForElement(OrgDashboardPage.currentOrgName);
-    console.log(OrgDashboardPage.currentOrgName.getText());
-  });
+  // it('Should be re-directed to last created Org', () => {
+  //   // waitForElement(OrgDashboardPage.currentOrgName);
+  //   // console.log(OrgDashboardPage.currentOrgName.getText());
+  // });
 });
 
