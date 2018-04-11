@@ -1,47 +1,43 @@
 import OrganizationSettingsPage from '../specs/viewOrganizationSettingsTest';
+import SettingsPage from '../page_objects/settingsPage';
+import HomePage from '../page_objects/homePage';
+// import Actions from '../actions/actions';
+
 
 describe('Update Organization name', () => {
   it('Checking organization name is similar across fields before edit', () => {
-    browser.element('//input[@name=\'organization-name\']').waitForExist();
-    browser.element('//input[@name=\'organization-name\']').waitForVisible();
-    const organizationName1 = browser.getValue('//input[@name=\'organization-name\']');
-    browser.element('//*[@class=\'h3\']').waitForExist();
-    browser.element('//*[@class=\'h3\']').waitForVisible();
-    const organizationName2 = browser.getText('//*[@class=\'h3\']');
-    // console.log(`${organizationName2 };;;;;;;;`);
-    // console.log(`${organizationName1};;;;;;;;`);
-    expect(organizationName1).to.equal(organizationName2);
+    SettingsPage.emailInput.waitForExist();
+    SettingsPage.emailInput.waitForVisible();    
+    const organizationName1 = SettingsPage.emailInput.getValue();
+    HomePage.orgNameAnchor.waitForExist();
+    HomePage.orgNameAnchor.waitForVisible();
+    // browser.element('//*[@class=\'h3\']').waitForExist();
+    // browser.element('//*[@class=\'h3\']').waitForVisible();
+    const organizationName2 = HomePage.orgNameAnchor.getText();
+    console.log(`${organizationName2 };;;;;;;;`);
+    console.log(`${organizationName1};;;;;;;;`);
+    expect(organizationName1).to.include(organizationName2);
   });
 
   it('Checking organization name is similar across fields after edit', () => {
-    browser.element('//input[@name=\'organization-name\']').setValue('changedvalue');
-    browser.element('//button[@type=\'submit\']').waitForExist();
-    browser.element('//button[@type=\'submit\']').waitForVisible();
-    browser.element('//button[@type=\'submit\']').click();
-    browser.pause(1000);
-    browser.element('//*[@class=\'h3\']').waitForExist();
-    browser.element('//*[@class=\'h3\']').waitForVisible();
-    const organizationName1 = browser.getValue('//input[@name=\'organization-name\']');
-    const organizationName2 = browser.getText('//*[@class=\'h3\']');
+    SettingsPage.emailInput.setValue('changedvalue');
+    SettingsPage.saveOrgNameButton.waitForExist();
+    SettingsPage.saveOrgNameButton.waitForVisible();
+    SettingsPage.saveOrgNameButton.click();
+    // browser.pause(1000);
+    HomePage.teamAnchor.waitForExist();
+    HomePage.teamAnchor.waitForVisible();
+    HomePage.teamAnchor.click();
+
+    HomePage.orgSettingsAnchor.waitForExist();
+    HomePage.orgSettingsAnchor.waitForVisible();
+    HomePage.orgSettingsAnchor.click();
+
+    const organizationName1 = SettingsPage.emailInput.getValue();
+    const organizationName2 = HomePage.orgNameAnchor.getText();
     // console.log(`${organizationName2};;;;;;;;`);
-    //console.log(`${organizationName1};;;;;;;;`);
-    expect(organizationName1).to.equal(organizationName2);
-  });
-
-  it('Checking organization name is similar across fields after navigation', () => {
-    browser.element('//*[contains(text(),\'Team\')]').waitForExist();
-    browser.element('//*[contains(text(),\'Team\')]').waitForVisible();
-    browser.element('//*[contains(text(),\'Team\')]').click();
-
-    browser.element('//*[contains(text(),\'General\')]').waitForExist();
-    browser.element('//*[contains(text(),\'General\')]').waitForVisible();
-    browser.element('//*[contains(text(),\'General\')]').click();
-
-    const organizationName1 = browser.getValue('//input[@name=\'organization-name\']');
-    const organizationName2 = browser.getText('//*[@class=\'h3\']');
-    // console.log(`${organizationName2 };;;;;;;;`);
     // console.log(`${organizationName1};;;;;;;;`);
-    expect(organizationName2).to.equal(organizationName1);
+    expect(organizationName1).to.equal(organizationName2);
   });
 });
 

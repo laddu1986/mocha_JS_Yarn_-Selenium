@@ -1,32 +1,33 @@
 import CreateAccountPage from '../specs/createAccountTest';
-
+import HomePage from '../page_objects/homePage';
 
 describe('View Organization setings', () => {
-  it('Checking Profile visibility', () => {
-    browser.element('//*[@data-qa=\'menu:profile\']').waitForExist();
-    browser.element('(//div[contains(@class,\'css-1rq2b0h\')])[2]').waitForVisible();
-
-    const profileVisibility = browser.isVisible('(//div[contains(@class,\'css-1rq2b0h\')])[2]');
+  it('Checking profile visibility', () => {
+    HomePage.profileMenu.waitForExist();
+    HomePage.profileMenu.waitForVisible();
+    const profileVisibility = HomePage.profileMenu.isVisible();
     // console.log(faqVisibility);
     expect(true).to.equal(profileVisibility);
-    browser.element('(//div[contains(@class,\'css-1rq2b0h\')])[2]').click();
+    HomePage.profileMenu.click();
   });
 
   it('Checking settings visibility', () => {
-    browser.element('//*[contains(text(),\'Settings\')]').waitForExist();
-    browser.element('//*[contains(text(),\'Settings\')]').waitForVisible();
+    HomePage.settingsAnchor.waitForExist();
+    HomePage.settingsAnchor.waitForVisible();
     // const helpCenterUrl = browser.getAttribute('//*[contains(text(),\'Help Center\')]/parent::a', 'href');
     // expect('https://help.appcurator.com/').to.equal(helpCenterUrl);
-    const settingsVisibility = browser.isVisible('//*[contains(text(),\'Settings\')]');
+    const settingsVisibility = HomePage.settingsAnchor.isVisible();
     // console.log(settingsVisibility + ';;;;;;;;');
     expect(settingsVisibility).to.equal(true);
-    browser.element('//*[contains(text(),\'Settings\')]').click();
+    HomePage.settingsAnchor.click();
   });
+  
   it('Checking general visibility', () => {
-    browser.element('//a[contains(text(),\'General\')]').waitForExist();
-    browser.element('//a[contains(text(),\'General\')]').waitForVisible();
-    const generalVisibility = browser.isVisible('//a[contains(text(),\'General\')]');
+    HomePage.orgSettingsAnchor.waitForExist();
+    HomePage.orgSettingsAnchor.waitForVisible();
+    const generalVisibility = HomePage.orgSettingsAnchor.isVisible();
     // console.log(generalVisibility + ';;;;;;;;');
     expect(generalVisibility).to.equal(true);
+    
   });
 });
