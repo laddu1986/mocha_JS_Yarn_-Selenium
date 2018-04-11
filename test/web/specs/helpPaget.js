@@ -7,43 +7,43 @@ import * as lib from '../../common';
 let signInSuccess;
 // SignInPage.open(lib.config.api.base)
 
-function signIn() {
-  SignInPage.open(lib.config.api.base);
-  waitForElement(SignInPage.emailInput);
-  setValue(SignInPage.emailInput, 'abhi@mass.co');
+// function signIn() {
+//   SignInPage.open(lib.config.api.base);
+//   waitForElement(SignInPage.emailInput);
+//   setValue(SignInPage.emailInput, 'abhi@mass.co');
 
-  waitForElement(SignInPage.passwordInput);
-  setValue(SignInPage.passwordInput, 'ABHIdp11');
+//   waitForElement(SignInPage.passwordInput);
+//   setValue(SignInPage.passwordInput, 'ABHIdp11');
 
-  waitForElement(SignInPage.signInButton);
-  click(SignInPage.signInButton);
+//   waitForElement(SignInPage.signInButton);
+//   click(SignInPage.signInButton);
 
-  waitForElement(HomePage.logo);
+//   waitForElement(HomePage.logo);
 
-  signInSuccess = HomePage.logo.isVisible();
-  expect(signInSuccess).to.equal(true);
-  console.log('Signed In');
-}
+//   signInSuccess = HomePage.logo.isVisible();
+//   expect(signInSuccess).to.equal(true);
+//   console.log('Signed In');
+// }
 
-function signOut() {
-  if (signInSuccess === true) {
-    waitForElement(HomePage.profileMenu);
-    HomePage.profileMenu.click();
+// function signOut() {
+//   if (signInSuccess === true) {
+//     waitForElement(HomePage.profileMenu);
+//     HomePage.profileMenu.click();
 
-    waitForElement(HomePage.signOut);
-    HomePage.signOut.click();
+//     waitForElement(HomePage.signOut);
+//     HomePage.signOut.click();
 
-    waitForElement(SignInPage.signInButton);
-    expect(SignInPage.signInButton.isVisible()).to.equal(true);
-    console.log('Signed Out');
-  } else {
-    console.log('User not Signed in');
-  }
-}
+//     waitForElement(SignInPage.signInButton);
+//     expect(SignInPage.signInButton.isVisible()).to.equal(true);
+//     console.log('Signed Out');
+//   } else {
+//     console.log('User not Signed in');
+//   }
+// }
 
 describe('Test Help Center', () => {
-  before(signIn);
-  after(signOut);
+  // before(signIn);
+  // after(signOut);
 
   it('Click Help Menu from Side Nav Bar', () => {
     clickHelpMenu();
@@ -68,8 +68,8 @@ describe('Test Help Center', () => {
 });
 
 describe('Test Developer Portal', () => {
-  before(signIn);
-  after(signOut);
+  // before(signIn);
+  // after(signOut);
 
   it('Click Help Menu from Side Nav Bar', () => {
     clickHelpMenu();
@@ -94,8 +94,8 @@ describe('Test Developer Portal', () => {
 });
 
 describe('Test API Portal', () => {
-  before(signIn);
-  after(signOut);
+  // before(signIn);
+  // after(signOut);
 
   it('Click Help Menu from Side Nav Bar', () => {
     clickHelpMenu();

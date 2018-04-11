@@ -1,5 +1,5 @@
 // import Page from './page';
-import Actions from '../actions/actions';
+// import Actions from '../actions/actions';
 
 class HomePage extends Actions {
     get navbar() { return browser.element('#navbar'); }
