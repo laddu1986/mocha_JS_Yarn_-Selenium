@@ -1,8 +1,8 @@
 // import Page from './page';
 
 class SettingsPage {
-  get emailInput() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:text']"); }
-  get emailError() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:error']"); }
+  get orgInput() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:text']"); }
+  get orgError() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:error']"); }
   get saveOrgNameButton() { return browser.element("//*[@data-qa='btn:save']"); }
 
   get leaveOrgButton() { return browser.element("//button[@data-qa='btn:leave-org']"); }
