@@ -1,6 +1,6 @@
 require('dotenv').config();
 const argv = require('yargs').argv;
-let WdioTestRailReporter = require('./packages/wdio-testrail-reporter/lib/wdio-testrail-reporter');
+// let WdioTestRailReporter = require('/Users/avinash.eediga/Documents/qa/qa-automation/node_modules/wdio-testrail-reporter/lib/wdio-testrail-reporter.js');
 
 // var config = require('config-yml');
 
@@ -20,7 +20,7 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/leaveOrganizationTest.js',
+    './test/web/specs/updateOrganizationNameTest.js',
     // './test/web/specs/viewOrganizationDashboard.js',
   ],
   // Patterns to exclude.
@@ -48,21 +48,21 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['allure', 'spec', WdioTestRailReporter],
+  reporters: ['allure', 'spec'],
   reporterOptions: {
     allure: {
       outputDir: 'allure-results',
       disableWebdriverStepsReporting: true,
     },
   },
-  testRailsOptions: {
-    domain: "testrail.massiveinteractive.com",
-    username: "abhijeet.daspatnaik@massive.co",
-    password: "ABHI@dp11",
-    projectId: P1,
-    suiteId: S2471,
-    runName: "My test run"
-  },
+  // testRailsOptions: {
+  //   domain: "testrail.massiveinteractive.com",
+  //   username: "abhijeet.daspatnaik@massive.co",
+  //   password: "ABHI@dp11",
+  //   projectId: P1,
+  //   suiteId: S2471,
+  //   runName: "My test run"
+  // },
 
   mochaOpts: {
     ui: 'bdd',

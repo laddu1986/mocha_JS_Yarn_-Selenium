@@ -1,7 +1,7 @@
 // import Page from './page';
 // import Actions from '../actions/actions';
 
-class HomePage extends Actions {
+class HomePage {
     get navbar() { return browser.element('#navbar'); }
     get profileMenu() { return browser.element("//*[@data-qa='menu:profile']"); }
     get switchOrCreateOrganizations() { return browser.element("//*[@data-qa='nav:menu']"); }
