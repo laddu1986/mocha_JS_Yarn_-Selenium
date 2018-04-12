@@ -31,7 +31,7 @@ The library offers a BDD testing style and fully exploits javascript promises - 
 [Java Development Kit 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or higher
 
 #### Installation
-`master` always contains the latest code from all three layers
+`master` always contains the latest stable code from all three layers
 
 `
 git checkout master

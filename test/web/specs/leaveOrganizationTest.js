@@ -67,7 +67,7 @@ describe('Leave Organization Test', () => {
     })
   })
 
-  describe('Create two more Orgs', () => {
+  it('Create two more Orgs', () => {
 
     testData.forEach((test) => {
       it(` ${test.title}`, () => {
@@ -111,7 +111,7 @@ describe('Leave Organization Test', () => {
 })
 
 
-describe('Leaving First Org re-directs to choose org page', () => {
+it('Leaving First Org re-directs to choose org page', () => {
 
   it('Go back to /organizations and choose First Org', () => {
     viewOrgDashboard()
@@ -149,7 +149,7 @@ describe('Leaving First Org re-directs to choose org page', () => {
 })
 
 
-describe('Leaving Second Org re-directs to Last Org', () => {
+it('Leaving Second Org re-directs to Last Org', () => {
   it('Choose Second Org', () => {
     waitForElement(HomePage.chooseOrg)
     browser.element("//a[@data-qa='org:card' and contains(@href,'second')]").click()
@@ -208,7 +208,7 @@ function gotoOrgSettings() {
 function clickLeaveOrganization() {
   SettingsPage.orgSettingsPage.waitForExist()
   SettingsPage.orgSettingsPage.waitForVisible()
-  SettingsPage.orgSettingsPage.waitForEnabled()
+  //SettingsPage.orgSettingsPage.waitForEnabled()
   SettingsPage.orgSettingsPage.click()
 
   SettingsPage.leaveOrgButton.waitForExist()
