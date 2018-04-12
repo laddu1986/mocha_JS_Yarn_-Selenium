@@ -34,63 +34,66 @@ function bigName(params) {
 
   return text;
 }
-const testData = [
-  // {
-  //   organization: ' ',
-  //   title: 'Do not allow blank Organization Name',
-  //   accepted: false,
-  // },
-  // {
-  //   organization: '~!@#$%^&*()_+ ',
-  //   title: 'Input special characters',
-  //   accepted: true,
-  // },
-  // {
-  //   organization: bigName(201),
-  //   title: 'Input 201 characters',
-  //   accepted: false,
-  // },
-  {
-    organization: 'ORG-QA',
-    title: 'Create with OrgName = ORG-QA',
-    accepted: true,
-  }];
+// const testData = [
+//   // {
+//   //   organization: ' ',
+//   //   title: 'Do not allow blank Organization Name',
+//   //   accepted: false,
+//   // },
+//   // {
+//   //   organization: '~!@#$%^&*()_+ ',
+//   //   title: 'Input special characters',
+//   //   accepted: true,
+//   // },
+//   // {
+//   //   organization: bigName(201),
+//   //   title: 'Input 201 characters',
+//   //   accepted: false,
+//   // },
+//   {
+//     organization: 'ORG-QA',
+//     title: 'Create with OrgName = ORG-QA',
+//     accepted: true,
+//   }];
 
+function createOrgs() {
+  it('Checking profile visibility', () => {
+    waitForElement(HomePage.profileMenu);
+    const profileVisibility = HomePage.profileMenu.isVisible();
+    expect(profileVisibility).to.equal(true);
+    click(HomePage.profileMenu);
+  });
+
+  it('Click Switch or Create Org', () => {
+    waitForElement(HomePage.switchOrCreateOrganizations);
+    const createOrgVisibility = HomePage.switchOrCreateOrganizations.isVisible();
+    expect(createOrgVisibility).to.equal(true);
+    click(HomePage.switchOrCreateOrganizations);
+  });
+
+  it('Click Create Organization Link', () => {
+    waitForElement(HomePage.createOrg);
+
+    const createOrgLink = HomePage.createOrg.isVisible();
+    expect(createOrgLink).to.equal(true);
+    click(HomePage.createOrg);
+
+    waitForElement(HomePage.createOrgInput);
+    setValue(HomePage.createOrgInput, bigName(10));
+    waitForElement(HomePage.submit);
+    HomePage.submit.waitForEnabled();
+    // if (HomePage.submit.isEnabled()) {
+
+    click(HomePage.submit);
+    OrgDashboardPage.changeOrgAnchor.waitForExist();
+    OrgDashboardPage.changeOrgAnchor.waitForVisible();
+  });
+}
 
 describe('Create an Organization', () => {
   let i;
   for (i = 0; i < 2; i++) {
-    it('Checking profile visibility', () => {
-      waitForElement(HomePage.profileMenu);
-      const profileVisibility = HomePage.profileMenu.isVisible();
-      expect(profileVisibility).to.equal(true);
-      click(HomePage.profileMenu);
-    });
-
-    it('Click Switch or Create Org', () => {
-      waitForElement(HomePage.switchOrCreateOrganizations);
-      const createOrgVisibility = HomePage.switchOrCreateOrganizations.isVisible();
-      expect(createOrgVisibility).to.equal(true);
-      click(HomePage.switchOrCreateOrganizations);
-    });
-
-    it('Click Create Organization Link', () => {
-      waitForElement(HomePage.createOrg);
-
-      const createOrgLink = HomePage.createOrg.isVisible();
-      expect(createOrgLink).to.equal(true);
-      click(HomePage.createOrg);
-
-      waitForElement(HomePage.createOrgInput);
-      setValue(HomePage.createOrgInput, bigName(10));
-      waitForElement(HomePage.submit);
-      HomePage.submit.waitForEnabled();
-      // if (HomePage.submit.isEnabled()) {
-
-      click(HomePage.submit);
-      OrgDashboardPage.changeOrgAnchor.waitForExist();
-      OrgDashboardPage.changeOrgAnchor.waitForVisible();
-    });
+    createOrgs();
   }
 
   // it('Checking org count', () => {
