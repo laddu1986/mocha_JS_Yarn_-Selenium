@@ -13,9 +13,12 @@ exports.config = {
   capabilities: [{
     browserName: brow,
     chromeOptions: {
-      args: ['disable-infobars'],
+      args: ['disable-infobars']
     }
-    //, '--headless', '--disable-gpu', '--window-size=1200, 700'] }    
+
+    //     , '--headless', '--disable-gpu', '--window-size=1200, 700']
+    // }
+
   }],
 
   updateJob: false,
@@ -32,7 +35,7 @@ exports.config = {
   screenshotPath: './errScreens',
   baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
   waitforTimeout: 10000,
-  // maxInstances: 3,
+  maxInstances: 10,
 
   plugins: {
     'wdio-screenshot': {},
