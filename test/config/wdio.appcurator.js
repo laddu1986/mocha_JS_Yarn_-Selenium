@@ -1,6 +1,6 @@
 require('dotenv').config();
 const argv = require('yargs').argv;
-let WdioTestRailReporter = require('./packages/wdio-testrail-reporter/lib/wdio-testrail-reporter');
+let WdioTestRailReporter = require('wdio-testrail-reporter/lib/wdio-testrail-reporter');
 
 // var config = require('config-yml');
 
@@ -48,7 +48,7 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['allure', 'spec', WdioTestRailReporter],
+  reporters: ['allure', 'spec'],
   reporterOptions: {
     allure: {
       outputDir: 'allure-results',
@@ -57,10 +57,10 @@ exports.config = {
   },
   testRailsOptions: {
     domain: "testrail.massiveinteractive.com",
-    username: "abhijeet.daspatnaik@massive.co",
-    password: "ABHI@dp11",
-    projectId: P1,
-    suiteId: S2471,
+    username: "",
+    password: "",
+    projectId: '1',
+    suiteId: '2471',
     runName: "My test run"
   },
 
@@ -101,3 +101,8 @@ exports.config = {
 
   },
 };
+
+
+
+//testrail
+//node /Users/abhi/git/qa-automation/node_modules/wdio-testrail-reporter/scripts/generate-cases.js /Users/abhi/git/qa-automation/test/wdio.conf.js /Users/abhi/git/qa-automation/test/web/specs

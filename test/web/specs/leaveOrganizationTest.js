@@ -8,18 +8,18 @@ import Page from '../page_objects/page';
 
 const name = lib.faker.name.findName()
 const email = lib.faker.internet.email()
-const organization = 'Org One'
+const organization = 'First Org'
 const password = 'Pass1234'
 
 const testData = [
   {
-    organization: 'Org Two',
-    title: 'Create with orgName = Org Two',
+    organization: 'Second Org',
+    title: 'Create with orgName = Second Org',
     accepted: true,
   },
   {
-    organization: 'Org Three',
-    title: 'Create with orgName = Org Three',
+    organization: 'Last Org',
+    title: 'Create with orgName = Last Org',
     accepted: true,
   }]
 
@@ -33,7 +33,7 @@ describe('Leave Organization Test', () => {
       CreateAccountPage.open(lib.config.api.base)
     })
 
-    it('Create Account with Org One and Sign In', () => {
+    it('Create Account with First Org and Sign In', () => {
       waitForElement(CreateAccountPage.createAccountLink)
       click(CreateAccountPage.createAccountLink)
 
@@ -111,17 +111,26 @@ describe('Leave Organization Test', () => {
 })
 
 
-describe('Leaving Org Three re-directs to choose org page', () => {
+describe('Leaving First Org re-directs to choose org page', () => {
 
-  it('Goto Organization Settings of Org Three', () => {
-    gotoOrgSettings()
+  it('Go back to /organizations and choose First Org', () => {
+    viewOrgDashboard()
+    browser.element("//*[@data-qa='page:org-dashboard']//*[contains(text(),'Change Organization')]").click()
+    expect(browser.getUrl()).to.equal(lib.config.api.base + 'organizations')
+    waitForElement(HomePage.chooseOrg)
 
-    browser.waitUntil(function () {
-      return SettingsPage.orgInput.getValue() === 'Org Three'
-    }, 10000, 'Org Three doesnt exist');
+    browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForExist()
+    browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForVisible()
+    browser.element("//a[@data-qa='org:card' and contains(@href,'first')]").click()
+    viewOrgDashboard()
+
   })
 
-  it('Click Leave Organization - Org Three', () => {
+  it('Goto Organization Settings of First Org', () => {
+    gotoOrgSettings()
+  })
+
+  it('Click Leave Organization - First Org', () => {
     clickLeaveOrganization()
   })
 
@@ -133,45 +142,41 @@ describe('Leaving Org Three re-directs to choose org page', () => {
     expect(orgCount.length).to.have.equal(2)
   })
 
-  it('Validate URL to end with /organizations', () => {
+  it('Validate choose org page URL to end with /organizations', () => {
     expect(browser.getUrl()).to.equal(lib.config.api.base + 'organizations')
   })
 
 })
 
 
-describe('Leaving Org Two re-directs to Org One', () => {
-  it('Choose Org Two', () => {
-    browser.element("//*[@data-qa='org:card']//*[contains(text(),'Two')]").click()
+describe('Leaving Second Org re-directs to Last Org', () => {
+  it('Choose Second Org', () => {
+    waitForElement(HomePage.chooseOrg)
+    browser.element("//a[@data-qa='org:card' and contains(@href,'second')]").click()
   })
 
-  it('Goto Organization Settings of Org Two', () => {
+  it('Goto Organization Settings of Second Org', () => {
     gotoOrgSettings()
-    browser.waitUntil(function () {
-      return SettingsPage.orgInput.getValue() === 'Org Two'
-    }, 10000, 'Org Two doesnt exist');
   })
 
-  it('Click Leave Organization - Org Two', () => {
+  it('Click Leave Organization - Second Org', () => {
     clickLeaveOrganization()
   })
 
-  it('Validate re-direction to Org One dashboard', () => {
+  it('Validate re-direction to Last Org dashboard', () => {
     viewOrgDashboard()
-    expect(OrgDashboardPage.currentOrgName.getText()).to.include('One')
+    expect(OrgDashboardPage.currentOrgName.getText()).to.include('Last Org')
   })
 })
 
 
-describe('Leaving Org One re-directs to No Orgs page', () => {
-  it('Goto Organization Settings of Org One', () => {
+describe('Leaving Last Org re-directs to No Orgs page', () => {
+  it('Goto Organization Settings of Last Org', () => {
     gotoOrgSettings()
-    browser.waitUntil(function () {
-      return SettingsPage.orgInput.getValue() === 'Org One'
-    }, 10000, 'Org One doesnt exist');
+
   })
 
-  it('Click Leave Organization - Org One', () => {
+  it('Click Leave Organization - Last Org', () => {
     clickLeaveOrganization()
   })
 
@@ -184,7 +189,7 @@ describe('Leaving Org One re-directs to No Orgs page', () => {
 
   })
 
-  it('Validate URL to end with /organizations', () => {
+  it('Validate no orgs page URL to end with /organizations', () => {
     expect(browser.getUrl()).to.equal(lib.config.api.base + 'organizations')
   })
 
@@ -201,10 +206,14 @@ function gotoOrgSettings() {
 }
 
 function clickLeaveOrganization() {
-  SettingsPage.orgSettingsPage.waitForExist(5000)
+  SettingsPage.orgSettingsPage.waitForExist()
+  SettingsPage.orgSettingsPage.waitForVisible()
+  SettingsPage.orgSettingsPage.waitForEnabled()
+  SettingsPage.orgSettingsPage.click()
 
   SettingsPage.leaveOrgButton.waitForExist()
   SettingsPage.leaveOrgButton.waitForVisible()
+  SettingsPage.leaveOrgButton.waitForEnabled()
   SettingsPage.leaveOrgButton.click()
 
   browser.alertAccept()
