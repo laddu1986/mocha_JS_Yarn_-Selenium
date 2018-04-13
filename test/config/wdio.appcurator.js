@@ -20,8 +20,8 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/updateOrganizationNameTest.js',
-    // './test/web/specs/viewOrganizationDashboard.js',
+    // './test/web/specs/*Test.js',
+    './test/web/specs/createOrganizationTest.js',
   ],
   // Patterns to exclude.
   exclude: [
