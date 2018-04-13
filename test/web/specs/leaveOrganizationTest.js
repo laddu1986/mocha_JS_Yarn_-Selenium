@@ -1,9 +1,9 @@
-import * as lib from '../../common'
-import CreateAccountPage from '../page_objects/createAccountPage'
-import HomePage from '../page_objects/homePage'
-import SignInPage from '../page_objects/signInPage'
-import OrgDashboardPage from '../page_objects/orgDashboardPage'
-import SettingsPage from '../page_objects/settingsPage'
+import * as lib from '../../common';
+import CreateAccountPage from '../page_objects/createAccountPage';
+import HomePage from '../page_objects/homePage';
+import SignInPage from '../page_objects/signInPage';
+import OrgDashboardPage from '../page_objects/orgDashboardPage';
+import SettingsPage from '../page_objects/settingsPage';
 import Page from '../page_objects/page';
 
 const name = lib.faker.name.findName()
@@ -21,97 +21,95 @@ const testData = [
     organization: 'Last Org',
     title: 'Create with orgName = Last Org',
     accepted: true,
-  }]
+  }];
 
-let accountCreated
-let signedIn
+let accountCreated;
+let signedIn;
 
 describe('Leave Organization Test', () => {
-
   describe('Create Account', () => {
     before('Open App URL', () => {
-      CreateAccountPage.open(lib.config.api.base)
-    })
+      CreateAccountPage.open(lib.config.api.base);
+    });
 
     it('Create Account with First Org and Sign In', () => {
       waitForElement(CreateAccountPage.createAccountLink)
       click(CreateAccountPage.createAccountLink)
 
-      waitForElement(CreateAccountPage.nameInput)
-      setValue(CreateAccountPage.nameInput, name)
+      waitForElement(CreateAccountPage.nameInput);
+      setValue(CreateAccountPage.nameInput, name);
 
-      waitForElement(CreateAccountPage.emailInput)
-      setValue(CreateAccountPage.emailInput, email)
+      waitForElement(CreateAccountPage.emailInput);
+      setValue(CreateAccountPage.emailInput, email);
 
-      waitForElement(CreateAccountPage.organizationInput)
-      setValue(CreateAccountPage.organizationInput, organization)
+      waitForElement(CreateAccountPage.organizationInput);
+      setValue(CreateAccountPage.organizationInput, organization);
 
-      waitForElement(CreateAccountPage.passwordInput)
-      setValue(CreateAccountPage.passwordInput, password)
+      waitForElement(CreateAccountPage.passwordInput);
+      setValue(CreateAccountPage.passwordInput, password);
 
-      waitForElement(CreateAccountPage.createAccountButton)
-      click(CreateAccountPage.createAccountButton)
+      waitForElement(CreateAccountPage.createAccountButton);
+      click(CreateAccountPage.createAccountButton);
 
-      console.log('Account Created with : - ' + '\n' +
-        'name = ' + name + '\n' +
-        'email = ' + email + '\n' +
-        'organization = ' + organization + '\n' +
-        'password = ' + password)
-    })
+      console.log(`${'Account Created with : - ' + '\n' +
+        'name = '}${name}\n` +
+        `email = ${email}\n` +
+        `organization = ${organization}\n` +
+        `password = ${password}`);
+    });
 
     it('Validate user lands in the created Org', () => {
-      viewOrgDashboard()
+      viewOrgDashboard();
 
-      const currentOrgName = OrgDashboardPage.currentOrgName.getText()
-      expect(organization).to.include(currentOrgName)
-    })
-  })
+      const currentOrgName = OrgDashboardPage.currentOrgName.getText();
+      expect(organization).to.include(currentOrgName);
+    });
+  });
 
   it('Create two more Orgs', () => {
 
     testData.forEach((test) => {
       it(` ${test.title}`, () => {
+        waitForElement(HomePage.profileMenu);
 
-        waitForElement(HomePage.profileMenu)
+        const profileVisibility = HomePage.profileMenu.isVisible();
+        expect(true).to.equal(profileVisibility);
+        click(HomePage.profileMenu);
 
-        const profileVisibility = HomePage.profileMenu.isVisible()
-        expect(true).to.equal(profileVisibility)
-        click(HomePage.profileMenu)
+        waitForElement(HomePage.switchOrCreateOrganizations);
 
-        waitForElement(HomePage.switchOrCreateOrganizations)
+        const createOrgVisibility = HomePage.switchOrCreateOrganizations.isVisible();
+        expect(true).to.equal(createOrgVisibility);
+        click(HomePage.switchOrCreateOrganizations);
 
-        const createOrgVisibility = HomePage.switchOrCreateOrganizations.isVisible()
-        expect(true).to.equal(createOrgVisibility)
-        click(HomePage.switchOrCreateOrganizations)
+        waitForElement(HomePage.createOrg);
 
-        waitForElement(HomePage.createOrg)
+        const createOrgLink = HomePage.createOrg.isVisible();
+        expect(true).to.equal(createOrgLink);
+        click(HomePage.createOrg);
 
-        const createOrgLink = HomePage.createOrg.isVisible()
-        expect(true).to.equal(createOrgLink)
-        click(HomePage.createOrg)
+        waitForElement(HomePage.createOrgInput);
+        HomePage.createOrgInput.clearElement();
 
-        waitForElement(HomePage.createOrgInput)
-        HomePage.createOrgInput.clearElement()
+        HomePage.submit.waitForExist();
+        expect(HomePage.submit.isEnabled()).to.equal(false);
+        waitForElement(HomePage.createOrgInput);
+        setValue(HomePage.createOrgInput, test.organization);
 
-        HomePage.submit.waitForExist()
-        expect(HomePage.submit.isEnabled()).to.equal(false)
-        waitForElement(HomePage.createOrgInput)
-        setValue(HomePage.createOrgInput, test.organization)
+        waitForElement(HomePage.submit);
+        click(HomePage.submit);
 
-        waitForElement(HomePage.submit)
-        click(HomePage.submit)
+        const errVisible = HomePage.createOrgErr.isVisible();
+        expect(test.accepted).to.not.equal(errVisible);
 
-        const errVisible = HomePage.createOrgErr.isVisible()
-        expect(test.accepted).to.not.equal(errVisible)
-
-        waitForElement(OrgDashboardPage.welcomeMsg)
-      })
-    })
-  })
-})
+        waitForElement(OrgDashboardPage.welcomeMsg);
+      });
+    });
+  });
+});
 
 
-it('Leaving First Org re-directs to choose org page', () => {
+describe('Leaving First Org re-directs to choose org page', () => {
 
   it('Go back to /organizations and choose First Org', () => {
     viewOrgDashboard()
@@ -135,12 +133,12 @@ it('Leaving First Org re-directs to choose org page', () => {
   })
 
   it('Validate re-direction to choose org page', () => {
-    waitForElement(HomePage.chooseOrg)
-    waitForElement(HomePage.individualOrgCard)
+    waitForElement(HomePage.chooseOrg);
+    waitForElement(HomePage.individualOrgCard);
 
-    const orgCount = HomePage.individualOrgCard.getElementSize()
-    expect(orgCount.length).to.have.equal(2)
-  })
+    const orgCount = HomePage.individualOrgCard.getElementSize();
+    expect(orgCount.length).to.have.equal(2);
+  });
 
   it('Validate choose org page URL to end with /organizations', () => {
     expect(browser.getUrl()).to.equal(lib.config.api.base + 'organizations')
@@ -149,7 +147,7 @@ it('Leaving First Org re-directs to choose org page', () => {
 })
 
 
-it('Leaving Second Org re-directs to Last Org', () => {
+describe('Leaving Second Org re-directs to Last Org', () => {
   it('Choose Second Org', () => {
     waitForElement(HomePage.chooseOrg)
     browser.element("//a[@data-qa='org:card' and contains(@href,'second')]").click()
@@ -181,28 +179,26 @@ describe('Leaving Last Org re-directs to No Orgs page', () => {
   })
 
   it('Should re-direct to No Orgs page after leaving the last Org', () => {
-    waitForElement(HomePage.noOrgs)
-    waitForElement(HomePage.createOrgButton)
+    waitForElement(HomePage.noOrgs);
+    waitForElement(HomePage.createOrgButton);
 
-    const createOrgButtonEnabled = HomePage.createOrgButton.isEnabled()
-    expect(createOrgButtonEnabled).to.equal(true)
+    const createOrgButtonEnabled = HomePage.createOrgButton.isEnabled();
+    expect(createOrgButtonEnabled).to.equal(true);
+  });
 
-  })
-
-  it('Validate no orgs page URL to end with /organizations', () => {
-    expect(browser.getUrl()).to.equal(lib.config.api.base + 'organizations')
-  })
-
-})
+  it('Validate URL to end with /organizations', () => {
+    expect(browser.getUrl()).to.equal(`${lib.config.api.base}organizations`);
+  });
+});
 
 function gotoOrgSettings() {
-  HomePage.profileMenu.waitForExist()
-  HomePage.profileMenu.waitForValue()
-  HomePage.profileMenu.click()
+  HomePage.profileMenu.waitForExist();
+  HomePage.profileMenu.waitForValue();
+  HomePage.profileMenu.click();
 
-  OrgDashboardPage.orgSettingsNavMenu.waitForExist()
-  OrgDashboardPage.orgSettingsNavMenu.waitForVisible()
-  OrgDashboardPage.orgSettingsNavMenu.click()
+  OrgDashboardPage.orgSettingsNavMenu.waitForExist();
+  OrgDashboardPage.orgSettingsNavMenu.waitForVisible();
+  OrgDashboardPage.orgSettingsNavMenu.click();
 }
 
 function clickLeaveOrganization() {
@@ -216,30 +212,30 @@ function clickLeaveOrganization() {
   SettingsPage.leaveOrgButton.waitForEnabled()
   SettingsPage.leaveOrgButton.click()
 
-  browser.alertAccept()
+  browser.alertAccept();
 }
 
 function viewOrgDashboard() {
-  OrgDashboardPage.currentOrgName.waitForExist()
-  OrgDashboardPage.currentOrgName.waitForVisible()
+  OrgDashboardPage.currentOrgName.waitForExist();
+  OrgDashboardPage.currentOrgName.waitForVisible();
 
-  OrgDashboardPage.welcomeMsg.waitForExist()
-  OrgDashboardPage.welcomeMsg.waitForVisible()
+  OrgDashboardPage.welcomeMsg.waitForExist();
+  OrgDashboardPage.welcomeMsg.waitForVisible();
 }
 
 function assertion(e, data) {
   e.forEach((expected) => {
-    expect(expected).to.equal(data)
-  })
+    expect(expected).to.equal(data);
+  });
 }
 
 function waitForElement(wfe) {
-  wfe.waitForExist()
-  wfe.waitForVisible()
+  wfe.waitForExist();
+  wfe.waitForVisible();
 }
 
 function setValue(sv, data) {
-  sv.setValue(data)
+  sv.setValue(data);
 }
 
 function click(c) {
