@@ -62,10 +62,10 @@ exports.config = {
   },
   // testRailsOptions: {
   //   domain: "testrail.massiveinteractive.com",
-  //   username: "abhijeet.daspatnaik@massive.co",
-  //   password: "ABHI@dp11",
-  //   projectId: P1,
-  //   suiteId: S2471,
+  //   username: "",
+  //   password: "",
+  //   projectId: 1,
+  //   suiteId: 2471,
   //   runName: "My test run"
   // },
 
