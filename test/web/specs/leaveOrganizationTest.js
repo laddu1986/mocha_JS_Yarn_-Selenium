@@ -66,7 +66,7 @@ describe('Leave Organization Test', () => {
     });
   });
 
-  it('Create two more Orgs', () => {
+  describe('Create two more Orgs', () => {
 
     testData.forEach((test) => {
       it(` ${test.title}`, () => {

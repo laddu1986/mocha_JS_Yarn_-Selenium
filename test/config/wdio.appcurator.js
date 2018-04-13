@@ -4,33 +4,35 @@ const argv = require('yargs').argv;
 
 // var config = require('config-yml');
 
-const brow = 'chrome';
+const brow = 'phantomjs';
 
 exports.config = {
-  services: ['selenium-standalone'],
+  services: ['selenium-standalone', 'phantomjs'],
   //services: ['chromedriver', 'devtools'],
   enableNetwork: true,
   capabilities: [{
     browserName: brow,
     chromeOptions: {
-      args: ['disable-infobars']
+      args: ['disable-infobars', '--window-size=1280,1024', '--disable-gpu']
     }
-
     //     , '--headless', '--disable-gpu', '--window-size=1200, 700']
     // }
-
   }],
+  phantomjsOpts: {
+    webdriverLogfile: 'phantomjs.log',
+    ignoreSslErrors: true
+  },
 
   updateJob: false,
   specs: [
-    './test/web/specs/updateOrganizationNameTest.js',
+    './test/web/specs/leaveOrganizationTest.js',
     // './test/web/specs/viewOrganizationDashboard.js',
   ],
   // Patterns to exclude.
   exclude: [
   ],
 
-  logLevel: 'silent',
+  logLevel: 'error',
   coloredLogs: true,
   screenshotPath: './errScreens',
   baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
