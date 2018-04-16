@@ -3,7 +3,7 @@
 
 class HomePage {
     get navbar() { return browser.element('#navbar'); }
-    get profileMenu() { return browser.element("//*[@data-qa='menu:profile']"); }
+    get profileMenu() { return browser.element("//nav[@data-qa='menu:profile']//div[@data-qa='btn:menu']"); }
     get switchOrCreateOrganizations() { return browser.element("//*[@data-qa='nav:menu']"); }
     get createOrg() { return browser.element("//*[@data-qa='nav:create-org']"); }
     get createOrgInput() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:text']"); }
