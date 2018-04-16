@@ -1,27 +1,68 @@
 require('dotenv').config();
 const argv = require('yargs').argv;
-// let WdioTestRailReporter = require('/Users/avinash.eediga/Documents/qa/qa-automation/node_modules/wdio-testrail-reporter/lib/wdio-testrail-reporter.js');
 
 // var config = require('config-yml');
 
-const brow = 'phantomjs';
+//const brow = 'chrome';
+
+//const brow = 'firefox';
+const brow = 'safari';
+
+const instance = 1
 
 exports.config = {
-  services: ['selenium-standalone', 'phantomjs'],
-  //services: ['chromedriver', 'devtools'],
-  enableNetwork: true,
-  capabilities: [{
+  services: ['selenium-standalone'],
+  //services: ['chromedriver'],
+  /* capabilities: [{
     browserName: brow,
-    chromeOptions: {
-      args: ['disable-infobars', '--window-size=1280,1024', '--disable-gpu']
-    }
-    //     , '--headless', '--disable-gpu', '--window-size=1200, 700']
+    // chromeOptions: {
+    //   args: ['disable-infobars', '--disable-gpu']
+
+    'moz:firefoxOptions': {
+      //args: [],
+      //]
+      //binary: '/Applications/Firefox.app/Contents/MacOS/',
+    },
+
+    // 'safari.options': {
+    //   technologyPreview: false
     // }
-  }],
-  phantomjsOpts: {
-    webdriverLogfile: 'phantomjs.log',
-    ignoreSslErrors: true
-  },
+  }], */
+
+  capabilities: [
+    // {
+    //   browserName: brow,
+    //   chromeOptions: {
+    //     args: ['disable-infobars', '--disable-gpu']
+    //   },
+    //   maxInstances: instance,
+    // },
+
+    // {
+    //   browserName: brow,
+    //   'moz:firefoxOptions': {
+    //     args: [],
+    //   },
+    //   maxInstances: instance,
+    // },
+
+    {
+      browserName: brow,
+      'safari.options': {
+        technologyPreview: false
+      },
+      maxInstances: instance,
+    },
+
+    // {
+    //   browserName: brow,
+    //   phantomjsOpts: {
+    //     webdriverLogfile: 'phantomjs.log',
+    //     ignoreSslErrors: true
+    //   },
+    //   maxInstances: instance,
+    //}
+  ],
 
   updateJob: false,
   specs: [
@@ -32,7 +73,7 @@ exports.config = {
   exclude: [
   ],
 
-  logLevel: 'error',
+  logLevel: 'silent',
   coloredLogs: true,
   screenshotPath: './errScreens',
   baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
@@ -40,8 +81,8 @@ exports.config = {
   maxInstances: 10,
 
   plugins: {
-    'wdio-screenshot': {},
-    'webdriverajax': {},
+    // 'wdio-screenshot': {},
+    // 'webdriverajax': {},
     // webdrivercss: {
     //     screenshotRoot: 'my-shots',
     //     failedComparisonsRoot: 'diffs',
