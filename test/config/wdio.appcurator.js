@@ -4,18 +4,18 @@ const argv = require('yargs').argv;
 
 // var config = require('config-yml');
 
-const brow = 'chrome';
+const brow = 'firefox';
 
 exports.config = {
-  services: ['selenium-standalone'],
-  //services: ['chromedriver', 'devtools'],
+  // services: ['selenium-standalone'],
+  // services: ['chromedriver', 'devtools'],
   enableNetwork: true,
   capabilities: [{
     browserName: brow,
-    chromeOptions: {
-      args: ['disable-infobars'],
-    }
-    //, '--headless', '--disable-gpu', '--window-size=1200, 700'] }    
+    // chromeOptions: {
+    //   args: ['disable-infobars','--headless'],
+    // },
+    // , '--headless', '--disable-gpu', '--window-size=1200, 700'] }
   }],
 
   updateJob: false,
@@ -36,7 +36,7 @@ exports.config = {
 
   plugins: {
     'wdio-screenshot': {},
-    'webdriverajax': {},
+    webdriverajax: {},
     // webdrivercss: {
     //     screenshotRoot: 'my-shots',
     //     failedComparisonsRoot: 'diffs',
