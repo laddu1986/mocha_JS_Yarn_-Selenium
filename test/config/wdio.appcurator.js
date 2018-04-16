@@ -7,13 +7,13 @@ const argv = require('yargs').argv;
 const brow = 'chrome';
 
 exports.config = {
-  // services: ['selenium-standalone'],
+  services: ['selenium-standalone'],
   // services: ['chromedriver', 'devtools'],
   enableNetwork: true,
   capabilities: [{
     browserName: brow,
     chromeOptions: {
-      args: ['disable-infobars','--headless'],
+      args: ['disable-infobars'],
     },
     // , '--headless', '--disable-gpu', '--window-size=1200, 700'] }
   }],
