@@ -14,8 +14,8 @@ function bigName(params) {
 }
 
 const name = bigName(5) + lib.faker.name.findName();
-const email = bigName(5) + lib.faker.internet.email();
-const organization = bigName(5) + (lib.faker.company.companyName()).replace(',','');
+const email = `test_${bigName(5)}${lib.faker.internet.email()}`;
+const organization = bigName(5) + (lib.faker.company.companyName()).replace(',', '');
 // const organization = `${lib.faker.company.companyName()} ${lib.faker.company.companySuffix()}`;
 const testData = [
   {
