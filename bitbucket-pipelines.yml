@@ -1,0 +1,6 @@
+pipelines:
+  scheduled: # Pipelines that can be scheduled or triggered manually
+    staging: # The name that is displayed in the list in the Bitbucket Cloud GUI
+      - step:
+          script:
+            - echo "Scheduled builds in Pipelines are awesome!"
