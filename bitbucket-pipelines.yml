@@ -1,4 +1,4 @@
-image: node:8.9.1
+image: qamassive/allpackages
 options:
   docker: true
 pipelines:
@@ -6,6 +6,5 @@ pipelines:
     - step:
         script:
           - npm install
-          - docker run -d -p 4444:4444 selenium/standalone-chrome
           - npm run web
           
