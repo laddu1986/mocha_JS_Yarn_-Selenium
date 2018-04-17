@@ -10,7 +10,7 @@ const brow = 'chrome';
 const instance = 10
 
 exports.config = {
-  services: ['selenium-standalone'],
+  services: ['selenium-standalone','chromedriver'],
   //services: ['chromedriver'],
 
 
