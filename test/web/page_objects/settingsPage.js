@@ -6,6 +6,8 @@ class SettingsPage {
   get saveOrgNameButton() { return browser.element("//*[@data-qa='btn:save']"); }
 
   get leaveOrgButton() { return browser.element("//button[@data-qa='btn:leave-org']"); }
+  get deleteOrgButton() { return browser.element("//button[@data-qa='btn:leave-org']"); }
+
 
   get orgSettingsPage() { return browser.element("//*[@data-qa='page:org-settings']") }
 
