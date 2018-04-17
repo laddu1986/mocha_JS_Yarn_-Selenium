@@ -1,58 +1,44 @@
 require('dotenv').config();
 const argv = require('yargs').argv;
 
-// var config = require('config-yml');
-
-//const brow = 'chrome';
-
+const brow = 'chrome';
 //const brow = 'firefox';
-const brow = 'safari';
+//const brow = 'safari';
+//const brow = 'opera';
 
-const instance = 1
+
+const instance = 10
 
 exports.config = {
   services: ['selenium-standalone'],
   //services: ['chromedriver'],
-  /* capabilities: [{
-    browserName: brow,
-    // chromeOptions: {
-    //   args: ['disable-infobars', '--disable-gpu']
 
-    'moz:firefoxOptions': {
-      //args: [],
-      //]
-      //binary: '/Applications/Firefox.app/Contents/MacOS/',
-    },
-
-    // 'safari.options': {
-    //   technologyPreview: false
-    // }
-  }], */
 
   capabilities: [
-    // {
-    //   browserName: brow,
-    //   chromeOptions: {
-    //     args: ['disable-infobars', '--disable-gpu']
-    //   },
-    //   maxInstances: instance,
-    // },
+    {
+      browserName: brow,
+      chromeOptions: {
+        args: ['disable-infobars', '--disable-gpu']
+      },
+      maxInstances: instance,
+    },
 
     // {
     //   browserName: brow,
     //   'moz:firefoxOptions': {
     //     args: [],
+    //     //binary: '/usr/local/bin/geckodriver'
     //   },
     //   maxInstances: instance,
     // },
 
-    {
-      browserName: brow,
-      'safari.options': {
-        technologyPreview: false
-      },
-      maxInstances: instance,
-    },
+    // {
+    //   browserName: brow,
+    //   'safari.options': {
+    //     technologyPreview: false
+    //   },
+    //   maxInstances: instance,
+    // },
 
     // {
     //   browserName: brow,
@@ -62,11 +48,15 @@ exports.config = {
     //   },
     //   maxInstances: instance,
     //}
+
+    // {
+    //   browserName: brow,
+    // }
   ],
 
   updateJob: false,
   specs: [
-    './test/web/specs/leaveOrganizationTest.js',
+    './test/web/specs/deleteOrganizationTest.js',
     // './test/web/specs/viewOrganizationDashboard.js',
   ],
   // Patterns to exclude.
@@ -75,7 +65,7 @@ exports.config = {
 
   logLevel: 'silent',
   coloredLogs: true,
-  screenshotPath: './errScreens',
+  //screenshotPath: './errScreens',
   baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
   waitforTimeout: 10000,
   maxInstances: 10,

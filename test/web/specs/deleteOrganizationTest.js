@@ -26,7 +26,7 @@ const testData = [
 let accountCreated;
 let signedIn;
 
-describe('Leave Organization Test', () => {
+describe('Delete Organization Test', () => {
   describe('Create Account', () => {
     before('Open App URL', () => {
       CreateAccountPage.open(lib.config.api.base);
@@ -126,8 +126,8 @@ describe('Leave Organization Test', () => {
       gotoOrgSettings()
     })
 
-    it('Click Leave Organization - First Org', () => {
-      clickLeaveOrganization()
+    it('Click Delete Organization - First Org', () => {
+      clickDeleteOrganization()
     })
 
     it('Validate re-direction to choose org page', () => {
@@ -155,8 +155,8 @@ describe('Leave Organization Test', () => {
       gotoOrgSettings()
     })
 
-    it('Click Leave Organization - Second Org', () => {
-      clickLeaveOrganization()
+    it('Click Delete Organization - Second Org', () => {
+      clickDeleteOrganization()
     })
 
     it('Validate re-direction to Last Org dashboard', () => {
@@ -172,8 +172,8 @@ describe('Leave Organization Test', () => {
 
     })
 
-    it('Click Leave Organization - Last Org', () => {
-      clickLeaveOrganization()
+    it('Click Delete Organization - Last Org', () => {
+      clickDeleteOrganization()
     })
 
     it('Should re-direct to No Orgs page after leaving the last Org', () => {
@@ -202,7 +202,7 @@ function gotoOrgSettings() {
 
 }
 
-function clickLeaveOrganization() {
+function clickDeleteOrganization() {
 
   // SettingsPage.orgSettingsPage.waitForExist()
   // SettingsPage.orgSettingsPage.waitForVisible()
@@ -210,10 +210,10 @@ function clickLeaveOrganization() {
 
   browser.pause(500) // for safari
 
-  // SettingsPage.deleteOrgButton.waitForExist()
-  // SettingsPage.deleteOrgButton.waitForVisible()
-  // SettingsPage.deleteOrgButton.waitForEnabled()
-  SettingsPage.deleteOrgButton.click()
+  // SettingsPage.leaveOrgButton.waitForExist()
+  // SettingsPage.leaveOrgButton.waitForVisible()
+  // SettingsPage.leaveOrgButton.waitForEnabled()
+  SettingsPage.leaveOrgButton.click()
 
   browser.alertAccept();
 }
