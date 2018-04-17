@@ -3,5 +3,6 @@ pipelines:
     scheduled-hourly:      
     - step:
           script:
+            - npm install chromedriver
             - npm install
             - npm run web
