@@ -56,13 +56,22 @@ RUN npm install -g \
   selenium-standalone@latest \
   && selenium-standalone install
 
+
 # RUN selenium-standalone start
-ADD . /app
-WORKDIR /app
-RUN npm i
+# ADD . /app
+# WORKDIR /app
+# RUN npm i
+# RUN npm install wdio-allure-reporter
+# RUN sh ./scripts/start.sh
 # RUN npm run web
 #============================================
 # Exposing ports
 #============================================
 EXPOSE 4444 5999
+
+# RUN export DISPLAY=:99 \
+#     Xvfb :99 -shmem -screen 0 1366x768x16 & \
+#     x11vnc -passwd secret -display :99 -N -forever &
+# # selenium must be started by a non-root user otherwise chrome can't start
+# RUN selenium-standalone start > /dev/null 2>&1 &
 # ENTRYPOINT ["sh", "/home/root/scripts/start.sh"]
