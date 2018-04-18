@@ -1,16 +1,3 @@
-
-# image: node:8.9.1
-# options:
-#   docker: true
-# pipelines:
-#   default:
-#     - step:
-#         script:
-#           - docker run -d -p 4444:4444 selenium/standalone-chrome
-#           - npm install
-#           - npm install wdio-allure-reporter
-#           - npm run web
-
 image: qamassive/allpackages
 options:
   docker: true
