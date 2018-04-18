@@ -17,7 +17,9 @@ options:
 pipelines:
   default:
     - step:
-        script: 
+        script:
+          - apt-get install net-tools
+          - netstat -plnt
           - npm install
           - npm install wdio-allure-reporter
           - npm run web
