@@ -1,7 +1,9 @@
+image: node:9.11.1
 pipelines:
   branches:  # Pipeline to run Hourly 
     scheduled-hourly:      
     - step:
           script:
+            - npm install chromedriver
             - npm install
             - npm run web
