@@ -10,7 +10,7 @@ const brow = 'chrome';
 const instance = 10
 
 exports.config = {
-  services: ['selenium-standalone'],
+  services: ['selenium-standalone', 'chromedriver', 'docker'],
   //services: ['chromedriver'],
 
 
@@ -53,6 +53,15 @@ exports.config = {
     //   browserName: brow,
     // }
   ],
+  dockerLogs: './logs',
+  dockerOptions: {
+    image: 'selenium/standalone-chrome',
+    healthCheck: 'http://localhost:4444',
+    options: {
+      p: ['4444:4444'],
+      shmSize: '2g'
+    }
+  },
 
   updateJob: false,
   specs: [
