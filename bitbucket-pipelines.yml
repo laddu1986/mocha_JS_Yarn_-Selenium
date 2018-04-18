@@ -5,7 +5,7 @@ pipelines:
   default:
     - step:
         script:
-          - curl ipinfo.io/ip
           - docker run -d -p 4444:4444 selenium/standalone-chrome
           - npm install
+          - npm install wdio-allure-reporter
           - npm run web
