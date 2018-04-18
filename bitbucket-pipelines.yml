@@ -2,8 +2,7 @@ image: qamassive/allpackages
 options:
   docker: true
 pipelines:
-  branches:  # Pipeline to run Hourly 
-    scheduled-hourly:      
+  default:
     - step:
         script:
           - sh ./scripts/start.sh
