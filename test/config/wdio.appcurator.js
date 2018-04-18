@@ -4,7 +4,7 @@ const argv = require('yargs').argv;
 
 // var config = require('config-yml');
 
-const brow = 'chrome';
+const brow = 'firefox';
 
 exports.config = {
   // services: ['selenium-standalone'],
@@ -12,9 +12,9 @@ exports.config = {
   enableNetwork: true,
   capabilities: [{
     browserName: brow,
-    chromeOptions: {
-      args: ['disable-infobars'],
-    },
+    // chromeOptions: {
+    //   args: ['disable-infobars'],
+    // },
     // , '--headless', '--disable-gpu', '--window-size=1200, 700'] }
   }],
 
@@ -27,7 +27,7 @@ exports.config = {
   exclude: [
   ],
 
-  logLevel: 'verbose',
+  logLevel: 'silent',
   coloredLogs: true,
   screenshotPath: './errScreens',
   baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
