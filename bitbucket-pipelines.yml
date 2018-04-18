@@ -19,7 +19,7 @@ pipelines:
     - step:
         script:
           - apt-get install net-tools
-          - netstat -plnt 
+          - netstat -plnt
           - npm install
           - npm install wdio-allure-reporter
           - npm run web
