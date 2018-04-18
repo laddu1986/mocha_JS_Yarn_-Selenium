@@ -5,6 +5,7 @@ pipelines:
   default:
     - step:
         script:
-          - npm install
+          - curl ipinfo.io/ip
           - docker run -d -p 4444:4444 selenium/standalone-chrome
+          - npm install
           - npm run web
