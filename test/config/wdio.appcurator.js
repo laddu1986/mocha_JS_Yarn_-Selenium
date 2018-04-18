@@ -4,7 +4,7 @@ const argv = require('yargs').argv;
 
 // var config = require('config-yml');
 
-const brow = 'chrome';
+const brow = 'firefox';
 
 exports.config = {
   // services: ['selenium-standalone'],
