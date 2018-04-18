@@ -10,7 +10,7 @@ const brow = 'chrome';
 const instance = 10
 
 exports.config = {
-  services: ['selenium-standalone', 'chromedriver', 'docker'],
+  //services: ['selenium-standalone', 'chromedriver'],
   //services: ['chromedriver'],
 
 
@@ -53,15 +53,8 @@ exports.config = {
     //   browserName: brow,
     // }
   ],
-  dockerLogs: './logs',
-  dockerOptions: {
-    image: 'selenium/standalone-chrome',
-    healthCheck: 'http://localhost:4444',
-    options: {
-      p: ['4444:4444'],
-      shmSize: '2g'
-    }
-  },
+
+
 
   updateJob: false,
   specs: [
@@ -72,7 +65,7 @@ exports.config = {
   exclude: [
   ],
 
-  logLevel: 'verbose',
+  logLevel: 'silent',
   coloredLogs: true,
   //screenshotPath: './errScreens',
   baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
