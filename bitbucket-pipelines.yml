@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 image: node:9.11.1
+=======
+image: qamassive/allpackages
+options:
+  docker: true
+>>>>>>> a8b787dc98833993bc829666ff85514c7163f3cf
 pipelines:
   branches:  # Pipeline to run Hourly 
     scheduled-hourly:      
     - step:
-          script:
-            - npm install chromedriver
-            - npm install
-            - npm run web
+        script:
+          - sh ./scripts/start.sh
+          - apt-get install net-tools
+          - netstat -plnt
+          - npm install
+          - npm install wdio-allure-reporter
+          - npm run web
