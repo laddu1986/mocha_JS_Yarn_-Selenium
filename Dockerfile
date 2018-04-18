@@ -1,6 +1,11 @@
 #========================================
 # Ubuntu
 #========================================
+# FROM qamassive/allpackages
+# ADD . /app
+# WORKDIR /app
+# RUN npm install
+# RUN npm run web
 FROM ubuntu
 ENV LC_ALL C
 
