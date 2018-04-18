@@ -65,4 +65,4 @@ RUN npm i
 # Exposing ports
 #============================================
 EXPOSE 4444 5999
-ENTRYPOINT ["sh", "/home/root/scripts/start.sh"]
+# ENTRYPOINT ["sh", "/home/root/scripts/start.sh"]
