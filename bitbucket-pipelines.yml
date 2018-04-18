@@ -5,7 +5,7 @@ pipelines:
   default:
     - step:
         script:
-          - dig +short myip.opendns.com @resolver1.opendns.com
+          - curl ipinfo.io/ip
           - npm install
           - docker run -d -p 4444:4444 selenium/standalone-chrome
           - npm run web
