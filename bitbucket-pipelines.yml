@@ -18,6 +18,7 @@ pipelines:
   default:
     - step:
         script:
+          - sh ./scripts/start.sh
           - apt-get install net-tools
           - netstat -plnt
           - npm install
