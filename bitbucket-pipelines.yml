@@ -6,6 +6,3 @@ pipelines:
     - step:
         script:
           - curl ipinfo.io/ip
-          - npm install
-          - docker run -d -p 4444:4444 selenium/standalone-chrome
-          - npm run web
