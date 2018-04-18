@@ -4,7 +4,7 @@ const argv = require('yargs').argv;
 
 // var config = require('config-yml');
 
-const brow = 'firefox';
+const brow = 'chrome';
 
 exports.config = {
   // services: ['selenium-standalone'],
@@ -12,9 +12,9 @@ exports.config = {
   enableNetwork: true,
   capabilities: [{
     browserName: brow,
-    // chromeOptions: {
-    //   args: ['disable-infobars', '--disable-gpu' ],
-    // },
+    chromeOptions: {
+      args: ['disable-infobars', '--disable-gpu' ],
+    },
     // , '--headless', '--disable-gpu', '--window-size=1200, 700'] }
   }],
 
