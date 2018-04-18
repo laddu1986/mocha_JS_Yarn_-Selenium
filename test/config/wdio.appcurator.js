@@ -72,7 +72,7 @@ exports.config = {
   exclude: [
   ],
 
-  logLevel: 'silent',
+  logLevel: 'verbose',
   coloredLogs: true,
   //screenshotPath: './errScreens',
   baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
