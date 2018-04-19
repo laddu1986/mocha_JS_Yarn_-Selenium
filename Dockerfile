@@ -52,6 +52,7 @@ RUN chown -R seleuser /home/seleuser
 RUN chgrp -R seleuser /home/seleuser
 RUN apt-get install zip unzip
 
+RUN apt-get install net-tools
 
 ADD ./scripts/ /home/root/scripts
 
