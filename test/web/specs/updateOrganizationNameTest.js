@@ -88,27 +88,25 @@ describe('Update Organization name', () => {
     HomePage.profileMenu.waitForExist();
     HomePage.profileMenu.waitForVisible();
     const profileVisibility = HomePage.profileMenu.isVisible();
-    // console.log(faqVisibility);
     expect(profileVisibility).to.equal(true);
     HomePage.profileMenu.click();
 
     HomePage.profileDetailsAnchor.waitForExist();
     HomePage.profileDetailsAnchor.waitForVisible();
     const profileVisibility1 = HomePage.profileDetailsAnchor.isVisible();
-    // console.log(faqVisibility);
     expect(profileVisibility1).to.equal(true);
     HomePage.profileDetailsAnchor.click();
 
     HomePage.logo.waitForExist();
     HomePage.logo.waitForVisible();
     const profileVisibility2 = HomePage.logo.isVisible();
-    // console.log(faqVisibility);
     expect(profileVisibility2).to.equal(true);
     HomePage.logo.click();
 
   });
 
   it('Checking organization name position in dashboard page', () => {
+    //OrgDashboardPage.changeOrgAnchor.click()
     HomePage.individualOrgCard.waitForExist();
     HomePage.individualOrgCard.waitForVisible();
     const orgCount = HomePage.individualOrgCard.getElementSize();

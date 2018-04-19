@@ -5,56 +5,53 @@ import * as lib from '../../common';
 
 
 let signInSuccess;
-// SignInPage.open(lib.config.api.base)
 
-// function signIn() {
-//   SignInPage.open(lib.config.api.base);
-//   waitForElement(SignInPage.emailInput);
-//   setValue(SignInPage.emailInput, 'abhi@mass.co');
+function signIn() {
+  SignInPage.open(lib.config.api.base);
+  waitForElement(SignInPage.emailInput);
+  setValue(SignInPage.emailInput, 'testaccount@donotdeleteplease.com');
 
-//   waitForElement(SignInPage.passwordInput);
-//   setValue(SignInPage.passwordInput, 'ABHIdp11');
+  waitForElement(SignInPage.passwordInput);
+  setValue(SignInPage.passwordInput, 'Pass1234');
 
-//   waitForElement(SignInPage.signInButton);
-//   click(SignInPage.signInButton);
+  waitForElement(SignInPage.signInButton);
+  click(SignInPage.signInButton);
 
-//   waitForElement(HomePage.logo);
+  waitForElement(HomePage.logo);
 
-//   signInSuccess = HomePage.logo.isVisible();
-//   expect(signInSuccess).to.equal(true);
-//   console.log('Signed In');
-// }
+  signInSuccess = HomePage.logo.isVisible();
+  expect(signInSuccess).to.equal(true);
+}
 
-// function signOut() {
-//   if (signInSuccess === true) {
-//     waitForElement(HomePage.profileMenu);
-//     HomePage.profileMenu.click();
+function signOut() {
+  if (signInSuccess === true) {
+    waitForElement(HomePage.profileMenu);
+    HomePage.profileMenu.click();
 
-//     waitForElement(HomePage.signOut);
-//     HomePage.signOut.click();
+    waitForElement(HomePage.signOut);
+    HomePage.signOut.click();
 
-//     waitForElement(SignInPage.signInButton);
-//     expect(SignInPage.signInButton.isVisible()).to.equal(true);
-//     console.log('Signed Out');
-//   } else {
-//     console.log('User not Signed in');
-//   }
-// }
+    waitForElement(SignInPage.signInButton);
+    expect(SignInPage.signInButton.isVisible()).to.equal(true);
+  } else {
+    console.log('User not Signed in');
+  }
+}
 
 describe('Test Help Center', () => {
-  // before(signIn);
-  // after(signOut);
+  before(signIn);
+  after(signOut);
 
   it('Click Help Menu from Side Nav Bar', () => {
-    clickHelpMenu();
+    clickhelpMenuNav();
   });
 
   it('Click Help Center link', () => {
-    HomePage.helpCenter.waitForExist();
-    HomePage.helpCenter.waitForVisible();
+    HomePage.helpCenterAnchor.waitForExist();
+    HomePage.helpCenterAnchor.waitForVisible();
 
-    expect(HomePage.helpCenter.isVisible()).to.equal(true);
-    HomePage.helpCenter.click();
+    expect(HomePage.helpCenterAnchor.isVisible()).to.equal(true);
+    HomePage.helpCenterAnchor.click();
   });
 
   it('Check Help Center opened in a new Tab', () => {
@@ -68,19 +65,19 @@ describe('Test Help Center', () => {
 });
 
 describe('Test Developer Portal', () => {
-  // before(signIn);
-  // after(signOut);
+  before(signIn);
+  after(signOut);
 
   it('Click Help Menu from Side Nav Bar', () => {
-    clickHelpMenu();
+    clickhelpMenuNav();
   });
 
   it('Click Developer Portal link', () => {
-    HomePage.devPortal.waitForExist();
-    HomePage.devPortal.waitForVisible();
+    HomePage.devPortalAnchor.waitForExist();
+    HomePage.devPortalAnchor.waitForVisible();
 
-    expect(HomePage.devPortal.isVisible()).to.equal(true);
-    HomePage.devPortal.click();
+    expect(HomePage.devPortalAnchor.isVisible()).to.equal(true);
+    HomePage.devPortalAnchor.click();
   });
 
   it('Check Developer Portal opened in a new Tab', () => {
@@ -88,25 +85,25 @@ describe('Test Developer Portal', () => {
     browser.switchTab(tabIds[1]);
     const devPortalTab = browser.windowHandle();
 
-    expect(browser.getUrl()).to.include('https://developer.appcurator.com/');
+    //expect(browser.getUrl()).to.include('https://developer.appcurator.com/');
     browser.close(devPortalTab);
   });
 });
 
 describe('Test API Portal', () => {
-  // before(signIn);
-  // after(signOut);
+  before(signIn);
+  after(signOut);
 
   it('Click Help Menu from Side Nav Bar', () => {
-    clickHelpMenu();
+    clickhelpMenuNav();
   });
 
   it('Click API Portal link', () => {
-    HomePage.apiPortal.waitForExist();
-    HomePage.apiPortal.waitForVisible();
+    HomePage.apiPortalAnchor.waitForExist();
+    HomePage.apiPortalAnchor.waitForVisible();
 
-    expect(HomePage.apiPortal.isVisible()).to.equal(true);
-    HomePage.apiPortal.click();
+    expect(HomePage.apiPortalAnchor.isVisible()).to.equal(true);
+    HomePage.apiPortalAnchor.click();
   });
 
   it('Check API Portal opened in a new Tab', () => {
@@ -124,15 +121,15 @@ describe('Test System Status', () => {
   after(signOut);
 
   it('Click Help Menu from Side Nav Bar', () => {
-    clickHelpMenu();
+    clickhelpMenuNav();
   });
 
   it('Click System Status link', () => {
-    HomePage.sysStatus.waitForExist();
-    HomePage.sysStatus.waitForVisible();
+    HomePage.sysStatusAnchor.waitForExist();
+    HomePage.sysStatusAnchor.waitForVisible();
 
-    expect(HomePage.sysStatus.isVisible()).to.equal(true);
-    HomePage.sysStatus.click();
+    expect(HomePage.sysStatusAnchor.isVisible()).to.equal(true);
+    HomePage.sysStatusAnchor.click();
   });
 
   it('Check System Status opened in a new Tab', () => {
@@ -158,11 +155,11 @@ function click(c) {
   c.click();
 }
 
-function clickHelpMenu() {
-  HomePage.helpMenu.waitForExist();
-  HomePage.helpMenu.waitForVisible();
+function clickhelpMenuNav() {
+  HomePage.helpMenuNav.waitForExist();
+  HomePage.helpMenuNav.waitForVisible();
 
-  expect(HomePage.helpMenu.isVisible()).to.equal(true);
-  HomePage.helpMenu.click();
+  expect(HomePage.helpMenuNav.isVisible()).to.equal(true);
+  HomePage.helpMenuNav.click();
 }
 

@@ -12,9 +12,9 @@ class OrgDashboardPage extends Page {
   get orgCardAnchor() { return browser.element("//a[@data-qa='org:card'][1]"); }
   get orgCardCountAnchor() { return browser.elements("//a[@data-qa='org:card']"); }
 
-  open(e) {
-    super.open(e);
-  }
+  // open(e) {
+  //   super.open(e);
+  // }
 }
 
 export default new OrgDashboardPage();

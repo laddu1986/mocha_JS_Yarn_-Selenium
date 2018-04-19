@@ -210,12 +210,14 @@ function clickLeaveOrganization() {
 
   browser.pause(500) // for safari
 
-  SettingsPage.deleteOrgButton.waitForExist()
-  SettingsPage.deleteOrgButton.waitForVisible()
-  SettingsPage.deleteOrgButton.waitForEnabled()
-  SettingsPage.deleteOrgButton.click()
+  SettingsPage.leaveOrgButton.waitForExist()
+  SettingsPage.leaveOrgButton.waitForVisible()
+  SettingsPage.leaveOrgButton.waitForEnabled()
+  SettingsPage.leaveOrgButton.click()
 
-  browser.alertAccept();
+  SettingsPage.ConfirmOKButton.waitForExist()
+  SettingsPage.ConfirmOKButton.waitForVisible()
+  SettingsPage.ConfirmOKButton.click()
 }
 
 function viewOrgDashboard() {
