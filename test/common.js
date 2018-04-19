@@ -1,14 +1,22 @@
+const server = require('chakram');
 
-import assertions from './api/actions/assertions';
-import del from './api/actions/delete';
-import post from './api/actions/post';
-
-const chakram = require('chakram');
-
-global.expect = chakram.expect;
+global.expect = server.expect;
 const mysql = require('mysql');
 const config = require('config-yml');
 const faker = require('faker');
+
+const fullname = (faker.name.findName()).replace('.', '');
+const email = `test_${faker.internet.email()}`;
+const password = faker.internet.password();
+const res = [];
+const idata = {
+  fullname,
+  email,
+  password,
+};
+const odata = {
+  name: (faker.name.findName()).replace('.', ''),
+};
 
 let con = null;
 
@@ -37,6 +45,30 @@ function assertion(e, data) {
   });
 }
 
+function post(done, any) {
+  return server.post(any.api, any.data)
+    .then((response) => {
+      // console.log(response.body);
+      any.func(response);
+      done();
+    });
+}
+function get(done, any) {
+  return server.get(any.api + any.data)
+    .then((response) => {
+      // console.log(response.body);
+      any.func(response);
+      done();
+    });
+}
+function del(done, any) {
+  return server.delete(any.api + any.data)
+    .then((response) => {
+      // console.log(response.body);
+      any.func(response);
+      done();
+    });
+}
 // const con = mysql.createConnection({
 //   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
 //   user: 'rouser',
@@ -51,4 +83,20 @@ function assertion(e, data) {
 
 // con.end();
 
-export { assertions, faker, config, chakram, del, post, connection, end };
+export {
+  // api
+  post,
+  get,
+  del,
+  // library
+  faker,
+  config,
+  server,
+  // db
+  connection,
+  end,
+  // data
+  idata,
+  odata,
+  res,
+};

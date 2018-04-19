@@ -1,4 +1,4 @@
-image: qamassive/allpackages
+image: qamassive/v2
 options:
   docker: true
 pipelines:
@@ -6,7 +6,6 @@ pipelines:
     - step:
         script:
           - sh ./scripts/start.sh
-          - apt-get install net-tools
           - netstat -plnt
           - npm install
           - npm install wdio-allure-reporter
