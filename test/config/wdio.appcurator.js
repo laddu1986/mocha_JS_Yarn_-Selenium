@@ -14,7 +14,7 @@ exports.config = {
     browserName: brow,
     chromeOptions: {
       args: ['disable-infobars',
-        //'--headless',
+        '--headless',
         '--disable-gpu'],
     },
   }],
