@@ -1,5 +1,5 @@
 // import SignInPage from '../specs/validSignIn_PreReq'
-import HomePage from '../page_objects/HomePage';
+import HomePage from '../page_objects/homePage';
 import SignInPage from '../page_objects/signInPage';
 import * as lib from '../../common';
 
