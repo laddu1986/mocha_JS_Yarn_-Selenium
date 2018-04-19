@@ -16,49 +16,49 @@ exports.config = {
 
   capabilities: [
     {
+      //   browserName: brow,
+      //   chromeOptions: {
+      //     args: ['disable-infobars', '--disable-gpu']
+      //   },
+      //   maxInstances: instance,
+      // },
+
+      // {
+      //   browserName: brow,
+      //   'moz:firefoxOptions': {
+      //     args: [],
+      //     //binary: '/usr/local/bin/geckodriver'
+      //   },
+      //   maxInstances: instance,
+      // },
+
+      // {
       browserName: brow,
-      chromeOptions: {
-        args: ['disable-infobars', '--disable-gpu']
-      },
-      maxInstances: instance,
-    },
+      //   'safari.options': {
+      //     technologyPreview: false
+      //   },
+      //   maxInstances: instance,
+      // },
 
-    // {
-    //   browserName: brow,
-    //   'moz:firefoxOptions': {
-    //     args: [],
-    //     //binary: '/usr/local/bin/geckodriver'
-    //   },
-    //   maxInstances: instance,
-    // },
+      // {
+      //   browserName: brow,
+      //   phantomjsOpts: {
+      //     webdriverLogfile: 'phantomjs.log',
+      //     ignoreSslErrors: true
+      //   },
+      //   maxInstances: instance,
+      //}
 
-    // {
-    //   browserName: brow,
-    //   'safari.options': {
-    //     technologyPreview: false
-    //   },
-    //   maxInstances: instance,
-    // },
-
-    // {
-    //   browserName: brow,
-    //   phantomjsOpts: {
-    //     webdriverLogfile: 'phantomjs.log',
-    //     ignoreSslErrors: true
-    //   },
-    //   maxInstances: instance,
-    //}
-
-    // {
-    //   browserName: brow,
-    // }
+      // {
+      //   browserName: brow,
+    }
   ],
 
 
 
   updateJob: false,
   specs: [
-    './test/web/specs/deleteOrganizationTest.js',
+    './test/web/specs/reRegisterAccountTest.js',
     // './test/web/specs/viewOrganizationDashboard.js',
   ],
   // Patterns to exclude.

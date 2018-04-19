@@ -10,6 +10,8 @@ class SettingsPage {
 
 
   get orgSettingsPage() { return browser.element("//*[@data-qa='page:org-settings']") }
+  get ConfirmOKButton() { return browser.element("//*[@data-qa='btn:submit']"); }
+
 
   //   open(e) {
   //     // console.log(e);

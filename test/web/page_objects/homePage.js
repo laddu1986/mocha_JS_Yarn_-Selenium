@@ -15,6 +15,7 @@ class HomePage {
   get individualOrgCard() { return browser.elements("//*[@data-qa='org:card']"); }
   get noOrgs() { return browser.element("//*[@data-qa='page:no-orgs']"); }
   get createOrgButton() { return browser.element("//*[@data-qa='link:create-org']") }
+  get removeAccountButton() { return browser.element("//button[@data-qa='btn:delete-acc']") }
 
   get helpMenuNav() { return browser.element("//*[@data-qa='menu:help']"); }
   get helpCenterAnchor() { return browser.element("//*[contains(text(),'Help Center')]"); }

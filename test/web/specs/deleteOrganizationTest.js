@@ -126,7 +126,7 @@ describe('Delete Organization Test', () => {
       gotoOrgSettings()
     })
 
-    it('Click Delete Organization - First Org', () => {
+    it('Click Delete Organization - First Org and Confirm OK', () => {
       clickDeleteOrganization()
     })
 
@@ -155,7 +155,7 @@ describe('Delete Organization Test', () => {
       gotoOrgSettings()
     })
 
-    it('Click Delete Organization - Second Org', () => {
+    it('Click Delete Organization - Second Org and Confirm OK', () => {
       clickDeleteOrganization()
     })
 
@@ -166,13 +166,13 @@ describe('Delete Organization Test', () => {
   })
 
 
-  describe(' Leaving Last Org re-directs to No Orgs page', () => {
+  describe('Leaving Last Org re-directs to No Orgs page', () => {
     it('Goto Organization Settings of Last Org', () => {
       gotoOrgSettings()
 
     })
 
-    it('Click Delete Organization - Last Org', () => {
+    it('Click Delete Organization - Last Org and Confirm OK', () => {
       clickDeleteOrganization()
     })
 
@@ -215,7 +215,7 @@ function clickDeleteOrganization() {
   // SettingsPage.leaveOrgButton.waitForEnabled()
   SettingsPage.leaveOrgButton.click()
 
-  browser.alertAccept();
+  SettingsPage.ConfirmOKButton.click()
 }
 
 function viewOrgDashboard() {

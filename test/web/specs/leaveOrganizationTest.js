@@ -204,15 +204,15 @@ function gotoOrgSettings() {
 
 function clickLeaveOrganization() {
 
-  // SettingsPage.orgSettingsPage.waitForExist()
-  // SettingsPage.orgSettingsPage.waitForVisible()
+  SettingsPage.orgSettingsPage.waitForExist()
+  SettingsPage.orgSettingsPage.waitForVisible()
   SettingsPage.orgSettingsPage.click()
 
   browser.pause(500) // for safari
 
-  // SettingsPage.deleteOrgButton.waitForExist()
-  // SettingsPage.deleteOrgButton.waitForVisible()
-  // SettingsPage.deleteOrgButton.waitForEnabled()
+  SettingsPage.deleteOrgButton.waitForExist()
+  SettingsPage.deleteOrgButton.waitForVisible()
+  SettingsPage.deleteOrgButton.waitForEnabled()
   SettingsPage.deleteOrgButton.click()
 
   browser.alertAccept();
