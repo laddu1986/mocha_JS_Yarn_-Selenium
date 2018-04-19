@@ -18,7 +18,6 @@ class CreateAccountPage extends Page {
   get organizationInputErr() { return browser.element("//*[@data-qa='input:password']//*[@data-qa='input:error']"); }
 
   // open(e) {
-  //   console.log(e);
   //   super.open(e);
   // }
 }
