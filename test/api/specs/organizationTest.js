@@ -4,7 +4,6 @@ import * as lib from '../../common';
 // const email = lib.faker.internet.email();
 // const password = lib.faker.internet.password();
 const res = [];
-const postRes = [];
 
 describe('Organizations Api', () => {
   before('Connect to database', () => {
@@ -16,18 +15,19 @@ describe('Organizations Api', () => {
     // });
   });
   describe('POST /organizations', () => {
-    it('Create a new organization.', () => lib.server
-      .post(
-        lib.config.api.organizations,
-        {
-          name: lib.faker.name.findName(),
+    it('Create a new organization.', (done) => {
+      const any = {
+        api: lib.config.api.organizations,
+        data: {
+          name: (lib.faker.name.findName()).replace('.', ''),
         },
-      )
-      .then((i) => {
-        res.push(i.body);
-        // console.log(i.body);
-        expect(i).to.have.status(201);
-      }));
+        func(response) {
+          res.push(response.body);
+          expect(response).to.have.status(201);
+        },
+      };
+      lib.post(done, any);
+    });
   });
   describe('GET /organizations/{id}', () => {
     it('Get a organizations by its id.', () => lib.server
