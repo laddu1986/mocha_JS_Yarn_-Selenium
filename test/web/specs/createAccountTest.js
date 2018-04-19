@@ -105,7 +105,7 @@ describe('Open create an account page', () => {
     //   password: 'R34d0nlyK3y',
     //   database: 'membership_test',
     // });
-    console.log(lib.config.api.createAccount);
+    //console.log(lib.config.api.createAccount);
     CreateAccountPage.open(lib.config.api.base);
     waitForElement(CreateAccountPage.createAccountLink);
     // browser.pause(5000)

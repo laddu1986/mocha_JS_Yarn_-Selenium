@@ -80,14 +80,14 @@ function createOrgs() {
 
     waitForElement(HomePage.createOrgInput);
     setValue(HomePage.createOrgInput, bigName(10));
+
     waitForElement(HomePage.submit);
     HomePage.submit.waitForEnabled();
-    // if (HomePage.submit.isEnabled()) {
-
     click(HomePage.submit);
+
     OrgDashboardPage.changeOrgAnchor.waitForExist();
     OrgDashboardPage.changeOrgAnchor.waitForVisible();
-  });
+  })
 }
 
 describe('Create an Organization', () => {

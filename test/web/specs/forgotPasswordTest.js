@@ -38,13 +38,11 @@ describe('Sign in page', () => {
     click(SignInPage.signInButton)
 
     waitForElement(SignInPage.backToSignIn)
-    console.log((SignInPage.backToSignIn).getText())
 
     waitForElement(SignInPage.backToSignIn)
     click(SignInPage.backToSignIn)
 
     const backToSignInPage = SignInPage.forgotPassword.isVisible()
-    console.log(backToSignInPage)
 
   })
 

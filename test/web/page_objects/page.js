@@ -10,8 +10,8 @@ class Page {
     browser.windowHandleSize({ width: 1280, height: 800 })
     browser.timeouts('implicit', 5000);
 
-    browser.url(base + path);
-    //browser.url(base)
+    //browser.url(base + path);
+    browser.url(base)
   }
 }
 

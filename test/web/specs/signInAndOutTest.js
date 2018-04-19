@@ -81,17 +81,17 @@ describe('Tests for Sign Page', () => {
 
   it('Should Sign In successfully with Correct credentials', () => {
     waitForElement(SignInPage.emailInput)
-    setValue(SignInPage.emailInput, 'abhi@mass.co')
+    setValue(SignInPage.emailInput, 'testaccount@donotdeleteplease.com')
 
     waitForElement(SignInPage.passwordInput)
-    setValue(SignInPage.passwordInput, 'ABHIdp11')
+    setValue(SignInPage.passwordInput, 'Pass1234')
 
     waitForElement(SignInPage.signInButton)
     click(SignInPage.signInButton)
 
-    waitForElement(HomePage.logo)
+    waitForElement(HomePage.profileMenu)
 
-    signInSuccess = HomePage.logo.isVisible()
+    signInSuccess = HomePage.profileMenu.isVisible()
     expect(signInSuccess).to.equal(true)
   })
 

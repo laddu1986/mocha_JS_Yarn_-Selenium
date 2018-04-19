@@ -13,18 +13,20 @@ exports.config = {
   capabilities: [{
     browserName: brow,
     chromeOptions: {
-      args: ['disable-infobars', '--disable-gpu'],
+      args: ['disable-infobars',
+        //'--headless',
+        '--disable-gpu'],
     },
-    // , '--headless', '--disable-gpu', '--window-size=1200, 700'] }
   }],
 
   updateJob: false,
   specs: [
-    // './test/web/specs/*Test.js',
-    './test/web/specs/deleteAccount.js',
+    './test/web/specs/*Test.js',
+    //'./test/web/specs/updateOrganizationNameTest.js',
   ],
   // Patterns to exclude.
   exclude: [
+    './test/web/specs/updateOrganizationNameTest.js',
   ],
 
   logLevel: 'silent',
@@ -32,7 +34,7 @@ exports.config = {
   screenshotPath: './errScreens',
   baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
   waitforTimeout: 10000,
-  // maxInstances: 3,
+  maxInstances: 10,
 
   plugins: {
     'wdio-screenshot': {},
