@@ -1,65 +1,27 @@
 require('dotenv').config();
 const argv = require('yargs').argv;
+// let WdioTestRailReporter = require('/Users/avinash.eediga/Documents/qa/qa-automation/node_modules/wdio-testrail-reporter/lib/wdio-testrail-reporter.js');
+
+// var config = require('config-yml');
 
 const brow = 'chrome';
-//const brow = 'firefox';
-//const brow = 'safari';
-//const brow = 'opera';
-
-
-const instance = 10
 
 exports.config = {
-  //services: ['selenium-standalone', 'chromedriver'],
-  //services: ['chromedriver'],
-
-
-  capabilities: [
-    {
-      //   browserName: brow,
-      //   chromeOptions: {
-      //     args: ['disable-infobars', '--disable-gpu']
-      //   },
-      //   maxInstances: instance,
-      // },
-
-      // {
-      //   browserName: brow,
-      //   'moz:firefoxOptions': {
-      //     args: [],
-      //     //binary: '/usr/local/bin/geckodriver'
-      //   },
-      //   maxInstances: instance,
-      // },
-
-      // {
-      browserName: brow,
-      //   'safari.options': {
-      //     technologyPreview: false
-      //   },
-      //   maxInstances: instance,
-      // },
-
-      // {
-      //   browserName: brow,
-      //   phantomjsOpts: {
-      //     webdriverLogfile: 'phantomjs.log',
-      //     ignoreSslErrors: true
-      //   },
-      //   maxInstances: instance,
-      //}
-
-      // {
-      //   browserName: brow,
-    }
-  ],
-
-
+  // services: ['selenium-standalone'],
+  // services: ['chromedriver', 'devtools'],
+  enableNetwork: true,
+  capabilities: [{
+    browserName: brow,
+    chromeOptions: {
+      args: ['disable-infobars', '--headless', '--disable-gpu'],
+    },
+    // , '--headless', '--disable-gpu', '--window-size=1200, 700'] }
+  }],
 
   updateJob: false,
   specs: [
-    './test/web/specs/reRegisterAccountTest.js',
-    // './test/web/specs/viewOrganizationDashboard.js',
+    // './test/web/specs/*Test.js',
+    './test/web/specs/deleteAccount.js',
   ],
   // Patterns to exclude.
   exclude: [
@@ -67,14 +29,14 @@ exports.config = {
 
   logLevel: 'silent',
   coloredLogs: true,
-  //screenshotPath: './errScreens',
+  screenshotPath: './errScreens',
   baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
   waitforTimeout: 10000,
-  maxInstances: 10,
+  // maxInstances: 3,
 
   plugins: {
-    // 'wdio-screenshot': {},
-    // 'webdriverajax': {},
+    'wdio-screenshot': {},
+    webdriverajax: {},
     // webdrivercss: {
     //     screenshotRoot: 'my-shots',
     //     failedComparisonsRoot: 'diffs',
@@ -95,10 +57,10 @@ exports.config = {
   },
   // testRailsOptions: {
   //   domain: "testrail.massiveinteractive.com",
-  //   username: "",
-  //   password: "",
-  //   projectId: 1,
-  //   suiteId: 2471,
+  //   username: "abhijeet.daspatnaik@massive.co",
+  //   password: "ABHI@dp11",
+  //   projectId: P1,
+  //   suiteId: S2471,
   //   runName: "My test run"
   // },
 
@@ -139,8 +101,3 @@ exports.config = {
 
   },
 };
-
-
-
-//testrail
-//node /Users/abhi/git/qa-automation/node_modules/wdio-testrail-reporter/scripts/generate-cases.js /Users/abhi/git/qa-automation/test/wdio.conf.js /Users/abhi/git/qa-automation/test/web/specs
