@@ -27,6 +27,7 @@ exports.config = {
   // Patterns to exclude.
   exclude: [
     './test/web/specs/updateOrganizationNameTest.js',
+    './test/web/specs/helpPageTest.js',
   ],
 
   logLevel: 'silent',
