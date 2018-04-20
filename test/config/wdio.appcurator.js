@@ -39,7 +39,6 @@ exports.config = {
 
   plugins: {
     'wdio-screenshot': {},
-    webdriverajax: {},
     // webdrivercss: {
     //     screenshotRoot: 'my-shots',
     //     failedComparisonsRoot: 'diffs',
