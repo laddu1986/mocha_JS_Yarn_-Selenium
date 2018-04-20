@@ -3,7 +3,6 @@ const config = require('config-yml');
 class Page {
   open(path) {
     const base = config.api.base;
-    //console.log('path =  ' + base + path);
     //browser.windowHandleSize({ width: 1280, height: 1024 })
     //browser.windowHandleSize({ width: 1920, height: 1200 })
     //browser.windowHandleSize({ width: 1280, height: 1200 })

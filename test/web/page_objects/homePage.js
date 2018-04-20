@@ -31,6 +31,10 @@ class HomePage {
 
   get signOut() { return browser.element("//*[@data-qa='nav:sign-out']"); }
 
+  // open(e) {
+  //   super.open(e);
+  // }
+
 }
 
 export default new HomePage();

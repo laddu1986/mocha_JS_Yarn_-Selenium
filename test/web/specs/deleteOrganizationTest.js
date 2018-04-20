@@ -215,9 +215,9 @@ function clickDeleteOrganization() {
   SettingsPage.leaveOrgButton.waitForEnabled()
   SettingsPage.leaveOrgButton.click()
 
-  SettingsPage.ConfirmOKButton.waitForExist()
-  SettingsPage.ConfirmOKButton.waitForVisible()
-  SettingsPage.ConfirmOKButton.click()
+  SettingsPage.confirmOkButton.waitForExist()
+  SettingsPage.confirmOkButton.waitForVisible()
+  SettingsPage.confirmOkButton.click()
 }
 
 function viewOrgDashboard() {

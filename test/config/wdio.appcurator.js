@@ -1,13 +1,10 @@
 require('dotenv').config();
 const argv = require('yargs').argv;
-// let WdioTestRailReporter = require('/Users/avinash.eediga/Documents/qa/qa-automation/node_modules/wdio-testrail-reporter/lib/wdio-testrail-reporter.js');
-
-// var config = require('config-yml');
 
 const brow = 'chrome';
 
 exports.config = {
-  // services: ['selenium-standalone'],
+  // services: ['selenium-standalone', 'chromedriver'],
   // services: ['chromedriver', 'devtools'],
   enableNetwork: true,
   capabilities: [{
@@ -15,6 +12,8 @@ exports.config = {
     chromeOptions: {
       args: ['disable-infobars',
         '--headless',
+        '--incognito',
+        '--ignore-certificate-errors',
         '--disable-gpu'],
     },
   }],
@@ -22,23 +21,21 @@ exports.config = {
   updateJob: false,
   specs: [
     './test/web/specs/*Test.js',
-    //'./test/web/specs/updateOrganizationNameTest.js',
+    //'./test/web/specs/helpPageTest.js',
   ],
   // Patterns to exclude.
   exclude: [
-    './test/web/specs/updateOrganizationNameTest.js',
-    './test/web/specs/helpPageTest.js',
   ],
 
   logLevel: 'silent',
   coloredLogs: true,
-  screenshotPath: './errScreens',
+  //screenshotPath: './errScreens',
   baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
   waitforTimeout: 10000,
   maxInstances: 10,
 
   plugins: {
-    'wdio-screenshot': {},
+
     // webdrivercss: {
     //     screenshotRoot: 'my-shots',
     //     failedComparisonsRoot: 'diffs',
