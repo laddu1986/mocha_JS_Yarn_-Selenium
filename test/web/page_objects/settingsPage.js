@@ -10,13 +10,13 @@ class SettingsPage {
 
 
   get orgSettingsPage() { return browser.element("//*[@data-qa='page:org-settings']") }
-  get ConfirmOKButton() { return browser.element("//*[@data-qa='btn:submit']"); }
+  get confirmOkButton() { return browser.element("//*[@data-qa='btn:submit']"); }
 
+  get backToOrgDashboardLink() { return browser.element("//a[@data-qa='link:dashboard']") }
 
-  //   open(e) {
-  //     // console.log(e);
-  //     super.open(e);
-  //   }
+  // open(e) {
+  //   super.open(e);
+  // }
 }
 
 export default new SettingsPage();

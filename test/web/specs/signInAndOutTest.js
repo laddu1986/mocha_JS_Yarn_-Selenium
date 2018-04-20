@@ -75,7 +75,7 @@ describe('Tests for Sign Page', () => {
 
     waitForElement(SignInPage.incorrectDetails)
     const signInErrMsg = SignInPage.incorrectDetails.getText()
-    expect(signInErrMsg).to.equal('Your details are incorrect. Try again.')
+    expect(signInErrMsg).to.include('incorrect')
   })
 
 
