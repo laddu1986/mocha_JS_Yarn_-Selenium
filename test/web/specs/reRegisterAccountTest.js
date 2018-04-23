@@ -14,8 +14,8 @@ import OrgDashboardPage from '../page_objects/orgDashboardPage';
 import SettingsPage from '../page_objects/settingsPage';
 import Page from '../page_objects/page';
 
-const name = lib.faker.name.findName();
-const email = `test_${lib.faker.internet.email()}`;
+const name = lib.bigName(10);
+const email = `test_${lib.bigName(15)}@dummy.co`;
 const organization = 'OrgReRegisterMe';
 const password = 'Pass1234';
 
