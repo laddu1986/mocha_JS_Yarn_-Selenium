@@ -10,7 +10,8 @@ exports.config = {
   capabilities: [{
     browserName: brow,
     chromeOptions: {
-      args: ['disable-infobars',
+      args: [
+        'disable-infobars',
         '--headless',
         '--incognito',
         '--ignore-certificate-errors',
@@ -21,7 +22,7 @@ exports.config = {
   updateJob: false,
   specs: [
     './test/web/specs/*Test.js',
-    //'./test/web/specs/updateOrganizationNameTest.js',
+    // './test/web/specs/updateOrganizationNameTest.js',
   ],
   // Patterns to exclude.
   exclude: [
@@ -29,8 +30,8 @@ exports.config = {
 
   logLevel: 'silent',
   coloredLogs: true,
-  //screenshotPath: './errScreens',
-  baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
+  // screenshotPath: './errScreens',
+  baseUrl: 'https://my.appcurator.com/',
   waitforTimeout: 10000,
   maxInstances: 10,
 

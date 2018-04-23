@@ -3,20 +3,23 @@ const server = require('chakram');
 global.expect = server.expect;
 const mysql = require('mysql');
 const config = require('config-yml');
-const faker = require('faker');
 
-const fullname = (faker.name.findName()).replace('.', '');
-const email = `test_${faker.internet.email()}`;
-const password = faker.internet.password();
-const res = [];
-const idata = {
-  fullname,
-  email,
-  password,
+const responseData = {
+  organization: [],
+  membership: [],
+  identity: [],
+  identityState: [],
+  invites: [],
 };
-const odata = {
-  name: (faker.name.findName()).replace('.', ''),
-};
+function bigName(params) {
+  let text = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (let i = 0; i < params; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
+
+  return `test_${text}`;
+}
+
 
 let con = null;
 
@@ -38,13 +41,6 @@ function end() {
   });
 }
 
-function assertion(e, data) {
-  //   console.log(e);
-  e.forEach((expected) => {
-    expect(expected).to.equal(data);
-  });
-}
-
 function post(done, any) {
   return server.post(any.api, any.data)
     .then((response) => {
@@ -55,6 +51,22 @@ function post(done, any) {
 }
 function get(done, any) {
   return server.get(any.api + any.data)
+    .then((response) => {
+      // console.log(response.body);
+      any.func(response);
+      done();
+    });
+}
+function put(done, any) {
+  return server.put(any.api, any.data)
+    .then((response) => {
+      // console.log(response.body);
+      any.func(response);
+      done();
+    });
+}
+function patch(done, any) {
+  return server.patch(any.api, any.data)
     .then((response) => {
       // console.log(response.body);
       any.func(response);
@@ -87,16 +99,16 @@ export {
   // api
   post,
   get,
+  put,
+  patch,
   del,
   // library
-  faker,
   config,
   server,
   // db
   connection,
   end,
   // data
-  idata,
-  odata,
-  res,
+  responseData,
+  bigName,
 };
