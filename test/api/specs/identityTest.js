@@ -1,12 +1,7 @@
+import * as identity from '../actions/identity';
 import * as lib from '../../common';
 
-// const fullname = lib.faker.name.findName();
-// const email = lib.faker.internet.email();
-// const password = lib.faker.internet.password();
-const res = [];
-const postRes = [];
-
-describe('Identities Api', () => {
+describe('Identity Api', () => {
   before('Connect to database', () => {
     // lib.connection({
     //   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
@@ -16,63 +11,20 @@ describe('Identities Api', () => {
     // });
   });
   describe('POST /identities ', () => {
-    it('Add a new user identity.', () => lib.server
-      .post(
-        lib.config.api.identities,
-        {
-          fullname: lib.faker.name.findName(),
-          email: lib.faker.internet.email(),
-          password: lib.faker.internet.password(),
-        },
-      )
-      .then((i) => {
-        // res = [];
-        postRes.push(i.body);
-        expect(i).to.have.status(201);
-      }));
+    it('Add a new user identity.', (done) => {
+      identity.postIdentity(done, lib.responseData.identity);
+    });
   });
   describe('GET /identities/{id}', () => {
-    it('Get a identity by its id.', () => lib.server
-      .post(
-        lib.config.api.identities,
-        {
-          fullname: lib.faker.name.findName(),
-          email: lib.faker.internet.email(),
-          password: lib.faker.internet.password(),
-        },
-      )
-      .then((i) => {
-        // console.log(i.body);
-        res.push(i.body);
-        expect(i).to.have.status(201);
-        // console.log("::: ::: :::");
-        // console.log("::: ::: :::");
-        return lib.server.get(lib.config.api.identities + res[0].id)
-          .then((o) => {
-            res.push(o.body);
-            expect(o).to.have.status(200);
-            // console.log(o.body);
-          });
-      }));
+    it('Get a identity by its id.', (done) => {
+      identity.getIdentityById(done, lib.responseData.identity);
+    });
   });
-  describe('GET /identities/{id}/state', () => {
-    it('Get identity state by its id.', () => lib.server
-      .get(`${lib.config.api.identities + res[0].id}/state`)
-      .then((i) => {
-        // console.log(i.body);
-        expect(o).to.have.status(200);
-      }));
+  describe('Delete /identities/{id}', () => {
+    it('Delete an identity by its id.', (done) => {
+      identity.deleteIdentityById(done, lib.responseData.identity);
+    });
   });
-
-  describe('PUT /identities/{id}/state', () => {
-    it('Update identity state by its id.', () => lib.server
-      .get(`${lib.config.api.identities + res[0].id}/state`)
-      .then((i) => {
-        // console.log(i.body);
-        expect(o).to.have.status(204);
-      }));
-  });
-
   after('End message', () => {
     // lib.end();
   });
