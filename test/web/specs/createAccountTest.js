@@ -4,85 +4,85 @@ import HomePage from '../page_objects/homePage';
 import SignInPage from '../page_objects/signInPage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
 
-function bigName(params) {
-  let text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+// function bigName(params) {
+//   let text = '';
+//   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-  for (let i = 0; i < params; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
+//   for (let i = 0; i < params; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
 
-  return text;
-}
+//   return text;
+// }
 
-const name = bigName(5) + lib.faker.name.findName();
-const email = `test_${bigName(5)}${lib.faker.internet.email()}`;
-const organization = bigName(5) + (lib.faker.company.companyName()).replace(',', '');
+const name = lib.bigName(10);
+const email = `test_${lib.bigName(15)}@dummy.co`;
+const organization = lib.bigName(14);
 // const organization = `${lib.faker.company.companyName()} ${lib.faker.company.companySuffix()}`;
-const testData = [
-  {
-    name: ' ',
-    email: ' ',
-    organization: ' ',
-    password: ' ',
-    title: 'Adding empty data',
-    expected: false,
-  },
-  {
-    name: bigName(201),
-    email: 'a@a',
-    organization: bigName(201),
-    password: 'Passwor',
-    title: 'Checking email format',
-    expected: false,
-  },
-  {
-    name: bigName(201),
-    email: '~!#$%^&*_+@massive.co',
-    organization: bigName(201),
-    password: 'M',
-    title: 'Checking password length with single character',
-    expected: false,
-  },
-  {
-    name: bigName(201),
-    email: '~!#$%^&*_+@massive.co',
-    organization: bigName(201),
-    password: 'Massive',
-    title: 'Checking password length with 7 characters',
-    expected: false,
-  },
-  {
-    name: bigName(201),
-    email: '~!#$%^&*_+@massive.co',
-    organization: bigName(201),
-    password: 'bigNam',
-    title: 'Checking with 201 characters',
-    expected: false,
-  },
-  {
-    name: '~!@#$%^&*()_+',
-    email: '~!#$%^&*_+@massive.co',
-    organization: '~!@#$%^&*()_+',
-    password: '!@#$%^&*()_+',
-    title: 'Adding all special characters',
-    expected: false,
-  },
-  // {
-  //   name,
-  //   email,
-  //   organization,
-  //   password,
-  //   title: 'Adding valid data',
-  //   expected: true,
-  // },
-];
+// const testData = [
+//   {
+//     name: ' ',
+//     email: ' ',
+//     organization: ' ',
+//     password: ' ',
+//     title: 'Adding empty data',
+//     expected: false,
+//   },
+//   {
+//     name: bigName(201),
+//     email: 'a@a',
+//     organization: bigName(201),
+//     password: 'Passwor',
+//     title: 'Checking email format',
+//     expected: false,
+//   },
+//   {
+//     name: bigName(201),
+//     email: '~!#$%^&*_+@massive.co',
+//     organization: bigName(201),
+//     password: 'M',
+//     title: 'Checking password length with single character',
+//     expected: false,
+//   },
+//   {
+//     name: bigName(201),
+//     email: '~!#$%^&*_+@massive.co',
+//     organization: bigName(201),
+//     password: 'Massive',
+//     title: 'Checking password length with 7 characters',
+//     expected: false,
+//   },
+//   {
+//     name: bigName(201),
+//     email: '~!#$%^&*_+@massive.co',
+//     organization: bigName(201),
+//     password: 'bigNam',
+//     title: 'Checking with 201 characters',
+//     expected: false,
+//   },
+//   {
+//     name: '~!@#$%^&*()_+',
+//     email: '~!#$%^&*_+@massive.co',
+//     organization: '~!@#$%^&*()_+',
+//     password: '!@#$%^&*()_+',
+//     title: 'Adding all special characters',
+//     expected: false,
+//   },
+//   // {
+//   //   name,
+//   //   email,
+//   //   organization,
+//   //   password,
+//   //   title: 'Adding valid data',
+//   //   expected: true,
+//   // },
+// ];
 
 
-function assertion(e, data) {
-  //   console.log(e);
-  e.forEach((expected) => {
-    expect(expected).to.equal(data);
-  });
-}
+// function assertion(e, data) {
+//   //   console.log(e);
+//   e.forEach((expected) => {
+//     expect(expected).to.equal(data);
+//   });
+// }
 
 function waitForElement(wfe) {
   wfe.waitForExist();
@@ -105,7 +105,7 @@ describe('Tests for Create Account', () => {
     //   password: 'R34d0nlyK3y',
     //   database: 'membership_test',
     // });
-    //console.log(lib.config.api.createAccount);
+    // console.log(lib.config.api.createAccount);
     CreateAccountPage.open(lib.config.api.base);
     waitForElement(CreateAccountPage.createAccountLink);
     // browser.pause(5000)

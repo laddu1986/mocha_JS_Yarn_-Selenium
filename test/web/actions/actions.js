@@ -2,10 +2,10 @@ import * as lib from '../../common';
 import CreateAccount from '../specs/createAccountTest';
 
 
-const name = lib.faker.name.findName();
-const email = `test_${lib.faker.internet.email()}`;
-const organization = (lib.faker.company.companyName()).replace(',', '');
-const password = 'Pass1234'
+// const name = lib.faker.name.findName();
+// const email = `test_${lib.faker.internet.email()}`;
+// const organization = (lib.faker.company.companyName()).replace(',', '');
+// const password = 'Pass1234'
 
 function waitForElement(wfe) {
   wfe.waitForExist();
