@@ -21,13 +21,12 @@ describe('View Organization setings', () => {
     expect(settingsVisibility).to.equal(true);
     HomePage.settingsAnchor.click();
   });
-  
+
   it('Checking general visibility', () => {
     HomePage.orgSettingsAnchor.waitForExist();
     HomePage.orgSettingsAnchor.waitForVisible();
     const generalVisibility = HomePage.orgSettingsAnchor.isVisible();
     // console.log(generalVisibility + ';;;;;;;;');
     expect(generalVisibility).to.equal(true);
-    
   });
 });
