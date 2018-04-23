@@ -9,7 +9,6 @@
         "babel-plugin-transform-runtime": "^6.15.0",
         "babel-preset-es2015": "^6.18.0",
         "babel-runtime": "^6.18.0",
-        "chromedriver": "^2.37.0",
         "config-yml": "^0.8.0",
         "dotenv": "^5.0.1",
         "easyimage": "^2.1.0",
@@ -19,11 +18,8 @@
         "eslint-plugin-import": "^2.9.0",
         "eslint-plugin-jsx-a11y": "^6.0.3",
         "eslint-plugin-react": "^7.7.0",
-        "mssql": "^4.1.0",
         "mysql": "^2.15.0",
-        "node-emoji": "^1.8.1",
         "node-resemble-js": "^0.0.5",
-        "selenium-standalone": "^6.14.0",
         "wdio-allure-reporter": "^0.6.0",
         "webdriverio": "^4.12.0",
         "winston": "^2.2.0",
@@ -37,9 +33,7 @@
         "chakram": "^1.5.0",
         "faker": "^4.1.0",
         "mocha": "^5.0.5",
-        "wdio-chromedriver-service": "^0.1.2",
         "wdio-mocha-framework": "^0.5.13",
-        "wdio-selenium-standalone-service": "0.0.10",
         "wdio-spec-reporter": "^0.1.4"
     },
     "scripts": {
@@ -54,5 +48,5 @@
         "url": "https://bitbucket.org/appcurator/qa-automation"
     },
     "author": "QA Team",
-    "license": "MIT"
+    "license": "Internal"
 }
