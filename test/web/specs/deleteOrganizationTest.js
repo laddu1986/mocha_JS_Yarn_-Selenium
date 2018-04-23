@@ -6,10 +6,10 @@ import OrgDashboardPage from '../page_objects/orgDashboardPage';
 import SettingsPage from '../page_objects/settingsPage';
 import Page from '../page_objects/page';
 
-const name = lib.faker.name.findName()
-const email = 'test_' + lib.faker.internet.email()
-const organization = 'First Org'
-const password = 'Pass1234'
+const name = lib.faker.name.findName();
+const email = `test_${  lib.faker.internet.email()}`;
+const organization = 'First Org';
+const password = 'Pass1234';
 
 const testData = [
   {
@@ -33,8 +33,8 @@ describe('Delete Organization Test', () => {
     });
 
     it('Create Account with First Org and Sign In', () => {
-      waitForElement(CreateAccountPage.createAccountLink)
-      click(CreateAccountPage.createAccountLink)
+      waitForElement(CreateAccountPage.createAccountLink);
+      click(CreateAccountPage.createAccountLink);
 
       waitForElement(CreateAccountPage.nameInput);
       setValue(CreateAccountPage.nameInput, name);
@@ -67,10 +67,8 @@ describe('Delete Organization Test', () => {
   });
 
   describe('Create two more Orgs', () => {
-
     testData.forEach((test) => {
       it(` ${test.title}`, () => {
-
         waitForElement(HomePage.profileMenu);
         const profileVisibility = HomePage.profileMenu.isVisible();
         expect(true).to.equal(profileVisibility);
@@ -106,29 +104,26 @@ describe('Delete Organization Test', () => {
   });
 
 
-
   describe('Leaving First Org re-directs to choose org page', () => {
-
     it('Go back to /organizations and choose First Org', () => {
-      viewOrgDashboard()
-      browser.element("//*[@data-qa='page:org-dashboard']//*[contains(text(),'Change Organization')]").click()
-      expect(browser.getUrl()).to.equal(lib.config.api.base + 'organizations')
-      waitForElement(HomePage.chooseOrg)
+      viewOrgDashboard();
+      browser.element("//*[@data-qa='page:org-dashboard']//*[contains(text(),'Change Organization')]").click();
+      expect(browser.getUrl()).to.equal(`${lib.config.api.base  }organizations`);
+      waitForElement(HomePage.chooseOrg);
 
-      browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForExist()
-      browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForVisible()
-      browser.element("//a[@data-qa='org:card' and contains(@href,'first')]").click()
-      viewOrgDashboard()
-
-    })
+      browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForExist();
+      browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForVisible();
+      browser.element("//a[@data-qa='org:card' and contains(@href,'first')]").click();
+      viewOrgDashboard();
+    });
 
     it('Goto Organization Settings of First Org', () => {
-      gotoOrgSettings()
-    })
+      gotoOrgSettings();
+    });
 
     it('Click Delete Organization - First Org and Confirm OK', () => {
-      clickDeleteOrganization()
-    })
+      clickDeleteOrganization();
+    });
 
     it('Validate re-direction to choose org page', () => {
       waitForElement(HomePage.chooseOrg);
@@ -139,42 +134,40 @@ describe('Delete Organization Test', () => {
     });
 
     it('Validate choose org page URL to end with /organizations', () => {
-      expect(browser.getUrl()).to.equal(lib.config.api.base + 'organizations')
-    })
-
-  })
+      expect(browser.getUrl()).to.equal(`${lib.config.api.base  }organizations`);
+    });
+  });
 
 
   describe('Leaving Second Org re-directs to Last Org', () => {
     it('Choose Second Org', () => {
-      waitForElement(HomePage.chooseOrg)
-      browser.element("//a[@data-qa='org:card' and contains(@href,'second')]").click()
-    })
+      waitForElement(HomePage.chooseOrg);
+      browser.element("//a[@data-qa='org:card' and contains(@href,'second')]").click();
+    });
 
     it('Goto Organization Settings of Second Org', () => {
-      gotoOrgSettings()
-    })
+      gotoOrgSettings();
+    });
 
     it('Click Delete Organization - Second Org and Confirm OK', () => {
-      clickDeleteOrganization()
-    })
+      clickDeleteOrganization();
+    });
 
     it('Validate re-direction to Last Org dashboard', () => {
-      viewOrgDashboard()
-      expect(OrgDashboardPage.currentOrgName.getText()).to.include('Last Org')
-    })
-  })
+      viewOrgDashboard();
+      expect(OrgDashboardPage.currentOrgName.getText()).to.include('Last Org');
+    });
+  });
 
 
   describe('Leaving Last Org re-directs to No Orgs page', () => {
     it('Goto Organization Settings of Last Org', () => {
-      gotoOrgSettings()
-
-    })
+      gotoOrgSettings();
+    });
 
     it('Click Delete Organization - Last Org and Confirm OK', () => {
-      clickDeleteOrganization()
-    })
+      clickDeleteOrganization();
+    });
 
     it('Should re-direct to No Orgs page after leaving the last Org', () => {
       waitForElement(HomePage.noOrgs);
@@ -198,25 +191,23 @@ function gotoOrgSettings() {
   OrgDashboardPage.orgSettingsNavMenu.waitForExist();
   OrgDashboardPage.orgSettingsNavMenu.waitForVisible();
   OrgDashboardPage.orgSettingsNavMenu.click();
-
 }
 
 function clickDeleteOrganization() {
+  SettingsPage.orgSettingsPage.waitForExist();
+  SettingsPage.orgSettingsPage.waitForVisible();
+  SettingsPage.orgSettingsPage.click();
 
-  SettingsPage.orgSettingsPage.waitForExist()
-  SettingsPage.orgSettingsPage.waitForVisible()
-  SettingsPage.orgSettingsPage.click()
+  browser.pause(500); // for safari
 
-  browser.pause(500) // for safari
+  SettingsPage.leaveOrgButton.waitForExist();
+  SettingsPage.leaveOrgButton.waitForVisible();
+  SettingsPage.leaveOrgButton.waitForEnabled();
+  SettingsPage.leaveOrgButton.click();
 
-  SettingsPage.leaveOrgButton.waitForExist()
-  SettingsPage.leaveOrgButton.waitForVisible()
-  SettingsPage.leaveOrgButton.waitForEnabled()
-  SettingsPage.leaveOrgButton.click()
-
-  SettingsPage.confirmOkButton.waitForExist()
-  SettingsPage.confirmOkButton.waitForVisible()
-  SettingsPage.confirmOkButton.click()
+  SettingsPage.confirmOkButton.waitForExist();
+  SettingsPage.confirmOkButton.waitForVisible();
+  SettingsPage.confirmOkButton.click();
 }
 
 function viewOrgDashboard() {
@@ -243,5 +234,5 @@ function setValue(sv, data) {
 }
 
 function click(c) {
-  c.click()
+  c.click();
 }
