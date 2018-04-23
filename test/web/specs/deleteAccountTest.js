@@ -113,7 +113,7 @@ describe('Delete Acount Test (Remove my Account)', () => {
       click(SignInPage.signInButton)
     })
 
-    it('User should not be allowed to login', () => {
+    it('Should show err msg - Incorrect details', () => {
       waitForElement(SignInPage.incorrectDetails)
       expect(SignInPage.incorrectDetails.getText()).to.include('incorrect')
     })

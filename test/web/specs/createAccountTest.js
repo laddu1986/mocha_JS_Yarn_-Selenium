@@ -97,7 +97,7 @@ function click(c) {
   c.click();
 }
 
-describe('Open create an account page', () => {
+describe('Tests for Create Account', () => {
   before('Open create account page', () => {
     // lib.connection({
     //   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',

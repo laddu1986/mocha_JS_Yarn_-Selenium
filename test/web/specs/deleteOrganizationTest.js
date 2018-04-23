@@ -195,7 +195,6 @@ function gotoOrgSettings() {
   HomePage.profileMenu.waitForVisible();
   HomePage.profileMenu.click();
 
-
   OrgDashboardPage.orgSettingsNavMenu.waitForExist();
   OrgDashboardPage.orgSettingsNavMenu.waitForVisible();
   OrgDashboardPage.orgSettingsNavMenu.click();

@@ -6,7 +6,7 @@ class HomePage {
   get profileMenu() { return browser.element("//nav[@data-qa='menu:profile']//div[@data-qa='btn:menu']"); }
   get switchOrCreateOrganizations() { return browser.element("//*[@data-qa='nav:menu']"); }
   get createOrg() { return browser.element("//*[@data-qa='nav:create-org']"); }
-  get createOrgInput() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:text']"); }
+  get createOrgInput() { return browser.element("//input[@data-qa='input:org-name']"); }
   get createOrgErr() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:error']"); }
   get submit() { return browser.element("//*[@data-qa='btn:submit']"); }
   get logo() { return browser.element("//*[@data-qa='nav:logo']"); }
