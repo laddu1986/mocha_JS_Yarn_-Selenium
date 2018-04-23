@@ -21,7 +21,7 @@ function click(c) {
   c.click()
 }
 
-describe('Sign in page', () => {
+describe('Test Forgot Password Link', () => {
   before('Open App URL', () => {
     SignInPage.open(lib.config.api.base)
   })

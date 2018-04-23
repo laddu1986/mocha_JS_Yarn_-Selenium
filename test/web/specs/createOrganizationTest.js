@@ -7,7 +7,6 @@ import OrgDashboardPage from '../page_objects/orgDashboardPage';
 
 
 function assertion(e, data) {
-  //   console.log(e)
   e.forEach((expected) => {
     expect(expected).to.equal(data);
   });
@@ -81,16 +80,16 @@ function createOrgs() {
     waitForElement(HomePage.createOrgInput);
     setValue(HomePage.createOrgInput, bigName(10));
 
-    waitForElement(HomePage.submit);
-    HomePage.submit.waitForEnabled();
-    click(HomePage.submit);
+    waitForElement(HomePage.createOrgButton);
+    HomePage.createOrgButton.waitForEnabled();
+    click(HomePage.createOrgButton);
 
     OrgDashboardPage.changeOrgAnchor.waitForExist();
     OrgDashboardPage.changeOrgAnchor.waitForVisible();
   })
 }
 
-describe('Create an Organization', () => {
+describe('Tests for Create Organization', () => {
   let i;
   for (i = 0; i < 2; i++) {
     createOrgs();
