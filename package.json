@@ -63,7 +63,7 @@
     },
     "scripts": {
         "web": "node_modules/.bin/wdio test/config/wdio.appcurator.js",
-        "api": "mocha test/api/specs/membershipTest.js --require babel-register",
+        "api": "mocha test/api/specs/*Test.js --require babel-register",
         "report": "allure generate allure-results --clean -o allure-report && allure open allure-report",
         "orca": "mocha test/orca/query.js --require babel-register",
         "test": "./node_modules/mocha/bin/mocha test/api/specs/Test.js --require babel-register"

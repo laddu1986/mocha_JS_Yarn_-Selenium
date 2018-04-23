@@ -4,18 +4,18 @@ import HomePage from '../page_objects/homePage';
 import SignInPage from '../page_objects/signInPage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
 
-function bigName(params) {
-  let text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+// function bigName(params) {
+//   let text = '';
+//   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-  for (let i = 0; i < params; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
+//   for (let i = 0; i < params; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
 
-  return text;
-}
+//   return text;
+// }
 
-const name = bigName(5) + lib.faker.name.findName();
-const email = `test_${bigName(5)}${lib.faker.internet.email()}`;
-const organization = bigName(5) + (lib.faker.company.companyName()).replace(',', '');
+const name = lib.bigName(10);
+const email = `test_${lib.bigName(15)}@dummy.co`;
+const organization = lib.bigName(14);
 // const organization = `${lib.faker.company.companyName()} ${lib.faker.company.companySuffix()}`;
 const testData = [
   {
