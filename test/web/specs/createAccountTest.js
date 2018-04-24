@@ -17,72 +17,72 @@ const name = lib.bigName(10);
 const email = `test_${lib.bigName(15)}@dummy.co`;
 const organization = lib.bigName(14);
 // const organization = `${lib.faker.company.companyName()} ${lib.faker.company.companySuffix()}`;
-const testData = [
-  {
-    name: ' ',
-    email: ' ',
-    organization: ' ',
-    password: ' ',
-    title: 'Adding empty data',
-    expected: false,
-  },
-  {
-    name: bigName(201),
-    email: 'a@a',
-    organization: bigName(201),
-    password: 'Passwor',
-    title: 'Checking email format',
-    expected: false,
-  },
-  {
-    name: bigName(201),
-    email: '~!#$%^&*_+@massive.co',
-    organization: bigName(201),
-    password: 'M',
-    title: 'Checking password length with single character',
-    expected: false,
-  },
-  {
-    name: bigName(201),
-    email: '~!#$%^&*_+@massive.co',
-    organization: bigName(201),
-    password: 'Massive',
-    title: 'Checking password length with 7 characters',
-    expected: false,
-  },
-  {
-    name: bigName(201),
-    email: '~!#$%^&*_+@massive.co',
-    organization: bigName(201),
-    password: 'bigNam',
-    title: 'Checking with 201 characters',
-    expected: false,
-  },
-  {
-    name: '~!@#$%^&*()_+',
-    email: '~!#$%^&*_+@massive.co',
-    organization: '~!@#$%^&*()_+',
-    password: '!@#$%^&*()_+',
-    title: 'Adding all special characters',
-    expected: false,
-  },
-  // {
-  //   name,
-  //   email,
-  //   organization,
-  //   password,
-  //   title: 'Adding valid data',
-  //   expected: true,
-  // },
-];
+// const testData = [
+//   {
+//     name: ' ',
+//     email: ' ',
+//     organization: ' ',
+//     password: ' ',
+//     title: 'Adding empty data',
+//     expected: false,
+//   },
+//   {
+//     name: bigName(201),
+//     email: 'a@a',
+//     organization: bigName(201),
+//     password: 'Passwor',
+//     title: 'Checking email format',
+//     expected: false,
+//   },
+//   {
+//     name: bigName(201),
+//     email: '~!#$%^&*_+@massive.co',
+//     organization: bigName(201),
+//     password: 'M',
+//     title: 'Checking password length with single character',
+//     expected: false,
+//   },
+//   {
+//     name: bigName(201),
+//     email: '~!#$%^&*_+@massive.co',
+//     organization: bigName(201),
+//     password: 'Massive',
+//     title: 'Checking password length with 7 characters',
+//     expected: false,
+//   },
+//   {
+//     name: bigName(201),
+//     email: '~!#$%^&*_+@massive.co',
+//     organization: bigName(201),
+//     password: 'bigNam',
+//     title: 'Checking with 201 characters',
+//     expected: false,
+//   },
+//   {
+//     name: '~!@#$%^&*()_+',
+//     email: '~!#$%^&*_+@massive.co',
+//     organization: '~!@#$%^&*()_+',
+//     password: '!@#$%^&*()_+',
+//     title: 'Adding all special characters',
+//     expected: false,
+//   },
+//   // {
+//   //   name,
+//   //   email,
+//   //   organization,
+//   //   password,
+//   //   title: 'Adding valid data',
+//   //   expected: true,
+//   // },
+// ];
 
 
-function assertion(e, data) {
-  //   console.log(e);
-  e.forEach((expected) => {
-    expect(expected).to.equal(data);
-  });
-}
+// function assertion(e, data) {
+//   //   console.log(e);
+//   e.forEach((expected) => {
+//     expect(expected).to.equal(data);
+//   });
+// }
 
 function waitForElement(wfe) {
   wfe.waitForExist();
