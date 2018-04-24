@@ -24,7 +24,7 @@ RUN apt-get install -y nodejs
 #============================================
 ARG CHROME_VERSION="google-chrome-stable"
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+  && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
   && apt-get update -qqy \
   && apt-get -qqy install \
     ${CHROME_VERSION:-google-chrome-stable} \
@@ -39,6 +39,7 @@ RUN apt-get install -y -q \
   google-chrome-stable \
   openjdk-8-jre \
   nodejs \
+  net-tools \
   x11vnc \
   xvfb \
   xfonts-100dpi \
@@ -52,9 +53,10 @@ RUN chown -R seleuser /home/seleuser
 RUN chgrp -R seleuser /home/seleuser
 RUN apt-get install zip unzip
 
-RUN apt-get install net-tools
+COPY ./scripts/ /home/root/scripts
 
-ADD ./scripts/ /home/root/scripts
+# ADD . /app
+# WORKDIR /app
 
 # #============================================
 # # Selenium packages
