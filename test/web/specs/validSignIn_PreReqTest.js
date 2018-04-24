@@ -1,7 +1,9 @@
-import SignInPage from '../page_objects/signInPage';
+/* import SignInPage from '../page_objects/signInPage';
 import HomePage from '../page_objects/homePage';
 
 import * as lib from '../../common';
+import { openApp, setValue, click, waitForEnable, waitForElement } from '../actions/actions'
+
 
 function assertion(e, data) {
   //   console.log(e)
@@ -51,3 +53,4 @@ describe('Sign in page', () => {
   });
 });
 
+ */

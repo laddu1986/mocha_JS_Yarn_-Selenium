@@ -1,60 +1,39 @@
-// import SignInPage from '../specs/validSignIn_PreReq'
-import HomePage from '../page_objects/HomePage';
+import { openApp, setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
+import * as set from '../actions/actions'
+import HomePage from '../page_objects/homePage';
 import SignInPage from '../page_objects/signInPage';
 import * as lib from '../../common';
 
+import { signOut } from '../actions/signOut'
 
 let signInSuccess;
-// SignInPage.open(lib.config.api.base)
 
-// function signIn() {
-//   SignInPage.open(lib.config.api.base);
-//   waitForElement(SignInPage.emailInput);
-//   setValue(SignInPage.emailInput, 'abhi@mass.co');
+function signIn() {
+  setValue(SignInPage.emailInput, 'testaccount@donotdeleteplease.com');
+  setValue(SignInPage.passwordInput, 'Pass1234');
+  click(SignInPage.signInButton);
+  waitForElement(HomePage.logo);
+  signInSuccess = HomePage.logo.isVisible();
+  expect(signInSuccess).to.equal(true);
+}
 
-//   waitForElement(SignInPage.passwordInput);
-//   setValue(SignInPage.passwordInput, 'ABHIdp11');
-
-//   waitForElement(SignInPage.signInButton);
-//   click(SignInPage.signInButton);
-
-//   waitForElement(HomePage.logo);
-
-//   signInSuccess = HomePage.logo.isVisible();
-//   expect(signInSuccess).to.equal(true);
-//   console.log('Signed In');
-// }
-
-// function signOut() {
-//   if (signInSuccess === true) {
-//     waitForElement(HomePage.profileMenu);
-//     HomePage.profileMenu.click();
-
-//     waitForElement(HomePage.signOut);
-//     HomePage.signOut.click();
-
-//     waitForElement(SignInPage.signInButton);
-//     expect(SignInPage.signInButton.isVisible()).to.equal(true);
-//     console.log('Signed Out');
-//   } else {
-//     console.log('User not Signed in');
-//   }
-// }
 
 describe('Test Help Center', () => {
-  // before(signIn);
-  // after(signOut);
+  it('Open App Page', () => {
+    SignInPage.open(lib.config.api.base)
+  })
+
+  it('Sign In', () => {
+    signIn()
+  })
+
 
   it('Click Help Menu from Side Nav Bar', () => {
-    clickHelpMenu();
+    click(HomePage.helpMenuNav);
   });
 
   it('Click Help Center link', () => {
-    HomePage.helpCenter.waitForExist();
-    HomePage.helpCenter.waitForVisible();
-
-    expect(HomePage.helpCenter.isVisible()).to.equal(true);
-    HomePage.helpCenter.click();
+    click(HomePage.helpCenterAnchor);
   });
 
   it('Check Help Center opened in a new Tab', () => {
@@ -64,23 +43,23 @@ describe('Test Help Center', () => {
 
     expect(browser.getUrl()).to.include('https://help.appcurator.com/');
     browser.close(helpTab);
-  });
+
+    signOut()
+  })
+
 });
 
 describe('Test Developer Portal', () => {
-  // before(signIn);
-  // after(signOut);
+  it('Sign In', () => {
+    signIn()
+  })
 
   it('Click Help Menu from Side Nav Bar', () => {
-    clickHelpMenu();
+    click(HomePage.helpMenuNav);
   });
 
   it('Click Developer Portal link', () => {
-    HomePage.devPortal.waitForExist();
-    HomePage.devPortal.waitForVisible();
-
-    expect(HomePage.devPortal.isVisible()).to.equal(true);
-    HomePage.devPortal.click();
+    click(HomePage.devPortalAnchor);
   });
 
   it('Check Developer Portal opened in a new Tab', () => {
@@ -88,25 +67,24 @@ describe('Test Developer Portal', () => {
     browser.switchTab(tabIds[1]);
     const devPortalTab = browser.windowHandle();
 
-    expect(browser.getUrl()).to.include('https://developer.appcurator.com/');
+    //expect(browser.getUrl()).to.include('https://developer.appcurator.com/');
     browser.close(devPortalTab);
+    signOut()
+
   });
 });
 
 describe('Test API Portal', () => {
-  // before(signIn);
-  // after(signOut);
+  it('Sign In', () => {
+    signIn()
+  })
 
   it('Click Help Menu from Side Nav Bar', () => {
-    clickHelpMenu();
+    click(HomePage.helpMenuNav);
   });
 
   it('Click API Portal link', () => {
-    HomePage.apiPortal.waitForExist();
-    HomePage.apiPortal.waitForVisible();
-
-    expect(HomePage.apiPortal.isVisible()).to.equal(true);
-    HomePage.apiPortal.click();
+    click(HomePage.apiPortalAnchor);
   });
 
   it('Check API Portal opened in a new Tab', () => {
@@ -116,23 +94,22 @@ describe('Test API Portal', () => {
 
     expect(browser.getUrl()).to.include('https://api.appcurator.com/');
     browser.close(apiPortalTab);
+    signOut()
+
   });
 });
 
 describe('Test System Status', () => {
-  before(signIn);
-  after(signOut);
+  it('Sign In', () => {
+    signIn()
+  })
 
   it('Click Help Menu from Side Nav Bar', () => {
-    clickHelpMenu();
+    click(HomePage.helpMenuNav);
   });
 
   it('Click System Status link', () => {
-    HomePage.sysStatus.waitForExist();
-    HomePage.sysStatus.waitForVisible();
-
-    expect(HomePage.sysStatus.isVisible()).to.equal(true);
-    HomePage.sysStatus.click();
+    click(HomePage.sysStatusAnchor);
   });
 
   it('Check System Status opened in a new Tab', () => {
@@ -142,27 +119,7 @@ describe('Test System Status', () => {
 
     expect(browser.getUrl()).to.include('https://stats.uptimerobot.com/');
     browser.close(sysStatusTab);
+    signOut()
+
   });
 });
-
-function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
-}
-
-function setValue(sv, data) {
-  sv.setValue(data);
-}
-
-function click(c) {
-  c.click();
-}
-
-function clickHelpMenu() {
-  HomePage.helpMenu.waitForExist();
-  HomePage.helpMenu.waitForVisible();
-
-  expect(HomePage.helpMenu.isVisible()).to.equal(true);
-  HomePage.helpMenu.click();
-}
-

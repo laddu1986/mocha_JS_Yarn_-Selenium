@@ -1,43 +1,3 @@
-web:
-  #SignIn Page
-
-  createAccountLink: "//*[@data-qa='link:register']"
-
-  emailInput: "//*[@data-qa='input:email']//*[@data-qa='input:text']"
-  emailError: "//*[@data-qa='input:email']//*[@data-qa='input:error']"
-  
-  passwordInput: "//*[@data-qa='input:password']//*[@data-qa='input:text']"
-  passwordError: "//*[@data-qa='input:password']//*[@data-qa='input-error']"
-  
-  signInButton: "//*[@data-qa='btn:submit']"
-  signInSuccessMessage: "//h1"
-  signInErrorMessage: "//*[@data-qa='form:error']"
-
-  forgotPasswordLink: "//*[@data-qa='link:forgot-pw']"
-  emailSentMsg: "//h2"
-  backToSignIn: "//*[@data-qa='link:sign-in']"
-  
-  #Create Account Page
-  nameInput: "//*[@data-qa='input:name']//*[@data-qa='input:text']"
-  nameErr: "//*[@data-qa='input:name']//*[@data-qa='input:error']"
-
-  orgInput: "//*[@data-qa='input:org']//*[@data-qa='input:text']"
-  orgErr: "//*[@data-qa='input:org']//*[@data-qa='input:error']"
-  
-  createAccountButton: "//*[@data-qa='btn:submit']"
-
-  #Home Page
-  profileMenu: "//*[@data-qa='menu:profile']"
-  navMenu: "//*[@data-qa='nav:menu']"
-  createOrg: "//*[@data-qa='nav:create-org']"
-
-  createOrgName: "//*[@data-qa='input:org-name']//*[@data-qa='input:text']"
-  createOrgErr: "//*[@data-qa='input:org-name']//*[@data-qa='input:error']"
-
-  helpMenu: "//*[@data-qa='menu:help']"
-
-  signOut: "//*[@data-qa='menu:profile']//*[@data-qa='nav:sign-out']"
-
 orca: 
   email: "lab@mass.co"
   password : "Pass1234"
@@ -47,8 +7,8 @@ api:
   signIn: "/sign-in"
   signedIn: "/signed-in"
   createAccount: "/join"
-  base: "https://my.appcurator.com/" #(MASTER)
-  #base: "https://develop.web.appcurator.qa/" #(DEV-QA)
-  organizations: "http://a89ec28cc219b11e8a04b0a484309a38-57129668.ap-southeast-2.elb.amazonaws.com/api/v1/organizations/"
-  identities: "http://a4f0950b62e5911e88381023cadbc14f-1304735737.ap-southeast-2.elb.amazonaws.com/api/identities/"
-  memberships: "http://a16d8d03c2e2c11e88381023cadbc14f-1270623244.ap-southeast-2.elb.amazonaws.com/api/memberships/"
+  base: "https://my.appcurator.com/" #(DEV-URL)
+  #base: "https://squad-tenancy.web.appcurator.qa/" #(QA-URL)
+  organizations: "http://a549dbed120dc11e8a04b0a484309a38-1209232420.ap-southeast-2.elb.amazonaws.com/api/v1/organizations/"
+  identities: "http://a672f40ce2e4e11e88381023cadbc14f-717884523.ap-southeast-2.elb.amazonaws.com/api/identities/"
+  memberships: "http://a549dbed120dc11e8a04b0a484309a38-1209232420.ap-southeast-2.elb.amazonaws.com/api/v1/memberships/"
