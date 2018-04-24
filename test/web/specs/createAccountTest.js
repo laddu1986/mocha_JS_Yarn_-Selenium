@@ -1,21 +1,16 @@
 import * as lib from '../../common';
+import { openApp, setValue, click, waitForEnable, waitForElement } from '../actions/actions'
+
 import CreateAccountPage from '../page_objects/createAccountPage';
 import HomePage from '../page_objects/homePage';
 import SignInPage from '../page_objects/signInPage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
+import { createAccount } from '../actions/createAccount';
 
-// function bigName(params) {
-//   let text = '';
-//   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+// const name = lib.bigName(10);
+// const email = lib.bigName(15) + `@test.co`;
+// const organization = lib.bigName(14);
 
-//   for (let i = 0; i < params; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
-
-//   return text;
-// }
-
-const name = lib.bigName(10);
-const email = `test_${lib.bigName(15)}@dummy.co`;
-const organization = lib.bigName(14);
 // const organization = `${lib.faker.company.companyName()} ${lib.faker.company.companySuffix()}`;
 // const testData = [
 //   {
@@ -84,18 +79,6 @@ const organization = lib.bigName(14);
 //   });
 // }
 
-function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
-}
-
-function setValue(sv, data) {
-  sv.setValue(data);
-}
-
-function click(c) {
-  c.click();
-}
 
 describe('Tests for Create Account', () => {
   before('Open create account page', () => {
@@ -106,10 +89,7 @@ describe('Tests for Create Account', () => {
     //   database: 'membership_test',
     // });
     // console.log(lib.config.api.createAccount);
-    CreateAccountPage.open(lib.config.api.base);
-    waitForElement(CreateAccountPage.createAccountLink);
-    // browser.pause(5000)
-    click(CreateAccountPage.createAccountLink);
+    SignInPage.open(lib.config.api.base)
   });
 
 
@@ -145,28 +125,11 @@ describe('Tests for Create Account', () => {
   //   });
   // });
 
-  it('Checking logo to confirm user logged in', () => {
-    waitForElement(CreateAccountPage.nameInput);
-    setValue(CreateAccountPage.nameInput, name);
-
-    waitForElement(CreateAccountPage.emailInput);
-    setValue(CreateAccountPage.emailInput, email);
-
-    waitForElement(CreateAccountPage.organizationInput);
-    setValue(CreateAccountPage.organizationInput, organization);
-
-    waitForElement(CreateAccountPage.passwordInput);
-    setValue(CreateAccountPage.passwordInput, 'Pass1234');
-
-    waitForElement(CreateAccountPage.createAccountButton);
-    click(CreateAccountPage.createAccountButton);
-    console.log(`${name}::::${email}::::${organization}::::Pass1234`);
-
-
-    waitForElement(HomePage.logo);
+  it('Create Account', () => {
+    createAccount()
+    //console.log(`${name}::::${email}::::${organization}::::${password}`);
     const logoPresent = HomePage.logo.isVisible();
     expect(logoPresent).to.equal(true);
-    // CreateAccountPage.logo.click();
   });
 
   // it('Validate Landing page with Created Org Name', () => {

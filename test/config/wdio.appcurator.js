@@ -22,10 +22,11 @@ exports.config = {
   updateJob: false,
   specs: [
     './test/web/specs/*Test.js',
-    // './test/web/specs/updateOrganizationNameTest.js',
+    //'./test/web/specs/deleteOrganizationTest.js',
   ],
   // Patterns to exclude.
   exclude: [
+    // './test/web/specs/createSpaceTest.js'
   ],
 
   logLevel: 'silent',
@@ -55,14 +56,6 @@ exports.config = {
       disableWebdriverStepsReporting: true,
     },
   },
-  // testRailsOptions: {
-  //   domain: "testrail.massiveinteractive.com",
-  //   username: "abhijeet.daspatnaik@massive.co",
-  //   password: "ABHI@dp11",
-  //   projectId: P1,
-  //   suiteId: S2471,
-  //   runName: "My test run"
-  // },
 
   mochaOpts: {
     ui: 'bdd',

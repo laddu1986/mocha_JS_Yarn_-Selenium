@@ -17,35 +17,26 @@ import SignInPage from '../page_objects/signInPage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
 import SettingsPage from '../page_objects/settingsPage';
 import Page from '../page_objects/page';
+import { openApp, setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
 
-const name = lib.faker.name.findName()
-const email = 'test_' + lib.faker.internet.email()
+
+const name = lib.bigName(10);
+const email = lib.bigName(15) + `@test.co`;
 const organization = 'OrgDeleteAccount'
 const password = 'Pass1234'
 
 describe('Delete Acount Test (Remove my Account)', () => {
   describe('Create Account', () => {
     before('Open App URL', () => {
-      CreateAccountPage.open(lib.config.api.base);
+      SignInPage.open(lib.config.api.base);
     });
 
     it('Create Account with OrgDeleteAccount Org and Sign In', () => {
-      waitForElement(CreateAccountPage.createAccountLink)
       click(CreateAccountPage.createAccountLink)
-
-      waitForElement(CreateAccountPage.nameInput);
       setValue(CreateAccountPage.nameInput, name);
-
-      waitForElement(CreateAccountPage.emailInput);
       setValue(CreateAccountPage.emailInput, email);
-
-      waitForElement(CreateAccountPage.organizationInput);
       setValue(CreateAccountPage.organizationInput, organization);
-
-      waitForElement(CreateAccountPage.passwordInput);
       setValue(CreateAccountPage.passwordInput, password);
-
-      waitForElement(CreateAccountPage.createAccountButton);
       click(CreateAccountPage.createAccountButton);
 
       console.log(`Test Data : -  \n` +
@@ -91,7 +82,6 @@ describe('Delete Acount Test (Remove my Account)', () => {
     it('Click Remove my account and Confirm OK', () => {
       waitForElement(HomePage.removeAccountButton)
       click(HomePage.removeAccountButton)
-
       browser.alertAccept()
     })
 
@@ -103,13 +93,8 @@ describe('Delete Acount Test (Remove my Account)', () => {
 
   describe('Should not be able to Sign In with the same credentials again', () => {
     it('Enter the same credentials as above and click Sign In', () => {
-      waitForElement(SignInPage.emailInput)
       setValue(SignInPage.emailInput, `${email}`)
-
-      waitForElement(SignInPage.passwordInput)
       setValue(SignInPage.passwordInput, `${password}`)
-
-      waitForElement(SignInPage.signInButton)
       click(SignInPage.signInButton)
     })
 
@@ -122,56 +107,25 @@ describe('Delete Acount Test (Remove my Account)', () => {
 });
 
 function gotoOrgSettings() {
-  HomePage.profileMenu.waitForExist();
-  HomePage.profileMenu.waitForVisible();
-  HomePage.profileMenu.click();
-
-  OrgDashboardPage.orgSettingsNavMenu.waitForExist();
-  OrgDashboardPage.orgSettingsNavMenu.waitForVisible();
-  OrgDashboardPage.orgSettingsNavMenu.click();
+  click(HomePage.profileMenu);
+  click(OrgDashboardPage.orgSettingsNavMenu);
 }
 
 function clickDeleteOrganization() {
-
-  SettingsPage.orgSettingsPage.waitForExist()
-  SettingsPage.orgSettingsPage.waitForVisible()
-  SettingsPage.orgSettingsPage.click()
-
+  click(SettingsPage.orgSettingsPage)
   browser.pause(500) // for safari
-
-  SettingsPage.leaveOrgButton.waitForExist()
-  SettingsPage.leaveOrgButton.waitForVisible()
-  SettingsPage.leaveOrgButton.waitForEnabled()
-  SettingsPage.leaveOrgButton.click()
-
-  SettingsPage.confirmOkButton.waitForExist()
-  SettingsPage.confirmOkButton.waitForVisible()
-  SettingsPage.confirmOkButton.click()
+  waitForEnabled(SettingsPage.leaveOrgButton)
+  click(SettingsPage.leaveOrgButton)
+  click(SettingsPage.confirmOkButton)
 }
 
 function viewOrgDashboard() {
-  OrgDashboardPage.currentOrgName.waitForExist();
-  OrgDashboardPage.currentOrgName.waitForVisible();
-
-  OrgDashboardPage.welcomeMsg.waitForExist();
-  OrgDashboardPage.welcomeMsg.waitForVisible();
+  waitForElement(OrgDashboardPage.currentOrgName);
+  waitForElement(OrgDashboardPage.welcomeMsg);
 }
 
 function assertion(e, data) {
   e.forEach((expected) => {
     expect(expected).to.equal(data);
   });
-}
-
-function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
-}
-
-function setValue(sv, data) {
-  sv.setValue(data);
-}
-
-function click(c) {
-  c.click()
 }

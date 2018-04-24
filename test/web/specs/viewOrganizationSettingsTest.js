@@ -1,27 +1,19 @@
 import CreateAccountPage from '../specs/createAccountTest';
 import HomePage from '../page_objects/homePage';
+import { openApp, setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
 
 describe('View Organization setings', () => {
   it('Checking profile visibility', () => {
-    HomePage.profileMenu.waitForExist();
-    HomePage.profileMenu.waitForVisible();
-    const profileVisibility = HomePage.profileMenu.isVisible();
-    expect(profileVisibility).to.equal(true);
-    HomePage.profileMenu.click();
+    waitForElement(HomePage.profileMenu);
+    click(HomePage.profileMenu);
   });
 
   it('Checking settings visibility', () => {
-    HomePage.settingsAnchor.waitForExist();
-    HomePage.settingsAnchor.waitForVisible();
-    const settingsVisibility = HomePage.settingsAnchor.isVisible();
-    expect(settingsVisibility).to.equal(true);
-    HomePage.settingsAnchor.click();
+    waitForElement(HomePage.settingsAnchor);
+    click(HomePage.settingsAnchor);
   });
 
   it('Checking general visibility', () => {
-    HomePage.orgSettingsAnchor.waitForExist();
-    HomePage.orgSettingsAnchor.waitForVisible();
-    const generalVisibility = HomePage.orgSettingsAnchor.isVisible();
-    expect(generalVisibility).to.equal(true);
+    waitForElement(HomePage.orgSettingsAnchor);
   });
 });

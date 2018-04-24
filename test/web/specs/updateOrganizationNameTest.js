@@ -3,56 +3,30 @@ import createOrganizationPage from '../specs/createOrganizationTest';
 import SettingsPage from '../page_objects/settingsPage';
 import HomePage from '../page_objects/homePage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
-import { settings } from 'cluster';
-
-
-function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
-}
-
-function setValue(sv, data) {
-  sv.setValue(data);
-}
-
-function click(c) {
-  c.click();
-}
+import { openApp, setValue, click, waitForElement, waitForEnabled } from '../actions/actions'
 
 let newOrgName;
 
 describe('Update Organization name', () => {
   it('Click Profile', () => {
-    HomePage.profileMenu.waitForExist();
-    HomePage.profileMenu.waitForVisible();
-    const profileVisibility = HomePage.profileMenu.isVisible();
-    expect(profileVisibility).to.equal(true);
-    HomePage.profileMenu.click();
+    click(HomePage.profileMenu);
   });
 
   it('Click Settings', () => {
-    HomePage.settingsAnchor.waitForExist();
-    HomePage.settingsAnchor.waitForVisible();
-    const settingsVisibility = HomePage.settingsAnchor.isVisible();
-
-    expect(settingsVisibility).to.equal(true);
-    HomePage.settingsAnchor.click();
+    click(HomePage.settingsAnchor);
   });
 
   it('Change the org name to "New Organization"', () => {
-    SettingsPage.orgInput.waitForExist();
-    SettingsPage.orgInput.waitForVisible();
+    waitForElement(SettingsPage.orgInput);
     SettingsPage.orgInput.clearElement();
 
     newOrgName = 'New Organization';
 
-    SettingsPage.orgInput.setValue(newOrgName);
+    setValue(SettingsPage.orgInput, newOrgName);
 
-    SettingsPage.saveOrgNameButton.waitForExist();
-    SettingsPage.saveOrgNameButton.waitForVisible();
-    SettingsPage.saveOrgNameButton.waitForEnabled();
+    waitForEnabled(SettingsPage.saveOrgNameButton);
     expect(SettingsPage.saveOrgNameButton.isEnabled()).to.equal(true);
-    SettingsPage.saveOrgNameButton.click();
+    click(SettingsPage.saveOrgNameButton);
   });
 
   it('Should update the side nav bar with the updated org name', () => {
@@ -63,9 +37,7 @@ describe('Update Organization name', () => {
   });
 
   it('Go back to Org Dashboard from the side nav bar org link', () => {
-    SettingsPage.backToOrgDashboardLink.waitForExist();
-    SettingsPage.backToOrgDashboardLink.waitForVisible();
-    SettingsPage.backToOrgDashboardLink.click();
+    click(SettingsPage.backToOrgDashboardLink);
   });
 
   it('Validate Org dashboard has the updated org name', () => {
@@ -74,18 +46,14 @@ describe('Update Organization name', () => {
   });
 
   it('Go back to Choose org page', () => {
-    OrgDashboardPage.changeOrgAnchor.waitForExist();
-    OrgDashboardPage.changeOrgAnchor.waitForVisible();
-    OrgDashboardPage.changeOrgAnchor.click();
+    click(OrgDashboardPage.changeOrgAnchor);
 
-    HomePage.chooseOrg.waitForExist();
-    HomePage.chooseOrg.waitForVisible();
+    waitForElement(HomePage.chooseOrg);
     expect(HomePage.chooseOrg.isVisible()).to.equal(true);
   });
 
   it('Modified org should be at the top of the org card stack', () => {
-    HomePage.individualOrgCard.waitForExist();
-    HomePage.individualOrgCard.waitForVisible();
+    waitForElement(HomePage.individualOrgCard);
     const topOrgCard = HomePage.individualOrgCard.getText()[0];
     expect(topOrgCard).to.include(newOrgName);
   });

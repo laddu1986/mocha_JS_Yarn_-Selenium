@@ -5,9 +5,10 @@ import SignInPage from '../page_objects/signInPage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
 import SettingsPage from '../page_objects/settingsPage';
 import Page from '../page_objects/page';
+import { openApp, setValue, click, waitForElement, waitForEnabled } from '../actions/actions'
 
 const name = lib.bigName(10);
-const email = `test_${lib.bigName(15)}@dummy.co`;
+const email = lib.bigName(15) + `@test.co`;
 const organization = 'First Org';
 const password = 'Pass1234';
 
@@ -29,26 +30,15 @@ let signedIn;
 describe('Delete Organization Test', () => {
   describe('Create Account', () => {
     before('Open App URL', () => {
-      CreateAccountPage.open(lib.config.api.base);
+      SignInPage.open(lib.config.api.base)
     });
 
     it('Create Account with First Org and Sign In', () => {
-      waitForElement(CreateAccountPage.createAccountLink);
       click(CreateAccountPage.createAccountLink);
-
-      waitForElement(CreateAccountPage.nameInput);
       setValue(CreateAccountPage.nameInput, name);
-
-      waitForElement(CreateAccountPage.emailInput);
       setValue(CreateAccountPage.emailInput, email);
-
-      waitForElement(CreateAccountPage.organizationInput);
       setValue(CreateAccountPage.organizationInput, organization);
-
-      waitForElement(CreateAccountPage.passwordInput);
       setValue(CreateAccountPage.passwordInput, password);
-
-      waitForElement(CreateAccountPage.createAccountButton);
       click(CreateAccountPage.createAccountButton);
 
       console.log(`${'Test Data : - ' + '\n' +
@@ -69,19 +59,19 @@ describe('Delete Organization Test', () => {
   describe('Create two more Orgs', () => {
     testData.forEach((test) => {
       it(` ${test.title}`, () => {
-        waitForElement(HomePage.profileMenu);
-        const profileVisibility = HomePage.profileMenu.isVisible();
-        expect(true).to.equal(profileVisibility);
+        // waitForElement(HomePage.profileMenu);
+        // const profileVisibility = HomePage.profileMenu.isVisible();
+        // expect(true).to.equal(profileVisibility);
         click(HomePage.profileMenu);
 
-        waitForElement(HomePage.switchOrCreateOrganizations);
-        const createOrgVisibility = HomePage.switchOrCreateOrganizations.isVisible();
-        expect(true).to.equal(createOrgVisibility);
+        // waitForElement(HomePage.switchOrCreateOrganizations);
+        // const createOrgVisibility = HomePage.switchOrCreateOrganizations.isVisible();
+        // expect(true).to.equal(createOrgVisibility);
         click(HomePage.switchOrCreateOrganizations);
 
-        waitForElement(HomePage.createOrg);
-        const createOrgLink = HomePage.createOrg.isVisible();
-        expect(true).to.equal(createOrgLink);
+        // waitForElement(HomePage.createOrg);
+        // const createOrgLink = HomePage.createOrg.isVisible();
+        // expect(true).to.equal(createOrgLink);
         click(HomePage.createOrg);
 
         waitForElement(HomePage.createOrgInput);
@@ -89,10 +79,8 @@ describe('Delete Organization Test', () => {
 
         HomePage.submit.waitForExist();
         expect(HomePage.submit.isEnabled()).to.equal(false);
-        waitForElement(HomePage.createOrgInput);
         setValue(HomePage.createOrgInput, test.organization);
 
-        waitForElement(HomePage.submit);
         click(HomePage.submit);
 
         const errVisible = HomePage.createOrgErr.isVisible();
@@ -108,7 +96,7 @@ describe('Delete Organization Test', () => {
     it('Go back to /organizations and choose First Org', () => {
       viewOrgDashboard();
       browser.element("//*[@data-qa='page:org-dashboard']//*[contains(text(),'Change Organization')]").click();
-      expect(browser.getUrl()).to.equal(`${lib.config.api.base  }organizations`);
+      expect(browser.getUrl()).to.equal(`${lib.config.api.base}organizations`);
       waitForElement(HomePage.chooseOrg);
 
       browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForExist();
@@ -134,7 +122,7 @@ describe('Delete Organization Test', () => {
     });
 
     it('Validate choose org page URL to end with /organizations', () => {
-      expect(browser.getUrl()).to.equal(`${lib.config.api.base  }organizations`);
+      expect(browser.getUrl()).to.equal(`${lib.config.api.base}organizations`);
     });
   });
 
@@ -184,55 +172,25 @@ describe('Delete Organization Test', () => {
 });
 
 function gotoOrgSettings() {
-  HomePage.profileMenu.waitForExist();
-  HomePage.profileMenu.waitForVisible();
-  HomePage.profileMenu.click();
-
-  OrgDashboardPage.orgSettingsNavMenu.waitForExist();
-  OrgDashboardPage.orgSettingsNavMenu.waitForVisible();
-  OrgDashboardPage.orgSettingsNavMenu.click();
+  click(HomePage.profileMenu)
+  click(OrgDashboardPage.orgSettingsNavMenu);
 }
 
 function clickDeleteOrganization() {
-  SettingsPage.orgSettingsPage.waitForExist();
-  SettingsPage.orgSettingsPage.waitForVisible();
-  SettingsPage.orgSettingsPage.click();
-
+  click(SettingsPage.orgSettingsPage)
   browser.pause(500); // for safari
-
-  SettingsPage.leaveOrgButton.waitForExist();
-  SettingsPage.leaveOrgButton.waitForVisible();
-  SettingsPage.leaveOrgButton.waitForEnabled();
-  SettingsPage.leaveOrgButton.click();
-
-  SettingsPage.confirmOkButton.waitForExist();
-  SettingsPage.confirmOkButton.waitForVisible();
-  SettingsPage.confirmOkButton.click();
+  waitForEnabled(SettingsPage.leaveOrgButton);
+  click(SettingsPage.leaveOrgButton);
+  click(SettingsPage.confirmOkButton)
 }
 
 function viewOrgDashboard() {
-  OrgDashboardPage.currentOrgName.waitForExist();
-  OrgDashboardPage.currentOrgName.waitForVisible();
-
-  OrgDashboardPage.welcomeMsg.waitForExist();
-  OrgDashboardPage.welcomeMsg.waitForVisible();
+  waitForElement(OrgDashboardPage.currentOrgName)
+  waitForElement(OrgDashboardPage.welcomeMsg);
 }
 
 function assertion(e, data) {
   e.forEach((expected) => {
     expect(expected).to.equal(data);
   });
-}
-
-function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
-}
-
-function setValue(sv, data) {
-  sv.setValue(data);
-}
-
-function click(c) {
-  c.click();
 }

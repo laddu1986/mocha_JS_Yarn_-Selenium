@@ -10,7 +10,7 @@ class Page {
     browser.timeouts('implicit', 5000);
 
     //browser.url(base + path);
-    browser.url(base)
+    browser.url(path)
   }
 }
 
