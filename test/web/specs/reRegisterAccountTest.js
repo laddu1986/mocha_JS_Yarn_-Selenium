@@ -24,7 +24,7 @@ const password = 'Pass1234';
 describe('Delete Acount Test (Remove my Account)', () => {
   describe('Create Account', () => {
     before('Open App URL', () => {
-      openApp()
+      SignInPage.open(lib.config.api.base)
     });
 
     it('Create Account and Sign In', () => {
