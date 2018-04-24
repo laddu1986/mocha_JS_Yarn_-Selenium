@@ -6,7 +6,5 @@ pipelines:
     - step:
         script:
           - sh ./scripts/start.sh
-          - netstat -plnt
           - npm install
-          - npm install wdio-allure-reporter
           - npm run web
