@@ -17,23 +17,27 @@ class HomePage {
   get createOrgButton() { return browser.element("//*[@data-qa='link:create-org']") }
   get removeAccountButton() { return browser.element("//button[@data-qa='btn:delete-acc']") }
 
-  get helpMenuNav() { return browser.element("//*[@data-qa='menu:help']"); }
-  get helpCenterAnchor() { return browser.element("//*[contains(text(),'Help Center')]"); }
-  get devPortalAnchor() { return browser.element("//*[contains(text(),'Developer Portal')]"); }
-  get apiPortalAnchor() { return browser.element("//*[contains(text(),'API Portal')]"); }
-  get sysStatusAnchor() { return browser.element("//*[contains(text(),'System Status')]"); }
-
   get settingsAnchor() { return browser.element("//*[@data-qa='nav:org-settings']"); }
   get profileDetailsAnchor() { return browser.element("//*[@data-qa='nav:profile']"); }
   get orgSettingsAnchor() { return browser.element("//*[@data-qa='link:settings']"); }
   get teamAnchor() { return browser.element("//*[@data-qa='link:team']"); }
   get orgNameAnchor() { return browser.element("//*[@data-qa='link:dashboard']"); }
 
+
+  //Help
+  get helpMenuNav() { return browser.element("//*[@data-qa='menu:help']"); }
+  get helpCenterAnchor() { return browser.element("//*[contains(text(),'Help Center')]"); }
+  get devPortalAnchor() { return browser.element("//*[contains(text(),'Developer Portal')]"); }
+  get apiPortalAnchor() { return browser.element("//*[contains(text(),'API Portal')]"); }
+  get sysStatusAnchor() { return browser.element("//*[contains(text(),'System Status')]"); }
+
   get signOut() { return browser.element("//*[@data-qa='nav:sign-out']"); }
 
-  // open(e) {
-  //   super.open(e);
-  // }
+
+
+  open(e) {
+    super.open(e);
+  }
 
 }
 

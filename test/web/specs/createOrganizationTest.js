@@ -1,28 +1,16 @@
 // Create Organization, sign out, sign back in to validate user lands in the created Org
 // import pre from '../specs/validSignIn_PreReq';
 import CreateAccount from '../specs/createAccountTest';
-// import SignInPage from '../page_objects/signInPage';
 import HomePage from '../page_objects/homePage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
+import { openApp, setValue, click, waitForEnable, waitForElement } from '../actions/actions'
+
 
 
 function assertion(e, data) {
   e.forEach((expected) => {
     expect(expected).to.equal(data);
   });
-}
-
-function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
-}
-
-function setValue(sv, data) {
-  sv.setValue(data);
-}
-
-function click(c) {
-  c.click();
 }
 
 function bigName(params) {

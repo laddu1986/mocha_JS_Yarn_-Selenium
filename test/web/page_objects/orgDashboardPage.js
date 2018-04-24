@@ -11,11 +11,12 @@ class OrgDashboardPage extends Page {
   get orgCardAnchor() { return browser.element("//a[@data-qa='org:card'][1]"); }
   get orgCardCountAnchor() { return browser.elements("//a[@data-qa='org:card']"); }
 
-  get createNewSpaceButton() { return browser.element("//a[@data-qa='link:create-space']") }
+  get createNewSpaceInput() { return browser.element("//input[@data-qa='input:space-name']") }
+  get createNewSpaceButton() { return browser.element("//button[@data-qa='button:create-space']") }
 
-  // open(e) {
-  //   super.open(e);
-  // }
+  open(e) {
+    super.open(e);
+  }
 }
 
 export default new OrgDashboardPage();

@@ -1,11 +1,7 @@
 import * as lib from '../../common';
-import CreateAccount from '../specs/createAccountTest';
+import SignInPage from '../page_objects/signInPage';
 
 
-// const name = lib.faker.name.findName();
-// const email = `test_${lib.faker.internet.email()}`;
-// const organization = (lib.faker.company.companyName()).replace(',', '');
-// const password = 'Pass1234'
 
 function waitForElement(wfe) {
   wfe.waitForExist();
@@ -13,22 +9,24 @@ function waitForElement(wfe) {
 }
 
 function setValue(sv, data) {
-  waitForElement()
+  waitForElement(sv)
   sv.setValue(data);
 }
 
 function click(c) {
-  waitForElement()
+  waitForElement(c)
   c.click();
 }
 
 function waitForEnabled(ena) {
-  waitForElement()
+  waitForElement(ena)
   ena.waitForEnabled()
 }
 
-function createAccount() {
-  CreateAccountPage.open(lib.config.api.base);
-  click(CreateAccountPage.createAccountLink)
-}
 
+export {
+  setValue,
+  click,
+  waitForEnabled,
+  waitForElement,
+}

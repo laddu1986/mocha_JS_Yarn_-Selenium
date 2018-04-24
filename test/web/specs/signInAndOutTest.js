@@ -2,6 +2,7 @@ import SignInPage from '../page_objects/signInPage';
 import HomePage from '../page_objects/homePage';
 
 import * as lib from '../../common';
+import { openApp, setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
 
 // function name(params) {
 //   let text = ''
@@ -20,24 +21,12 @@ function assertion(e, data) {
   });
 }
 
-function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
-}
-
-function setValue(sv, data) {
-  sv.setValue(data);
-}
-
-function click(c) {
-  c.click();
-}
 
 let signInSuccess;
 
 describe('Tests for Sign Page', () => {
   before('Open Sign In page', () => {
-    SignInPage.open(lib.config.api.base);
+    SignInPage.open(lib.config.api.base)
   });
 
   it('Should throw an error while Signing In with Blank data', () => {
@@ -70,7 +59,6 @@ describe('Tests for Sign Page', () => {
     SignInPage.passwordInput.clearElement();
     setValue(SignInPage.passwordInput, 'Incorrect@Password123');
 
-    waitForElement(SignInPage.signInButton);
     click(SignInPage.signInButton);
 
     waitForElement(SignInPage.incorrectDetails);
@@ -80,39 +68,24 @@ describe('Tests for Sign Page', () => {
 
 
   it('Should Sign In successfully with Correct credentials', () => {
-    waitForElement(SignInPage.emailInput);
     setValue(SignInPage.emailInput, 'testaccount@donotdeleteplease.com');
-
-    waitForElement(SignInPage.passwordInput);
     setValue(SignInPage.passwordInput, 'Pass1234');
-
-    waitForElement(SignInPage.signInButton);
     click(SignInPage.signInButton);
-
     waitForElement(HomePage.profileMenu);
-
     signInSuccess = HomePage.profileMenu.isVisible();
     expect(signInSuccess).to.equal(true);
   });
 
   it('Should Sign Out successfully', () => {
     if (signInSuccess === true) {
-      waitForElement(HomePage.profileMenu);
-      HomePage.profileMenu.click();
-
-      waitForElement(HomePage.signOut);
-      HomePage.signOut.click();
+      click(HomePage.profileMenu);
+      click(HomePage.signOut);
 
       waitForElement(SignInPage.signInButton);
       expect(SignInPage.signInButton.isVisible()).to.equal(true);
     } else {
       console.log('User not Signed in');
     }
-  });
-
-
-  after('End message', () => {
-    // lib.end()
   });
 });
 

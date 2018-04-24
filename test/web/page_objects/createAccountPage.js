@@ -18,9 +18,9 @@ class CreateAccountPage extends Page {
   // Buttons
   get createAccountButton() { return browser.element("//*[@data-qa='btn:submit']"); }
 
-  // open(e) {
-  //   super.open(e);
-  // }
+  open(e) {
+    super.open(e);
+  }
 }
 
 export default new CreateAccountPage();

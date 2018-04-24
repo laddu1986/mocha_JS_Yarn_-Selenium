@@ -1,6 +1,7 @@
 import SignInPage from '../page_objects/signInPage';
 
 import * as lib from '../../common';
+import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
 
 function assertion(e, data) {
   e.forEach((expected) => {
@@ -8,46 +9,35 @@ function assertion(e, data) {
   });
 }
 
-function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
-}
-
-function setValue(sv, data) {
-  sv.setValue(data);
-}
-
-function click(c) {
-  c.click();
-}
-
 describe('Test Forgot Password Link', () => {
-  before('Open App URL', () => {
+  it('Open App URL', () => {
     SignInPage.open(lib.config.api.base);
   });
 
-
-  it('Check Forgot Password link', () => {
-    waitForElement(SignInPage.forgotPassword);
+  it('Click Forgot Password link', () => {
     click(SignInPage.forgotPassword);
+  });
 
-    waitForElement(SignInPage.emailInput);
+  it('Enter your Email', () => {
     setValue(SignInPage.emailInput, 'forgot@password.com');
+  });
 
-    waitForElement(SignInPage.signInButton);
+  it('Click Send me Link button', () => {
     click(SignInPage.signInButton);
+  });
 
-    waitForElement(SignInPage.backToSignIn);
-
-    waitForElement(SignInPage.backToSignIn);
+  it('Click Back to Sign In button', () => {
     click(SignInPage.backToSignIn);
-
-    const backToSignInPage = SignInPage.forgotPassword.isVisible();
   });
 
-
-  after('End message', () => {
-    // lib.end()
+  it('Should re-direct to Sign in page', () => {
+    waitForElement(SignInPage.forgotPassword)
   });
+
+  it('Email field should be pre-populated with the user Email', () => {
+    waitForElement(SignInPage.emailInput)
+    expect(SignInPage.emailInput.getValue()).to.include('forgot@password.com')
+  });
+
 });
 

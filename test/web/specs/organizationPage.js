@@ -2,26 +2,13 @@ import * as lib from '../../common';
 import SignInPage from '../page_objects/signInPage';
 import HomePage from '../page_objects/homePage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
-
+import { openApp, setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
 
 function assertion(e, data) {
   //   console.log(e);
   e.forEach((expected) => {
     expect(expected).to.equal(data);
   });
-}
-
-function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
-}
-
-function setValue(sv, data) {
-  sv.setValue(data);
-}
-
-function click(c) {
-  c.click();
 }
 
 describe('Organization Page Test', () => {
@@ -59,24 +46,15 @@ describe('Organization Page Test', () => {
   //
 
   it('Upon SignIn Re-direct to the last accessed Org if User has multiple Orgs', () => {
-    waitForElement(SignInPage.emailInput);
     setValue(SignInPage.emailInput, 'fourorg@qa.co');
-
-    waitForElement(SignInPage.passwordInput);
     setValue(SignInPage.passwordInput, 'TestQA123');
-
-    waitForElement(SignInPage.signInButton);
     click(SignInPage.signInButton);
 
-    waitForElement(HomePage.profileMenu);
-    HomePage.profileMenu.click();
-
-    waitForElement(HomePage.switchOrCreateOrganizations);
-    HomePage.switchOrCreateOrganizations.click();
+    click(HomePage.profileMenu);
+    click(HomePage.switchOrCreateOrganizations);
 
     waitForElement(HomePage.orgList);
     console.log(HomePage.orgList.getText().length);
-
 
     const maxOrgs = HomePage.orgList.getText().length >= 6 ? 5 : HomePage.orgList.getText().length;
     // const arr = HomePage.orgList.getText().slice(0, maxOrgs);

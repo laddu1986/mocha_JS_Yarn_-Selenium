@@ -14,9 +14,9 @@ class SettingsPage {
 
   get backToOrgDashboardLink() { return browser.element("//a[@data-qa='link:dashboard']") }
 
-  // open(e) {
-  //   super.open(e);
-  // }
+  open(e) {
+    super.open(e);
+  }
 }
 
 export default new SettingsPage();
