@@ -16,7 +16,6 @@ class SignInPage extends Page {
   get backToSignIn() { return browser.element("//*[@data-qa='link:sign-in']"); }
 
   open(e) {
-    console.log(e);
     super.open(e);
   }
 }

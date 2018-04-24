@@ -1,14 +1,25 @@
+const server = require('chakram');
 
-import assertions from './api/actions/assertions';
-import del from './api/actions/delete';
-import post from './api/actions/post';
-
-const chakram = require('chakram');
-
-global.expect = chakram.expect;
+global.expect = server.expect;
 const mysql = require('mysql');
 const config = require('config-yml');
-const faker = require('faker');
+
+const responseData = {
+  organization: [],
+  membership: [],
+  identity: [],
+  identityState: [],
+  invites: [],
+};
+function bigName(params) {
+  let text = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (let i = 0; i < params; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
+
+  return `test_${text}`;
+}
+
 
 let con = null;
 
@@ -30,13 +41,46 @@ function end() {
   });
 }
 
-function assertion(e, data) {
-  //   console.log(e);
-  e.forEach((expected) => {
-    expect(expected).to.equal(data);
-  });
+function post(done, any) {
+  return server.post(any.api, any.data)
+    .then((response) => {
+      // console.log(response.body);
+      any.func(response);
+      done();
+    });
 }
-
+function get(done, any) {
+  return server.get(any.api + any.data)
+    .then((response) => {
+      // console.log(response.body);
+      any.func(response);
+      done();
+    });
+}
+function put(done, any) {
+  return server.put(any.api, any.data)
+    .then((response) => {
+      // console.log(response.body);
+      any.func(response);
+      done();
+    });
+}
+function patch(done, any) {
+  return server.patch(any.api, any.data)
+    .then((response) => {
+      // console.log(response.body);
+      any.func(response);
+      done();
+    });
+}
+function del(done, any) {
+  return server.delete(any.api + any.data)
+    .then((response) => {
+      // console.log(response.body);
+      any.func(response);
+      done();
+    });
+}
 // const con = mysql.createConnection({
 //   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
 //   user: 'rouser',
@@ -51,4 +95,20 @@ function assertion(e, data) {
 
 // con.end();
 
-export { assertions, faker, config, chakram, del, post, connection, end };
+export {
+  // api
+  post,
+  get,
+  put,
+  patch,
+  del,
+  // library
+  config,
+  server,
+  // db
+  connection,
+  end,
+  // data
+  responseData,
+  bigName,
+};

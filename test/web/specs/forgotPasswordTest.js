@@ -1,56 +1,43 @@
-import SignInPage from '../page_objects/signInPage'
+import SignInPage from '../page_objects/signInPage';
 
-import * as lib from '../../common'
+import * as lib from '../../common';
+import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
 
 function assertion(e, data) {
   e.forEach((expected) => {
-    expect(expected).to.equal(data)
-  })
+    expect(expected).to.equal(data);
+  });
 }
 
-function waitForElement(wfe) {
-  wfe.waitForExist()
-  wfe.waitForVisible()
-}
+describe('Test Forgot Password Link', () => {
+  it('Open App URL', () => {
+    SignInPage.open(lib.config.api.base);
+  });
 
-function setValue(sv, data) {
-  sv.setValue(data)
-}
+  it('Click Forgot Password link', () => {
+    click(SignInPage.forgotPassword);
+  });
 
-function click(c) {
-  c.click()
-}
+  it('Enter your Email', () => {
+    setValue(SignInPage.emailInput, 'forgot@password.com');
+  });
 
-describe('Sign in page', () => {
-  before('Open App URL', () => {
-    SignInPage.open(lib.config.api.base)
-  })
+  it('Click Send me Link button', () => {
+    click(SignInPage.signInButton);
+  });
 
+  it('Click Back to Sign In button', () => {
+    click(SignInPage.backToSignIn);
+  });
 
-  it('Check Forgot Password link', () => {
+  it('Should re-direct to Sign in page', () => {
     waitForElement(SignInPage.forgotPassword)
-    click(SignInPage.forgotPassword)
+  });
 
+  it('Email field should be pre-populated with the user Email', () => {
     waitForElement(SignInPage.emailInput)
-    setValue(SignInPage.emailInput, 'forgot@password.com')
+    expect(SignInPage.emailInput.getValue()).to.include('forgot@password.com')
+  });
 
-    waitForElement(SignInPage.signInButton)
-    click(SignInPage.signInButton)
-
-    waitForElement(SignInPage.backToSignIn)
-    console.log((SignInPage.backToSignIn).getText())
-
-    waitForElement(SignInPage.backToSignIn)
-    click(SignInPage.backToSignIn)
-
-    const backToSignInPage = SignInPage.forgotPassword.isVisible()
-    console.log(backToSignInPage)
-
-  })
-
-
-  after('End message', () => {
-    // lib.end()
-  })
-})
+});
 

@@ -27,7 +27,7 @@ const testData = [
 let accountCreated;
 let signedIn;
 
-describe('Leave Organization Test', () => {
+describe('Delete Organization Test', () => {
   describe('Create Account', () => {
     before('Open App URL', () => {
       SignInPage.open(lib.config.api.base)
@@ -77,7 +77,7 @@ describe('Leave Organization Test', () => {
         waitForElement(HomePage.createOrgInput);
         HomePage.createOrgInput.clearElement();
 
-        waitForElement(HomePage.submit)
+        HomePage.submit.waitForExist();
         expect(HomePage.submit.isEnabled()).to.equal(false);
         setValue(HomePage.createOrgInput, test.organization);
 
@@ -95,12 +95,13 @@ describe('Leave Organization Test', () => {
   describe('Leaving First Org re-directs to choose org page', () => {
     it('Go back to /organizations and choose First Org', () => {
       viewOrgDashboard();
-      click(browser.element("//*[@data-qa='page:org-dashboard']//*[contains(text(),'Change Organization')]"));
+      browser.element("//*[@data-qa='page:org-dashboard']//*[contains(text(),'Change Organization')]").click();
       expect(browser.getUrl()).to.equal(`${lib.config.api.base}organizations`);
       waitForElement(HomePage.chooseOrg);
 
-      //waitForElement(browser.element("//*[@data-qa='org:card' and contains(@href,'first')]"));
-      click(browser.element("//a[@data-qa='org:card' and contains(@href,'first')]"))
+      browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForExist();
+      browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForVisible();
+      browser.element("//a[@data-qa='org:card' and contains(@href,'first')]").click();
       viewOrgDashboard();
     });
 
@@ -108,8 +109,8 @@ describe('Leave Organization Test', () => {
       gotoOrgSettings();
     });
 
-    it('Click Leave Organization - First Org', () => {
-      clickLeaveOrganization();
+    it('Click Delete Organization - First Org and Confirm OK', () => {
+      clickDeleteOrganization();
     });
 
     it('Validate re-direction to choose org page', () => {
@@ -129,15 +130,15 @@ describe('Leave Organization Test', () => {
   describe('Leaving Second Org re-directs to Last Org', () => {
     it('Choose Second Org', () => {
       waitForElement(HomePage.chooseOrg);
-      click(browser.element("//a[@data-qa='org:card' and contains(@href,'second')]"));
+      browser.element("//a[@data-qa='org:card' and contains(@href,'second')]").click();
     });
 
     it('Goto Organization Settings of Second Org', () => {
       gotoOrgSettings();
     });
 
-    it('Click Leave Organization - Second Org', () => {
-      clickLeaveOrganization();
+    it('Click Delete Organization - Second Org and Confirm OK', () => {
+      clickDeleteOrganization();
     });
 
     it('Validate re-direction to Last Org dashboard', () => {
@@ -146,13 +147,14 @@ describe('Leave Organization Test', () => {
     });
   });
 
-  describe(' Leaving Last Org re-directs to No Orgs page', () => {
+
+  describe('Leaving Last Org re-directs to No Orgs page', () => {
     it('Goto Organization Settings of Last Org', () => {
       gotoOrgSettings();
     });
 
-    it('Click Leave Organization - Last Org', () => {
-      clickLeaveOrganization();
+    it('Click Delete Organization - Last Org and Confirm OK', () => {
+      clickDeleteOrganization();
     });
 
     it('Should re-direct to No Orgs page after leaving the last Org', () => {
@@ -170,29 +172,20 @@ describe('Leave Organization Test', () => {
 });
 
 function gotoOrgSettings() {
-  // HomePage.profileMenu.waitForExist();
-  // HomePage.profileMenu.waitForVisible();
-  click(HomePage.profileMenu);
-  // OrgDashboardPage.orgSettingsNavMenu.waitForExist();
-  //   OrgDashboardPage.orgSettingsNavMenu.waitForVisible();
+  click(HomePage.profileMenu)
   click(OrgDashboardPage.orgSettingsNavMenu);
 }
 
-function clickLeaveOrganization() {
-  // SettingsPage.orgSettingsPage.waitForExist();
-  // SettingsPage.orgSettingsPage.waitForVisible();
-  click(SettingsPage.orgSettingsPage);
-
+function clickDeleteOrganization() {
+  click(SettingsPage.orgSettingsPage)
   browser.pause(500); // for safari
-
   waitForEnabled(SettingsPage.leaveOrgButton);
   click(SettingsPage.leaveOrgButton);
-
-  click(SettingsPage.confirmOkButton);
+  click(SettingsPage.confirmOkButton)
 }
 
 function viewOrgDashboard() {
-  waitForElement(OrgDashboardPage.currentOrgName);
+  waitForElement(OrgDashboardPage.currentOrgName)
   waitForElement(OrgDashboardPage.welcomeMsg);
 }
 

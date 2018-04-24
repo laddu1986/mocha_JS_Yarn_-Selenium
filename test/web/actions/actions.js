@@ -1,12 +1,7 @@
+import * as lib from '../../common';
+import SignInPage from '../page_objects/signInPage';
 
 
-// class Actions {
-// open(path) {
-//   const base = config.api.base;
-//   // console.log('path =  ' + base + path);
-//   // browser.url(base + path);
-//   browser.url(base);
-// }
 
 function waitForElement(wfe) {
   wfe.waitForExist();
@@ -14,13 +9,24 @@ function waitForElement(wfe) {
 }
 
 function setValue(sv, data) {
+  waitForElement(sv)
   sv.setValue(data);
 }
 
 function click(c) {
+  waitForElement(c)
   c.click();
 }
-// }
 
-// export default Actions;
+function waitForEnabled(ena) {
+  waitForElement(ena)
+  ena.waitForEnabled()
+}
 
+
+export {
+  setValue,
+  click,
+  waitForEnabled,
+  waitForElement,
+}

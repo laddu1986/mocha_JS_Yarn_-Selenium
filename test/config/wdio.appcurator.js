@@ -1,47 +1,52 @@
 require('dotenv').config();
 const argv = require('yargs').argv;
-// let WdioTestRailReporter = require('/Users/avinash.eediga/Documents/qa/qa-automation/node_modules/wdio-testrail-reporter/lib/wdio-testrail-reporter.js');
 
-// var config = require('config-yml');
-
-const brow = 'phantomjs';
+const brow = 'chrome';
 
 exports.config = {
-  services: ['selenium-standalone', 'phantomjs'],
-  //services: ['chromedriver', 'devtools'],
+  // services: ['selenium-standalone', 'chromedriver'],
+  // services: ['chromedriver', 'devtools'],
   enableNetwork: true,
   capabilities: [{
     browserName: brow,
     chromeOptions: {
-      args: ['disable-infobars', '--window-size=1280,1024', '--disable-gpu']
-    }
-    //     , '--headless', '--disable-gpu', '--window-size=1200, 700']
-    // }
+      args: [
+        'disable-infobars',
+        '--headless',
+        '--incognito',
+        '--ignore-certificate-errors',
+        '--disable-gpu'],
+    },
   }],
-  phantomjsOpts: {
-    webdriverLogfile: 'phantomjs.log',
-    ignoreSslErrors: true
-  },
 
   updateJob: false,
   specs: [
-    './test/web/specs/leaveOrganizationTest.js',
-    // './test/web/specs/viewOrganizationDashboard.js',
+    './test/web/specs/*Test.js',
+    //'./test/web/specs/deleteOrganizationTest.js',
   ],
   // Patterns to exclude.
   exclude: [
+    './test/web/specs/reRegisterAccountTest.js',
+    './test/web/specs/createOrganizationTest.js',
+    './test/web/specs/leaveOrganizationTest.js',
+    './test/web/specs/updateOrganizationNameTest.js',
+    './test/web/specs/deleteOrganizationTest.js',
+    /* './test/web/specs/',
+    './test/web/specs/',
+    './test/web/specs/',
+ */
+
   ],
 
-  logLevel: 'error',
+  logLevel: 'silent',
   coloredLogs: true,
-  screenshotPath: './errScreens',
-  baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
+  // screenshotPath: './errScreens',
+  baseUrl: 'https://my.appcurator.com/',
   waitforTimeout: 10000,
   maxInstances: 10,
 
   plugins: {
-    'wdio-screenshot': {},
-    'webdriverajax': {},
+
     // webdrivercss: {
     //     screenshotRoot: 'my-shots',
     //     failedComparisonsRoot: 'diffs',
@@ -60,14 +65,6 @@ exports.config = {
       disableWebdriverStepsReporting: true,
     },
   },
-  // testRailsOptions: {
-  //   domain: "testrail.massiveinteractive.com",
-  //   username: "",
-  //   password: "",
-  //   projectId: 1,
-  //   suiteId: 2471,
-  //   runName: "My test run"
-  // },
 
   mochaOpts: {
     ui: 'bdd',
@@ -106,8 +103,3 @@ exports.config = {
 
   },
 };
-
-
-
-//testrail
-//node /Users/abhi/git/qa-automation/node_modules/wdio-testrail-reporter/scripts/generate-cases.js /Users/abhi/git/qa-automation/test/wdio.conf.js /Users/abhi/git/qa-automation/test/web/specs

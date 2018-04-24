@@ -1,6 +1,6 @@
 app:
   build: .
-  command: bash -c "npm start -- --host selenium"
+  command: bash -c "npm run web -- --host selenium"
   links:
     - selenium
 
