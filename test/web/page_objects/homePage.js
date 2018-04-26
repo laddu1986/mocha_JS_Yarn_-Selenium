@@ -3,12 +3,12 @@
 
 class HomePage {
   get navbar() { return browser.element('#navbar'); }
-  get profileMenu() { return browser.element("//nav[@data-qa='menu:profile']//div[@data-qa='btn:menu']"); }
+  get profileMenu() { return browser.element("//div[@data-qa='menu:profile']//div[@data-qa='btn:menu']"); }
   get switchOrCreateOrganizations() { return browser.element("//*[@data-qa='nav:menu']"); }
   get createOrg() { return browser.element("//*[@data-qa='nav:create-org']"); }
   get createOrgInput() { return browser.element("//input[@data-qa='input:org-name']"); }
   get createOrgErr() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:error']"); }
-  get submit() { return browser.element("//*[@data-qa='btn:submit']"); }
+  //get submit() { return browser.element("//*[@data-qa='btn:submit']"); }
   get logo() { return browser.element("//*[@data-qa='nav:logo']"); }
   get orgListFromNavMenu() { return browser.elements("//*[@data-qa='nav:menu']//li"); }
   get chooseOrg() { return browser.element("//*[@data-qa='page:choose-org']"); }
