@@ -77,11 +77,11 @@ describe('Delete Organization Test', () => {
         waitForElement(HomePage.createOrgInput);
         HomePage.createOrgInput.clearElement();
 
-        HomePage.submit.waitForExist();
-        expect(HomePage.submit.isEnabled()).to.equal(false);
+        HomePage.createOrgButton.waitForExist();
+        expect(HomePage.createOrgButton.isEnabled()).to.equal(false);
         setValue(HomePage.createOrgInput, test.organization);
 
-        click(HomePage.submit);
+        click(HomePage.createOrgButton);
 
         const errVisible = HomePage.createOrgErr.isVisible();
         expect(test.accepted).to.not.equal(errVisible);

@@ -16,7 +16,7 @@ import Page from '../page_objects/page';
 import { openApp, setValue, click, waitForElement, waitForEnabled } from '../actions/actions'
 
 const name = lib.bigName(10);
-const email = `test_${lib.bigName(15)}@dummy.co`;
+const email = lib.bigName(15) + `@test.co`;
 const organization = 'OrgReRegisterMe';
 const password = 'Pass1234';
 
@@ -28,7 +28,15 @@ describe('Delete Acount Test (Remove my Account)', () => {
     });
 
     it('Create Account and Sign In', () => {
-      createAccount();
+      click(CreateAccountPage.createAccountLink)
+
+      setValue(CreateAccountPage.nameInput, name);
+      setValue(CreateAccountPage.emailInput, email);
+      setValue(CreateAccountPage.organizationInput, organization);
+      setValue(CreateAccountPage.passwordInput, password);
+
+      click(CreateAccountPage.createAccountButton);
+      waitForElement(HomePage.logo);
       console.log('Test Data : -  \n' +
         `name = ${name}\n` +
         `email = ${email}\n` +
