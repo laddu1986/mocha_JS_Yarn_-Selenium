@@ -22,15 +22,15 @@ exports.config = {
   updateJob: false,
   specs: [
     './test/web/specs/*Test.js',
-    //'./test/web/specs/deleteOrganizationTest.js',
+    //'./test/web/specs/leaveOrganizationTest.js',
   ],
   // Patterns to exclude.
   exclude: [
-    './test/web/specs/reRegisterAccountTest.js',
-    './test/web/specs/createOrganizationTest.js',
-    './test/web/specs/leaveOrganizationTest.js',
-    './test/web/specs/updateOrganizationNameTest.js',
-    './test/web/specs/deleteOrganizationTest.js',
+    //'./test/web/specs/reRegisterAccountTest.js',
+    // './test/web/specs/createOrganizationTest.js',
+    // './test/web/specs/leaveOrganizationTest.js',
+    // './test/web/specs/updateOrganizationNameTest.js',
+    // './test/web/specs/deleteOrganizationTest.js',
     /* './test/web/specs/',
     './test/web/specs/',
     './test/web/specs/',
