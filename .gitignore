@@ -5,3 +5,4 @@ allure-results
 errScreens/*
 .vscode
 yarn.lock
+phantomjs.log
