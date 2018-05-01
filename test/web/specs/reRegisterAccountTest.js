@@ -60,6 +60,11 @@ describe('Delete Acount Test (Remove my Account)', () => {
       clickDeleteOrganization();
     });
 
+    it('Accept Confirmation', () => {
+      click(SettingsPage.confirmOkButton)
+
+    });
+
     it('Should re-direct to No Orgs page after deleting the last Org', () => {
       waitForElement(HomePage.noOrgs);
       waitForElement(HomePage.createOrgButton);
@@ -74,9 +79,13 @@ describe('Delete Acount Test (Remove my Account)', () => {
   });
 
   describe('Removing account ends the session and redirects to Sign In page', () => {
-    it('Click Remove my account and Confirm OK', () => {
+    it('Click Remove my account', () => {
       click(HomePage.removeAccountButton);
-      browser.alertAccept();
+    });
+
+    it('Accept Confirmation', () => {
+      click(SettingsPage.confirmOkButton)
+
     });
 
     it('Should re-direct to Sign In page after deleting my Account', () => {
@@ -107,7 +116,7 @@ function clickDeleteOrganization() {
   click(SettingsPage.orgSettingsPage);
   browser.pause(500); // for safari
   click(SettingsPage.leaveOrgButton);
-  click(SettingsPage.confirmOkButton);
+  // click(SettingsPage.confirmOkButton);
 }
 
 function viewOrgDashboard() {

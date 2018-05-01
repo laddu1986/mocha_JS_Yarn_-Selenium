@@ -29,6 +29,10 @@ describe('Update Organization name', () => {
     click(SettingsPage.saveOrgNameButton);
   });
 
+  /*  it('Confirm', () => {
+     click(SettingsPage.confirmOkButton)
+   }); */
+
   it('Should update the side nav bar with the updated org name', () => {
     browser.waitUntil(() => {
       return SettingsPage.backToOrgDashboardLink.getText() === SettingsPage.orgInput.getValue()
