@@ -12,7 +12,7 @@ exports.config = {
     chromeOptions: {
       args: [
         'disable-infobars',
-        '--headless',
+        //'--headless',
         '--incognito',
         '--ignore-certificate-errors',
         '--disable-gpu'],
@@ -22,23 +22,15 @@ exports.config = {
   updateJob: false,
   specs: [
     './test/web/specs/*Test.js',
-    //'./test/web/specs/leaveOrganizationTest.js',
+    //'./test/web/specs/inviteTest.js',
   ],
   // Patterns to exclude.
   exclude: [
     //'./test/web/specs/reRegisterAccountTest.js',
-    // './test/web/specs/createOrganizationTest.js',
-    // './test/web/specs/leaveOrganizationTest.js',
-    // './test/web/specs/updateOrganizationNameTest.js',
-    // './test/web/specs/deleteOrganizationTest.js',
-    /* './test/web/specs/',
-    './test/web/specs/',
-    './test/web/specs/',
- */
-
   ],
 
   logLevel: 'silent',
+  //bail: 5,
   coloredLogs: true,
   // screenshotPath: './errScreens',
   baseUrl: 'https://my.appcurator.com/',
@@ -69,7 +61,7 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     compilers: ['js:babel-register'],
-    timeout: 20000,
+    timeout: 30000,
   },
 
   //
@@ -78,6 +70,7 @@ exports.config = {
   // =====
   // Gets executed before all workers get launched.
   onPrepare() {
+    // console.log('On Prepare')
   },
 
   // Gets executed before test execution begins. At this point you will have access to all global
@@ -87,6 +80,7 @@ exports.config = {
 
     global.expect = chai.expect;
     chai.Should();
+    //console.log('Before')
 
     // const config = require('config-yml');
   },
@@ -95,11 +89,13 @@ exports.config = {
   // the test.
   after() {
     // do something
+    //console.log('After')
   },
 
   // Gets executed after all workers got shut down and the process is about to exit. It is not
   // possible to defer the end of the process using a promise.
   onComplete() {
+    //console.log('On Complete')
 
   },
 };
