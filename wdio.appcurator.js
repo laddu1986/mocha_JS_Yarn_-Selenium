@@ -22,7 +22,7 @@ exports.config = {
   updateJob: false,
   specs: [
     './test/web/specs/*Test.js',
-  //'./test/web/specs/inviteTest.js',
+    //'./test/web/specs/inviteTest.js',
   ],
   // Patterns to exclude.
   exclude: [
@@ -35,7 +35,7 @@ exports.config = {
   // screenshotPath: './errScreens',
   baseUrl: 'https://my.appcurator.com/',
   waitforTimeout: 10000,
-  maxInstances: 20,
+  maxInstances: 10,
 
   plugins: {
 
