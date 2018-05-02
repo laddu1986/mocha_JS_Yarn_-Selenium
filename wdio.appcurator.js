@@ -12,7 +12,7 @@ exports.config = {
     chromeOptions: {
       args: [
         'disable-infobars',
-        //'--headless',
+        '--headless',
         '--incognito',
         '--ignore-certificate-errors',
         '--disable-gpu'],
