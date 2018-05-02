@@ -81,11 +81,8 @@ describe('Leave Organization Test', () => {
         setValue(HomePage.createOrgInput, test.organization);
 
         click(HomePage.createOrgButton);
-
-        const errVisible = HomePage.createOrgErr.isVisible();
-        expect(test.accepted).to.not.equal(errVisible);
-
         waitForElement(OrgDashboardPage.welcomeMsg);
+        //console.log(OrgDashboardPage.welcomeMsg.getText())
       });
     });
   });

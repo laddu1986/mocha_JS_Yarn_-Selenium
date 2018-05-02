@@ -65,6 +65,7 @@ describe('Delete Acount Test (Remove my Account)', () => {
       clickDeleteOrganization()
     })
 
+
     it('Should re-direct to No Orgs page after deleting the last Org', () => {
       waitForElement(HomePage.noOrgs);
       waitForElement(HomePage.createOrgButton);
@@ -79,11 +80,18 @@ describe('Delete Acount Test (Remove my Account)', () => {
   });
 
   describe('Removing account ends the session and redirects to Sign In page', () => {
-    it('Click Remove my account and Confirm OK', () => {
+    it('Click Remove my account', () => {
       waitForElement(HomePage.removeAccountButton)
       click(HomePage.removeAccountButton)
-      browser.alertAccept()
     })
+
+    it('Confirm Deletion', () => {
+      click(SettingsPage.confirmOkButton)
+    });
+
+    it('Click Ok to Confirm Account deletion', () => {
+      click(SettingsPage.confirmOkButton)
+    });
 
     it('Should re-direct to Sign In page after deleting my Account', () => {
       waitForElement(SignInPage.signInButton)

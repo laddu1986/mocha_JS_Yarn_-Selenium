@@ -1,13 +1,18 @@
 import OrgDashboardPage from '../page_objects/orgDashboardPage'
 import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
 import * as lib from '../../common';
+import SpaceDashboardPage from '../page_objects/spaceDashboardPage';
 
 
-const space = lib.bigName(14);
-
-function createSpace() {
-  setValue(OrgDashboardPage.createNewSpaceInput, space)
-  click(OrgDashboardPage.createNewSpaceButton)
+function createFirstSpace() {
+  setValue(OrgDashboardPage.createSpaceInput, lib.testData.space)
+  click(OrgDashboardPage.createSpaceButton)
+  waitForElement(SpaceDashboardPage.devApiGuideButton)
 }
 
-export { createSpace }
+function createAnotherSpace() {
+  click(OrgDashboardPage.createNewSpaceButton)
+  createFirstSpace()
+}
+
+export { createFirstSpace, createAnotherSpace }
