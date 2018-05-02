@@ -61,7 +61,7 @@ ADD ./scripts/ /home/root/scripts
 # #============================================
 RUN npm install -g \
   selenium-standalone@latest \
-  && selenium-standalone install
+  && selenium-standalone install --version=3.4.0
 
 #============================================
 # Exposing ports
