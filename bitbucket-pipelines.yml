@@ -8,7 +8,4 @@ pipelines:
           - sh ./scripts/start.sh
           - netstat -plnt
           - npm install
-          - npm install selenium-standalone
-          - selenium-standalone install --version=3.4.0
-          - selenium-standalone --version=3.4.0 start
           - npm run web
