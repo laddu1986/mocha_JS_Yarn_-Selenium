@@ -9,4 +9,5 @@ pipelines:
           - netstat -plnt
           - npm install
           - npm install wdio-allure-reporter
+          - selenium-standalone --version=3.4.0 start
           - npm run web
