@@ -13,7 +13,7 @@ var invite_1 = 'invite_1_' + lib.bigName(5) + '@test.co'
 describe('Invite Tests', () => {
   before('Open App URL', () => {
     SignInPage.open(lib.config.api.base)
-    console.log(lib.testData)
+    //console.log(lib.testData)
   });
 
   after(() => {
@@ -41,29 +41,32 @@ describe('Invite Tests', () => {
   });
 
   it('Validate pending to show +1', () => {
-    //browser.refresh()
-    //waitForElement(OrgDashboardPage.pendingInviteCircle)
+    // browser.pause(500)
+    // browser.refresh()
+    // waitForElement(OrgDashboardPage.pendingInviteCircle)
     browser.waitUntil(() => {
       return OrgDashboardPage.pendingInviteCircle.getText() === '+1'
     }, 5000, 'Expect pending invite circle to increment by 1', 200);
-    console.log('PENDING INVITE   ' + OrgDashboardPage.pendingInviteCircle.getText())
+    //console.log('PENDING INVITE   ' + OrgDashboardPage.pendingInviteCircle.getText())
     expect(OrgDashboardPage.pendingInviteCircle.getText()).to.include('1')
 
   });
 
   it('Send another Invite', () => {
     var invite_email = 'invite_' + lib.bigName(5) + '@test.co'
-    console.log(invite_email)
+    //console.log(invite_email)
     inviteTeammate(invite_email)
   });
 
   it('Validate pending invitation to show +2', () => {
-    //browser.refresh()
-    //waitForElement(OrgDashboardPage.pendingInviteCircle)
+    // browser.pause(500)
+    // browser.refresh()
+
+    // waitForElement(OrgDashboardPage.pendingInviteCircle)
     browser.waitUntil(() => {
       return OrgDashboardPage.pendingInviteCircle.getText() === '+2'
     }, 5000, 'Expect pending invite circle to increment by 1', 200);
-    console.log('PENDING INVITE   ' + OrgDashboardPage.pendingInviteCircle.getText())
+    //console.log('PENDING INVITE   ' + OrgDashboardPage.pendingInviteCircle.getText())
     expect(OrgDashboardPage.pendingInviteCircle.getText()).to.include('2')
 
   });

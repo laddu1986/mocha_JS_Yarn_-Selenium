@@ -1,5 +1,6 @@
 import HomePage from '../page_objects/homePage';
 import CreateAccountPage from '../page_objects/createAccountPage'
+import OrgDashboardPage from '../page_objects/orgDashboardPage'
 import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
 import * as lib from '../../common';
 
@@ -20,6 +21,7 @@ function createAccount() {
 
   click(CreateAccountPage.createAccountButton);
   waitForElement(HomePage.logo);
+  waitForElement(OrgDashboardPage.currentOrgName)
 }
 
 export { createAccount }

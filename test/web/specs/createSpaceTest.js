@@ -12,7 +12,7 @@ describe('Space Tests', () => {
   before('Open App URL', () => {
     SignInPage.open(lib.config.api.base)
     console.log(lib.config.api.base)
-    console.log(lib.testData)
+    //console.log(lib.testData)
   });
 
   after('Sign Out', () => {
