@@ -10,8 +10,7 @@ import SpaceDashboardPage from '../page_objects/spaceDashboardPage';
 
 describe('Space Tests', () => {
   before('Open App URL', () => {
-    SignInPage.open(lib.config.api.base)
-    console.log(lib.config.api.base)
+    SignInPage.open()
     //console.log(lib.testData)
   });
 
@@ -33,7 +32,7 @@ describe('Space Tests', () => {
 
   describe('Create two more spaces', () => {
     it('Create space by clicking on create new space button', () => {
-      const goBackToOrg = (lib.config.api.base + lib.testData.organization).toLowerCase() + '/'
+      const goBackToOrg = (lib.config.api.base + '/' + lib.testData.organization).toLowerCase() + '/'
       console.log(goBackToOrg)
       for (let i = 0; i < 3; i++) {
         browser.url(goBackToOrg) //Temporary - will change when we have a "Go Back to OrgDashBoard" link in the space page
