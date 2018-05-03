@@ -26,7 +26,7 @@ let signInSuccess;
 
 describe('Tests for Sign Page', () => {
   before('Open Sign In page', () => {
-    SignInPage.open(lib.config.api.base)
+    SignInPage.open()
   });
 
   it('Should throw an error while Signing In with Blank data', () => {
