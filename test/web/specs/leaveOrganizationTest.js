@@ -30,7 +30,7 @@ let signedIn;
 describe('Leave Organization Test', () => {
   describe('Create Account', () => {
     before('Open App URL', () => {
-      SignInPage.open(lib.config.api.base)
+      SignInPage.open()
     });
 
     it('Create Account with First Org and Sign In', () => {
@@ -92,7 +92,7 @@ describe('Leave Organization Test', () => {
     it('Go back to /organizations and choose First Org', () => {
       viewOrgDashboard();
       click(browser.element("//*[@data-qa='page:org-dashboard']//*[contains(text(),'Change Organization')]"));
-      expect(browser.getUrl()).to.equal(`${lib.config.api.base}organizations`);
+      expect(browser.getUrl()).to.equal(`${lib.config.api.base}/organizations`);
       waitForElement(HomePage.chooseOrg);
 
       //waitForElement(browser.element("//*[@data-qa='org:card' and contains(@href,'first')]"));
@@ -117,7 +117,7 @@ describe('Leave Organization Test', () => {
     });
 
     it('Validate choose org page URL to end with /organizations', () => {
-      expect(browser.getUrl()).to.equal(`${lib.config.api.base}organizations`);
+      expect(browser.getUrl()).to.equal(`${lib.config.api.base}/organizations`);
     });
   });
 
@@ -160,7 +160,7 @@ describe('Leave Organization Test', () => {
     });
 
     it('Validate URL to end with /organizations', () => {
-      expect(browser.getUrl()).to.equal(`${lib.config.api.base}organizations`);
+      expect(browser.getUrl()).to.equal(`${lib.config.api.base}/organizations`);
     });
   });
 });
