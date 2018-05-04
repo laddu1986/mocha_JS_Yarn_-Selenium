@@ -1,12 +1,12 @@
 import * as lib from '../../common';
 
-function postIdentity(done, responseData) {
+function postSpaceByOrganizationId(done, responseData) {
+  // console.log(responseData[1]);
   const any = {
-    api: lib.config.api.identities,
+    api: `${lib.config.api.spaces + responseData[1].id}/space`,
     data: {
-      fullname: lib.bigName(12),
-      email: `${lib.bigName(12)}@dummy.co`,
-      password: 'Pass1234',
+      name: lib.bigName(10),
+      createdById: responseData[0].id,
     },
     func(response) {
       responseData.push(response.body);
@@ -18,12 +18,12 @@ function postIdentity(done, responseData) {
   // console.log(any);
   lib.post(done, any);
 }
-function getIdentityById(done, responseData) {
+function getSpacesByOrganizationId(done, responseData) {
   const any = {
-    api: lib.config.api.identities,
-    data: responseData[0].id,
+    api: lib.config.api.spaces,
+    data: responseData[1].id,
     func(response) {
-    //   lib.res.push(response.body);
+      responseData.push(response.body);
       expect(response).to.have.status(200);
     },
   };
@@ -40,7 +40,6 @@ function deleteIdentityById(done, responseData) {
   lib.del(done, any);
 }
 export {
-  postIdentity,
-  getIdentityById,
-  deleteIdentityById,
+  postSpaceByOrganizationId,
+  getSpacesByOrganizationId,
 };
