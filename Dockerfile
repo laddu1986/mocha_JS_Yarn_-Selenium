@@ -8,7 +8,7 @@ ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 
-MAINTAINER "Avinash <avinash.eediga@gmail.com>"
+LABEL maintainer="Avinash <avinash.eediga@gmail.com>"
 RUN apt-get -y update
 RUN apt-get install -y -q software-properties-common wget
 RUN add-apt-repository -y ppa:mozillateam/firefox-next
@@ -27,7 +27,7 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
   && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
   && apt-get update -qqy \
   && apt-get -qqy install \
-    ${CHROME_VERSION:-google-chrome-stable} \
+  ${CHROME_VERSION:-google-chrome-stable} \
   && rm /etc/apt/sources.list.d/google-chrome.list \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 

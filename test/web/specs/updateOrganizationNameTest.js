@@ -1,118 +1,91 @@
 
-import createOrganizationPage from '../specs/createOrganizationTest';
-// import OrganizationSettingsPage from '../specs/viewOrganizationSettingsTest';
+//import createOrganizationPage from '../specs/createOrganizationTest';
+import { createAccount } from '../actions/createAccount'
 import SettingsPage from '../page_objects/settingsPage';
 import HomePage from '../page_objects/homePage';
-// import Actions from '../actions/actions';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
-import { settings } from 'cluster';
+import { openApp, setValue, click, waitForElement, waitForEnabled } from '../actions/actions'
+import SignInPage from '../page_objects/signInPage';
+import * as lib from '../../common';
+import { createOrg } from '../actions/createOrg';
+let updatedOrgName;
 
+describe('Create Account', () => {
 
-function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
-}
+  before('Open App URL', () => {
+    SignInPage.open(lib.config.api.base)
+    //console.log(lib.testData)
+  });
 
-function setValue(sv, data) {
-  sv.setValue(data);
-}
+  it('Create Account', () => {
+    createAccount()
+  });
 
-function click(c) {
-  c.click();
-}
+  it('Create two more Orgs', () => {
+    let i;
+    for (i = 0; i < 3; i++) {
+      var orgname = lib.bigName(10)
+      createOrg(orgname)
+      i++
+    }
+  });
+
+});
+
 describe('Update Organization name', () => {
-  // it('Checking whether org name is similar across fields before edit', () => {
-  //   // SettingsPage.orgSettingsPage.waitForExist();
-  //   // SettingsPage.orgSettingsPage.waitForVisible();
-  //   // browser.waitUntil(() => {
-  //   //   return SettingsPage.orgSettingsPage.isVisible();
-  //   // }, 10000, 'Not visible');
-  //   SettingsPage.orgInput.waitForExist();
-  //   SettingsPage.orgInput.waitForVisible();
-  //   // SettingsPage.orgInput.waitForSelected();
-  //   const organizationName1 = SettingsPage.orgInput.getValue();
-  //   HomePage.orgNameAnchor.waitForExist();
-  //   HomePage.orgNameAnchor.waitForVisible();
-  //   // browser.element('//*[@class=\'h3\']').waitForExist();
-  //   // browser.element('//*[@class=\'h3\']').waitForVisible();
-  //   HomePage.orgNameAnchor.waitForText();
-  //   const organizationName2 = HomePage.orgNameAnchor.getText();
-  //   console.log(`${organizationName2};;;;;;;;`);
-  //   console.log(`${organizationName1};;;;;;;;`);
-  //   expect(organizationName1).to.include(organizationName2);
-  // });
-
-  it('Checking profile visibility', () => {
-    HomePage.profileMenu.waitForExist();
-    HomePage.profileMenu.waitForVisible();
-    const profileVisibility = HomePage.profileMenu.isVisible();
-    expect(profileVisibility).to.equal(true);
-    HomePage.profileMenu.click();
+  it('Click Profile', () => {
+    click(HomePage.profileMenu);
   });
 
-  it('Checking settings visibility', () => {
-    HomePage.settingsAnchor.waitForExist();
-    HomePage.settingsAnchor.waitForVisible();
-    const settingsVisibility = HomePage.settingsAnchor.isVisible();
-
-    expect(settingsVisibility).to.equal(true);
-    HomePage.settingsAnchor.click();
-    // browser.pause(10000);
+  it('Click Settings', () => {
+    click(HomePage.settingsAnchor);
   });
 
-  it('Checking whether organization name is similar across fields after edit', () => {
-    SettingsPage.orgInput.waitForExist();
-    SettingsPage.orgInput.waitForVisible();
+  it('Change the org name to "Updated Organization"', () => {
+    waitForElement(SettingsPage.orgInput);
     SettingsPage.orgInput.clearElement();
 
-    SettingsPage.orgInput.setValue('changedvalue');
+    updatedOrgName = 'Updated Organization';
 
-    SettingsPage.saveOrgNameButton.waitForExist();
-    SettingsPage.saveOrgNameButton.waitForVisible();
-    SettingsPage.saveOrgNameButton.click();
+    setValue(SettingsPage.orgInput, updatedOrgName);
 
-    HomePage.teamAnchor.waitForExist();
-    HomePage.teamAnchor.waitForVisible();
-    HomePage.teamAnchor.click();
-
-    HomePage.orgSettingsAnchor.waitForExist();
-    HomePage.orgSettingsAnchor.waitForVisible();
-    HomePage.orgSettingsAnchor.click();
-
-    const organizationName1 = SettingsPage.orgInput.getValue();
-    const organizationName2 = HomePage.orgNameAnchor.getText();
-    expect(organizationName1).to.equal(organizationName2);
+    waitForEnabled(SettingsPage.saveOrgNameButton);
+    expect(SettingsPage.saveOrgNameButton.isEnabled()).to.equal(true);
+    click(SettingsPage.saveOrgNameButton);
   });
 
-  it('Checking profile visibility', () => {
-    HomePage.profileMenu.waitForExist();
-    HomePage.profileMenu.waitForVisible();
-    const profileVisibility = HomePage.profileMenu.isVisible();
-    // console.log(faqVisibility);
-    expect(profileVisibility).to.equal(true);
-    HomePage.profileMenu.click();
+  /*  it('Confirm', () => {
+     click(SettingsPage.confirmOkButton)
+   }); */
 
-    HomePage.profileDetailsAnchor.waitForExist();
-    HomePage.profileDetailsAnchor.waitForVisible();
-    const profileVisibility1 = HomePage.profileDetailsAnchor.isVisible();
-    // console.log(faqVisibility);
-    expect(profileVisibility1).to.equal(true);
-    HomePage.profileDetailsAnchor.click();
-
-    HomePage.logo.waitForExist();
-    HomePage.logo.waitForVisible();
-    const profileVisibility2 = HomePage.logo.isVisible();
-    // console.log(faqVisibility);
-    expect(profileVisibility2).to.equal(true);
-    HomePage.logo.click();
-
+  it('Should update the side nav bar with the updated org name', () => {
+    browser.waitUntil(() => {
+      return SettingsPage.backToOrgDashboardLink.getText() === SettingsPage.orgInput.getValue()
+    }, 5000, 'Expect orgname to change in the side nav bar', 200);
+    expect(SettingsPage.backToOrgDashboardLink.getText()).to.equal(SettingsPage.orgInput.getValue());
   });
 
-  it('Checking organization name position in dashboard page', () => {
-    HomePage.individualOrgCard.waitForExist();
-    HomePage.individualOrgCard.waitForVisible();
-    const orgCount = HomePage.individualOrgCard.getElementSize();
-    expect(orgCount.length).to.have.equal(3);
+  it('Go back to Org Dashboard from the side nav bar org link', () => {
+    click(SettingsPage.backToOrgDashboardLink);
+  });
+
+  it('Validate Org dashboard has the updated org name', () => {
+    const orgDashboardOrgName = OrgDashboardPage.currentOrgName.getText();
+    expect(orgDashboardOrgName).to.equal(updatedOrgName);
+  });
+
+  it('Go back to Choose org page', () => {
+    click(OrgDashboardPage.changeOrgAnchor);
+
+    waitForElement(HomePage.chooseOrg);
+    expect(HomePage.chooseOrg.isVisible()).to.equal(true);
+  });
+
+  it('Modified org should be at the top of the org card stack', () => {
+    //browser.pause(2000)
+    waitForElement(HomePage.individualOrgCard);
+    const topOrgCard = HomePage.individualOrgCard.getText()[0];
+    expect(topOrgCard).to.include(updatedOrgName);
   });
 });
 

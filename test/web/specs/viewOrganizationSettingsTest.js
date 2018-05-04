@@ -1,33 +1,19 @@
 import CreateAccountPage from '../specs/createAccountTest';
 import HomePage from '../page_objects/homePage';
+import { openApp, setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
 
 describe('View Organization setings', () => {
   it('Checking profile visibility', () => {
-    HomePage.profileMenu.waitForExist();
-    HomePage.profileMenu.waitForVisible();
-    const profileVisibility = HomePage.profileMenu.isVisible();
-    // console.log(faqVisibility);
-    expect(profileVisibility).to.equal(true);
-    HomePage.profileMenu.click();
+    waitForElement(HomePage.profileMenu);
+    click(HomePage.profileMenu);
   });
 
   it('Checking settings visibility', () => {
-    HomePage.settingsAnchor.waitForExist();
-    HomePage.settingsAnchor.waitForVisible();
-    // const helpCenterUrl = browser.getAttribute('//*[contains(text(),\'Help Center\')]/parent::a', 'href');
-    // expect('https://help.appcurator.com/').to.equal(helpCenterUrl);
-    const settingsVisibility = HomePage.settingsAnchor.isVisible();
-    // console.log(settingsVisibility + ';;;;;;;;');
-    expect(settingsVisibility).to.equal(true);
-    HomePage.settingsAnchor.click();
+    waitForElement(HomePage.settingsAnchor);
+    click(HomePage.settingsAnchor);
   });
-  
+
   it('Checking general visibility', () => {
-    HomePage.orgSettingsAnchor.waitForExist();
-    HomePage.orgSettingsAnchor.waitForVisible();
-    const generalVisibility = HomePage.orgSettingsAnchor.isVisible();
-    // console.log(generalVisibility + ';;;;;;;;');
-    expect(generalVisibility).to.equal(true);
-    
+    waitForElement(HomePage.orgSettingsAnchor);
   });
 });
