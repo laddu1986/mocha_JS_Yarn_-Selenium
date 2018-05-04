@@ -1,42 +1,44 @@
 require('dotenv').config();
 const argv = require('yargs').argv;
-// let WdioTestRailReporter = require('/Users/avinash.eediga/Documents/qa/qa-automation/node_modules/wdio-testrail-reporter/lib/wdio-testrail-reporter.js');
-
-// var config = require('config-yml');
 
 const brow = 'chrome';
 
 exports.config = {
-  // services: ['selenium-standalone'],
+  // services: ['selenium-standalone', 'chromedriver'],
   // services: ['chromedriver', 'devtools'],
   enableNetwork: true,
   capabilities: [{
     browserName: brow,
     chromeOptions: {
-      args: ['disable-infobars', '--disable-gpu'],
+      args: [
+        'disable-infobars',
+        '--headless',
+        '--incognito',
+        '--ignore-certificate-errors',
+        '--disable-gpu'],
     },
-    // , '--headless', '--disable-gpu', '--window-size=1200, 700'] }
   }],
 
   updateJob: false,
   specs: [
-    // './test/web/specs/*Test.js',
-    './test/web/specs/createAccountTest.js',
+    './test/web/specs/*Test.js',
+    //'./test/web/specs/deleteOrganizationTest.js',
   ],
   // Patterns to exclude.
   exclude: [
+    //'./test/web/specs/reRegisterAccountTest.js',
   ],
 
   logLevel: 'silent',
+  bail: 2,
   coloredLogs: true,
-  screenshotPath: './errScreens',
-  baseUrl: 'https://feature-qa-org.web.appcurator.qa/',
+  // screenshotPath: './errScreens',
+  baseUrl: 'https://my.appcurator.com/',
   waitforTimeout: 10000,
-  // maxInstances: 3,
+  maxInstances: 10,
 
   plugins: {
-    'wdio-screenshot': {},
-    webdriverajax: {},
+
     // webdrivercss: {
     //     screenshotRoot: 'my-shots',
     //     failedComparisonsRoot: 'diffs',
@@ -48,26 +50,18 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['allure', 'spec'],
+  reporters: ['dot'],
   reporterOptions: {
     allure: {
       outputDir: 'allure-results',
       disableWebdriverStepsReporting: true,
     },
   },
-  // testRailsOptions: {
-  //   domain: "testrail.massiveinteractive.com",
-  //   username: "abhijeet.daspatnaik@massive.co",
-  //   password: "ABHI@dp11",
-  //   projectId: P1,
-  //   suiteId: S2471,
-  //   runName: "My test run"
-  // },
 
   mochaOpts: {
     ui: 'bdd',
     compilers: ['js:babel-register'],
-    timeout: 20000,
+    timeout: 30000,
   },
 
   //
@@ -76,6 +70,7 @@ exports.config = {
   // =====
   // Gets executed before all workers get launched.
   onPrepare() {
+    // console.log('On Prepare')
   },
 
   // Gets executed before test execution begins. At this point you will have access to all global
@@ -85,6 +80,7 @@ exports.config = {
 
     global.expect = chai.expect;
     chai.Should();
+    //console.log('Before')
 
     // const config = require('config-yml');
   },
@@ -93,11 +89,13 @@ exports.config = {
   // the test.
   after() {
     // do something
+    //console.log('After')
   },
 
   // Gets executed after all workers got shut down and the process is about to exit. It is not
   // possible to defer the end of the process using a promise.
   onComplete() {
+    //console.log('On Complete')
 
   },
 };

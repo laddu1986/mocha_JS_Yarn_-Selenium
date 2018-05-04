@@ -1,29 +1,16 @@
 // Create Organization, sign out, sign back in to validate user lands in the created Org
 // import pre from '../specs/validSignIn_PreReq';
 import CreateAccount from '../specs/createAccountTest';
-// import SignInPage from '../page_objects/signInPage';
 import HomePage from '../page_objects/homePage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
+import { openApp, setValue, click, waitForEnable, waitForElement } from '../actions/actions'
+
 
 
 function assertion(e, data) {
-  //   console.log(e)
   e.forEach((expected) => {
     expect(expected).to.equal(data);
   });
-}
-
-function waitForElement(wfe) {
-  wfe.waitForExist();
-  wfe.waitForVisible();
-}
-
-function setValue(sv, data) {
-  sv.setValue(data);
-}
-
-function click(c) {
-  c.click();
 }
 
 function bigName(params) {
@@ -80,17 +67,17 @@ function createOrgs() {
 
     waitForElement(HomePage.createOrgInput);
     setValue(HomePage.createOrgInput, bigName(10));
-    waitForElement(HomePage.submit);
-    HomePage.submit.waitForEnabled();
-    // if (HomePage.submit.isEnabled()) {
 
-    click(HomePage.submit);
+    waitForElement(HomePage.createOrgButton);
+    HomePage.createOrgButton.waitForEnabled();
+    click(HomePage.createOrgButton);
+
     OrgDashboardPage.changeOrgAnchor.waitForExist();
     OrgDashboardPage.changeOrgAnchor.waitForVisible();
-  });
+  })
 }
 
-describe('Create an Organization', () => {
+describe('Tests for Create Organization', () => {
   let i;
   for (i = 0; i < 2; i++) {
     createOrgs();
