@@ -15,7 +15,7 @@ const responseData = {
 // uri end points
 const orca = config.orca.base;
 const api = config.api.base;
-const web = config.web.base;
+// const web = config.web.base;
 
 function bigName(params) {
   let text = '';
@@ -118,7 +118,7 @@ export {
   // uri
   orca,
   api,
-  web,
+  // web,
   // api calls
   post,
   get,

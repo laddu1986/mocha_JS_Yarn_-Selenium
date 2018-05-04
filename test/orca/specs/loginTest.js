@@ -38,6 +38,8 @@ function login(data) {
   });
 }
 function createOrganization(data) {
+  // setTimeout(() => {
+  // }, 200);
   it(`${data.it} create organization`, (done) => {
     mutation.createOrganization(done, data, responseData);
   });
