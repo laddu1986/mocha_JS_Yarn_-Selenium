@@ -48,7 +48,14 @@ function end() {
 }
 
 function post(done, any) {
-  // console.log(any);
+  if (any.headers == undefined) {
+    any.headers = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+  }
+  // console.log(any.headers);
   return server.post(any.api, any.data, any.headers)
     .then((response) => {
       // console.log(response.body);
@@ -105,12 +112,11 @@ function del(done, any) {
 
 const testData = {
   name: bigName(10),
-  email: bigName(15) + `@test.co`,
-  organization: bigName(10) + `_Org`,
-  space: bigName(8) + `_Space`,
+  email: `${bigName(15)}@test.co`,
+  organization: `${bigName(10)}_Org`,
+  space: `${bigName(8)}_Space`,
   password: 'Pass1234',
 };
-
 
 
 export {
@@ -136,5 +142,4 @@ export {
   bigName,
   testData,
 };
-
 
