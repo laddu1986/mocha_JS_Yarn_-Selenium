@@ -1,7 +1,7 @@
 import HomePage from '../page_objects/homePage';
-import CreateAccountPage from '../page_objects/createAccountPage'
-import OrgDashboardPage from '../page_objects/orgDashboardPage'
-import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
+import CreateAccountPage from '../page_objects/createAccountPage';
+import OrgDashboardPage from '../page_objects/orgDashboardPage';
+import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
 import * as lib from '../../common';
 
 
@@ -11,8 +11,7 @@ import * as lib from '../../common';
 // const password = 'Pass1234'
 
 function createAccount() {
-
-  click(CreateAccountPage.createAccountLink)
+  click(CreateAccountPage.createAccountLink);
 
   setValue(CreateAccountPage.nameInput, lib.testData.name);
   setValue(CreateAccountPage.emailInput, lib.testData.email);
@@ -21,9 +20,8 @@ function createAccount() {
 
   click(CreateAccountPage.createAccountButton);
   waitForElement(HomePage.logo);
-  waitForElement(OrgDashboardPage.currentOrgName)
+  waitForElement(OrgDashboardPage.currentOrgName);
 }
 
-export { createAccount }
-
+export { createAccount };
 

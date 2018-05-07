@@ -1,6 +1,7 @@
 import * as invites from '../actions/invites';
 import * as organization from '../actions/organization';
 import * as identity from '../actions/identity';
+import * as membership from '../actions/membership';
 import * as lib from '../../common';
 
 describe('Invites Api', () => {
@@ -23,10 +24,10 @@ describe('Invites Api', () => {
       invites.postInvitesByOrganizationId(done, lib.responseData.invites);
     });
   });
-
-  describe('GET /organizations/{orgId}/invites/?size={pageSize}&offset={offset}&orderBy={orderBy}&orderingDirection={orderingDirection}', () => {
+  // doesnot implemented
+  describe('GET /organizations/{orgId}/invites', () => {
     it('Get invites in the org.', (done) => {
-      invites.getInvitesDetailsByOrganizationIdOrPageSizeOrOffsetOrOrderOrDirection(done, lib.responseData.invites);
+      invites.getInvitesDetailsByOrganizationId(done, lib.responseData.invites);
     });
   });
   describe('GET /organizations/{orgId}/invites/{token}', () => {
