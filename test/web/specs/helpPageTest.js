@@ -20,7 +20,7 @@ function signIn() {
 
 describe('Test Help Center', () => {
   it('Open App Page', () => {
-    SignInPage.open(lib.config.api.base)
+    SignInPage.open()
   })
 
   it('Sign In', () => {
