@@ -282,7 +282,6 @@ describe('Identity Api', () => {
             },
           },
         },
-
       };
       // console.log(JSON.stringify(data));
       // console.log(JSON.stringify(orcaRes[1]));

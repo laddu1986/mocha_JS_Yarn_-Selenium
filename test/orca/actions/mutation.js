@@ -92,7 +92,7 @@ function createOrganization(done, params, responseData) {
   lib.post(done, any);
 }
 
-function updateorganization(done, params, responseData){
+function updateOrganization(done, params, responseData){
     const data = {
       query: 'mutation EditOrg($input: UpdateOrgInput!) { updateOrganization(input: $input) { organization { id rowVersion name slug }}}',
       variables: {
@@ -130,6 +130,6 @@ export {
   registerAndCreateOrg,
   login,
   createOrganization,
-  updateorganization
+  updateOrganization
 };
 
