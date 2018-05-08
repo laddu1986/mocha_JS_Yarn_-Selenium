@@ -6,6 +6,5 @@ pipelines:
     - step:
         script:
           - sh ./scripts/start.sh
-          - netstat -plnt
           - npm install
           - npm run web

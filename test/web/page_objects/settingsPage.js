@@ -8,11 +8,8 @@ class SettingsPage {
   get leaveOrgButton() { return browser.element("//button[@data-qa='btn:leave-org']"); }
   get deleteOrgButton() { return browser.element("//button[@data-qa='btn:leave-org']"); }
 
-
   get orgSettingsPage() { return browser.element("//*[@data-qa='page:org-settings']") }
   get confirmOkButton() { return browser.element("//*[@data-qa='btn:submit']"); }
-
-  get backToOrgDashboardLink() { return browser.element("//a[@data-qa='link:dashboard']") }
 
   open(e) {
     super.open(e);

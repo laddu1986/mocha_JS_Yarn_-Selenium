@@ -13,8 +13,9 @@
         "copy-paste": "^1.3.0",
         "dotenv": "^5.0.1",
         "easyimage": "^2.1.0",
-        "eslint": "^4.18.2",
-        "eslint-plugin-babel": "^5.1.0",
+        "eslint": "^4.19.1",
+        "eslint-config-airbnb": "^16.1.0",
+        "eslint-plugin-babel": "^4.1.2",
         "eslint-plugin-import": "^2.9.0",
         "eslint-plugin-react": "^7.7.0",
         "mysql": "^2.15.0",
@@ -38,8 +39,8 @@
         "web": "node_modules/.bin/wdio wdio.appcurator.js",
         "api": "mocha test/api/specs/*Test.js --require babel-register",
         "report": "allure generate allure-results --clean -o allure-report && allure open allure-report",
-        "orca": "mocha test/orca/query.js --require babel-register",
-        "test": "./node_modules/mocha/bin/mocha test/api/specs/*Test.js --require babel-register"
+        "orca": "mocha test/orca/specs/mutation_sample.js --require babel-register",
+        "test": "./node_modules/mocha/bin/mocha test/api/specs/Test.js --require babel-register"
     },
     "repository": {
         "type": "git",

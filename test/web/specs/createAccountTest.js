@@ -79,7 +79,6 @@ import { createAccount } from '../actions/createAccount';
 //   });
 // }
 
-
 describe('Tests for Create Account', () => {
   before('Open create account page', () => {
     // lib.connection({
@@ -89,7 +88,7 @@ describe('Tests for Create Account', () => {
     //   database: 'membership_test',
     // });
     // console.log(lib.config.api.createAccount);
-    SignInPage.open(lib.config.api.base)
+    SignInPage.open()
   });
 
 
