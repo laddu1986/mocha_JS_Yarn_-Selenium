@@ -48,8 +48,6 @@
     "type": "git",
     "url": "https://bitbucket.org/appcurator/qa-automation"
   },
-  "pre-commit": [
-  ],
   "author": "QA Team",
   "license": "Internal"
 }
