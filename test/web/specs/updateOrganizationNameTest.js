@@ -1,5 +1,6 @@
 
 //import createOrganizationPage from '../specs/createOrganizationTest';
+import NavBar from '../page_objects/navBar'
 import { createAccount } from '../actions/createAccount'
 import SettingsPage from '../page_objects/settingsPage';
 import HomePage from '../page_objects/homePage';
@@ -13,7 +14,7 @@ let updatedOrgName;
 describe('Create Account', () => {
 
   before('Open App URL', () => {
-    SignInPage.open(lib.config.api.base)
+    SignInPage.open()
     //console.log(lib.testData)
   });
 
@@ -60,13 +61,13 @@ describe('Update Organization name', () => {
 
   it('Should update the side nav bar with the updated org name', () => {
     browser.waitUntil(() => {
-      return SettingsPage.backToOrgDashboardLink.getText() === SettingsPage.orgInput.getValue()
+      return NavBar.backToOrgDashboardLink.getText() === SettingsPage.orgInput.getValue()
     }, 5000, 'Expect orgname to change in the side nav bar', 200);
-    expect(SettingsPage.backToOrgDashboardLink.getText()).to.equal(SettingsPage.orgInput.getValue());
+    expect(NavBar.backToOrgDashboardLink.getText()).to.equal(SettingsPage.orgInput.getValue());
   });
 
   it('Go back to Org Dashboard from the side nav bar org link', () => {
-    click(SettingsPage.backToOrgDashboardLink);
+    click(NavBar.backToOrgDashboardLink);
   });
 
   it('Validate Org dashboard has the updated org name', () => {
