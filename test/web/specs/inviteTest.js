@@ -11,7 +11,7 @@ var invite_email3 = 'invite_3' + lib.bigName(5) + '@test.co'
 describe(`Invite Tests \n`, () => {
   
   before('Open App URL', () => {
-    SignInPage.open(lib.config.api.base)
+    SignInPage.open()
   });
 
   before(()=>{
