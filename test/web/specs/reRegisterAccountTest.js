@@ -74,7 +74,7 @@ describe('Delete Acount Test (Remove my Account)', () => {
     });
 
     it('Validate URL to end with /organizations', () => {
-      expect(browser.getUrl()).to.equal(`${lib.config.api.base}organizations`);
+      expect(browser.getUrl()).to.equal(`${lib.config.api.base}/organizations`);
     });
   });
 
@@ -90,7 +90,7 @@ describe('Delete Acount Test (Remove my Account)', () => {
 
     it('Should re-direct to Sign In page after deleting my Account', () => {
       waitForElement(SignInPage.signInButton);
-      expect(browser.getUrl()).to.equal(`${lib.config.api.base}sign-in`);
+      expect(browser.getUrl()).to.equal(`${lib.config.api.base}/sign-in`);
     });
   });
 

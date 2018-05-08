@@ -12,7 +12,7 @@ exports.config = {
     chromeOptions: {
       args: [
         'disable-infobars',
-        //'--headless',
+        '--headless',
         '--incognito',
         '--ignore-certificate-errors',
         '--disable-gpu'],
@@ -22,7 +22,7 @@ exports.config = {
   updateJob: false,
   specs: [
     './test/web/specs/*Test.js',
-    //'./test/web/specs/inviteTest.js',
+    //'./test/web/specs/deleteOrganizationTest.js',
   ],
   // Patterns to exclude.
   exclude: [
@@ -30,7 +30,7 @@ exports.config = {
   ],
 
   logLevel: 'silent',
-  //bail: 5,
+  bail: 2,
   coloredLogs: true,
   // screenshotPath: './errScreens',
   baseUrl: 'https://my.appcurator.com/',
@@ -50,7 +50,7 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['allure', 'spec'],
+  reporters: ['dot'],
   reporterOptions: {
     allure: {
       outputDir: 'allure-results',
