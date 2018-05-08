@@ -41,7 +41,7 @@
         "report": "allure generate allure-results --clean -o allure-report && allure open allure-report",
         "orca": "mocha test/orca/query.js --require babel-register",
         "test": "./node_modules/mocha/bin/mocha test/api/specs/*Test.js --require babel-register",
-        "clean": "./node_modules/.bin/eslint ./test/* --fix"
+        "clean": "node_modules/.bin/eslint test/* --fix"
     },
     "repository": {
         "type": "git",
