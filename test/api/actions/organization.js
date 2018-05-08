@@ -3,10 +3,13 @@ import * as lib from '../../common';
 function postOrganization(done, responseData) {
   const any = {
     api: lib.config.api.organizations,
-    data: { name: lib.bigName(10) },
+    data: {
+      name: lib.bigName(10),
+      createdByAccountId: responseData[0].id,
+    },
     func(response) {
       responseData.push(response.body);
-      // console.log(responseData);
+      console.log(response.body);
       expect(response).to.have.status(201);
     },
   };
@@ -16,7 +19,7 @@ function postOrganization(done, responseData) {
 function getOrganizationById(done, responseData) {
   const any = {
     api: lib.config.api.organizations,
-    data: responseData[0].id,
+    data: responseData[1].id,
     func(response) {
     //   lib.res.push(response.body);
       expect(response).to.have.status(200);
@@ -40,7 +43,7 @@ function getOrganizations(done) {
 function postOrganizations(done, responseData) {
   const any = {
     api: lib.config.api.organizations,
-    data: [responseData[0], responseData[1]],
+    data: [responseData[1], responseData[2]],
     func(response) {
       //   lib.res.push(response.body);
       expect(response.body).to.be.an('array');
@@ -53,7 +56,7 @@ function postOrganizations(done, responseData) {
 function deleteOrganizationById(done, responseData) {
   const any = {
     api: lib.config.api.organizations,
-    data: `${responseData[1].id}?rowVersion=${responseData[1].rowVersion}`,
+    data: `${responseData[2].id}?rowVersion=${responseData[2].rowVersion}`,
     func(response) {
       expect(response).to.have.status(204);
     },
@@ -64,7 +67,7 @@ function deleteOrganizationById(done, responseData) {
 function checkStatusChangedToPendingDelete(done, responseData) {
   const any = {
     api: lib.config.api.organizations,
-    data: responseData[1],
+    data: responseData[2],
     func(response) {
       expect(response.body.rowStatus).to.equal('PendingDelete');
       expect(response).to.have.status(200);
@@ -74,7 +77,7 @@ function checkStatusChangedToPendingDelete(done, responseData) {
 }
 
 function putOrganization(done, responseData) {
-  const update = responseData[0];
+  const update = responseData[1];
   update.name = 'check update name string';
   //   console.log(update);
   const any = {

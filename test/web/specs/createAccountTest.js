@@ -79,6 +79,15 @@ import { createAccount } from '../actions/createAccount';
 //   });
 // }
 
+function waitForElement(wfe) {
+  wfe.waitForExist();
+  wfe.waitForVisible();
+}
+
+function setValue(sv, data) {
+  sv.setValue(data);
+}
+
 
 describe('Tests for Create Account', () => {
   before('Open create account page', () => {
