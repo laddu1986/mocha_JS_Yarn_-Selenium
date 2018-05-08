@@ -1,6 +1,7 @@
-import * as invites from '../actions/invites';
-import * as organization from '../actions/organization';
 import * as lib from '../../common';
+import * as invites from 'api/actions/invites';
+import * as organization from 'api/actions/organization';
+
 
 describe('Identity State Api', () => {
   before('Connect to database', () => {
