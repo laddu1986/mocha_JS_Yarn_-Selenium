@@ -1,3 +1,4 @@
+import "app-module-path/register";
 const server = require('chakram');
 
 global.expect = server.expect;
@@ -123,5 +124,3 @@ export {
   bigName,
   testData,
 };
-
-
