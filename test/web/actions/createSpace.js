@@ -1,7 +1,7 @@
-import OrgDashboardPage from '../page_objects/orgDashboardPage'
-import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
 import * as lib from '../../common';
-import SpaceDashboardPage from '../page_objects/spaceDashboardPage';
+import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
+import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
+import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
 
 
 function createFirstSpace() {
