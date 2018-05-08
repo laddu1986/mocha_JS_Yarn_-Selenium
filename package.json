@@ -40,11 +40,15 @@
         "api": "mocha test/api/specs/*Test.js --require babel-register",
         "report": "allure generate allure-results --clean -o allure-report && allure open allure-report",
         "orca": "mocha test/orca/query.js --require babel-register",
-        "test": "./node_modules/mocha/bin/mocha test/api/specs/*Test.js --require babel-register"
+        "test": "./node_modules/mocha/bin/mocha test/api/specs/*Test.js --require babel-register",
+        "clean": "./node_modules/.bin/eslint ./test/* --fix"
     },
     "repository": {
         "type": "git",
         "url": "https://bitbucket.org/appcurator/qa-automation"
+    },
+    "pre-commit": {
+        "clean"
     },
     "author": "QA Team",
     "license": "Internal"
