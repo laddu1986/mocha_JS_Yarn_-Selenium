@@ -11,7 +11,7 @@ function assertion(e, data) {
 
 describe('Test Forgot Password Link', () => {
   it('Open App URL', () => {
-    SignInPage.open(lib.config.api.base);
+    SignInPage.open();
   });
 
   it('Click Forgot Password link', () => {
