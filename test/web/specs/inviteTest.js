@@ -11,48 +11,47 @@ var invite_email3 = 'invite_3' + lib.bigName(5) + '@test.co'
 describe(`Invite Tests \n`, () => {
   
   before('Open App URL', () => {
-    SignInPage.open(lib.config.api.base)
+    SignInPage.open()
   });
 
   before(()=>{
     createAccount();
   });
 
-  describe(`Organisation Dashoard page \n`, () => {
+  describe(`Organisation Dashboard page \n`, () => {
 
   it('Verify Send Invite button is disabled', () => {
     clickInviteTeammateButton();
-    expect(sendInviteButtonEnabled()).to.equal(false)
+    expect(sendInviteButtonEnabled()).to.equal(false);
   });
 
   it('Send invite --> verify count increases', () => {
-    sendInvite(invite_email1)
+    sendInvite(invite_email1);
     verifyInviteCount("1");
   });
 
   it('Send another Invite --> verify count increases', () => {
     clickInviteTeammateButton();
-    sendInvite(invite_email2)
+    sendInvite(invite_email2);
     verifyInviteCount("2");
   });
-
   });
 
   describe(`Teammates page \n`, () => {
 
     it('Verify Send Invite button is disabled', () => {
       goToTeammatesPage();
-      expect(sendInviteButtonEnabled()).to.equal(false)
-    });
-  
-    it('Send Invite --> verify inactive tab', () => {
-      sendInvite(invite_email3);
-      expect(verifyInvite()).to.include(invite_email3);
+      expect(sendInviteButtonEnabled()).to.equal(false);
     });
 
   it('Validate inactive tab for the invites',() =>{
     expect(verifyInvite()).to.include(invite_email1);
     expect(verifyInvite()).to.include(invite_email2);
+  });
+
+  it('Send Invite --> verify inactive tab', () => {
+    sendInvite(invite_email3);
+    expect(verifyInvite()).to.include(invite_email3);
   });
 
   it('Validate pending invite count', () => {

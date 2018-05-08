@@ -22,8 +22,8 @@ function sendInvite(inviteMail) {
 function goToTeammatesPage(){
   click(homePage.profileMenu);
   click(NavBar.settingsAnchor);
-  browser.pause(500);
-  click(NavBar.teamNavButton);
+  browser.waitUntil(() => {return NavBar.teamNavLink.getText() === ('Team')}, 5000, 'Team link is not displayed', 200);
+  click(NavBar.teamNavLink);
 }
 
 function verifyInvite(){
@@ -33,9 +33,8 @@ return TeamPage.email.getText();
 
 function verifyInviteCount(count){
   browser.waitUntil(() => {
-    return OrgDashboardPage.pendingInviteCircle.getText() === ('+'+count)
-  }, 5000, 'Expect pending invite circle to increment by 1', 200);
-}
+       return OrgDashboardPage.pendingInviteCircle.getText() === ('+'+count)
+     }, 5000, 'Expect pending invite circle to increment by 1', 200);}
 
 function goToOrganisationDashboard(){
   NavBar.backToOrgDashboardLink.click();
