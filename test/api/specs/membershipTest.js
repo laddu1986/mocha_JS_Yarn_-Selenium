@@ -1,7 +1,7 @@
-import * as organization from '../actions/organization';
-import * as membership from '../actions/membership';
-import * as identity from '../actions/identity';
 import * as lib from '../../common';
+import * as organization from 'api/actions/organization';
+import * as membership from 'api/actions/membership';
+import * as identity from 'api/actions/identity';
 
 const description = {
   getMemberships: 'GET /memberships',
@@ -37,7 +37,7 @@ describe('Memberships Api', () => {
     it('Posting membership details', (done) => {
       membership.postMembership(done, lib.responseData.membership);
     });
-    
+
     it('Getting membership by account id', (done) => {
       membership.getMembershipByAccount(done, lib.responseData.membership);
     });

@@ -1,5 +1,5 @@
-import * as organization from '../actions/organization';
 import * as lib from '../../common';
+import * as organization from 'api/actions/organization';
 
 describe('Organizations Api', () => {
   before('Connect to database', () => {
