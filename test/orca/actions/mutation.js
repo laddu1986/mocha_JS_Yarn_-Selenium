@@ -92,9 +92,44 @@ function createOrganization(done, params, responseData) {
   lib.post(done, any);
 }
 
+function updateorganization(done, params, responseData){
+    const data = {
+      query: 'mutation EditOrg($input: UpdateOrgInput!) { updateOrganization(input: $input) { organization { id rowVersion name slug }}}',
+      variables: {
+        input: {
+          id: responseData[0].data.registerAndCreateOrg.account.organizations[0].id,
+          rowVersion: responseData[0].data.registerAndCreateOrg.account.organizations[0].rowVersion,
+          fields: {
+            name: 'updatedText',
+          },
+        },
+      },
+    };
+    // console.log(JSON.stringify(data));
+    // console.log(JSON.stringify(orcaRes[1]));
+    const any = {
+      api: lib.config.orca.base,
+      data: JSON.parse(JSON.stringify(data)),
+      headers: {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          cookie: responseData[1],
+        },
+      },
+      func(response) {
+        console.log(JSON.stringify(response.body));
+        expect(response).to.have.status(200);
+      },
+    };
+      // console.log(any);
+    lib.post(done, any);
+}
+
 export {
   registerAndCreateOrg,
   login,
   createOrganization,
+  updateorganization
 };
 

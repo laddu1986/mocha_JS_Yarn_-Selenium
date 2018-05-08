@@ -38,11 +38,17 @@ function login(data) {
   });
 }
 function createOrganization(data) {
-  // setTimeout(() => {
-  // }, 200);
-  it(`${data.it} create organization`, (done) => {
-    mutation.createOrganization(done, data, responseData);
-  });
+  // setTimeout((done) => {
+    it(`create organization`, (done) => {
+      mutation.createOrganization(done, data, responseData);
+    });
+  // }, 2);
+  
+}
+function updateOrganization(data) {
+    it(`update organization`, (done) => {
+      mutation.updateOrganization(done, data, responseData);
+    });  
 }
 
 describe('Mutation registerAndCreateOrg ', () => {
@@ -53,4 +59,6 @@ describe('Mutation login ', () => {
 });
 describe('Mutation organization', () => {
   testData.map(data => createOrganization(data));
+  testData.map(data => updateOrganization(data));
 });
+
