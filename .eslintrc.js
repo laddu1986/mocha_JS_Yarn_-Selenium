@@ -33,6 +33,10 @@ module.exports = {
       "import/prefer-default-export": "off",                          // Don't use default export settings - wdio reference page-object model
       "class-methods-use-this": "off",                                 // Do not enforce method to be static function
       "max-len": ["warn", 120, 2, {"ignoreComments": true, "ignoreStrings": true}],                 // Max length of lines
-      "no-param-reassign": "off"                                      // Allow reassign params (pass between cases)
+      "no-param-reassign": "off",                                      // Allow reassign params (pass between cases)
+      "max-statements": "off",
+      "camelcase": "warn",
+      "prefer-destructuring": "off",
+      "no-shadow": "warn",
   }
 };
