@@ -9,7 +9,7 @@ const responseData = {
   membership: [],
   identity: [],
   identityState: [],
-  invites: [],
+  invites: []
 };
 function bigName(params) {
   let text = '';
@@ -97,12 +97,11 @@ function del(done, any) {
 
 const testData = {
   name: bigName(10),
-  email: bigName(15) + `@test.co`,
-  organization: bigName(10) + `_Org`,
-  space: bigName(8) + `_Space`,
-  password: 'Pass1234',
+  email: `${bigName(15)}@test.co`,
+  organization: `${bigName(10)}_Org`,
+  space: `${bigName(8)}_Space`,
+  password: 'Pass1234'
 };
-
 
 
 export {
@@ -121,7 +120,6 @@ export {
   // data
   responseData,
   bigName,
-  testData,
+  testData
 };
-
 

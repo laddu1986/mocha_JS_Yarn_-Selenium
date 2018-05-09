@@ -5,10 +5,10 @@ import SignInPage from '../page_objects/signInPage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
 import SettingsPage from '../page_objects/settingsPage';
 import Page from '../page_objects/page';
-import { openApp, setValue, click, waitForElement, waitForEnabled } from '../actions/actions'
+import { openApp, setValue, click, waitForElement, waitForEnabled } from '../actions/actions';
 
 const name = lib.bigName(10);
-const email = lib.bigName(15) + `@test.co`;
+const email = `${lib.bigName(15)}@test.co`;
 const organization = 'First Org';
 const password = 'Pass1234';
 
@@ -16,12 +16,12 @@ const testData = [
   {
     organization: 'Second Org',
     title: 'Create with orgName = Second Org',
-    accepted: true,
+    accepted: true
   },
   {
     organization: 'Last Org',
     title: 'Create with orgName = Last Org',
-    accepted: true,
+    accepted: true
   }];
 
 let accountCreated;
@@ -30,7 +30,7 @@ let signedIn;
 describe('Leave Organization Test', () => {
   describe('Create Account', () => {
     before('Open App URL', () => {
-      SignInPage.open()
+      SignInPage.open();
     });
 
     it('Create Account with First Org and Sign In', () => {
@@ -41,8 +41,8 @@ describe('Leave Organization Test', () => {
       setValue(CreateAccountPage.passwordInput, password);
       click(CreateAccountPage.createAccountButton);
 
-      console.log(`${'Test Data : - ' + '\n' +
-        'name = '}${name}\n` +
+      console.log('Test Data : - \n' +
+        `name = ${name}\n` +
         `email = ${email}\n` +
         `organization = ${organization}\n` +
         `password = ${password}`);
@@ -82,7 +82,7 @@ describe('Leave Organization Test', () => {
 
         click(HomePage.createOrgButton);
         waitForElement(OrgDashboardPage.welcomeMsg);
-        //console.log(OrgDashboardPage.welcomeMsg.getText())
+        // console.log(OrgDashboardPage.welcomeMsg.getText())
       });
     });
   });
@@ -95,8 +95,8 @@ describe('Leave Organization Test', () => {
       expect(browser.getUrl()).to.equal(`${lib.config.api.base}/organizations`);
       waitForElement(HomePage.chooseOrg);
 
-      //waitForElement(browser.element("//*[@data-qa='org:card' and contains(@href,'first')]"));
-      click(browser.element("//a[@data-qa='org:card' and contains(@href,'first')]"))
+      // waitForElement(browser.element("//*[@data-qa='org:card' and contains(@href,'first')]"));
+      click(browser.element("//a[@data-qa='org:card' and contains(@href,'first')]"));
       viewOrgDashboard();
     });
 

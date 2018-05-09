@@ -1,10 +1,9 @@
-import { openApp, setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
-import * as set from '../actions/actions'
+import { openApp, setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
 import HomePage from '../page_objects/homePage';
 import SignInPage from '../page_objects/signInPage';
 import * as lib from '../../common';
 
-import { signOut } from '../actions/signOut'
+import { signOut } from '../actions/signOut';
 
 let signInSuccess;
 
@@ -20,12 +19,12 @@ function signIn() {
 
 describe('Test Help Center', () => {
   it('Open App Page', () => {
-    SignInPage.open(lib.config.api.base)
-  })
+    SignInPage.open(lib.config.api.base);
+  });
 
   it('Sign In', () => {
-    signIn()
-  })
+    signIn();
+  });
 
 
   it('Click Help Menu from Side Nav Bar', () => {
@@ -44,15 +43,15 @@ describe('Test Help Center', () => {
     expect(browser.getUrl()).to.include('https://help.appcurator.com/');
     browser.close(helpTab);
 
-    signOut()
-  })
+    signOut();
+  });
 
 });
 
 describe('Test Developer Portal', () => {
   it('Sign In', () => {
-    signIn()
-  })
+    signIn();
+  });
 
   it('Click Help Menu from Side Nav Bar', () => {
     click(HomePage.helpMenuNav);
@@ -67,17 +66,17 @@ describe('Test Developer Portal', () => {
     browser.switchTab(tabIds[1]);
     const devPortalTab = browser.windowHandle();
 
-    //expect(browser.getUrl()).to.include('https://developer.appcurator.com/');
+    // expect(browser.getUrl()).to.include('https://developer.appcurator.com/');
     browser.close(devPortalTab);
-    signOut()
+    signOut();
 
   });
 });
 
 describe('Test API Portal', () => {
   it('Sign In', () => {
-    signIn()
-  })
+    signIn();
+  });
 
   it('Click Help Menu from Side Nav Bar', () => {
     click(HomePage.helpMenuNav);
@@ -94,15 +93,15 @@ describe('Test API Portal', () => {
 
     expect(browser.getUrl()).to.include('https://api.appcurator.com/');
     browser.close(apiPortalTab);
-    signOut()
+    signOut();
 
   });
 });
 
 describe('Test System Status', () => {
   it('Sign In', () => {
-    signIn()
-  })
+    signIn();
+  });
 
   it('Click Help Menu from Side Nav Bar', () => {
     click(HomePage.helpMenuNav);
@@ -119,7 +118,7 @@ describe('Test System Status', () => {
 
     expect(browser.getUrl()).to.include('https://stats.uptimerobot.com/');
     browser.close(sysStatusTab);
-    signOut()
+    signOut();
 
   });
 });
