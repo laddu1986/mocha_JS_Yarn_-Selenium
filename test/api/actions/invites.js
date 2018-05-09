@@ -36,7 +36,7 @@ function getInvitesDetailsByOrganizationId(done, responseData) {
       responseData.push(response.body);
       console.log(response.body);
       expect(response).to.have.status(200);
-    },
+    }
   };
   // console.log(any);
   lib.get(done, any);
@@ -62,17 +62,13 @@ function deleteInviteByOrganizationIdAndEmail(done, responseData) {
     data: `${responseData[1].id}/invites/?email=${responseData[2][0]}`,
     func(response) {
       expect(response).to.have.status(204);
-    },
+    }
   };
   lib.del(done, any);
 }
 export {
   postInvitesByOrganizationId,
-<<<<<<< HEAD
   getInvitesByOrganizationIdAndToken,
   getInvitesDetailsByOrganizationId,
-  deleteInviteByOrganizationIdAndEmail,
-=======
-  getInvitesByOrganizationId
->>>>>>> 9ae762286416b477b0ad99d272a1a1da9c84cbdd
+  deleteInviteByOrganizationIdAndEmail
 };

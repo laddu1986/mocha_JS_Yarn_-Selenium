@@ -37,11 +37,6 @@ describe('Memberships Api', () => {
     it('Posting membership details', (done) => {
       membership.postMembership(done, lib.responseData.membership);
     });
-<<<<<<< HEAD
-    // it('Getting membership by account id', (done) => {
-    //   membership.getMembershipByAccount(done, lib.responseData.membership);
-    // });
-=======
 
     it('Getting membership by account id', (done) => {
       membership.getMembershipByAccount(done, lib.responseData.membership);
@@ -50,7 +45,6 @@ describe('Memberships Api', () => {
     it('Getting membership by organization id', (done) => {
       membership.getMembershipByOrganization(done, lib.responseData.membership);
     });
->>>>>>> 9ae762286416b477b0ad99d272a1a1da9c84cbdd
 
     // it('Getting membership by organization id', (done) => {
     //   membership.getMembershipByOrganization(done, lib.responseData.membership);

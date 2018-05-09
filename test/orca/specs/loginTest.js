@@ -8,12 +8,12 @@ const testData = [{
       name: `${lib.bigName(10)}`,
       email: `${lib.bigName(10)}@test.co`,
       password: 'Pass1234',
-      organizationName: `${lib.bigName(10)}`,
-    },
+      organizationName: `${lib.bigName(10)}`
+    }
   },
   it: 'Adding proper details',
-  expected: true,
-},
+  expected: true
+}
 //  {
 //   data: {
 //     fields: {
@@ -39,16 +39,16 @@ function login(data) {
 }
 function createOrganization(data) {
   // setTimeout((done) => {
-    it(`create organization`, (done) => {
-      mutation.createOrganization(done, data, responseData);
-    });
+  it('create organization', (done) => {
+    mutation.createOrganization(done, data, responseData);
+  });
   // }, 2);
-  
+
 }
 function updateOrganization(data) {
-    it(`update organization`, (done) => {
-      mutation.updateOrganization(done, data, responseData);
-    });  
+  it('update organization', (done) => {
+    mutation.updateOrganization(done, data, responseData);
+  });
 }
 
 describe('Mutation registerAndCreateOrg ', () => {

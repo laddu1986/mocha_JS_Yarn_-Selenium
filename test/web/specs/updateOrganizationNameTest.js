@@ -15,8 +15,8 @@ let updatedOrgName;
 describe('Create Account', () => {
 
   before('Open App URL', () => {
-    SignInPage.open()
-    //console.log(lib.testData)
+    SignInPage.open();
+    // console.log(lib.testData)
   });
 
   it('Create Account', () => {

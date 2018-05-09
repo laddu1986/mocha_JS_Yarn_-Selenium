@@ -2,7 +2,7 @@ import SignInPage from '../page_objects/signInPage';
 import HomePage from '../page_objects/homePage';
 
 import * as lib from '../../common';
-import { openApp, setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
+import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
 
 // function name(params) {
 //   let text = ''
@@ -53,11 +53,17 @@ describe('Tests for Sign Page', () => {
   it('Should throw an error while Signing In with Incorrect credentials', () => {
     waitForElement(SignInPage.emailInput);
     SignInPage.emailInput.clearElement();
-    setValue(SignInPage.emailInput, 'incorrect@email.com');
+    browser.pause(1000)
+      //setValue(SignInPage.emailInput, 'incorrect@email.com');
+      (SignInPage.emailInput).setValue('incorrect@email.com')
 
     waitForElement(SignInPage.passwordInput);
     SignInPage.passwordInput.clearElement();
+    browser.pause(1000)
+
     setValue(SignInPage.passwordInput, 'Incorrect@Password123');
+    browser.pause(1000)
+
 
     click(SignInPage.signInButton);
 

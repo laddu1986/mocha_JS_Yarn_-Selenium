@@ -30,7 +30,7 @@ let signedIn;
 describe('Delete Organization Test', () => {
   describe('Create Account', () => {
     before('Open App URL', () => {
-      SignInPage.open()
+      SignInPage.open();
     });
 
     it('Create Account with First Org and Sign In', () => {

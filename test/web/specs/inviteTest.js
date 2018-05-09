@@ -11,11 +11,7 @@ const invite_email3 = `invite_3${lib.bigName(5)}@test.co`;
 describe('Invite Tests \n', () => {
 
   before('Open App URL', () => {
-<<<<<<< HEAD
-    SignInPage.open()
-=======
-    SignInPage.open(lib.config.api.base);
->>>>>>> 9ae762286416b477b0ad99d272a1a1da9c84cbdd
+    SignInPage.open();
   });
 
   before(() => {

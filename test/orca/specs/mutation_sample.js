@@ -9,8 +9,8 @@ describe('Identity Api', () => {
       name: `${lib.bigName(10)}`,
       email: `${lib.bigName(10)}@test.co`,
       password: 'Pass1234',
-      organizationName: 'organizationName',
-    },
+      organizationName: 'organizationName'
+    }
   };
   //   this.timeout(500);
   describe('Mutation /identities ', () => {
@@ -18,8 +18,8 @@ describe('Identity Api', () => {
       const data = {
         query: 'mutation registerAndCreateOrg($input: RegisterAndCreateOrgInput!) { registerAndCreateOrg(input: $input) { account { id email name organizations {id name slug createdByAccountId rowVersion createdTime modifiedTime rowStatus}}  } }',
         variables: {
-          input: inputT,
-        },
+          input: inputT
+        }
       };
       const any = {
         api: lib.config.orca.base,
@@ -27,15 +27,15 @@ describe('Identity Api', () => {
         headers: {
           headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         },
         func(response) {
           orcaRes.push((response.body));
           // orgId = response.body.data.registerAndCreateOrg.account.organizations[0].id;
           console.log(JSON.stringify(response.body));
           expect(response).to.have.status(200);
-        },
+        }
       };
       lib.post(done, any);
     });
@@ -49,10 +49,10 @@ describe('Identity Api', () => {
               fields: {
                 email: inputT.fields.email,
                 password: inputT.fields.password,
-                remember: true,
-              },
-            },
-          },
+                remember: true
+              }
+            }
+          }
         };
         // console.log(JSON.stringify(data));
         const any = {
@@ -61,14 +61,14 @@ describe('Identity Api', () => {
           headers: {
             headers: {
               Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
+              'Content-Type': 'application/json'
+            }
           },
           func(response) {
             orcaRes.push((response.response.headers['set-cookie'].map(v => v.split(';')[0])).join('; '));
             console.log(JSON.stringify(response.body));
             expect(response).to.have.status(200);
-          },
+          }
         };
         // console.log(any);
         lib.post(done, any);
@@ -82,10 +82,10 @@ describe('Identity Api', () => {
         variables: {
           input: {
             fields: {
-              name: lib.bigName(10),
-            },
-          },
-        },
+              name: lib.bigName(10)
+            }
+          }
+        }
       };
       // console.log(JSON.stringify(data));
       // console.log(JSON.stringify(orcaRes[1]));
@@ -96,14 +96,14 @@ describe('Identity Api', () => {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            cookie: orcaRes[1],
-          },
+            cookie: orcaRes[1]
+          }
         },
         func(response) {
           console.log(JSON.stringify(response.body));
           orcaRes.push(response.body);
           expect(response).to.have.status(200);
-        },
+        }
       };
       // console.log(any);
       lib.post(done, any);
@@ -118,10 +118,10 @@ describe('Identity Api', () => {
             id: orcaRes[0].data.registerAndCreateOrg.account.organizations[0].id,
             rowVersion: orcaRes[0].data.registerAndCreateOrg.account.organizations[0].rowVersion,
             fields: {
-              name: 'updatedText',
-            },
-          },
-        },
+              name: 'updatedText'
+            }
+          }
+        }
       };
       // console.log(JSON.stringify(data));
       // console.log(JSON.stringify(orcaRes[1]));
@@ -132,13 +132,13 @@ describe('Identity Api', () => {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            cookie: orcaRes[1],
-          },
+            cookie: orcaRes[1]
+          }
         },
         func(response) {
           console.log(JSON.stringify(response.body));
           expect(response).to.have.status(200);
-        },
+        }
       };
         // console.log(any);
       lib.post(done, any);
@@ -149,7 +149,7 @@ describe('Identity Api', () => {
       // console.log(orcaRes[2].data.createOrganization.organization.id);
       const data = {
         query: 'query getOrganization($id: ID!) {getOrganization(id: $id) { id name rowVersion}}',
-        variables: { id: orcaRes[2].data.createOrganization.organization.id },
+        variables: { id: orcaRes[2].data.createOrganization.organization.id }
       };
       // console.log(JSON.stringify(data));
       // console.log(JSON.stringify(orcaRes[1]));
@@ -160,14 +160,14 @@ describe('Identity Api', () => {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            cookie: orcaRes[1],
-          },
+            cookie: orcaRes[1]
+          }
         },
         func(response) {
           console.log(JSON.stringify(response.body));
           orcaRes.push(response.body);
           expect(response).to.have.status(200);
-        },
+        }
       };
         // console.log(any);
       lib.post(done, any);
@@ -178,9 +178,9 @@ describe('Identity Api', () => {
         variables: {
           input: {
             organizationId: orcaRes[3].data.getOrganization.id,
-            rowVersion: orcaRes[3].data.getOrganization.rowVersion,
-          },
-        },
+            rowVersion: orcaRes[3].data.getOrganization.rowVersion
+          }
+        }
       };
       // console.log(JSON.stringify(data));
       // console.log(JSON.stringify(orcaRes[1]));
@@ -191,14 +191,14 @@ describe('Identity Api', () => {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            cookie: orcaRes[1],
-          },
+            cookie: orcaRes[1]
+          }
         },
         func(response) {
           console.log(JSON.stringify(response.body));
 
           expect(response).to.have.status(200);
-        },
+        }
       };
         // console.log(any);
       lib.post(done, any);
@@ -211,9 +211,9 @@ describe('Identity Api', () => {
         variables: {
           input: {
             organizationId: orcaRes[0].data.registerAndCreateOrg.account.organizations[0].id,
-            emails: [createOrgInviteEmail, "asd@dd.co",],
-          },
-        },
+            emails: [createOrgInviteEmail, 'asd@dd.co']
+          }
+        }
 
       };
       // console.log(JSON.stringify(data));
@@ -225,13 +225,13 @@ describe('Identity Api', () => {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            cookie: orcaRes[1],
-          },
+            cookie: orcaRes[1]
+          }
         },
         func(response) {
           console.log(JSON.stringify(response.body));
           expect(response).to.have.status(200);
-        },
+        }
       };
         // console.log(any);
       lib.post(done, any);
@@ -244,9 +244,9 @@ describe('Identity Api', () => {
         variables: {
           input: {
             organizationId: orcaRes[0].data.registerAndCreateOrg.account.organizations[0].id,
-            email: createOrgInviteEmail,
-          },
-        },
+            email: createOrgInviteEmail
+          }
+        }
 
       };
       // console.log(JSON.stringify(data));
@@ -258,13 +258,13 @@ describe('Identity Api', () => {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            cookie: orcaRes[1],
-          },
+            cookie: orcaRes[1]
+          }
         },
         func(response) {
           console.log(JSON.stringify(response.body));
           expect(response).to.have.status(200);
-        },
+        }
       };
         // console.log(any);
       lib.post(done, any);
@@ -278,10 +278,10 @@ describe('Identity Api', () => {
           input: {
             organizationId: orcaRes[0].data.registerAndCreateOrg.account.organizations[0].id,
             fields: {
-              name: 'spacetest1',
-            },
-          },
-        },
+              name: 'spacetest1'
+            }
+          }
+        }
       };
       // console.log(JSON.stringify(data));
       // console.log(JSON.stringify(orcaRes[1]));
@@ -292,14 +292,14 @@ describe('Identity Api', () => {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            cookie: orcaRes[1],
-          },
+            cookie: orcaRes[1]
+          }
         },
         func(response) {
           orcaRes.push(response.body);
           console.log(JSON.stringify(response.body));
           expect(response).to.have.status(200);
-        },
+        }
       };
         // console.log(any);
       lib.post(done, any);
@@ -314,10 +314,10 @@ describe('Identity Api', () => {
             id: orcaRes[4].data.createSpace.space.id,
             rowVersion: orcaRes[4].data.createSpace.space.rowVersion,
             fields: {
-              name: 'updatedSpace',
-            },
-          },
-        },
+              name: 'updatedSpace'
+            }
+          }
+        }
 
       };
       // console.log(JSON.stringify(data));
@@ -329,13 +329,13 @@ describe('Identity Api', () => {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            cookie: orcaRes[1],
-          },
+            cookie: orcaRes[1]
+          }
         },
         func(response) {
           console.log(JSON.stringify(response.body));
           expect(response).to.have.status(200);
-        },
+        }
       };
         // console.log(any);
       lib.post(done, any);
@@ -345,7 +345,7 @@ describe('Identity Api', () => {
     it('Logout', (done) => {
       const data = {
         query: 'mutation logout {logout}',
-        variables: {},
+        variables: {}
       };
       // console.log(JSON.stringify(data));
       //   console.log(JSON.stringify(orcaRes[1]));
@@ -356,15 +356,15 @@ describe('Identity Api', () => {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            cookie: orcaRes[1],
-          },
+            cookie: orcaRes[1]
+          }
         },
         func(response) {
           console.log((response.body));
           const cookies = (response.response.headers['set-cookie'].map(v => v.split(';')[0]));
           // console.log(cookies);
           expect(response).to.have.status(200);
-        },
+        }
       };
         // console.log(any);
       lib.post(done, any);
@@ -405,7 +405,7 @@ describe('Identity Api', () => {
     it('Delete account', (done) => {
       const data = {
         query: 'mutation {deleteAccount}',
-        variables: {},
+        variables: {}
 
       };
       // console.log(JSON.stringify(data));
@@ -417,13 +417,13 @@ describe('Identity Api', () => {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            cookie: orcaRes[1],
-          },
+            cookie: orcaRes[1]
+          }
         },
         func(response) {
           console.log(JSON.stringify(response.body));
           expect(response).to.have.status(200);
-        },
+        }
       };
         // console.log(any);
       lib.post(done, any);
