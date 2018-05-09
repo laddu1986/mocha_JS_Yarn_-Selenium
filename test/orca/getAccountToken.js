@@ -1,43 +1,44 @@
 import { chakram, faker, config } from '../common';
 
 
-var emoji = require('node-emoji')
-var email = config.orca.email
-var password = config.orca.password
-var remember = config.orca.remember
+const emoji = require('node-emoji');
 
-console.log(email, password)
+const email = config.orca.email;
+const password = config.orca.password;
+const remember = config.orca.remember;
 
-var url = 'https://api.appcurator.com/'
-var cookies
-describe('Authenticate User', function () {
+console.log(email, password);
 
-  it('Get Cookie', function () {
-    var response = chakram.post(url, {
+const url = 'https://api.appcurator.com/';
+let cookies;
+describe('Authenticate User', () => {
+
+  it('Get Cookie', () => {
+    const response = chakram.post(url, {
       query: `
         mutation {
           login(input: {fields: {email: "${email}", password: "${password}", remember: ${remember}}})
         }
       `
-    })
+    });
     return chakram.waitFor([
       expect(response).to.have.status(200),
       expect(response).to.have.json('data.login', true),
       expect(response).to.have.cookie('acid'),
       expect(response).to.have.cookie('acsi')
-    ]).then(function (responsebody) {
+    ]).then((responsebody) => {
       // [ 'name=whatever', 'other=foo' ]
       cookies = (responsebody.response.headers['set-cookie'].map(v => v.split(';')[0])).join('; ');
-      //console.log(responsebody.response.body)
-      return responsebody
-    }).then(function (getAccDetails) {
-      var options = {
+      // console.log(responsebody.response.body)
+      return responsebody;
+    }).then((getAccDetails) => {
+      const options = {
         headers: {
-          "cookie": cookies
+          cookie: cookies
         }
-      }
+      };
 
-      let response = chakram.post(url, {
+      const response = chakram.post(url, {
         query: `query{getAccount{id
                 name
                 email
@@ -48,17 +49,17 @@ describe('Authenticate User', function () {
             }
             `
       }, options)
-        .then(function (resBody) {
-          console.log(resBody.response.body.data.getAccount)
-          //console.log(JSON.stringify(resBody.response.body))
-          return resBody
-        })
-      console.log('Cookie Ready ' + emoji.get(':cookie:'))
-      console.log('COO 1' + cookies)
-      return getAccDetails, cookies
-    })
-    console.log('COO 2' + cookies)
-  })
-})
+        .then((resBody) => {
+          console.log(resBody.response.body.data.getAccount);
+          // console.log(JSON.stringify(resBody.response.body))
+          return resBody;
+        });
+      console.log(`Cookie Ready ${emoji.get(':cookie:')}`);
+      console.log(`COO 1${cookies}`);
+      return getAccDetails, cookies;
+    });
+    console.log(`COO 2${cookies}`);
+  });
+});
 
-//export default new Cookies();
+// export default new Cookies();

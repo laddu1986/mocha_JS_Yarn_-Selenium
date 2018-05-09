@@ -9,7 +9,7 @@ function postInvitesByOrganizationId(done, responseData) {
       //   console.log(responseData);
       //   console.log(any.api + any.data);
       expect(response).to.have.status(201);
-    },
+    }
   };
   // console.log(any);
   lib.post(done, any);
@@ -22,11 +22,11 @@ function getInvitesByOrganizationId(done, responseData) {
       responseData.push(response.body);
       //   console.log(responseData);
       expect(response).to.have.status(200);
-    },
+    }
   };
   lib.get(done, any);
 }
 export {
   postInvitesByOrganizationId,
-  getInvitesByOrganizationId,
+  getInvitesByOrganizationId
 };

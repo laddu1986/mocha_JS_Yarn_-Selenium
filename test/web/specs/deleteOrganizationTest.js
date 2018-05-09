@@ -5,10 +5,10 @@ import SignInPage from '../page_objects/signInPage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
 import SettingsPage from '../page_objects/settingsPage';
 import Page from '../page_objects/page';
-import { openApp, setValue, click, waitForElement, waitForEnabled } from '../actions/actions'
+import { openApp, setValue, click, waitForElement, waitForEnabled } from '../actions/actions';
 
 const name = lib.bigName(10);
-const email = lib.bigName(15) + `@test.co`;
+const email = `${lib.bigName(15)}@test.co`;
 const organization = 'First Org';
 const password = 'Pass1234';
 
@@ -16,12 +16,12 @@ const testData = [
   {
     organization: 'Second Org',
     title: 'Create with orgName = Second Org',
-    accepted: true,
+    accepted: true
   },
   {
     organization: 'Last Org',
     title: 'Create with orgName = Last Org',
-    accepted: true,
+    accepted: true
   }];
 
 let accountCreated;
@@ -30,7 +30,7 @@ let signedIn;
 describe('Delete Organization Test', () => {
   describe('Create Account', () => {
     before('Open App URL', () => {
-      SignInPage.open(lib.config.api.base)
+      SignInPage.open(lib.config.api.base);
     });
 
     it('Create Account with First Org and Sign In', () => {
@@ -41,8 +41,8 @@ describe('Delete Organization Test', () => {
       setValue(CreateAccountPage.passwordInput, password);
       click(CreateAccountPage.createAccountButton);
 
-      console.log(`${'Test Data : - ' + '\n' +
-        'name = '}${name}\n` +
+      console.log('Test Data : -  \n' +
+        `name = ${name}\n` +
         `email = ${email}\n` +
         `organization = ${organization}\n` +
         `password = ${password}`);
@@ -168,20 +168,20 @@ describe('Delete Organization Test', () => {
 });
 
 function gotoOrgSettings() {
-  click(HomePage.profileMenu)
+  click(HomePage.profileMenu);
   click(OrgDashboardPage.orgSettingsNavMenu);
 }
 
 function clickDeleteOrganization() {
-  click(SettingsPage.orgSettingsPage)
+  click(SettingsPage.orgSettingsPage);
   browser.pause(500); // for safari
   waitForEnabled(SettingsPage.leaveOrgButton);
   click(SettingsPage.leaveOrgButton);
-  click(SettingsPage.confirmOkButton)
+  click(SettingsPage.confirmOkButton);
 }
 
 function viewOrgDashboard() {
-  waitForElement(OrgDashboardPage.currentOrgName)
+  waitForElement(OrgDashboardPage.currentOrgName);
   waitForElement(OrgDashboardPage.welcomeMsg);
 }
 

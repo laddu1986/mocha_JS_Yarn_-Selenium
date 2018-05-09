@@ -1,7 +1,7 @@
 import SignInPage from '../page_objects/signInPage';
 
 import * as lib from '../../common';
-import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
+import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
 
 function assertion(e, data) {
   e.forEach((expected) => {
@@ -31,12 +31,12 @@ describe('Test Forgot Password Link', () => {
   });
 
   it('Should re-direct to Sign in page', () => {
-    waitForElement(SignInPage.forgotPassword)
+    waitForElement(SignInPage.forgotPassword);
   });
 
   it('Email field should be pre-populated with the user Email', () => {
-    waitForElement(SignInPage.emailInput)
-    expect(SignInPage.emailInput.getValue()).to.include('forgot@password.com')
+    waitForElement(SignInPage.emailInput);
+    expect(SignInPage.emailInput.getValue()).to.include('forgot@password.com');
   });
 
 });
