@@ -13,10 +13,10 @@ import SignInPage from '../page_objects/signInPage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
 import SettingsPage from '../page_objects/settingsPage';
 import Page from '../page_objects/page';
-import { openApp, setValue, click, waitForElement, waitForEnabled } from '../actions/actions'
+import { openApp, setValue, click, waitForElement, waitForEnabled } from '../actions/actions';
 
 const name = lib.bigName(10);
-const email = lib.bigName(15) + `@test.co`;
+const email = `${lib.bigName(15)}@test.co`;
 const organization = 'OrgReRegisterMe';
 const password = 'Pass1234';
 
@@ -28,7 +28,7 @@ describe('Delete Acount Test (Remove my Account)', () => {
     });
 
     it('Create Account and Sign In', () => {
-      click(CreateAccountPage.createAccountLink)
+      click(CreateAccountPage.createAccountLink);
 
       setValue(CreateAccountPage.nameInput, name);
       setValue(CreateAccountPage.emailInput, email);
@@ -61,7 +61,7 @@ describe('Delete Acount Test (Remove my Account)', () => {
     });
 
     it('Accept Confirmation', () => {
-      click(SettingsPage.confirmOkButton)
+      click(SettingsPage.confirmOkButton);
 
     });
 
@@ -84,7 +84,7 @@ describe('Delete Acount Test (Remove my Account)', () => {
     });
 
     it('Accept Confirmation', () => {
-      click(SettingsPage.confirmOkButton)
+      click(SettingsPage.confirmOkButton);
 
     });
 

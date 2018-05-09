@@ -3,8 +3,7 @@
 import CreateAccount from '../specs/createAccountTest';
 import HomePage from '../page_objects/homePage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
-import { openApp, setValue, click, waitForEnable, waitForElement } from '../actions/actions'
-
+import { openApp, setValue, click, waitForEnable, waitForElement } from '../actions/actions';
 
 
 function assertion(e, data) {
@@ -74,7 +73,7 @@ function createOrgs() {
 
     OrgDashboardPage.changeOrgAnchor.waitForExist();
     OrgDashboardPage.changeOrgAnchor.waitForVisible();
-  })
+  });
 }
 
 describe('Tests for Create Organization', () => {

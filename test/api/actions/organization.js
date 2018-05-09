@@ -11,7 +11,7 @@ function postOrganization(done, responseData) {
       responseData.push(response.body);
       console.log(response.body);
       expect(response).to.have.status(201);
-    },
+    }
   };
   lib.post(done, any);
 }
@@ -23,7 +23,7 @@ function getOrganizationById(done, responseData) {
     func(response) {
     //   lib.res.push(response.body);
       expect(response).to.have.status(200);
-    },
+    }
   };
   lib.get(done, any);
 }
@@ -35,7 +35,7 @@ function getOrganizations(done) {
     func(response) {
     //   lib.res.push(response.body);
       expect(response.body).to.be.an('array');
-    },
+    }
   };
   lib.post(done, any);
 }
@@ -48,7 +48,7 @@ function postOrganizations(done, responseData) {
       //   lib.res.push(response.body);
       expect(response.body).to.be.an('array');
       expect(response).to.have.status(200);
-    },
+    }
   };
   lib.post(done, any);
 }
@@ -59,7 +59,7 @@ function deleteOrganizationById(done, responseData) {
     data: `${responseData[2].id}?rowVersion=${responseData[2].rowVersion}`,
     func(response) {
       expect(response).to.have.status(204);
-    },
+    }
   };
   lib.del(done, any);
 }
@@ -71,7 +71,7 @@ function checkStatusChangedToPendingDelete(done, responseData) {
     func(response) {
       expect(response.body.rowStatus).to.equal('PendingDelete');
       expect(response).to.have.status(200);
-    },
+    }
   };
   lib.get(done, any);
 }
@@ -89,7 +89,7 @@ function putOrganization(done, responseData) {
       expect(response).to.have.status(200);
       expect(response.body.id).to.equal(update.id);
       expect(response.body.rowVersion).to.not.equal(update.rowVersion);
-    },
+    }
   };
   lib.put(done, any);
 }
@@ -101,5 +101,5 @@ export {
   postOrganizations,
   deleteOrganizationById,
   putOrganization,
-  checkStatusChangedToPendingDelete,
+  checkStatusChangedToPendingDelete
 };

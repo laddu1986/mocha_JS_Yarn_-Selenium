@@ -1,5 +1,5 @@
 import * as lib from '../../common';
-import { openApp, setValue, click, waitForEnable, waitForElement } from '../actions/actions'
+import { openApp, setValue, click, waitForEnable, waitForElement } from '../actions/actions';
 
 import CreateAccountPage from '../page_objects/createAccountPage';
 import HomePage from '../page_objects/homePage';
@@ -88,7 +88,11 @@ describe('Tests for Create Account', () => {
     //   database: 'membership_test',
     // });
     // console.log(lib.config.api.createAccount);
+<<<<<<< HEAD
     SignInPage.open()
+=======
+    SignInPage.open(lib.config.api.base);
+>>>>>>> 9ae762286416b477b0ad99d272a1a1da9c84cbdd
   });
 
 
@@ -125,8 +129,8 @@ describe('Tests for Create Account', () => {
   // });
 
   it('Create Account', () => {
-    createAccount()
-    //console.log(`${name}::::${email}::::${organization}::::${password}`);
+    createAccount();
+    // console.log(`${name}::::${email}::::${organization}::::${password}`);
     const logoPresent = HomePage.logo.isVisible();
     expect(logoPresent).to.equal(true);
   });
