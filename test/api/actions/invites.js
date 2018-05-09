@@ -21,7 +21,7 @@ function postInvitesByOrganizationId(done, responseData) {
       // responseData.push(response.body);
       console.log(response.body);
       expect(response).to.have.status(201);
-    },
+    }
   };
   console.log(any);
   lib.post(done, any);
@@ -51,7 +51,7 @@ function getInvitesByOrganizationIdAndToken(done, responseData) {
       responseData.push(response.body);
       //   console.log(responseData);
       expect(response).to.have.status(200);
-    },
+    }
   };
   lib.get(done, any);
 }
@@ -68,7 +68,11 @@ function deleteInviteByOrganizationIdAndEmail(done, responseData) {
 }
 export {
   postInvitesByOrganizationId,
+<<<<<<< HEAD
   getInvitesByOrganizationIdAndToken,
   getInvitesDetailsByOrganizationId,
   deleteInviteByOrganizationIdAndEmail,
+=======
+  getInvitesByOrganizationId
+>>>>>>> 9ae762286416b477b0ad99d272a1a1da9c84cbdd
 };
