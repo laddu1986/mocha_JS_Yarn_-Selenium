@@ -5,7 +5,7 @@ function postOrganization(done, responseData) {
     api: lib.config.api.organizations,
     data: {
       name: lib.bigName(10),
-      createdByAccountId: responseData[0].id,
+      createdByAccountId: responseData[0].id
     },
     func(response) {
       responseData.push(response.body);

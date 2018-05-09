@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import * as lib from '../../common';
 
 const fullname = lib.faker.name.findName();
@@ -77,4 +75,3 @@ describe('Memberships', () => {
     return lib.chakram.wait();
   });
 });
->>>>>>> 9ae762286416b477b0ad99d272a1a1da9c84cbdd

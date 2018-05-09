@@ -10,7 +10,7 @@ const responseData = {
   identity: [],
   identityState: [],
   invites: [],
-  spaces: [],
+  spaces: []
 };
 // uri end points
 const orca = config.orca.base;
@@ -51,8 +51,8 @@ function post(done, any) {
   if (any.headers == undefined) {
     any.headers = {
       headers: {
-        'Content-Type': 'application/json',
-      },
+        'Content-Type': 'application/json'
+      }
     };
   }
   // console.log(any.headers);

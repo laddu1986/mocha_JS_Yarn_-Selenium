@@ -19,8 +19,8 @@ function signIn() {
 
 describe('Test Help Center', () => {
   it('Open App Page', () => {
-    SignInPage.open()
-  })
+    SignInPage.open();
+  });
 
   it('Sign In', () => {
     signIn();
