@@ -98,7 +98,7 @@ describe('Tests for Create Account', () => {
     //   database: 'membership_test',
     // });
     // console.log(lib.config.api.createAccount);
-    SignInPage.open(lib.config.api.base)
+    SignInPage.open()
   });
 
 
