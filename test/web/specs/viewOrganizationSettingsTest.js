@@ -1,6 +1,6 @@
 import CreateAccountPage from '../specs/createAccountTest';
 import HomePage from '../page_objects/homePage';
-import { openApp, setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
+import { openApp, setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
 
 describe('View Organization setings', () => {
   it('Checking profile visibility', () => {
