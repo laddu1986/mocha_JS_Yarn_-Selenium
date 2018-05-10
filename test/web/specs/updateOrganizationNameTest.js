@@ -1,33 +1,34 @@
 
-//import createOrganizationPage from '../specs/createOrganizationTest';
-import NavBar from '../page_objects/navBar'
-import { createAccount } from '../actions/createAccount'
+// import createOrganizationPage from '../specs/createOrganizationTest';
+import NavBar from '../page_objects/navBar';
+import { createAccount } from '../actions/createAccount';
 import SettingsPage from '../page_objects/settingsPage';
 import HomePage from '../page_objects/homePage';
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
-import { openApp, setValue, click, waitForElement, waitForEnabled } from '../actions/actions'
+import { setValue, click, waitForElement, waitForEnabled } from '../actions/actions';
 import SignInPage from '../page_objects/signInPage';
 import * as lib from '../../common';
 import { createOrg } from '../actions/createOrg';
+
 let updatedOrgName;
 
 describe('Create Account', () => {
 
   before('Open App URL', () => {
-    SignInPage.open()
-    //console.log(lib.testData)
+    SignInPage.open();
+    // console.log(lib.testData)
   });
 
   it('Create Account', () => {
-    createAccount()
+    createAccount();
   });
 
   it('Create two more Orgs', () => {
     let i;
     for (i = 0; i < 3; i++) {
-      var orgname = lib.bigName(10)
-      createOrg(orgname)
-      i++
+      const orgname = lib.bigName(10);
+      createOrg(orgname);
+      i += 1;
     }
   });
 
@@ -60,9 +61,7 @@ describe('Update Organization name', () => {
    }); */
 
   it('Should update the side nav bar with the updated org name', () => {
-    browser.waitUntil(() => {
-      return NavBar.backToOrgDashboardLink.getText() === SettingsPage.orgInput.getValue()
-    }, 5000, 'Expect orgname to change in the side nav bar', 200);
+    browser.waitUntil(() => NavBar.backToOrgDashboardLink.getText() === SettingsPage.orgInput.getValue(), 5000, 'Expect orgname to change in the side nav bar', 200);
     expect(NavBar.backToOrgDashboardLink.getText()).to.equal(SettingsPage.orgInput.getValue());
   });
 
@@ -83,7 +82,7 @@ describe('Update Organization name', () => {
   });
 
   it('Modified org should be at the top of the org card stack', () => {
-    //browser.pause(2000)
+    // browser.pause(2000)
     waitForElement(HomePage.individualOrgCard);
     const topOrgCard = HomePage.individualOrgCard.getText()[0];
     expect(topOrgCard).to.include(updatedOrgName);
