@@ -21,7 +21,7 @@ function postInvitesByOrganizationId(done, responseData) {
       // responseData.push(response.body);
       console.log(response.body);
       expect(response).to.have.status(201);
-    },
+    }
   };
   console.log(any);
   lib.post(done, any);
@@ -36,7 +36,7 @@ function getInvitesDetailsByOrganizationId(done, responseData) {
       responseData.push(response.body);
       console.log(response.body);
       expect(response).to.have.status(200);
-    },
+    }
   };
   // console.log(any);
   lib.get(done, any);
@@ -51,7 +51,7 @@ function getInvitesByOrganizationIdAndToken(done, responseData) {
       responseData.push(response.body);
       //   console.log(responseData);
       expect(response).to.have.status(200);
-    },
+    }
   };
   lib.get(done, any);
 }
@@ -62,7 +62,7 @@ function deleteInviteByOrganizationIdAndEmail(done, responseData) {
     data: `${responseData[1].id}/invites/?email=${responseData[2][0]}`,
     func(response) {
       expect(response).to.have.status(204);
-    },
+    }
   };
   lib.del(done, any);
 }
@@ -70,5 +70,5 @@ export {
   postInvitesByOrganizationId,
   getInvitesByOrganizationIdAndToken,
   getInvitesDetailsByOrganizationId,
-  deleteInviteByOrganizationIdAndEmail,
+  deleteInviteByOrganizationIdAndEmail
 };

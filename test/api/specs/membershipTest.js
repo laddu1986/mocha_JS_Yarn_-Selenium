@@ -8,7 +8,7 @@ const description = {
   postMembership: 'POST /memberships',
   getByOrganizationId: 'GET /memberships/organization/{id}',
   getByAccountId: 'GET /memberships/account/{id}',
-  deteleMembership: 'DELETE /memberships/organization/{organizationId}/account/{accountId}',
+  deteleMembership: 'DELETE /memberships/organization/{organizationId}/account/{accountId}'
 };
 
 describe('Memberships Api', () => {
@@ -37,9 +37,14 @@ describe('Memberships Api', () => {
     it('Posting membership details', (done) => {
       membership.postMembership(done, lib.responseData.membership);
     });
-    // it('Getting membership by account id', (done) => {
-    //   membership.getMembershipByAccount(done, lib.responseData.membership);
-    // });
+
+    it('Getting membership by account id', (done) => {
+      membership.getMembershipByAccount(done, lib.responseData.membership);
+    });
+
+    it('Getting membership by organization id', (done) => {
+      membership.getMembershipByOrganization(done, lib.responseData.membership);
+    });
 
     // it('Getting membership by organization id', (done) => {
     //   membership.getMembershipByOrganization(done, lib.responseData.membership);
