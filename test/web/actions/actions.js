@@ -1,6 +1,6 @@
 import * as lib from '../../common';
 import SignInPage from '../page_objects/signInPage';
-
+import CommonPage from '../page_objects/common';
 
 function waitForElement(wfe) {
   wfe.waitForExist();
@@ -22,10 +22,15 @@ function waitForEnabled(ena) {
   ena.waitForEnabled();
 }
 
+function getNotificationMessageText() {
+  waitForElement(CommonPage.successMsg);
+  return CommonPage.successMsg.getText();
+}
 
 export {
   setValue,
   click,
   waitForEnabled,
-  waitForElement
+  waitForElement,
+  getNotificationMessageText
 };
