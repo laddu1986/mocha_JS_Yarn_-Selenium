@@ -1,10 +1,9 @@
-import HomePage from '../page_objects/homePage'
-import OrgDashboardPage from '../page_objects/orgDashboardPage'
-import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions'
+import HomePage from '../page_objects/homePage';
+import OrgDashboardPage from '../page_objects/orgDashboardPage';
+import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
 import * as lib from '../../common';
 
 // pass the orgname parameter from ur test
-
 
 
 function createOrg(orgname) {
@@ -17,9 +16,9 @@ function createOrg(orgname) {
   setValue(HomePage.createOrgInput, orgname);
   HomePage.createOrgButton.waitForEnabled();
   click(HomePage.createOrgButton);
-  waitForElement(OrgDashboardPage.currentOrgName)
+  waitForElement(OrgDashboardPage.currentOrgName);
 
 }
 
-export { createOrg }
+export { createOrg };
 
