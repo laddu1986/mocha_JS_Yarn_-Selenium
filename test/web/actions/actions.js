@@ -1,7 +1,6 @@
 import * as lib from '../../common';
 import SignInPage from '../page_objects/signInPage';
 
-
 function waitForElement(wfe) {
   wfe.waitForExist();
   wfe.waitForVisible();
@@ -21,7 +20,6 @@ function waitForEnabled(ena) {
   waitForElement(ena);
   ena.waitForEnabled();
 }
-
 
 export {
   setValue,

@@ -1,6 +1,6 @@
 import { createAccount } from '../actions/createAccount';
 import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard } from '../actions/inviteTeammate';
-import { signOut } from '../actions/signOut';
+import { signOut } from '../actions/common';
 import * as lib from '../../common';
 import SignInPage from '../page_objects/signInPage';
 
