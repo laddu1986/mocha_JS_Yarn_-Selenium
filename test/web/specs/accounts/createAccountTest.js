@@ -78,7 +78,6 @@ import { createAccount } from 'web/actions/createAccount';
 //   });
 // }
 
-
 describe('Tests for Create Account', () => {
   before('Open create account page', () => {
     // lib.connection({
@@ -88,7 +87,7 @@ describe('Tests for Create Account', () => {
     //   database: 'membership_test',
     // });
     // console.log(lib.config.api.createAccount);
-    SignInPage.open(lib.config.api.base)
+    SignInPage.open();
   });
 
 
@@ -125,8 +124,8 @@ describe('Tests for Create Account', () => {
   // });
 
   it('Create Account', () => {
-    createAccount()
-    //console.log(`${name}::::${email}::::${organization}::::${password}`);
+    createAccount();
+    // console.log(`${name}::::${email}::::${organization}::::${password}`);
     const logoPresent = HomePage.logo.isVisible();
     expect(logoPresent).to.equal(true);
   });

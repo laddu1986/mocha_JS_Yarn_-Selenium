@@ -75,7 +75,7 @@ function createOrgs() {
 
     OrgDashboardPage.changeOrgAnchor.waitForExist();
     OrgDashboardPage.changeOrgAnchor.waitForVisible();
-  })
+  });
 }
 
 describe('Tests for Create Organization', () => {

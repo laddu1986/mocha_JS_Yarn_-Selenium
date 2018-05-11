@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+import * as organization from '../actions/organization';
+import * as identity from '../actions/identity';
+>>>>>>> 91b6e54b8754ef6cc7627988359f619c4a48e43d
 import * as lib from '../../common';
 import * as organization from 'api/actions/organization';
 
@@ -11,6 +16,9 @@ describe('Organizations Api', () => {
     // });
   });
   describe('POST /organizations', () => {
+    it('Posting idenity details', (done) => {
+      identity.postIdentity(done, lib.responseData.organization);
+    });
     it('Create a new organization.', (done) => {
       // first post
       organization.postOrganization(done, lib.responseData.organization);

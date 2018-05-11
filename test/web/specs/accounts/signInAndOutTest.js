@@ -24,7 +24,7 @@ let signInSuccess;
 
 describe('Tests for Sign Page', () => {
   before('Open Sign In page', () => {
-    SignInPage.open()
+    SignInPage.open();
   });
 
   it('Should throw an error while Signing In with Blank data', () => {
@@ -51,11 +51,17 @@ describe('Tests for Sign Page', () => {
   it('Should throw an error while Signing In with Incorrect credentials', () => {
     waitForElement(SignInPage.emailInput);
     SignInPage.emailInput.clearElement();
-    setValue(SignInPage.emailInput, 'incorrect@email.com');
+    browser.pause(1000)
+      //setValue(SignInPage.emailInput, 'incorrect@email.com');
+      (SignInPage.emailInput).setValue('incorrect@email.com')
 
     waitForElement(SignInPage.passwordInput);
     SignInPage.passwordInput.clearElement();
+    browser.pause(1000)
+
     setValue(SignInPage.passwordInput, 'Incorrect@Password123');
+    browser.pause(1000)
+
 
     click(SignInPage.signInButton);
 
@@ -77,7 +83,7 @@ describe('Tests for Sign Page', () => {
   it('Should Sign Out successfully', () => {
     if (signInSuccess === true) {
       click(HomePage.profileMenu);
-      click(HomePage.signOut);
+      click(NavBar.signOut);
 
       waitForElement(SignInPage.signInButton);
       expect(SignInPage.signInButton.isVisible()).to.equal(true);

@@ -13,7 +13,7 @@ function assertion(e, data) {
 
 describe('Organization Page Test', () => {
   before('Open SignIn Page', () => {
-    SignInPage.open(lib.config.api.base);
+    SignInPage.open();
   });
 
   //

@@ -11,7 +11,13 @@ const responseData = {
   identity: [],
   identityState: [],
   invites: [],
+  spaces: []
 };
+// uri end points
+const orca = config.orca.base;
+const api = config.api.base;
+// const web = config.web.base;
+
 function bigName(params) {
   let text = '';
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -43,11 +49,20 @@ function end() {
 }
 
 function post(done, any) {
-  return server.post(any.api, any.data)
+  if (any.headers == undefined) {
+    any.headers = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+  }
+  // console.log(any.headers);
+  return server.post(any.api, any.data, any.headers)
     .then((response) => {
       // console.log(response.body);
       any.func(response);
       done();
+      // server.wait();
     });
 }
 function get(done, any) {
@@ -98,16 +113,20 @@ function del(done, any) {
 
 const testData = {
   name: bigName(10),
-  email: bigName(15) + `@test.co`,
-  organization: bigName(10) + `_Org`,
-  space: bigName(8) + `_Space`,
-  password: 'Pass1234',
+  email: `${bigName(15)}@test.co`,
+  organization: `${bigName(10)}_Org`,
+  space: `${bigName(8)}_Space`,
+  password: 'Pass1234'
 };
 
 
-
 export {
-  // api
+
+  // uri
+  orca,
+  api,
+  // web,
+  // api calls
   post,
   get,
   put,
@@ -122,5 +141,5 @@ export {
   // data
   responseData,
   bigName,
-  testData,
+  testData
 };

@@ -7,7 +7,6 @@ import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/act
 // pass the orgname parameter from ur test
 
 
-
 function createOrg(orgname) {
 
   click(HomePage.profileMenu);
@@ -18,7 +17,7 @@ function createOrg(orgname) {
   setValue(HomePage.createOrgInput, orgname);
   HomePage.createOrgButton.waitForEnabled();
   click(HomePage.createOrgButton);
-  waitForElement(OrgDashboardPage.currentOrgName)
+  waitForElement(OrgDashboardPage.currentOrgName);
 
 }
 

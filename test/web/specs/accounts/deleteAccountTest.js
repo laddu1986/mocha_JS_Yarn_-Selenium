@@ -6,7 +6,7 @@ Member must be able to delete account if not associated with any Org
 Page URL: /organizations
 Upon clicking / tapping on 'Delete my account', display a confirmation prompt to delete the account
 After confirming to delete the account, member should be redirected to 'Sign in' page
-Attempt to sign in should fail for deleted account 
+Attempt to sign in should fail for deleted account
 */
 
 
@@ -21,25 +21,25 @@ import { openApp, setValue, click, waitForEnabled, waitForElement } from 'web/ac
 
 
 const name = lib.bigName(10);
-const email = lib.bigName(15) + `@test.co`;
-const organization = 'OrgDeleteAccount'
-const password = 'Pass1234'
+const email = `${lib.bigName(15)}@test.co`;
+const organization = 'OrgDeleteAccount';
+const password = 'Pass1234';
 
 describe('Delete Acount Test (Remove my Account)', () => {
   describe('Create Account', () => {
     before('Open App URL', () => {
-      SignInPage.open(lib.config.api.base);
+      SignInPage.open();
     });
 
     it('Create Account with OrgDeleteAccount Org and Sign In', () => {
-      click(CreateAccountPage.createAccountLink)
+      click(CreateAccountPage.createAccountLink);
       setValue(CreateAccountPage.nameInput, name);
       setValue(CreateAccountPage.emailInput, email);
       setValue(CreateAccountPage.organizationInput, organization);
       setValue(CreateAccountPage.passwordInput, password);
       click(CreateAccountPage.createAccountButton);
 
-      console.log(`Test Data : -  \n` +
+      console.log('Test Data : -  \n' +
         `name = ${name}\n` +
         `email = ${email}\n` +
         `organization = ${organization}\n` +
@@ -57,13 +57,13 @@ describe('Delete Acount Test (Remove my Account)', () => {
 
   describe('Leaving OrgDeleteAccount re-directs to No Orgs page', () => {
     it('Goto Organization Settings of OrgDeleteAccount', () => {
-      gotoOrgSettings()
+      gotoOrgSettings();
 
-    })
+    });
 
     it('Click Delete Organization', () => {
-      clickDeleteOrganization()
-    })
+      clickDeleteOrganization();
+    });
 
 
     it('Should re-direct to No Orgs page after deleting the last Org', () => {
@@ -81,36 +81,36 @@ describe('Delete Acount Test (Remove my Account)', () => {
 
   describe('Removing account ends the session and redirects to Sign In page', () => {
     it('Click Remove my account', () => {
-      waitForElement(HomePage.removeAccountButton)
-      click(HomePage.removeAccountButton)
-    })
+      waitForElement(HomePage.removeAccountButton);
+      click(HomePage.removeAccountButton);
+    });
 
     it('Confirm Deletion', () => {
-      click(SettingsPage.confirmOkButton)
+      click(SettingsPage.confirmOkButton);
     });
 
     it('Click Ok to Confirm Account deletion', () => {
-      click(SettingsPage.confirmOkButton)
+      click(SettingsPage.confirmOkButton);
     });
 
     it('Should re-direct to Sign In page after deleting my Account', () => {
-      waitForElement(SignInPage.signInButton)
+      waitForElement(SignInPage.signInButton);
       expect(browser.getUrl()).to.equal(`${lib.config.api.base}/sign-in`);
-    })
-  })
+    });
+  });
 
   describe('Should not be able to Sign In with the same credentials again', () => {
     it('Enter the same credentials as above and click Sign In', () => {
-      setValue(SignInPage.emailInput, `${email}`)
-      setValue(SignInPage.passwordInput, `${password}`)
-      click(SignInPage.signInButton)
-    })
+      setValue(SignInPage.emailInput, `${email}`);
+      setValue(SignInPage.passwordInput, `${password}`);
+      click(SignInPage.signInButton);
+    });
 
     it('Should show err msg - Incorrect details', () => {
-      waitForElement(SignInPage.incorrectDetails)
-      expect(SignInPage.incorrectDetails.getText()).to.include('incorrect')
-    })
-  })
+      waitForElement(SignInPage.incorrectDetails);
+      expect(SignInPage.incorrectDetails.getText()).to.include('incorrect');
+    });
+  });
 
 });
 
@@ -120,11 +120,11 @@ function gotoOrgSettings() {
 }
 
 function clickDeleteOrganization() {
-  click(SettingsPage.orgSettingsPage)
-  browser.pause(500) // for safari
-  waitForEnabled(SettingsPage.leaveOrgButton)
-  click(SettingsPage.leaveOrgButton)
-  click(SettingsPage.confirmOkButton)
+  click(SettingsPage.orgSettingsPage);
+  browser.pause(500); // for safari
+  waitForEnabled(SettingsPage.leaveOrgButton);
+  click(SettingsPage.leaveOrgButton);
+  click(SettingsPage.confirmOkButton);
 }
 
 function viewOrgDashboard() {
