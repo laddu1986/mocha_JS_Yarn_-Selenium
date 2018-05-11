@@ -43,7 +43,7 @@ exports.config = {
   // screenshotPath: './errScreens',
   //baseUrl: 'https://my.appcurator.com/',
   waitforTimeout: 10000,
-  maxInstances: 10,
+  maxInstances: 15,
 
   plugins: {
 
