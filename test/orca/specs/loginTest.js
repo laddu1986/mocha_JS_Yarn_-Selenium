@@ -30,6 +30,8 @@ const testData = [{
 function register(data) {
   it(`${data.it} registerAndCreateOrg`, (done) => {
     mutation.registerAndCreateOrg(done, data, responseData);
+    console.log(JSON.stringify(responseData[0])+"::::::::::::::::::::::");
+    expect(responseData[0]).to.have.status(200);
   });
 }
 function login(data) {
