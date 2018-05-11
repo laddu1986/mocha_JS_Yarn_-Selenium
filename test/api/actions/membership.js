@@ -3,14 +3,15 @@ import * as lib from '../../common';
 function postMembership(done, responseData) {
   const m = {
     accountId: responseData[0].id,
-    organizationId: responseData[1].id,
+    organizationId: responseData[1].id
   };
   const any = {
     api: lib.config.api.memberships,
     data: m,
     func(response) {
+      // console.log(response.body);
       expect(response).to.have.status(201);
-    },
+    }
   };
   lib.post(done, any);
 }
@@ -21,7 +22,7 @@ function getMembershipByAny(done, anyId) {
     func(response) {
       // lib.res.push(response.body);
       expect(response).to.have.status(200);
-    },
+    }
   };
   lib.get(done, any);
 }
@@ -37,17 +38,18 @@ function deleteMembershipByAccountAndOrganization(done, responseData) {
     data: `organization/${responseData[1].id}/account/${responseData[0].id}`,
     func(response) {
       expect(response).to.have.status(204);
-    },
+    }
   };
+  // console.log(any.data);
   lib.del(done, any);
 }
-function getMemberships(done) {
+function getMemberships(done, responseData) {
   const any = {
     api: lib.config.api.memberships,
-    data: '',
+    data: `?orgId=${responseData[1].id}&accountId=${responseData[0].id}&pageSize=1`,
     func(response) {
       expect(response.body).to.be.an('array');
-    },
+    }
   };
   lib.get(done, any);
 }
@@ -58,16 +60,16 @@ function deleteMembershipStatus(done, responseData) {
     func(response) {
       // console.log(response.body);
       expect(response).to.have.status(200);
-    },
+    }
   };
   lib.get(done, any);
 }
 
 export {
   postMembership,
-  getMembershipByAccount,
-  getMembershipByOrganization,
+  // getMembershipByAccount,
+  // getMembershipByOrganization,
   deleteMembershipByAccountAndOrganization,
   getMemberships,
-  deleteMembershipStatus,
+  deleteMembershipStatus
 };

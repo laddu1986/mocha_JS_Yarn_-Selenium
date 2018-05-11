@@ -8,17 +8,17 @@ const res = [];
 const idata = {
   fullname,
   email,
-  password,
+  password
 };
 const odata = {
-  name: fullname,
+  name: fullname
 };
 
 lib.connection({
   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
   user: 'rouser',
   password: 'R34d0nlyK3y',
-  database: 'membership_test',
+  database: 'membership_test'
 });
 
 lib.connection().query('select * from Memberships', (error, results) => {
@@ -46,7 +46,7 @@ describe('Memberships', () => {
             firstName: res[0].fullname,
             lastName: res[0].fullname,
             organizationId: res[1].id,
-            organizationName: res[1].name,
+            organizationName: res[1].name
           };
           return lib.chakram.post(lib.config.api.memberships, m)
             .then((mR) => {

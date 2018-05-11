@@ -10,8 +10,7 @@ import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/act
 // const password = 'Pass1234'
 
 function createAccount() {
-
-  click(CreateAccountPage.createAccountLink)
+  click(CreateAccountPage.createAccountLink);
 
   setValue(CreateAccountPage.nameInput, lib.testData.name);
   setValue(CreateAccountPage.emailInput, lib.testData.email);
@@ -20,7 +19,7 @@ function createAccount() {
 
   click(CreateAccountPage.createAccountButton);
   waitForElement(HomePage.logo);
-  waitForElement(OrgDashboardPage.currentOrgName)
+  waitForElement(OrgDashboardPage.currentOrgName);
 }
 
 export { createAccount }

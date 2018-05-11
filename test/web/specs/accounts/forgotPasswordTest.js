@@ -10,7 +10,7 @@ function assertion(e, data) {
 
 describe('Test Forgot Password Link', () => {
   it('Open App URL', () => {
-    SignInPage.open(lib.config.api.base);
+    SignInPage.open();
   });
 
   it('Click Forgot Password link', () => {
@@ -30,12 +30,12 @@ describe('Test Forgot Password Link', () => {
   });
 
   it('Should re-direct to Sign in page', () => {
-    waitForElement(SignInPage.forgotPassword)
+    waitForElement(SignInPage.forgotPassword);
   });
 
   it('Email field should be pre-populated with the user Email', () => {
-    waitForElement(SignInPage.emailInput)
-    expect(SignInPage.emailInput.getValue()).to.include('forgot@password.com')
+    waitForElement(SignInPage.emailInput);
+    expect(SignInPage.emailInput.getValue()).to.include('forgot@password.com');
   });
 
 });

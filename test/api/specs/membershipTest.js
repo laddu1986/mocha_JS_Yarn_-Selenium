@@ -8,7 +8,7 @@ const description = {
   postMembership: 'POST /memberships',
   getByOrganizationId: 'GET /memberships/organization/{id}',
   getByAccountId: 'GET /memberships/account/{id}',
-  deteleMembership: 'DELETE /memberships/organization/{organizationId}/account/{accountId}',
+  deteleMembership: 'DELETE /memberships/organization/{organizationId}/account/{accountId}'
 };
 
 describe('Memberships Api', () => {
@@ -46,17 +46,22 @@ describe('Memberships Api', () => {
       membership.getMembershipByOrganization(done, lib.responseData.membership);
     });
 
-    it('Delete membership by organization id and account id', (done) => {
-      membership.deleteMembershipByAccountAndOrganization(done, lib.responseData.membership);
-    });
+    // it('Getting membership by organization id', (done) => {
+    //   membership.getMembershipByOrganization(done, lib.responseData.membership);
+    // });
 
-    it('Deleted membership status', (done) => {
-      membership.deleteMembershipStatus(done, lib.responseData.membership);
-    });
+    // it('Deleted membership status', (done) => {
+    //   membership.deleteMembershipStatus(done, lib.responseData.membership);
+    // });
   });
   describe(description.getMemberships, () => {
     it('List all Memberships.', (done) => {
-      membership.getMemberships(done);
+      membership.getMemberships(done, lib.responseData.membership);
+    });
+  });
+  describe(description.deteleMembership, () => {
+    it('Delete membership by organization id and account id', (done) => {
+      membership.deleteMembershipByAccountAndOrganization(done, lib.responseData.membership);
     });
   });
   after('End message', () => {
