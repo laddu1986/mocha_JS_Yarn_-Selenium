@@ -10,7 +10,7 @@ const responseData = {
   identity: [],
   identityState: [],
   invites: [],
-  spaces: [],
+  spaces: []
 };
 // uri end points
 const orca = config.orca.base;
@@ -51,8 +51,8 @@ function post(done, any) {
   if (any.headers == undefined) {
     any.headers = {
       headers: {
-        'Content-Type': 'application/json',
-      },
+        'Content-Type': 'application/json'
+      }
     };
   }
   // console.log(any.headers);
@@ -115,7 +115,7 @@ const testData = {
   email: `${bigName(15)}@test.co`,
   organization: `${bigName(10)}_Org`,
   space: `${bigName(8)}_Space`,
-  password: 'Pass1234',
+  password: 'Pass1234'
 };
 
 
@@ -140,6 +140,6 @@ export {
   // data
   responseData,
   bigName,
-  testData,
+  testData
 };
 
