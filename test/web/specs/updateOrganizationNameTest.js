@@ -11,6 +11,7 @@ import * as lib from '../../common';
 import { createOrg } from '../actions/createOrg';
 
 let updatedOrgName;
+let orgname
 
 describe('Create Account', () => {
 
@@ -26,7 +27,7 @@ describe('Create Account', () => {
   it('Create two more Orgs', () => {
     let i;
     for (i = 0; i < 3; i++) {
-      const orgname = lib.bigName(10);
+      orgname = lib.bigName(10);
       createOrg(orgname);
       i += 1;
     }
@@ -41,6 +42,7 @@ describe('Update Organization name', () => {
 
   it('Click Settings', () => {
     click(HomePage.settingsAnchor);
+    expect(browser.getUrl()).to.include((lib.config.api.base + `/${orgname}/edit`).toLowerCase())
   });
 
   it('Change the org name to "Updated Organization"', () => {
@@ -55,10 +57,6 @@ describe('Update Organization name', () => {
     expect(SettingsPage.saveOrgNameButton.isEnabled()).to.equal(true);
     click(SettingsPage.saveOrgNameButton);
   });
-
-  /*  it('Confirm', () => {
-     click(SettingsPage.confirmOkButton)
-   }); */
 
   it('Should update the side nav bar with the updated org name', () => {
     browser.waitUntil(() => NavBar.backToOrgDashboardLink.getText() === SettingsPage.orgInput.getValue(), 5000, 'Expect orgname to change in the side nav bar', 200);
@@ -75,14 +73,12 @@ describe('Update Organization name', () => {
   });
 
   it('Go back to Choose org page', () => {
-    click(OrgDashboardPage.changeOrgAnchor);
-
+    browser.url(lib.config.api.base + `/organizations`)
     waitForElement(HomePage.chooseOrg);
     expect(HomePage.chooseOrg.isVisible()).to.equal(true);
   });
 
   it('Modified org should be at the top of the org card stack', () => {
-    // browser.pause(2000)
     waitForElement(HomePage.individualOrgCard);
     const topOrgCard = HomePage.individualOrgCard.getText()[0];
     expect(topOrgCard).to.include(updatedOrgName);

@@ -91,8 +91,7 @@ describe('Delete Organization Test', () => {
   describe('Leaving First Org re-directs to choose org page', () => {
     it('Go back to /organizations and choose First Org', () => {
       viewOrgDashboard();
-      browser.element("//*[@data-qa='page:org-dashboard']//*[contains(text(),'Change Organization')]").click();
-      expect(browser.getUrl()).to.equal(`${lib.config.api.base}/organizations`);
+      browser.url(lib.config.api.base + `/organizations`)
       waitForElement(HomePage.chooseOrg);
 
       browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForExist();
