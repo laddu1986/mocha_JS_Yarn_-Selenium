@@ -3,7 +3,7 @@ import HomePage from '../page_objects/homePage';
 import SignInPage from '../page_objects/signInPage';
 import * as lib from '../../common';
 
-import { signOut } from '../actions/signOut';
+import { signOut } from '../actions/common';
 
 let signInSuccess;
 
