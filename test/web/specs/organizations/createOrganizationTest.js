@@ -1,9 +1,11 @@
 // Create Organization, sign out, sign back in to validate user lands in the created Org
+import * as lib from '../../../common';
 // import pre from '../specs/validSignIn_PreReq';
-import CreateAccount from '../specs/createAccountTest';
-import HomePage from '../page_objects/homePage';
-import OrgDashboardPage from '../page_objects/orgDashboardPage';
-import { openApp, setValue, click, waitForEnable, waitForElement } from '../actions/actions';
+import CreateAccount from 'web/specs/accounts/createAccountTest';
+import HomePage from 'web/page_objects/homePage';
+import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
+import { openApp, setValue, click, waitForEnable, waitForElement } from 'web/actions/actions'
+
 
 
 function assertion(e, data) {

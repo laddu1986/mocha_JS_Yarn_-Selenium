@@ -1,15 +1,14 @@
 
-// import createOrganizationPage from '../specs/createOrganizationTest';
-import NavBar from '../page_objects/navBar';
-import { createAccount } from '../actions/createAccount';
-import SettingsPage from '../page_objects/settingsPage';
-import HomePage from '../page_objects/homePage';
-import OrgDashboardPage from '../page_objects/orgDashboardPage';
-import { setValue, click, waitForElement, waitForEnabled } from '../actions/actions';
-import SignInPage from '../page_objects/signInPage';
-import * as lib from '../../common';
-import { createOrg } from '../actions/createOrg';
-
+//import createOrganizationPage from '../specs/createOrganizationTest';
+import * as lib from '../../../common';
+import NavBar from 'web/page_objects/navBar'
+import { createAccount } from 'web/actions/createAccount'
+import SettingsPage from 'web/page_objects/settingsPage';
+import HomePage from 'web/page_objects/homePage';
+import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
+import { openApp, setValue, click, waitForElement, waitForEnabled } from 'web/actions/actions'
+import SignInPage from 'web/page_objects/signInPage';
+import { createOrg } from 'web/actions/createOrg';
 let updatedOrgName;
 
 describe('Create Account', () => {
@@ -88,4 +87,3 @@ describe('Update Organization name', () => {
     expect(topOrgCard).to.include(updatedOrgName);
   });
 });
-

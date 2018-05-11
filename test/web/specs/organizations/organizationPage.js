@@ -1,8 +1,8 @@
-import * as lib from '../../common';
-import SignInPage from '../page_objects/signInPage';
-import HomePage from '../page_objects/homePage';
-import OrgDashboardPage from '../page_objects/orgDashboardPage';
-import { openApp, setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
+import * as lib from '../../../common';
+import SignInPage from 'web/page_objects/signInPage';
+import HomePage from 'web/page_objects/homePage';
+import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
+import { openApp, setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
 
 function assertion(e, data) {
   //   console.log(e);

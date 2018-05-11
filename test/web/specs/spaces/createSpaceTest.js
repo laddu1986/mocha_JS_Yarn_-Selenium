@@ -1,8 +1,13 @@
-import { createAccount } from '../actions/createAccount';
-import * as createSpaceActions from '../actions/createSpace';
-import { getNotificationMessageText, signOut } from '../actions/common';
-import SignInPage from '../page_objects/signInPage';
-import spaceData from '../data/space.json';
+import * as lib from '../../../common';
+import { createAccount } from 'web/actions/createAccount';
+import { createFirstSpace, createAnotherSpace } from 'web/actions/createSpace'
+import { signOut } from 'web/actions/signOut'
+import HomePage from 'web/page_objects/homePage'
+import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
+
+import SignInPage from 'web/page_objects/signInPage'
+import { openApp, setValue, click, waitForEnable, waitForElement } from 'web/actions/actions'
+import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
 
 describe('Space Tests', () => {
   before('Open App URL', () => {

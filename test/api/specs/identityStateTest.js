@@ -1,6 +1,7 @@
-import * as identityState from '../actions/identityState';
-import * as identity from '../actions/identity';
+
 import * as lib from '../../common';
+import * as identityState from 'api/actions/identityState';
+import * as identity from 'api/actions/identity';
 
 describe('Identity State Api', () => {
   before('Connect to database', () => {
