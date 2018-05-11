@@ -37,6 +37,7 @@ function copyToastMessage() {
   return SpaceDashboardPage.successMsg.getText();
 }
 
+<<<<<<< HEAD
 function copiedValue() {
   var copiedValue =copyPasteModule.paste();
   return copiedValue;
@@ -47,3 +48,17 @@ function defaultAPIKey() {
 }
 
 export { goBackToSpacesPage, defaultAPIKey, copiedValue, createSpace, verifySpace, clickCreateNewSpaceButton, createSpaceButtonEnabled, copyAPIKeyToClipBoard, copyToastMessage }
+=======
+function createFirstSpace() {
+  setValue(OrgDashboardPage.createSpaceInput, lib.testData.space);
+  click(OrgDashboardPage.createSpaceButton);
+  waitForElement(SpaceDashboardPage.devApiGuideButton);
+}
+
+function createAnotherSpace() {
+  click(OrgDashboardPage.createNewSpaceButton);
+  createFirstSpace();
+}
+
+export { createFirstSpace, createAnotherSpace };
+>>>>>>> 42e427fb3fafaacc7aef49c94a49250b6b0eb7dd

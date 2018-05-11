@@ -6,14 +6,14 @@ function postSpaceByOrganizationId(done, responseData) {
     api: `${lib.config.api.spaces + responseData[1].id}/space`,
     data: {
       name: lib.bigName(10),
-      createdById: responseData[0].id,
+      createdById: responseData[0].id
     },
     func(response) {
       responseData.push(response.body);
       console.log(response.body);
       // console.log(Object.keys(responseData));
       expect(response).to.have.status(201);
-    },
+    }
   };
   // console.log(any);
   lib.post(done, any);
@@ -25,7 +25,7 @@ function getSpacesByOrganizationId(done, responseData) {
     func(response) {
       responseData.push(response.body);
       expect(response).to.have.status(200);
-    },
+    }
   };
   lib.get(done, any);
 }
@@ -35,11 +35,11 @@ function deleteIdentityById(done, responseData) {
     data: responseData[0].id,
     func(response) {
       expect(response).to.have.status(204);
-    },
+    }
   };
   lib.del(done, any);
 }
 export {
   postSpaceByOrganizationId,
-  getSpacesByOrganizationId,
+  getSpacesByOrganizationId
 };
