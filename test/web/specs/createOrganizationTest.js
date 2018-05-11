@@ -71,8 +71,8 @@ function createOrgs() {
     HomePage.createOrgButton.waitForEnabled();
     click(HomePage.createOrgButton);
 
-    OrgDashboardPage.changeOrgAnchor.waitForExist();
-    OrgDashboardPage.changeOrgAnchor.waitForVisible();
+    OrgDashboardPage.welcomeMsg.waitForExist();
+    OrgDashboardPage.welcomeMsg.waitForVisible();
   });
 }
 
