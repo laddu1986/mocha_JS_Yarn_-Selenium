@@ -13,11 +13,11 @@ Test Automation Framework built in Javascript for testing all three layers of Ap
 ### Front End
 Front End tests use the [WebdriverIO](http://webdriver.io/) library. This library is a [Webdriver](https://w3c.github.io/webdriver/webdriver-spec.html) (browser automation) module for [Node.JS](https://nodejs.org/en/). It makes possible to write super easy [Selenium](https://en.wikipedia.org/wiki/Selenium_(software)) tests in [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development) test framework.
 
-Tests are written and executed using [Mocha](https://mochajs.org/) and 
+Tests are written and executed using [Mocha](https://mochajs.org/) and
 assertions are handled using [Chai](http://www.chaijs.com/)
 
 ### Orca and Back End
-Orca and BackEnd API endpoints Integration tests are written using [Chakram](http://dareid.github.io/chakram/). 
+Orca and BackEnd API endpoints Integration tests are written using [Chakram](http://dareid.github.io/chakram/).
 
 Chakram is an API testing framework designed to perform end to end tests on JSON REST endpoints.
 
@@ -42,33 +42,32 @@ update *config.yml* with the URLs that you want to run tests against
 
 
 Install dependencies
+`
+npm install -g yarn
+`
 
 `
-npm install 
+yarn install
 `
 
 Run Front End Tests
 
 `
-npm run web
+yarn run web
 `
 
 Run Orca Tests
 
 `
-npm run orca
+yarn run orca
 `
 
 Run API Tests
 
 `
-npm run api
+yarn run api
 `
 #
 
 ###  Help !
 For any queries contact [Avinash](avinash.eediga@massive.co) or [Abhi](abhijeet.daspatnaik@massive.co)
-
-
-
-
