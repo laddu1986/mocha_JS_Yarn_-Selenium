@@ -17,12 +17,11 @@ function registerAndCreateOrg(done, params, responseData) {
       }
     },
     func(response) {
-      responseData.push((response.body));
-      console.log(JSON.stringify(response.body));
-      expect(response).to.have.status(200);
+      responseData.push((response));
+      // console.log(JSON.stringify(response.body));
     }
   };
-  console.log(JSON.stringify(any));
+  // console.log(JSON.stringify(any));
   lib.post(done, any);
 }
 function login(done, params, responseData) {
@@ -51,12 +50,12 @@ function login(done, params, responseData) {
     },
     func(response) {
       responseData.push((response.response.headers['set-cookie'].map(v => v.split(';')[0])).join('; '));
-      console.log((response.response.headers['set-cookie'].map(v => v.split(';')[0])).join('; '));
+      // console.log((response.response.headers['set-cookie'].map(v => v.split(';')[0])).join('; '));
       // console.log(JSON.stringify(response));
       expect(response).to.have.status(200);
     }
   };
-  console.log(JSON.stringify(any));
+  // console.log(JSON.stringify(any));
   lib.post(done, any);
 }
 function createOrganization(done, params, responseData) {
@@ -83,7 +82,7 @@ function createOrganization(done, params, responseData) {
       }
     },
     func(response) {
-      console.log(JSON.stringify(response.body));
+      // console.log(JSON.stringify(response.body));
       responseData.push(response.body);
       expect(response).to.have.status(200);
     }
