@@ -1,5 +1,6 @@
 import SignInPage from '../page_objects/signInPage';
 import HomePage from '../page_objects/homePage';
+import NavBar from '../page_objects/navBar';
 
 import * as lib from '../../common';
 import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
@@ -85,7 +86,7 @@ describe('Tests for Sign Page', () => {
   it('Should Sign Out successfully', () => {
     if (signInSuccess === true) {
       click(HomePage.profileMenu);
-      click(HomePage.signOut);
+      click(NavBar.signOut);
 
       waitForElement(SignInPage.signInButton);
       expect(SignInPage.signInButton.isVisible()).to.equal(true);
