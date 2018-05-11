@@ -1,7 +1,6 @@
 import { createAccount } from '../actions/createAccount';
-import { signOut } from '../actions/signOut';
 import * as createSpaceActions from '../actions/createSpace';
-import * as commonActions from '../actions/actions';
+import { getNotificationMessageText, signOut } from '../actions/common';
 import SignInPage from '../page_objects/signInPage';
 import spaceData from '../data/space.json';
 
@@ -22,7 +21,7 @@ describe('Space Tests', () => {
 
   it('Copy APIKey --> verify key is copied', () => {
     createSpaceActions.copyAPIKeyToClipBoard();
-    expect(commonActions.getNotificationMessageText()).to.include(spaceData.copyNotificationMessage.text);
+    expect(getNotificationMessageText()).to.include(spaceData.copyNotificationMessage.text);
     expect(createSpaceActions.copiedValue()).to.deep.equal(createSpaceActions.defaultAPIKey());
   })
 
