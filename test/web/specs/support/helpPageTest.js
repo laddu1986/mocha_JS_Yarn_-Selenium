@@ -3,7 +3,7 @@ import * as set from 'web/actions/actions'
 import HomePage from 'web/page_objects/homePage';
 import SignInPage from 'web/page_objects/signInPage';
 import { openApp, setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
-import { signOut } from 'web/actions/signOut'
+import { signOut } from 'web/actions/common'
 
 let signInSuccess;
 
