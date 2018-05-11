@@ -1,9 +1,9 @@
-import OrgDashboardPage from '../page_objects/orgDashboardPage';
-import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
 import * as lib from '../../common';
-import SpaceDashboardPage from '../page_objects/spaceDashboardPage';
-import homePage from '../page_objects/homePage';
+import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
+import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
+import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
 const copyPasteModule = require('copy-paste');
+import homePage from 'web/page_objects/homePage';
 
 function createSpace() {
   setValue(OrgDashboardPage.createSpaceInput, lib.testData.space);
