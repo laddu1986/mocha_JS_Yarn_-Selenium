@@ -1,13 +1,14 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/createAccount';
 import { createFirstSpace, createAnotherSpace } from 'web/actions/createSpace'
-import { signOut } from 'web/actions/signOut'
-import HomePage from 'web/page_objects/homePage'
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
-
+import * as createSpaceActions from 'web/actions/createSpace';
 import SignInPage from 'web/page_objects/signInPage'
 import { openApp, setValue, click, waitForEnable, waitForElement } from 'web/actions/actions'
 import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
+import { getNotificationMessageText, signOut } from 'web/actions/common';
+import spaceData from 'web/data/space.json';
+
 
 describe('Space Tests', () => {
   before('Open App URL', () => {

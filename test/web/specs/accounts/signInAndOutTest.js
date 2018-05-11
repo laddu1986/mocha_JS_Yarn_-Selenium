@@ -1,6 +1,7 @@
 import * as lib from '../../../common';
 import SignInPage from 'web/page_objects/signInPage';
 import HomePage from 'web/page_objects/homePage';
+import NavBar from 'web/page_objects/navBar'
 import { openApp, setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
 
 // function name(params) {
@@ -51,16 +52,13 @@ describe('Tests for Sign Page', () => {
   it('Should throw an error while Signing In with Incorrect credentials', () => {
     waitForElement(SignInPage.emailInput);
     SignInPage.emailInput.clearElement();
-    browser.pause(1000)
-      //setValue(SignInPage.emailInput, 'incorrect@email.com');
-      (SignInPage.emailInput).setValue('incorrect@email.com')
+    //setValue(SignInPage.emailInput, 'incorrect@email.com');
+    (SignInPage.emailInput).setValue('incorrect@email.com')
 
     waitForElement(SignInPage.passwordInput);
     SignInPage.passwordInput.clearElement();
-    browser.pause(1000)
 
     setValue(SignInPage.passwordInput, 'Incorrect@Password123');
-    browser.pause(1000)
 
 
     click(SignInPage.signInButton);
