@@ -12,7 +12,7 @@ exports.config = {
     chromeOptions: {
       args: [
         'disable-infobars',
-        //'--headless',
+        '--headless',
         '--incognito',
         '--ignore-certificate-errors',
         '--disable-gpu'],
@@ -21,15 +21,21 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    // './test/web/specs/*Test.js',
-    './test/web/specs/createSpaceTest.js',
+    './test/web/specs/support/*Test.js',
+    //'./test/web/specs/createAccountTest.js',
   ],
   // Patterns to exclude.
   exclude: [
-    './test/web/specs/deleteOrganizationTest.js',
-    './test/web/specs/leaveOrganizationTest.js',
-    './test/web/specs/inviteTest.js',
+    './test/web/specs/organizations/deleteOrganizationTest.js',
+    './test/web/specs/organizations/leaveOrganizationTest.js',
+    './test/web/specs/organizations/inviteTest.js',
   ],
+  suites: {
+    accounts: ['./test/web/specs/accounts/*Test.js'],
+    organizations: ['./test/web/specs/accounts/*Test.js'],
+    spaces: ['./test/web/specs/accounts/*Test.js'],
+    support: ['./test/web/specs/accounts/*Test.js']
+  },
 
   logLevel: 'silent',
   bail: 2,

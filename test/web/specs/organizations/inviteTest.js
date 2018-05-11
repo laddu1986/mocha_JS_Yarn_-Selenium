@@ -1,8 +1,8 @@
-import { createAccount } from '../actions/createAccount';
-import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard } from '../actions/inviteTeammate';
-import { signOut } from '../actions/common';
-import * as lib from '../../common';
-import SignInPage from '../page_objects/signInPage';
+import * as lib from '../../../common';
+import { createAccount } from 'web/actions/createAccount';
+import { sendInviteButtonEnabled,sendInvite,verifyInviteCount,clickInviteTeammateButton,goToTeammatesPage, verifyInvite,goToOrganisationDashboard} from "web/actions/inviteTeammate";
+import { signOut } from 'web/actions/signOut'
+import SignInPage from 'web/page_objects/signInPage'
 
 const invite_email1 = `invite_1_${lib.bigName(5)}@test.co`;
 const invite_email2 = `invite_2${lib.bigName(5)}@test.co`;

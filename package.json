@@ -4,6 +4,7 @@
   "description": "qa-automation framework for e2e testing using node and webdriverio",
   "main": "wdio.appcurator.js",
   "dependencies": {
+    "app-module-path": "^2.2.0",
     "babel-cli": "^6.18.0",
     "babel-eslint": "^8.2.2",
     "babel-plugin-transform-runtime": "^6.15.0",

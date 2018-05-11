@@ -1,9 +1,8 @@
-import SignInPage from '../page_objects/signInPage';
-import HomePage from '../page_objects/homePage';
-import NavBar from '../page_objects/navBar';
-
-import * as lib from '../../common';
-import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
+import * as lib from '../../../common';
+import SignInPage from 'web/page_objects/signInPage';
+import HomePage from 'web/page_objects/homePage';
+import NavBar from 'web/page_objects/navBar'
+import { openApp, setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
 
 // function name(params) {
 //   let text = ''
@@ -13,7 +12,6 @@ import { setValue, click, waitForEnabled, waitForElement } from '../actions/acti
 
 //   return text
 // }
-
 
 function assertion(e, data) {
   //   console.log(e)
@@ -54,8 +52,8 @@ describe('Tests for Sign Page', () => {
   it('Should throw an error while Signing In with Incorrect credentials', () => {
     waitForElement(SignInPage.emailInput);
     SignInPage.emailInput.clearElement();
-      //setValue(SignInPage.emailInput, 'incorrect@email.com');
-      (SignInPage.emailInput).setValue('incorrect@email.com')
+    //setValue(SignInPage.emailInput, 'incorrect@email.com');
+    (SignInPage.emailInput).setValue('incorrect@email.com')
 
     waitForElement(SignInPage.passwordInput);
     SignInPage.passwordInput.clearElement();
