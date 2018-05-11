@@ -31,8 +31,6 @@ class HomePage {
   get apiPortalAnchor() { return browser.element("//*[contains(text(),'API Portal')]"); }
   get sysStatusAnchor() { return browser.element("//*[contains(text(),'System Status')]"); }
 
-  get signOut() { return browser.element("//*[@data-qa='nav:sign-out']"); }
-
 
   open(e) {
     super.open(e);
