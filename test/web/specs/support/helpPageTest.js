@@ -1,9 +1,9 @@
-import { openApp, setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
-import HomePage from '../page_objects/homePage';
-import SignInPage from '../page_objects/signInPage';
-import * as lib from '../../common';
-
-import { signOut } from '../actions/signOut';
+import * as lib from '../../../common';
+import * as set from 'web/actions/actions'
+import HomePage from 'web/page_objects/homePage';
+import SignInPage from 'web/page_objects/signInPage';
+import { openApp, setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
+import { signOut } from 'web/actions/common'
 
 let signInSuccess;
 

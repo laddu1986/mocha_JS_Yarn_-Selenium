@@ -1,5 +1,5 @@
-import * as identity from '../actions/identity';
 import * as lib from '../../common';
+import * as identity from 'api/actions/identity';
 
 describe('Identity Api', () => {
   before('Connect to database', () => {
