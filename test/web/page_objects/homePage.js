@@ -1,5 +1,5 @@
 // import Page from './page';
-// import Actions from '../actions/actions';
+// import Actions from 'web/actions/actions';
 
 class HomePage {
   get navbar() { return browser.element('#navbar'); }
@@ -30,8 +30,6 @@ class HomePage {
   get devPortalAnchor() { return browser.element("//*[contains(text(),'Developer Portal')]"); }
   get apiPortalAnchor() { return browser.element("//*[contains(text(),'API Portal')]"); }
   get sysStatusAnchor() { return browser.element("//*[contains(text(),'System Status')]"); }
-
-  get signOut() { return browser.element("//*[@data-qa='nav:sign-out']"); }
 
 
   open(e) {

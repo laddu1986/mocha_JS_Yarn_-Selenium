@@ -1,8 +1,8 @@
-import SignInPage from '../page_objects/signInPage';
-import HomePage from '../page_objects/homePage';
-
-import * as lib from '../../common';
-import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
+import * as lib from '../../../common';
+import SignInPage from 'web/page_objects/signInPage';
+import HomePage from 'web/page_objects/homePage';
+import NavBar from 'web/page_objects/navBar'
+import { openApp, setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
 
 // function name(params) {
 //   let text = ''
@@ -12,7 +12,6 @@ import { setValue, click, waitForEnabled, waitForElement } from '../actions/acti
 
 //   return text
 // }
-
 
 function assertion(e, data) {
   //   console.log(e)
@@ -53,16 +52,13 @@ describe('Tests for Sign Page', () => {
   it('Should throw an error while Signing In with Incorrect credentials', () => {
     waitForElement(SignInPage.emailInput);
     SignInPage.emailInput.clearElement();
-    browser.pause(1000)
-      //setValue(SignInPage.emailInput, 'incorrect@email.com');
-      (SignInPage.emailInput).setValue('incorrect@email.com')
+    //setValue(SignInPage.emailInput, 'incorrect@email.com');
+    (SignInPage.emailInput).setValue('incorrect@email.com')
 
     waitForElement(SignInPage.passwordInput);
     SignInPage.passwordInput.clearElement();
-    browser.pause(1000)
 
     setValue(SignInPage.passwordInput, 'Incorrect@Password123');
-    browser.pause(1000)
 
 
     click(SignInPage.signInButton);
@@ -85,7 +81,7 @@ describe('Tests for Sign Page', () => {
   it('Should Sign Out successfully', () => {
     if (signInSuccess === true) {
       click(HomePage.profileMenu);
-      click(HomePage.signOut);
+      click(NavBar.signOut);
 
       waitForElement(SignInPage.signInButton);
       expect(SignInPage.signInButton.isVisible()).to.equal(true);

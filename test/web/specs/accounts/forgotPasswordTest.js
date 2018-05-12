@@ -1,7 +1,6 @@
-import SignInPage from '../page_objects/signInPage';
-
-import * as lib from '../../common';
-import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
+import * as lib from '../../../common';
+import SignInPage from 'web/page_objects/signInPage';
+import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
 
 function assertion(e, data) {
   e.forEach((expected) => {

@@ -1,9 +1,8 @@
-import HomePage from '../page_objects/homePage';
-import CreateAccountPage from '../page_objects/createAccountPage';
-import OrgDashboardPage from '../page_objects/orgDashboardPage';
-import { setValue, click, waitForEnabled, waitForElement } from '../actions/actions';
 import * as lib from '../../common';
-
+import HomePage from 'web/page_objects/homePage';
+import CreateAccountPage from 'web/page_objects/createAccountPage'
+import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
+import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
 
 // const name = lib.bigName(10);
 // const email = lib.bigName(15) + `@test.co`;
@@ -23,5 +22,4 @@ function createAccount() {
   waitForElement(OrgDashboardPage.currentOrgName);
 }
 
-export { createAccount };
-
+export { createAccount }

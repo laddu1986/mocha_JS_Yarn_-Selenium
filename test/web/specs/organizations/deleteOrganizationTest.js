@@ -1,11 +1,11 @@
-import * as lib from '../../common';
-import CreateAccountPage from '../page_objects/createAccountPage';
-import HomePage from '../page_objects/homePage';
-import SignInPage from '../page_objects/signInPage';
-import OrgDashboardPage from '../page_objects/orgDashboardPage';
-import SettingsPage from '../page_objects/settingsPage';
-import Page from '../page_objects/page';
-import { openApp, setValue, click, waitForElement, waitForEnabled } from '../actions/actions';
+import * as lib from '../../../common';
+import CreateAccountPage from 'web/page_objects/createAccountPage';
+import HomePage from 'web/page_objects/homePage';
+import SignInPage from 'web/page_objects/signInPage';
+import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
+import SettingsPage from 'web/page_objects/settingsPage';
+import Page from 'web/page_objects/page';
+import { openApp, setValue, click, waitForElement, waitForEnabled } from 'web/actions/actions'
 
 const name = lib.bigName(10);
 const email = `${lib.bigName(15)}@test.co`;
@@ -91,8 +91,7 @@ describe('Delete Organization Test', () => {
   describe('Leaving First Org re-directs to choose org page', () => {
     it('Go back to /organizations and choose First Org', () => {
       viewOrgDashboard();
-      browser.element("//*[@data-qa='page:org-dashboard']//*[contains(text(),'Change Organization')]").click();
-      expect(browser.getUrl()).to.equal(`${lib.config.api.base}/organizations`);
+      browser.url(lib.config.api.base + `/organizations`)
       waitForElement(HomePage.chooseOrg);
 
       browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForExist();

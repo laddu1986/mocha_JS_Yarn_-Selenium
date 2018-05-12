@@ -21,21 +21,29 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    // './test/web/specs/*Test.js',
-    './test/web/specs/createOrganizationTest.js',
+    './test/web/specs/support/*Test.js',
+    //'./test/web/specs/createAccountTest.js',
   ],
   // Patterns to exclude.
   exclude: [
-    //'./test/web/specs/reRegisterAccountTest.js',
+    './test/web/specs/organizations/deleteOrganizationTest.js',
+    './test/web/specs/organizations/leaveOrganizationTest.js',
+    './test/web/specs/organizations/inviteTest.js',
   ],
+  suites: {
+    accounts: ['./test/web/specs/accounts/*Test.js'],
+    organizations: ['./test/web/specs/accounts/*Test.js'],
+    spaces: ['./test/web/specs/accounts/*Test.js'],
+    support: ['./test/web/specs/accounts/*Test.js']
+  },
 
   logLevel: 'silent',
   bail: 2,
   coloredLogs: true,
   // screenshotPath: './errScreens',
-  baseUrl: 'https://my.appcurator.com/',
+  //baseUrl: 'https://my.appcurator.com/',
   waitforTimeout: 10000,
-  maxInstances: 10,
+  maxInstances: 15,
 
   plugins: {
 
@@ -50,7 +58,7 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['dot'],
+  reporters: ['spec'],
   reporterOptions: {
     allure: {
       outputDir: 'allure-results',
