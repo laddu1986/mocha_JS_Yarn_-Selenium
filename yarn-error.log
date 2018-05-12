@@ -1,0 +1,94 @@
+Arguments: 
+  /usr/local/Cellar/node/8.9.1/bin/node /usr/local/Cellar/yarn/1.5.1/libexec/bin/yarn.js run api
+
+PATH: 
+  /Users/avinash.eediga/Library/Android/sdk//tools:/Users/avinash.eediga/Library/Android/sdk//platform-tools:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Wireshark.app/Contents/MacOS:/Applications/Xamarin Workbooks.app/Contents/SharedSupport/path-bin:/Users/avinash.eediga/Library/Android/sdk//tools:/Users/avinash.eediga/Library/Android/sdk//platform-tools:/Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/bin:/Users/avinash.eediga/.rvm/bin:/Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/bin:/Users/avinash.eediga/.rvm/bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  8.9.1
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  {
+    "name": "qa-automation",
+    "version": "1.0.0",
+    "description": "qa-automation framework for e2e testing using node and webdriverio",
+    "main": "wdio.appcurator.js",
+    "dependencies": {
+      "babel-cli": "^6.18.0",
+      "babel-eslint": "^8.2.2",
+      "babel-plugin-transform-runtime": "^6.15.0",
+      "babel-preset-es2015": "^6.18.0",
+      "babel-runtime": "^6.18.0",
+      "config-yml": "^0.8.0",
+      "dotenv": "^5.0.1",
+      "easyimage": "^2.1.0",
+      "eslint": "^4.18.2",
+      "eslint-plugin-babel": "^5.1.0",
+      "mysql": "^2.15.0",
+      "node-resemble-js": "^0.0.5",
+      "npm": "^6.0.0",
+      "webdriverio": "^4.12.0",
+      "winston": "^2.2.0",
+      "yargs": "^11.0.0"
+    },
+    "devDependencies": {
+      "allure-commandline": "^2.0.0",
+      "babel-preset-latest": "^6.24.1",
+      "babel-register": "^6.26.0",
+      "chai": "^4.1.2",
+      "chakram": "^1.5.0",
+      "eslint-config-airbnb": "^16.1.0",
+      "eslint-plugin-import": "^2.11.0",
+      "eslint-plugin-jsx-a11y": "^6.0.3",
+      "eslint-plugin-react": "^7.7.0",
+      "faker": "^4.1.0",
+      "mocha": "^5.0.5",
+      "precommit-hook": "^3.0.0",
+      "wdio-mocha-framework": "^0.5.13"
+    },
+    "scripts": {
+      "web": "node_modules/.bin/wdio wdio.appcurator.js",
+      "api": "mocha test/api/specs/*Test.js --require babel-register",
+      "report": "allure generate allure-results --clean -o allure-report && allure open allure-report",
+      "orca": "mocha test/orca/specs/loginTest.js --require babel-register",
+      "test": "./node_modules/mocha/bin/mocha test/api/specs/*Test.js --require babel-register",
+      "clean": "node_modules/.bin/eslint test/* --fix",
+      "lint": "jshint .",
+      "validate": "npm ls"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://bitbucket.org/appcurator/qa-automation"
+    },
+    "author": "QA Team",
+    "license": "Internal",
+    "pre-commit": []
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Command failed.
+  Exit code: 8
+  Command: sh
+  Arguments: -c mocha test/api/specs/*Test.js --require babel-register
+  Directory: /Users/avinash.eediga/Documents/qa-automation
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:30281:17)
+      at emitTwo (events.js:126:13)
+      at ChildProcess.emit (events.js:214:7)
+      at maybeClose (internal/child_process.js:925:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
