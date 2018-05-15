@@ -1,97 +1,75 @@
 import * as lib from '../../common';
 
-function postOrganization(done, responseData) {
+function postOrganization(responseData) {
   const any = {
     api: lib.config.api.organizations,
     data: {
       name: lib.bigName(10),
       createdByAccountId: responseData[0].id
-    },
-    func(response) {
-      responseData.push(response.body);
-      console.log(response.body);
-      expect(response).to.have.status(201);
     }
   };
-  lib.post(done, any);
+  return lib.post(any).then((response) => {
+    responseData.push(response.body);
+    return response;
+  })
 }
 
-function getOrganizationById(done, responseData) {
+function getOrganizationById(responseData) {
   const any = {
     api: lib.config.api.organizations,
-    data: responseData[1].id,
-    func(response) {
-    //   lib.res.push(response.body);
-      expect(response).to.have.status(200);
-    }
+    data: responseData[1].id
   };
-  lib.get(done, any);
+  return lib.get(any);
 }
 
-function getOrganizations(done) {
+function getOrganizations() {
   const any = {
     api: lib.config.api.organizations,
-    data: '',
-    func(response) {
-    //   lib.res.push(response.body);
-      expect(response.body).to.be.an('array');
-    }
+    data: ''
   };
-  lib.post(done, any);
+  return lib.get(any);
 }
 
-function postOrganizations(done, responseData) {
+function postOrganizations(responseData) {
+  const any = {
+    api: lib.config.api.allOrganizations,
+    data:
+      [
+        responseData[1].id,
+        responseData[2].id
+      ]
+  };
+  return lib.post(any)
+}
+
+function deleteOrganizationById(responseData) {
   const any = {
     api: lib.config.api.organizations,
-    data: [responseData[1], responseData[2]],
-    func(response) {
-      //   lib.res.push(response.body);
-      expect(response.body).to.be.an('array');
-      expect(response).to.have.status(200);
-    }
+    data: `${responseData[2].id}?rowVersion=${responseData[2].rowVersion}`
   };
-  lib.post(done, any);
+  return lib.del(any);
 }
 
-function deleteOrganizationById(done, responseData) {
+function checkStatusChangedToPendingDelete(responseData) {
   const any = {
     api: lib.config.api.organizations,
-    data: `${responseData[2].id}?rowVersion=${responseData[2].rowVersion}`,
-    func(response) {
-      expect(response).to.have.status(204);
-    }
+    data: responseData[2]
+    // func(response) {
+    //   expect(response.body.rowStatus).to.equal('PendingDelete');
+    //   expect(response).to.have.status(200);
+    // }
   };
-  lib.del(done, any);
+  return lib.get(any);
 }
 
-function checkStatusChangedToPendingDelete(done, responseData) {
-  const any = {
-    api: lib.config.api.organizations,
-    data: responseData[2],
-    func(response) {
-      expect(response.body.rowStatus).to.equal('PendingDelete');
-      expect(response).to.have.status(200);
-    }
-  };
-  lib.get(done, any);
-}
-
-function putOrganization(done, responseData) {
+function putOrganization(responseData) {
   const update = responseData[1];
   update.name = 'check update name string';
-  //   console.log(update);
   const any = {
     api: lib.config.api.organizations,
-    data: update,
-    func(response) {
-    //   lib.res.push(response.body);
-    //   console.log(response.body);
-      expect(response).to.have.status(200);
-      expect(response.body.id).to.equal(update.id);
-      expect(response.body.rowVersion).to.not.equal(update.rowVersion);
-    }
+    data: update
   };
-  lib.put(done, any);
+  return lib.put(any);
 }
 
 export {

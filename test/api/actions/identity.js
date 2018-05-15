@@ -1,43 +1,32 @@
 import * as lib from '../../common';
 
-function postIdentity(done, responseData) {
+function postIdentity(responseData) {
   const any = {
     api: lib.config.api.identities,
     data: {
       fullname: lib.bigName(12),
       email: `${lib.bigName(12)}@dummy.co`,
       password: 'Pass1234'
-    },
-    func(response) {
-      responseData.push(response.body);
-      console.log(response.body);
-      // console.log(Object.keys(responseData));
-      expect(response).to.have.status(201);
     }
   };
-  // console.log(any);
-  lib.post(done, any);
+  return lib.post(any).then((response) => {
+    responseData.push(response.body);
+    return response;
+  })
 }
-function getIdentityById(done, responseData) {
+function getIdentityById(responseData) {
   const any = {
     api: lib.config.api.identities,
-    data: responseData[0].id,
-    func(response) {
-    //   lib.res.push(response.body);
-      expect(response).to.have.status(200);
-    }
+    data: responseData[0].id
   };
-  lib.get(done, any);
+  return lib.get(any);
 }
-function deleteIdentityById(done, responseData) {
+function deleteIdentityById(responseData) {
   const any = {
     api: lib.config.api.identities,
-    data: responseData[0].id,
-    func(response) {
-      expect(response).to.have.status(204);
-    }
+    data: responseData[0].id
   };
-  lib.del(done, any);
+  return lib.del(any);
 }
 export {
   postIdentity,
