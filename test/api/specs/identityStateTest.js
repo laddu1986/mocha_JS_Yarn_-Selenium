@@ -3,34 +3,47 @@ import * as lib from '../../common';
 import * as identityState from 'api/actions/identityState';
 import * as identity from 'api/actions/identity';
 
+var getResponse, putResponse, patchResponse;
+
 describe('Identity State Api', () => {
-  before('Connect to database', () => {
-    // lib.connection({
-    //   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
-    //   user: 'rouser',
-    //   password: 'R34d0nlyK3y',
-    //   database: 'membership_test',
-    // });
-  });
+
   describe('GET /identities/{id}/state', () => {
-    it('Add a new user identity.', (done) => {
-      identity.postIdentity(done, lib.responseData.identityState);
+    before((done) => {
+      identity.postIdentity(lib.responseData.identityState).then(() => {
+        getResponse = identityState.getIdentityStateById(lib.responseData.identityState);
+        done();
+      })
     });
-    it('Return identity state by identity id.', (done) => {
-      identityState.getIdentityStateById(done, lib.responseData.identityState);
+
+    it('Return identity state by identity id.', () => {
+      return getResponse.then(function (response) {
+        expect(response).to.have.status(200);
+      });
     });
   });
+
   describe('PUT /identities/{id}/state', () => {
-    it('Set identity state for an identity.', (done) => {
-      identityState.putIdentityById(done, lib.responseData.identityState);
+    before((done) => {
+      putResponse = identityState.putIdentityById(lib.responseData.identityState);
+      done();
+    });
+    it('Set identity state for an identity.', () => {
+      return putResponse.then(function (response) {
+        expect(response).to.have.status(204);
+      });
     });
   });
+
   describe('PATCH /identities/{id}/state', () => {
-    it('Partial update identity state for an identity.', (done) => {
-      identityState.patchIdentityStateById(done, lib.responseData.identityState);
+    before((done) => {
+      patchResponse = identityState.patchIdentityStateById(lib.responseData.identityState);
+      done();
+    });
+    it('Partial update identity state for an identity.', () => {
+      return patchResponse.then(function (response) {
+        expect(response).to.have.status(200);
+      });
     });
   });
-  after('End message', () => {
-    // lib.end();
-  });
+
 });

@@ -27,7 +27,6 @@ function bigName(params) {
   return `test_${text}`;
 }
 
-
 let con = null;
 
 function connection(params) {
@@ -48,7 +47,7 @@ function end() {
   });
 }
 
-function post(done, any) {
+function post(any) {
   if (any.headers == undefined) {
     any.headers = {
       headers: {
@@ -56,47 +55,21 @@ function post(done, any) {
       }
     };
   }
-  // console.log(any.headers);
-  return server.post(any.api, any.data, any.headers)
-    .then((response) => {
-      // console.log(response.body);
-      any.func(response);
-      done();
-      // server.wait();
-    });
+  return server.post(any.api, any.data, any.headers);
 }
-function get(done, any) {
-  return server.get(any.api + any.data)
-    .then((response) => {
-      // console.log(response.body);
-      any.func(response);
-      done();
-    });
+function get(any) {
+  return server.get(any.api + any.data);
 }
-function put(done, any) {
-  return server.put(any.api, any.data)
-    .then((response) => {
-      // console.log(response.body);
-      any.func(response);
-      done();
-    });
+function put(any) {
+  return server.put(any.api, any.data);
 }
-function patch(done, any) {
-  return server.patch(any.api, any.data)
-    .then((response) => {
-      // console.log(response.body);
-      any.func(response);
-      done();
-    });
+function patch(any) {
+  return server.patch(any.api, any.data);
 }
-function del(done, any) {
-  return server.delete(any.api + any.data)
-    .then((response) => {
-      // console.log(response.body);
-      any.func(response);
-      done();
-    });
+function del(any) {
+  return server.delete(any.api + any.data);
 }
+
 // const con = mysql.createConnection({
 //   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
 //   user: 'rouser',

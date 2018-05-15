@@ -32,9 +32,9 @@ exports.config = {
   ],
   suites: {
     accounts: ['./test/web/specs/accounts/*Test.js'],
-    organizations: ['./test/web/specs/accounts/*Test.js'],
-    spaces: ['./test/web/specs/accounts/*Test.js'],
-    support: ['./test/web/specs/accounts/*Test.js']
+    organizations: ['./test/web/specs/organizations/*Test.js'],
+    spaces: ['./test/web/specs/spaces/*Test.js'],
+    support: ['./test/web/specs/support/*Test.js']
   },
 
   logLevel: 'silent',
@@ -58,7 +58,7 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['spec'],
+  reporters: ['dot'],
   reporterOptions: {
     allure: {
       outputDir: 'allure-results',
