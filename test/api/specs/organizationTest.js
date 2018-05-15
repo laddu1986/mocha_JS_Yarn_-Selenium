@@ -1,66 +1,85 @@
-<<<<<<< HEAD
-=======
-import * as organization from '../actions/organization';
 import * as identity from '../actions/identity';
->>>>>>> 91b6e54b8754ef6cc7627988359f619c4a48e43d
 import * as lib from '../../common';
 import * as organization from 'api/actions/organization';
 
+var createOrgResponse, getOrgResponse, listOrgResponse, updateResponse, listOrgsByIDResponse, deleteResponse
+
 describe('Organizations Api', () => {
-  before('Connect to database', () => {
-    // lib.connection({
-    //   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
-    //   user: 'rouser',
-    //   password: 'R34d0nlyK3y',
-    //   database: 'membership_test',
-    // });
-  });
   describe('POST /organizations', () => {
-    it('Posting idenity details', (done) => {
-      identity.postIdentity(done, lib.responseData.organization);
+    before((done) => {
+      identity.postIdentity(lib.responseData.organization).then(() => {
+        createOrgResponse = organization.postOrganization(lib.responseData.organization);
+        done();
+      })
     });
-    it('Create a new organization.', (done) => {
-      // first post
-      organization.postOrganization(done, lib.responseData.organization);
+    it('Create a new organization.', () => {
+      return createOrgResponse.then((response) => {
+        expect(response).to.have.status(201);
+      })
     });
   });
   describe('GET /organizations/{id}', () => {
-    it('Get a organizations by its id.', (done) => {
-      organization.getOrganizationById(done, lib.responseData.organization);
+    before((done) => {
+      getOrgResponse = organization.getOrganizationById(lib.responseData.organization);
+      done();
+    });
+    it('Get a organizations by its id.', () => {
+      return getOrgResponse.then((response) => {
+        expect(response).to.have.status(200);
+      });
     });
   });
   describe('GET /organizations', () => {
-    it('List all organizations.', () => {
-      organization.getOrganizations();
+    before((done) => {
+      listOrgResponse = organization.getOrganizations();
+      done();
     });
-    // it('Schema check.', () => lib.server.get(lib.config.api.organizations)
-    //   .then((i) => {
-    //     // console.log(i.body);
-    //     expect(i.body).to.have.schema([{
-    //       id: 'string',
-    //       identityId: 'string',
-    //       organizationId: 'string',
-    //     }]);
-    //   }));
+
+    it('List all organizations.', () => {
+      return listOrgResponse.then((response) => {
+        expect(response.body).to.be.an('array');
+        expect(response).to.have.status(200);
+      });
+    });
   });
+
   describe('PUT /organization', () => {
-    it('Post organization.', (done) => {
-      organization.putOrganization(done, lib.responseData.organization);
+    before((done) => {
+      updateResponse = organization.putOrganization(lib.responseData.organization);
+      done();
+    });
+    it('Update an existing organization.', () => {
+      return updateResponse.then((response) => {
+        expect(response).to.have.status(200);
+        expect(response.body.name).to.equal('check update name string');
+      });
     });
   });
   describe('POST /organizations/list', () => {
-    it('List of organizations by their id.', (done) => {
-      // second post
-      organization.postOrganization(done, lib.responseData.organization);
-      organization.postOrganizations(done, lib.responseData.organization);
+    before((done) => {
+      organization.postOrganization(lib.responseData.organization).then(() => {
+        listOrgsByIDResponse = organization.postOrganizations(lib.responseData.organization);
+        done();
+      });
+    });
+
+    it('List of organizations by their id.', () => {
+      return listOrgsByIDResponse.then((response) => {
+        expect(response.body).to.be.an('array');
+        expect(response).to.have.status(200);
+      });
     });
   });
   describe('DELETE /organizations/{id}', () => {
-    it('Delete a organization.', (done) => {
-      organization.deleteOrganizationById(done, lib.responseData.organization);
+    before((done) => {
+      deleteResponse = organization.deleteOrganizationById(lib.responseData.organization);
+      done();
     });
-  });
-  after('End message', () => {
-    // lib.end();
+
+    it('Delete a organization.', () => {
+      return deleteResponse.then((response) => {
+        expect(response).to.have.status(204);
+      })
+    });
   });
 });
