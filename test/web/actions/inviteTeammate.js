@@ -39,4 +39,6 @@ function goToOrganisationDashboard() {
   NavBar.backToOrgDashboardLink.click();
 }
 
+
+
 export { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard };
