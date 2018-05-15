@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-=======
-import * as invites from '../actions/invites';
-import * as organization from '../actions/organization';
-import * as identity from '../actions/identity';
-import * as membership from '../actions/membership';
->>>>>>> 91b6e54b8754ef6cc7627988359f619c4a48e43d
 import * as lib from '../../common';
+import * as identity from 'api/actions/identity';
+import * as membership from 'api/actions/membership';
 import * as invites from 'api/actions/invites';
 import * as organization from 'api/actions/organization';
 
