@@ -25,12 +25,6 @@ describe('Space Tests', () => {
     expect(createSpaceActions.verifySpace()).to.equal(true);
   });
 
-  it('Copy APIKey --> verify key is copied', () => {
-    createSpaceActions.copyAPIKeyToClipBoard();
-    expect(getNotificationMessageText()).to.include(spaceData.copyNotificationMessage.text);
-    expect(createSpaceActions.copiedValue()).to.deep.equal(createSpaceActions.defaultAPIKey());
-  })
-
   it('Verify creating two more spaces ', () => {
     for (var i = 0; i < 2; i++) {
       createSpaceActions.goBackToOrgDashboard();
