@@ -21,9 +21,14 @@ function waitForEnabled(ena) {
   ena.waitForEnabled();
 }
 
+function ifEnabled(element) {
+  return element.isEnabled();
+}
+
 export {
   setValue,
   click,
   waitForEnabled,
-  waitForElement
+  waitForElement,
+  ifEnabled
 };
