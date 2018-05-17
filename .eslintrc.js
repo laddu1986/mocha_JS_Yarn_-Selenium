@@ -32,11 +32,15 @@ module.exports = {
       "no-unused-vars": ["warn", {"vars": "local", "args": "none"}],  // Check local fors for usage, do not check args
       "import/prefer-default-export": "off",                          // Don't use default export settings - wdio reference page-object model
       "class-methods-use-this": "off",                                 // Do not enforce method to be static function
-      "max-len": ["warn", 120, 2, {"ignoreComments": true, "ignoreStrings": true}],                 // Max length of lines
+      "max-len": ["warn", 150, 2, {"ignoreComments": true, "ignoreStrings": true}],                 // Max length of lines
       "no-param-reassign": "off",                                      // Allow reassign params (pass between cases)
       "max-statements": "off",
       "camelcase": "warn",
       "prefer-destructuring": "off",
       "no-shadow": "warn",
+      "import/first": "off",
+      "import/extensions": "off",
+      "import/no-unresolved": "off",
+      "one-var": "off"
   }
 };
