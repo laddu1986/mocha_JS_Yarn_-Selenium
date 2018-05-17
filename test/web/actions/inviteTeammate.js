@@ -39,33 +39,30 @@ function goToOrganisationDashboard() {
   NavBar.backToOrgDashboardLink.click();
 }
 
-
 function inviteTeammate(mail, counta) {
   clickInviteTeammateButton()
   sendInvite(mail)
   verifyInviteCount(counta)
 }
 
-
-function getInviteTokenFromDB() {
+function getInviteTokenFromDB(m) {
   return new Promise((resolve, reject) => {
-    lib.con.query({ sql: "SELECT id from Invites WHERE email = 'someone@email.com';" },
+    const sqlQuery = `SELECT id from Invites WHERE email = "${m}"`
+    lib.con.query({ sql: sqlQuery },
       function (err, result) {
         lib.con.end()
         if (err) reject(err);
-        console.log('INVITE TOKEN 1 ' + result[0].id)
+        console.log('Invite Token  ' + result[0].id)
+        lib.con.end()
         return resolve(result[0].id)
       })
   })
 }
 
-
-async function invitationLink() {
-  const token = await getInviteTokenFromDB()
+async function invitationLink(i) {
+  const token = await getInviteTokenFromDB(i)
   return `${lib.web}/join?invite=${token}`
 }
-
-
 
 export {
   sendInviteButtonEnabled,
