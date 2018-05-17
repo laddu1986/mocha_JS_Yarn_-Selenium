@@ -21,12 +21,10 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    // './test/web/specs/support/*Test.js',
-    './test/web/specs/invites/joinOrgNewMember.js',
+    './test/web/specs/organizations/deleteOrganizationTest.js',
   ],
   // Patterns to exclude.
   exclude: [
-    './test/web/specs/organizations/deleteOrganizationTest.js',
     './test/web/specs/organizations/leaveOrganizationTest.js',
     './test/web/specs/organizations/inviteTest.js',
   ],
@@ -59,7 +57,7 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['dot'],
+  reporters: ['spec'],
   reporterOptions: {
     allure: {
       outputDir: 'allure-results',

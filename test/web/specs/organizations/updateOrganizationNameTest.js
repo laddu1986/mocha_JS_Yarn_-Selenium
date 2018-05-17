@@ -41,7 +41,7 @@ describe('Update Organization name', () => {
 
   it('Click Settings', () => {
     click(HomePage.settingsAnchor);
-    expect(browser.getUrl()).to.include((lib.config.api.base + `/${orgname}/edit`).toLowerCase())
+    expect(browser.getUrl()).to.include((`${lib.web}/${orgname}/edit`).toLowerCase())
   });
 
   it('Change the org name to "Updated Organization"', () => {
@@ -72,7 +72,7 @@ describe('Update Organization name', () => {
   });
 
   it('Go back to Choose org page', () => {
-    browser.url(lib.config.api.base + `/organizations`)
+    browser.url(`${lib.web}/organizations`)
     waitForElement(HomePage.chooseOrg);
     expect(HomePage.chooseOrg.isVisible()).to.equal(true);
   });

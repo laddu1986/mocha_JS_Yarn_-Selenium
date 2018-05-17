@@ -1,0 +1,8 @@
+{
+    "copyNotificationMessage": {
+        "text": "Copied to clipboard"
+    },
+    "deleteOrgMessage": {
+        "text": "You have successfully deleted"
+    }
+}

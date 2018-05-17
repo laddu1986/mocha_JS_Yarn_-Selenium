@@ -32,7 +32,12 @@ function verifyInvite() {
 }
 
 function verifyInviteCount(count) {
-  browser.waitUntil(() => OrgDashboardPage.pendingInviteCircle.getText() === (`+${count}`), 5000, 'Expect pending invite circle to increment by 1', 200);
+  try {
+    browser.waitUntil(() => OrgDashboardPage.pendingInviteCircle.getText() === (`+${count}`), 5000, 'Expect pending invite circle to increment by 1', 200);
+
+  } catch (error) {
+    console.log('Invite Failed', error)
+  }
 }
 
 function goToOrganisationDashboard() {
@@ -53,7 +58,7 @@ function getInviteTokenFromDB(m) {
         lib.con.end()
         if (err) reject(err);
         console.log('Invite Token  ' + result[0].id)
-        lib.con.end()
+        //lib.con.end()
         return resolve(result[0].id)
       })
   })

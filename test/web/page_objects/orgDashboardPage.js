@@ -23,6 +23,7 @@ class OrgDashboardPage extends Page {
   get inviteEmailInput() { return browser.element("//input[@data-qa='input:email']"); }
   get sendInviteButton() { return browser.element("//button[@data-qa='button:invite']"); }
   get pendingInviteCircle() { return browser.element("//div[@data-qa='page:org-dashboard']//div[contains(@class,'pending')]"); }
+  get joinButton() { return browser.element("//button[@data-qa='btn:join']") }
 
   open(e) {
     super.open(e);
