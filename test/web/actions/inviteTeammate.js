@@ -6,7 +6,6 @@ import TeamPage from 'web/page_objects/TeamPage'
 import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
 import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
 
-
 function clickInviteTeammateButton() {
   click(OrgDashboardPage.inviteTeammateButton);
 }
@@ -48,39 +47,34 @@ function inviteTeammate(mail, counta) {
 }
 
 
-function invitationLink() {
-
-  var getInviteTokenDB = getInviteTokenFromDB()
-  var inviteURL = lib.web + `/join?invite=` + getInviteTokenFromDB()
-  console.log('inviteURL******  ' + inviteURL)
-
-  lib.con.end()
-  //return inviteURL
+function getInviteTokenFromDB() {
+  return new Promise((resolve, reject) => {
+    lib.con.query({ sql: "SELECT id from Invites WHERE email = 'someone@email.com';" },
+      function (err, result) {
+        lib.con.end()
+        if (err) reject(err);
+        console.log('INVITE TOKEN 1 ' + result[0].id)
+        return resolve(result[0].id)
+      })
+  })
 }
 
 
-function getInviteTokenFromDB({
-
-  var something = lib.con.query({ sql: "SELECT id from Invites WHERE email = 'someone@email.com';" },
-    function (err, result) {
-      if (err) throw err;
-      console.log('INVITE TOKEN ====== ' + result[0].id)
-      return result[0].id
-    })
+async function invitationLink() {
+  const token = await getInviteTokenFromDB()
+  return `${lib.web}/join?invite=${token}`
 }
-
-
 
 
 
 export {
-    sendInviteButtonEnabled,
-    sendInvite,
-    verifyInviteCount,
-    clickInviteTeammateButton,
-    goToTeammatesPage,
-    verifyInvite,
-    goToOrganisationDashboard,
-    inviteTeammate,
-    invitationLink
-  };
+  sendInviteButtonEnabled,
+  sendInvite,
+  verifyInviteCount,
+  clickInviteTeammateButton,
+  goToTeammatesPage,
+  verifyInvite,
+  goToOrganisationDashboard,
+  inviteTeammate,
+  invitationLink
+};
