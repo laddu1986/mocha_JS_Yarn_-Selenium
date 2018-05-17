@@ -5,14 +5,14 @@ const brow = 'chrome';
 
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
-  // services: ['chromedriver', 'devtools'],
+  services: ['devtools'],
   enableNetwork: true,
   capabilities: [{
     browserName: brow,
     chromeOptions: {
       args: [
         'disable-infobars',
-        '--headless',
+        //'--headless',
         '--incognito',
         '--ignore-certificate-errors',
         '--disable-gpu'],
@@ -21,8 +21,8 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/support/*Test.js',
-    //'./test/web/specs/createAccountTest.js',
+    // './test/web/specs/support/*Test.js',
+    './test/web/specs/invites/joinOrgNewMember.js',
   ],
   // Patterns to exclude.
   exclude: [
@@ -34,7 +34,8 @@ exports.config = {
     accounts: ['./test/web/specs/accounts/*Test.js'],
     organizations: ['./test/web/specs/organizations/*Test.js'],
     spaces: ['./test/web/specs/spaces/*Test.js'],
-    support: ['./test/web/specs/support/*Test.js']
+    support: ['./test/web/specs/support/*Test.js'],
+    invites: ['./test/web/specs/invites/*Test.js']
   },
 
   logLevel: 'silent',
@@ -71,6 +72,7 @@ exports.config = {
     compilers: ['js:babel-register'],
     timeout: 30000,
   },
+  //execArgv: ['--inspect'],
 
   //
   // =====
