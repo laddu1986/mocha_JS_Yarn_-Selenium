@@ -7,8 +7,6 @@ class SignInPage extends Page {
   get passwordInput() { return browser.element("//*[@data-qa='input:password']//*[@data-qa='input:text']"); }
   get passwordError() { return browser.element("//*[@data-qa='input:password']//*[@data-qa='input:error']"); }
 
-  get signInButton() { return browser.element("//*[@data-qa='btn:submit']"); }
-
   get incorrectDetails() { return browser.element("//*[@data-qa='form:error']"); }
 
   get forgotPassword() { return browser.element("//*[@data-qa='link:forgot-pw']"); }

@@ -12,7 +12,7 @@ function getNotificationMessageText() {
 function signOut() {
     click(HomePage.profileMenu);
     click(NavBar.signOut);
-    waitForElement(SignInPage.signInButton);
+    waitForElement(CommonPage.submitButton);
 }
 
 export {

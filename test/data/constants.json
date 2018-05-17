@@ -1,0 +1,7 @@
+{
+    "APIKeyStatus": {
+        "Active": "Active",
+        "Revoked": "Revoked",
+        "PendingDelete": "Pending Delete"
+    }
+}
