@@ -32,7 +32,7 @@ function getOrganizations() {
 
 function postOrganizations(responseData) {
   const any = {
-    api: lib.config.api.allOrganizations,
+    api: `${lib.config.api.organizations}list`,
     data:
       [
         responseData[1].id,
