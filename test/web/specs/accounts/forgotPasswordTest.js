@@ -1,5 +1,6 @@
 import * as lib from '../../../common';
 import SignInPage from 'web/page_objects/signInPage';
+import CommonPage from 'web/page_objects/common';
 import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
 
 function assertion(e, data) {
@@ -22,7 +23,7 @@ describe('Test Forgot Password Link', () => {
   });
 
   it('Click Send me Link button', () => {
-    click(SignInPage.signInButton);
+    click(CommonPage.submitButton);
   });
 
   it('Click Back to Sign In button', () => {

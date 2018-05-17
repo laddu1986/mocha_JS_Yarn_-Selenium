@@ -13,6 +13,7 @@ import SignInPage from 'web/page_objects/signInPage';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
 import SettingsPage from 'web/page_objects/settingsPage';
 import Page from 'web/page_objects/page';
+import CommonPage from 'web/page_objects/common';
 import { openApp, setValue, click, waitForElement, waitForEnabled } from 'web/actions/actions'
 
 const name = lib.bigName(10);
@@ -35,7 +36,7 @@ describe('Delete Acount Test (Remove my Account)', () => {
       setValue(CreateAccountPage.organizationInput, organization);
       setValue(CreateAccountPage.passwordInput, password);
 
-      click(CreateAccountPage.createAccountButton);
+      click(CommonPage.submitButton);
       waitForElement(HomePage.logo);
       console.log('Test Data : -  \n' +
         `name = ${name}\n` +
@@ -61,7 +62,7 @@ describe('Delete Acount Test (Remove my Account)', () => {
     });
 
     it('Accept Confirmation', () => {
-      click(SettingsPage.confirmOkButton);
+      click(CommonPage.submitButton);
 
     });
 
@@ -84,12 +85,12 @@ describe('Delete Acount Test (Remove my Account)', () => {
     });
 
     it('Accept Confirmation', () => {
-      click(SettingsPage.confirmOkButton);
+      click(CommonPage.submitButton);
 
     });
 
     it('Should re-direct to Sign In page after deleting my Account', () => {
-      waitForElement(SignInPage.signInButton);
+      waitForElement(CommonPage.submitButton);
       expect(browser.getUrl()).to.equal(`${lib.config.api.base}/sign-in`);
     });
   });
@@ -116,7 +117,7 @@ function clickDeleteOrganization() {
   click(SettingsPage.orgSettingsPage);
   browser.pause(500); // for safari
   click(SettingsPage.leaveOrgButton);
-  // click(SettingsPage.confirmOkButton);
+  // click(CommonPage.submitButton);
 }
 
 function viewOrgDashboard() {
@@ -130,7 +131,7 @@ function createAccount() {
   setValue(CreateAccountPage.emailInput, email);
   setValue(CreateAccountPage.organizationInput, organization);
   setValue(CreateAccountPage.passwordInput, password);
-  click(CreateAccountPage.createAccountButton);
+  click(CommonPage.submitButton);
 }
 
 function assertion(e, data) {

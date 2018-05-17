@@ -5,6 +5,7 @@ import SignInPage from 'web/page_objects/signInPage';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
 import SettingsPage from 'web/page_objects/settingsPage';
 import Page from 'web/page_objects/page';
+import CommonPage from 'web/page_objects/common';
 import { openApp, setValue, click, waitForElement, waitForEnabled } from 'web/actions/actions'
 
 const name = lib.bigName(10);
@@ -39,7 +40,7 @@ describe('Leave Organization Test', () => {
       setValue(CreateAccountPage.emailInput, email);
       setValue(CreateAccountPage.organizationInput, organization);
       setValue(CreateAccountPage.passwordInput, password);
-      click(CreateAccountPage.createAccountButton);
+      click(CommonPage.submitButton);
 
       console.log('Test Data : - \n' +
         `name = ${name}\n` +
@@ -184,7 +185,7 @@ function clickLeaveOrganization() {
   waitForEnabled(SettingsPage.leaveOrgButton);
   click(SettingsPage.leaveOrgButton);
 
-  click(SettingsPage.confirmOkButton);
+  click(CommonPage.submitButton);
 }
 
 function viewOrgDashboard() {

@@ -9,8 +9,7 @@ class SettingsPage {
   get deleteOrgButton() { return browser.element("//button[@data-qa='btn:leave-org']"); }
 
   get orgSettingsPage() { return browser.element("//*[@data-qa='page:org-settings']"); }
-  get confirmOkButton() { return browser.element("//*[@data-qa='btn:submit']"); }
-
+  
   open(e) {
     super.open(e);
   }
