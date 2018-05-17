@@ -3,6 +3,9 @@ const argv = require('yargs').argv;
 
 const brow = 'chrome';
 
+const debug = process.env.DEBUG;
+const timeoutPeriod = 20000;
+
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
   // services: ['chromedriver', 'devtools'],
@@ -34,7 +37,7 @@ exports.config = {
     accounts: ['./test/web/specs/accounts/*Test.js'],
     organizations: ['./test/web/specs/organizations/*Test.js'],
     spaces: ['./test/web/specs/spaces/*Test.js'],
-    support: ['./test/web/specs/support/*Test.js']
+    //support: ['./test/web/specs/support/*Test.js']
   },
 
   logLevel: 'silent',
@@ -42,8 +45,8 @@ exports.config = {
   coloredLogs: true,
   // screenshotPath: './errScreens',
   //baseUrl: 'https://my.appcurator.com/',
-  waitforTimeout: 10000,
-  maxInstances: 15,
+  waitforTimeout: debug ? 9999999 : timeoutPeriod,
+  maxInstances: debug ? 1 : 15,
 
   plugins: {
 
@@ -69,9 +72,9 @@ exports.config = {
   mochaOpts: {
     ui: 'bdd',
     compilers: ['js:babel-register'],
-    timeout: 30000,
+    timeout: debug ? 9999999 : timeoutPeriod,
   },
-
+  execArgv: debug ? ['--inspect'] : [],
   //
   // =====
   // Hooks
