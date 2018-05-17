@@ -51,8 +51,10 @@ describe('Join an Organization via invitation email (Existing Account)', () => {
   // });
 
 
-  it('New Member clicks on the Invite link', () => {
-    invitationLink()
+  it('New Member clicks on the Invite link', async () => {
+    const url = await invitationLink()
+
+    console.log('url', url)
   })
 
 
