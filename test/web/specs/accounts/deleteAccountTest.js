@@ -18,7 +18,7 @@ import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
 import SettingsPage from 'web/page_objects/settingsPage';
 import Page from 'web/page_objects/page';
 import { openApp, setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
-
+import CommonPage from 'web/page_objects/common';
 
 const name = lib.bigName(10);
 const email = `${lib.bigName(15)}@test.co`;
@@ -37,7 +37,7 @@ describe('Delete Acount Test (Remove my Account)', () => {
       setValue(CreateAccountPage.emailInput, email);
       setValue(CreateAccountPage.organizationInput, organization);
       setValue(CreateAccountPage.passwordInput, password);
-      click(CreateAccountPage.createAccountButton);
+      click(CommonPage.submitButton);
 
       console.log('Test Data : -  \n' +
         `name = ${name}\n` +
@@ -86,15 +86,15 @@ describe('Delete Acount Test (Remove my Account)', () => {
     });
 
     it('Confirm Deletion', () => {
-      click(SettingsPage.confirmOkButton);
+      click(CommonPage.submitButton);
     });
 
     it('Click Ok to Confirm Account deletion', () => {
-      click(SettingsPage.confirmOkButton);
+      click(CommonPage.submitButton);
     });
 
     it('Should re-direct to Sign In page after deleting my Account', () => {
-      waitForElement(SignInPage.signInButton);
+      waitForElement(CommonPage.submitButton);
       expect(browser.getUrl()).to.equal(`${lib.config.api.base}/sign-in`);
     });
   });
@@ -103,7 +103,7 @@ describe('Delete Acount Test (Remove my Account)', () => {
     it('Enter the same credentials as above and click Sign In', () => {
       setValue(SignInPage.emailInput, `${email}`);
       setValue(SignInPage.passwordInput, `${password}`);
-      click(SignInPage.signInButton);
+      click(CommonPage.submitButton);
     });
 
     it('Should show err msg - Incorrect details', () => {
@@ -124,7 +124,7 @@ function clickDeleteOrganization() {
   browser.pause(500); // for safari
   waitForEnabled(SettingsPage.leaveOrgButton);
   click(SettingsPage.leaveOrgButton);
-  click(SettingsPage.confirmOkButton);
+  click(CommonPage.submitButton);
 }
 
 function viewOrgDashboard() {

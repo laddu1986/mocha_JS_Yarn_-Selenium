@@ -1,7 +1,8 @@
 import * as lib from '../../../common';
 import SignInPage from 'web/page_objects/signInPage';
 import HomePage from 'web/page_objects/homePage';
-import NavBar from 'web/page_objects/navBar'
+import NavBar from 'web/page_objects/navBar';
+import CommonPage from 'web/page_objects/common';
 import { openApp, setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
 
 // function name(params) {
@@ -31,12 +32,12 @@ describe('Tests for Sign Page', () => {
   it('Should throw an error while Signing In with Blank data', () => {
     waitForElement(SignInPage.emailInput);
     waitForElement(SignInPage.passwordInput);
-    waitForElement(SignInPage.signInButton);
+    waitForElement(CommonPage.submitButton);
 
     SignInPage.emailInput.clearElement();
     SignInPage.passwordInput.clearElement();
 
-    click(SignInPage.signInButton);
+    click(CommonPage.submitButton);
 
     expect(SignInPage.emailError.isVisible()).to.equal(true);
     expect(SignInPage.passwordError.isVisible()).to.equal(true);
@@ -61,7 +62,7 @@ describe('Tests for Sign Page', () => {
     setValue(SignInPage.passwordInput, 'Incorrect@Password123');
 
 
-    click(SignInPage.signInButton);
+    click(CommonPage.submitButton);
 
     waitForElement(SignInPage.incorrectDetails);
     const signInErrMsg = SignInPage.incorrectDetails.getText();
@@ -72,7 +73,7 @@ describe('Tests for Sign Page', () => {
   it('Should Sign In successfully with Correct credentials', () => {
     setValue(SignInPage.emailInput, 'testaccount@donotdeleteplease.com');
     setValue(SignInPage.passwordInput, 'Pass1234');
-    click(SignInPage.signInButton);
+    click(CommonPage.submitButton);
     waitForElement(HomePage.profileMenu);
     signInSuccess = HomePage.profileMenu.isVisible();
     expect(signInSuccess).to.equal(true);
@@ -83,8 +84,8 @@ describe('Tests for Sign Page', () => {
       click(HomePage.profileMenu);
       click(NavBar.signOut);
 
-      waitForElement(SignInPage.signInButton);
-      expect(SignInPage.signInButton.isVisible()).to.equal(true);
+      waitForElement(CommonPage.submitButton);
+      expect(CommonPage.submitButton.isVisible()).to.equal(true);
     } else {
       console.log('User not Signed in');
     }

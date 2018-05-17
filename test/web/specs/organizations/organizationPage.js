@@ -2,6 +2,7 @@ import * as lib from '../../../common';
 import SignInPage from 'web/page_objects/signInPage';
 import HomePage from 'web/page_objects/homePage';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
+import CommonPage from 'web/page_objects/common';
 import { openApp, setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
 
 function assertion(e, data) {
@@ -48,7 +49,7 @@ describe('Organization Page Test', () => {
   it('Upon SignIn Re-direct to the last accessed Org if User has multiple Orgs', () => {
     setValue(SignInPage.emailInput, 'fourorg@qa.co');
     setValue(SignInPage.passwordInput, 'TestQA123');
-    click(SignInPage.signInButton);
+    click(CommonPage.submitButton);
 
     click(HomePage.profileMenu);
     click(HomePage.switchOrCreateOrganizations);
