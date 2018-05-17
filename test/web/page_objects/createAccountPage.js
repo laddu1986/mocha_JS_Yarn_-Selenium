@@ -14,6 +14,9 @@ class CreateAccountPage extends Page {
   get emailInputErr() { return browser.element("//*[@data-qa='input:email']//*[@data-qa='input:error']"); }
   get passwordInputErr() { return browser.element("//*[@data-qa='input:org']//*[@data-qa='input:error']"); }
   get organizationInputErr() { return browser.element("//*[@data-qa='input:password']//*[@data-qa='input:error']"); }
+
+  //Join Org
+  get joinOrgMsg(){ return browser.element("//h2")}
   
   open(e) {
     super.open(e);
