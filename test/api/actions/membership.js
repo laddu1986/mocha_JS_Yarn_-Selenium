@@ -1,75 +1,56 @@
 import * as lib from '../../common';
 
-function postMembership(done, responseData) {
-  const m = {
+function postMembership(responseData) {
+  const postRequestData = {
     accountId: responseData[0].id,
     organizationId: responseData[1].id
   };
   const any = {
     api: lib.config.api.memberships,
-    data: m,
-    func(response) {
-      // console.log(response.body);
-      expect(response).to.have.status(201);
-    }
+    data: postRequestData
   };
-  lib.post(done, any);
+  return lib.post(any);
 }
-function getMembershipByAny(done, anyId) {
+function getMembershipByAnyID(anyId) {
   const any = {
     api: lib.config.api.memberships,
-    data: anyId,
-    func(response) {
-      // lib.res.push(response.body);
-      expect(response).to.have.status(200);
-    }
+    data: anyId
   };
-  lib.get(done, any);
+  return lib.get(any);
 }
-function getMembershipByAccount(done, responseData) {
-  getMembershipByAny(done, `account/${responseData[0].id}`);
+function getMembershipByAccount(responseData) {
+  return getMembershipByAnyID(`?accountId=${responseData[0].id}`);
 }
-function getMembershipByOrganization(done, responseData) {
-  getMembershipByAny(done, `organization/${responseData[1].id}`);
+function getMembershipByOrganization(responseData) {
+  return getMembershipByAnyID(`?orgId=${responseData[1].id}`);
 }
-function deleteMembershipByAccountAndOrganization(done, responseData) {
+function getMemberships(responseData) {
   const any = {
     api: lib.config.api.memberships,
-    data: `organization/${responseData[1].id}/account/${responseData[0].id}`,
-    func(response) {
-      expect(response).to.have.status(204);
-    }
+    data: `?orgId=${responseData[1].id}&accountId=${responseData[0].id}&pageSize=1`
   };
-  // console.log(any.data);
-  lib.del(done, any);
+  return lib.get(any);
 }
-function getMemberships(done, responseData) {
+function deleteMembershipByAccountAndOrganization(responseData) {
   const any = {
     api: lib.config.api.memberships,
-    data: `?orgId=${responseData[1].id}&accountId=${responseData[0].id}&pageSize=1`,
-    func(response) {
-      expect(response.body).to.be.an('array');
-    }
+    data: `organization/${responseData[1].id}/account/${responseData[0].id}`
   };
-  lib.get(done, any);
+  return lib.del(any);
 }
-function deleteMembershipStatus(done, responseData) {
+function deleteMembershipStatus(responseData) {
   const any = {
     api: lib.config.api.memberships,
-    data: `account/${responseData[0].id}`,
-    func(response) {
-      // console.log(response.body);
-      expect(response).to.have.status(200);
-    }
+    data: `account/${responseData[0].id}`
   };
-  lib.get(done, any);
+  return lib.get(any);
 }
 
 export {
   postMembership,
-  // getMembershipByAccount,
-  // getMembershipByOrganization,
-  deleteMembershipByAccountAndOrganization,
+  getMembershipByAccount,
+  getMembershipByOrganization,
   getMemberships,
-  deleteMembershipStatus
+  deleteMembershipStatus,
+  deleteMembershipByAccountAndOrganization
 };
