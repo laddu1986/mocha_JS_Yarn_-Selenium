@@ -21,7 +21,7 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/organizations/deleteOrganizationTest.js',
+    './test/web/specs/invites/joinOrgNewMember.js',
   ],
   // Patterns to exclude.
   exclude: [

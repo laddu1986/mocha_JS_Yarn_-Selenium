@@ -13,7 +13,6 @@ let newMember;
 
 describe('Join an Organization via invitation email (Existing Account)', () => {
 
-
   before(() => {
     SignInPage.open();
     createAccount()
@@ -48,6 +47,8 @@ describe('Join an Organization via invitation email (Existing Account)', () => {
   });
 
   it('Validate email field is disabled and prefilled with new member Email', () => {
+    expect(createAccountPage.emailInput.isEnabled()).to.equal(false)
+    expect(createAccountPage.emailInput.getText()).to.equal(newMember)
 
   });
 
@@ -59,7 +60,6 @@ describe('Join an Organization via invitation email (Existing Account)', () => {
 
   it('Click Join button', () => {
     click(orgDashboardPage.joinButton)
-
   });
 
 
