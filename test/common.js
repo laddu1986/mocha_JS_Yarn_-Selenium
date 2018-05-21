@@ -55,7 +55,7 @@ function post(any) {
       }
     };
   }
-  return server.post(any.api, any.data, any.headers);
+  return server.post(any.api, any.data, any);
 }
 function get(any) {
   return server.get(any.api + any.data);

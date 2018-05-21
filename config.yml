@@ -11,3 +11,4 @@ api:
   identities: "http://a672f40ce2e4e11e88381023cadbc14f-717884523.ap-southeast-2.elb.amazonaws.com/api/identities/"
   memberships: "http://a549dbed120dc11e8a04b0a484309a38-1209232420.ap-southeast-2.elb.amazonaws.com/api/v1/memberships/"
   spaces: "https://hub.appcurator.io/spaces/v1/organizations/"
+  token: "http://a672f40ce2e4e11e88381023cadbc14f-717884523.ap-southeast-2.elb.amazonaws.com/connect/token"
