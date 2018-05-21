@@ -11,8 +11,10 @@ describe('Invites Api', () => {
     before((done) => {
       identity.postIdentity(lib.responseData.invites).then(() => {
         organization.postOrganization(lib.responseData.invites).then(() => {
-          postResponse = invites.postInvitesByOrganizationId(lib.responseData.invites);
-          done();
+          invites.getAccessToken(lib.responseData.invites).then(() => {
+            postResponse = invites.postInvitesByOrganizationId(lib.responseData.invites);
+            done();
+          });
         })
       })
     });
