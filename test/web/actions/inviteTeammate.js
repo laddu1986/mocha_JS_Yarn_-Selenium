@@ -46,6 +46,7 @@ function goToOrganisationDashboard() {
 
 function inviteTeammate(mail, counta) {
   clickInviteTeammateButton()
+  // browser.pause(1000)
   sendInvite(mail)
   verifyInviteCount(counta)
 }
@@ -55,11 +56,11 @@ function getInviteTokenFromDB(m) {
     const sqlQuery = `SELECT id from Invites WHERE email = "${m}"`
     lib.con.query({ sql: sqlQuery },
       function (err, result) {
-        lib.con.end()
+        lib.end()
         if (err) reject(err);
         console.log('Invite Token  ' + result[0].id)
-        //lib.con.end()
         return resolve(result[0].id)
+        lib.end()
       })
   })
 }

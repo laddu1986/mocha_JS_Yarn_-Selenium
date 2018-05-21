@@ -140,26 +140,24 @@ describe('Tests for Create Account', () => {
   //   expect(actualHeading).to.equal(expectedHeading);
   // });
 
-  it('Checking org creation in database', () => {
-    const url = browser.getUrl();
-    const parts = url.split('/');
-    console.log(parts);
-    console.log(parts[parts.length - 1])
-    //console.log('The solution is: ', testData[3].name);
-    lib.connection().query({
-
-      sql: "SELECT * from `Organization` where `Name` = 'test_gc84xxyw2i_org';",
-      timeout: 40000, // 40s
-      values: [parts[parts.length - 1]],
-    }, (error, results) => {
-      if (error) throw error;
-      console.log('The solution is: ', results);
-    })
-
-    lib.end()
-
-
-  });
+  /*   it('Checking org creation in database', () => {
+      const url = browser.getUrl();
+      const parts = url.split('/');
+      console.log(parts);
+      console.log(parts[parts.length - 1])
+      //console.log('The solution is: ', testData[3].name);
+      lib.connection().query({
+  
+        sql: "SELECT * from `Organization` where `Name` = 'test_gc84xxyw2i_org';",
+        timeout: 40000, // 40s
+        values: [parts[parts.length - 1]],
+      }, (error, results) => {
+        if (error) throw error;
+        console.log('The solution is: ', results);
+      })
+  
+      lib.end()
+    }); */
 
 
   // it('Sign Out', () => {

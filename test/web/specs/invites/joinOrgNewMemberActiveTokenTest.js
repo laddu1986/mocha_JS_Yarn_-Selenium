@@ -1,9 +1,11 @@
+
+
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/createAccount';
 import { createOrg } from 'web/actions/createOrg'
 import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard, inviteTeammate, invitationLink } from 'web/actions/inviteTeammate';
 import SignInPage from 'web/page_objects/signInPage'
-import { signOut } from 'web/actions/common'
+import { signIn, signOut } from 'web/actions/common'
 import createAccountPage from '../../page_objects/createAccountPage';
 import common from '../../page_objects/common'
 import { waitForElement, setValue, click } from '../../actions/actions'
@@ -11,21 +13,34 @@ import orgDashboardPage from '../../page_objects/orgDashboardPage';
 let newMember;
 
 
-describe('Join an Organization via invitation email (Existing Account)', () => {
+describe('Join an Organization via ACTIVE invitation (New Account)', () => {
 
   before(() => {
     SignInPage.open();
     createAccount()
+    // browser.pause(2000)
+
     console.log(lib.testData.email + `\n` + lib.testData.password + `\n` + lib.testData.organization)
+    signOut()
+    // browser.pause(2000)
+    signIn(lib.testData.email, lib.testData.password)
+    // browser.pause(2000)
+
   });
 
   it('Invite a Non Existing member', () => {
     newMember = `newmember_${lib.testData.email}`;
+    // browser.pause(2000)
+
     inviteTeammate(newMember, '1')
+    // browser.pause(2000)
+
   });
 
   it('Sign Out', () => {
     signOut()
+    // browser.pause(2000)
+
   });
 
   it('New Member clicks on the Invite link', async () => {
@@ -34,7 +49,6 @@ describe('Join an Organization via invitation email (Existing Account)', () => {
 
     console.log('url', acceptInvitation)
     browser.url(acceptInvitation)
-    browser.pause(5000)
   })
 
   it('Validate redirection to Join Org page with Create Account button ', () => {
@@ -46,22 +60,23 @@ describe('Join an Organization via invitation email (Existing Account)', () => {
     expect(common.submitButton.getText()).to.include('Create Account')
   });
 
-  it('Validate email field is disabled and prefilled with new member Email', () => {
+  it('Validate email field is disabled', () => {
     expect(createAccountPage.emailInput.isEnabled()).to.equal(false)
-    expect(createAccountPage.emailInput.getText()).to.equal(newMember)
-
   });
 
-  it('Create Account for New Member', () => {
+  it('Validate email field is pre-filled with new member Email', () => {
+    expect(createAccountPage.emailInput.getValue()).to.equal(newMember)
+  });
+
+  it('Complete Account creation by filling other details ', () => {
     setValue(createAccountPage.nameInput, `newMember_${lib.testData.name}`)
     setValue(createAccountPage.passwordInput, lib.testData.password)
     click(common.submitButton)
   });
 
-  it('Click Join button', () => {
-    click(orgDashboardPage.joinButton)
+  it('Validate User lands in invited Org', () => {
+    waitForElement(orgDashboardPage.currentOrgName)
+    expect(orgDashboardPage.currentOrgName.getText()).to.equal(lib.testData.organization)
   });
-
-
 });
 

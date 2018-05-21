@@ -24,12 +24,13 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/invites/joinOrgNewMember.js',
+    './test/web/specs/invites/joinOrgNewMemberActiveTokenTest.js',
+    // './test/web/specs/organizations/inviteTest.js',
   ],
   // Patterns to exclude.
   exclude: [
     './test/web/specs/organizations/leaveOrganizationTest.js',
-    './test/web/specs/organizations/inviteTest.js',
+    // './test/web/specs/organizations/inviteTest.js',
   ],
   suites: {
     accounts: ['./test/web/specs/accounts/*Test.js'],
