@@ -24,10 +24,7 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/invites/joinOrgAfterInviteRevokedTest.js',
-    // './test/web/specs/accounts/createAccountTest.js',
-
-    // './test/web/specs/organizations/inviteTest.js',
+    './test/web/specs/invites/joinOrgNewMemberActiveTokenTest.js',
   ],
   // Patterns to exclude.
   exclude: [

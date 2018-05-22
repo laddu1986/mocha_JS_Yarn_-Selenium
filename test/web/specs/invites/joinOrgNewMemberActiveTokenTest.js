@@ -1,5 +1,3 @@
-
-
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/createAccount';
 import { createOrg } from 'web/actions/createOrg'
@@ -11,7 +9,6 @@ import common from '../../page_objects/common'
 import { waitForElement, setValue, click } from '../../actions/actions'
 import orgDashboardPage from '../../page_objects/orgDashboardPage';
 let newMember;
-
 
 describe('Join an Organization via ACTIVE invitation (New Account)', () => {
 
@@ -66,4 +63,3 @@ describe('Join an Organization via ACTIVE invitation (New Account)', () => {
     expect(orgDashboardPage.currentOrgName.getText()).to.equal(lib.testData.organization)
   });
 });
-
