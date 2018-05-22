@@ -28,17 +28,12 @@ function goToTeammatesPage() {
 }
 
 function verifyInvite() {
-  click(TeamPage.inactiveTab);
+  goToInactiveTab();
   return TeamPage.email.getText();
 }
 
 function verifyInviteCount(count) {
-  try {
-    browser.waitUntil(() => OrgDashboardPage.pendingInviteCircle.getText() === (`+${count}`), 5000, 'Expect pending invite circle to increment by 1', 200);
-
-  } catch (error) {
-    console.log('Invite Failed', error)
-  }
+  browser.waitUntil(() => OrgDashboardPage.pendingInviteCircle.getText() === (`+${count}`), 5000, 'Expect pending invite circle to increment by 1', 200);
 }
 
 function goToOrganisationDashboard() {
@@ -47,7 +42,6 @@ function goToOrganisationDashboard() {
 
 function inviteTeammate(mail, counta) {
   clickInviteTeammateButton()
-  // browser.pause(1000)
   sendInvite(mail)
   verifyInviteCount(counta)
 }
@@ -56,9 +50,13 @@ export function revokeInvite() {
   click(teamPage.revokeButton)
 }
 
-function getInviteTokenFromDB(m) {
+function goToInactiveTab() {
+  click(teamPage.inactiveTab)
+}
+
+function getInviteTokenFromDB(email) {
   return new Promise((resolve, reject) => {
-    const sqlQuery = `SELECT id from Invites WHERE email = "${m}"`
+    const sqlQuery = `SELECT id from Invites WHERE email = "${email}"`
     lib.con.query({ sql: sqlQuery },
       function (err, result) {
         lib.end()
@@ -70,8 +68,8 @@ function getInviteTokenFromDB(m) {
   })
 }
 
-async function invitationLink(i) {
-  const token = await getInviteTokenFromDB(i)
+async function invitationLink(email) {
+  const token = await getInviteTokenFromDB(email)
   return `${lib.web}/join?invite=${token}`
 }
 
@@ -84,5 +82,6 @@ export {
   verifyInvite,
   goToOrganisationDashboard,
   inviteTeammate,
-  invitationLink
+  invitationLink,
+  goToInactiveTab
 };

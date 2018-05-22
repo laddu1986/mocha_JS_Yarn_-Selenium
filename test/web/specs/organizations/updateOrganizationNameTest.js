@@ -78,8 +78,8 @@ describe('Update Organization name', () => {
   });
 
   it('Modified org should be at the top of the org card stack', () => {
-    waitForElement(HomePage.individualOrgCard);
-    const topOrgCard = HomePage.individualOrgCard.getText()[0];
+    waitForElement(HomePage.orgCards);
+    const topOrgCard = HomePage.orgCards.getText()[0];
     expect(topOrgCard).to.include(updatedOrgName);
   });
 });
