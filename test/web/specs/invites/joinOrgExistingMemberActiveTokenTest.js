@@ -20,21 +20,15 @@ describe('Join an Organization via ACTIVE invitation (Existing Account)', () => 
     createAccount()
 
     console.log(lib.testData.email + `\n` + lib.testData.password + `\n` + lib.testData.organization)
-    signOut()
-    signIn(lib.testData.email, lib.testData.password)
-
   });
 
   it('Invite a Non Existing member', () => {
     newMember = `newmember_${lib.testData.email}`;
-
     inviteTeammate(newMember, '1')
-
   });
 
   it('Sign Out', () => {
     signOut()
-
   });
 
   it('New Member clicks on the Invite link', async () => {

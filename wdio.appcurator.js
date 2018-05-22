@@ -76,7 +76,7 @@ exports.config = {
     compilers: ['js:babel-register'],
     timeout: debug ? 9999999 : timeoutPeriod,
   },
-  //execArgv: ['--inspect'],
+  execArgv: ['--inspect'],
 
   //
   // =====
