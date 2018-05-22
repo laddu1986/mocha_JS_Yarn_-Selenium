@@ -1,7 +1,6 @@
 import * as spaces from '../actions/spaces';
 import * as organization from '../actions/organization';
 import * as identity from '../actions/identity';
-import * as membership from '../actions/membership';
 import * as lib from '../../common';
 
 var postResponse, getResponse;
