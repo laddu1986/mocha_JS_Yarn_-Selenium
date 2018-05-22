@@ -41,7 +41,7 @@ describe('Access an Expired Invitation (New Account)', () => {
   });
 
   it('Expire the invitation manually from Database', async () => {
-    await updateExpiryDateInDB(newMember)
+    await updateTokenExpireDateInDB(newMember)
   });
 
   it('Sign Out', () => {
