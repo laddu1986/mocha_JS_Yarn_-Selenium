@@ -8,11 +8,11 @@ class HomePage {
   get createOrg() { return browser.element("//*[@data-qa='nav:create-org']"); }
   get createOrgInput() { return browser.element("//input[@data-qa='input:org-name']"); }
   get createOrgErr() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:error']"); }
- 
+
   get logo() { return browser.element("//*[@data-qa='nav:logo']"); }
   get orgListFromNavMenu() { return browser.elements("//*[@data-qa='nav:menu']//li"); }
   get chooseOrg() { return browser.element("//*[@data-qa='page:choose-org']"); }
-  get individualOrgCard() { return browser.elements("//a[@data-qa='org:card']"); }
+  get orgCards() { return browser.elements("//a[@data-qa='org:card']"); }
   get noOrgs() { return browser.element("//*[@data-qa='page:no-org']"); }
   get createOrgButton() { return browser.element("//*[@data-qa='link:create-org']"); }
   get removeAccountButton() { return browser.element("//button[@data-qa='btn:delete-acc']"); }
