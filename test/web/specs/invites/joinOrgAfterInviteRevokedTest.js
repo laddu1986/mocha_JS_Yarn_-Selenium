@@ -52,7 +52,7 @@ describe('Access a Revoked Invitation (New Account)', () => {
     browser.url(invitationURL) //user clicks on Accept Invitation button from invite email
   })
 
-  it('Validate user lands on Invalid invitation page', () => {
+  it('Verify user lands on Invalid invitation page', () => {
     expect(common.invalidInvitationMsg.getText()).to.include('Invalid invitation')
   });
 });
