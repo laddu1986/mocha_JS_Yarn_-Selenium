@@ -33,15 +33,6 @@ var con = mysql.createConnection({
   database: 'organization_dev'
 });
 
-
-//let con = null;
-
-// const params = `{
-//   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
-//   user: 'rouser',
-//   password: 'R34d0nlyK3y'
-// }`
-
 function connection(params) {
   if (!con) {
     con = mysql.createConnection(params);
@@ -83,20 +74,6 @@ function del(any) {
   return server.delete(any.api + any.data);
 }
 
-// const con = mysql.createConnection({
-//   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
-//   user: 'rouser',
-//   password: 'R34d0nlyK3y',
-//   database: 'membership_test',
-// });
-
-// con.connect((err) => {
-//   if (err) throw err;
-//   console.log('Connected!');
-// });
-
-// con.end();
-
 const testData = {
   name: bigName(10),
   email: `${bigName(15)}@test.co`,
@@ -107,7 +84,6 @@ const testData = {
 
 
 export {
-
   // uri
   orca,
   web,

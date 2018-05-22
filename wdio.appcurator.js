@@ -28,8 +28,7 @@ exports.config = {
   ],
   // Patterns to exclude.
   exclude: [
-    './test/web/specs/organizations/leaveOrganizationTest.js',
-    // './test/web/specs/organizations/inviteTest.js',
+    './test/web/specs/organizations/leaveOrganizationTest.js', //feature not ready yet
   ],
   suites: {
     accounts: ['./test/web/specs/accounts/*Test.js'],
