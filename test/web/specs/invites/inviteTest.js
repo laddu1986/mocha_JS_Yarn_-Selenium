@@ -1,7 +1,6 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/createAccount';
-import { sendInviteButtonEnabled,sendInvite,verifyInviteCount,clickInviteTeammateButton,goToTeammatesPage, verifyInvite,goToOrganisationDashboard} from "web/actions/inviteTeammate";
-import { signOut } from 'web/actions/signOut'
+import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard } from "web/actions/inviteTeammate";
 import SignInPage from 'web/page_objects/signInPage'
 
 const invite_email1 = `invite_1_${lib.bigName(5)}@test.co`;
