@@ -4,7 +4,7 @@ const argv = require('yargs').argv;
 const brow = 'chrome';
 
 const debug = process.env.DEBUG;
-const timeoutPeriod = 20000;
+const timeoutPeriod = 30000;
 
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
@@ -16,7 +16,7 @@ exports.config = {
       args: [
         'disable-infobars',
         //'--headless',
-        '--incognito',
+        //'--incognito',
         '--ignore-certificate-errors',
         '--disable-gpu'],
     },
@@ -24,7 +24,9 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/invites/joinOrgNewMemberActiveTokenTest.js',
+    './test/web/specs/invites/joinOrgAfterInviteRevokedTest.js',
+    // './test/web/specs/accounts/createAccountTest.js',
+
     // './test/web/specs/organizations/inviteTest.js',
   ],
   // Patterns to exclude.
