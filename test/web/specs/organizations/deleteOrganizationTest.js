@@ -10,19 +10,12 @@ import { openApp, setValue, click, waitForElement, waitForEnabled } from 'web/ac
 import { getNotificationMessageText, closePassiveNotification } from 'web/actions/common';
 import orgNotif from 'web/data/passiveNotification.json';
 
-
-
 const name = lib.bigName(10);
 const email = `${lib.bigName(15)}@test.co`;
 const organization = 'First Org';
 const password = 'Pass1234';
 
 const testData = [
-  // {
-  //   organization: 'Second Org',
-  //   title: 'Create with orgName = Second Org',
-  //   accepted: true
-  // },
   {
     organization: 'Last Org',
     title: 'Create with orgName = Last Org',
@@ -45,17 +38,10 @@ describe('Delete Organization Test', () => {
       setValue(CreateAccountPage.organizationInput, organization);
       setValue(CreateAccountPage.passwordInput, password);
       click(CommonPage.submitButton);
-
-      console.log(`Test Data : -  \n` +
-        `name = ${name}\n` +
-        `email = ${email}\n` +
-        `organization = ${organization}\n` +
-        `password = ${password}`);
     });
 
     it('Validate user lands in the created Org', () => {
       viewOrgDashboard();
-
       const currentOrgName = OrgDashboardPage.currentOrgName.getText();
       expect(organization).to.include(currentOrgName);
     });
@@ -78,16 +64,12 @@ describe('Delete Organization Test', () => {
     });
   });
 
-
   describe('Leaving First Org re-directs to choose org page', () => {
     it('Go back to /organizations and choose First Org', () => {
       viewOrgDashboard();
       browser.url(lib.web + `/organizations`)
       waitForElement(HomePage.chooseOrg);
-
-      browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForExist();
-      browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForVisible();
-      browser.element("//a[@data-qa='org:card' and contains(@href,'first')]").click();
+      click(HomePage.orgCards.value[1]) //selecting First Org
       viewOrgDashboard();
     });
 
@@ -104,9 +86,9 @@ describe('Delete Organization Test', () => {
 
     it('Validate re-direction to choose org page', () => {
       waitForElement(HomePage.chooseOrg);
-      waitForElement(HomePage.individualOrgCard);
+      waitForElement(HomePage.orgCards);
 
-      const orgCount = [HomePage.individualOrgCard].length;
+      const orgCount = [HomePage.orgCards].length;
       expect(orgCount).to.equal(1);
     });
 
@@ -119,10 +101,7 @@ describe('Delete Organization Test', () => {
 
     it('Choose Last Org', () => {
       waitForElement(HomePage.chooseOrg);
-
-      browser.element("//*[@data-qa='org:card' and contains(@href,'last')]").waitForExist();
-      browser.element("//*[@data-qa='org:card' and contains(@href,'last')]").waitForVisible();
-      browser.element("//a[@data-qa='org:card' and contains(@href,'last')]").click();
+      click(HomePage.orgCards.value[0]) //selecting Last Org
       viewOrgDashboard();
     });
     it('Goto Organization Settings of Last Org', () => {
