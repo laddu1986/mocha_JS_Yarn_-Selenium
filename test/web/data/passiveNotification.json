@@ -4,5 +4,8 @@
     },
     "deleteOrgMessage": {
         "text": "You have successfully deleted"
+    },
+    "revokeInviteMessage": {
+        "text": "Invite deleted for "
     }
 }

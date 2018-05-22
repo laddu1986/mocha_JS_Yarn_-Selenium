@@ -18,29 +18,16 @@ describe('Join an Organization via ACTIVE invitation (New Account)', () => {
   before(() => {
     SignInPage.open();
     createAccount()
-    // browser.pause(2000)
-
     console.log(lib.testData.email + `\n` + lib.testData.password + `\n` + lib.testData.organization)
-    signOut()
-    // browser.pause(2000)
-    signIn(lib.testData.email, lib.testData.password)
-    // browser.pause(2000)
-
   });
 
   it('Invite a Non Existing member', () => {
     newMember = `newmember_${lib.testData.email}`;
-    // browser.pause(2000)
-
     inviteTeammate(newMember, '1')
-    // browser.pause(2000)
-
   });
 
   it('Sign Out', () => {
     signOut()
-    // browser.pause(2000)
-
   });
 
   it('New Member clicks on the Invite link', async () => {

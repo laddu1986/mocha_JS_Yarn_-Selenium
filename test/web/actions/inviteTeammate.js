@@ -5,6 +5,7 @@ import NavBar from 'web/page_objects/navBar'
 import TeamPage from 'web/page_objects/TeamPage'
 import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
 import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
+import teamPage from '../page_objects/teamPage';
 
 function clickInviteTeammateButton() {
   click(OrgDashboardPage.inviteTeammateButton);
@@ -49,6 +50,10 @@ function inviteTeammate(mail, counta) {
   // browser.pause(1000)
   sendInvite(mail)
   verifyInviteCount(counta)
+}
+
+export function revokeInvite() {
+  click(teamPage.revokeButton)
 }
 
 function getInviteTokenFromDB(m) {
