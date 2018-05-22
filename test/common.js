@@ -15,8 +15,7 @@ const responseData = {
 };
 // uri end points
 const orca = config.orca.base;
-const api = config.api.base;
-// const web = config.web.base;
+const web = config.web.base;
 
 function bigName(params) {
   let text = '';
@@ -27,7 +26,21 @@ function bigName(params) {
   return `test_${text}`;
 }
 
-let con = null;
+var con = mysql.createConnection({
+  host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
+  user: 'rouser',
+  password: 'R34d0nlyK3y',
+  database: 'organization_dev'
+});
+
+
+//let con = null;
+
+// const params = `{
+//   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
+//   user: 'rouser',
+//   password: 'R34d0nlyK3y'
+// }`
 
 function connection(params) {
   if (!con) {
@@ -97,8 +110,7 @@ export {
 
   // uri
   orca,
-  api,
-  // web,
+  web,
   // api calls
   post,
   get,
@@ -110,6 +122,7 @@ export {
   server,
   // db
   connection,
+  con,
   end,
   // data
   responseData,

@@ -80,12 +80,12 @@ import { createAccount } from 'web/actions/createAccount';
 
 describe('Tests for Create Account', () => {
   before('Open create account page', () => {
-    // lib.connection({
-    //   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
-    //   user: 'rouser',
-    //   password: 'R34d0nlyK3y',
-    //   database: 'membership_test',
-    // });
+    /* lib.connection({
+      host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
+      user: 'rouser',
+      password: 'R34d0nlyK3y',
+      database: 'organization_dev',
+    }); */
     // console.log(lib.config.api.createAccount);
     SignInPage.open();
   });
@@ -125,7 +125,7 @@ describe('Tests for Create Account', () => {
 
   it('Create Account', () => {
     createAccount();
-    // console.log(`${name}::::${email}::::${organization}::::${password}`);
+    console.log(lib.testData.email);
     const logoPresent = HomePage.logo.isVisible();
     expect(logoPresent).to.equal(true);
   });
@@ -140,21 +140,24 @@ describe('Tests for Create Account', () => {
   //   expect(actualHeading).to.equal(expectedHeading);
   // });
 
-  // it('Checking org creation in database', () => {
-  // const url = browser.getUrl();
-  // const parts = url.split('/');
-  // // console.log(parts + url );
-  // // console.log('The solution is: ', testData[3].name);
-  // lib.connection().query({
-
-  //   sql: 'select * from `Organizations` where id = ?',
-  //   timeout: 40000, // 40s
-  //   values: [parts[parts.length - 1]],
-  // }, (error, results) => {
-  //   if (error) throw error;
-  //   // console.log('The solution is: ', results);
-  // });
-  // });
+  /*   it('Checking org creation in database', () => {
+      const url = browser.getUrl();
+      const parts = url.split('/');
+      console.log(parts);
+      console.log(parts[parts.length - 1])
+      //console.log('The solution is: ', testData[3].name);
+      lib.connection().query({
+  
+        sql: "SELECT * from `Organization` where `Name` = 'test_gc84xxyw2i_org';",
+        timeout: 40000, // 40s
+        values: [parts[parts.length - 1]],
+      }, (error, results) => {
+        if (error) throw error;
+        console.log('The solution is: ', results);
+      })
+  
+      lib.end()
+    }); */
 
 
   // it('Sign Out', () => {

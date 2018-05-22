@@ -7,7 +7,7 @@ import SignInPage from 'web/page_objects/signInPage'
 import { openApp, setValue, click, waitForEnable, waitForElement } from 'web/actions/actions'
 import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
 import { getNotificationMessageText, signOut } from 'web/actions/common';
-import spaceData from 'web/data/space.json';
+import spaceData from 'web/data/passiveNotification.json';
 
 
 describe('Space Tests', () => {
