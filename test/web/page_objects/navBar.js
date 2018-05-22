@@ -2,9 +2,11 @@ import Page from './page';
 
 class NavBar extends Page {
 
-// settings
+  // settings
   get settingsAnchor() { return browser.element("//*[@data-qa='nav:org-settings']"); }
   get backToOrgDashboardLink() { return browser.element("//a[@data-qa='link:dashboard']"); }
+  get profileMenu() { return browser.element("//div[@data-qa='menu:profile']//div[@data-qa='btn:menu']"); }
+
   // Help
   get helpMenuNav() { return browser.element("//*[@data-qa='menu:help']"); }
   get teamNavLink() { return browser.element("//*[@data-qa='link:team']"); }

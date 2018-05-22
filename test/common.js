@@ -15,8 +15,7 @@ const responseData = {
 };
 // uri end points
 const orca = config.orca.base;
-const api = config.api.base;
-// const web = config.web.base;
+const web = config.web.base;
 
 function bigName(params) {
   let text = '';
@@ -27,7 +26,12 @@ function bigName(params) {
   return `test_${text}`;
 }
 
-let con = null;
+var con = mysql.createConnection({
+  host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
+  user: 'rouser',
+  password: 'R34d0nlyK3y',
+  database: 'organization_dev'
+});
 
 function connection(params) {
   if (!con) {
@@ -70,20 +74,6 @@ function del(any) {
   return server.delete(any.api + any.data);
 }
 
-// const con = mysql.createConnection({
-//   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
-//   user: 'rouser',
-//   password: 'R34d0nlyK3y',
-//   database: 'membership_test',
-// });
-
-// con.connect((err) => {
-//   if (err) throw err;
-//   console.log('Connected!');
-// });
-
-// con.end();
-
 const testData = {
   name: bigName(10),
   email: `${bigName(15)}@test.co`,
@@ -94,11 +84,9 @@ const testData = {
 
 
 export {
-
   // uri
   orca,
-  api,
-  // web,
+  web,
   // api calls
   post,
   get,
@@ -110,6 +98,7 @@ export {
   server,
   // db
   connection,
+  con,
   end,
   // data
   responseData,

@@ -7,6 +7,8 @@ import SettingsPage from 'web/page_objects/settingsPage';
 import Page from 'web/page_objects/page';
 import CommonPage from 'web/page_objects/common';
 import { openApp, setValue, click, waitForElement, waitForEnabled } from 'web/actions/actions'
+import { getNotificationMessageText, closePassiveNotification } from 'web/actions/common';
+import orgNotif from 'web/data/passiveNotification.json';
 
 const name = lib.bigName(10);
 const email = `${lib.bigName(15)}@test.co`;
@@ -14,11 +16,6 @@ const organization = 'First Org';
 const password = 'Pass1234';
 
 const testData = [
-  {
-    organization: 'Second Org',
-    title: 'Create with orgName = Second Org',
-    accepted: true
-  },
   {
     organization: 'Last Org',
     title: 'Create with orgName = Last Org',
@@ -41,63 +38,38 @@ describe('Delete Organization Test', () => {
       setValue(CreateAccountPage.organizationInput, organization);
       setValue(CreateAccountPage.passwordInput, password);
       click(CommonPage.submitButton);
-
-      console.log('Test Data : -  \n' +
-        `name = ${name}\n` +
-        `email = ${email}\n` +
-        `organization = ${organization}\n` +
-        `password = ${password}`);
     });
 
     it('Validate user lands in the created Org', () => {
       viewOrgDashboard();
-
       const currentOrgName = OrgDashboardPage.currentOrgName.getText();
       expect(organization).to.include(currentOrgName);
     });
   });
 
-  describe('Create two more Orgs', () => {
+  describe('Create Last Org', () => {
     testData.forEach((test) => {
       it(` ${test.title}`, () => {
-        // waitForElement(HomePage.profileMenu);
-        // const profileVisibility = HomePage.profileMenu.isVisible();
-        // expect(true).to.equal(profileVisibility);
         click(HomePage.profileMenu);
-
-        // waitForElement(HomePage.switchOrCreateOrganizations);
-        // const createOrgVisibility = HomePage.switchOrCreateOrganizations.isVisible();
-        // expect(true).to.equal(createOrgVisibility);
         click(HomePage.switchOrCreateOrganizations);
-
-        // waitForElement(HomePage.createOrg);
-        // const createOrgLink = HomePage.createOrg.isVisible();
-        // expect(true).to.equal(createOrgLink);
         click(HomePage.createOrg);
-
         waitForElement(HomePage.createOrgInput);
         HomePage.createOrgInput.clearElement();
-
         HomePage.createOrgButton.waitForExist();
         expect(HomePage.createOrgButton.isEnabled()).to.equal(false);
         setValue(HomePage.createOrgInput, test.organization);
-
         click(HomePage.createOrgButton);
         waitForElement(OrgDashboardPage.welcomeMsg);
       });
     });
   });
 
-
   describe('Leaving First Org re-directs to choose org page', () => {
     it('Go back to /organizations and choose First Org', () => {
       viewOrgDashboard();
-      browser.url(lib.config.api.base + `/organizations`)
+      browser.url(lib.web + `/organizations`)
       waitForElement(HomePage.chooseOrg);
-
-      browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForExist();
-      browser.element("//*[@data-qa='org:card' and contains(@href,'first')]").waitForVisible();
-      browser.element("//a[@data-qa='org:card' and contains(@href,'first')]").click();
+      click(HomePage.orgCards.value[1]) //selecting First Org
       viewOrgDashboard();
     });
 
@@ -107,50 +79,40 @@ describe('Delete Organization Test', () => {
 
     it('Click Delete Organization - First Org and Confirm OK', () => {
       clickDeleteOrganization();
+      expect(getNotificationMessageText()).to.include(orgNotif.deleteOrgMessage.text)
+      closePassiveNotification()
+
     });
 
     it('Validate re-direction to choose org page', () => {
       waitForElement(HomePage.chooseOrg);
-      waitForElement(HomePage.individualOrgCard);
+      waitForElement(HomePage.orgCards);
 
-      const orgCount = HomePage.individualOrgCard.getElementSize();
-      expect(orgCount.length).to.have.equal(2);
+      const orgCount = [HomePage.orgCards].length;
+      expect(orgCount).to.equal(1);
     });
 
     it('Validate choose org page URL to end with /organizations', () => {
-      expect(browser.getUrl()).to.equal(`${lib.config.api.base}/organizations`);
+      expect(browser.getUrl()).to.equal(`${lib.web}/organizations`);
     });
   });
-
-
-  describe('Leaving Second Org re-directs to Last Org', () => {
-    it('Choose Second Org', () => {
-      waitForElement(HomePage.chooseOrg);
-      browser.element("//a[@data-qa='org:card' and contains(@href,'second')]").click();
-    });
-
-    it('Goto Organization Settings of Second Org', () => {
-      gotoOrgSettings();
-    });
-
-    it('Click Delete Organization - Second Org and Confirm OK', () => {
-      clickDeleteOrganization();
-    });
-
-    it('Validate re-direction to Last Org dashboard', () => {
-      viewOrgDashboard();
-      expect(OrgDashboardPage.currentOrgName.getText()).to.include('Last Org');
-    });
-  });
-
 
   describe('Leaving Last Org re-directs to No Orgs page', () => {
+
+    it('Choose Last Org', () => {
+      waitForElement(HomePage.chooseOrg);
+      click(HomePage.orgCards.value[0]) //selecting Last Org
+      viewOrgDashboard();
+    });
     it('Goto Organization Settings of Last Org', () => {
       gotoOrgSettings();
     });
 
     it('Click Delete Organization - Last Org and Confirm OK', () => {
       clickDeleteOrganization();
+      expect(getNotificationMessageText()).to.include(orgNotif.deleteOrgMessage.text)
+      closePassiveNotification()
+
     });
 
     it('Should re-direct to No Orgs page after leaving the last Org', () => {
@@ -162,7 +124,7 @@ describe('Delete Organization Test', () => {
     });
 
     it('Validate URL to end with /organizations', () => {
-      expect(browser.getUrl()).to.equal(`${lib.config.api.base}/organizations`);
+      expect(browser.getUrl()).to.equal(`${lib.web}/organizations`);
     });
   });
 });

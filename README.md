@@ -70,4 +70,4 @@ yarn run api
 #
 
 ###  Help !
-For any queries contact [Avinash](avinash.eediga@massive.co) or [Abhi](abhijeet.daspatnaik@massive.co)
+For any queries contact [Balpreet](balpreet.kaur@massive.co) or [Abhi](abhijeet.daspatnaik@massive.co) or [Paul](paul.sanchez@massive.co)
