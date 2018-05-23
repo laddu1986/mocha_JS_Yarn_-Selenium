@@ -3,7 +3,7 @@ import SignInPage from 'web/page_objects/signInPage'
 import { createAccount } from 'web/actions/createAccount';
 import * as createSpaceActions from 'web/actions/createSpace';
 import { getNotificationMessageText } from 'web/actions/common';
-import spaceData from 'web/data/space.json';
+import spaceData from 'web/data/passiveNotification.json';
 import constants from 'data/constants.json';
 
 describe('Space API Key Tests', () => {

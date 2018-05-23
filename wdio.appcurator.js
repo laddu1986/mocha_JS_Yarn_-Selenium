@@ -4,19 +4,19 @@ const argv = require('yargs').argv;
 const brow = 'chrome';
 
 const debug = process.env.DEBUG;
-const timeoutPeriod = 20000;
+const timeoutPeriod = 30000;
 
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
-  // services: ['chromedriver', 'devtools'],
+  services: ['devtools'],
   enableNetwork: true,
   capabilities: [{
     browserName: brow,
     chromeOptions: {
       args: [
         'disable-infobars',
-        '--headless',
-        '--incognito',
+        //'--headless',
+        //'--incognito',
         '--ignore-certificate-errors',
         '--disable-gpu'],
     },
@@ -24,20 +24,18 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/support/*Test.js',
-    //'./test/web/specs/createAccountTest.js',
+    './test/web/specs/*/*Test.js'  //master
   ],
   // Patterns to exclude.
   exclude: [
-    './test/web/specs/organizations/deleteOrganizationTest.js',
-    './test/web/specs/organizations/leaveOrganizationTest.js',
-    './test/web/specs/organizations/inviteTest.js',
+    './test/web/specs/organizations/leaveOrganizationTest.js', //feature not ready yet
   ],
   suites: {
     accounts: ['./test/web/specs/accounts/*Test.js'],
     organizations: ['./test/web/specs/organizations/*Test.js'],
     spaces: ['./test/web/specs/spaces/*Test.js'],
-    //support: ['./test/web/specs/support/*Test.js']
+    support: ['./test/web/specs/support/*Test.js'],
+    invites: ['./test/web/specs/invites/*Test.js']
   },
 
   logLevel: 'silent',
@@ -61,7 +59,7 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['dot'],
+  reporters: ['spec'],
   reporterOptions: {
     allure: {
       outputDir: 'allure-results',
@@ -74,7 +72,8 @@ exports.config = {
     compilers: ['js:babel-register'],
     timeout: debug ? 9999999 : timeoutPeriod,
   },
-  execArgv: debug ? ['--inspect'] : [],
+  //execArgv: ['--inspect'],
+
   //
   // =====
   // Hooks
