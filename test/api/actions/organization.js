@@ -47,6 +47,7 @@ function deleteOrganizationById(responseData) {
     api: lib.config.api.organizations,
     data: `${responseData[2].id}?rowVersion=${responseData[2].rowVersion}`
   };
+  
   return lib.del(any);
 }
 
@@ -69,7 +70,10 @@ function putOrganization(responseData) {
     api: lib.config.api.organizations,
     data: update
   };
-  return lib.put(any);
+  return lib.put(any).then((response) => {
+    responseData.push(response.body);
+    return response;
+  })
 }
 
 export {
