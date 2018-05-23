@@ -111,9 +111,9 @@ describe('Leave Organization Test', () => {
 
     it('Validate re-direction to choose org page', () => {
       waitForElement(HomePage.chooseOrg);
-      waitForElement(HomePage.individualOrgCard);
+      waitForElement(HomePage.orgCards);
 
-      const orgCount = HomePage.individualOrgCard.getElementSize();
+      const orgCount = HomePage.orgCards.getElementSize();
       expect(orgCount.length).to.have.equal(2);
     });
 
