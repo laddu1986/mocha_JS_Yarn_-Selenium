@@ -24,7 +24,7 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/invites/joinOrgNewMemberActiveTokenTest.js',
+    './test/web/specs/invites/joinOrgExpiredInviteTest.js',
   ],
   // Patterns to exclude.
   exclude: [
@@ -72,7 +72,7 @@ exports.config = {
     compilers: ['js:babel-register'],
     timeout: debug ? 9999999 : timeoutPeriod,
   },
-  execArgv: ['--inspect'],
+  //execArgv: ['--inspect'],
 
   //
   // =====
@@ -98,8 +98,6 @@ exports.config = {
   // Gets executed after all tests are done. You still have access to all global variables from
   // the test.
   after() {
-    // do something
-    //console.log('After')
   },
 
   // Gets executed after all workers got shut down and the process is about to exit. It is not

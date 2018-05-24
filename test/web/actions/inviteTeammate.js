@@ -56,14 +56,14 @@ function goToInactiveTab() {
 
 function getInviteTokenFromDB(email) {
   return new Promise((resolve, reject) => {
-    const sqlQuery = `SELECT id from Invites WHERE email = "${email}"`
+    const sqlQuery = `select Id from organization_dev.Invites where Email = "${email}" order by CreatedTime desc;`
     lib.con.query({ sql: sqlQuery },
       function (err, result) {
-        lib.end()
+        //lib.end()
         if (err) reject(err);
-        console.log('Invite Token  ' + result[0].id)
-        return resolve(result[0].id)
-        lib.end()
+        console.log('token  ', result[0].Id)
+        return resolve(result[0].Id)
+        //lib.end()
       })
   })
 }
@@ -71,6 +71,21 @@ function getInviteTokenFromDB(email) {
 async function invitationLink(email) {
   const token = await getInviteTokenFromDB(email)
   return `${lib.web}/join?invite=${token}`
+}
+
+export async function updateTokenExpiryDateInDB(email) {
+  return new Promise((resolve, reject) => {
+    const sqlQuery = `update organization_dev.Invites set ExpiryDate = (CreatedTime - 1) where Email = "${email}" ;`
+    console.log(sqlQuery)
+    lib.con.query({ sql: sqlQuery },
+      function (err, result) {
+        //lib.end()
+        if (err) reject(err);
+        console.log(result)
+        return resolve(result)
+        //lib.end()
+      })
+  })
 }
 
 export {
