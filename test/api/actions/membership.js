@@ -1,13 +1,12 @@
 import * as lib from '../../common';
 
 function postMembership(responseData) {
-  const postRequestData = {
-    accountId: responseData[0].id,
-    organizationId: responseData[1].id
-  };
   const any = {
     api: lib.config.api.memberships,
-    data: postRequestData
+    data: {
+      accountId: responseData[0].id,
+      organizationId: responseData[1].id
+    }
   };
   return lib.post(any);
 }
@@ -45,6 +44,16 @@ function deleteMembershipStatus(responseData) {
   };
   return lib.get(any);
 }
+function postMembershipWithBlankOrgID(responseData) {
+  const any = {
+    api: lib.config.api.memberships,
+    data: {
+      accountId: responseData[0].id,
+      organizationId: ""
+    }
+  };
+  return lib.post(any);
+}
 
 export {
   postMembership,
@@ -52,5 +61,6 @@ export {
   getMembershipByOrganization,
   getMemberships,
   deleteMembershipStatus,
-  deleteMembershipByAccountAndOrganization
+  deleteMembershipByAccountAndOrganization,
+  postMembershipWithBlankOrgID
 };
