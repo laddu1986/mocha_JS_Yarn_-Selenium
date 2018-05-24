@@ -8,7 +8,7 @@ const timeoutPeriod = 30000;
 
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
-  services: ['devtools'],
+  //services: ['devtools'],
   enableNetwork: true,
   capabilities: [{
     browserName: brow,
@@ -16,7 +16,7 @@ exports.config = {
       args: [
         'disable-infobars',
         //'--headless',
-        //'--incognito',
+        '--incognito',
         '--ignore-certificate-errors',
         '--disable-gpu'],
     },
@@ -25,6 +25,7 @@ exports.config = {
   updateJob: false,
   specs: [
     './test/web/specs/invites/joinOrgExpiredInviteTest.js',
+    //'./test/web/specs/*/*Test.js' //master
   ],
   // Patterns to exclude.
   exclude: [
