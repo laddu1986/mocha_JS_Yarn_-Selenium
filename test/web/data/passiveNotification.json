@@ -7,5 +7,8 @@
     },
     "revokeInviteMessage": {
         "text": "Invite deleted for "
+    },
+    "resendInviteMessage": {
+        "text": "Resent Invite to "
     }
 }
