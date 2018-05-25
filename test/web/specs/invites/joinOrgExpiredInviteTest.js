@@ -92,14 +92,8 @@ describe('Admin Re-sends an Expired Invitation', () => {
 
   it('Admin Resends Expired Invitation and validate Passive Notification', () => {
     resendInvite()
-    
-    try {
-      const expectedPassiveNotificationMessage = `${passiveNotification.resendInviteMessage.text}${newUser}`
-      expect(CommonPage.successMsg.getText()).to.include(expectedPassiveNotificationMessage)
-      
-    } catch (error) {
-      const expectedPassiveNotificationMessage = `${passiveNotification.resendInviteMessage.text}${newUser}`
-    }
+    const expectedPassiveNotificationMessage = `${passiveNotification.resendInviteMessage.text}${newUser}`
+    expect(CommonPage.successMsg.getText()).to.include(expectedPassiveNotificationMessage)
   });
 
   it('Admin Sign Out', () => {
