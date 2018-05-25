@@ -24,8 +24,7 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/invites/joinOrgExpiredInviteTest.js',
-    //'./test/web/specs/*/*Test.js' //master
+    './test/web/specs/*/*Test.js' //master
   ],
   // Patterns to exclude.
   exclude: [
