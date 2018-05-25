@@ -10,5 +10,8 @@
     },
     "resendInviteMessage": {
         "text": "Resent Invite to "
+    },
+    "invitationSentMessage": {
+        "text": "Invitation sent"
     }
 }

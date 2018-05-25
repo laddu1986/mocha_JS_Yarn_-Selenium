@@ -1,3 +1,11 @@
+/*
+TEST CASE - 
+Admin invites new User
+User gets invite mail 
+Clicks on Accept Invite button
+Redirected to Create Account page
+User lands in invited Org after account creation
+*/
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/createAccount';
 import { createOrg } from 'web/actions/createOrg'
@@ -8,6 +16,8 @@ import createAccountPage from '../../page_objects/createAccountPage';
 import common from '../../page_objects/common'
 import { waitForElement, setValue, click } from '../../actions/actions'
 import orgDashboardPage from '../../page_objects/orgDashboardPage';
+import passiveNotification from '../../data/passiveNotification.json'
+
 let newUser;
 
 describe('New User Joins an Organization via ACTIVE invitation', () => {
@@ -15,12 +25,13 @@ describe('New User Joins an Organization via ACTIVE invitation', () => {
   before(() => {
     SignInPage.open();
     createAccount()
-    console.log(lib.testData.email + `\n` + lib.testData.password + `\n` + lib.testData.organization)
   });
 
-  it('Admin invites a Non Existing user', () => {
+  it('Admin invites a Non Existing user and verifies passive notification', () => {
     newUser = `newUser_${lib.testData.email}`;
     inviteTeammate(newUser, '1')
+    expect(common.successMsg.getText()).to.include(passiveNotification.invitationSentMessage.text)
+
   });
 
   it('Admin Signs Out', () => {
@@ -28,10 +39,7 @@ describe('New User Joins an Organization via ACTIVE invitation', () => {
   });
 
   it('User clicks on the Invite link', async () => {
-    console.log('New user Email :   ', newUser)
     const acceptInvitation = await invitationLink(newUser)
-
-    console.log('url', acceptInvitation)
     browser.url(acceptInvitation)  //replication for user clicking on Accept Invitation button in email
   })
 
@@ -44,12 +52,9 @@ describe('New User Joins an Organization via ACTIVE invitation', () => {
     expect(common.submitButton.getText()).to.include('Create Account')
   });
 
-  it('User\'s email field is disabled and pre-filled with his Email', () => {
+  it('User\'s email field is disabled and pre-filled with invited Email', () => {
     expect(createAccountPage.emailInput.isEnabled()).to.equal(false)
     expect(createAccountPage.emailInput.getValue()).to.equal(newUser)
-  });
-
-  it('User\'s email field is pre-filled with his Email', () => {
   });
 
   it('User completes Account creation by filling other details ', () => {
