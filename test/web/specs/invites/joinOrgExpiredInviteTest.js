@@ -85,7 +85,7 @@ describe('Admin Re-sends an Expired Invitation', () => {
   });
 
   it('Admin goes to Inactive tab of Teammates page', () => {
-    browser.pause(1500)
+    browser.pause(1500) // pause workaround for Bug: ACT-299. will be removed after bugfix
     goToTeammatesPage()
     goToInactiveTab()
   });
