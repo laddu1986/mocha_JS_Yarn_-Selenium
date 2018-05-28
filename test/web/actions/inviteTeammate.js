@@ -21,7 +21,7 @@ function sendInvite(inviteMail) {
 }
 
 function goToTeammatesPage() {
-  click(homePage.profileMenu);
+  click(NavBar.profileMenu);
   click(NavBar.settingsAnchor);
   browser.waitUntil(() => NavBar.teamNavLink.getText() === ('Team'), 5000, 'Team link is not displayed', 200);
   click(NavBar.teamNavLink);
@@ -50,20 +50,24 @@ export function revokeInvite() {
   click(teamPage.revokeButton)
 }
 
+export function resendInvite() {
+  click(teamPage.resendButton)
+}
+
 function goToInactiveTab() {
   click(teamPage.inactiveTab)
 }
 
 function getInviteTokenFromDB(email) {
   return new Promise((resolve, reject) => {
-    const sqlQuery = `SELECT id from Invites WHERE email = "${email}"`
-    lib.con.query({ sql: sqlQuery },
+    const selectInviteId = `SELECT Id FROM organization_dev.Invites 
+                            WHERE Email = "${email}"
+                            AND CreatedTime = (SELECT MAX(CreatedTime) from organization_dev.Invites)
+                            order by CreatedTime desc;`
+    lib.con.query({ sql: selectInviteId },
       function (err, result) {
-        lib.end()
         if (err) reject(err);
-        console.log('Invite Token  ' + result[0].id)
-        return resolve(result[0].id)
-        lib.end()
+        return resolve(result[0].Id)
       })
   })
 }
@@ -71,6 +75,19 @@ function getInviteTokenFromDB(email) {
 async function invitationLink(email) {
   const token = await getInviteTokenFromDB(email)
   return `${lib.web}/join?invite=${token}`
+}
+
+export async function updateTokenExpiryDateInDB(email) {
+  return new Promise((resolve, reject) => {
+    const updateExpiryDate = `UPDATE organization_dev.Invites SET ExpiryDate = (CreatedTime - 1) 
+                              WHERE Email = "${email}"
+                              order by CreatedTime desc;`
+    lib.con.query({ sql: updateExpiryDate },
+      function (err, result) {
+        if (err) reject(err);
+        return resolve(result)
+      })
+  })
 }
 
 export {
