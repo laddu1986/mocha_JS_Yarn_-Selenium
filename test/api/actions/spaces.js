@@ -4,9 +4,9 @@ function postSpaceByOrganizationId(responseData) {
   const any = {
     api: `${lib.config.api.spaces + responseData[1].id}/spaces`,
     data: {
-      name: lib.bigName(10),
+      name: lib.randomString.generate(10),
       createdByAccountId: responseData[0].id,
-      shortUrl: lib.bigName(6)
+      shortUrl: lib.randomString.generate(6)
     }
   };
   return lib.post(any).then((response) => {

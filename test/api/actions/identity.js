@@ -4,8 +4,8 @@ function postIdentity(responseData) {
   const any = {
     api: lib.config.api.identities,
     data: {
-      fullname: lib.bigName(12),
-      email: `${lib.bigName(12)}@dummy.co`,
+      fullname: lib.randomString.generate(12),
+      email: `${lib.randomString.generate(12)}@dummy.co`,
       password: 'Pass1234'
     }
   };

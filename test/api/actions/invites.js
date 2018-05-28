@@ -5,7 +5,7 @@ function loop() {
   const array = [];
   let i;
   for (i = 0; i < 2; i++) {
-    array.push(`${lib.bigName(5)}@test.co`);
+    array.push(`${lib.randomString.generate(5)}@test.co`);
   }
   return array;
 }
