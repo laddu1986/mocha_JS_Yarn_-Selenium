@@ -65,16 +65,9 @@ function createOrgs() {
     const createOrgLink = HomePage.createOrg.isVisible();
     expect(createOrgLink).to.equal(true);
     click(HomePage.createOrg);
-
-    waitForElement(HomePage.createOrgInput);
     setValue(HomePage.createOrgInput, bigName(10));
-
-    waitForElement(HomePage.createOrgButton);
-    HomePage.createOrgButton.waitForEnabled();
     click(HomePage.createOrgButton);
-
-    OrgDashboardPage.welcomeMsg.waitForExist();
-    OrgDashboardPage.welcomeMsg.waitForVisible();
+    waitForElement(OrgDashboardPage.welcomeMsg)
   });
 }
 

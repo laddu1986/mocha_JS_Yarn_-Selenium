@@ -12,23 +12,25 @@ function setValue(sv, data) {
 }
 
 function click(c) {
-  waitForElement(c);
+  waitForElement(c)
+  c.isEnabled();
   c.click();
 }
 
-function waitForEnabled(ena) {
-  waitForElement(ena);
+/* function waitForEnabled(ena) {
+   waitForElement(ena);
   ena.waitForEnabled();
-}
+} */
 
-function ifEnabled(element) {
+/* function ifEnabled(element) {
   return element.isEnabled();
-}
+} */
+
 
 export {
   setValue,
   click,
-  waitForEnabled,
+  //waitForEnabled,
   waitForElement,
-  ifEnabled
+  //ifEnabled
 };

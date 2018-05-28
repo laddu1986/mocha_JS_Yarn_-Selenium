@@ -3,7 +3,7 @@ import SignInPage from 'web/page_objects/signInPage';
 import HomePage from 'web/page_objects/homePage';
 import NavBar from 'web/page_objects/navBar';
 import CommonPage from 'web/page_objects/common';
-import { openApp, setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
+import { openApp, setValue, click, waitForElement } from 'web/actions/actions'
 
 // function name(params) {
 //   let text = ''

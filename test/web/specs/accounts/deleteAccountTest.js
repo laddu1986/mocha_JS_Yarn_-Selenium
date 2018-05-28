@@ -17,7 +17,7 @@ import SignInPage from 'web/page_objects/signInPage';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
 import SettingsPage from 'web/page_objects/settingsPage';
 import Page from 'web/page_objects/page';
-import { openApp, setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
+import { openApp, setValue, click, waitForElement } from 'web/actions/actions'
 import CommonPage from 'web/page_objects/common';
 
 const name = lib.bigName(10);
@@ -122,7 +122,6 @@ function gotoOrgSettings() {
 function clickDeleteOrganization() {
   click(SettingsPage.orgSettingsPage);
   browser.pause(500); // for safari
-  waitForEnabled(SettingsPage.leaveOrgButton);
   click(SettingsPage.leaveOrgButton);
   click(CommonPage.submitButton);
 }

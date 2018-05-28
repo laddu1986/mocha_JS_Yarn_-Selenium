@@ -6,7 +6,7 @@ import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
 import SettingsPage from 'web/page_objects/settingsPage';
 import Page from 'web/page_objects/page';
 import CommonPage from 'web/page_objects/common';
-import { openApp, setValue, click, waitForElement, waitForEnabled } from 'web/actions/actions'
+import { openApp, setValue, click, waitForElement } from 'web/actions/actions'
 
 const name = lib.bigName(10);
 const email = `${lib.bigName(15)}@test.co`;
@@ -167,24 +167,14 @@ describe('Leave Organization Test', () => {
 });
 
 function gotoOrgSettings() {
-  // HomePage.profileMenu.waitForExist();
-  // HomePage.profileMenu.waitForVisible();
   click(HomePage.profileMenu);
-  // OrgDashboardPage.orgSettingsNavMenu.waitForExist();
-  //   OrgDashboardPage.orgSettingsNavMenu.waitForVisible();
   click(OrgDashboardPage.orgSettingsNavMenu);
 }
 
 function clickLeaveOrganization() {
-  // SettingsPage.orgSettingsPage.waitForExist();
-  // SettingsPage.orgSettingsPage.waitForVisible();
   click(SettingsPage.orgSettingsPage);
-
   browser.pause(500); // for safari
-
-  waitForEnabled(SettingsPage.leaveOrgButton);
   click(SettingsPage.leaveOrgButton);
-
   click(CommonPage.submitButton);
 }
 

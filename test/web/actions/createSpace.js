@@ -1,6 +1,6 @@
 import * as lib from '../../common';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
-import { ifEnabled, setValue, click, waitForElement } from 'web/actions/actions'
+import { setValue, click, waitForElement } from 'web/actions/actions'
 import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
 const copyPasteModule = require('copy-paste');
 import HomePage from 'web/page_objects/homePage';
@@ -62,7 +62,7 @@ function deleteAPIKey() {
 }
 
 function ifIconsEnabled() {
-  if (ifEnabled(SpaceDashboardPage.deleteButton) === false && ifEnabled(SpaceDashboardPage.undoButton) === false) {
+  if ((SpaceDashboardPage.deleteButton.isEnabled()) === false && (SpaceDashboardPage.undoButton.isEnabled()) === false) {
     return false;
   }
 }

@@ -6,7 +6,7 @@ import { createAccount } from 'web/actions/createAccount'
 import SettingsPage from 'web/page_objects/settingsPage';
 import HomePage from 'web/page_objects/homePage';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
-import { openApp, setValue, click, waitForElement, waitForEnabled } from 'web/actions/actions'
+import { openApp, setValue, click, waitForElement } from 'web/actions/actions'
 import SignInPage from 'web/page_objects/signInPage';
 import { createOrg } from 'web/actions/createOrg';
 let updatedOrgName;
@@ -51,8 +51,6 @@ describe('Update Organization name', () => {
     updatedOrgName = 'Updated Organization';
 
     setValue(SettingsPage.orgInput, updatedOrgName);
-
-    waitForEnabled(SettingsPage.saveOrgNameButton);
     expect(SettingsPage.saveOrgNameButton.isEnabled()).to.equal(true);
     click(SettingsPage.saveOrgNameButton);
   });
