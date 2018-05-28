@@ -14,7 +14,7 @@ import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
 import SettingsPage from 'web/page_objects/settingsPage';
 import Page from 'web/page_objects/page';
 import CommonPage from 'web/page_objects/common';
-import { openApp, setValue, click, waitForElement, waitForEnabled } from 'web/actions/actions'
+import { openApp, setValue, click, waitForElement } from 'web/actions/actions'
 
 const name = lib.bigName(10);
 const email = `${lib.bigName(15)}@test.co`;

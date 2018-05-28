@@ -4,7 +4,7 @@ import homePage from 'web/page_objects/homePage'
 import NavBar from 'web/page_objects/navBar'
 import TeamPage from 'web/page_objects/TeamPage'
 import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
-import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
+import { setValue, click, waitForElement } from 'web/actions/actions'
 import teamPage from '../page_objects/teamPage';
 
 function clickInviteTeammateButton() {

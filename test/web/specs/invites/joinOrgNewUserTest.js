@@ -22,49 +22,46 @@ let newUser;
 
 describe('New User Joins an Organization via ACTIVE invitation', () => {
 
-  before(() => {
+  before("Admin invites a Non Existing user", () => {
     SignInPage.open();
     createAccount()
-  });
-
-  it('Admin invites a Non Existing user and verifies passive notification', () => {
     newUser = `newUser_${lib.testData.email}`;
     inviteTeammate(newUser, '1')
     expect(common.successMsg.getText()).to.include(passiveNotification.invitationSentMessage.text)
-
-  });
-
-  it('Admin Signs Out', () => {
     signOut()
   });
 
-  it('User clicks on the Invite link', async () => {
+  before("Click on the Invitation Link", async () => {
     const acceptInvitation = await invitationLink(newUser)
     browser.url(acceptInvitation)  //replication for user clicking on Accept Invitation button in email
-  })
-
-  it('User redirected to Join Org page with Create Account button ', () => {
-    const joinOrgMsg = createAccountPage.joinOrgMsg.getText()
-    const expectedMsg = `Join ${lib.testData.organization}`
-
-    expect(joinOrgMsg).to.equal(expectedMsg)
-    waitForElement(common.submitButton)
-    expect(common.submitButton.getText()).to.include('Create Account')
   });
+
+  it('New User Accepts Invite and is taken to Join Org page', async () => {
+    const expectedMsg = `Join ${lib.testData.organization}`
+    expect(createAccountPage.joinOrgMsg.getText()).to.equal(expectedMsg)
+    expect(common.submitButton.getText()).to.include('Create Account')
+  })
 
   it('User\'s email field is disabled and pre-filled with invited Email', () => {
     expect(createAccountPage.emailInput.isEnabled()).to.equal(false)
     expect(createAccountPage.emailInput.getValue()).to.equal(newUser)
   });
 
-  it('User completes Account creation by filling other details ', () => {
+  it('Completes Account creation and lands on Invited OrgDashboard ', () => {
+    createAccountToJoinInvitedOrg()
+    expect(orgDashboardPage.currentOrgName.getText()).to.equal(lib.testData.organization)
+  });
+
+  function createAccountToJoinInvitedOrg() {
     setValue(createAccountPage.nameInput, `newUser_${lib.testData.name}`)
     setValue(createAccountPage.passwordInput, lib.testData.password)
     click(common.submitButton)
-  });
-
-  it('User lands on invited Org page', () => {
     waitForElement(orgDashboardPage.currentOrgName)
-    expect(orgDashboardPage.currentOrgName.getText()).to.equal(lib.testData.organization)
-  });
+  }
+
+  after("end SQL connection", () => {
+    lib.end()
+  })
+
 });
+
