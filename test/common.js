@@ -22,7 +22,7 @@ var con = mysql.createConnection({
   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
   user: 'rouser',
   password: 'R34d0nlyK3y',
-  database: 'organization_dev'
+  //database: 'organization_dev'
 });
 
 function connection(params) {

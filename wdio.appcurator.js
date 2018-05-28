@@ -8,7 +8,7 @@ const timeoutPeriod = 30000;
 
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
-  services: ['devtools'],
+  //services: ['devtools'],
   enableNetwork: true,
   capabilities: [{
     browserName: brow,
@@ -16,7 +16,7 @@ exports.config = {
       args: [
         'disable-infobars',
         //'--headless',
-        //'--incognito',
+        '--incognito',
         '--ignore-certificate-errors',
         '--disable-gpu'],
     },
@@ -24,7 +24,7 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/*/*Test.js'  //master
+    './test/web/specs/*/*Test.js' //master
   ],
   // Patterns to exclude.
   exclude: [
@@ -98,8 +98,6 @@ exports.config = {
   // Gets executed after all tests are done. You still have access to all global variables from
   // the test.
   after() {
-    // do something
-    //console.log('After')
   },
 
   // Gets executed after all workers got shut down and the process is about to exit. It is not
