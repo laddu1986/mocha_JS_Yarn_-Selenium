@@ -14,14 +14,6 @@ function assertion(e, data) {
   });
 }
 
-function bigName(params) {
-  let text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (let i = 0; i < params; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
-
-  return text;
-}
 // const testData = [
 //   // {
 //   //   organization: ' ',
@@ -34,7 +26,7 @@ function bigName(params) {
 //   //   accepted: true,
 //   // },
 //   // {
-//   //   organization: bigName(201),
+//   //   organization: lib.randomString.generate(201),
 //   //   title: 'Input 201 characters',
 //   //   accepted: false,
 //   // },
@@ -67,7 +59,7 @@ function createOrgs() {
     click(HomePage.createOrg);
 
     waitForElement(HomePage.createOrgInput);
-    setValue(HomePage.createOrgInput, bigName(10));
+    setValue(HomePage.createOrgInput, lib.randomString.generate(10));
 
     waitForElement(HomePage.createOrgButton);
     HomePage.createOrgButton.waitForEnabled();

@@ -7,5 +7,11 @@
     },
     "revokeInviteMessage": {
         "text": "Invite deleted for "
+    },
+    "spaceDetailsSaved": {
+        "text": "Space details have been successfully updated."
+    },
+    "spaceDeleted": {
+        "text": "You have successfully deleted "
     }
 }
