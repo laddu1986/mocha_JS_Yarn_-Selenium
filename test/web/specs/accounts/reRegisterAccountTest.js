@@ -38,11 +38,11 @@ describe('Delete Acount Test (Remove my Account)', () => {
 
       click(CommonPage.submitButton);
       waitForElement(HomePage.logo);
-      console.log('Test Data : -  \n' +
+      /* console.log('Test Data : -  \n' +
         `name = ${name}\n` +
         `email = ${email}\n` +
         `organization = ${organization}\n` +
-        `password = ${password}`);
+        `password = ${password}`); */
     });
 
     it('Validate user lands in the created Org', () => {
@@ -63,7 +63,6 @@ describe('Delete Acount Test (Remove my Account)', () => {
 
     it('Accept Confirmation', () => {
       click(CommonPage.submitButton);
-
     });
 
     it('Should re-direct to No Orgs page after deleting the last Org', () => {
@@ -75,7 +74,7 @@ describe('Delete Acount Test (Remove my Account)', () => {
     });
 
     it('Validate URL to end with /organizations', () => {
-      expect(browser.getUrl()).to.equal(`${lib.config.api.base}/organizations`);
+      expect(browser.getUrl()).to.equal(`${lib.web}/organizations`);
     });
   });
 
@@ -86,12 +85,11 @@ describe('Delete Acount Test (Remove my Account)', () => {
 
     it('Accept Confirmation', () => {
       click(CommonPage.submitButton);
-
     });
 
     it('Should re-direct to Sign In page after deleting my Account', () => {
       waitForElement(CommonPage.submitButton);
-      expect(browser.getUrl()).to.equal(`${lib.config.api.base}/sign-in`);
+      expect(browser.getUrl()).to.equal(`${lib.web}/sign-in`);
     });
   });
 
@@ -132,6 +130,7 @@ function createAccount() {
   setValue(CreateAccountPage.organizationInput, organization);
   setValue(CreateAccountPage.passwordInput, password);
   click(CommonPage.submitButton);
+  waitForElement(HomePage.logo)
 }
 
 function assertion(e, data) {

@@ -6,7 +6,7 @@ import SignInPage from 'web/page_objects/signInPage'
 import CommonPage from '../../page_objects/common';
 import createAccountPage from '../../page_objects/createAccountPage';
 import common from '../../page_objects/common'
-import { getNotificationMessageText, closePassiveNotification, signOut, signIn } from 'web/actions/common'
+import { getNotificationMessageText, signOut, signIn } from 'web/actions/common'
 import { waitForElement, setValue, click } from '../../actions/actions'
 import orgDashboardPage from '../../page_objects/orgDashboardPage';
 import navBar from '../../page_objects/navBar';
@@ -26,6 +26,7 @@ describe('Access a Revoked Invitation (New Account)', () => {
   it('Invite a Non Existing member', () => {
     newMember = `newmember_${lib.testData.email}`;
     inviteTeammate(newMember, '1')
+    expect(getNotificationMessageText()).to.include(passiveNotification.invitationSentMessage.text)
   });
 
   it('Get Invitation URL', async () => {

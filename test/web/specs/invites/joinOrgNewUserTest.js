@@ -60,7 +60,7 @@ describe('New User Joins an Organization via ACTIVE invitation', () => {
   }
 
   after("end SQL connection", () => {
-    lib.end()
+    //lib.end()
   })
 
 });

@@ -7,7 +7,7 @@ import SettingsPage from 'web/page_objects/settingsPage';
 import Page from 'web/page_objects/page';
 import CommonPage from 'web/page_objects/common';
 import { openApp, setValue, click, waitForElement } from 'web/actions/actions'
-import { getNotificationMessageText, closePassiveNotification } from 'web/actions/common';
+import { getNotificationMessageText } from 'web/actions/common';
 import orgNotif from 'web/data/passiveNotification.json';
 
 const name = lib.bigName(10);
@@ -80,8 +80,6 @@ describe('Delete Organization Test', () => {
     it('Click Delete Organization - First Org and Confirm OK', () => {
       clickDeleteOrganization();
       expect(getNotificationMessageText()).to.include(orgNotif.deleteOrgMessage.text)
-      closePassiveNotification()
-
     });
 
     it('Validate re-direction to choose org page', () => {
@@ -111,8 +109,6 @@ describe('Delete Organization Test', () => {
     it('Click Delete Organization - Last Org and Confirm OK', () => {
       clickDeleteOrganization();
       expect(getNotificationMessageText()).to.include(orgNotif.deleteOrgMessage.text)
-      closePassiveNotification()
-
     });
 
     it('Should re-direct to No Orgs page after leaving the last Org', () => {
