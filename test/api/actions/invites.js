@@ -1,14 +1,6 @@
 import * as lib from '../../common';
 
-
-function loop() {
-  const array = [];
-  let i;
-  for (i = 0; i < 2; i++) {
-    array.push(`${lib.randomString.generate(5)}@test.co`);
-  }
-  return array;
-}
+var emailInvited = `${lib.randomString.generate(5)}@test.co`;
 
 function getAccessToken(responseData) {
   const any = {
@@ -28,40 +20,39 @@ function getAccessToken(responseData) {
 }
 
 function postInvitesByOrganizationId(responseData) {
-  const array = loop();
   const any = {
     api: `${lib.config.api.organizations + responseData[1].id}/invites`,
-    data: [`${array}`],
+    data: emailInvited,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${responseData[2].access_token}`
     }
   };
-
   return lib.post(any);
 }
 
-function getInvitesDetailsByOrganizationId(responseData) {
+function getInvitesByOrganizationId(responseData) {
   const any = {
     api: lib.config.api.organizations,
-    data: `${responseData[1].id}/invites?pageSize=2`
+    data: `${responseData[1].id}/invites?pageSize=1`
   };
   return lib.get(any).then((response) => {
     responseData.push(response.body);
     return response;
   })
 }
-function getInvitesByOrganizationId(responseData) {
+function getInviteDetailsByOrganizationId(responseData) {
   const any = {
-    api: lib.config.api.organizations,
-    data: `${responseData[1].id}/invites`
+    api: `${lib.config.api.invites}${responseData[3].results[0].token}`,
+    data: ""
   };
   return lib.get(any);
 }
+
 function deleteInviteByOrganizationIdAndEmail(responseData) {
   const any = {
     api: lib.config.api.organizations,
-    data: `${responseData[1].id}/invites/?email=${responseData[3][0]}`
+    data: `${responseData[1].id}/invites/?email=${emailInvited}`
   };
   return lib.del(any);
 }
@@ -69,7 +60,7 @@ function deleteInviteByOrganizationIdAndEmail(responseData) {
 export {
   postInvitesByOrganizationId,
   getInvitesByOrganizationId,
-  getInvitesDetailsByOrganizationId,
+  getInviteDetailsByOrganizationId,
   deleteInviteByOrganizationIdAndEmail,
   getAccessToken
 };
