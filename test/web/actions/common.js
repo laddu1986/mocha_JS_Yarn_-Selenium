@@ -5,12 +5,11 @@ import SignInPage from '../page_objects/signInPage'
 
 function getNotificationMessageText() {
     waitForElement(CommonPage.successMsg);
-    return CommonPage.successMsg.getText();
+    const notificationMsg = CommonPage.successMsg.getText();
+    click(CommonPage.dismissNotification)
+    return notificationMsg;
 }
 
-function closePassiveNotification() {
-    click(CommonPage.dismissNotification)
-}
 
 function signOut() {
     click(NavBar.profileMenu);
@@ -27,7 +26,6 @@ function signIn(email, password) {
 
 export {
     getNotificationMessageText,
-    closePassiveNotification,
     signOut,
     signIn
 };

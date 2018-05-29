@@ -24,7 +24,8 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/*/joinOrgNewUserTest.1.js' //master
+    './test/web/specs/invites/joinOrgExpiredInviteTest.js', //master
+    './test/web/specs/invites/joinOrgAfterInviteRevokedTest.js',//master
     // './test/web/specs/*/*Test.js' //master
   ],
   // Patterns to exclude.
@@ -45,7 +46,7 @@ exports.config = {
   // screenshotPath: './errScreens',
   //baseUrl: 'https://my.appcurator.com/',
   waitforTimeout: debug ? 9999999 : timeoutPeriod,
-  maxInstances: debug ? 1 : 15,
+  maxInstances: debug ? 1 : 10,
 
   plugins: {
 
@@ -91,9 +92,7 @@ exports.config = {
 
     global.expect = chai.expect;
     chai.Should();
-    //console.log('Before')
 
-    // const config = require('config-yml');
   },
 
   // Gets executed after all tests are done. You still have access to all global variables from

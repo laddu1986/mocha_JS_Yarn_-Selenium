@@ -24,7 +24,7 @@ import SignInPage from 'web/page_objects/signInPage'
 import CommonPage from '../../page_objects/common';
 import createAccountPage from '../../page_objects/createAccountPage';
 import common from '../../page_objects/common'
-import { getNotificationMessageText, closePassiveNotification, signOut, signIn } from 'web/actions/common'
+import { getNotificationMessageText, signOut, signIn } from 'web/actions/common'
 import { waitForElement, setValue, click } from '../../actions/actions'
 import orgDashboardPage from '../../page_objects/orgDashboardPage';
 import navBar from '../../page_objects/navBar';
@@ -35,16 +35,17 @@ import passiveNotification from '../../data/passiveNotification.json'
 let newUser;
 let invitationURL;
 
-
 describe('New User accesses an Expired Invitation', () => {
 
   before(() => {
     SignInPage.open();
     createAccount()
+    console.log(lib.testData.email)
   });
 
   it('Admin invites a New User', () => {
     newUser = `newUser_${lib.testData.email}`;
+    console.log(newUser)
     inviteTeammate(newUser, '1')
   });
 
@@ -57,12 +58,14 @@ describe('New User accesses an Expired Invitation', () => {
   });
 
   it('Admin goes to Inactive tab of Teammates page', () => {
+    browser.refresh()
     goToTeammatesPage()
     goToInactiveTab()
   });
 
   it('Admin verifies status as Expired', () => {
     expect(teamPage.inactiveRowStatus.getText()).to.deep.equal('Expired')
+
   });
 
   it('Admin Signs Out', () => {

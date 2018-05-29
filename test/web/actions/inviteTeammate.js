@@ -6,6 +6,7 @@ import TeamPage from 'web/page_objects/TeamPage'
 import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
 import { setValue, click, waitForElement } from 'web/actions/actions'
 import teamPage from '../page_objects/teamPage';
+import Common from '../page_objects/common'
 
 function clickInviteTeammateButton() {
   click(OrgDashboardPage.inviteTeammateButton);
@@ -48,6 +49,7 @@ function inviteTeammate(mail, counta) {
 
 export function revokeInvite() {
   click(teamPage.revokeButton)
+  click(Common.iAmSureButton)
 }
 
 export function resendInvite() {
@@ -85,6 +87,9 @@ export async function updateTokenExpiryDateInDB(email) {
     lib.con.query({ sql: updateExpiryDate },
       function (err, result) {
         if (err) reject(err);
+        console.log(updateExpiryDate)
+
+        console.log(result)
         return resolve(result)
       })
   })
