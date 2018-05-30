@@ -33,10 +33,12 @@ var con = mysql.createConnection({
 });
 
 var pool = mysql.createPool({
-  connectionLimit: 10,
   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
   user: 'rouser',
   password: 'R34d0nlyK3y',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
 /* function connection(params) {

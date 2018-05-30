@@ -22,16 +22,24 @@ let newUser;
 
 describe('New User Joins an Organization via ACTIVE invitation', () => {
 
-  before("Admin invites a Non Existing user", () => {
+  // before("Admin invites a Non Existing user", () => {
+  before(() => {
     SignInPage.open();
     createAccount()
+    console.log('ADMIN  ', lib.testData.email)
     newUser = `newUser_${lib.testData.email}`;
+    console.log('newUser', newUser)
+    // inviteTeammate(newUser, '1')
+    // expect(common.successMsg.getText()).to.include(passiveNotification.invitationSentMessage.text)
+    // signOut()
+  });
+  it('Admin Invites Teammate', () => {
     inviteTeammate(newUser, '1')
     expect(common.successMsg.getText()).to.include(passiveNotification.invitationSentMessage.text)
     signOut()
   });
 
-  before("Click on the Invitation Link", async () => {
+  it("Click on the Invitation Link", async () => {
     const acceptInvitation = await invitationLink(newUser)
     browser.url(acceptInvitation)  //replication for user clicking on Accept Invitation button in email
   });
