@@ -46,6 +46,7 @@ describe('New User accesses an Expired Invitation', () => {
   it('Admin invites a New User', () => {
     newUser = `newUser_${lib.testData.email}`;
     console.log(newUser)
+    // browser.pause(4000)
     inviteTeammate(newUser, '1')
   });
 
@@ -88,7 +89,7 @@ describe('Admin Re-sends an Expired Invitation', () => {
   });
 
   it('Admin goes to Inactive tab of Teammates page', () => {
-    browser.pause(1500) // pause workaround for Bug: ACT-299. will be removed after bugfix
+    browser.pause(1500) // workaround for Bug: ACT-299. will be removed after bugfix
     goToTeammatesPage()
     goToInactiveTab()
   });

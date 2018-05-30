@@ -66,11 +66,15 @@ function getInviteTokenFromDB(email) {
                             WHERE Email = "${email}"
                             AND CreatedTime = (SELECT MAX(CreatedTime) from organization_dev.Invites)
                             order by CreatedTime desc;`
-    lib.con.query({ sql: selectInviteId },
-      function (err, result) {
-        if (err) reject(err);
-        return resolve(result[0].Id)
-      })
+    lib.pool.getConnection(function (err, connection) {
+      connection.query({ sql: selectInviteId },
+        function (err, result) {
+          connection.release()
+          if (err) reject(err);
+          console.log('SELECT ID  ', result[0].Id)
+          resolve(result[0].Id)
+        })
+    })
   })
 }
 
@@ -84,14 +88,15 @@ export async function updateTokenExpiryDateInDB(email) {
     const updateExpiryDate = `UPDATE organization_dev.Invites SET ExpiryDate = (CreatedTime - 1) 
                               WHERE Email = "${email}"
                               order by CreatedTime desc;`
-    lib.con.query({ sql: updateExpiryDate },
-      function (err, result) {
-        if (err) reject(err);
-        console.log(updateExpiryDate)
-
-        console.log(result)
-        return resolve(result)
-      })
+    lib.pool.getConnection(function (err, connection) {
+      connection.query({ sql: updateExpiryDate },
+        function (err, result) {
+          connection.release()
+          if (err) reject(err);
+          console.log('UPDATE   ', result.message)
+          resolve(result)
+        })
+    })
   })
 }
 
