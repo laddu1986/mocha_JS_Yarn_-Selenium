@@ -9,11 +9,11 @@ var getResponse, deleteResponse, postResponse;
 describe('Negative tests-> Membership', () => {
   describe(`\nSearch Non Existing Membership\n`, () => {
     before((done) => {
-      identity.postIdentity(lib.responseData.identity).then(() => {
-        organization.postOrganization(lib.responseData.identity).then(() => {
-          membership.postMembership(lib.responseData.identity).then(() => {
-            membership.deleteMembershipByAccountAndOrganization(lib.responseData.identity).then(() => {
-              getResponse = membership.getMembershipByAccount(lib.responseData.identity);
+      identity.postIdentity(lib.responseData.negMembership).then(() => {
+        organization.postOrganization(lib.responseData.negMembership).then(() => {
+          membership.postMembership(lib.responseData.negMembership).then(() => {
+            membership.deleteMembershipByAccountAndOrganization(lib.responseData.negMembership).then(() => {
+              getResponse = membership.getMembershipByAccount(lib.responseData.negMembership);
               done();
             })
           })
@@ -30,8 +30,8 @@ describe('Negative tests-> Membership', () => {
 
   describe(`\nDelete Membership when Account is Non Existing \n`, () => {
     before((done) => {
-      identity.deleteIdentityById(lib.responseData.identity).then(() => {
-        deleteResponse = membership.deleteMembershipByAccountAndOrganization(lib.responseData.identity);
+      identity.deleteIdentityById(lib.responseData.negMembership).then(() => {
+        deleteResponse = membership.deleteMembershipByAccountAndOrganization(lib.responseData.negMembership);
         done();
       })
     })
@@ -44,7 +44,7 @@ describe('Negative tests-> Membership', () => {
 
   describe(`\nCreate Membership when organization is Non Existing \n`, () => {
     before((done) => {
-      postResponse = membership.postMembershipWithBlankOrgID(lib.responseData.identity);
+      postResponse = membership.postMembershipWithBlankOrgID(lib.responseData.negMembership);
       done();
     })
 

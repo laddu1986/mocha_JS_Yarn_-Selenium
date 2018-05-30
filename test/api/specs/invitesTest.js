@@ -28,10 +28,10 @@ describe('Invites Api', () => {
 
   describe('GET /organizations/{orgId}/invites', () => {
     before((done) => {
-      getResponse = invites.getInvitesDetailsByOrganizationId(lib.responseData.invites);
+      getResponse = invites.getInvitesByOrganizationId(lib.responseData.invites);
       done();
     });
-    it('Get invites in the org.', () => {
+    it('Search invites in the org', () => {
       return getResponse.then((response) => {
         expect(response).to.have.status(200);
       });
@@ -40,7 +40,7 @@ describe('Invites Api', () => {
 
   describe('GET /organizations/{orgId}/invites/{token}', () => {
     before((done) => {
-      getInviteResponse = invites.getInvitesByOrganizationId(lib.responseData.invites);
+      getInviteResponse = invites.getInviteDetailsByOrganizationId(lib.responseData.invites);
       done();
     });
     it('Get invite details', () => {
