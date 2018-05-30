@@ -20,8 +20,8 @@ import Page from 'web/page_objects/page';
 import { openApp, setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
 import CommonPage from 'web/page_objects/common';
 
-const name = lib.bigName(10);
-const email = `${lib.bigName(15)}@test.co`;
+const name = lib.randomString.generate(10);
+const email = `${lib.randomString.generate(15)}@test.co`;
 const organization = 'OrgDeleteAccount';
 const password = 'Pass1234';
 

@@ -4,6 +4,7 @@ const server = require('chakram');
 global.expect = server.expect;
 const mysql = require('mysql');
 const config = require('config-yml');
+var randomString = require("randomstring");
 
 const responseData = {
   organization: [],
@@ -16,15 +17,6 @@ const responseData = {
 // uri end points
 const orca = config.orca.base;
 const web = config.web.base;
-
-function bigName(params) {
-  let text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (let i = 0; i < params; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
-
-  return `test_${text}`;
-}
 
 var con = mysql.createConnection({
   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
@@ -74,15 +66,6 @@ function del(any) {
   return server.delete(any.api + any.data);
 }
 
-const testData = {
-  name: bigName(10),
-  email: `${bigName(15)}@test.co`,
-  organization: `${bigName(10)}_Org`,
-  space: `${bigName(8)}_Space`,
-  password: 'Pass1234'
-};
-
-
 export {
   // uri
   orca,
@@ -102,6 +85,5 @@ export {
   end,
   // data
   responseData,
-  bigName,
-  testData
+  randomString
 };
