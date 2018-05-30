@@ -4,7 +4,7 @@ function postOrganization(responseData) {
   const any = {
     api: lib.config.api.organizations,
     data: {
-      name: lib.bigName(10),
+      name: lib.randomString.generate(10),
       createdByAccountId: responseData[0].id
     }
   };

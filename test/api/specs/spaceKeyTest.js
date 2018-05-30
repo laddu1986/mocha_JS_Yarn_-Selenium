@@ -9,10 +9,10 @@ var postResponse, getResponse, revokeResponse, reactivateResponse, deleteRespons
 describe('Space Keys Api', () => {
     describe(`\nPOST /keys\n`, () => {
         before((done) => {
-            identity.postIdentity(lib.responseData.spaces).then(() => {
-                organization.postOrganization(lib.responseData.spaces).then(() => {
-                    spaces.postSpaceByOrganizationId(lib.responseData.spaces).then(() => {
-                        postResponse = spaces.postKeysBySpaceId(lib.responseData.spaces);
+            identity.postIdentity(lib.responseData.spaceKey).then(() => {
+                organization.postOrganization(lib.responseData.spaceKey).then(() => {
+                    spaces.postSpaceByOrganizationId(lib.responseData.spaceKey).then(() => {
+                        postResponse = spaces.postKeysBySpaceId(lib.responseData.spaceKey);
                         done();
                     })
                 });
@@ -27,7 +27,7 @@ describe('Space Keys Api', () => {
     });
     describe(`\nGET /keys\n`, () => {
         before((done) => {
-            getResponse = spaces.getKeysBySpaceId(lib.responseData.spaces);
+            getResponse = spaces.getKeysBySpaceId(lib.responseData.spaceKey);
             done();
         });
 
@@ -40,7 +40,7 @@ describe('Space Keys Api', () => {
     describe(`\nPATCH /keys/{key}\n`, () => {
         describe(`Revoke\n`, () => {
             before((done) => {
-                revokeResponse = spaces.patchKeyBySpaceIdAndRowVersion(lib.responseData.spaces, constants.APIKeyStatus.Revoked);
+                revokeResponse = spaces.patchKeyBySpaceIdAndRowVersion(lib.responseData.spaceKey, constants.APIKeyStatus.Revoked);
                 done();
             });
 
@@ -54,7 +54,7 @@ describe('Space Keys Api', () => {
         });
         describe(`\nRe-activate\n`, () => {
             before((done) => {
-                reactivateResponse = spaces.patchKeyBySpaceIdAndRowVersion(lib.responseData.spaces, constants.APIKeyStatus.Active);
+                reactivateResponse = spaces.patchKeyBySpaceIdAndRowVersion(lib.responseData.spaceKey, constants.APIKeyStatus.Active);
                 done();
             });
 
@@ -69,7 +69,7 @@ describe('Space Keys Api', () => {
     });
     describe(`\nDELETE /keys/{key}\n`, () => {
         before((done) => {
-            deleteResponse = spaces.deleteKeyBySpaceIdAndRowVersion(lib.responseData.spaces);
+            deleteResponse = spaces.deleteKeyBySpaceIdAndRowVersion(lib.responseData.spaceKey);
             done();
         });
 

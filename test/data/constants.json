@@ -3,5 +3,9 @@
         "Active": "Active",
         "Revoked": "Revoked",
         "PendingDelete": "Pending Delete"
+    },
+    "SpaceAttributes": {
+        "Name": "name",
+        "Slug": "slug"
     }
 }

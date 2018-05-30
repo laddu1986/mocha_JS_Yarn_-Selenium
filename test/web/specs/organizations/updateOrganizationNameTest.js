@@ -16,7 +16,6 @@ describe('Create Account', () => {
 
   before('Open App URL', () => {
     SignInPage.open();
-    // console.log(lib.testData)
   });
 
   it('Create Account', () => {
@@ -26,7 +25,7 @@ describe('Create Account', () => {
   it('Create two more Orgs', () => {
     let i;
     for (i = 0; i < 3; i++) {
-      orgname = lib.bigName(10);
+      orgname = lib.randomString.generate(10);
       createOrg(orgname);
       i += 1;
     }

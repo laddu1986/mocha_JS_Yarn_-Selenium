@@ -4,9 +4,9 @@ function postSpaceByOrganizationId(responseData) {
   const any = {
     api: `${lib.config.api.spaces + responseData[1].id}/spaces`,
     data: {
-      name: lib.bigName(10),
+      name: lib.randomString.generate(10),
       createdByAccountId: responseData[0].id,
-      shortUrl: lib.bigName(6)
+      shortUrl: lib.randomString.generate(6)
     }
   };
   return lib.post(any).then((response) => {
@@ -14,6 +14,7 @@ function postSpaceByOrganizationId(responseData) {
     return response;
   })
 }
+
 function getSpacesByOrganizationId(responseData) {
   const any = {
     api: `${lib.config.api.spaces + responseData[1].id}/spaces`,
@@ -21,6 +22,40 @@ function getSpacesByOrganizationId(responseData) {
   };
   return lib.get(any);
 }
+
+export function updateSpace(responseData) {
+  const any = {
+    api: `${lib.config.api.spaces + responseData[1].id}/spaces`,
+    data: {
+      id: responseData[2].id,
+      name: lib.randomString.generate(5),
+      rowVersion: responseData[2].rowVersion,
+      shortUrl: lib.randomString.generate(6)
+    }
+  };
+  return lib.put(any).then((response) => {
+    responseData.push(response.body);
+    return response;
+  });
+};
+
+export function getSpaceByOrgIdAndSpaceId(responseData) {
+  const any = {
+    api: `${lib.config.api.spaces + responseData[1].id}/spaces/${responseData[2].id}`,
+    data: ""
+  };
+  return lib.get(any);
+};
+
+export function deleteSpaceByOrgIdAndSpaceId(responseData) {
+  const any = {
+    api: `${lib.config.api.spaces + responseData[1].id}/spaces/${responseData[2].id}?rowVersion=${responseData[3].rowVersion}`,
+    data: ""
+  };
+  return lib.del(any);
+}
+
+//--------------------------------KEYS RELATED FUNCTIONS--------------------------
 function postKeysBySpaceId(responseData) {
   const any = {
     api: lib.config.api.keys,
