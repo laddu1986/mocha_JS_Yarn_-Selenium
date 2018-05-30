@@ -2,17 +2,43 @@ import * as lib from '../../common';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
 import { setValue, click, waitForElement } from 'web/actions/actions'
 import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
+import SpaceSettingsPage from 'web/page_objects/SpaceSettingsPage';
 const copyPasteModule = require('copy-paste');
 import HomePage from 'web/page_objects/homePage';
 import CommonPage from 'web/page_objects/common';
 
+export function changeSpace(type) {
+  var webElement = SpaceSettingsPage.spaceName;
+  var name = `${lib.randomString.generate(8)}_Space`;
+  if (type == "slug") {
+    webElement = SpaceSettingsPage.spaceSlug;
+    name = `${lib.randomString.generate(8)}_Slug`;
+  }
+  setValue(webElement, name);
+  click(CommonPage.submitButton);
+  return name;
+}
+
+export function verifyNewSpaceName() {
+  click(HomePage.logo);
+  return OrgDashboardPage.spaceCards.getText();
+}
+
+export function deleteSpace() {
+  click(SpaceSettingsPage.deleteSpaceButton);
+  click(SpaceSettingsPage.imSureButton);
+}
+
+export function spaceIsDeleted() {
+  return OrgDashboardPage.createSpaceInput.isVisible();
+}
 function createSpace() {
-  setValue(OrgDashboardPage.createSpaceInput, `${lib.bigName(8)}_Space`);
+  setValue(OrgDashboardPage.createSpaceInput, `${lib.randomString.generate(8)}_Space`);
   click(OrgDashboardPage.createSpaceButton);
+  waitForElement(SpaceDashboardPage.devApiGuideButton);
 }
 
 function verifySpace() {
-  waitForElement(SpaceDashboardPage.devApiGuideButton);
   return SpaceDashboardPage.devApiGuideButton.isVisible();
 }
 
@@ -46,6 +72,12 @@ function verifyAPIKeyStatus(status) {
   return browser.waitUntil(function () {
     return SpaceDashboardPage.APIKeyStatus.getText() === status
   }, 5000, `Api Key status is not+${status}`);
+}
+
+export function verifyNewSpaceUrl(newSlugName) {
+  return browser.waitUntil(function () {
+    return browser.getUrl().includes(newSlugName)
+  }, 5000, `New Slug ${newSlugName} is not updated`);
 }
 
 function clickRevokeButton() {
