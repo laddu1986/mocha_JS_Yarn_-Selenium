@@ -5,7 +5,7 @@ function postIdentity(responseData) {
     api: lib.config.api.identities,
     data: {
       fullname: lib.randomString.generate(12),
-      email: `${lib.randomString.generate(12)}@dummy.co`,
+      email: `${lib.randomString.generate(12)}@test.co`,
       password: 'Pass1234'
     }
   };
