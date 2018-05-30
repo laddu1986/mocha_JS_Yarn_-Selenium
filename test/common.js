@@ -30,10 +30,16 @@ var con = mysql.createConnection({
   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
   user: 'rouser',
   password: 'R34d0nlyK3y',
-  //database: 'organization_dev'
 });
 
-function connection(params) {
+var pool = mysql.createPool({
+  connectionLimit: 10,
+  host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
+  user: 'rouser',
+  password: 'R34d0nlyK3y',
+});
+
+/* function connection(params) {
   if (!con) {
     con = mysql.createConnection(params);
     con.connect((err) => {
@@ -49,7 +55,7 @@ function end() {
     if (err) throw err;
     console.log('Disconnected from Database!');
   });
-}
+} */
 
 function post(any) {
   if (any.headers == undefined) {
@@ -97,9 +103,10 @@ export {
   config,
   server,
   // db
-  connection,
-  con,
-  end,
+  //connection,
+  //con,
+  //end,
+  pool,
   // data
   responseData,
   bigName,

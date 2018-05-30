@@ -92,7 +92,6 @@ exports.config = {
 
     global.expect = chai.expect;
     chai.Should();
-
   },
 
   // Gets executed after all tests are done. You still have access to all global variables from
