@@ -61,8 +61,11 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['spec'],
+  reporters: ['spec', 'html-format'],
   reporterOptions: {
+    htmlFormat: {
+      outputDir: './test/web/Reports'
+    },
     allure: {
       outputDir: 'allure-results',
       disableWebdriverStepsReporting: true,

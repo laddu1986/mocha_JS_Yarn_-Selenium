@@ -6,3 +6,5 @@ errScreens/*
 .vscode
 yarn*.log
 phantomjs.log
+**/wdio-report.html
+**/api-report.html
