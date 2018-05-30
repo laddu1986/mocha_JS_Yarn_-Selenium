@@ -46,7 +46,7 @@ describe('New User accesses an Expired Invitation', () => {
   it('Admin invites a New User', () => {
     newUser = `newUser_${lib.testData.email}`;
     console.log(newUser)
-    // browser.pause(4000)
+    browser.pause(8000)
     inviteTeammate(newUser, '1')
   });
 
