@@ -2,12 +2,12 @@ import * as lib from '../../common';
 
 const orcaRes = [];
 const orgId = '';
-const createOrgInviteEmail = `${lib.bigName(10)}@test.co`;
+const createOrgInviteEmail = `${lib.randomString.generate(10)}@test.co`;
 describe('Identity Api', () => {
   const inputT = {
     fields: {
-      name: `${lib.bigName(10)}`,
-      email: `${lib.bigName(10)}@test.co`,
+      name: `${lib.randomString.generate(10)}`,
+      email: `${lib.randomString.generate(10)}@test.co`,
       password: 'Pass1234',
       organizationName: 'organizationName'
     }
@@ -82,7 +82,7 @@ describe('Identity Api', () => {
         variables: {
           input: {
             fields: {
-              name: lib.bigName(10)
+              name: lib.randomString.generate(10)
             }
           }
         }
