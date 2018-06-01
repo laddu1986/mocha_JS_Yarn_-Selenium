@@ -1,6 +1,6 @@
 import * as lib from '../../../common';
 import SignInPage from 'web/page_objects/signInPage';
-import * as createAccountActions from 'web/actions/createAccount';
+import * as createAccountActions from 'web/actions/account';
 
 describe('Tests for Create Account', () => {
   before('Open create account page', () => {
