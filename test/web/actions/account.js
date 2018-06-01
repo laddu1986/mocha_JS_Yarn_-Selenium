@@ -1,6 +1,6 @@
 import * as lib from '../../common';
 import HomePage from 'web/page_objects/homePage';
-import CreateAccountPage from 'web/page_objects/createAccountPage'
+import CreateAccountPage from 'web/page_objects/accountPage'
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
 import CommonPage from 'web/page_objects/common'
 import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
