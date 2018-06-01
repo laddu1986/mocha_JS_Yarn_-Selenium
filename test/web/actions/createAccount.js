@@ -4,16 +4,21 @@ import CreateAccountPage from 'web/page_objects/createAccountPage'
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
 import CommonPage from 'web/page_objects/common'
 import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
+var name, email, organization, accountData = { name, email, organization };
 
-function createAccount() {
-  click(CreateAccountPage.createAccountLink);
-  setValue(CreateAccountPage.nameInput, lib.randomString.generate(8));
-  setValue(CreateAccountPage.emailInput, `${lib.randomString.generate(10)}@test.co`);
-  setValue(CreateAccountPage.organizationInput, `${lib.randomString.generate(10)}_Org`);
+export function createAccount() {
+  accountData.name = lib.randomString.generate(8);
+  accountData.email = `${lib.randomString.generate(10)}@test.co`;
+  accountData.organization = `${lib.randomString.generate(10)}_Org`;
+  clickCreateAccountLink();
+  setValue(CreateAccountPage.nameInput, accountData.name);
+  setValue(CreateAccountPage.emailInput, accountData.email);
+  setValue(CreateAccountPage.organizationInput, accountData.organization);
   setValue(CreateAccountPage.passwordInput, 'Pass1234');
-  click(CommonPage.submitButton);
+  submit();
   waitForElement(HomePage.logo);
   waitForElement(OrgDashboardPage.currentOrgName);
+  return accountData;
 }
 
 export function clickCreateAccountLink() {
@@ -43,4 +48,3 @@ export function verifyOrgDashboardPageAppears() {
   }
 }
 
-export { createAccount }
