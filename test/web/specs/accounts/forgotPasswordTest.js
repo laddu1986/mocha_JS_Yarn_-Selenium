@@ -1,43 +1,25 @@
 import * as lib from '../../../common';
 import SignInPage from 'web/page_objects/signInPage';
-import CommonPage from 'web/page_objects/common';
-import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
-
-function assertion(e, data) {
-  e.forEach((expected) => {
-    expect(expected).to.equal(data);
-  });
-}
+import { emailInputValue, clickBackToSignIn, clickForgotPassword, submitButtonVisible, submitEmail, backToSignInButtonVisible } from 'web/actions/login';
 
 describe('Test Forgot Password Link', () => {
-  it('Open App URL', () => {
+  before('Open App URL', () => {
     SignInPage.open();
   });
 
   it('Click Forgot Password link', () => {
-    click(SignInPage.forgotPassword);
+    clickForgotPassword();
+    expect(submitButtonVisible()).to.equal(true);
   });
 
-  it('Enter your Email', () => {
-    setValue(SignInPage.emailInput, 'forgot@password.com');
-  });
-
-  it('Click Send me Link button', () => {
-    click(CommonPage.submitButton);
+  it('Submit your Email', () => {
+    submitEmail();
+    expect(backToSignInButtonVisible()).to.equal(true);
   });
 
   it('Click Back to Sign In button', () => {
-    click(SignInPage.backToSignIn);
+    clickBackToSignIn();
+    expect(emailInputValue()).to.include('forgot@password.com');
   });
-
-  it('Should re-direct to Sign in page', () => {
-    waitForElement(SignInPage.forgotPassword);
-  });
-
-  it('Email field should be pre-populated with the user Email', () => {
-    waitForElement(SignInPage.emailInput);
-    expect(SignInPage.emailInput.getValue()).to.include('forgot@password.com');
-  });
-
 });
 
