@@ -1,7 +1,7 @@
 import * as lib from '../../../common';
-import { createAccount } from 'web/actions/createAccount';
-import { createOrg } from 'web/actions/createOrg'
-import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard, inviteTeammate, invitationLink, revokeInvite, goToInactiveTab } from 'web/actions/inviteTeammate';
+import { createAccount } from 'web/actions/account';
+import { createOrg } from 'web/actions/organization'
+import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard, inviteTeammate, invitationLink, revokeInvite, goToInactiveTab } from 'web/actions/invite';
 import SignInPage from 'web/page_objects/signInPage'
 import CommonPage from '../../page_objects/common';
 import createAccountPage from '../../page_objects/createAccountPage';

@@ -2,13 +2,13 @@
 //import createOrganizationPage from '../specs/createOrganizationTest';
 import * as lib from '../../../common';
 import NavBar from 'web/page_objects/navBar'
-import { createAccount } from 'web/actions/createAccount'
+import { createAccount } from 'web/actions/account'
 import SettingsPage from 'web/page_objects/settingsPage';
 import HomePage from 'web/page_objects/homePage';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
 import { openApp, setValue, click, waitForElement, waitForEnabled } from 'web/actions/actions'
 import SignInPage from 'web/page_objects/signInPage';
-import { createOrg } from 'web/actions/createOrg';
+import { createOrg } from 'web/actions/organization';
 let updatedOrgName;
 let orgname
 

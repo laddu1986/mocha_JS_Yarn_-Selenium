@@ -1,7 +1,5 @@
 /* https://appcurator.atlassian.net/browse/ACT-35
-
 ACCEPTANCE CRITERIA
-
 Member must be able to delete account if not associated with any Org
 Page URL: /organizations
 Upon clicking / tapping on 'Delete my account', display a confirmation prompt to delete the account
@@ -10,10 +8,11 @@ Attempt to sign in should fail for deleted account
 */
 
 import * as lib from '../../../common';
-import { createAccount } from 'web/actions/createAccount';
+import { createAccount } from 'web/actions/account';
 import SignInPage from 'web/page_objects/signInPage';
-import { deleteAccount, deleteOrg } from 'web/actions/createOrg';
-import { verifyIncorrectSignIn, incorrectSignIn } from 'web/actions/login';
+import { deleteAccount, deleteOrg } from 'web/actions/organization';
+import { verifyIncorrectSignIn, signIn } from 'web/actions/login';
+import { verifyOrgDashboardPageAppears } from 'web/actions/account';
 var accountDetails;
 
 describe('Delete Account Test (Remove my Account)', () => {
@@ -29,7 +28,12 @@ describe('Delete Account Test (Remove my Account)', () => {
   });
 
   it('Login with same credentials --> Incorrect Details Error', () => {
-    incorrectSignIn(accountDetails.email, 'Pass1234');
+    signIn(accountDetails.email, 'Pass1234');
     expect(verifyIncorrectSignIn()).to.include('incorrect');
+  });
+
+  it('Re-registeration with same email is allowed', () => {
+    createAccount(accountDetails.email);
+    expect(verifyOrgDashboardPageAppears()).to.equal(true);
   });
 });

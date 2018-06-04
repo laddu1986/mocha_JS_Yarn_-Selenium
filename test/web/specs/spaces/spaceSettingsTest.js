@@ -1,7 +1,7 @@
 import * as lib from '../../../common';
 import SignInPage from 'web/page_objects/signInPage'
-import { createAccount } from 'web/actions/createAccount';
-import * as createSpaceActions from 'web/actions/createSpace';
+import { createAccount } from 'web/actions/account';
+import * as createSpaceActions from 'web/actions/space';
 import { getNotificationMessageText, closePassiveNotification } from 'web/actions/common';
 import spaceData from 'web/data/passiveNotification.json';
 import constants from 'data/constants.json';
