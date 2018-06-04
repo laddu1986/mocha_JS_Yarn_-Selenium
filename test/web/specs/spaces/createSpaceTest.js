@@ -4,7 +4,6 @@ import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
 import * as createSpaceActions from 'web/actions/space';
 import SignInPage from 'web/page_objects/signInPage'
 import { openApp, setValue, click, waitForEnable, waitForElement } from 'web/actions/actions'
-import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
 import { getNotificationMessageText, signOut } from 'web/actions/common';
 import spaceData from 'web/data/passiveNotification.json';
 
