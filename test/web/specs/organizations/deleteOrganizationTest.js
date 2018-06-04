@@ -1,5 +1,5 @@
 import * as lib from '../../../common';
-import CreateAccountPage from 'web/page_objects/createAccountPage';
+import CreateAccountPage from 'web/page_objects/accountPage';
 import HomePage from 'web/page_objects/homePage';
 import SignInPage from 'web/page_objects/signInPage';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
