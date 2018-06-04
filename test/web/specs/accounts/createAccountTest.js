@@ -1,6 +1,6 @@
 import * as lib from '../../../common';
 import SignInPage from 'web/page_objects/signInPage';
-import * as createAccountActions from 'web/actions/account';
+import { createAccount, clickCreateAccountLink, verifyCreateAccountPageAppears, inputDetails, submit, verifyOrgDashboardPageAppears } from 'web/actions/account';
 
 describe('Tests for Create Account', () => {
   before('Open create account page', () => {
@@ -8,14 +8,14 @@ describe('Tests for Create Account', () => {
   });
 
   it(`\nClick create account link\n`, () => {
-    createAccountActions.clickCreateAccountLink();
-    expect(createAccountActions.verifyCreateAccountPageAppears()).to.equal(true);
+    clickCreateAccountLink();
+    expect(verifyCreateAccountPageAppears()).to.equal(true);
   });
 
   it('Enter the details for creating account  --> verify org dashboard appears', () => {
-    createAccountActions.inputDetails();
-    createAccountActions.submit();
-    expect(createAccountActions.verifyOrgDashboardPageAppears()).to.equal(true);
+    inputDetails();
+    submit();
+    expect(verifyOrgDashboardPageAppears()).to.equal(true);
   });
 });
 
