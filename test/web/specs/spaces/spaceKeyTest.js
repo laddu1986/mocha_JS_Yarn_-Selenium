@@ -11,6 +11,7 @@ describe('Space API Key Tests', () => {
         SignInPage.open();
         createAccount();
         createSpaceActions.createSpace();
+        createSpaceActions.goToAPIKeyPage();
     });
 
     it('Copy --> verify key is copied', () => {
