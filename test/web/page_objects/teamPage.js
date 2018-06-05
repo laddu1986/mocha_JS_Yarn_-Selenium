@@ -4,7 +4,8 @@ class TeamPage {
   get email() { return browser.element("//*[@data-qa='page:org-members']"); }
 
   //Inactive Tab
-  get inactiveTab() { return browser.element("//*[contains(text(),'Inactive')]"); }
+  get inactiveTab() { return browser.element("//button[@data-id='inactive']"); }
+  // get inactiveTab() { return browser.element("//button[@data-qa='button:tab-inactive']"); }
   get revokeButton() { return browser.element("//button[@data-qa='btn:submit']//*[contains(text(),'Revoke')]") }
   get resendButton() { return browser.element("//button[@data-qa='btn:submit']//*[contains(text(),'Resend')]") }
   get inactiveRowStatus() { return browser.element("//tr[@data-qa='table:row-inactive']//td[2]") }

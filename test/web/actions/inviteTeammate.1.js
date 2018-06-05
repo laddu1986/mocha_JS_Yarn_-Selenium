@@ -1,28 +1,24 @@
 import * as lib from '../../common';
+import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
 import homePage from 'web/page_objects/homePage'
 import NavBar from 'web/page_objects/navBar'
+import TeamPage from 'web/page_objects/TeamPage'
 import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
-import { setValue, click, waitForElement } from '../actions/actions'
+import { setValue, click, waitForElement } from 'web/actions/actions'
 import teamPage from '../page_objects/teamPage';
 import Common from '../page_objects/common'
-import orgDashboardPage from '../page_objects/orgDashboardPage';
 
 function clickInviteTeammateButton() {
-  click(orgDashboardPage.inviteTeammateButton);
+  click(OrgDashboardPage.inviteTeammateButton);
 }
 
 function sendInviteButtonEnabled() {
-  return orgDashboardPage.sendInviteButton.isEnabled();
+  return OrgDashboardPage.sendInviteButton.isEnabled();
 }
 
 function sendInvite(inviteMail) {
-  setValue(orgDashboardPage.inviteEmailInput, inviteMail);
-  //browser.pause(2000)
-  click(orgDashboardPage.sendInviteButton);
-  // browser.pause(2000)
-  waitForElement(Common.successMsg)
-  console.log(Common.successMsg.getText())
-  waitForElement(orgDashboardPage.pendingInviteCircle)
+  setValue(OrgDashboardPage.inviteEmailInput, inviteMail);
+  click(OrgDashboardPage.sendInviteButton);
 }
 
 function goToTeammatesPage() {
@@ -34,11 +30,11 @@ function goToTeammatesPage() {
 
 function verifyInvite() {
   goToInactiveTab();
-  return teamPage.email.getText();
+  return TeamPage.email.getText();
 }
 
 function verifyInviteCount(count) {
-  browser.waitUntil(() => orgDashboardPage.pendingInviteCircle.getText() === (`+${count}`), 5000, 'Expect pending invite circle to increment by 1', 200);
+  browser.waitUntil(() => OrgDashboardPage.pendingInviteCircle.getText() === (`+${count}`), 5000, 'Expect pending invite circle to increment by 1', 200);
 }
 
 function goToOrganisationDashboard() {
@@ -47,15 +43,14 @@ function goToOrganisationDashboard() {
 
 function inviteTeammate(mail, counta) {
   clickInviteTeammateButton()
-  // browser.pause(2000)
   sendInvite(mail)
-  browser.pause(22000)
   verifyInviteCount(counta)
+  waitForElement(Common.successMsg)
 }
 
 export function revokeInvite() {
   click(teamPage.revokeButton)
-  return click(Common.iAmSureButton)
+  click(Common.iAmSureButton)
 }
 
 export function resendInvite() {

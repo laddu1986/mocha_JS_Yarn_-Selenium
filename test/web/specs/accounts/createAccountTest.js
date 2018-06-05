@@ -1,6 +1,7 @@
 import * as lib from '../../../common';
 import SignInPage from 'web/page_objects/signInPage';
 import * as createAccountActions from 'web/actions/createAccount';
+import { signOut } from '../../actions/common';
 
 describe('Tests for Create Account', () => {
   before('Open create account page', () => {
@@ -18,4 +19,3 @@ describe('Tests for Create Account', () => {
     expect(createAccountActions.verifyOrgDashboardPageAppears()).to.equal(true);
   });
 });
-

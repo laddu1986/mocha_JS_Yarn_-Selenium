@@ -57,16 +57,12 @@ function createOrgs() {
     const createOrgLink = HomePage.createOrg.isVisible();
     expect(createOrgLink).to.equal(true);
     click(HomePage.createOrg);
-<<<<<<< HEAD
-    setValue(HomePage.createOrgInput, bigName(10));
-=======
 
     waitForElement(HomePage.createOrgInput);
     setValue(HomePage.createOrgInput, lib.randomString.generate(10));
 
     waitForElement(HomePage.createOrgButton);
     HomePage.createOrgButton.waitForEnabled();
->>>>>>> 3578cca23ba5be7188fa52a527ec67338c774190
     click(HomePage.createOrgButton);
     waitForElement(OrgDashboardPage.welcomeMsg)
   });

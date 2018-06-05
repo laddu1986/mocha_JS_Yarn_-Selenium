@@ -20,11 +20,12 @@ exports.config = {
         '--ignore-certificate-errors',
         '--disable-gpu'],
     },
+    pageLoadStrategy: 'normal'
   }],
 
   updateJob: false,
   specs: [
-    './test/web/specs/invites/joinOrgNewUserTest.js',//master
+    './test/web/specs/invites/joinOrgAfterInviteRevokedTest.js',//master
     // './test/web/specs/invites/joinOrgExpiredInviteTest.js', //master
     //'./test/web/specs/*/*Test.js' //master
   ],
@@ -61,16 +62,8 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['spec', 'html-format'],
-  reporterOptions: {
-    htmlFormat: {
-      outputDir: './test/web/Reports'
-    },
-    allure: {
-      outputDir: 'allure-results',
-      disableWebdriverStepsReporting: true,
-    },
-  },
+  reporters: ['spec'],
+
 
   mochaOpts: {
     ui: 'bdd',
