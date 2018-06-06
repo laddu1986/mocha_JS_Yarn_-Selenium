@@ -3,7 +3,6 @@ import SignInPage from 'web/page_objects/signInPage';
 import HomePage from 'web/page_objects/homePage';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
 import CommonPage from 'web/page_objects/common';
-import { openApp, setValue, click, waitForElement } from 'web/actions/actions'
 
 function assertion(e, data) {
   //   console.log(e);
@@ -21,13 +20,13 @@ describe('Organization Page Test', () => {
   // DO NOT DELETE
   //
   // it('Upon SignIn Re-direct to the Org if User has only One Org ', () => {
-  //   waitForElement(SignInPage.emailInput);
+  //   waitForVisible(SignInPage.emailInput);
   //   setValue(SignInPage.emailInput, 'singleorg@qa.co');
 
-  //   waitForElement(SignInPage.passwordInput);
+  //   waitForVisible(SignInPage.passwordInput);
   //   setValue(SignInPage.passwordInput, 'TestQA123');
 
-  //   waitForElement(SignInPage.signInButton);
+  //   waitForVisible(SignInPage.signInButton);
   //   click(SignInPage.signInButton);
 
   //   OrgDashboardPage.welcomeMsg.waitForExist();
@@ -54,7 +53,7 @@ describe('Organization Page Test', () => {
     click(HomePage.profileMenu);
     click(HomePage.switchOrCreateOrganizations);
 
-    waitForElement(HomePage.orgList);
+    waitForVisible(HomePage.orgList);
     console.log(HomePage.orgList.getText().length);
 
     const maxOrgs = HomePage.orgList.getText().length >= 6 ? 5 : HomePage.orgList.getText().length;

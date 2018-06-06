@@ -1,25 +1,15 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
-import { createOrg } from 'web/actions/organization'
-import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard, inviteTeammate, invitationLink, revokeInvite, goToInactiveTab } from 'web/actions/invite';
-import SignInPage from 'web/page_objects/signInPage'
-import CommonPage from '../../page_objects/common';
-import createAccountPage from '../../page_objects/createAccountPage';
-import common from '../../page_objects/common'
-import { getNotificationMessageText, signOut, signIn } from '../../actions/common'
-import { waitForElement, setValue, click } from '../../actions/actions'
-import orgDashboardPage from '../../page_objects/orgDashboardPage';
-import navBar from '../../page_objects/navBar';
-import teamPage from '../../page_objects/teamPage';
+import { goToTeammatesPage, inviteTeammate, invitationLink, revokeInvite, goToInactiveTab } from 'web/actions/invite';
+import { getNotificationMessageText, signOut } from 'web/actions/common'
 import passiveNotification from '../../data/passiveNotification.json'
-import { email, organization } from '../../actions/createAccount';
-import OrgDashboardPage from '../../page_objects/orgDashboardPage'
+import SignInPage from 'web/page_objects/signInPage'
+import common from 'web/page_objects/common'
 let newMember;
 let invitationURL;
 
 describe('Access a Revoked Invitation (New Account)', () => {
-
-  before('Admin Invites New User', () => {
+  before(() => {
     SignInPage.open();
     createAccount()
     console.log(email, '---- ', organization)
