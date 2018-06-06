@@ -24,9 +24,10 @@ function createAccount() {
   setValue(CreateAccountPage.organizationInput, organization);
   setValue(CreateAccountPage.passwordInput, password);
   click(CommonPage.submitButton);
-  
+
   waitForElement(HomePage.logo);
   waitForElement(OrgDashboardPage.currentOrgName);
+  verifyOrgDashboardPageAppears()
 }
 
 export function clickCreateAccountLink() {

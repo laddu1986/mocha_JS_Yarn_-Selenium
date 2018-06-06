@@ -25,7 +25,7 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './test/web/specs/invites/joinOrgAfterInviteRevokedTest.js',//master
+    './test/web/specs/invites/inviteTest.js',//master
     // './test/web/specs/invites/joinOrgExpiredInviteTest.js', //master
     //'./test/web/specs/*/*Test.js' //master
   ],
