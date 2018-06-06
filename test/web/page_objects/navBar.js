@@ -14,6 +14,7 @@ class NavBar extends Page {
   get devPortalAnchor() { return browser.element("//*[contains(text(),'Developer Portal')]"); }
   get apiPortalAnchor() { return browser.element("//*[contains(text(),'API Portal')]"); }
   get sysStatusAnchor() { return browser.element("//*[contains(text(),'System Status')]"); }
+  get navOrgs() { return browser.elements("//*[@data-qa='nav:org']"); }
 
   get signOut() { return browser.element("//*[@data-qa='nav:sign-out']"); }
 

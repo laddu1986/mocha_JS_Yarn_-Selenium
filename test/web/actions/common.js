@@ -1,27 +1,25 @@
 import NavBar from '../page_objects/navBar';
 import CommonPage from '../page_objects/common';
-import { click, waitForElement, setValue } from '../actions/actions';
 import SignInPage from '../page_objects/signInPage'
 
 export function getNotificationMessageText() {
-    waitForElement(CommonPage.successMsg);
+    CommonPage.successMsg.waitForVisible();
     return CommonPage.successMsg.getText();
 }
 
 export function closePassiveNotification() {
-    click(CommonPage.dismissNotification)
-    return notificationMsg;
+    CommonPage.dismissNotification.click()
 }
 
 export function signOut() {
-    click(NavBar.profileMenu);
-    click(NavBar.signOut);
-    waitForElement(CommonPage.submitButton);
+    NavBar.profileMenu.click();
+    NavBar.signOut.click();
+    CommonPage.submitButton.waitForVisible();
 }
 
 export function signIn(email, password) {
-    setValue(SignInPage.emailInput, email);
-    setValue(SignInPage.passwordInput, password);
-    click(CommonPage.submitButton);
-    waitForElement(NavBar.profileMenu);
+    SignInPage.emailInput.setValue(email);
+    SignInPage.passwordInput.setValue(password);
+    CommonPage.submitButton.click();
+    NavBar.profileMenu.waitForVisible();
 }

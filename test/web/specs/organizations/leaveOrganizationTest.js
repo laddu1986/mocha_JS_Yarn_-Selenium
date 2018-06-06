@@ -6,7 +6,6 @@ import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
 import SettingsPage from 'web/page_objects/settingsPage';
 import Page from 'web/page_objects/page';
 import CommonPage from 'web/page_objects/common';
-import { openApp, setValue, click, waitForElement } from 'web/actions/actions'
 
 const name = lib.randomString.generate(10);
 const email = `${lib.randomString.generate(15)}@test.co`;
@@ -60,29 +59,29 @@ describe('Leave Organization Test', () => {
   describe('Create two more Orgs', () => {
     testData.forEach((test) => {
       it(` ${test.title}`, () => {
-        // waitForElement(HomePage.profileMenu);
+        // waitForVisible(HomePage.profileMenu);
         // const profileVisibility = HomePage.profileMenu.isVisible();
         // expect(true).to.equal(profileVisibility);
         click(HomePage.profileMenu);
 
-        // waitForElement(HomePage.switchOrCreateOrganizations);
+        // waitForVisible(HomePage.switchOrCreateOrganizations);
         // const createOrgVisibility = HomePage.switchOrCreateOrganizations.isVisible();
         // expect(true).to.equal(createOrgVisibility);
         click(HomePage.switchOrCreateOrganizations);
 
-        // waitForElement(HomePage.createOrg);
+        // waitForVisible(HomePage.createOrg);
         // const createOrgLink = HomePage.createOrg.isVisible();
         // expect(true).to.equal(createOrgLink);
         click(HomePage.createOrg);
 
-        waitForElement(HomePage.createOrgInput);
+        waitForVisible(HomePage.createOrgInput);
         HomePage.createOrgInput.clearElement();
 
         expect(HomePage.createOrgButton.isEnabled()).to.equal(false);
         setValue(HomePage.createOrgInput, test.organization);
 
         click(HomePage.createOrgButton);
-        waitForElement(OrgDashboardPage.welcomeMsg);
+        waitForVisible(OrgDashboardPage.welcomeMsg);
         // console.log(OrgDashboardPage.welcomeMsg.getText())
       });
     });
@@ -94,9 +93,9 @@ describe('Leave Organization Test', () => {
       viewOrgDashboard();
       click(browser.element("//*[@data-qa='page:org-dashboard']//*[contains(text(),'Change Organization')]"));
       expect(browser.getUrl()).to.equal(`${lib.config.api.base}/organizations`);
-      waitForElement(HomePage.chooseOrg);
+      waitForVisible(HomePage.chooseOrg);
 
-      // waitForElement(browser.element("//*[@data-qa='org:card' and contains(@href,'first')]"));
+      // waitForVisible(browser.element("//*[@data-qa='org:card' and contains(@href,'first')]"));
       click(browser.element("//a[@data-qa='org:card' and contains(@href,'first')]"));
       viewOrgDashboard();
     });
@@ -110,8 +109,8 @@ describe('Leave Organization Test', () => {
     });
 
     it('Validate re-direction to choose org page', () => {
-      waitForElement(HomePage.chooseOrg);
-      waitForElement(HomePage.orgCards);
+      waitForVisible(HomePage.chooseOrg);
+      waitForVisible(HomePage.orgCards);
 
       const orgCount = HomePage.orgCards.getElementSize();
       expect(orgCount.length).to.have.equal(2);
@@ -125,7 +124,7 @@ describe('Leave Organization Test', () => {
 
   describe('Leaving Second Org re-directs to Last Org', () => {
     it('Choose Second Org', () => {
-      waitForElement(HomePage.chooseOrg);
+      waitForVisible(HomePage.chooseOrg);
       click(browser.element("//a[@data-qa='org:card' and contains(@href,'second')]"));
     });
 
@@ -153,8 +152,8 @@ describe('Leave Organization Test', () => {
     });
 
     it('Should re-direct to No Orgs page after leaving the last Org', () => {
-      waitForElement(HomePage.noOrgs);
-      waitForElement(HomePage.createOrgButton);
+      waitForVisible(HomePage.noOrgs);
+      waitForVisible(HomePage.createOrgButton);
 
       const createOrgButtonEnabled = HomePage.createOrgButton.isEnabled();
       expect(createOrgButtonEnabled).to.equal(true);
@@ -179,8 +178,8 @@ function clickLeaveOrganization() {
 }
 
 function viewOrgDashboard() {
-  waitForElement(OrgDashboardPage.currentOrgName);
-  waitForElement(OrgDashboardPage.welcomeMsg);
+  waitForVisible(OrgDashboardPage.currentOrgName);
+  waitForVisible(OrgDashboardPage.welcomeMsg);
 }
 
 function assertion(e, data) {

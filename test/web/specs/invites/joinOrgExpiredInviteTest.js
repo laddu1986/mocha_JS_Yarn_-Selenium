@@ -6,11 +6,8 @@ TestCase: New User
   User accepts and lands on Join Org page
 */
 import * as lib from '../../../common';
-<<<<<<< HEAD
-import { createAccount, organization, name, email, password } from 'web/actions/createAccount';
-=======
+
 import { createAccount } from 'web/actions/account';
->>>>>>> 0c2ee244a544538ce518c6883fd0015de1c64595
 import {
   sendInviteButtonEnabled,
   sendInvite, verifyInviteCount,
@@ -23,11 +20,7 @@ import {
   updateTokenExpiryDateInDB,
   goToInactiveTab,
   resendInvite,
-<<<<<<< HEAD
-} from '../../actions/inviteTeammate';
-=======
 } from 'web/actions/invite';
->>>>>>> 0c2ee244a544538ce518c6883fd0015de1c64595
 import SignInPage from 'web/page_objects/signInPage'
 import CommonPage from '../../page_objects/common';
 import createAccountPage from '../../page_objects/createAccountPage';
@@ -40,22 +33,18 @@ import teamPage from '../../page_objects/teamPage';
 import message from '../../data/messages.json'
 import passiveNotification from '../../data/passiveNotification.json'
 
-let newUser;
-let invitationURL;
-//let adminEmail
+let newUser, invitationURL, accountData;
+
 
 describe('New User accesses an Expired Invitation', () => {
 
   before(() => {
     SignInPage.open();
-    createAccount()
-    console.log(email)
+    accountData = createAccount()
   });
 
   it('Admin invites a New User', () => {
-    newUser = `newUser_${email}`;
-    console.log(newUser)
-    // browser.pause(8000)
+    newUser = `newUser_${lib.randomString.generate(7)}@test.co`;
     inviteTeammate(newUser, '1')
     expect(CommonPage.successMsg.getText().to.include(passiveNotification.invitationSentMessage.text))
   });
@@ -71,6 +60,7 @@ describe('New User accesses an Expired Invitation', () => {
   it('Admin goes to Inactive tab of Teammates page', () => {
     browser.refresh()
     goToTeammatesPage()
+    browser.refresh();
     goToInactiveTab()
   });
 
@@ -88,14 +78,14 @@ describe('New User accesses an Expired Invitation', () => {
   })
 
   it('User lands on Expired invitation page', () => {
-    expect(common.expiredInvitationMsg.getText()).to.include(message.expiredInvitation)
+    expect(CommonPage.expiredInvitationMsg.getText()).to.include(message.expiredInvitation)
   });
 });
 
 describe('Admin Re-sends an Expired Invitation', () => {
   it('Admin logs in', () => {
     SignInPage.open()
-    signIn(email, password)
+    signIn(accountData.email, 'Pass1234')
   });
 
   it('Admin goes to Inactive tab of Teammates page', () => {
@@ -113,7 +103,6 @@ describe('Admin Re-sends an Expired Invitation', () => {
   it('Admin Sign Out', () => {
     signOut()
   });
-
 });
 
 describe('New User Accepts new Invite', () => {
@@ -122,7 +111,7 @@ describe('New User Accepts new Invite', () => {
     browser.url(invitationURL)
   });
   it('User lands on Create Account and Join org page', () => {
-    expect(createAccountPage.joinOrgMsg.getText()).to.include(`Join ${organization}`)
+    expect(accountPage.joinOrgMsg.getText()).to.include(accountData.organization)
     expect(CommonPage.submitButton.isVisible()).to.equal(true)
   });
 });

@@ -11,6 +11,7 @@ import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
 import SignInPage from 'web/page_objects/signInPage';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
 import SettingsPage from 'web/page_objects/settingsPage';
 import Page from 'web/page_objects/page';
@@ -96,6 +97,9 @@ describe('Delete Acount Test (Remove my Account)', () => {
     });
 =======
 import { deleteAccount, deleteOrg } from 'web/actions/organization';
+=======
+import { deleteAccount, deleteOrganization, gotoOrgSettings } from 'web/actions/organization';
+>>>>>>> c6af3ea8071fb369c5dac333a283c54d6d82bfda
 import { verifyIncorrectSignIn, signIn } from 'web/actions/login';
 import { verifyOrgDashboardPageAppears } from 'web/actions/account';
 var accountDetails;
@@ -104,7 +108,8 @@ describe('Delete Account Test (Remove my Account)', () => {
   before('Create account and delete organisation', () => {
     SignInPage.open();
     accountDetails = createAccount();
-    deleteOrg();
+    gotoOrgSettings();
+    deleteOrganization();
   });
 
   it(`\nRemove account --> Sign In page appears\n`, () => {

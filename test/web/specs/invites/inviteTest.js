@@ -1,9 +1,8 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
 import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard } from "web/actions/invite";
-import SignInPage from 'web/page_objects/signInPage'
-import { signOut } from 'web/actions/common'
-
+import SignInPage from 'web/page_objects/signInPage';
+import { signOut } from 'web/actions/common';
 
 const invite_email1 = `invite_1_${lib.randomString.generate(5)}@test.co`;
 const invite_email2 = `invite_2${lib.randomString.generate(5)}@test.co`;
