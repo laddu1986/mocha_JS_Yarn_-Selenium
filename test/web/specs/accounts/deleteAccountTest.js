@@ -1,7 +1,5 @@
 /* https://appcurator.atlassian.net/browse/ACT-35
-
 ACCEPTANCE CRITERIA
-
 Member must be able to delete account if not associated with any Org
 Page URL: /organizations
 Upon clicking / tapping on 'Delete my account', display a confirmation prompt to delete the account
@@ -9,11 +7,10 @@ After confirming to delete the account, member should be redirected to 'Sign in'
 Attempt to sign in should fail for deleted account
 */
 
-
 import * as lib from '../../../common';
-import CreateAccountPage from 'web/page_objects/createAccountPage';
-import HomePage from 'web/page_objects/homePage';
+import { createAccount } from 'web/actions/account';
 import SignInPage from 'web/page_objects/signInPage';
+<<<<<<< HEAD
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
 import SettingsPage from 'web/page_objects/settingsPage';
 import Page from 'web/page_objects/page';
@@ -97,22 +94,36 @@ describe('Delete Acount Test (Remove my Account)', () => {
       waitForElement(CommonPage.submitButton);
       expect(browser.getUrl()).to.equal(`${lib.web}/sign-in`);
     });
+=======
+import { deleteAccount, deleteOrg } from 'web/actions/organization';
+import { verifyIncorrectSignIn, signIn } from 'web/actions/login';
+import { verifyOrgDashboardPageAppears } from 'web/actions/account';
+var accountDetails;
+
+describe('Delete Account Test (Remove my Account)', () => {
+  before('Create account and delete organisation', () => {
+    SignInPage.open();
+    accountDetails = createAccount();
+    deleteOrg();
   });
 
-  describe('Should not be able to Sign In with the same credentials again', () => {
-    it('Enter the same credentials as above and click Sign In', () => {
-      setValue(SignInPage.emailInput, `${email}`);
-      setValue(SignInPage.passwordInput, `${password}`);
-      click(CommonPage.submitButton);
-    });
-
-    it('Should show err msg - Incorrect details', () => {
-      waitForElement(SignInPage.incorrectDetails);
-      expect(SignInPage.incorrectDetails.getText()).to.include('incorrect');
-    });
+  it(`\nRemove account --> Sign In page appears\n`, () => {
+    deleteAccount();
+    expect(browser.getUrl()).to.equal(`${lib.config.web.base}/sign-in`);
   });
 
+  it('Login with same credentials --> Incorrect Details Error', () => {
+    signIn(accountDetails.email, 'Pass1234');
+    expect(verifyIncorrectSignIn()).to.include('incorrect');
+>>>>>>> 0c2ee244a544538ce518c6883fd0015de1c64595
+  });
+
+  it('Re-registeration with same email is allowed', () => {
+    createAccount(accountDetails.email);
+    expect(verifyOrgDashboardPageAppears()).to.equal(true);
+  });
 });
+<<<<<<< HEAD
 
 function gotoOrgSettings() {
   click(HomePage.profileMenu);
@@ -136,3 +147,5 @@ function assertion(e, data) {
     expect(expected).to.equal(data);
   });
 }
+=======
+>>>>>>> 0c2ee244a544538ce518c6883fd0015de1c64595

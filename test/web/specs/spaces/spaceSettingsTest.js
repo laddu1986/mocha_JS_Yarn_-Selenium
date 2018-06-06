@@ -1,7 +1,7 @@
 import * as lib from '../../../common';
 import SignInPage from 'web/page_objects/signInPage'
-import { createAccount } from 'web/actions/createAccount';
-import * as createSpaceActions from 'web/actions/createSpace';
+import { createAccount } from 'web/actions/account';
+import * as createSpaceActions from 'web/actions/space';
 import { getNotificationMessageText, closePassiveNotification } from 'web/actions/common';
 import spaceData from 'web/data/passiveNotification.json';
 import constants from 'data/constants.json';
@@ -15,7 +15,7 @@ describe('Space Settings', () => {
         editSpaceUrl = browser.getUrl();
     });
     it('Edit Space name --> verify passive notfication and new space name on dashboard', () => {
-        browser.url(`${editSpaceUrl}/edit`);                // hard coding until we have space settings nav options
+        browser.url(`${editSpaceUrl}/settings`);                // hard coding until we have space settings nav options
         newSpacename = createSpaceActions.changeSpace();
         expect(getNotificationMessageText()).to.contain(spaceData.spaceDetailsSaved.text);
         closePassiveNotification();
@@ -23,7 +23,7 @@ describe('Space Settings', () => {
     });
 
     it('Edit Space slug --> verify passive notification and new space url', () => {
-        browser.url(`${editSpaceUrl}/edit`);
+        browser.url(`${editSpaceUrl}/settings`);
         var newSlugName = createSpaceActions.changeSpace(constants.SpaceAttributes.Slug);
         expect(getNotificationMessageText()).to.contain(spaceData.spaceDetailsSaved.text);
         closePassiveNotification();

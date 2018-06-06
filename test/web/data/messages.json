@@ -1,3 +1,4 @@
 {
-  "expiredInvitation": "This invitation has expired :("
+  "expiredInvitation": "This invitation has expired :(",
+  "invalidLogin": "This is a required field"
 }

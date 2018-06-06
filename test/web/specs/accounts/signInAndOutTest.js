@@ -1,94 +1,38 @@
 import * as lib from '../../../common';
 import SignInPage from 'web/page_objects/signInPage';
+<<<<<<< HEAD
 import HomePage from 'web/page_objects/homePage';
 import NavBar from 'web/page_objects/navBar';
 import CommonPage from 'web/page_objects/common';
 import { openApp, setValue, click, waitForElement } from 'web/actions/actions'
+=======
+import { signIn, clearPlaceholder, verifySignIn } from 'web/actions/login';
+import { signOut, verifySignOut } from 'web/actions/navBar';
+import * as validationMessage from 'web/data/messages';
+>>>>>>> 0c2ee244a544538ce518c6883fd0015de1c64595
 
-// function name(params) {
-//   let text = ''
-//   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-
-//   for (let i = 0 i < params i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)) }
-
-//   return text
-// }
-
-function assertion(e, data) {
-  //   console.log(e)
-  e.forEach((expected) => {
-    expect(expected).to.equal(data);
-  });
-}
-
-
-let signInSuccess;
-
-describe('Tests for Sign Page', () => {
+describe('Sign In/Out Test', () => {
   before('Open Sign In page', () => {
     SignInPage.open();
   });
 
-  it('Should throw an error while Signing In with Blank data', () => {
-    waitForElement(SignInPage.emailInput);
-    waitForElement(SignInPage.passwordInput);
-    waitForElement(CommonPage.submitButton);
-
-    SignInPage.emailInput.clearElement();
-    SignInPage.passwordInput.clearElement();
-
-    click(CommonPage.submitButton);
-
-    expect(SignInPage.emailError.isVisible()).to.equal(true);
-    expect(SignInPage.passwordError.isVisible()).to.equal(true);
-
-    const emailErr = SignInPage.emailError.getText();
-    const passwordErr = SignInPage.passwordError.getText();
-
-    expect(emailErr).to.equal('This is a required field');
-    expect(passwordErr).to.equal('This is a required field');
+  it(`\nSign In with Blank data --> Throws an error\n`, () => {
+    clearPlaceholder();
+    signIn('', '');
+    expect(SignInPage.emailError.getText()).to.equal(validationMessage.invalidLogin);
+    expect(SignInPage.passwordError.getText()).to.equal(validationMessage.invalidLogin);
   });
 
-
-  it('Should throw an error while Signing In with Incorrect credentials', () => {
-    waitForElement(SignInPage.emailInput);
-    SignInPage.emailInput.clearElement();
-    //setValue(SignInPage.emailInput, 'incorrect@email.com');
-    (SignInPage.emailInput).setValue('incorrect@email.com')
-
-    waitForElement(SignInPage.passwordInput);
-    SignInPage.passwordInput.clearElement();
-
-    setValue(SignInPage.passwordInput, 'Incorrect@Password123');
-
-
-    click(CommonPage.submitButton);
-
-    waitForElement(SignInPage.incorrectDetails);
-    const signInErrMsg = SignInPage.incorrectDetails.getText();
-    expect(signInErrMsg).to.include('incorrect');
+  it('Sign In with correct credentials --> successful', () => {
+    clearPlaceholder();
+    signIn('testaccount@donotdeleteplease.com', 'Pass1234');
+    expect(verifySignIn()).to.equal(true);
   });
 
-
-  it('Should Sign In successfully with Correct credentials', () => {
-    setValue(SignInPage.emailInput, 'testaccount@donotdeleteplease.com');
-    setValue(SignInPage.passwordInput, 'Pass1234');
-    click(CommonPage.submitButton);
-    waitForElement(HomePage.profileMenu);
-    signInSuccess = HomePage.profileMenu.isVisible();
-    expect(signInSuccess).to.equal(true);
-  });
-
-  it('Should Sign Out successfully', () => {
-    if (signInSuccess === true) {
-      click(HomePage.profileMenu);
-      click(NavBar.signOut);
-
-      waitForElement(CommonPage.submitButton);
-      expect(CommonPage.submitButton.isVisible()).to.equal(true);
-    } else {
-      console.log('User not Signed in');
-    }
+  it('Sign out', () => {
+    signOut();
+    expect(verifySignOut()).to.equal(true);
   });
 });
+
 
