@@ -1,32 +1,94 @@
 require('dotenv').config();
 const argv = require('yargs').argv;
 
-const brow = 'chrome';
-
 const debug = process.env.DEBUG;
 const timeoutPeriod = 30000;
+
+var browsers = {
+  chrome_headless: {
+    browserName: 'chrome',
+    chromeOptions: {
+      args: [
+        '--disable-infobars',
+        '--headless',
+        '--incognito',
+        '--ignore-certificate-errors',
+        '--disable-gpu'],
+    }
+  },
+  chrome: {
+    browserName: 'chrome',
+    chromeOptions: {
+      args: [
+        '--start-maximized',
+        '--disable-infobars',
+        '--incognito',
+        '--ignore-certificate-errors',
+        '--disable-gpu'],
+    }
+  },
+  firefox: {
+    browserName: 'firefox',
+    "moz:firefoxOptions": {
+      args: [
+        '--disable-infobars',
+        '--incognito',
+        '--ignore-certificate-errors',
+        '--disable-gpu'],
+    }
+  },
+  safari: {
+    browserName: 'safari',
+    safariOptions: {
+      args: [
+        '--disable-infobars',
+        '--incognito',
+        '--ignore-certificate-errors',
+        '--disable-gpu'],
+    }
+  },
+  ie: {
+    browserName: 'internetExplorer',
+    internetExplorerOptions: {
+      args: [
+        '--disable-infobars',
+        '--incognito',
+        '--ignore-certificate-errors',
+        '--disable-gpu'],
+    }
+  }
+}
+
+function getBrowser() {
+  let vars, argument;
+  process.argv.forEach(function (value) { //here we can overwrite variables (ex. --browser:chrome )
+    if (/--.+\:/.test(value)) {
+      vars = value.split(':');
+      argument = vars[1];
+    }
+  });
+  if (argument == "firefox")
+    return browsers.firefox;
+  if (argument == "chrome_headless")
+    return browsers.chrome_headless;
+  if (argument == "safari")
+    return browsers.safari;
+  if (argument == "ie")
+    return browsers.ie;
+  else
+    return browsers.chrome;
+}
 
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
   //services: ['devtools'],
   enableNetwork: true,
-  capabilities: [{
-    browserName: brow,
-    chromeOptions: {
-      args: [
-        'disable-infobars',
-        //'--headless',
-        '--incognito',
-        '--ignore-certificate-errors',
-        '--disable-gpu'],
-    },
-  }],
-
+  capabilities: [getBrowser()],
   updateJob: false,
   specs: [
-    './test/web/specs/invites/joinOrgExpiredInviteTest.js', //master
-    './test/web/specs/invites/joinOrgAfterInviteRevokedTest.js',//master
-    // './test/web/specs/*/*Test.js' //master
+    './test/web/specs/invites/inviteTest.js',//master
+    // './test/web/specs/invites/joinOrgExpiredInviteTest.js', //master
+    //'./test/web/specs/*/*Test.js' //master
   ],
   // Patterns to exclude.
   exclude: [
@@ -39,7 +101,6 @@ exports.config = {
     support: ['./test/web/specs/support/*Test.js'],
     invites: ['./test/web/specs/invites/*Test.js']
   },
-
   logLevel: 'silent',
   bail: 2,
   coloredLogs: true,
@@ -62,15 +123,11 @@ exports.config = {
 
   framework: 'mocha',
   reporters: ['spec'],
-  reporterOptions: {
-    allure: {
-      outputDir: 'allure-results',
-      disableWebdriverStepsReporting: true,
-    },
-  },
+
 
   mochaOpts: {
     ui: 'bdd',
+    reporter: 'spec',
     compilers: ['js:babel-register'],
     timeout: debug ? 9999999 : timeoutPeriod,
   },
@@ -89,10 +146,10 @@ exports.config = {
   // variables like `browser`. It is the perfect place to define custom commands.
   before() {
     const chai = require('chai');
-
     global.expect = chai.expect;
     chai.Should();
-
+    //console.log('Before')
+    // const config = require('config-yml');
   },
 
   // Gets executed after all tests are done. You still have access to all global variables from

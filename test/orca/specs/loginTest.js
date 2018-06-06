@@ -5,10 +5,10 @@ const responseData = [];
 const testData = [{
   data: {
     fields: {
-      name: `${lib.bigName(10)}`,
-      email: `${lib.bigName(10)}@test.co`,
+      name: `${lib.randomString.generate(10)}`,
+      email: `${lib.randomString.generate(10)}@test.co`,
       password: 'Pass1234',
-      organizationName: `${lib.bigName(10)}`
+      organizationName: `${lib.randomString.generate(10)}`
     }
   },
   it: 'Adding proper details',
@@ -17,10 +17,10 @@ const testData = [{
 //  {
 //   data: {
 //     fields: {
-//       name: `${lib.bigName(10)}`,
-//       email: `${lib.bigName(10)}@test.co`,
+//       name: `${lib.randomString.generate(10)}`,
+//       email: `${lib.randomString.generate(10)}@test.co`,
 //       password: 'Pass1234',
-//       organizationName: `${lib.bigName(10)}`,
+//       organizationName: `${lib.randomString.generate(10)}`,
 //     },
 //   },
 //   it: 'Adding wrong details data',

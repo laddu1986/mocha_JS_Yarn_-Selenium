@@ -18,7 +18,7 @@ function signIn() {
 }
 
 
-describe('Test Help Center', () => {
+xdescribe('Test Help Center', () => {
   it('Open App Page', () => {
     SignInPage.open();
   });
@@ -49,7 +49,7 @@ describe('Test Help Center', () => {
 
 });
 
-describe('Test Developer Portal', () => {
+xdescribe('Test Developer Portal', () => {
   it('Sign In', () => {
     signIn();
   });
@@ -74,7 +74,7 @@ describe('Test Developer Portal', () => {
   });
 });
 
-describe('Test API Portal', () => {
+xdescribe('Test API Portal', () => {
   it('Sign In', () => {
     signIn();
   });
@@ -99,7 +99,7 @@ describe('Test API Portal', () => {
   });
 });
 
-describe('Test System Status', () => {
+xdescribe('Test System Status', () => {
   it('Sign In', () => {
     signIn();
   });

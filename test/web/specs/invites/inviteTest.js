@@ -1,13 +1,13 @@
 import * as lib from '../../../common';
-import { createAccount } from 'web/actions/createAccount';
-import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard } from "web/actions/inviteTeammate";
+import { createAccount } from 'web/actions/account';
+import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard } from "web/actions/invite";
 import SignInPage from 'web/page_objects/signInPage'
 import { signOut } from 'web/actions/common'
 
 
-const invite_email1 = `invite_1_${lib.bigName(5)}@test.co`;
-const invite_email2 = `invite_2${lib.bigName(5)}@test.co`;
-const invite_email3 = `invite_3${lib.bigName(5)}@test.co`;
+const invite_email1 = `invite_1_${lib.randomString.generate(5)}@test.co`;
+const invite_email2 = `invite_2${lib.randomString.generate(5)}@test.co`;
+const invite_email3 = `invite_3${lib.randomString.generate(5)}@test.co`;
 
 describe('Invite Tests \n', () => {
 
@@ -17,6 +17,8 @@ describe('Invite Tests \n', () => {
 
   before(() => {
     createAccount();
+    //browser.refresh()
+    browser.pause(2000)
   });
 
   describe('Organisation Dashboard page \n', () => {
@@ -46,13 +48,13 @@ describe('Invite Tests \n', () => {
     });
 
     it('Validate inactive tab for the invites', () => {
-      expect(verifyInvite()).to.include(invite_email1);
-      expect(verifyInvite()).to.include(invite_email2);
+      expect(verifyInactiveInvite()).to.include(invite_email1);
+      expect(verifyInactiveInvite()).to.include(invite_email2);
     });
 
     it('Send Invite --> verify inactive tab', () => {
       sendInvite(invite_email3);
-      expect(verifyInvite()).to.include(invite_email3);
+      expect(verifyInactiveInvite()).to.include(invite_email3);
     });
 
     it('Validate pending invite count', () => {

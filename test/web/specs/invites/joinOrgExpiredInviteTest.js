@@ -6,7 +6,11 @@ TestCase: New User
   User accepts and lands on Join Org page
 */
 import * as lib from '../../../common';
-import { createAccount } from 'web/actions/createAccount';
+<<<<<<< HEAD
+import { createAccount, organization, name, email, password } from 'web/actions/createAccount';
+=======
+import { createAccount } from 'web/actions/account';
+>>>>>>> 0c2ee244a544538ce518c6883fd0015de1c64595
 import {
   sendInviteButtonEnabled,
   sendInvite, verifyInviteCount,
@@ -19,7 +23,11 @@ import {
   updateTokenExpiryDateInDB,
   goToInactiveTab,
   resendInvite,
-} from 'web/actions/inviteTeammate';
+<<<<<<< HEAD
+} from '../../actions/inviteTeammate';
+=======
+} from 'web/actions/invite';
+>>>>>>> 0c2ee244a544538ce518c6883fd0015de1c64595
 import SignInPage from 'web/page_objects/signInPage'
 import CommonPage from '../../page_objects/common';
 import createAccountPage from '../../page_objects/createAccountPage';
@@ -34,19 +42,22 @@ import passiveNotification from '../../data/passiveNotification.json'
 
 let newUser;
 let invitationURL;
+//let adminEmail
 
 describe('New User accesses an Expired Invitation', () => {
 
   before(() => {
     SignInPage.open();
     createAccount()
-    console.log(lib.testData.email)
+    console.log(email)
   });
 
   it('Admin invites a New User', () => {
-    newUser = `newUser_${lib.testData.email}`;
+    newUser = `newUser_${email}`;
     console.log(newUser)
+    // browser.pause(8000)
     inviteTeammate(newUser, '1')
+    expect(CommonPage.successMsg.getText().to.include(passiveNotification.invitationSentMessage.text))
   });
 
   it('User gets Invitation URL', async () => {
@@ -84,11 +95,11 @@ describe('New User accesses an Expired Invitation', () => {
 describe('Admin Re-sends an Expired Invitation', () => {
   it('Admin logs in', () => {
     SignInPage.open()
-    signIn(lib.testData.email, lib.testData.password)
+    signIn(email, password)
   });
 
   it('Admin goes to Inactive tab of Teammates page', () => {
-    browser.pause(1500) // pause workaround for Bug: ACT-299. will be removed after bugfix
+    browser.pause(1500) // workaround for Bug: ACT-299. will be removed after bugfix
     goToTeammatesPage()
     goToInactiveTab()
   });
@@ -111,7 +122,7 @@ describe('New User Accepts new Invite', () => {
     browser.url(invitationURL)
   });
   it('User lands on Create Account and Join org page', () => {
-    expect(createAccountPage.joinOrgMsg.getText()).to.include(`Join ${lib.testData.organization}`)
+    expect(createAccountPage.joinOrgMsg.getText()).to.include(`Join ${organization}`)
     expect(CommonPage.submitButton.isVisible()).to.equal(true)
   });
 });

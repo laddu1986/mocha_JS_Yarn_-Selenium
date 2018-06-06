@@ -3,29 +3,25 @@ import CommonPage from '../page_objects/common';
 import { click, waitForElement, setValue } from '../actions/actions';
 import SignInPage from '../page_objects/signInPage'
 
-function getNotificationMessageText() {
+export function getNotificationMessageText() {
     waitForElement(CommonPage.successMsg);
-    const notificationMsg = CommonPage.successMsg.getText();
+    return CommonPage.successMsg.getText();
+}
+
+export function closePassiveNotification() {
     click(CommonPage.dismissNotification)
     return notificationMsg;
 }
 
-
-function signOut() {
+export function signOut() {
     click(NavBar.profileMenu);
     click(NavBar.signOut);
     waitForElement(CommonPage.submitButton);
 }
 
-function signIn(email, password) {
+export function signIn(email, password) {
     setValue(SignInPage.emailInput, email);
     setValue(SignInPage.passwordInput, password);
     click(CommonPage.submitButton);
     waitForElement(NavBar.profileMenu);
 }
-
-export {
-    getNotificationMessageText,
-    signOut,
-    signIn
-};

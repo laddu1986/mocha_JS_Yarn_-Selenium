@@ -1,55 +1,48 @@
 import * as lib from '../../../common';
-import { createAccount } from 'web/actions/createAccount';
-import { createOrg } from 'web/actions/createOrg'
-import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard, inviteTeammate, invitationLink, revokeInvite, goToInactiveTab } from 'web/actions/inviteTeammate';
+import { createAccount } from 'web/actions/account';
+import { createOrg } from 'web/actions/organization'
+import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard, inviteTeammate, invitationLink, revokeInvite, goToInactiveTab } from 'web/actions/invite';
 import SignInPage from 'web/page_objects/signInPage'
 import CommonPage from '../../page_objects/common';
 import createAccountPage from '../../page_objects/createAccountPage';
 import common from '../../page_objects/common'
-import { getNotificationMessageText, signOut, signIn } from 'web/actions/common'
+import { getNotificationMessageText, signOut, signIn } from '../../actions/common'
 import { waitForElement, setValue, click } from '../../actions/actions'
 import orgDashboardPage from '../../page_objects/orgDashboardPage';
 import navBar from '../../page_objects/navBar';
 import teamPage from '../../page_objects/teamPage';
 import passiveNotification from '../../data/passiveNotification.json'
+import { email, organization } from '../../actions/createAccount';
+import OrgDashboardPage from '../../page_objects/orgDashboardPage'
 let newMember;
 let invitationURL;
 
 describe('Access a Revoked Invitation (New Account)', () => {
 
-  before(() => {
+  before('Admin Invites New User', () => {
     SignInPage.open();
     createAccount()
-    console.log(lib.testData.email + `\n` + lib.testData.password + `\n` + lib.testData.organization)
-  });
-
-  it('Invite a Non Existing member', () => {
-    newMember = `newmember_${lib.testData.email}`;
+    console.log(email, '---- ', organization)
+    newMember = `newmember_${email}`;
     inviteTeammate(newMember, '1')
     expect(getNotificationMessageText()).to.include(passiveNotification.invitationSentMessage.text)
   });
 
-  it('Get Invitation URL', async () => {
+  it('New User gets Invitation URL', async () => {
     invitationURL = await invitationLink(newMember)
   });
 
-  it('Revoke Invite and validate Passive Notification', () => {
+  it('Admin revokes invite and validates Passive Notification and Sign Out', () => {
     goToTeammatesPage()
     goToInactiveTab()
     revokeInvite()
     expect(getNotificationMessageText()).to.include(passiveNotification.revokeInviteMessage.text)
-  });
-
-  it('Sign Out', () => {
     signOut()
   });
 
-  it('New Member clicks on the Invite link', () => {
+  it('New User clicks on the Invite link --> Lands on Invalid invitation page', () => {
     browser.url(invitationURL) //user clicks on Accept Invitation button from invite email
+    expect(common.invalidInvitationMsg.getText()).to.include('Invalid invitation')
   })
 
-  it('Verify user lands on Invalid invitation page', () => {
-    expect(common.invalidInvitationMsg.getText()).to.include('Invalid invitation')
-  });
 });
-
