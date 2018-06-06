@@ -6,6 +6,8 @@ import { setValue, click, waitForElement } from '../actions/actions'
 import teamPage from '../page_objects/teamPage';
 import Common from '../page_objects/common'
 import orgDashboardPage from '../page_objects/orgDashboardPage';
+import getNotificationMessageText from '../actions/common'
+import common from '../page_objects/common';
 
 function clickInviteTeammateButton() {
   click(orgDashboardPage.inviteTeammateButton);
@@ -18,11 +20,12 @@ function sendInviteButtonEnabled() {
 function sendInvite(inviteMail) {
   setValue(orgDashboardPage.inviteEmailInput, inviteMail);
   //browser.pause(2000)
-  click(orgDashboardPage.sendInviteButton);
-  // browser.pause(2000)
-  waitForElement(Common.successMsg)
-  console.log(Common.successMsg.getText())
-  waitForElement(orgDashboardPage.pendingInviteCircle)
+  orgDashboardPage.sendInviteButton.click();
+  waitForElement(common.successMsg)
+  Common.successMsg.getText()
+  common.dismissNotification.click()
+  // console.log(Common.successMsg.getText())
+  //waitForElement(orgDashboardPage.pendingInviteCircle)
 }
 
 function goToTeammatesPage() {
@@ -32,8 +35,11 @@ function goToTeammatesPage() {
   click(NavBar.teamNavLink);
 }
 
-function verifyInvite() {
+export function verifyInactiveInvite() {
   goToInactiveTab();
+  // browser.waitUntil(() => teamPage.email.getText().includes(invite_email3) == true, 5000, 'Email is not present in the Inactive Tab', 200);
+  console.log(teamPage.email.getText())
+
   return teamPage.email.getText();
 }
 
@@ -47,9 +53,8 @@ function goToOrganisationDashboard() {
 
 function inviteTeammate(mail, counta) {
   clickInviteTeammateButton()
-  // browser.pause(2000)
   sendInvite(mail)
-  browser.pause(22000)
+  getNotificationMessageText()
   verifyInviteCount(counta)
 }
 
@@ -63,7 +68,7 @@ export function resendInvite() {
 }
 
 function goToInactiveTab() {
-  click(teamPage.inactiveTab)
+  teamPage.inactiveTab.click()
 }
 
 function getInviteTokenFromDB(email) {
@@ -114,7 +119,6 @@ export {
   verifyInviteCount,
   clickInviteTeammateButton,
   goToTeammatesPage,
-  verifyInvite,
   goToOrganisationDashboard,
   inviteTeammate,
   invitationLink,
