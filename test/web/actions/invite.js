@@ -4,61 +4,60 @@ import homePage from 'web/page_objects/homePage'
 import NavBar from 'web/page_objects/navBar'
 import TeamPage from 'web/page_objects/TeamPage'
 import SpaceAPIKeyPage from 'web/page_objects/spaceAPIKeyPage';
-import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
 import teamPage from '../page_objects/teamPage';
 
-function clickInviteTeammateButton() {
-  click(OrgDashboardPage.inviteTeammateButton);
+export function clickInviteTeammateButton() {
+  OrgDashboardPage.inviteTeammateButton.click();
 }
 
-function sendInviteButtonEnabled() {
+export function sendInviteButtonEnabled() {
   return OrgDashboardPage.sendInviteButton.isEnabled();
 }
 
-function sendInvite(inviteMail) {
-  setValue(OrgDashboardPage.inviteEmailInput, inviteMail);
-  click(OrgDashboardPage.sendInviteButton);
+export function sendInvite(inviteMail) {
+  OrgDashboardPage.inviteEmailInput.setValue(inviteMail);
+  OrgDashboardPage.sendInviteButton.click();
 }
 
-function goToTeammatesPage() {
-  click(NavBar.profileMenu);
-  click(NavBar.settingsAnchor);
+export function goToTeammatesPage() {
+  NavBar.profileMenu.click();
+  NavBar.settingsAnchor.click();
   browser.waitUntil(() => NavBar.teamNavLink.getText() === ('Team'), 5000, 'Team link is not displayed', 200);
-  click(NavBar.teamNavLink);
+  NavBar.teamNavLink.click();
 }
 
-function verifyInvite() {
+export function verifyInvite() {
   goToInactiveTab();
   return TeamPage.email.getText();
 }
 
-function verifyInviteCount(count) {
+export function verifyInviteCount(count) {
   browser.waitUntil(() => OrgDashboardPage.pendingInviteCircle.getText() === (`+${count}`), 5000, 'Expect pending invite circle to increment by 1', 200);
 }
 
-function goToOrganisationDashboard() {
+export function goToOrganisationDashboard() {
   NavBar.backToOrgDashboardLink.click();
 }
 
-function inviteTeammate(mail, counta) {
+export function inviteTeammate(mail, counta) {
   clickInviteTeammateButton()
   sendInvite(mail)
   verifyInviteCount(counta)
 }
 
 export function revokeInvite() {
-  click(teamPage.revokeButton)
+  teamPage.revokeButton.click()
 }
 
 export function resendInvite() {
-  click(teamPage.resendButton)
+  teamPage.resendButton.click()
 }
 
-function goToInactiveTab() {
-  click(teamPage.inactiveTab)
+export function goToInactiveTab() {
+  teamPage.inactiveTab.click()
 }
 
-function getInviteTokenFromDB(email) {
+export function getInviteTokenFromDB(email) {
   return new Promise((resolve, reject) => {
     const selectInviteId = `SELECT Id FROM organization_dev.Invites 
                             WHERE Email = "${email}"
@@ -72,7 +71,7 @@ function getInviteTokenFromDB(email) {
   })
 }
 
-async function invitationLink(email) {
+export async function invitationLink(email) {
   const token = await getInviteTokenFromDB(email)
   return `${lib.web}/join?invite=${token}`
 }
@@ -89,16 +88,3 @@ export async function updateTokenExpiryDateInDB(email) {
       })
   })
 }
-
-export {
-  sendInviteButtonEnabled,
-  sendInvite,
-  verifyInviteCount,
-  clickInviteTeammateButton,
-  goToTeammatesPage,
-  verifyInvite,
-  goToOrganisationDashboard,
-  inviteTeammate,
-  invitationLink,
-  goToInactiveTab
-};

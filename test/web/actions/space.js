@@ -1,10 +1,9 @@
+const copyPasteModule = require('copy-paste');
 import * as lib from '../../common';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
-import { ifEnabled, setValue, click, waitForElement } from 'web/actions/actions'
 import SpaceAPIKeyPage from 'web/page_objects/spaceAPIKeyPage';
 import SpaceSettingsPage from 'web/page_objects/SpaceSettingsPage';
 import SpaceDashboardPage from 'web/page_objects/SpaceDashboardPage';
-const copyPasteModule = require('copy-paste');
 import HomePage from 'web/page_objects/homePage';
 import CommonPage from 'web/page_objects/common';
 
@@ -15,33 +14,33 @@ export function changeSpace(type) {
     webElement = SpaceSettingsPage.spaceSlug;
     name = `${lib.randomString.generate(8)}_Slug`;
   }
-  setValue(webElement, name);
-  click(CommonPage.submitButton);
+  webElement.setValue(name);
+  CommonPage.submitButton.click();
   return name;
 }
 
 export function verifyNewSpaceName() {
-  click(HomePage.logo);
+  HomePage.logo.click();
   return OrgDashboardPage.spaceCards.getText();
 }
 
 export function deleteSpace() {
-  click(SpaceSettingsPage.deleteSpaceButton);
-  click(SpaceSettingsPage.imSureButton);
+  SpaceSettingsPage.deleteSpaceButton.click();
+  SpaceSettingsPage.imSureButton.click();
 }
 
 export function spaceIsDeleted() {
   return OrgDashboardPage.createSpaceInput.isVisible();
 }
 function createSpace() {
-  setValue(OrgDashboardPage.createSpaceInput, `${lib.randomString.generate(8)}_Space`);
-  click(OrgDashboardPage.createSpaceButton);
-  waitForElement(SpaceDashboardPage.goToAppSettings);
+  OrgDashboardPage.createSpaceInput.setValue(`${lib.randomString.generate(8)}_Space`);
+  OrgDashboardPage.createSpaceButton.click();
+  SpaceDashboardPage.goToAppSettings.waitForVisible();
 }
 
 export function goToAPIKeyPage() {
-  click(SpaceDashboardPage.goToAppSettings);
-  waitForElement(SpaceAPIKeyPage.devApiGuideButton);
+  SpaceDashboardPage.goToAppSettings.click();
+  SpaceAPIKeyPage.devApiGuideButton.waitForVisible();
 }
 
 function verifySpace() {
@@ -49,12 +48,12 @@ function verifySpace() {
 }
 
 function clickCreateNewSpaceButton() {
-  click(OrgDashboardPage.createNewSpaceButton);
+  OrgDashboardPage.createNewSpaceButton.click();
 }
 
 function goBackToOrgDashboard() {
-  click(HomePage.logo);
-  waitForElement(OrgDashboardPage.spaceCards);
+  HomePage.logo.click();
+  OrgDashboardPage.spaceCards.waitForVisible();
 }
 
 function createSpaceButtonEnabled() {
@@ -87,20 +86,20 @@ export function verifyNewSpaceUrl(newSlugName) {
 }
 
 function clickRevokeButton() {
-  click(SpaceAPIKeyPage.revokeButton);
+  SpaceAPIKeyPage.revokeButton.click();
 }
 
 function clickUndoButton() {
-  click(SpaceAPIKeyPage.undoButton);
+  SpaceAPIKeyPage.undoButton.click();
 }
 
 function deleteAPIKey() {
-  click(SpaceAPIKeyPage.deleteButton);
-  click(CommonPage.submitButton);
+  SpaceAPIKeyPage.deleteButton.click();
+  CommonPage.submitButton.click();
 }
 
 function ifIconsEnabled() {
-  if (ifEnabled(SpaceAPIKeyPage.deleteButton) === false && ifEnabled(SpaceAPIKeyPage.undoButton) === false) {
+  if (SpaceAPIKeyPage.deleteButton.isEnabled() === false && SpaceAPIKeyPage.undoButton.isEnabled() === false) {
     return false;
   }
 }
