@@ -3,20 +3,19 @@ import HomePage from 'web/page_objects/homePage';
 import CreateAccountPage from 'web/page_objects/accountPage'
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
 import CommonPage from 'web/page_objects/common'
-import { setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
 var name, email, organization, accountData = { name, email, organization };
 
 export function createAccount(email) {
   clickCreateAccountLink();
   inputDetails(email);
   submit();
-  waitForElement(HomePage.logo);
-  waitForElement(OrgDashboardPage.currentOrgName);
+  HomePage.logo.waitForVisible();
+  OrgDashboardPage.currentOrgName.waitForVisible();
   return accountData;
 }
 
 export function clickCreateAccountLink() {
-  click(CreateAccountPage.createAccountLink);
+  CreateAccountPage.createAccountLink.click();
 }
 
 export function verifyCreateAccountPageAppears() {
@@ -26,20 +25,20 @@ export function verifyCreateAccountPageAppears() {
 export function inputDetails(email) {
   accountData.name = lib.randomString.generate(8);
   accountData.organization = `${lib.randomString.generate(10)}_Org`;
-  setValue(CreateAccountPage.nameInput, accountData.name);
-  setValue(CreateAccountPage.organizationInput, accountData.organization);
-  setValue(CreateAccountPage.passwordInput, 'Pass1234');
+  CreateAccountPage.nameInput.setValue(accountData.name);
+  CreateAccountPage.organizationInput.setValue(accountData.organization);
+  CreateAccountPage.passwordInput.setValue('Pass1234');
   if (email != undefined) {
-    setValue(CreateAccountPage.emailInput, email);
+    CreateAccountPage.emailInput.setValue(email);
     accountData.email = email;
   } else {
     accountData.email = `${lib.randomString.generate(15)}@test.co`
-    setValue(CreateAccountPage.emailInput, accountData.email);
+    CreateAccountPage.emailInput.setValue(accountData.email);
   }
 }
 
 export function submit() {
-  click(CommonPage.submitButton);
+  CommonPage.submitButton.click();
 }
 
 export function verifyOrgDashboardPageAppears() {
