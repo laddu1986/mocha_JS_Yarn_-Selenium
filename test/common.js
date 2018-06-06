@@ -4,6 +4,7 @@ const server = require('chakram');
 global.expect = server.expect;
 const mysql = require('mysql');
 const config = require('config-yml');
+var randomString = require("randomstring");
 
 const responseData = {
   organization: [],
@@ -11,29 +12,30 @@ const responseData = {
   identity: [],
   identityState: [],
   invites: [],
-  spaces: []
+  spaces: [],
+  spaceKey: [],
+  negMembership: []
 };
 // uri end points
 const orca = config.orca.base;
 const web = config.web.base;
 
-function bigName(params) {
-  let text = '';
-  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (let i = 0; i < params; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
-
-  return `test_${text}`;
-}
-
 var con = mysql.createConnection({
   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
   user: 'rouser',
   password: 'R34d0nlyK3y',
-  //database: 'organization_dev'
 });
 
-function connection(params) {
+var pool = mysql.createPool({
+  host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
+  user: 'rouser',
+  password: 'R34d0nlyK3y',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
+
+/* function connection(params) {
   if (!con) {
     con = mysql.createConnection(params);
     con.connect((err) => {
@@ -49,7 +51,7 @@ function end() {
     if (err) throw err;
     console.log('Disconnected from Database!');
   });
-}
+} */
 
 function post(any) {
   if (any.headers == undefined) {
@@ -74,15 +76,6 @@ function del(any) {
   return server.delete(any.api + any.data);
 }
 
-const testData = {
-  name: bigName(10),
-  email: `${bigName(15)}@test.co`,
-  organization: `${bigName(10)}_Org`,
-  space: `${bigName(8)}_Space`,
-  password: 'Pass1234'
-};
-
-
 export {
   // uri
   orca,
@@ -97,11 +90,11 @@ export {
   config,
   server,
   // db
-  connection,
-  con,
-  end,
+  //connection,
+  //con,
+  //end,
+  pool,
   // data
   responseData,
-  bigName,
-  testData
+  randomString
 };

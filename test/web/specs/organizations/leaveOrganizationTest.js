@@ -1,5 +1,5 @@
 import * as lib from '../../../common';
-import CreateAccountPage from 'web/page_objects/createAccountPage';
+import CreateAccountPage from 'web/page_objects/accountPage';
 import HomePage from 'web/page_objects/homePage';
 import SignInPage from 'web/page_objects/signInPage';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
@@ -8,8 +8,8 @@ import Page from 'web/page_objects/page';
 import CommonPage from 'web/page_objects/common';
 import { openApp, setValue, click, waitForElement } from 'web/actions/actions'
 
-const name = lib.bigName(10);
-const email = `${lib.bigName(15)}@test.co`;
+const name = lib.randomString.generate(10);
+const email = `${lib.randomString.generate(15)}@test.co`;
 const organization = 'First Org';
 const password = 'Pass1234';
 
