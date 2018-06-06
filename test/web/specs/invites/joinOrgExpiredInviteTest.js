@@ -6,7 +6,11 @@ TestCase: New User
   User accepts and lands on Join Org page
 */
 import * as lib from '../../../common';
+<<<<<<< HEAD
 import { createAccount, organization, name, email, password } from 'web/actions/createAccount';
+=======
+import { createAccount } from 'web/actions/account';
+>>>>>>> 0c2ee244a544538ce518c6883fd0015de1c64595
 import {
   sendInviteButtonEnabled,
   sendInvite, verifyInviteCount,
@@ -19,7 +23,11 @@ import {
   updateTokenExpiryDateInDB,
   goToInactiveTab,
   resendInvite,
+<<<<<<< HEAD
 } from '../../actions/inviteTeammate';
+=======
+} from 'web/actions/invite';
+>>>>>>> 0c2ee244a544538ce518c6883fd0015de1c64595
 import SignInPage from 'web/page_objects/signInPage'
 import CommonPage from '../../page_objects/common';
 import createAccountPage from '../../page_objects/createAccountPage';
