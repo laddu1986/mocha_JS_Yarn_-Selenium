@@ -3,7 +3,6 @@ import * as set from 'web/actions/actions'
 import HomePage from 'web/page_objects/homePage';
 import SignInPage from 'web/page_objects/signInPage';
 import CommonPage from 'web/page_objects/common';
-import { openApp, setValue, click, waitForEnabled, waitForElement } from 'web/actions/actions'
 import { signOut } from 'web/actions/common'
 
 let signInSuccess;
@@ -12,7 +11,7 @@ function signIn() {
   setValue(SignInPage.emailInput, 'testaccount@donotdeleteplease.com');
   setValue(SignInPage.passwordInput, 'Pass1234');
   click(CommonPage.submitButton);
-  waitForElement(HomePage.logo);
+  waitForVisible(HomePage.logo);
   signInSuccess = HomePage.logo.isVisible();
   expect(signInSuccess).to.equal(true);
 }
