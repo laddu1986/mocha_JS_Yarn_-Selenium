@@ -10,7 +10,7 @@ Attempt to sign in should fail for deleted account
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
 import SignInPage from 'web/page_objects/signInPage';
-import { deleteAccount, deleteOrg } from 'web/actions/organization';
+import { deleteAccount, deleteOrganization, gotoOrgSettings } from 'web/actions/organization';
 import { verifyIncorrectSignIn, signIn } from 'web/actions/login';
 import { verifyOrgDashboardPageAppears } from 'web/actions/account';
 var accountDetails;
@@ -19,7 +19,8 @@ describe('Delete Account Test (Remove my Account)', () => {
   before('Create account and delete organisation', () => {
     SignInPage.open();
     accountDetails = createAccount();
-    deleteOrg();
+    gotoOrgSettings();
+    deleteOrganization();
   });
 
   it(`\nRemove account --> Sign In page appears\n`, () => {

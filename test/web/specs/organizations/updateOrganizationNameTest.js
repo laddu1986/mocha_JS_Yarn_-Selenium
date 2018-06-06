@@ -6,7 +6,6 @@ import { createAccount } from 'web/actions/account'
 import SettingsPage from 'web/page_objects/settingsPage';
 import HomePage from 'web/page_objects/homePage';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
-import { openApp, setValue, click, waitForElement, waitForEnabled } from 'web/actions/actions'
 import SignInPage from 'web/page_objects/signInPage';
 import { createOrg } from 'web/actions/organization';
 let updatedOrgName;
@@ -44,7 +43,7 @@ describe('Update Organization name', () => {
   });
 
   it('Change the org name to "Updated Organization"', () => {
-    waitForElement(SettingsPage.orgInput);
+    waitForVisible(SettingsPage.orgInput);
     SettingsPage.orgInput.clearElement();
 
     updatedOrgName = 'Updated Organization';
@@ -72,12 +71,12 @@ describe('Update Organization name', () => {
 
   it('Go back to Choose org page', () => {
     browser.url(`${lib.web}/organizations`)
-    waitForElement(HomePage.chooseOrg);
+    waitForVisible(HomePage.chooseOrg);
     expect(HomePage.chooseOrg.isVisible()).to.equal(true);
   });
 
   it('Modified org should be at the top of the org card stack', () => {
-    waitForElement(HomePage.orgCards);
+    waitForVisible(HomePage.orgCards);
     const topOrgCard = HomePage.orgCards.getText()[0];
     expect(topOrgCard).to.include(updatedOrgName);
   });
