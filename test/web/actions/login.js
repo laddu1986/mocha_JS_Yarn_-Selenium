@@ -2,10 +2,8 @@ import * as lib from '../../common';
 import CommonPage from 'web/page_objects/common'
 import HomePage from 'web/page_objects/homePage'
 import SignInPage from 'web/page_objects/signInPage'
-import { click, waitForElement, setValue } from '../actions/actions';
 
 export function verifyIncorrectSignIn() {
-    waitForElement(SignInPage.incorrectDetails);
     return SignInPage.incorrectDetails.getText()
 }
 
@@ -14,15 +12,14 @@ export function verifySignIn() {
 }
 
 export function signIn(email, password) {
-    waitForElement(SignInPage.emailInput);
-    setValue(SignInPage.emailInput, email);
-    setValue(SignInPage.passwordInput, password);
-    click(CommonPage.submitButton);
+    SignInPage.emailInput.setValue(email);
+    SignInPage.passwordInput.setValue(password);
+    CommonPage.submitButton.click();
 }
 
 export function submitEmail() {
-    setValue(SignInPage.emailInput, 'forgot@password.com');
-    click(CommonPage.submitButton);
+    SignInPage.emailInput.setValue('forgot@password.com');
+    CommonPage.submitButton.click();
 }
 
 export function backToSignInButtonVisible() {
@@ -34,12 +31,11 @@ export function submitButtonVisible() {
 }
 
 export function clickForgotPassword() {
-    click(SignInPage.forgotPassword);
+    SignInPage.forgotPassword.click();
 }
 
 export function clickBackToSignIn() {
-    click(SignInPage.backToSignIn);
-    waitForElement(SignInPage.forgotPassword);
+    SignInPage.backToSignIn.click();
 }
 
 export function emailInputValue() {
