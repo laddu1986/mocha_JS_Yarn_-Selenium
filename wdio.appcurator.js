@@ -86,9 +86,7 @@ exports.config = {
   capabilities: [getBrowser()],
   updateJob: false,
   specs: [
-    './test/web/specs/invites/inviteTest.js',//master
-    // './test/web/specs/invites/joinOrgExpiredInviteTest.js', //master
-    //'./test/web/specs/*/*Test.js' //master
+    './test/web/specs/*/*Test.js', //master
   ],
   // Patterns to exclude.
   exclude: [
