@@ -1,5 +1,4 @@
 import * as lib from '../../../common';
-import * as set from 'web/actions/actions'
 import HomePage from 'web/page_objects/homePage';
 import SignInPage from 'web/page_objects/signInPage';
 import CommonPage from 'web/page_objects/common';
