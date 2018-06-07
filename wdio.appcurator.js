@@ -6,7 +6,7 @@ const timeoutPeriod = 30000;
 
 var browsers = {
   chrome_headless: {
-    browserName: 'chrome_headless',
+    browserName: 'chrome',
     chromeOptions: {
       args: [
         '--disable-infobars',
