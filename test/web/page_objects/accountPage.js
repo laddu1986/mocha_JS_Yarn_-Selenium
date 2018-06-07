@@ -1,6 +1,6 @@
 import Page from './page';
 
-class CreateAccountPage extends Page {
+class AccountPage extends Page {
   get createAccountLink() { return browser.element("//*[@data-qa='link:register']"); }
 
   // Input Fields
@@ -23,4 +23,4 @@ class CreateAccountPage extends Page {
   }
 }
 
-export default new CreateAccountPage();
+export default new AccountPage();
