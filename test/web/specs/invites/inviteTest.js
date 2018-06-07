@@ -1,6 +1,6 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
-import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard } from "web/actions/invite";
+import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInactiveInvite, goToOrganisationDashboard } from "web/actions/invite";
 import SignInPage from 'web/page_objects/signInPage';
 import { signOut } from 'web/actions/common';
 
@@ -16,7 +16,6 @@ describe('Invite Tests \n', () => {
 
   before(() => {
     createAccount();
-    //browser.refresh()
     browser.pause(2000)
   });
 

@@ -5,9 +5,8 @@ import TeamPage from 'web/page_objects/TeamPage'
 import SpaceAPIKeyPage from 'web/page_objects/spaceAPIKeyPage';
 import teamPage from '../page_objects/teamPage';
 import Common from '../page_objects/common'
-import orgDashboardPage from '../page_objects/orgDashboardPage';
-import getNotificationMessageText from '../actions/common'
-import common from '../page_objects/common';
+import OrgDashboardPage from '../page_objects/orgDashboardPage';
+import { getNotificationMessageText, closePassiveNotification } from '../actions/common'
 
 export function clickInviteTeammateButton() {
   OrgDashboardPage.inviteTeammateButton.click();
@@ -20,9 +19,8 @@ export function sendInviteButtonEnabled() {
 export function sendInvite(inviteMail) {
   OrgDashboardPage.inviteEmailInput.setValue(inviteMail);
   OrgDashboardPage.sendInviteButton.click();
-  common.successMsg.waitForVisible()
-  Common.successMsg.getText()
-  common.dismissNotification.click()
+  getNotificationMessageText();
+  closePassiveNotification();
 }
 
 export function goToTeammatesPage() {
@@ -73,12 +71,9 @@ export function getInviteTokenFromDB(email) {
                             order by CreatedTime desc;`
     lib.pool.getConnection(function (err, connection) {
       lib.pool.query({ sql: selectInviteId },
-        console.log('SELECT QUERY  ', selectInviteId),
         function (err, result) {
-          //lib.pool.releaseConnection(connection)
+          lib.pool.releaseConnection(connection)
           if (err) reject(err);
-          // console.log('SELECT ID  ', result[0].Id)
-          console.log('JSON STRINGIFY RESULT****  ', JSON.stringify(result))
           resolve(result[0].Id)
         })
     })
@@ -100,7 +95,6 @@ export async function updateTokenExpiryDateInDB(email) {
         function (err, result) {
           lib.pool.releaseConnection(connection)
           if (err) reject(err);
-          console.log('UPDATE   ', result.message)
           resolve(result)
         })
     })
