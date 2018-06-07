@@ -12,34 +12,27 @@ describe('Access a Revoked Invitation (New Account)', () => {
   before(() => {
     SignInPage.open();
     createAccount()
-  });
-
-  it('Invite a Non Existing member', () => {
-    newMember = `newmember_${lib.randomString.generate(8)}@test.com`;
+    browser.pause(2000)
+    newMember = `newmember_${lib.randomString.generate(5)}@test.co`;
     inviteTeammate(newMember, '1')
+    expect(getNotificationMessageText()).to.include(passiveNotification.invitationSentMessage.text)
   });
 
-  it('Get Invitation URL', async () => {
+  it('New User gets Invitation URL', async () => {
     invitationURL = await invitationLink(newMember)
   });
 
-  it('Revoke Invite and validate Passive Notification', () => {
+  it('Admin revokes invite and validates Passive Notification and Sign Out', () => {
     goToTeammatesPage()
     goToInactiveTab()
     revokeInvite()
     expect(getNotificationMessageText()).to.include(passiveNotification.revokeInviteMessage.text)
-  });
-
-  it('Sign Out', () => {
     signOut()
   });
 
-  it('New Member clicks on the Invite link', () => {
+  it('New User clicks on the Invite link --> Lands on Invalid invitation page', () => {
     browser.url(invitationURL) //user clicks on Accept Invitation button from invite email
+    expect(common.invalidInvitationMsg.getText()).to.include('Invalid invitation')
   })
 
-  it('Verify user lands on Invalid invitation page', () => {
-    expect(common.invalidInvitationMsg.getText()).to.include('Invalid invitation')
-  });
 });
-

@@ -86,7 +86,7 @@ exports.config = {
   capabilities: [getBrowser()],
   updateJob: false,
   specs: [
-    './test/web/specs/*/*Test.js' //master
+    './test/web/specs/*/*Test.js', //master
   ],
   // Patterns to exclude.
   exclude: [
@@ -104,7 +104,7 @@ exports.config = {
   // screenshotPath: './errScreens',
   //baseUrl: 'https://my.appcurator.com/',
   waitforTimeout: debug ? 9999999 : timeoutPeriod,
-  maxInstances: debug ? 1 : 15,
+  maxInstances: debug ? 1 : 10,
 
   plugins: {
 
@@ -119,19 +119,12 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['spec', 'html-format'],
-  reporterOptions: {
-    htmlFormat: {
-      outputDir: './test/web/Reports'
-    },
-    allure: {
-      outputDir: 'allure-results',
-      disableWebdriverStepsReporting: true,
-    },
-  },
+  reporters: ['spec'],
+
 
   mochaOpts: {
     ui: 'bdd',
+    reporter: 'spec',
     compilers: ['js:babel-register'],
     timeout: debug ? 9999999 : timeoutPeriod,
   },
