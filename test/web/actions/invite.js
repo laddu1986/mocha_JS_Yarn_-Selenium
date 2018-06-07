@@ -1,10 +1,12 @@
 import * as lib from '../../common';
-import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
 import homePage from 'web/page_objects/homePage'
 import NavBar from 'web/page_objects/navBar'
 import TeamPage from 'web/page_objects/TeamPage'
 import SpaceAPIKeyPage from 'web/page_objects/spaceAPIKeyPage';
 import teamPage from '../page_objects/teamPage';
+import Common from '../page_objects/common'
+import OrgDashboardPage from '../page_objects/orgDashboardPage';
+import { getNotificationMessageText, closePassiveNotification } from '../actions/common'
 
 export function clickInviteTeammateButton() {
   OrgDashboardPage.inviteTeammateButton.click();
@@ -17,6 +19,8 @@ export function sendInviteButtonEnabled() {
 export function sendInvite(inviteMail) {
   OrgDashboardPage.inviteEmailInput.setValue(inviteMail);
   OrgDashboardPage.sendInviteButton.click();
+  getNotificationMessageText();
+  closePassiveNotification();
 }
 
 export function goToTeammatesPage() {
@@ -26,9 +30,9 @@ export function goToTeammatesPage() {
   NavBar.teamNavLink.click();
 }
 
-export function verifyInvite() {
+export function verifyInactiveInvite() {
   goToInactiveTab();
-  return TeamPage.email.getText();
+  return teamPage.email.getText();
 }
 
 export function verifyInviteCount(count) {
@@ -42,11 +46,13 @@ export function goToOrganisationDashboard() {
 export function inviteTeammate(mail, counta) {
   clickInviteTeammateButton()
   sendInvite(mail)
+  getNotificationMessageText()
   verifyInviteCount(counta)
 }
 
 export function revokeInvite() {
   teamPage.revokeButton.click()
+  Common.iAmSureButton.click()
 }
 
 export function resendInvite() {
@@ -63,11 +69,14 @@ export function getInviteTokenFromDB(email) {
                             WHERE Email = "${email}"
                             AND CreatedTime = (SELECT MAX(CreatedTime) from organization_dev.Invites)
                             order by CreatedTime desc;`
-    lib.con.query({ sql: selectInviteId },
-      function (err, result) {
-        if (err) reject(err);
-        return resolve(result[0].Id)
-      })
+    lib.pool.getConnection(function (err, connection) {
+      lib.pool.query({ sql: selectInviteId },
+        function (err, result) {
+          lib.pool.releaseConnection(connection)
+          if (err) reject(err);
+          resolve(result[0].Id)
+        })
+    })
   })
 }
 
@@ -81,10 +90,13 @@ export async function updateTokenExpiryDateInDB(email) {
     const updateExpiryDate = `UPDATE organization_dev.Invites SET ExpiryDate = (CreatedTime - 1) 
                               WHERE Email = "${email}"
                               order by CreatedTime desc;`
-    lib.con.query({ sql: updateExpiryDate },
-      function (err, result) {
-        if (err) reject(err);
-        return resolve(result)
-      })
+    lib.pool.getConnection(function (err, connection) {
+      lib.pool.query({ sql: updateExpiryDate },
+        function (err, result) {
+          lib.pool.releaseConnection(connection)
+          if (err) reject(err);
+          resolve(result)
+        })
+    })
   })
 }

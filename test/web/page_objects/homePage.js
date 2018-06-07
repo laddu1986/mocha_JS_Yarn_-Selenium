@@ -1,6 +1,3 @@
-// import Page from './page';
-// import Actions from 'web/actions/actions';
-
 class HomePage {
   get navbar() { return browser.element('#navbar'); }
   get profileMenu() { return browser.element("//div[@data-qa='menu:profile']//div[@data-qa='btn:menu']"); }
