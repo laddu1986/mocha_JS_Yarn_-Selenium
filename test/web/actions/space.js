@@ -26,7 +26,7 @@ export function verifyNewSpaceName() {
 
 export function deleteSpace() {
   SpaceSettingsPage.deleteSpaceButton.click();
-  SpaceSettingsPage.imSureButton.click();
+  CommonPage.iAmSureButton.click();
 }
 
 export function spaceIsDeleted() {

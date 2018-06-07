@@ -1,9 +1,11 @@
 import * as lib from '../../common';
 import HomePage from 'web/page_objects/homePage';
-import CreateAccountPage from 'web/page_objects/accountPage'
+import AccountPage from 'web/page_objects/accountPage'
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
 import CommonPage from 'web/page_objects/common'
-var name, email, organization, accountData = { name, email, organization };
+
+const password = 'Pass1234'
+var name, email, organization, accountData = { name, email, organization, password };
 
 export function createAccount(email) {
   clickCreateAccountLink();
@@ -15,26 +17,26 @@ export function createAccount(email) {
 }
 
 export function clickCreateAccountLink() {
-  CreateAccountPage.createAccountLink.click();
+  AccountPage.createAccountLink.click();
 }
 
-export function verifyCreateAccountPageAppears() {
-  return CreateAccountPage.nameInput.isVisible();
+export function verifyAccountPageAppears() {
+  return AccountPage.nameInput.isVisible();
 }
 
 export function inputDetails(email) {
   accountData.name = lib.randomString.generate(8);
   accountData.organization = `${lib.randomString.generate(10)}_Org`;
-  CreateAccountPage.nameInput.setValue(accountData.name);
-  CreateAccountPage.organizationInput.setValue(accountData.organization);
-  CreateAccountPage.passwordInput.setValue('Pass1234');
+  AccountPage.nameInput.setValue(accountData.name);
   if (email != undefined) {
-    CreateAccountPage.emailInput.setValue(email);
+    AccountPage.emailInput.setValue(email);
     accountData.email = email;
   } else {
     accountData.email = `${lib.randomString.generate(15)}@test.co`
-    CreateAccountPage.emailInput.setValue(accountData.email);
+    AccountPage.emailInput.setValue(accountData.email);
   }
+  AccountPage.organizationInput.setValue(accountData.organization);
+  AccountPage.passwordInput.setValue(password);
 }
 
 export function submit() {

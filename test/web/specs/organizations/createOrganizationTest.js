@@ -26,7 +26,7 @@ describe('Tests for Create Organization', () => {
 
   it(`\nSign out and back in -->Should show last accessed Org dashboard`, () => {
     signOut();
-    signIn(accountDetails.email, 'Pass1234');
+    signIn(accountDetails.email, accountDetails.password);
     expect(verifyOrgDashBoardAfterLogin()).to.equal(orgName);
   });
 

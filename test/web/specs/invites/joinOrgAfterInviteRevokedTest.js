@@ -12,8 +12,8 @@ describe('Access a Revoked Invitation (New Account)', () => {
   before(() => {
     SignInPage.open();
     createAccount()
-    console.log(email, '---- ', organization)
-    newMember = `newmember_${email}`;
+    browser.pause(2000)
+    newMember = `newmember_${lib.randomString.generate(5)}@test.co`;
     inviteTeammate(newMember, '1')
     expect(getNotificationMessageText()).to.include(passiveNotification.invitationSentMessage.text)
   });

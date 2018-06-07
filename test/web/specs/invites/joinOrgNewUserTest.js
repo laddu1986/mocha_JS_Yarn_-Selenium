@@ -7,30 +7,27 @@ Redirected to Create Account page
 User lands in invited Org after account creation
 */
 import * as lib from '../../../common';
-import { createAccount, organization, email, name, password } from 'web/actions/createAccount';
+import { createAccount } from 'web/actions/account';
 import { createOrg } from 'web/actions/createOrg'
-import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard, inviteTeammate, invitationLink } from 'web/actions/inviteTeammate';
+import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard, inviteTeammate, invitationLink } from 'web/actions/invite';
 import SignInPage from 'web/page_objects/signInPage'
 import { signIn, signOut } from 'web/actions/common'
-import createAccountPage from '../../page_objects/createAccountPage';
-import common from '../../page_objects/common'
-import { waitForElement, setValue, click } from '../../actions/actions'
-import orgDashboardPage from '../../page_objects/orgDashboardPage';
+import AccountPage from '../../page_objects/AccountPage';
+import Common from '../../page_objects/common'
+import OrgDashboardPage from '../../page_objects/orgDashboardPage';
 import passiveNotification from '../../data/passiveNotification.json'
 
-let newUser;
+let newUser, accountData;
 
 describe('New User Joins an Organization via ACTIVE invitation', () => {
 
-  // before("Admin invites a Non Existing user", () => {
   before('Admin Invites Teammate', () => {
     SignInPage.open();
-    createAccount()
-    console.log('ADMIN  ', email)
-    newUser = `newUser_${email}`;
-    console.log('newUser', newUser)
+    accountData = createAccount()
+    browser.pause(2000)
+    newUser = `newUser_${lib.randomString.generate(4)}@test.co`;
     inviteTeammate(newUser, '1')
-    expect(common.successMsg.getText()).to.include(passiveNotification.invitationSentMessage.text)
+    expect(Common.successMsg.getText()).to.include(passiveNotification.invitationSentMessage.text)
     signOut()
   });
 
@@ -40,31 +37,27 @@ describe('New User Joins an Organization via ACTIVE invitation', () => {
   });
 
   it('New User Accepts Invite and is taken to Join Org page', async () => {
-    const expectedMsg = `Join ${organization}`
-    expect(createAccountPage.joinOrgMsg.getText()).to.equal(expectedMsg)
-    expect(common.submitButton.getText()).to.include('Create Account')
+    const expectedMsg = `Join ${accountData.organization}`
+    expect(AccountPage.joinOrgMsg.getText()).to.equal(expectedMsg)
+    expect(Common.submitButton.getText()).to.include('Create Account')
   })
 
   it('User\'s email field is disabled and pre-filled with invited Email', () => {
-    expect(createAccountPage.emailInput.isEnabled()).to.equal(false)
-    expect(createAccountPage.emailInput.getValue()).to.equal(newUser)
+    expect(AccountPage.emailInput.isEnabled()).to.equal(false)
+    expect(AccountPage.emailInput.getValue()).to.equal(newUser)
   });
 
   it('Completes Account creation and lands on Invited OrgDashboard ', () => {
     createAccountToJoinInvitedOrg()
-    expect(orgDashboardPage.currentOrgName.getText()).to.equal(organization)
+    expect(OrgDashboardPage.currentOrgName.getText()).to.equal(accountData.organization)
   });
 
   function createAccountToJoinInvitedOrg() {
-    setValue(createAccountPage.nameInput, `newUser_${name}`)
-    setValue(createAccountPage.passwordInput, password)
-    click(common.submitButton)
-    waitForElement(orgDashboardPage.currentOrgName)
+    AccountPage.nameInput.setValue(`newUser_${accountData.name}`)
+    AccountPage.passwordInput.setValue(accountData.password)
+    Common.submitButton.click()
+    OrgDashboardPage.currentOrgName.waitForVisible();
   }
-
-  after("end SQL connection", () => {
-    //lib.end()
-  })
 
 });
 
