@@ -1,5 +1,6 @@
 import * as lib from '../../common';
 import HomePage from 'web/page_objects/homePage'
+import NavBar from 'web/page_objects/navBar'
 import SignInPage from 'web/page_objects/signInPage'
 import SettingsPage from 'web/page_objects/settingsPage'
 import CommonPage from 'web/page_objects/common'
@@ -44,14 +45,13 @@ export function verifyOrgIsCreated() {
   return OrgDashboardPage.welcomeMsg.isVisible();
 }
 
-export function verifyOrgDashBoardAfterLogin() {
+export function verifyOrgNameOnDashBoard() {
   return OrgDashboardPage.currentOrgName.getText();
 }
 
 export function gotoOrgSettings() {
   HomePage.profileMenu.click();
   OrgDashboardPage.orgSettingsNavMenu.click();
-  SettingsPage.orgSettingsPage.click();
 }
 
 export function deleteOrganization() {
@@ -73,4 +73,28 @@ export function verifyChooseOrgspage() {
 
 export function selectOrg() {
   HomePage.orgCards.value[0].click();
+}
+
+export function isSaveButtonEnabled() {
+  return SettingsPage.saveOrgNameButton.isEnabled();
+}
+
+export function updateOrgName(updatedOrgName) {
+  SettingsPage.orgInput.clearElement();
+  SettingsPage.orgInput.setValue(updatedOrgName);
+  SettingsPage.saveOrgNameButton.click();
+}
+
+export function verifyNewOrgNameInNavbar(updatedOrgName) {
+  browser.waitUntil(() => NavBar.backToOrgDashboardLink.getText() === updatedOrgName, 5000, 'Expect orgname to change in the side nav bar', 200);
+}
+
+export function goBackToOrgDashboard() {
+  NavBar.backToOrgDashboardLink.click();
+}
+
+export function verifyOrgCardStack() {
+  HomePage.chooseOrg.waitForVisible();
+  HomePage.orgCards.waitForVisible();
+  return HomePage.orgCards.value[0].getText();
 }

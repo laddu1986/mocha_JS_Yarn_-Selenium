@@ -2,7 +2,7 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
 import { signOut, signIn } from 'web/actions/common';
-import { verifyOrgDashBoardAfterLogin, goToCreateOrgPageFromNavbar, verifyCreateOrgPage, createNewOrg, verifyOrgIsCreated } from 'web/actions/organization';
+import { verifyOrgNameOnDashBoard, goToCreateOrgPageFromNavbar, verifyCreateOrgPage, createNewOrg, verifyOrgIsCreated } from 'web/actions/organization';
 import { getnavOrgCount } from 'web/actions/navBar';
 import SignInPage from 'web/page_objects/signInPage';
 var orgName = lib.randomString.generate(10), accountDetails;
@@ -27,7 +27,7 @@ describe('Tests for Create Organization', () => {
   it(`\nSign out and back in -->Should show last accessed Org dashboard`, () => {
     signOut();
     signIn(accountDetails.email, 'Pass1234');
-    expect(verifyOrgDashBoardAfterLogin()).to.equal(orgName);
+    expect(verifyOrgNameOnDashBoard()).to.equal(orgName);
   });
 
   it(`\n Checking Org Count in Navbar`, () => {
