@@ -7,27 +7,26 @@ Redirected to Create Account page
 User lands in invited Org after account creation
 */
 import * as lib from '../../../common';
-import { createAccount } from 'web/actions/account';
-import { createOrg } from 'web/actions/createOrg'
+import { createAccountToJoinInvitedOrg, createAccount } from 'web/actions/account';
 import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard, inviteTeammate, invitationLink } from 'web/actions/invite';
 import SignInPage from 'web/page_objects/signInPage'
-import { signIn, signOut } from 'web/actions/common'
+import { getNotificationMessageText, signIn, signOut } from 'web/actions/common'
 import AccountPage from '../../page_objects/AccountPage';
 import Common from '../../page_objects/common'
 import OrgDashboardPage from '../../page_objects/orgDashboardPage';
+import { submitButtonText } from 'web/actions/login';
 import passiveNotification from '../../data/passiveNotification.json'
 
 let newUser, accountData;
 
 describe('New User Joins an Organization via ACTIVE invitation', () => {
-
   before('Admin Invites Teammate', () => {
     SignInPage.open();
     accountData = createAccount()
     browser.pause(2000)
     newUser = `newUser_${lib.randomString.generate(4)}@test.co`;
     inviteTeammate(newUser, '1')
-    expect(Common.successMsg.getText()).to.include(passiveNotification.invitationSentMessage.text)
+    expect(getNotificationMessageText()).to.include(passiveNotification.invitationSentMessage.text)
     signOut()
   });
 
@@ -39,7 +38,7 @@ describe('New User Joins an Organization via ACTIVE invitation', () => {
   it('New User Accepts Invite and is taken to Join Org page', async () => {
     const expectedMsg = `Join ${accountData.organization}`
     expect(AccountPage.joinOrgMsg.getText()).to.equal(expectedMsg)
-    expect(Common.submitButton.getText()).to.include('Create Account')
+    expect(submitButtonText()).to.include('Create Account')
   })
 
   it('User\'s email field is disabled and pre-filled with invited Email', () => {
@@ -51,13 +50,5 @@ describe('New User Joins an Organization via ACTIVE invitation', () => {
     createAccountToJoinInvitedOrg()
     expect(OrgDashboardPage.currentOrgName.getText()).to.equal(accountData.organization)
   });
-
-  function createAccountToJoinInvitedOrg() {
-    AccountPage.nameInput.setValue(`newUser_${accountData.name}`)
-    AccountPage.passwordInput.setValue(accountData.password)
-    Common.submitButton.click()
-    OrgDashboardPage.currentOrgName.waitForVisible();
-  }
-
 });
 
