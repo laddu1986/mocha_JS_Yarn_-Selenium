@@ -46,3 +46,7 @@ export function clearPlaceholder() {
     SignInPage.emailInput.clearElement();
     SignInPage.passwordInput.clearElement();
 }
+
+export function submitButtonText() {
+    return CommonPage.submitButton.getText();
+}

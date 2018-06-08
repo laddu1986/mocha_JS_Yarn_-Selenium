@@ -1,9 +1,8 @@
 import * as lib from '../../common';
 import homePage from 'web/page_objects/homePage'
 import NavBar from 'web/page_objects/navBar'
-import TeamPage from 'web/page_objects/TeamPage'
 import SpaceAPIKeyPage from 'web/page_objects/spaceAPIKeyPage';
-import teamPage from '../page_objects/teamPage';
+import TeamPage from '../page_objects/teamPage';
 import Common from '../page_objects/common'
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
 import { getNotificationMessageText, closePassiveNotification } from '../actions/common'
@@ -32,7 +31,7 @@ export function goToTeammatesPage() {
 
 export function verifyInactiveInvite() {
   goToInactiveTab();
-  return teamPage.email.getText();
+  return TeamPage.email.getText();
 }
 
 export function verifyInviteCount(count) {
@@ -51,16 +50,16 @@ export function inviteTeammate(mail, counta) {
 }
 
 export function revokeInvite() {
-  teamPage.revokeButton.click()
+  TeamPage.revokeButton.click()
   Common.iAmSureButton.click()
 }
 
 export function resendInvite() {
-  teamPage.resendButton.click()
+  TeamPage.resendButton.click()
 }
 
 export function goToInactiveTab() {
-  teamPage.inactiveTab.click()
+  TeamPage.inactiveTab.click()
 }
 
 export function getInviteTokenFromDB(email) {
@@ -99,4 +98,16 @@ export async function updateTokenExpiryDateInDB(email) {
         })
     })
   })
+}
+
+export function invalidInvitationText() {
+  return Common.invalidInvitationMsg.getText()
+}
+
+export function expiredInvitationText() {
+  return Common.expiredInvitationMsg.getText();
+}
+
+export function inviteStatus() {
+  return TeamPage.inactiveRowStatus.getText();
 }
