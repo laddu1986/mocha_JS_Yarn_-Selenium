@@ -1,4 +1,9 @@
 {
-  "expiredInvitation": "This invitation has expired :(",
-  "invalidLogin": "This is a required field"
+  "invite": {
+    "expiredInvitation": "This invitation has expired :(",
+    "invalidInvitation": "Invalid invitation"
+  },
+  "login": {
+    "invalidLogin": "This is a required field"
+  }
 }

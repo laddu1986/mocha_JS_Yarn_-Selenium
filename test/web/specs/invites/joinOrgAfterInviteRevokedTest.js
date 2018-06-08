@@ -1,10 +1,10 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
-import { goToTeammatesPage, inviteTeammate, invitationLink, revokeInvite, goToInactiveTab } from 'web/actions/invite';
+import { invalidInvitationText, goToTeammatesPage, inviteTeammate, invitationLink, revokeInvite, goToInactiveTab } from 'web/actions/invite';
 import { getNotificationMessageText, signOut } from 'web/actions/common'
 import passiveNotification from '../../data/passiveNotification.json'
+import messagesData from '../../data/messages.json'
 import SignInPage from 'web/page_objects/signInPage'
-import common from 'web/page_objects/common'
 let newMember;
 let invitationURL;
 
@@ -32,7 +32,7 @@ describe('Access a Revoked Invitation (New Account)', () => {
 
   it('New User clicks on the Invite link --> Lands on Invalid invitation page', () => {
     browser.url(invitationURL) //user clicks on Accept Invitation button from invite email
-    expect(common.invalidInvitationMsg.getText()).to.include('Invalid invitation')
+    expect(invalidInvitationText()).to.include(messagesData.invite.invalidInvitation)
   })
 
 });

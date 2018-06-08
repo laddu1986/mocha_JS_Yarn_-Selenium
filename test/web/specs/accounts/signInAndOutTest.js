@@ -12,8 +12,8 @@ describe('Sign In/Out Test', () => {
   it(`\nSign In with Blank data --> Throws an error\n`, () => {
     clearPlaceholder();
     signIn('', '');
-    expect(SignInPage.emailError.getText()).to.equal(validationMessage.invalidLogin);
-    expect(SignInPage.passwordError.getText()).to.equal(validationMessage.invalidLogin);
+    expect(SignInPage.emailError.getText()).to.equal(validationMessage.login.invalidLogin);
+    expect(SignInPage.passwordError.getText()).to.equal(validationMessage.login.invalidLogin);
   });
 
   it('Sign In with correct credentials --> successful', () => {

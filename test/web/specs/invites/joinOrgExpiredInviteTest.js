@@ -6,37 +6,19 @@ TestCase: New User
   User accepts and lands on Join Org page
 */
 import * as lib from '../../../common';
-
-import { createAccount } from 'web/actions/account';
-import {
-  sendInviteButtonEnabled,
-  sendInvite, verifyInviteCount,
-  clickInviteTeammateButton,
-  goToTeammatesPage, verifyInvite,
-  goToOrganisationDashboard,
-  inviteTeammate,
-  invitationLink,
-  revokeInvite,
-  updateTokenExpiryDateInDB,
-  goToInactiveTab,
-  resendInvite,
-} from 'web/actions/invite';
-import SignInPage from 'web/page_objects/signInPage'
-import CommonPage from '../../page_objects/common';
-import AccountPage from '../../page_objects/accountPage';
-import common from '../../page_objects/common'
+import { createAccount, joinOrgText } from 'web/actions/account';
+import { submitButtonVisible } from 'web/actions/login';
+import { inviteStatus } from 'web/actions/invite';
+import { expiredInvitationText, goToTeammatesPage, inviteTeammate, invitationLink, updateTokenExpiryDateInDB, goToInactiveTab, resendInvite, } from 'web/actions/invite';
 import { getNotificationMessageText, signOut, signIn } from 'web/actions/common'
-import orgDashboardPage from '../../page_objects/orgDashboardPage';
-import navBar from '../../page_objects/navBar';
-import teamPage from '../../page_objects/teamPage';
+import SignInPage from 'web/page_objects/signInPage'
 import message from '../../data/messages.json'
 import passiveNotification from '../../data/passiveNotification.json'
+import constants from 'data/constants.json';
 
 let newUser, invitationURL, accountData;
 
-
 describe('New User accesses an Expired Invitation', () => {
-
   before(() => {
     SignInPage.open();
     accountData = createAccount()
@@ -45,71 +27,53 @@ describe('New User accesses an Expired Invitation', () => {
 
   it('Admin invites a New User', () => {
     newUser = `newUser_${lib.randomString.generate(4)}@test.co`;
-    inviteTeammate(newUser, '1')
-    expect(getNotificationMessageText()).to.include(passiveNotification.invitationSentMessage.text)
+    inviteTeammate(newUser, '1');
+    expect(getNotificationMessageText()).to.include(passiveNotification.invitationSentMessage.text);
   });
 
-  it('User gets Invitation URL', async () => {
-    invitationURL = await invitationLink(newUser)
+  it('Invitation Expires', async () => {
+    invitationURL = await invitationLink(newUser);
+    await updateTokenExpiryDateInDB(newUser); //update ExpiryDate of token to a history date in db
   });
 
-  it('Expire invite token manually from Database', async () => {
-    await updateTokenExpiryDateInDB(newUser) //update ExpiryDate of token to a history date in db
+  it('Inactive tab status --> shows as Expired', () => {
+    browser.refresh(); //refresh to reflect the latest expired/pending status from DB
+    goToTeammatesPage();
+    goToInactiveTab();
+    expect(inviteStatus()).to.deep.equal(constants.InviteStatus.Expired);
+    signOut();
   });
 
-  it('Admin goes to Inactive tab of Teammates page', () => {
-    browser.refresh() //refresh to reflect the latest expired/pending status from DB
-    goToTeammatesPage()
-    goToInactiveTab()
-  });
-
-  it('Admin verifies status as Expired', () => {
-    expect(teamPage.inactiveRowStatus.getText()).to.deep.equal('Expired')
-  });
-
-  it('Admin Signs Out', () => {
-    signOut()
-  });
-
-  it('User clicks on the Invite link', () => {
+  it('Clicking Invite link  -->  Redirects to Expired invitation page', () => {
     browser.url(invitationURL) //this is a replication of user clicking on Accept Invitation button from invite email
+    expect(expiredInvitationText()).to.include(message.invite.expiredInvitation)
   })
-
-  it('User lands on Expired invitation page', () => {
-    expect(CommonPage.expiredInvitationMsg.getText()).to.include(message.expiredInvitation)
-  });
 });
 
-describe('Admin Re-sends an Expired Invitation', () => {
-  it('Admin logs in', () => {
-    SignInPage.open()
-    signIn(accountData.email, accountData.password)
+describe('Re-sending an Expired Invite', () => {
+  before('Admin logs in and go to inactive inte tab', () => {
+    SignInPage.open();
+    signIn(accountData.email, accountData.password);
+    browser.pause(1500); // workaround for Bug: ACT-299. will be removed after bugfix
+    goToTeammatesPage();
+    goToInactiveTab();
   });
 
-  it('Admin goes to Inactive tab of Teammates page', () => {
-    browser.pause(1500) // workaround for Bug: ACT-299. will be removed after bugfix
-    goToTeammatesPage()
-    goToInactiveTab()
-  });
-
-  it('Admin Resends Expired Invitation and validate Passive Notification', () => {
+  it('Resends Expired Invitation --> validate Passive Notification', () => {
     resendInvite()
     const expectedPassiveNotificationMessage = `${passiveNotification.resendInviteMessage.text}${newUser}`
-    expect(CommonPage.successMsg.getText()).to.include(expectedPassiveNotificationMessage)
-  });
-
-  it('Admin Sign Out', () => {
-    signOut()
+    expect(getNotificationMessageText()).to.include(expectedPassiveNotificationMessage)
+    signOut();
   });
 });
 
-describe('New User Accepts new Invite', () => {
+describe('User Accepts resent Invite', () => {
   it('User gets new Invitation eMail and Accepts Invite', async () => {
     invitationURL = await invitationLink(newUser)
     browser.url(invitationURL)
   });
   it('User lands on Create Account and Join org page', () => {
-    expect(AccountPage.joinOrgMsg.getText()).to.include(accountData.organization)
-    expect(CommonPage.submitButton.isVisible()).to.equal(true)
+    expect(joinOrgText()).to.include(accountData.organization)
+    expect(submitButtonVisible()).to.equal(true)
   });
 });
