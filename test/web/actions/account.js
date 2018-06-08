@@ -4,8 +4,7 @@ import AccountPage from 'web/page_objects/accountPage'
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
 import CommonPage from 'web/page_objects/common'
 
-const password = 'Pass1234'
-var name, email, organization, accountData = { name, email, organization, password };
+var name, email, organization, password, accountData = { name, email, organization, password };
 
 export function createAccount(email) {
   clickCreateAccountLink();
@@ -27,6 +26,7 @@ export function verifyAccountPageAppears() {
 export function inputDetails(email) {
   accountData.name = lib.randomString.generate(8);
   accountData.organization = `${lib.randomString.generate(10)}_Org`;
+  accountData.password = 'Pass1234';
   AccountPage.nameInput.setValue(accountData.name);
   if (email != undefined) {
     AccountPage.emailInput.setValue(email);
@@ -36,7 +36,7 @@ export function inputDetails(email) {
     AccountPage.emailInput.setValue(accountData.email);
   }
   AccountPage.organizationInput.setValue(accountData.organization);
-  AccountPage.passwordInput.setValue(password);
+  AccountPage.passwordInput.setValue(accountData.password);
 }
 
 export function submit() {
@@ -49,5 +49,16 @@ export function verifyOrgDashboardPageAppears() {
   } else {
     return false;
   }
+}
+
+export function joinOrgText() {
+  return AccountPage.joinOrgMsg.getText();
+}
+
+export function createAccountToJoinInvitedOrg() {
+  AccountPage.nameInput.setValue(`newUser_${accountData.name}`)
+  AccountPage.passwordInput.setValue(accountData.password)
+  CommonPage.submitButton.click()
+  OrgDashboardPage.currentOrgName.waitForVisible();
 }
 
