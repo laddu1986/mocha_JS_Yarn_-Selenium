@@ -6,7 +6,8 @@
     },
     "SpaceAttributes": {
         "Name": "name",
-        "Slug": "slug"
+        "Slug": "slug",
+        "ShortUrl": "shortUrl"
     },
     "InviteStatus": {
         "Expired": "Expired"

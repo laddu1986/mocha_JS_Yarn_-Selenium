@@ -15,5 +15,6 @@ api:
   memberships: "https://hub.appcurator.io/org/api/v1/memberships/"
   spaces: "https://hub.appcurator.io/spaces/v1/organizations/"
   token: "http://a672f40ce2e4e11e88381023cadbc14f-717884523.ap-southeast-2.elb.amazonaws.com/connect/token"
-  keys: "https://hub.appcurator.io/keys/v1/keys"
+  keys: "https://hub.appcurator.io/keys/v1/organizations/"
   invites: "https://hub.appcurator.io/org/api/v1/invites/"
+  metrics: "https://hub.appcurator.io/metrics/v1/organizations/"

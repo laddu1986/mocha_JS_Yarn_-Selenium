@@ -18,6 +18,7 @@ describe('Space Keys Api', () => {
                 });
             });
         });
+
         it('Creates a new key for the resource that is passed as input', () => {
             return postResponse.then((response) => {
                 expect(response).to.have.status(201);
@@ -44,7 +45,6 @@ describe('Space Keys Api', () => {
                 done();
             });
 
-
             it('Revokes the provided key', () => {
                 return revokeResponse.then((response) => {
                     expect(response).to.have.status(200);
@@ -57,7 +57,6 @@ describe('Space Keys Api', () => {
                 reactivateResponse = spaces.patchKeyBySpaceIdAndRowVersion(lib.responseData.spaceKey, constants.APIKeyStatus.Active);
                 done();
             });
-
 
             it('Re-activates the provided key', () => {
                 return reactivateResponse.then((response) => {

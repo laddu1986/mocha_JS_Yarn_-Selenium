@@ -119,8 +119,16 @@ exports.config = {
   },
 
   framework: 'mocha',
-  reporters: ['spec'],
-
+  reporters: ['spec', 'html-format'],
+  reporterOptions: {
+    htmlFormat: {
+      outputDir: './test/web/reports'
+    },
+    allure: {
+      outputDir: 'allure-results',
+      disableWebdriverStepsReporting: true,
+    }
+  },
 
   mochaOpts: {
     ui: 'bdd',
@@ -158,6 +166,5 @@ exports.config = {
   // possible to defer the end of the process using a promise.
   onComplete() {
     //console.log('On Complete')
-
   },
 };

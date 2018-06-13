@@ -13,6 +13,8 @@ describe('Identity Api', () => {
     it('Add a new user identity.', () => {
       return addResponse.then(function (response) {
         expect(response).to.have.status(201);
+        expect(response).to.have.schema({ "type": "object", "required": ["id", "fullName", "email"] });
+        expect(response).to.have.json('email', lib.responseData.identity[0].email);
       });
     });
   });
@@ -25,6 +27,8 @@ describe('Identity Api', () => {
     it('Get a identity by its id.', () => {
       return getResponse.then(function (response) {
         expect(response).to.have.status(200);
+        expect(response).to.have.schema({ "type": "object", "required": ["id", "fullName", "email"] });
+        expect(response).to.have.json('id', lib.responseData.identity[0].id);
       });
     });
   });
