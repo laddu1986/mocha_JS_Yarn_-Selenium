@@ -14,7 +14,8 @@ const responseData = {
   invites: [],
   spaces: [],
   spaceKey: [],
-  negMembership: []
+  negMembership: [],
+  metrics: []
 };
 // uri end points
 const orca = config.orca.base;

@@ -2,8 +2,9 @@ import * as spaces from '../actions/spaces';
 import * as organization from '../actions/organization';
 import * as identity from '../actions/identity';
 import * as lib from '../../common';
+import * as Constants from 'data/constants.json';
 
-var postResponse, getResponse, updateResponse, getAllResponse, deleteResponse;
+var postResponse, getResponse, updateResponse, getAllResponse, deleteResponse, patchResponse, patchNameResponse;
 
 describe('Spaces Api', () => {
   describe('POST /organizations/{orgId}/spaces', () => {
@@ -53,6 +54,29 @@ describe('Spaces Api', () => {
     })
     it('Get Space for an Organization', () => {
       return getResponse.then((response) => {
+        expect(response).to.have.status(200);
+      })
+    });
+  });
+  describe('PATCH /organizations/{orgId}/spaces/{spaceId}', () => {
+    before((done) => {
+      patchResponse = spaces.patchSpaceByOrgIdRowVersionAndSpaceId(lib.responseData.spaces, Constants.SpaceAttributes.ShortUrl);
+      done();
+    })
+    it('Patch a space Url', () => {
+      return patchResponse.then((response) => {
+        expect(response).to.have.status(200);
+      })
+    });
+  });
+
+  describe('PATCH /organizations/{orgId}/spaces/{spaceId}', () => {
+    before((done) => {
+      patchNameResponse = spaces.patchSpaceByOrgIdRowVersionAndSpaceId(lib.responseData.spaces, Constants.SpaceAttributes.Name);
+      done();
+    })
+    it('Patch a space name', () => {
+      return patchNameResponse.then((response) => {
         expect(response).to.have.status(200);
       })
     });
