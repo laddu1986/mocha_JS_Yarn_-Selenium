@@ -14,7 +14,7 @@ export function createOrg(orgname) {
   OrgDashboardPage.currentOrgName.waitForVisible();
 }
 
-export function verifyLastOrgDeleted() {
+export function verifyNoOrgPage() {
   if (HomePage.noOrgs.isVisible() == HomePage.createOrgButton.isVisible() == HomePage.removeAccountButton.isVisible() == true)
     return true;
 }

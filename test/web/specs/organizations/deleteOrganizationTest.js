@@ -2,9 +2,11 @@ import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
 import SignInPage from 'web/page_objects/signInPage';
 import { getNotificationMessageText, closePassiveNotification } from 'web/actions/common';
-import { createNewOrg, createOrg, selectOrg, verifyChooseOrgspage, verifyOrgIsCreated, deleteOrganization, gotoOrgSettings, verifyLastOrgDeleted, clickCreateOrgFromNoOrgPage } from 'web/actions/organization';
+import { createNewOrg, createOrg, selectOrg, verifyChooseOrgspage, verifyOrgIsCreated, deleteOrganization, gotoOrgSettings, verifyNoOrgPage, clickCreateOrgFromNoOrgPage } from 'web/actions/organization';
 import orgNotificationData from 'web/data/passiveNotification.json';
+import { signIn, signOut } from 'web/actions/common';
 var accountDetails, orgName = `${lib.randomString.generate(10)}_Org1`, newOrgName = `${lib.randomString.generate(10)}_Org2`;
+
 describe('Delete organization Tests', () => {
   before(() => {
     SignInPage.open();
@@ -26,7 +28,13 @@ describe('Delete organization Tests', () => {
     deleteOrganization();
     expect(getNotificationMessageText()).to.include(orgNotificationData.deleteOrgMessage.text)
     closePassiveNotification();
-    verifyLastOrgDeleted();
+    expect(verifyNoOrgPage()).to.equal(true);
+  });
+
+  it(`Logout and Login --> No orgs page is displayed\n`, () => {
+    signOut();
+    signIn(accountDetails.email, accountDetails.password);
+    expect(verifyNoOrgPage()).to.equal(true);
   });
 
   it(`Create new Org from No-Orgs Page`, () => {

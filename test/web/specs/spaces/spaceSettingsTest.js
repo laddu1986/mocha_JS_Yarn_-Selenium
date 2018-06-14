@@ -5,12 +5,13 @@ import * as createSpaceActions from 'web/actions/space';
 import { getNotificationMessageText, closePassiveNotification } from 'web/actions/common';
 import spaceData from 'web/data/passiveNotification.json';
 import constants from 'data/constants.json';
-var newSpacename, editSpaceUrl;
+import { signIn, signOut } from 'web/actions/common';
+var newSpacename, editSpaceUrl, accountData;
 
 describe('Space Settings', () => {
     before(() => {
         SignInPage.open();
-        createAccount();
+        accountData = createAccount();
         createSpaceActions.createSpace();
         editSpaceUrl = browser.getUrl();
     });
@@ -34,5 +35,11 @@ describe('Space Settings', () => {
         createSpaceActions.deleteSpace();
         expect(getNotificationMessageText()).to.contain(spaceData.spaceDeleted.text + "'" + newSpacename + "'");
         expect(createSpaceActions.spaceIsDeleted()).to.equal(true);
+    });
+
+    it('Logout and Login --> Create new space page is displayed', () => {
+        signOut();
+        signIn(accountData.email, accountData.password);
+        expect(createSpaceActions.verifyCreateFirstSpacePage()).to.equal(true);
     });
 });
