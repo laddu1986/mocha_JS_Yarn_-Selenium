@@ -32,10 +32,13 @@ export function deleteSpace() {
 export function spaceIsDeleted() {
   return OrgDashboardPage.createSpaceInput.isVisible();
 }
-function createSpace() {
-  OrgDashboardPage.createSpaceInput.setValue(`${lib.randomString.generate(8)}_Space`);
+
+export function createSpace() {
+  var spacename = `${lib.randomString.generate(8)}_Space`;
+  OrgDashboardPage.createSpaceInput.setValue(spacename);
   OrgDashboardPage.createSpaceButton.click();
   SpaceDashboardPage.goToAppSettings.waitForVisible();
+  return spacename;
 }
 
 export function goToAPIKeyPage() {
@@ -43,37 +46,45 @@ export function goToAPIKeyPage() {
   SpaceAPIKeyPage.devApiGuideButton.waitForVisible();
 }
 
-function verifySpace() {
-  return SpaceDashboardPage.goToAppSettings.isVisible();
+export function verifySpacePage(spaceName) {
+  if (SpaceDashboardPage.goToAppSettings.isVisible() == true && browser.getUrl().includes(spaceName)) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
-function clickCreateNewSpaceButton() {
+export function clickCreateNewSpaceButton() {
   OrgDashboardPage.createNewSpaceButton.click();
 }
 
-function goBackToOrgDashboard() {
+export function goBackToOrgDashboard() {
   HomePage.logo.click();
   OrgDashboardPage.spaceCards.waitForVisible();
 }
 
-function createSpaceButtonEnabled() {
-  return OrgDashboardPage.createSpaceButton.isEnabled();
+export function verifyCreateFirstSpacePage() {
+  if (OrgDashboardPage.createSpaceButton.isEnabled() == false && OrgDashboardPage.createSpaceInput.isVisible() == true) {
+    return OrgDashboardPage.createYourFirstSpaceLabel.getText().includes('Create your first Space');
+  } else {
+    return false;
+  }
 }
 
-function copyAPIKeyToClipBoard() {
+export function copyAPIKeyToClipBoard() {
   SpaceAPIKeyPage.copyToClipboard.click();
 }
 
-function copiedValue() {
+export function copiedValue() {
   var copiedValue = copyPasteModule.paste();
   return copiedValue;
 }
 
-function defaultAPIKey() {
+export function defaultAPIKey() {
   return SpaceAPIKeyPage.APIKey.getText();
 }
 
-function verifyAPIKeyStatus(status) {
+export function verifyAPIKeyStatus(status) {
   return browser.waitUntil(function () {
     return SpaceAPIKeyPage.APIKeyStatus.getText() === status
   }, 5000, `Api Key status is not+${status}`);
@@ -85,27 +96,30 @@ export function verifyNewSpaceUrl(newSlugName) {
   }, 5000, `New Slug ${newSlugName} is not updated`);
 }
 
-function clickRevokeButton() {
+export function clickRevokeButton() {
   SpaceAPIKeyPage.revokeButton.click();
 }
 
-function clickUndoButton() {
+export function clickUndoButton() {
   SpaceAPIKeyPage.undoButton.click();
 }
 
-function deleteAPIKey() {
+export function deleteAPIKey() {
   SpaceAPIKeyPage.deleteButton.click();
   CommonPage.submitButton.click();
 }
 
-function ifIconsEnabled() {
+export function ifIconsEnabled() {
   if (SpaceAPIKeyPage.deleteButton.isEnabled() === false && SpaceAPIKeyPage.undoButton.isEnabled() === false) {
     return false;
   }
 }
 
-function revokeButtonAppears() {
+export function revokeButtonAppears() {
   return SpaceAPIKeyPage.revokeButton.isVisible();
 }
 
-export { revokeButtonAppears, ifIconsEnabled, deleteAPIKey, clickUndoButton, clickRevokeButton, verifyAPIKeyStatus, goBackToOrgDashboard, defaultAPIKey, copiedValue, createSpace, verifySpace, clickCreateNewSpaceButton, createSpaceButtonEnabled, copyAPIKeyToClipBoard }
+export function verifySpaceOrder(index) {
+  return OrgDashboardPage.spaceCards.value[index].getText();
+}
+
