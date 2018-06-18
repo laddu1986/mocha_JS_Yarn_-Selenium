@@ -16,7 +16,7 @@ describe('Invite Tests \n', () => {
 
   before(() => {
     createAccount();
-    browser.pause(2000)
+    browser.pause(1000)
   });
 
   describe('Organisation Dashboard page \n', () => {

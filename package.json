@@ -16,9 +16,11 @@
     "eslint": "^4.18.2",
     "eslint-plugin-babel": "^5.1.0",
     "mocha-simple-html-reporter": "^1.1.0",
+    "mysql2": "^1.5.3",
     "npm": "^6.0.0",
     "pngjs": "^3.3.3",
     "randomstring": "^1.1.5",
+    "sequelize": "^4.37.10",
     "wdio-html-format-reporter": "0.2.7",
     "webdriverio": "^4.12.0",
     "yargs": "^11.0.0"

@@ -22,13 +22,12 @@ describe('New User accesses an Expired Invitation', () => {
   before(() => {
     SignInPage.open();
     accountData = createAccount()
-    browser.pause(2000)
+    browser.pause(1000)
   });
 
   it('Admin invites a New User', () => {
     newUser = `newUser_${lib.randomString.generate(4)}@test.co`;
     inviteTeammate(newUser, '1');
-    expect(getNotificationMessageText()).to.include(passiveNotification.invitationSentMessage.text);
   });
 
   it('Invitation Expires', async () => {

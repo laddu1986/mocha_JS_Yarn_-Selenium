@@ -2,7 +2,6 @@ import "app-module-path/register";
 const server = require('chakram');
 
 global.expect = server.expect;
-const mysql = require('mysql');
 const config = require('config-yml');
 var randomString = require("randomstring");
 
@@ -21,38 +20,18 @@ const responseData = {
 const orca = config.orca.base;
 const web = config.web.base;
 
-var con = mysql.createConnection({
+const Sequelize = require('sequelize');
+const mysql = new Sequelize('organization_dev', 'rouser', 'R34d0nlyK3y', {
   host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
-  user: 'rouser',
-  password: 'R34d0nlyK3y',
+  dialect: 'mysql',
+  operatorsAliases: false,
+  pool: {
+    max: 30,
+    min: 20,
+    idle: 30000
+  },
+  logging: false
 });
-
-var pool = mysql.createPool({
-  host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
-  user: 'rouser',
-  password: 'R34d0nlyK3y',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
-
-/* function connection(params) {
-  if (!con) {
-    con = mysql.createConnection(params);
-    con.connect((err) => {
-      if (err) throw err;
-      console.log('Connected to Database!');
-    });
-  }
-  return con;
-}
-
-function end() {
-  con.end((err) => {
-    if (err) throw err;
-    console.log('Disconnected from Database!');
-  });
-} */
 
 function post(any) {
   if (any.headers == undefined) {
@@ -91,10 +70,8 @@ export {
   config,
   server,
   // db
-  //connection,
-  //con,
-  //end,
-  pool,
+  Sequelize,
+  mysql,
   // data
   responseData,
   randomString

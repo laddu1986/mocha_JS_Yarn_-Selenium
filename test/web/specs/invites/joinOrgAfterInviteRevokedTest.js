@@ -12,10 +12,9 @@ describe('Access a Revoked Invitation (New Account)', () => {
   before(() => {
     SignInPage.open();
     createAccount()
-    browser.pause(2000)
+    browser.pause(1000)
     newMember = `newmember_${lib.randomString.generate(5)}@test.co`;
     inviteTeammate(newMember, '1')
-    expect(getNotificationMessageText()).to.include(passiveNotification.invitationSentMessage.text)
   });
 
   it('New User gets Invitation URL', async () => {
