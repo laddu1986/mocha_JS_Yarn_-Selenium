@@ -12,7 +12,6 @@ import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeam
 import SignInPage from 'web/page_objects/signInPage'
 import { getNotificationMessageText, signIn, signOut } from 'web/actions/common'
 import AccountPage from '../../page_objects/AccountPage';
-import Common from '../../page_objects/common'
 import OrgDashboardPage from '../../page_objects/orgDashboardPage';
 import { submitButtonText } from 'web/actions/login';
 import passiveNotification from '../../data/passiveNotification.json'
@@ -23,10 +22,9 @@ describe('New User Joins an Organization via ACTIVE invitation', () => {
   before('Admin Invites Teammate', () => {
     SignInPage.open();
     accountData = createAccount()
-    browser.pause(2000)
+    browser.pause(1000)
     newUser = `newUser_${lib.randomString.generate(4)}@test.co`;
     inviteTeammate(newUser, '1')
-    expect(getNotificationMessageText()).to.include(passiveNotification.invitationSentMessage.text)
     signOut()
   });
 
@@ -51,4 +49,3 @@ describe('New User Joins an Organization via ACTIVE invitation', () => {
     expect(OrgDashboardPage.currentOrgName.getText()).to.equal(accountData.organization)
   });
 });
-

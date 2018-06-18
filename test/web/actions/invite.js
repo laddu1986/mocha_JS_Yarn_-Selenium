@@ -1,11 +1,24 @@
 import * as lib from '../../common';
-import homePage from 'web/page_objects/homePage'
 import NavBar from 'web/page_objects/navBar'
-import SpaceAPIKeyPage from 'web/page_objects/spaceAPIKeyPage';
 import TeamPage from '../page_objects/teamPage';
 import Common from '../page_objects/common'
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
 import { getNotificationMessageText, closePassiveNotification } from '../actions/common'
+
+var id;
+var createdTime;
+
+//define model
+var Invites = lib.mysql.define(
+  'Invites',
+  {
+    Id: { type: lib.Sequelize.STRING },
+    Email: { type: lib.Sequelize.STRING },
+    ExpiryDate: { type: lib.Sequelize.DATE },
+    CreatedTime: { type: lib.Sequelize.DATE }
+  },
+  { timestamps: false }
+)
 
 export function clickInviteTeammateButton() {
   OrgDashboardPage.inviteTeammateButton.click();
@@ -64,18 +77,21 @@ export function goToInactiveTab() {
 
 export function getInviteTokenFromDB(email) {
   return new Promise((resolve, reject) => {
-    const selectInviteId = `SELECT Id FROM organization_dev.Invites 
-                            WHERE Email = "${email}"
-                            AND CreatedTime = (SELECT MAX(CreatedTime) from organization_dev.Invites)
-                            order by CreatedTime desc;`
-    lib.pool.getConnection(function (err, connection) {
-      lib.pool.query({ sql: selectInviteId },
-        function (err, result) {
-          lib.pool.releaseConnection(connection)
-          if (err) reject(err);
-          resolve(result[0].Id)
+    lib.mysql.authenticate()
+      .then(function () {
+        Invites.findAll({
+          attributes: ['Id', 'Email', 'CreatedTime'],
+          where: { Email: `${email}` },
+          order: [lib.mysql.fn('max', lib.mysql.col('CreatedTime'))],
+        }).then(function (result) {
+          id = result[0].dataValues.Id
+          resolve(id)
         })
-    })
+      })
+      .catch(err => {
+        console.error('Unable to connect to the database:', err);
+        reject(err)
+      });
   })
 }
 
@@ -86,17 +102,27 @@ export async function invitationLink(email) {
 
 export async function updateTokenExpiryDateInDB(email) {
   return new Promise((resolve, reject) => {
-    const updateExpiryDate = `UPDATE organization_dev.Invites SET ExpiryDate = (CreatedTime - 1) 
-                              WHERE Email = "${email}"
-                              order by CreatedTime desc;`
-    lib.pool.getConnection(function (err, connection) {
-      lib.pool.query({ sql: updateExpiryDate },
-        function (err, result) {
-          lib.pool.releaseConnection(connection)
-          if (err) reject(err);
-          resolve(result)
+    lib.mysql.authenticate()
+      .then(function () {
+        Invites.findAll({
+          attributes: ['Id', 'Email', 'CreatedTime'],
+          where: { Email: `${email}` },
+          order: [lib.mysql.fn('max', lib.mysql.col('CreatedTime'))],
+        }).then(function (result) {
+          id = result[0].dataValues.Id
+          createdTime = result[0].dataValues.CreatedTime
+          Invites.update(
+            { ExpiryDate: createdTime },
+            { where: { Id: id } }).then(function () {
+              resolve(id)
+            })
         })
-    })
+      })
+      .catch(err => {
+        console.error('Unable to connect to the database:', err);
+        lib.mysql.close()
+        reject(err)
+      });
   })
 }
 
