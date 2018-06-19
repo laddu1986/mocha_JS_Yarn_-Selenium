@@ -1,6 +1,6 @@
 import "app-module-path/register";
 const server = require('chakram');
-
+var joi = require('joi');
 global.expect = server.expect;
 const mysql = require('mysql');
 const config = require('config-yml');
@@ -15,8 +15,16 @@ const responseData = {
   spaces: [],
   spaceKey: [],
   negMembership: [],
+  negIdentity: [],
   metrics: []
 };
+
+const testData = {
+  identityData: [],
+  organizationData: [],
+  invitesData: [],
+  spacesData: []
+}
 // uri end points
 const orca = config.orca.base;
 const web = config.web.base;
@@ -35,24 +43,6 @@ var pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0
 });
-
-/* function connection(params) {
-  if (!con) {
-    con = mysql.createConnection(params);
-    con.connect((err) => {
-      if (err) throw err;
-      console.log('Connected to Database!');
-    });
-  }
-  return con;
-}
-
-function end() {
-  con.end((err) => {
-    if (err) throw err;
-    console.log('Disconnected from Database!');
-  });
-} */
 
 function post(any) {
   if (any.headers == undefined) {
@@ -78,6 +68,8 @@ function del(any) {
 }
 
 export {
+  joi,
+  testData,
   // uri
   orca,
   web,
