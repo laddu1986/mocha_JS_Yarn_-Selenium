@@ -3,13 +3,13 @@ import NavBar from 'web/page_objects/navBar'
 import TeamPage from '../page_objects/teamPage';
 import Common from '../page_objects/common'
 import OrgDashboardPage from '../page_objects/orgDashboardPage';
-import { getNotificationMessageText, closePassiveNotification } from '../actions/common'
+import { closePassiveNotification } from '../actions/common'
 
 var id;
 var createdTime;
 
-//define model
-var Invites = lib.mysql.define(
+//define SQL model for specific table eg: Invites
+const Invites = lib.mysql.define(
   'Invites',
   {
     Id: { type: lib.Sequelize.STRING },
@@ -31,7 +31,6 @@ export function sendInviteButtonEnabled() {
 export function sendInvite(inviteMail) {
   OrgDashboardPage.inviteEmailInput.setValue(inviteMail);
   OrgDashboardPage.sendInviteButton.click();
-  getNotificationMessageText();
   closePassiveNotification();
 }
 
@@ -58,7 +57,6 @@ export function goToOrganisationDashboard() {
 export function inviteTeammate(mail, counta) {
   clickInviteTeammateButton()
   sendInvite(mail)
-  getNotificationMessageText()
   verifyInviteCount(counta)
 }
 
@@ -120,7 +118,6 @@ export async function updateTokenExpiryDateInDB(email) {
       })
       .catch(err => {
         console.error('Unable to connect to the database:', err);
-        lib.mysql.close()
         reject(err)
       });
   })
