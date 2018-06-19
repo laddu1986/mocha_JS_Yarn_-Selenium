@@ -2,7 +2,7 @@ import * as identity from '../actions/identity';
 import * as lib from '../../common';
 import * as organization from 'api/actions/organization';
 import * as membership from 'api/actions/membership';
-import * as validationErrorsData from 'api/validationErrorsData.json';
+import * as validationErrorsData from 'api/data/validationErrorsData.json';
 
 var getResponse, deleteResponse, postResponse;
 
