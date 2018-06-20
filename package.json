@@ -19,6 +19,7 @@
     "mocha-multi-reporters": "^1.1.7",
     "mocha-simple-html-reporter": "^1.1.0",
     "mysql2": "^1.5.3",
+    "node-es-module-loader": "^0.3.8",
     "npm": "^6.0.0",
     "pngjs": "^3.3.3",
     "randomstring": "^1.1.5",
