@@ -1,20 +1,23 @@
 import * as lib from '../../common';
 import * as identity from 'api/actions/identity';
-
-var addResponse, getResponse, deleteResponse;
+var schema, addResponse, getResponse, deleteResponse;
 
 describe('Identity Api', () => {
   describe('POST /identities ', () => {
     before((done) => {
-      addResponse = identity.postIdentity(lib.responseData.identity);
+      addResponse = identity.postIdentity(lib.responseData.identity, true);
       done();
     });
 
     it('Add a new user identity.', () => {
       return addResponse.then(function (response) {
         expect(response).to.have.status(201);
-        expect(response).to.have.schema({ "type": "object", "required": ["id", "fullName", "email"] });
-        expect(response).to.have.json('email', lib.responseData.identity[0].email);
+        schema = lib.joi.object().keys({
+          fullName: lib.joi.required().valid(lib.testData.identityData[0]),
+          email: lib.joi.required().valid(lib.testData.identityData[1]),
+          id: lib.joi.string().guid().required()
+        });
+        lib.joi.assert(response.body, schema);
       });
     });
   });
@@ -27,8 +30,12 @@ describe('Identity Api', () => {
     it('Get a identity by its id.', () => {
       return getResponse.then(function (response) {
         expect(response).to.have.status(200);
-        expect(response).to.have.schema({ "type": "object", "required": ["id", "fullName", "email"] });
-        expect(response).to.have.json('id', lib.responseData.identity[0].id);
+        schema = lib.joi.object().keys({
+          fullName: lib.joi.required().valid(lib.testData.identityData[0]),
+          email: lib.joi.required().valid(lib.testData.identityData[1]),
+          id: lib.joi.required().valid(lib.responseData.identity[0].id)
+        });
+        lib.joi.assert(response.body, schema);
       });
     });
   });

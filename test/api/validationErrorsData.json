@@ -1,5 +1,0 @@
-{
-    "CreateMembership": {
-        "BlankOrgIDError": "Must provide OrganizationId or InviteToken. Both cannot be empty."
-    }
-}
