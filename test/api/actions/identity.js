@@ -1,6 +1,6 @@
 import * as lib from '../../common';
 
-function postIdentity(responseData) {
+function postIdentity(responseData, flag) {
   const any = {
     api: lib.config.api.identities,
     data: {
@@ -9,11 +9,16 @@ function postIdentity(responseData) {
       password: 'Pass1234'
     }
   };
+  if (flag) {
+    lib.testData.identityData.push(any.data.fullname);
+    lib.testData.identityData.push(any.data.email);
+  }
   return lib.post(any).then((response) => {
     responseData.push(response.body);
     return response;
   })
 }
+
 function getIdentityById(responseData) {
   const any = {
     api: lib.config.api.identities,

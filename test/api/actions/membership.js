@@ -44,16 +44,6 @@ function deleteMembershipStatus(responseData) {
   };
   return lib.get(any);
 }
-function postMembershipWithBlankOrgID(responseData) {
-  const any = {
-    api: lib.config.api.memberships,
-    data: {
-      accountId: responseData[0].id,
-      organizationId: ""
-    }
-  };
-  return lib.post(any);
-}
 
 export {
   postMembership,
@@ -61,6 +51,5 @@ export {
   getMembershipByOrganization,
   getMemberships,
   deleteMembershipStatus,
-  deleteMembershipByAccountAndOrganization,
-  postMembershipWithBlankOrgID
+  deleteMembershipByAccountAndOrganization
 };

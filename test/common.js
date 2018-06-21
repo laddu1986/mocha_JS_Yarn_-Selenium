@@ -1,6 +1,6 @@
 import "app-module-path/register";
 const server = require('chakram');
-
+var joi = require('joi');
 global.expect = server.expect;
 const config = require('config-yml');
 var randomString = require("randomstring");
@@ -14,8 +14,16 @@ const responseData = {
   spaces: [],
   spaceKey: [],
   negMembership: [],
+  negIdentity: [],
   metrics: []
 };
+
+const testData = {
+  identityData: [],
+  organizationData: [],
+  invitesData: [],
+  spacesData: []
+}
 // uri end points
 const orca = config.orca.base;
 const web = config.web.base;
@@ -57,6 +65,8 @@ function del(any) {
 }
 
 export {
+  joi,
+  testData,
   // uri
   orca,
   web,
