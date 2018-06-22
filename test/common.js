@@ -20,7 +20,7 @@ const responseData = {
 
 const testData = {
   identityData: [],
-  organizationData: [],
+  organizationsData: [],
   invitesData: [],
   spacesData: []
 }

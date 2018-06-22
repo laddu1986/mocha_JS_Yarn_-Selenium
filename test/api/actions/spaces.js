@@ -1,6 +1,6 @@
 import * as lib from '../../common';
 
-function postSpaceByOrganizationId(responseData) {
+function postSpaceByOrganizationId(responseData, flag) {
   const any = {
     api: `${lib.config.api.spaces + responseData[1].id}/spaces`,
     data: {
@@ -9,6 +9,10 @@ function postSpaceByOrganizationId(responseData) {
       shortUrl: lib.randomString.generate(6)
     }
   };
+  if (flag) {
+    lib.testData.spacesData.push(any.data.name);
+    lib.testData.spacesData.push(any.data.shortUrl);
+  }
   return lib.post(any).then((response) => {
     responseData.push(response.body);
     return response;
@@ -23,7 +27,7 @@ function getSpacesByOrganizationId(responseData) {
   return lib.get(any);
 }
 
-export function updateSpace(responseData) {
+export function updateSpace(responseData, flag) {
   const any = {
     api: `${lib.config.api.spaces + responseData[1].id}/spaces`,
     data: {
@@ -33,13 +37,17 @@ export function updateSpace(responseData) {
       shortUrl: lib.randomString.generate(6)
     }
   };
+  if (flag) {
+    lib.testData.spacesData.push(any.data.name);
+    lib.testData.spacesData.push(any.data.shortUrl);
+  }
   return lib.put(any).then((response) => {
     responseData.push(response.body);
     return response;
   });
 };
 var index = 3;
-export function patchSpaceByOrgIdRowVersionAndSpaceId(responseData, type) {
+export function patchSpaceByOrgIdRowVersionAndSpaceId(responseData, type, flag) {
   if (type == "name") {
     index = 4;
   }
@@ -47,12 +55,15 @@ export function patchSpaceByOrgIdRowVersionAndSpaceId(responseData, type) {
     api: `${lib.config.api.spaces + responseData[1].id}/spaces/${responseData[2].id}?rowVersion=${responseData[index].rowVersion}`,
     data: [
       {
-        "op": "replace",
-        "path": `/${type}`,
-        "value": lib.randomString.generate(6)
+        op: "replace",
+        path: `/${type}`,
+        value: lib.randomString.generate(6)
       }
     ]
   };
+  if (flag) {
+    lib.testData.spacesData.push(any.data[0].value);
+  }
   return lib.patch(any).then((response) => {
     responseData.push(response.body);
     return response;

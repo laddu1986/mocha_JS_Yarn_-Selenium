@@ -18,10 +18,10 @@ function getMembershipByAnyID(anyId) {
   return lib.get(any);
 }
 function getMembershipByAccount(responseData) {
-  return getMembershipByAnyID(`?accountId=${responseData[0].id}`);
+  return getMembershipByAnyID(`?accountId=${responseData[0].id}&pageSize=1`);
 }
 function getMembershipByOrganization(responseData) {
-  return getMembershipByAnyID(`?orgId=${responseData[1].id}`);
+  return getMembershipByAnyID(`?orgId=${responseData[1].id}&pageSize=1`);
 }
 function getMemberships(responseData) {
   const any = {

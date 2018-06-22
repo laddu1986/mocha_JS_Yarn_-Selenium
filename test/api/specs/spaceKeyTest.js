@@ -2,9 +2,9 @@ import * as lib from '../../common';
 import * as spaces from 'api/actions/spaces';
 import * as organization from 'api/actions/organization';
 import * as identity from 'api/actions/identity';
-import * as constants from 'data/constants.json';
+import * as Constants from 'data/constants.json';
 
-var postResponse, getResponse, revokeResponse, reactivateResponse, deleteResponse;
+var schema, postResponse, getResponse, revokeResponse, reactivateResponse, deleteResponse;
 
 describe('Space Keys Api', () => {
     describe(`\nPOST /keys\n`, () => {
@@ -14,7 +14,7 @@ describe('Space Keys Api', () => {
                     spaces.postSpaceByOrganizationId(lib.responseData.spaceKey).then(() => {
                         postResponse = spaces.postKeysBySpaceId(lib.responseData.spaceKey);
                         done();
-                    })
+                    });
                 });
             });
         });
@@ -22,7 +22,15 @@ describe('Space Keys Api', () => {
         it('Creates a new key for the resource that is passed as input', () => {
             return postResponse.then((response) => {
                 expect(response).to.have.status(201);
-                expect(response.body.rowStatus).to.equal(constants.APIKeyStatus.Active);
+                schema = lib.joi.object().keys({
+                    value: lib.joi.string().uuid().required(),
+                    rowVersion: lib.joi.date().required(),
+                    rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required(),
+                    resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+                    resourceType: lib.joi.valid('Space').required(),
+                    resourceName: lib.joi.valid(null).required(),
+                });
+                lib.joi.assert(response.body, schema);
             });
         });
     });
@@ -35,33 +43,61 @@ describe('Space Keys Api', () => {
         it('Returns the list of keys associated with a particular space', () => {
             return getResponse.then((response) => {
                 expect(response).to.have.status(200);
+                const schemaObject = lib.joi.object().keys({
+                    value: lib.joi.valid(lib.responseData.spaceKey[3].value).required(),
+                    rowVersion: lib.joi.date().required(),
+                    rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required()
+                });
+                const keysSchemaObject = lib.joi.object().keys({
+                    keys: lib.joi.array().items(schemaObject),
+                    resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+                    resourceType: lib.joi.valid('Space').required(),
+                });
+                schema = lib.joi.array().items(keysSchemaObject);
+                lib.joi.assert(response.body, schema);
             });
         });
     });
     describe(`\nPATCH /keys/{key}\n`, () => {
         describe(`Revoke\n`, () => {
             before((done) => {
-                revokeResponse = spaces.patchKeyBySpaceIdAndRowVersion(lib.responseData.spaceKey, constants.APIKeyStatus.Revoked);
+                revokeResponse = spaces.patchKeyBySpaceIdAndRowVersion(lib.responseData.spaceKey, Constants.APIKeyStatus.Revoked);
                 done();
             });
 
             it('Revokes the provided key', () => {
                 return revokeResponse.then((response) => {
                     expect(response).to.have.status(200);
-                    expect(response.body.rowStatus).to.equal(constants.APIKeyStatus.Revoked);
+                    schema = lib.joi.object().keys({
+                        value: lib.joi.valid(lib.responseData.spaceKey[3].value).required(),
+                        rowVersion: lib.joi.date().required(),
+                        rowStatus: lib.joi.valid(Constants.APIKeyStatus.Revoked).required(),
+                        resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+                        resourceType: lib.joi.valid('Space').required(),
+                        resourceName: lib.joi.valid(null).required(),
+                    });
+                    lib.joi.assert(response.body, schema);
                 });
             });
         });
         describe(`\nRe-activate\n`, () => {
             before((done) => {
-                reactivateResponse = spaces.patchKeyBySpaceIdAndRowVersion(lib.responseData.spaceKey, constants.APIKeyStatus.Active);
+                reactivateResponse = spaces.patchKeyBySpaceIdAndRowVersion(lib.responseData.spaceKey, Constants.APIKeyStatus.Active);
                 done();
             });
 
             it('Re-activates the provided key', () => {
                 return reactivateResponse.then((response) => {
                     expect(response).to.have.status(200);
-                    expect(response.body.rowStatus).to.equal(constants.APIKeyStatus.Active);
+                    schema = lib.joi.object().keys({
+                        value: lib.joi.valid(lib.responseData.spaceKey[3].value).required(),
+                        rowVersion: lib.joi.date().required(),
+                        rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required(),
+                        resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+                        resourceType: lib.joi.valid('Space').required(),
+                        resourceName: lib.joi.valid(null).required(),
+                    });
+                    lib.joi.assert(response.body, schema);
                 });
             });
         });
@@ -75,7 +111,15 @@ describe('Space Keys Api', () => {
         it('Deletes the provided key', () => {
             return deleteResponse.then((response) => {
                 expect(response).to.have.status(200);
-                expect(response.body.rowStatus).to.equal((constants.APIKeyStatus.PendingDelete).replace(/\s/g, ''));
+                schema = lib.joi.object().keys({
+                    value: lib.joi.valid(lib.responseData.spaceKey[3].value).required(),
+                    rowVersion: lib.joi.date().required(),
+                    rowStatus: lib.joi.valid((Constants.APIKeyStatus.PendingDelete).replace(/\s/g, '')).required(),
+                    resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+                    resourceType: lib.joi.valid('Space').required(),
+                    resourceName: lib.joi.valid(null).required(),
+                });
+                lib.joi.assert(response.body, schema);
             });
         });
     });

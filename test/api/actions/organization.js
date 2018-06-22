@@ -1,6 +1,6 @@
 import * as lib from '../../common';
 
-function postOrganization(responseData) {
+function postOrganization(responseData, flag) {
   const any = {
     api: lib.config.api.organizations,
     data: {
@@ -8,6 +8,9 @@ function postOrganization(responseData) {
       createdByAccountId: responseData[0].id
     }
   };
+  if (flag) {
+    lib.testData.organizationsData.push(any.data.name);
+  }
   return lib.post(any).then((response) => {
     responseData.push(response.body);
     return response;
@@ -35,8 +38,7 @@ function postOrganizations(responseData) {
     api: `${lib.config.api.organizations}list`,
     data:
       [
-        responseData[1].id,
-        responseData[2].id
+        responseData[1].id
       ]
   };
   return lib.post(any)
@@ -47,29 +49,20 @@ function deleteOrganizationById(responseData) {
     api: lib.config.api.organizations,
     data: `${responseData[2].id}?rowVersion=${responseData[2].rowVersion}`
   };
-  
+
   return lib.del(any);
 }
 
-function checkStatusChangedToPendingDelete(responseData) {
-  const any = {
-    api: lib.config.api.organizations,
-    data: responseData[2]
-    // func(response) {
-    //   expect(response.body.rowStatus).to.equal('PendingDelete');
-    //   expect(response).to.have.status(200);
-    // }
-  };
-  return lib.get(any);
-}
-
-function putOrganization(responseData) {
+function putOrganization(responseData, flag) {
   const update = responseData[1];
   update.name = 'check update name string';
   const any = {
     api: lib.config.api.organizations,
     data: update
   };
+  if (flag) {
+    lib.testData.organizationsData.push(any.data.name);
+  }
   return lib.put(any).then((response) => {
     responseData.push(response.body);
     return response;
@@ -82,6 +75,5 @@ export {
   getOrganizations,
   postOrganizations,
   deleteOrganizationById,
-  putOrganization,
-  checkStatusChangedToPendingDelete
+  putOrganization
 };
