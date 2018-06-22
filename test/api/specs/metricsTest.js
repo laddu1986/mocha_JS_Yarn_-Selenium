@@ -3,7 +3,7 @@ import * as organization from '../actions/organization';
 import * as identity from '../actions/identity';
 import * as metrics from '../actions/metrics';
 import * as lib from '../../common';
-var getUniqueUsersResponse, getAPIRequestsResponse, getActiveResponse;
+var schema, getUniqueUsersResponse, getAPIRequestsResponse, getActiveResponse;
 
 describe('Metrics Api', () => {
     describe('GET /organizations/{orgId}/spaces/{spaceId}/metrics/unique-users/count', () => {
@@ -20,6 +20,10 @@ describe('Metrics Api', () => {
         it('Returns the number of unique users that visited the space in a given time period', () => {
             return getUniqueUsersResponse.then((response) => {
                 expect(response).to.have.status(200);
+                schema = lib.joi.object().keys({
+                    uniqueUsers: lib.joi.number().required()
+                });
+                lib.joi.assert(response.body, schema);
             })
         });
     });
@@ -33,6 +37,10 @@ describe('Metrics Api', () => {
         it('Returns the number of api requests from a space in a given time period', () => {
             return getAPIRequestsResponse.then((response) => {
                 expect(response).to.have.status(200);
+                schema = lib.joi.object().keys({
+                    uniqueRequests: lib.joi.number().required()
+                });
+                lib.joi.assert(response.body, schema);
             });
         });
     });
@@ -46,6 +54,10 @@ describe('Metrics Api', () => {
         it('Returns whether the space is active or not', () => {
             return getActiveResponse.then((response) => {
                 expect(response).to.have.status(200);
+                schema = lib.joi.object().keys({
+                    isActive: lib.joi.boolean().required()
+                });
+                lib.joi.assert(response.body, schema);
             });
         });
     });

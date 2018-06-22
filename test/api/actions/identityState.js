@@ -4,7 +4,7 @@ import * as lib from '../../common';
 function getIdentityStateById(responseData) {
   const any = {
     api: lib.config.api.identities,
-    data: responseData[0].id
+    data: `${responseData[0].id}/state`
   };
   return lib.get(any);
 }
