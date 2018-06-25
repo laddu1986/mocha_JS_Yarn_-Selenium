@@ -61,7 +61,7 @@ COPY ./scripts/ /home/root/scripts
 # #============================================
 # # Selenium packages
 # #============================================
-RUN sudo apt-get update && sudo apt-get install yarn \
+RUN apt-get update && apt-get install yarn \
   selenium-standalone@latest \
   && selenium-standalone install
 
