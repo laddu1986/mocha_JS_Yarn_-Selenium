@@ -3,6 +3,7 @@ options:
   docker: true
 pipelines:
   branches:
+    update-pipelines:
     - step:
         script:
           - sh ./scripts/start.sh
