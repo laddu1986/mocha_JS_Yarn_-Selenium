@@ -1,8 +1,9 @@
 import * as lib from '../../common';
 import * as data from 'api/data/identityTestsData.js';
 import * as identity from 'api/actions/identity.js';
+import * as identityState from 'api/actions/identityState.js';
 import * as validationErrors from 'api/data/validationErrorsData.json';
-var noEmailResponse, noFullNameResponse, noPwdResponse, emailExistsResponse, getResponse;
+var noEmailResponse, noFullNameResponse, noPwdResponse, emailExistsResponse, getResponse, putResponse, patchResponse;
 
 describe('Negative Cases --> Identity Api', () => {
     describe('POST /identities ', () => {
@@ -65,6 +66,30 @@ describe('Negative Cases --> Identity Api', () => {
                     expect(response).to.have.status(404);
                     expect(response.body.message).to.include(validationErrors.GetIdentity.UserNotFound);
                 });
+            });
+        });
+    });
+    describe('PUT /identities/{id}/state ', () => {
+        before((done) => {
+            putResponse = identityState.putIdentityById(lib.responseData.negIdentity)
+            done();
+        });
+        it('400 - Invalid userState entered ', () => {
+            return putResponse.then(function (response) {
+                expect(response).to.have.status(400);
+                expect(response.body.message).to.equal(validationErrors.SetIdentity.InvalidIdentity);
+            });
+        });
+    });
+    describe('PATCH /identities/{id}/state ', () => {
+        before((done) => {
+            patchResponse = identityState.patchIdentityStateById(lib.responseData.negIdentity)
+            done();
+        });
+        it('400 - Invalid userState entered ', () => {
+            return patchResponse.then(function (response) {
+                expect(response).to.have.status(400);
+                expect(response.body.message).to.equal(validationErrors.SetIdentity.InvalidIdentity);
             });
         });
     });
