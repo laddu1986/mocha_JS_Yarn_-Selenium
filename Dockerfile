@@ -18,6 +18,7 @@ RUN add-apt-repository -y ppa:mozillateam/firefox-next
 #============================================
 RUN wget -qO- https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
+RUN apt-get install --no-install-recommends yarn
 
 #============================================
 # Chrome, webdriver, JAVA 9, Firefox and Miscellaneous packages
@@ -61,7 +62,7 @@ COPY ./scripts/ /home/root/scripts
 # #============================================
 # # Selenium packages
 # #============================================
-RUN apt-get update && apt-get install yarn \
+RUN npm install -g \
   selenium-standalone@latest \
   && selenium-standalone install
 

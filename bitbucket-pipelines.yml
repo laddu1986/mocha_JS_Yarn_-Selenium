@@ -3,10 +3,8 @@ options:
   docker: true
 pipelines:
   branches:
-    update-pipelines:
     - step:
         script:
           - sh ./scripts/start.sh
-          - apt-get update && apt-get install yarn
           - yarn install
           - yarn run api
