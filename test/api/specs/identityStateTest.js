@@ -3,7 +3,7 @@ import * as lib from '../../common';
 import * as identityState from 'api/actions/identityState';
 import * as identity from 'api/actions/identity';
 
-var getResponse, putResponse, patchResponse;
+var schema, getResponse, putResponse, patchResponse;
 
 describe('Identity State Api', () => {
 
@@ -18,6 +18,10 @@ describe('Identity State Api', () => {
     it('Return identity state by identity id.', () => {
       return getResponse.then(function (response) {
         expect(response).to.have.status(200);
+        schema = lib.joi.object().keys({
+          values: lib.joi.required()
+        });
+        lib.joi.assert(response.body, schema);
       });
     });
   });
@@ -42,6 +46,14 @@ describe('Identity State Api', () => {
     it('Partial update identity state for an identity.', () => {
       return patchResponse.then(function (response) {
         expect(response).to.have.status(200);
+        schema = lib.joi.object().keys({
+          values: lib.joi.object().keys({
+            additionalProp1: lib.joi.valid('1').required(),
+            additionalProp2: lib.joi.valid('2').required(),
+            additionalProp3: lib.joi.valid('3').required()
+          })
+        });
+        lib.joi.assert(response.body, schema);
       });
     });
   });
