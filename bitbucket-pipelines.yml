@@ -6,5 +6,5 @@ pipelines:
     - step:
         script:
           - sh ./scripts/start.sh
-          - npm install
-          - npm run web
+          - yarn install
+          - yarn run api
