@@ -4,7 +4,7 @@ import * as identity from 'api/actions/identity.js';
 import * as validationErrors from 'api/data/validationErrorsData.json';
 var noEmailResponse, noFullNameResponse, noPwdResponse, emailExistsResponse, getResponse;
 
-describe('Identity Api - Negative Cases', () => {
+describe('Negative Cases --> Identity Api', () => {
     describe('POST /identities ', () => {
         describe('400 Response - Mandatory fields validation ', () => {
             before((done) => {

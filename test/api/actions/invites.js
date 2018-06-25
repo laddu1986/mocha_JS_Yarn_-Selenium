@@ -2,7 +2,7 @@ import * as lib from '../../common';
 
 var emailInvited = `${lib.randomString.generate(5)}@test.co`;
 
-function getAccessToken(responseData) {
+export function getAccessToken(responseData) {
   const any = {
     api: lib.config.api.token,
     headers: {
@@ -19,19 +19,22 @@ function getAccessToken(responseData) {
   });
 }
 
-function postInvitesByOrganizationId(responseData) {
+export function postInvitesByOrganizationId(responseData, flag) {
   const any = {
     api: `${lib.config.api.organizations + responseData[1].id}/invites`,
-    data: emailInvited,
+    data: [emailInvited],
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${responseData[2].access_token}`
     }
   };
+  if (flag) {
+    lib.testData.invitesData.push(emailInvited);
+  }
   return lib.post(any);
 }
 
-function getInvitesByOrganizationId(responseData) {
+export function getInvitesByOrganizationId(responseData) {
   const any = {
     api: lib.config.api.organizations,
     data: `${responseData[1].id}/invites?pageSize=1`
@@ -41,7 +44,7 @@ function getInvitesByOrganizationId(responseData) {
     return response;
   })
 }
-function getInviteDetailsByOrganizationId(responseData) {
+export function getInviteDetailsByToken(responseData) {
   const any = {
     api: `${lib.config.api.invites}${responseData[3].results[0].token}`,
     data: ""
@@ -49,18 +52,10 @@ function getInviteDetailsByOrganizationId(responseData) {
   return lib.get(any);
 }
 
-function deleteInviteByOrganizationIdAndEmail(responseData) {
+export function deleteInviteByOrganizationIdAndEmail(responseData) {
   const any = {
     api: lib.config.api.organizations,
     data: `${responseData[1].id}/invites/?email=${emailInvited}`
   };
   return lib.del(any);
 }
-
-export {
-  postInvitesByOrganizationId,
-  getInvitesByOrganizationId,
-  getInviteDetailsByOrganizationId,
-  deleteInviteByOrganizationIdAndEmail,
-  getAccessToken
-};

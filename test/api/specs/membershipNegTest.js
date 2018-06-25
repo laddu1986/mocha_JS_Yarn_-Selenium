@@ -7,7 +7,7 @@ var NodeESModuleLoader = require('node-es-module-loader');
 var loader = new NodeESModuleLoader();
 var expectedMessageForBlankOrgId, expectedMessageForinvalidToken, getResponse, deleteResponse, blankOrgIdResponse, invalidTokenResponse;
 
-describe('Negative tests-> Membership', () => {
+describe('Negative tests --> Membership', () => {
   describe(`\nGET /memberships\n`, () => {
     before((done) => {
       identity.postIdentity(lib.responseData.negMembership).then(() => {

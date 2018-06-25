@@ -10,6 +10,7 @@
         "ShortUrl": "shortUrl"
     },
     "InviteStatus": {
-        "Expired": "Expired"
+        "Expired": "Expired",
+        "Pending": "Pending"
     }
 }

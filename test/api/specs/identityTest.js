@@ -13,8 +13,8 @@ describe('Identity Api', () => {
       return addResponse.then(function (response) {
         expect(response).to.have.status(201);
         schema = lib.joi.object().keys({
-          fullName: lib.joi.required().valid(lib.testData.identityData[0]),
-          email: lib.joi.required().valid(lib.testData.identityData[1]),
+          fullName: lib.joi.valid(lib.testData.identityData[0]).required(),
+          email: lib.joi.valid(lib.testData.identityData[1]).required(),
           id: lib.joi.string().guid().required()
         });
         lib.joi.assert(response.body, schema);
@@ -31,9 +31,9 @@ describe('Identity Api', () => {
       return getResponse.then(function (response) {
         expect(response).to.have.status(200);
         schema = lib.joi.object().keys({
-          fullName: lib.joi.required().valid(lib.testData.identityData[0]),
-          email: lib.joi.required().valid(lib.testData.identityData[1]),
-          id: lib.joi.required().valid(lib.responseData.identity[0].id)
+          fullName: lib.joi.valid(lib.testData.identityData[0]).required(),
+          email: lib.joi.valid(lib.testData.identityData[1]).required(),
+          id: lib.joi.valid(lib.responseData.identity[0].id).required()
         });
         lib.joi.assert(response.body, schema);
       });
