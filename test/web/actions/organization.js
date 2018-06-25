@@ -15,7 +15,7 @@ export function createOrg(orgname) {
 }
 
 export function verifyNoOrgPage() {
-  if (HomePage.noOrgs.isVisible() == HomePage.createOrgButton.isVisible() == HomePage.removeAccountButton.isVisible() == true)
+  if (HomePage.createOrgButton.isVisible() == HomePage.removeAccountButton.isVisible() == true)
     return true;
 }
 
@@ -94,7 +94,6 @@ export function goBackToOrgDashboard() {
 }
 
 export function verifyOrgCardStack() {
-  HomePage.chooseOrg.waitForVisible();
   HomePage.orgCards.waitForVisible();
   return HomePage.orgCards.value[0].getText();
 }

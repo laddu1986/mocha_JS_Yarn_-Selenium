@@ -1,5 +1,8 @@
 {
     "GetIdentity": {
         "UserNotFound": "not found"
+    },
+    "SetIdentity": {
+        "InvalidIdentity": "Identity id is invalid"
     }
 }
