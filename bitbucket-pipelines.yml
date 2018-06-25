@@ -2,7 +2,8 @@ image: qamassive/v2
 options:
   docker: true
 pipelines:
-  default:
+  branches:
+    update-pipelines:
     - step:
         script:
           - sh ./scripts/start.sh
