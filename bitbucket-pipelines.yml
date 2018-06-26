@@ -11,8 +11,10 @@ pipelines:
         script:
           - sh ./scripts/start.sh
           - yarn install
-          -parallel:
-            -step:
-              - yarn run api
-            -step:
-              - yarn run  web
+    - parallel:
+      - step:
+          script:
+            - yarn run api
+      - step:
+          script:
+            - yarn run web
