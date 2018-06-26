@@ -1,0 +1,885 @@
+
+<html>
+    <head>
+        <title>Mocha</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style type="text/css">
+        @charset "utf-8";
+
+body {
+  margin:0;
+}
+
+#mocha {
+  font: 20px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 60px 50px;
+}
+
+#mocha ul,
+#mocha li {
+  margin: 0;
+  padding: 0;
+}
+
+#mocha ul {
+  list-style: none;
+}
+
+#mocha h1,
+#mocha h2 {
+  margin: 0;
+}
+
+#mocha h1 {
+  margin-top: 15px;
+  font-size: 1em;
+  font-weight: 200;
+}
+
+#mocha h1 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#mocha h1 a:hover {
+  text-decoration: underline;
+}
+
+#mocha .suite .suite h1 {
+  margin-top: 0;
+  font-size: .8em;
+}
+
+#mocha .hidden {
+  display: none;
+}
+
+#mocha h2 {
+  font-size: 12px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+#mocha .suite {
+  margin-left: 15px;
+}
+
+#mocha .test {
+  margin-left: 15px;
+  overflow: hidden;
+}
+
+#mocha .test.pending:hover h2::after {
+  content: '(pending)';
+  font-family: arial, sans-serif;
+}
+
+#mocha .test.pass.medium .duration {
+  background: #c09853;
+}
+
+#mocha .test.pass.slow .duration {
+  background: #b94a48;
+}
+
+#mocha .test.pass::before {
+  content: '✓';
+  font-size: 12px;
+  display: block;
+  float: left;
+  margin-right: 5px;
+  color: #00d6b2;
+}
+
+#mocha .test.pass .duration {
+  font-size: 9px;
+  margin-left: 5px;
+  padding: 2px 5px;
+  color: #fff;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.2);
+  -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.2);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.2);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#mocha .test.pass.fast .duration {
+  display: none;
+}
+
+#mocha .test.pending {
+  color: #0b97c4;
+}
+
+#mocha .test.pending::before {
+  content: '◦';
+  color: #0b97c4;
+}
+
+#mocha .test.fail {
+  color: #c00;
+}
+
+#mocha .test.fail pre {
+  color: black;
+}
+
+#mocha .test.fail::before {
+  content: '✖';
+  font-size: 12px;
+  display: block;
+  float: left;
+  margin-right: 5px;
+  color: #c00;
+}
+
+#mocha .test pre.error {
+  color: #c00;
+  max-height: 300px;
+  overflow: auto;
+}
+
+#mocha .test .html-error {
+  overflow: auto;
+  color: black;
+  line-height: 1.5;
+  display: block;
+  float: left;
+  clear: left;
+  font: 12px/1.5 monaco, monospace;
+  margin: 5px;
+  padding: 15px;
+  border: 1px solid #eee;
+  max-width: 85%; /*(1)*/
+  max-width: -webkit-calc(100% - 42px);
+  max-width: -moz-calc(100% - 42px);
+  max-width: calc(100% - 42px); /*(2)*/
+  max-height: 300px;
+  word-wrap: break-word;
+  border-bottom-color: #ddd;
+  -webkit-box-shadow: 0 1px 3px #eee;
+  -moz-box-shadow: 0 1px 3px #eee;
+  box-shadow: 0 1px 3px #eee;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#mocha .test .html-error pre.error {
+  border: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: 0;
+  -moz-box-shadow: 0;
+  box-shadow: 0;
+  padding: 0;
+  margin: 0;
+  margin-top: 18px;
+  max-height: none;
+}
+
+/**
+ * (1): approximate for browsers not supporting calc
+ * (2): 42 = 2*15 + 2*10 + 2*1 (padding + margin + border)
+ *      ^^ seriously
+ */
+#mocha .test pre {
+  display: block;
+  float: left;
+  clear: left;
+  font: 12px/1.5 monaco, monospace;
+  margin: 5px;
+  padding: 15px;
+  border: 1px solid #eee;
+  max-width: 85%; /*(1)*/
+  max-width: -webkit-calc(100% - 42px);
+  max-width: -moz-calc(100% - 42px);
+  max-width: calc(100% - 42px); /*(2)*/
+  word-wrap: break-word;
+  border-bottom-color: #ddd;
+  -webkit-box-shadow: 0 1px 3px #eee;
+  -moz-box-shadow: 0 1px 3px #eee;
+  box-shadow: 0 1px 3px #eee;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#mocha .test h2 {
+  position: relative;
+}
+
+#mocha .test a.replay {
+  position: absolute;
+  top: 3px;
+  right: 0;
+  text-decoration: none;
+  vertical-align: middle;
+  display: block;
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  text-align: center;
+  background: #eee;
+  font-size: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  -webkit-transition:opacity 200ms;
+  -moz-transition:opacity 200ms;
+  -o-transition:opacity 200ms;
+  transition: opacity 200ms;
+  opacity: 0.3;
+  color: #888;
+}
+
+#mocha .test:hover a.replay {
+  opacity: 1;
+}
+
+#mocha-report.pass .test.fail {
+  display: none;
+}
+
+#mocha-report.fail .test.pass {
+  display: none;
+}
+
+#mocha-report.pending .test.pass,
+#mocha-report.pending .test.fail {
+  display: none;
+}
+#mocha-report.pending .test.pass.pending {
+  display: block;
+}
+
+#mocha-error {
+  color: #c00;
+  font-size: 1.5em;
+  font-weight: 100;
+  letter-spacing: 1px;
+}
+
+#mocha-stats {
+  position: fixed;
+  top: 15px;
+  right: 10px;
+  font-size: 12px;
+  margin: 0;
+  color: #888;
+  z-index: 1;
+}
+
+#mocha-stats .progress {
+  float: right;
+  padding-top: 0;
+
+  /**
+   * Set safe initial values, so mochas .progress does not inherit these
+   * properties from Bootstrap .progress (which causes .progress height to
+   * equal line height set in Bootstrap).
+   */
+  height: auto;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background-color: initial;
+}
+
+#mocha-stats em {
+  color: black;
+}
+
+#mocha-stats a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#mocha-stats a:hover {
+  border-bottom: 1px solid #eee;
+}
+
+#mocha-stats li {
+  display: inline-block;
+  margin: 0 5px;
+  list-style: none;
+  padding-top: 11px;
+}
+
+#mocha-stats canvas {
+  width: 40px;
+  height: 40px;
+}
+
+#mocha code .comment { color: #ddd; }
+#mocha code .init { color: #2f6fad; }
+#mocha code .string { color: #5890ad; }
+#mocha code .keyword { color: #8a6343; }
+#mocha code .number { color: #2f6fad; }
+
+@media screen and (max-device-width: 480px) {
+  #mocha {
+    margin: 60px 0px;
+  }
+
+  #mocha #stats {
+    position: absolute;
+  }
+}
+#mocha .test.pass pre {
+    display: none;
+}
+
+#mocha .test.fail pre {
+    display: none;
+}
+
+#mocha .test pre.error {
+    display: block;
+}
+
+#mocha .test .html-error pre.error {
+    box-shadow: none;
+}
+
+#mocha .test:hover h2:after {
+    color: #888888;
+    content: "(view source)";
+    font-family: arial;
+    font-size: 12px;
+    position: relative;
+    right: -10px;
+    top: 0;
+}
+
+#mocha .test.pass.pending h2 {
+    cursor: auto;
+}
+
+#mocha .mocha-header {
+    right: 30px;
+    position: fixed;
+    top: 15px;
+    font-size: 14px;
+    margin: 0;
+    color: #888;
+    z-index: 1;
+}
+
+#mocha .mocha-header em {
+    font-style: normal;
+    color: black;
+}
+
+#mocha .mocha-header ul {
+    display: inline-block;
+}
+
+#mocha .mocha-stats li {
+    display: inline-block;
+    margin: 0 5px;
+    list-style: none;
+    padding-top: 11px;
+}
+
+#mocha .mocha-menu {
+    margin-right: 10px;
+}
+
+#mocha .mocha-menu li {
+    display: inline-block;
+    margin-left: 10px;
+    list-style: none;
+}
+
+#mocha .mocha-menu li span {
+    display: inline-block;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+    padding: 3px 7px 2px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,.2);
+    border-radius: 5px;
+    user-select: none;
+}
+
+#mocha .mocha-menu li span.checked {
+    box-shadow: inset 1px 1px 3px rgba(0,0,0,.2);
+}
+
+#mocha .toggle-passes {
+    background: #b94a48;
+}
+
+        </style>
+    </head>
+    <body>
+        <div id="mocha">
+            <div class="mocha-header">
+                <ul class="mocha-menu">
+                    <li><span id="toggle-passes" class="toggle-passes">show failures only</span></li>
+                </ul>
+                <ul class="mocha-stats">
+                    <li class="passes">passes: <em>45</em></li>
+                    <li class="pending">pending: <em>0</em></li>
+                    <li class="failures">failures: <em>0</em></li>
+                    <li class="duration">duration: <em>43.2s</em></li>
+                </ul>
+            </div>
+            <ul id="report"><li class="suite"><h1>Negative Cases --&#x3E; Identity Api</h1><ul><li class="suite"><h1>POST /identities </h1><ul><li class="suite"><h1>400 Response - Mandatory fields validation </h1><ul><li class="test pass slow"><h2>Email cannot be empty<span class="duration">210ms</span></h2><pre><code>return noEmailResponse.then(function (response) {
+    expect(response).to.have.status(400);
+    expect(response.body.validationErrors.email).to.include(data.noEmail.expected);
+});</code></pre></li><li class="test pass fast"><h2>FullName cannot be emtpy<span class="duration">1ms</span></h2><pre><code>return noFullNameResponse.then(function (response) {
+    expect(response).to.have.status(400);
+    expect(response.body.validationErrors.fullName).to.include(data.noFullName.expected);
+});</code></pre></li><li class="test pass fast"><h2>Password cannot be empty<span class="duration">0ms</span></h2><pre><code>return noPwdResponse.then(function (response) {
+    expect(response).to.have.status(400);
+    expect(response.body.validationErrors.password).to.include(data.noPwd.expected);
+});</code></pre></li></ul></li><li class="suite"><h1>409 Response - Conflict error for existing email</h1><ul><li class="test pass fast"><h2>Email id already registered<span class="duration">35ms</span></h2><pre><code>return emailExistsResponse.then(function (response) {
+    expect(response).to.have.status(409);
+    expect(response.body.message).to.equal(data.existingEmailData.expected);
+});</code></pre></li></ul></li></ul></li><li class="suite"><h1>GET /identities/{id} </h1><ul><li class="suite"><h1>404 - Not found validation </h1><ul><li class="test pass fast"><h2>Search the non-existing user<span class="duration">20ms</span></h2><pre><code>return getResponse.then(function (response) {
+    expect(response).to.have.status(404);
+    expect(response.body.message).to.include(validationErrors.GetIdentity.UserNotFound);
+});</code></pre></li></ul></li></ul></li></ul></li><li class="suite"><h1>Identity State Api</h1><ul><li class="suite"><h1>GET /identities/{id}/state</h1><ul><li class="test pass fast"><h2>Return identity state by identity id.<span class="duration">20ms</span></h2><pre><code>return getResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  schema = lib.joi.object().keys({
+    values: lib.joi.required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>PUT /identities/{id}/state</h1><ul><li class="test pass medium"><h2>Set identity state for an identity.<span class="duration">50ms</span></h2><pre><code>return putResponse.then(function (response) {
+  expect(response).to.have.status(204);
+});</code></pre></li></ul></li><li class="suite"><h1>PATCH /identities/{id}/state</h1><ul><li class="test pass medium"><h2>Partial update identity state for an identity.<span class="duration">49ms</span></h2><pre><code>return patchResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  schema = lib.joi.object().keys({
+    values: lib.joi.object().keys({
+      additionalProp1: lib.joi.valid(&#x27;1&#x27;).required(),
+      additionalProp2: lib.joi.valid(&#x27;2&#x27;).required(),
+      additionalProp3: lib.joi.valid(&#x27;3&#x27;).required()
+    })
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li></ul></li><li class="suite"><h1>Identity Api</h1><ul><li class="suite"><h1>POST /identities </h1><ul><li class="test pass medium"><h2>Add a new user identity.<span class="duration">57ms</span></h2><pre><code>return addResponse.then(function (response) {
+  expect(response).to.have.status(201);
+  schema = lib.joi.object().keys({
+    fullName: lib.joi.valid(lib.testData.identityData[0]).required(),
+    email: lib.joi.valid(lib.testData.identityData[1]).required(),
+    id: lib.joi.string().guid().required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>GET /identities/{id}</h1><ul><li class="test pass fast"><h2>Get a identity by its id.<span class="duration">16ms</span></h2><pre><code>return getResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  schema = lib.joi.object().keys({
+    fullName: lib.joi.valid(lib.testData.identityData[0]).required(),
+    email: lib.joi.valid(lib.testData.identityData[1]).required(),
+    id: lib.joi.valid(lib.responseData.identity[0].id).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>Delete /identities/{id}</h1><ul><li class="test pass fast"><h2>Delete an identity by its id.<span class="duration">29ms</span></h2><pre><code>return deleteResponse.then(function (response) {
+  expect(response).to.have.status(204);
+});</code></pre></li></ul></li></ul></li><li class="suite"><h1>Invites Api</h1><ul><li class="suite"><h1>POST /organizations/{id}/invites</h1><ul><li class="test pass slow"><h2>Create a new invite.<span class="duration">2426ms</span></h2><pre><code>return postResponse.then(function (response) {
+  expect(response).to.have.status(201);
+});</code></pre></li></ul></li><li class="suite"><h1>GET /organizations/{orgId}/invites</h1><ul><li class="test pass slow"><h2>Search invites in the org<span class="duration">422ms</span></h2><pre><code>return getResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  var objectSchema = lib.joi.object().keys({
+    token: lib.joi.string().uuid().required(),
+    email: lib.joi.valid(lib.testData.invitesData[0]).required(),
+    createdTime: lib.joi.date().required(),
+    status: lib.joi.valid(constants.InviteStatus.Pending).required(),
+    expiryDate: lib.joi.date().required()
+  });
+  schema = lib.joi.object().keys({
+    totalRows: lib.joi.valid(1).required(),
+    results: lib.joi.array().items(objectSchema).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>GET /organizations/{orgId}/invites/{token}</h1><ul><li class="test pass slow"><h2>Get invite details<span class="duration">463ms</span></h2><pre><code>return getInviteResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  schema = lib.joi.object().keys({
+    email: lib.joi.valid(lib.testData.invitesData[0]).required(),
+    organizationId: lib.joi.string().uuid().valid(lib.responseData.invites[1].id).required(),
+    organizationName: lib.joi.valid(lib.responseData.invites[1].name).required(),
+    hasAccount: lib.joi.boolean().valid(false).required(),
+    status: lib.joi.valid(constants.InviteStatus.Pending).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>DELETE /organizations/{orgId}/invites/?email={email}</h1><ul><li class="test pass slow"><h2>Delete an invite.<span class="duration">420ms</span></h2><pre><code>return deleteResponse.then(function (response) {
+  expect(response).to.have.status(204);
+});</code></pre></li></ul></li></ul></li><li class="suite"><h1>Negative tests --&#x3E; Membership</h1><ul><li class="suite"><h1>
+GET /memberships
+</h1><ul><li class="test pass slow"><h2>Non existing membership -&#x3E; Should return 0 rows<span class="duration">425ms</span></h2><pre><code>return getResponse.then(function (response) {
+  expect(response.body.totalRows).to.deep.equal(0);
+});</code></pre></li></ul></li><li class="suite"><h1>
+POST /memberships 
+</h1><ul><li class="test pass slow"><h2>Invalid OrgID --&#x3E; Should return 400 response<span class="duration">457ms</span></h2><pre><code>return blankOrgIdResponse.then(function (response) {
+  expect(response).to.have.status(400);
+  expect(response.body.validationErrors.organizationId).to.equal(expectedMessageForBlankOrgId);
+});</code></pre></li><li class="test pass fast"><h2>Invalid token --&#x3E; Should return 404 response<span class="duration">10ms</span></h2><pre><code>return invalidTokenResponse.then(function (response) {
+  expect(response).to.have.status(404);
+  expect(response.body.validationErrors.InviteToken).to.equal(expectedMessageForinvalidToken);
+});</code></pre></li></ul></li><li class="suite"><h1>
+Delete Membership when Account is Non Existing 
+</h1><ul><li class="test pass slow"><h2>Should return 404 response<span class="duration">446ms</span></h2><pre><code>return deleteResponse.then(function (response) {
+  expect(response).to.have.status(404);
+});</code></pre></li></ul></li></ul></li><li class="suite"><h1>Memberships Api
+</h1><ul><li class="suite"><h1>POST /memberships
+</h1><ul><li class="test pass slow"><h2>Create a new membership<span class="duration">421ms</span></h2><pre><code>return createResponse.then(function (response) {
+  expect(response).to.have.status(201);
+  schema = lib.joi.object().keys({
+    accountId: lib.joi.valid(lib.responseData.membership[0].id).required(),
+    organizationId: lib.joi.valid(lib.responseData.membership[1].id).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>
+GET /memberships/account/{id}
+</h1><ul><li class="test pass slow"><h2>Getting membership by account id<span class="duration">456ms</span></h2><pre><code>return getByAccountIDResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  var objectSchema = lib.joi.object().keys({
+    isAdmin: lib.joi.boolean().valid(true).required(),
+    fullName: lib.joi.valid(lib.responseData.membership[0].fullName).required(),
+    email: lib.joi.valid(lib.responseData.membership[0].email).required(),
+    organizationName: lib.joi.valid(lib.responseData.membership[1].name).required(),
+    accountId: lib.joi.valid(lib.responseData.membership[0].id).required(),
+    organizationId: lib.joi.valid(lib.responseData.membership[1].id).required()
+  });
+  schema = lib.joi.object().keys({
+    totalRows: lib.joi.valid(1).required(),
+    results: lib.joi.array().items(objectSchema).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>
+GET /memberships/organization/{id}
+</h1><ul><li class="test pass slow"><h2>Getting membership by organization id<span class="duration">1222ms</span></h2><pre><code>return getByOrgIDResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  var objectSchema = lib.joi.object().keys({
+    isAdmin: lib.joi.boolean().valid(true).required(),
+    fullName: lib.joi.valid(lib.responseData.membership[0].fullName).required(),
+    email: lib.joi.valid(lib.responseData.membership[0].email).required(),
+    organizationName: lib.joi.valid(lib.responseData.membership[1].name).required(),
+    accountId: lib.joi.valid(lib.responseData.membership[0].id).required(),
+    organizationId: lib.joi.valid(lib.responseData.membership[1].id).required()
+  });
+  schema = lib.joi.object().keys({
+    totalRows: lib.joi.valid(1).required(),
+    results: lib.joi.array().items(objectSchema).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>
+GET /memberships
+</h1><ul><li class="test pass slow"><h2>List all Memberships<span class="duration">424ms</span></h2><pre><code>return getResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  var objectSchema = lib.joi.object().keys({
+    isAdmin: lib.joi.boolean().valid(true).required(),
+    fullName: lib.joi.valid(lib.responseData.membership[0].fullName).required(),
+    email: lib.joi.valid(lib.responseData.membership[0].email).required(),
+    organizationName: lib.joi.valid(lib.responseData.membership[1].name).required(),
+    accountId: lib.joi.valid(lib.responseData.membership[0].id).required(),
+    organizationId: lib.joi.valid(lib.responseData.membership[1].id).required()
+  });
+  schema = lib.joi.object().keys({
+    totalRows: lib.joi.valid(1).required(),
+    results: lib.joi.array().items(objectSchema).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>
+DELETE /memberships/organization/{organizationId}/account/{accountId}
+</h1><ul><li class="test pass slow"><h2>Delete a membership<span class="duration">456ms</span></h2><pre><code>return deleteResponse.then(function (response) {
+  expect(response).to.have.status(204);
+});</code></pre></li></ul></li></ul></li><li class="suite"><h1>Metrics Api</h1><ul><li class="suite"><h1>GET /organizations/{orgId}/spaces/{spaceId}/metrics/unique-users/count</h1><ul><li class="test pass medium"><h2>Returns the number of unique users that visited the space in a given time period<span class="duration">74ms</span></h2><pre><code>return getUniqueUsersResponse.then(function (response) {
+    expect(response).to.have.status(200);
+    schema = lib.joi.object().keys({
+        uniqueUsers: lib.joi.number().required()
+    });
+    lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>GET /organizations/{orgId}/spaces/{spaceId}/metrics/requests/count</h1><ul><li class="test pass slow"><h2>Returns the number of api requests from a space in a given time period<span class="duration">103ms</span></h2><pre><code>return getAPIRequestsResponse.then(function (response) {
+    expect(response).to.have.status(200);
+    schema = lib.joi.object().keys({
+        uniqueRequests: lib.joi.number().required()
+    });
+    lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>GET /organizations/{orgId}/spaces/{spaceId}/metrics/active</h1><ul><li class="test pass medium"><h2>Returns whether the space is active or not<span class="duration">75ms</span></h2><pre><code>return getActiveResponse.then(function (response) {
+    expect(response).to.have.status(200);
+    schema = lib.joi.object().keys({
+        isActive: lib.joi.boolean().required()
+    });
+    lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li></ul></li><li class="suite"><h1>Organizations Api</h1><ul><li class="suite"><h1>POST /organizations</h1><ul><li class="test pass slow"><h2>Create a new organization.<span class="duration">2295ms</span></h2><pre><code>return createOrgResponse.then(function (response) {
+  expect(response).to.have.status(201);
+  schema = lib.joi.object().keys({
+    id: lib.joi.string().uuid().required(),
+    name: lib.joi.valid(lib.testData.organizationsData[0]).required(),
+    createdByAccountId: lib.joi.valid(lib.responseData.organization[0].id).required(),
+    rowVersion: lib.joi.date().required(),
+    createdTime: lib.joi.date().required(),
+    modifiedTime: lib.joi.valid(null).required(),
+    rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>GET /organizations</h1><ul><li class="test pass slow"><h2>List all organizations.<span class="duration">637ms</span></h2><pre><code>return listOrgResponse.then(function (response) {
+  expect(response.body).to.be.an(&#x27;array&#x27;);
+  expect(response).to.have.status(200);
+});</code></pre></li></ul></li><li class="suite"><h1>PUT /organization</h1><ul><li class="test pass slow"><h2>Update an existing organization.<span class="duration">219ms</span></h2><pre><code>return updateResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  expect(response.body.name).to.equal(&#x27;check update name string&#x27;);
+  schema = lib.joi.object().keys({
+    id: lib.joi.valid(lib.responseData.organization[1].id).required(),
+    name: lib.joi.valid(lib.testData.organizationsData[1]).required(),
+    createdByAccountId: lib.joi.valid(lib.responseData.organization[0].id).required(),
+    rowVersion: lib.joi.date().required(),
+    createdTime: lib.joi.date().required(),
+    modifiedTime: lib.joi.date().required(),
+    rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>POST /organizations/list</h1><ul><li class="test pass slow"><h2>List of organizations by their id.<span class="duration">420ms</span></h2><pre><code>return listOrgsByIDResponse.then(function (response) {
+  expect(response.body).to.be.an(&#x27;array&#x27;);
+  expect(response).to.have.status(200);
+  var objectSchema = lib.joi.object().keys({
+    id: lib.joi.valid(lib.responseData.organization[1].id).required(),
+    name: lib.joi.valid(lib.testData.organizationsData[1]).required(),
+    createdByAccountId: lib.joi.valid(lib.responseData.organization[0].id).required(),
+    rowVersion: lib.joi.date().required(),
+    createdTime: lib.joi.date().required(),
+    modifiedTime: lib.joi.date().required(),
+    rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required()
+  });
+  schema = lib.joi.array().items(objectSchema).required();
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>DELETE /organizations/{id}</h1><ul><li class="test pass slow"><h2>Delete a organization.<span class="duration">2223ms</span></h2><pre><code>return deleteResponse.then(function (delResponse) {
+  expect(delResponse).to.have.status(204);
+});</code></pre></li></ul></li><li class="suite"><h1>GET /organizations/{id}</h1><ul><li class="test pass slow"><h2>Get a organizations by its id.<span class="duration">246ms</span></h2><pre><code>return getOrgResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  schema = lib.joi.object().keys({
+    id: lib.joi.valid(lib.responseData.organization[1].id).required(),
+    name: lib.joi.valid(lib.testData.organizationsData[1]).required(),
+    createdByAccountId: lib.joi.valid(lib.responseData.organization[0].id).required(),
+    rowVersion: lib.joi.date().required(),
+    createdTime: lib.joi.date().required(),
+    modifiedTime: lib.joi.date().required(),
+    rowStatus: lib.joi.valid(Constants.APIKeyStatus.PendingDelete.replace(/\s/g, &#x27;&#x27;)).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li></ul></li><li class="suite"><h1>Space Keys Api</h1><ul><li class="suite"><h1>
+POST /keys
+</h1><ul><li class="test pass slow"><h2>Creates a new key for the resource that is passed as input<span class="duration">2224ms</span></h2><pre><code>return postResponse.then(function (response) {
+    expect(response).to.have.status(201);
+    schema = lib.joi.object().keys({
+        value: lib.joi.string().uuid().required(),
+        rowVersion: lib.joi.date().required(),
+        rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required(),
+        resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+        resourceType: lib.joi.valid(&#x27;Space&#x27;).required(),
+        resourceName: lib.joi.valid(null).required()
+    });
+    lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>
+GET /keys
+</h1><ul><li class="test pass slow"><h2>Returns the list of keys associated with a particular space<span class="duration">325ms</span></h2><pre><code>return getResponse.then(function (response) {
+    expect(response).to.have.status(200);
+    var schemaObject = lib.joi.object().keys({
+        value: lib.joi.valid(lib.responseData.spaceKey[3].value).required(),
+        rowVersion: lib.joi.date().required(),
+        rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required()
+    });
+    var keysSchemaObject = lib.joi.object().keys({
+        keys: lib.joi.array().items(schemaObject),
+        resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+        resourceType: lib.joi.valid(&#x27;Space&#x27;).required()
+    });
+    schema = lib.joi.array().items(keysSchemaObject);
+    lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>
+PATCH /keys/{key}
+</h1><ul><li class="suite"><h1>Revoke
+</h1><ul><li class="test pass slow"><h2>Revokes the provided key<span class="duration">302ms</span></h2><pre><code>return revokeResponse.then(function (response) {
+    expect(response).to.have.status(200);
+    schema = lib.joi.object().keys({
+        value: lib.joi.valid(lib.responseData.spaceKey[3].value).required(),
+        rowVersion: lib.joi.date().required(),
+        rowStatus: lib.joi.valid(Constants.APIKeyStatus.Revoked).required(),
+        resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+        resourceType: lib.joi.valid(&#x27;Space&#x27;).required(),
+        resourceName: lib.joi.valid(null).required()
+    });
+    lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>
+Re-activate
+</h1><ul><li class="test pass slow"><h2>Re-activates the provided key<span class="duration">218ms</span></h2><pre><code>return reactivateResponse.then(function (response) {
+    expect(response).to.have.status(200);
+    schema = lib.joi.object().keys({
+        value: lib.joi.valid(lib.responseData.spaceKey[3].value).required(),
+        rowVersion: lib.joi.date().required(),
+        rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required(),
+        resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+        resourceType: lib.joi.valid(&#x27;Space&#x27;).required(),
+        resourceName: lib.joi.valid(null).required()
+    });
+    lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li></ul></li><li class="suite"><h1>
+DELETE /keys/{key}
+</h1><ul><li class="test pass slow"><h2>Deletes the provided key<span class="duration">219ms</span></h2><pre><code>return deleteResponse.then(function (response) {
+    expect(response).to.have.status(200);
+    schema = lib.joi.object().keys({
+        value: lib.joi.valid(lib.responseData.spaceKey[3].value).required(),
+        rowVersion: lib.joi.date().required(),
+        rowStatus: lib.joi.valid(Constants.APIKeyStatus.PendingDelete.replace(/\s/g, &#x27;&#x27;)).required(),
+        resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+        resourceType: lib.joi.valid(&#x27;Space&#x27;).required(),
+        resourceName: lib.joi.valid(null).required()
+    });
+    lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li></ul></li><li class="suite"><h1>Spaces Api</h1><ul><li class="suite"><h1>POST /organizations/{orgId}/spaces</h1><ul><li class="test pass slow"><h2>Create a new space.<span class="duration">1826ms</span></h2><pre><code>return postResponse.then(function (response) {
+  expect(response).to.have.status(201);
+  schema = lib.joi.object().keys({
+    createdByAccountId: lib.joi.valid(lib.responseData.spaces[0].id).required(),
+    id: lib.joi.string().uuid().required(),
+    keys: lib.joi.valid(null).required(),
+    modifiedTime: lib.joi.valid(null).required(),
+    name: lib.joi.valid(lib.testData.spacesData[0]).required(),
+    organizationId: lib.joi.valid(lib.responseData.spaces[1].id).required(),
+    rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required(),
+    rowVersion: lib.joi.date().required(),
+    shortUrl: lib.joi.valid(lib.testData.spacesData[1]).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>GET /organizations/{orgId}/spaces</h1><ul><li class="test pass fast"><h2>Get All Spaces for an Organization<span class="duration">25ms</span></h2><pre><code>return getAllResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  var schemaObject = lib.joi.object().keys({
+    createdByAccountId: lib.joi.valid(lib.responseData.spaces[0].id).required(),
+    id: lib.joi.valid(lib.responseData.spaces[2].id).required(),
+    keys: lib.joi.valid(null).required(),
+    modifiedTime: lib.joi.valid(null).required(),
+    name: lib.joi.valid(lib.testData.spacesData[0]).required(),
+    organizationId: lib.joi.valid(lib.responseData.spaces[1].id).required(),
+    rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required(),
+    rowVersion: lib.joi.date().required(),
+    shortUrl: lib.joi.valid(lib.testData.spacesData[1]).required()
+  });
+  schema = lib.joi.array().items(schemaObject).required();
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>PUT /organizations/{orgId}/spaces</h1><ul><li class="test pass slow"><h2>Update Space for an Organization<span class="duration">1518ms</span></h2><pre><code>return updateResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  schema = lib.joi.object().keys({
+    createdByAccountId: lib.joi.valid(lib.responseData.spaces[0].id).required(),
+    id: lib.joi.valid(lib.responseData.spaces[2].id).required(),
+    keys: lib.joi.valid(null).required(),
+    modifiedTime: lib.joi.date().required(),
+    name: lib.joi.valid(lib.testData.spacesData[2]).required(),
+    organizationId: lib.joi.valid(lib.responseData.spaces[1].id).required(),
+    rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required(),
+    rowVersion: lib.joi.date().required(),
+    shortUrl: lib.joi.valid(lib.testData.spacesData[3]).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>GET /organizations/{orgId}/spaces/{spaceId}</h1><ul><li class="test pass slow"><h2>Get Space for an Organization<span class="duration">100ms</span></h2><pre><code>return getResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  schema = lib.joi.object().keys({
+    createdByAccountId: lib.joi.valid(lib.responseData.spaces[0].id).required(),
+    id: lib.joi.valid(lib.responseData.spaces[2].id).required(),
+    keys: lib.joi.valid(null).required(),
+    modifiedTime: lib.joi.date().required(),
+    name: lib.joi.valid(lib.testData.spacesData[2]).required(),
+    organizationId: lib.joi.valid(lib.responseData.spaces[1].id).required(),
+    rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required(),
+    rowVersion: lib.joi.date().required(),
+    shortUrl: lib.joi.valid(lib.testData.spacesData[3]).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>PATCH /organizations/{orgId}/spaces/{spaceId}</h1><ul><li class="test pass slow"><h2>Patch a space Url<span class="duration">1553ms</span></h2><pre><code>return patchResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  schema = lib.joi.object().keys({
+    createdByAccountId: lib.joi.valid(lib.responseData.spaces[0].id).required(),
+    id: lib.joi.valid(lib.responseData.spaces[2].id).required(),
+    keys: lib.joi.valid(null).required(),
+    modifiedTime: lib.joi.date().required(),
+    name: lib.joi.valid(lib.testData.spacesData[2]).required(),
+    organizationId: lib.joi.valid(lib.responseData.spaces[1].id).required(),
+    rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required(),
+    rowVersion: lib.joi.date().required(),
+    shortUrl: lib.joi.valid(lib.testData.spacesData[4]).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>PATCH /organizations/{orgId}/spaces/{spaceId}</h1><ul><li class="test pass slow"><h2>Patch a space name<span class="duration">481ms</span></h2><pre><code>return patchNameResponse.then(function (response) {
+  expect(response).to.have.status(200);
+  schema = lib.joi.object().keys({
+    createdByAccountId: lib.joi.valid(lib.responseData.spaces[0].id).required(),
+    id: lib.joi.valid(lib.responseData.spaces[2].id).required(),
+    keys: lib.joi.valid(null).required(),
+    modifiedTime: lib.joi.date().required(),
+    name: lib.joi.valid(lib.testData.spacesData[5]).required(),
+    organizationId: lib.joi.valid(lib.responseData.spaces[1].id).required(),
+    rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required(),
+    rowVersion: lib.joi.date().required(),
+    shortUrl: lib.joi.valid(lib.testData.spacesData[4]).required()
+  });
+  lib.joi.assert(response.body, schema);
+});</code></pre></li></ul></li><li class="suite"><h1>DELETE /organizations/{orgId}/spaces/{spaceId}</h1><ul><li class="test pass slow"><h2>Delete space for an Organization<span class="duration">510ms</span></h2><pre><code>return deleteResponse.then(function (response) {
+  expect(response).to.have.status(204);
+});</code></pre></li></ul></li></ul></li></ul>
+        </div>
+        <script>
+        function hideSuitesWithout(className) {
+    var suites = document.querySelectorAll('#report > .suite');
+
+    for (var i = 0; i < suites.length; i++) {
+        let suite = suites[i];
+
+        var els = suite.getElementsByClassName(className);
+        if (!els.length) {
+            suite.classList.add('hidden');
+        }
+    }
+}
+
+function unhide() {
+    var suites = document.getElementsByClassName('suite hidden');
+
+    while (suites.length) {
+        suites[0].classList.remove('hidden');
+    }
+}
+
+function togglePasses() {
+    var report = document.getElementById('report');
+
+    report.classList.toggle('hide-passes');
+
+    if (report.classList.contains('hide-passes')) {
+        hideSuitesWithout('test fail');
+    } else {
+        unhide();
+    }
+}
+
+document.getElementById('toggle-passes').addEventListener('click', function(e) {
+    e.preventDefault();
+    
+    this.classList.toggle('checked');
+
+    togglePasses();
+});
+
+var tests = document.getElementsByClassName('test');
+
+for (var i = 0; i < tests.length; i++) {
+    var elem = tests[i];
+    var head = elem.children[0];
+
+    head.onclick = function () {
+        var code = this.parentElement.children[1];
+        var display = code.style.display;
+
+        if (display && display === 'block') {
+            code.style.display = 'none';
+        } else {
+            code.style.display = 'block';
+        }
+    };
+}
+        </script>
+    </body>
+</html>

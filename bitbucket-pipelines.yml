@@ -1,4 +1,4 @@
-image: abhimassive/foo:firsttry
+image: massiveinteractive/qa-ci
 options:
   docker: true
 pipelines:
