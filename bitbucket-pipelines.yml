@@ -1,7 +1,7 @@
 image: 
   name: massiveinteractive/qa-ci
-  username: $DOCKER_HUB_USERNAME
-  password: $DOCKER_HUB_PASSWORD
+  username: $docker_user
+  password: $docker_user_pwd
 options:
   docker: true
 pipelines:
@@ -11,4 +11,8 @@ pipelines:
         script:
           - sh ./scripts/start.sh
           - yarn install
-          - yarn run api
+          -parallel:
+            -step:
+              - yarn run api
+            -step:
+              - yarn run  web
