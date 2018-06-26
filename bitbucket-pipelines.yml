@@ -1,4 +1,4 @@
-image: qamassive/v2
+image: abhimassive/foo:firsttry
 options:
   docker: true
 pipelines:
