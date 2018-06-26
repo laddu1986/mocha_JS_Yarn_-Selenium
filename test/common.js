@@ -18,6 +18,7 @@ const responseData = {
   negMembership: [],
   negIdentity: [],
   negInvites: [],
+  negOrganization: [],
   metrics: []
 };
 
@@ -37,9 +38,8 @@ const mysql = new Sequelize('organization_dev', 'rouser', 'R34d0nlyK3y', {
   dialect: 'mysql',
   operatorsAliases: false,
   pool: {
-    max: 30,
-    min: 20,
-    idle: 30000
+    max: 50,
+    idle: 5000
   },
   logging: false
 });
