@@ -3,8 +3,6 @@ import * as lib from '../../common';
 import * as organization from 'api/actions/organization';
 import * as membership from 'api/actions/membership';
 const moduleSpecifier = 'api/data/membershipTestsData';
-var NodeESModuleLoader = require('node-es-module-loader');
-var loader = new NodeESModuleLoader();
 var expectedMessageForBlankOrgId, expectedMessageForinvalidToken, getResponse, deleteResponse, blankOrgIdResponse, invalidTokenResponse;
 
 describe('Negative tests --> Membership', () => {
@@ -29,7 +27,7 @@ describe('Negative tests --> Membership', () => {
   });
   describe(`\nPOST /memberships \n`, () => {
     before((done) => {
-      loader.import(moduleSpecifier).then((dataImported) => {
+      lib.loader.import(moduleSpecifier).then((dataImported) => {
         blankOrgIdResponse = lib.post(dataImported.default.blankOrgId);
         invalidTokenResponse = lib.post(dataImported.default.invalidToken);
         expectedMessageForBlankOrgId = dataImported.default.blankOrgId.expected;

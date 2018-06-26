@@ -4,6 +4,8 @@ var joi = require('joi');
 global.expect = server.expect;
 const config = require('config-yml');
 var randomString = require("randomstring");
+var NodeESModuleLoader = require('node-es-module-loader');
+var loader = new NodeESModuleLoader();
 
 const responseData = {
   organization: [],
@@ -15,6 +17,7 @@ const responseData = {
   spaceKey: [],
   negMembership: [],
   negIdentity: [],
+  negInvites: [],
   metrics: []
 };
 
@@ -65,6 +68,7 @@ function del(any) {
 }
 
 export {
+  loader,
   joi,
   testData,
   // uri
