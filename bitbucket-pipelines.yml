@@ -1,4 +1,7 @@
-image: massiveinteractive/qa-ci
+image: 
+  name: massiveinteractive/qa-ci
+  username: $DOCKER_HUB_USERNAME
+  password: $DOCKER_HUB_PASSWORD
 options:
   docker: true
 pipelines:
