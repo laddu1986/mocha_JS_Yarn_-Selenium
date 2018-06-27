@@ -7,13 +7,10 @@ options:
 pipelines:
   branches:
     update-pipelines:
-    - parallel:
       - step:
           script:
             - yarn install
             - yarn run api
-      - step:
-          script:
             - sh ./scripts/start.sh
             - yarn install
             - yarn run web
