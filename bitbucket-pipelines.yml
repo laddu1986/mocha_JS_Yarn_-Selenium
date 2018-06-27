@@ -12,8 +12,7 @@ pipelines:
             - node
             - docker
           script:
-            # - sh ./scripts/start.sh
-            - selenium-standalone start
+            - sh ./scripts/start.sh
             - netstat -plnt
             - yarn install
             - yarn run web
