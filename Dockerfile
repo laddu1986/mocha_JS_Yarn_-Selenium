@@ -55,7 +55,6 @@ RUN apt-get install -y nodejs
 
 # RUN rm /usr/local/bin/yarn && rm /usr/local/bin/yarnpkg
 RUN rm -rf /opt/yarn
-
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash
 # RUN $HOME/.yarn/bin/yarn install
 
