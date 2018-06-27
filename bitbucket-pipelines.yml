@@ -7,20 +7,18 @@ options:
 pipelines:
   branches:
     update-pipelines:
-      - step:
-          caches:
-            - node
-          script:
-            - sh ./scripts/start.sh
-            - netstat -plnt
-            - yarn install
       - parallel:
           - step:
-              script:
-                - yarn run api
+             caches:
+              - node
+             script:
+              - yarn install
+              - yarn run api
           - step:
-              script:
-                - yarn run web
-      - step:
-          script:
-            - echo "I made a pipeline!"
+             caches:
+              - node
+             script:
+              - sh ./scripts/start.sh
+              - yarn install
+              - yarn run web
+              - echo "I made a pipeline!"
