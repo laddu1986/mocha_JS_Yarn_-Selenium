@@ -14,5 +14,13 @@ pipelines:
             - sh ./scripts/start.sh
             - netstat -plnt
             - yarn install
-            - yarn run web
-            - echo "COMPLETE"
+      - parallel:
+          - step:
+              script:
+                - yarn run api
+          - step:
+              script:
+                - yarn run web
+      - step:
+          script:
+            - echo "I made a pipeline!"
