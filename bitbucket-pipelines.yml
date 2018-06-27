@@ -12,6 +12,7 @@ pipelines:
               - node
              script:
               - sh ./scripts/start.sh
+              - netstat -plnt
               - yarn install
               - yarn run api
               - yarn run web
