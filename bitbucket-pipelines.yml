@@ -10,8 +10,10 @@ pipelines:
       - step:
           caches:
             - node
+            - docker
           script:
             - sh ./scripts/start.sh
             - netstat -plnt
             - yarn install
-            - yarn run web --browser:chrome_headless
+            - yarn run web
+            
