@@ -9,10 +9,16 @@ pipelines:
     update-pipelines:
     - parallel:
       - step:
+          caches:
+            - docker
+            - node
           script:
             - yarn install
             - yarn run api
       - step:
+          caches:
+            - docker
+            - node
           script:
             - sh ./scripts/start.sh
             - yarn install

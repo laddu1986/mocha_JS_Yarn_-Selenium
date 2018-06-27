@@ -8,12 +8,10 @@ ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 
-LABEL maintainer="Avinash <avinash.eediga@gmail.com>"
+LABEL maintainer="Abhi <abhijeet.daspatnaik@massive.co>"
 RUN apt-get -y update
 RUN apt-get install -y -q software-properties-common wget
 RUN add-apt-repository -y ppa:mozillateam/firefox-next
-
-
 
 #============================================
 # Chrome, webdriver, JAVA 9, Firefox and Miscellaneous packages
@@ -63,15 +61,6 @@ RUN mkdir -p /home/seleuser/chrome
 RUN chown -R seleuser /home/seleuser
 RUN chgrp -R seleuser /home/seleuser
 RUN apt-get install zip unzip
-
-# Install yarn
-# RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
-#   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-#   echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-#   apt-get update && \
-#   apt-get install -qq -y build-essential libpq-dev nodejs yarn
-
-
 
 #COPY ./scripts/ /home/root/scripts
 
