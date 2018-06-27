@@ -15,4 +15,4 @@ pipelines:
             - netstat -plnt
             - yarn install
             - yarn run web
-            
+            - echo "COMPLETE"
