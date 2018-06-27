@@ -15,5 +15,5 @@ pipelines:
               - netstat -plnt
               - yarn install
               - yarn run api
-              - yarn run web
+              - yarn run web --browser:chrome_headless
               - echo "I made a pipeline!"
