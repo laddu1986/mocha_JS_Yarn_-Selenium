@@ -14,4 +14,4 @@ pipelines:
             - sh ./scripts/start.sh
             - netstat -plnt
             - yarn install
-            - arn run web --browser:chrome_headless
+            - yarn run web --browser:chrome_headless
