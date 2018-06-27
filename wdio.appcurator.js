@@ -99,7 +99,7 @@ exports.config = {
     support: ['./test/web/specs/support/*Test.js'],
     invites: ['./test/web/specs/invites/*Test.js']
   },
-  logLevel: 'silent',
+  logLevel: 'verbose',
   bail: 2,
   coloredLogs: true,
   // screenshotPath: './errScreens',
