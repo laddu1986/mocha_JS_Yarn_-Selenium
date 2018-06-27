@@ -8,10 +8,18 @@ ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 
-LABEL maintainer="Abhi <abhijeet.daspatnaik@massive.co>"
+LABEL maintainer="Avinash <avinash.eediga@gmail.com>"
 RUN apt-get -y update
 RUN apt-get install -y -q software-properties-common wget
 RUN add-apt-repository -y ppa:mozillateam/firefox-next
+
+#============================================
+# Nodejs packages
+#============================================
+RUN wget -qO- https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+
+
 
 #============================================
 # Chrome, webdriver, JAVA 9, Firefox and Miscellaneous packages
@@ -42,27 +50,16 @@ RUN apt-get install -y -q \
   xfonts-scalable \
   xfonts-cyrillic
 
-#============================================
-# Nodejs packages
-#============================================
-#RUN apt-get install -y nodejs
-# RUN apt-get install npm
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
-RUN apt-get install -y nodejs
-
-
-# RUN rm /usr/local/bin/yarn && rm /usr/local/bin/yarnpkg
-RUN rm -rf /opt/yarn
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash
-# RUN $HOME/.yarn/bin/yarn install
-
 RUN useradd -d /home/seleuser -m seleuser
 RUN mkdir -p /home/seleuser/chrome
 RUN chown -R seleuser /home/seleuser
 RUN chgrp -R seleuser /home/seleuser
 RUN apt-get install zip unzip
 
-#COPY ./scripts/ /home/root/scripts
+RUN rm -rf /opt/yarn
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash
+
+COPY ./scripts/ /home/root/scripts
 
 # ADD . /app
 # WORKDIR /app
@@ -70,7 +67,7 @@ RUN apt-get install zip unzip
 # #============================================
 # # Selenium packages
 # #============================================
-RUN npm install selenium-standalone@latest -g \
+RUN npm install -g \
   selenium-standalone@latest \
   && selenium-standalone install
 
