@@ -9,8 +9,8 @@ pipelines:
     update-pipelines:
       - step:
           script:
+            - sh ./scripts/start.sh
+            - netstat -plnt
             - yarn install
             - yarn run api
-            - sh ./scripts/start.sh
-            - yarn install
             - yarn run web
