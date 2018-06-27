@@ -10,7 +10,6 @@ pipelines:
       - step:
           caches:
             - node
-            - docker
           script:
             - sh ./scripts/start.sh
             - netstat -plnt
