@@ -18,6 +18,7 @@ const responseData = {
   negMembership: [],
   negIdentity: [],
   negInvites: [],
+  negOrganization: [],
   metrics: []
 };
 
