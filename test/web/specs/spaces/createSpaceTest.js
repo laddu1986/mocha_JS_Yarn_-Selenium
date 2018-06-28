@@ -8,7 +8,7 @@ import spaceData from 'web/data/passiveNotification.json';
 import orgDashboardPage from '../../page_objects/orgDashboardPage';
 var accountDetail, spaceName1, spaceName = [];
 
-describe('Space Tests', () => {
+describe(`Space Tests ${lib.Tags.smokeTest}`, () => {
   before('Open App URL', () => {
     SignInPage.open();
     accountDetail = createAccount();

@@ -4,7 +4,7 @@ import { signIn, clearPlaceholder, verifySignIn } from 'web/actions/login';
 import { signOut, verifySignOut } from 'web/actions/navBar';
 import * as validationMessage from 'web/data/messages';
 
-describe('Sign In/Out Test', () => {
+describe(`Sign In/Out Test ${lib.Tags.smokeTest}`, () => {
   before('Open Sign In page', () => {
     SignInPage.open();
   });
