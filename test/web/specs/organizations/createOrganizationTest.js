@@ -7,7 +7,7 @@ import { getnavOrgCount } from 'web/actions/navBar';
 import SignInPage from 'web/page_objects/signInPage';
 var orgName = lib.randomString.generate(10), accountDetails;
 
-describe('Tests for Create Organization', () => {
+describe(`Tests for Create Organization ${lib.Tags.smokeTest}`, () => {
   before(() => {
     SignInPage.open();
     accountDetails = createAccount();

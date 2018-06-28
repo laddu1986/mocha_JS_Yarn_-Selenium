@@ -3,7 +3,7 @@ import * as identity from 'api/actions/identity';
 var schema, addResponse, getResponse, deleteResponse;
 
 describe('Identity Api', () => {
-  describe('POST /identities ', () => {
+  describe(`POST /identities ${lib.Tags.smokeTest}`, () => {
     before((done) => {
       addResponse = identity.postIdentity(lib.responseData.identity, true);
       done();

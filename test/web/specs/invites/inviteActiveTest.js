@@ -18,7 +18,7 @@ import passiveNotification from '../../data/passiveNotification.json'
 
 let newUser, accountData;
 
-describe('New User Joins an Organization via ACTIVE invitation', () => {
+describe(`New User Joins an Organization via ACTIVE invitation ${lib.Tags.smokeTest}`, () => {
   before('Admin Invites Teammate', () => {
     SignInPage.open();
     accountData = createAccount()

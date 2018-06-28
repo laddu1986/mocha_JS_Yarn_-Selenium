@@ -28,6 +28,10 @@ const testData = {
   invitesData: [],
   spacesData: []
 }
+
+const Tags = {
+  smokeTest: "@smoke"
+}
 // uri end points
 const orca = config.orca.base;
 const web = config.web.base;
@@ -68,6 +72,7 @@ function del(any) {
 }
 
 export {
+  Tags,
   loader,
   joi,
   testData,
