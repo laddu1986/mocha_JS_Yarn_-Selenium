@@ -1,7 +1,7 @@
 image: 
-  name: massiveinteractive/qa-ci
-  username: $docker_user
-  password: $docker_user_pwd
+  name: selenium/standalone-chrome
+  #username: $docker_user
+  #password: $docker_user_pwd
 options:
   docker: true
 pipelines:
@@ -11,9 +11,8 @@ pipelines:
              caches:
               - node
              script:
-              - sh ./scripts/start.sh
               - netstat -plnt
               - yarn install
               - yarn run api
-              - yarn run web --browser:firefox
+              - yarn run web
               - echo "I made a pipeline!"
