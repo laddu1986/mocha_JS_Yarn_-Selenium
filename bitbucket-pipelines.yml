@@ -11,7 +11,7 @@ pipelines:
              caches:
               - node
              script:
+              - sh ./scripts/start.sh
               - yarn install
-              - yarn run api
               - yarn run web
-              - echo "I made a pipeline!"
+              - echo "Test Complete"
