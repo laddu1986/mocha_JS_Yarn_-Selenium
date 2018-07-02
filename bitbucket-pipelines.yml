@@ -9,6 +9,7 @@ pipelines:
     update-pipelines:
       - parallel:   
           - step:
+              name: API Tests
               caches:
                 - docker
                 - node
@@ -16,10 +17,11 @@ pipelines:
                - yarn install
                - yarn run api 
           - step:
+              name: WEB Tests
               caches:
                 - docker
                 - node
               script:
                - yarn install
                - sh ./scripts/start.sh
-               - yarn run web
+               - yarn run web --browser:chrome_headless
