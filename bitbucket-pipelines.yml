@@ -7,11 +7,17 @@ options:
 pipelines:
   branches:
     update-pipelines:
+      - step:
+           caches:
+                  - docker
+                  - node
+           script:
+               - yarn install
+      - parallel:   
           - step:
-             caches:
-              - docker
-              - node
-             script:
-              - sh ./scripts/start.sh
-              - yarn install
-              - yarn run web
+              script:
+                  - yarn run api 
+          - step:
+                script:
+                  - sh ./scripts/start.sh
+                  - yarn run web
