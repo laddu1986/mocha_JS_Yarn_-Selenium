@@ -69,7 +69,7 @@ RUN curl -o- -L https://yarnpkg.com/install.sh | bash
 #============================================
 RUN npm install -g \
   selenium-standalone@latest \
-  && selenium-standalone install --singleDriverInstall=chrome
+  && selenium-standalone install
 
 #============================================
 # Exposing ports
