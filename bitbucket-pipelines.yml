@@ -1,5 +1,5 @@
 image: 
-  name: selenium/standalone-chrome
+  name: massiveinteractive/qa-ci
   #username: $docker_user
   #password: $docker_user_pwd
 options:
