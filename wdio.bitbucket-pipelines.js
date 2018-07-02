@@ -3,6 +3,7 @@ const argv = require('yargs').argv;
 
 const debug = process.env.DEBUG;
 const timeoutPeriod = 30000;
+const brow = 'chrome';
 
 exports.config = {
   enableNetwork: true,
