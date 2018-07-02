@@ -10,15 +10,16 @@
 #NEW
 #source /functions.sh
 
-function get_server_num() {
-  echo $(echo $DISPLAY | sed -r -e 's/([^:]+)?:([0-9]+)(\.[0-9]+)?/\2/')
-}
+# function get_server_num() {
+#   echo $(echo $DISPLAY | sed -r -e 's/([^:]+)?:([0-9]+)(\.[0-9]+)?/\2/')
+# }
 
 export GEOMETRY="$SCREEN_WIDTH""x""$SCREEN_HEIGHT""x""$SCREEN_DEPTH"
 
 rm -f /tmp/.X*lock
 
-SERVERNUM=$(get_server_num)
-xvfb-run -n $SERVERNUM --server-args="-screen 0 $GEOMETRY -ac +extension RANDR" &
+#SERVERNUM=$(get_server_num)
+# xvfb-run -n $SERVERNUM --server-args="-screen 0 $GEOMETRY -ac +extension RANDR" &
+xvfb-run  --server-args="-screen 0 $GEOMETRY -ac +extension RANDR" &
 
 su - seluser -c "selenium-standalone start &"
