@@ -39,7 +39,8 @@ const mysql = new Sequelize('organization_dev', 'rouser', 'R34d0nlyK3y', {
   operatorsAliases: false,
   pool: {
     max: 50,
-    idle: 5000
+    min: 1
+    idle: 10000
   },
   logging: false
 });
