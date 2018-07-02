@@ -1,7 +1,7 @@
 image: 
   name: massiveinteractive/qa-ci
-  #username: $docker_user
-  #password: $docker_user_pwd
+  username: $docker_user
+  password: $docker_user_pwd
 options:
   docker: true
 pipelines:
