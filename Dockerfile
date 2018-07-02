@@ -14,14 +14,6 @@ RUN apt-get install -y -q software-properties-common wget
 RUN add-apt-repository -y ppa:mozillateam/firefox-next
 
 #============================================
-# Nodejs packages
-#============================================
-RUN wget -qO- https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get install -y nodejs
-RUN rm -rf /opt/yarn
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash
-
-#============================================
 # Chrome, webdriver, JAVA 9, Firefox and Miscellaneous packages
 #============================================
 ARG CHROME_VERSION="google-chrome-stable"
@@ -33,8 +25,6 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
   && rm /etc/apt/sources.list.d/google-chrome.list \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
-# RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-# RUN echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
 RUN apt-get update -y
 RUN apt-get install -y -q \
   firefox \
@@ -49,11 +39,22 @@ RUN apt-get install -y -q \
   xfonts-scalable \
   xfonts-cyrillic
 
+# RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+# RUN echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
+
 RUN useradd -d /home/seleuser -m seleuser
 RUN mkdir -p /home/seleuser/chrome
 RUN chown -R seleuser /home/seleuser
 RUN chgrp -R seleuser /home/seleuser
 RUN apt-get install zip unzip
+
+#============================================
+# Nodejs packages
+#============================================
+RUN wget -qO- https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+RUN rm -rf /opt/yarn
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash
 
 RUN apt-get install net-tools
 
