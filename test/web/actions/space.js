@@ -2,8 +2,8 @@ const copyPasteModule = require('copy-paste');
 import * as lib from '../../common';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
 import SpaceAPIKeyPage from 'web/page_objects/spaceAPIKeyPage';
-import SpaceSettingsPage from 'web/page_objects/SpaceSettingsPage';
-import SpaceDashboardPage from 'web/page_objects/SpaceDashboardPage';
+import SpaceSettingsPage from 'web/page_objects/spaceSettingsPage';
+import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
 import HomePage from 'web/page_objects/homePage';
 import CommonPage from 'web/page_objects/common';
 
