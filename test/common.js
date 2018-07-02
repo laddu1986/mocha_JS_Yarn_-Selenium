@@ -15,11 +15,12 @@ const responseData = {
   invites: [],
   spaces: [],
   spaceKey: [],
+  metrics: [],
   negMembership: [],
   negIdentity: [],
   negInvites: [],
   negOrganization: [],
-  metrics: []
+  negSpace: []
 };
 
 const testData = {

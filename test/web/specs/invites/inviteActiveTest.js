@@ -8,13 +8,12 @@ User lands in invited Org after account creation
 */
 import * as lib from '../../../common';
 import { createAccountToJoinInvitedOrg, createAccount } from 'web/actions/account';
-import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInvite, goToOrganisationDashboard, inviteTeammate, invitationLink } from 'web/actions/invite';
+import { inviteTeammate, invitationLink } from 'web/actions/invite';
 import SignInPage from 'web/page_objects/signInPage'
-import { getNotificationMessageText, signIn, signOut } from 'web/actions/common'
-import AccountPage from '../../page_objects/AccountPage';
+import { signOut } from 'web/actions/common'
+import AccountPage from '../../page_objects/accountPage';
 import OrgDashboardPage from '../../page_objects/orgDashboardPage';
 import { submitButtonText } from 'web/actions/login';
-import passiveNotification from '../../data/passiveNotification.json'
 
 let newUser, accountData;
 
