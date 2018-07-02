@@ -8,8 +8,10 @@ pipelines:
   branches:
     update-pipelines:
           - step:
+             caches:
+              - docker
+              - node
              script:
               - sh ./scripts/start.sh
               - yarn install
               - yarn run web
-              - echo "Test Complete"
