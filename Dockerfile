@@ -18,15 +18,15 @@ RUN add-apt-repository -y ppa:mozillateam/firefox-next
 #============================================
 RUN wget -qO- https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
-
-
+RUN rm -rf /opt/yarn
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash
 
 #============================================
 # Chrome, webdriver, JAVA 9, Firefox and Miscellaneous packages
 #============================================
 ARG CHROME_VERSION="google-chrome-stable"
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-  && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
+  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
   && apt-get update -qqy \
   && apt-get -qqy install \
   ${CHROME_VERSION:-google-chrome-stable} \
@@ -42,7 +42,6 @@ RUN apt-get install -y -q \
   openjdk-8-jre \
   nodejs \
   curl \
-  net-tools \
   x11vnc \
   xvfb \
   xfonts-100dpi \
@@ -56,13 +55,9 @@ RUN chown -R seleuser /home/seleuser
 RUN chgrp -R seleuser /home/seleuser
 RUN apt-get install zip unzip
 
-RUN rm -rf /opt/yarn
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash
+RUN apt-get install net-tools
 
-COPY ./scripts/ /home/root/scripts
-
-# ADD . /app
-# WORKDIR /app
+ADD ./scripts/ /home/root/scripts
 
 # #============================================
 # # Selenium packages
@@ -75,4 +70,3 @@ RUN npm install -g \
 # Exposing ports
 #============================================
 EXPOSE 4444 5999
-# ENTRYPOINT ["sh","/home/root/scripts/start.sh"]
