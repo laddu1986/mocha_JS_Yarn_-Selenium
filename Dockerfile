@@ -8,13 +8,41 @@ ENV LC_ALL C
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 
-LABEL maintainer="Avinash <avinash.eediga@gmail.com>"
+LABEL maintainer="Abhi <abhijeet.daspatnaik@massive.co"
 RUN apt-get -y update
 RUN apt-get install -y -q software-properties-common wget
-RUN add-apt-repository -y ppa:mozillateam/firefox-next
+#RUN add-apt-repository -y ppa:mozillateam/firefox-next
+
+#========================
+# Miscellaneous packages
+# Includes minimal runtime used for executing non GUI Java programs
+#========================
+RUN apt-get update -y
+RUN apt-get install -y -q \
+  bzip2 \
+  #wget \
+  #google-chrome-stable \
+  ca-certificates \
+  openjdk-8-jre-headless \
+  #openjdk-8-jre \
+  #nodejs \
+  curl \
+  x11vnc \
+  xvfb \
+  xfonts-100dpi \
+  xfonts-75dpi \
+  xfonts-scalable \
+  xfonts-cyrillic
 
 #============================================
-# Chrome, webdriver, JAVA 9, Firefox and Miscellaneous packages
+# Google Chrome
+#============================================
+# can specify versions by CHROME_VERSION;
+#  e.g. google-chrome-stable=53.0.2785.101-1
+#       google-chrome-beta=53.0.2785.92-1
+#       google-chrome-unstable=54.0.2840.14-1
+#       latest (equivalent to google-chrome-stable)
+#       google-chrome-beta  (pull latest beta)
 #============================================
 ARG CHROME_VERSION="google-chrome-stable"
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
@@ -25,28 +53,15 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
   && rm /etc/apt/sources.list.d/google-chrome.list \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
-RUN apt-get update -y
-RUN apt-get install -y -q \
-  firefox \
-  google-chrome-stable \
-  openjdk-8-jre \
-  nodejs \
-  curl \
-  x11vnc \
-  xvfb \
-  xfonts-100dpi \
-  xfonts-75dpi \
-  xfonts-scalable \
-  xfonts-cyrillic
 
-# RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-# RUN echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
-
+#========================================
+# Add normal user with passwordless sudo
+#========================================
 RUN useradd -d /home/seleuser -m seleuser
 RUN mkdir -p /home/seleuser/chrome
 RUN chown -R seleuser /home/seleuser
 RUN chgrp -R seleuser /home/seleuser
-RUN apt-get install zip unzip
+#RUN apt-get install zip unzip
 
 #============================================
 # Nodejs packages
@@ -56,9 +71,9 @@ RUN apt-get install -y nodejs
 RUN rm -rf /opt/yarn
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash
 
-RUN apt-get install net-tools
+#RUN apt-get install net-tools
 
-ADD ./scripts/ /home/root/scripts
+#ADD ./scripts/ /home/root/scripts
 
 # #============================================
 # # Selenium packages
