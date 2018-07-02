@@ -20,6 +20,6 @@
 
 #SERVERNUM=$(get_server_num)
 # xvfb-run -n $SERVERNUM --server-args="-screen 0 $GEOMETRY -ac +extension RANDR" &
-xvfb-run -a --server-args="-screen 0 1366x768x16 -ac +extension RANDR" &
+Xvfb-run -a --server-args="-screen 0 1366x768x16 -ac +extension RANDR" &
 
 su - seluser -c "selenium-standalone start &"
