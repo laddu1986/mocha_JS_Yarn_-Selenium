@@ -4,91 +4,26 @@ const argv = require('yargs').argv;
 const debug = process.env.DEBUG;
 const timeoutPeriod = 30000;
 
-var browsers = {
-  chrome_headless: {
-    browserName: 'chrome',
+exports.config = {
+  enableNetwork: true,
+  capabilities: [{
+    browserName: brow,
     chromeOptions: {
       args: [
-        '--disable-infobars',
+        'disable-infobars',
         '--headless',
         '--incognito',
         '--ignore-certificate-errors',
         '--disable-gpu'],
-    }
-  },
-  chrome: {
-    browserName: 'chrome',
-    chromeOptions: {
-      args: [
-        '--start-maximized',
-        '--disable-infobars',
-        '--incognito',
-        '--ignore-certificate-errors',
-        '--disable-gpu'],
-    }
-  },
-  firefox: {
-    browserName: 'firefox',
-    "moz:firefoxOptions": {
-      args: [
-        '--disable-infobars',
-        '--incognito',
-        '--ignore-certificate-errors',
-        '--disable-gpu'],
-    }
-  },
-  safari: {
-    browserName: 'safari',
-    safariOptions: {
-      args: [
-        '--disable-infobars',
-        '--incognito',
-        '--ignore-certificate-errors',
-        '--disable-gpu'],
-    }
-  },
-  ie: {
-    browserName: 'internetExplorer',
-    internetExplorerOptions: {
-      args: [
-        '--disable-infobars',
-        '--incognito',
-        '--ignore-certificate-errors',
-        '--disable-gpu'],
-    }
-  }
-}
-
-function getBrowser() {
-  let vars, argument;
-  process.argv.forEach(function (value) { //here we can overwrite variables (ex. --browser:chrome )
-    if (/--.+\:/.test(value)) {
-      vars = value.split(':');
-      argument = vars[1];
-    }
-  });
-  if (argument == "firefox")
-    return browsers.firefox;
-  if (argument == "chrome_headless")
-    return browsers.chrome_headless;
-  if (argument == "safari")
-    return browsers.safari;
-  if (argument == "ie")
-    return browsers.ie;
-  else
-    return browsers.chrome;
-}
-
-exports.config = {
-  enableNetwork: true,
-  capabilities: [getBrowser()],
+    },
+  }],
   updateJob: false,
   specs: [
-    './test/web/specs/accounts/signInAndOutTest.js', //master
+    './test/web/specs/*/*Test.js', //master
   ],
   // Patterns to exclude.
   exclude: [
-    './test/web/specs/support/helpPageTest.js',
+    './test/web/specs/invites/*Test.js',
   ],
   suites: {
     accounts: ['./test/web/specs/accounts/*Test.js'],
@@ -98,22 +33,14 @@ exports.config = {
     invites: ['./test/web/specs/invites/*Test.js']
   },
   logLevel: 'silent',
-  bail: 2,
+  bail: 5,
   coloredLogs: true,
   waitforTimeout: debug ? 9999999 : timeoutPeriod,
   maxInstances: debug ? 1 : 10,
 
   framework: 'mocha',
-  reporters: ['spec', 'html-format'],
-  reporterOptions: {
-    htmlFormat: {
-      outputDir: './test/web/reports'
-    },
-    allure: {
-      outputDir: 'allure-results',
-      disableWebdriverStepsReporting: true,
-    }
-  },
+  reporters: ['dot'],
+  reporterOptions: {},
 
   mochaOpts: {
     ui: 'bdd',
@@ -121,7 +48,6 @@ exports.config = {
     compilers: ['js:babel-register'],
     timeout: debug ? 9999999 : timeoutPeriod,
   },
-  //execArgv: ['--inspect'],
 
   //
   // =====

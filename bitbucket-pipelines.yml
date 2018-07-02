@@ -15,7 +15,7 @@ pipelines:
                 - node
               script:
                - yarn install
-               - yarn run api 
+               - yarn run api-pipelines 
           - step:
               name: WEB Tests
               caches:
@@ -24,4 +24,4 @@ pipelines:
               script:
                - yarn install
                - sh ./scripts/start.sh
-               - yarn run web --browser:chrome_headless
+               - yarn run web-pipelines
