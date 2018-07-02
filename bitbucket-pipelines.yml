@@ -8,8 +8,6 @@ pipelines:
   branches:
     update-pipelines:
           - step:
-             caches:
-              - node
              script:
               - sh ./scripts/start.sh
               - yarn install
