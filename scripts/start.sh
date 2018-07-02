@@ -22,4 +22,4 @@ rm -f /tmp/.X*lock
 # xvfb-run -n $SERVERNUM --server-args="-screen 0 $GEOMETRY -ac +extension RANDR" &
 xvfb-run -a --server-args="-screen 0 $GEOMETRY -ac +extension RANDR" &
 
-su - seluser -c "selenium-standalone start &"
+su-exec - seluser -c "selenium-standalone start &"
