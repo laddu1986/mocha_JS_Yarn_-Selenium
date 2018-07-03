@@ -20,11 +20,12 @@ exports.config = {
   }],
   updateJob: false,
   specs: [
-    './test/web/specs/*/*Test.js', //master
+    './test/web/specs/*/spaceKeyTest.js', //master
   ],
   // Patterns to exclude.
   exclude: [
     './test/web/specs/invites/*Test.js',
+    './test/web/specs/support/helpPageTest.js'
   ],
   suites: {
     accounts: ['./test/web/specs/accounts/*Test.js'],
