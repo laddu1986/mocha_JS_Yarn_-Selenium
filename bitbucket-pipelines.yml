@@ -18,9 +18,9 @@ pipelines:
           #      - yarn run api-pipelines 
           - step:
               name: WEB Tests
-              # caches:
-              #   - docker
-              #   - node
+              caches:
+                - docker
+                - node
               script:
                - yarn install
                - sh ./scripts/start.sh
