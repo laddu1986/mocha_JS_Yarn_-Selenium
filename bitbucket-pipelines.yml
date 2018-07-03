@@ -6,7 +6,7 @@ options:
   docker: true
 pipelines:
   branches:
-    update-pipelines:
+    default:
       - parallel:   
           - step:
               name: API Tests
