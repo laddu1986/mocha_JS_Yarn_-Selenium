@@ -23,7 +23,7 @@ pipelines:
               script:
                 - yarn install
                 - sh ./scripts/start.sh
-                - yarn run web-smoke-tests
+                - yarn run web-smoke-tests --browser:chrome_headless
     branches:
       nightly:
         - parallel:   
