@@ -2,9 +2,9 @@ node_modules
 package-lock.json
 allure-report
 allure-results
-errScreens/*
+errScreens
 .vscode
-yarn*.log
+yarn-error.log
 phantomjs.log
 **/wdio-report.html
 **/api-report.html
