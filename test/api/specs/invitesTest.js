@@ -6,7 +6,7 @@ import * as constants from 'data/constants.json';
 var schema, postResponse, getResponse, getInviteResponse, deleteResponse;
 
 describe('Invites Api', () => {
-  describe('POST /organizations/{id}/invites', () => {
+  describe(`POST /organizations/{id}/invites ${lib.Tags.smokeTest}`, () => {
     before((done) => {
       identity.postIdentity(lib.responseData.invites).then(() => {
         organization.postOrganization(lib.responseData.invites).then(() => {

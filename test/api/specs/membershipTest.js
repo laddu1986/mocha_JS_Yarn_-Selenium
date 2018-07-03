@@ -6,7 +6,7 @@ import * as identity from 'api/actions/identity';
 var schema, createResponse, getByAccountIDResponse, getByOrgIDResponse, deleteResponse, getResponse;
 
 describe(`Memberships Api\n`, () => {
-  describe(`POST /memberships\n`, () => {
+  describe(`POST /memberships\n ${lib.Tags.smokeTest}`, () => {
     before((done) => {
       identity.postIdentity(lib.responseData.membership).then(() => {
         organization.postOrganization(lib.responseData.membership).then(() => {
