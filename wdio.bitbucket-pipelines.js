@@ -26,7 +26,7 @@ exports.config = {
   exclude: [
     './test/web/specs/invites/*Test.js',
     './test/web/specs/support/helpPageTest.js',
-    './test/web/specs/spaceKeyTest.js'
+    './test/web/specs/spaces/spaceKeyTest.js'
   ],
   suites: {
     accounts: ['./test/web/specs/accounts/*Test.js'],
