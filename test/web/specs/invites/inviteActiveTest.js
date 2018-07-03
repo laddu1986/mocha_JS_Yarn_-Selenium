@@ -17,7 +17,7 @@ import { submitButtonText } from 'web/actions/login';
 
 let newUser, accountData;
 
-describe(`New User Joins an Organization via ACTIVE invitation ${lib.Tags.smokeTest}`, () => {
+describe(`New User Joins an Organization via ACTIVE invitation`, () => {
   before('Admin Invites Teammate', () => {
     SignInPage.open();
     accountData = createAccount()

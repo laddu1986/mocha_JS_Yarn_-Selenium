@@ -24,6 +24,7 @@
     "pngjs": "^3.3.3",
     "randomstring": "^1.1.5",
     "sequelize": "^4.37.10",
+    "wdio-dot-reporter": "^5.0.0-alpha.7",
     "wdio-html-format-reporter": "0.2.7",
     "webdriverio": "^4.12.0",
     "yargs": "^11.0.0"
@@ -49,6 +50,8 @@
     "clean": "node_modules/.bin/eslint test/* --fix",
     "lint": "jshint .",
     "validate": "npm ls",
+    "web-pipelines": "node_modules/.bin/wdio wdio.bitbucket-pipelines.js",
+    "api-pipelines": "mocha test/api/specs/*Test.js --require babel-register --timeout 10000",
     "web-smoke-tests": "node_modules/.bin/wdio wdio.appcurator.js --mochaOpts.grep=@smoke",
     "api-smoke-tests": "mocha test/api/specs/*Test.js --opts test/api/config/mocha.opts --grep @smoke"
   },
