@@ -20,7 +20,7 @@ exports.config = {
   }],
   updateJob: false,
   specs: [
-    './test/web/specs/*/spaceKeyTest.js', //master
+    './test/web/specs/*/*Test.js', //master
   ],
   // Patterns to exclude.
   exclude: [
