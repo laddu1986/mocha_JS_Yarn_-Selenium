@@ -4,12 +4,12 @@ import SignInPage from 'web/page_objects/signInPage';
 import { verifyOrgCardStack, verifyOrgNameOnDashBoard, goBackToOrgDashboard, verifyNewOrgNameInNavbar, updateOrgName, isSaveButtonEnabled, gotoOrgSettings, createOrg } from 'web/actions/organization';
 var org1 = `${lib.randomString.generate(10)}_Org1`,
   org2 = `${lib.randomString.generate(10)}_Org2`,
-  updatedOrgName = `${lib.randomString.generate(10)}_OrgUpdated`, accountData;
+  updatedOrgName = `${lib.randomString.generate(10)}_OrgUpdated`;
 
 describe('Update Organization name', () => {
   before(() => {
     SignInPage.open();
-    accountData = createAccount();
+    createAccount();
     createOrg(org1);
     createOrg(org2);
   });

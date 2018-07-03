@@ -1,7 +1,6 @@
 import * as lib from '../../common';
 import CommonPage from 'web/page_objects/common';
 import NavBar from 'web/page_objects/navBar';
-import HomePage from 'web/page_objects/homePage';
 
 export function signOut() {
     NavBar.profileMenu.click();

@@ -1,14 +1,11 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
-import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
 import { verifySpaceOrder, verifyCreateFirstSpacePage, createSpace, verifySpacePage, goBackToOrgDashboard, clickCreateNewSpaceButton, } from 'web/actions/space';
 import SignInPage from 'web/page_objects/signInPage';
-import { getNotificationMessageText, signIn, signOut } from 'web/actions/common';
-import spaceData from 'web/data/passiveNotification.json';
-import orgDashboardPage from '../../page_objects/orgDashboardPage';
+import { signIn, signOut } from 'web/actions/common';
 var accountDetail, spaceName1, spaceName = [];
 
-describe('Space Tests', () => {
+describe(`Space Tests ${lib.Tags.smokeTest}`, () => {
   before('Open App URL', () => {
     SignInPage.open();
     accountDetail = createAccount();

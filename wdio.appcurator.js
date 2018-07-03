@@ -58,25 +58,40 @@ var browsers = {
     }
   }
 }
-
+var argument = [];
 function getBrowser() {
-  let vars, argument;
+  var vars, flag = false;
   process.argv.forEach(function (value) { //here we can overwrite variables (ex. --browser:chrome )
     if (/--.+\:/.test(value)) {
       vars = value.split(':');
-      argument = vars[1];
+      argument.push(vars[1]);
     }
   });
-  if (argument == "firefox")
-    return browsers.firefox;
-  if (argument == "chrome_headless")
-    return browsers.chrome_headless;
-  if (argument == "safari")
-    return browsers.safari;
-  if (argument == "ie")
-    return browsers.ie;
-  else
+  if (argument.length == 0)
     return browsers.chrome;
+  else {
+    for (var i = 0; i < argument.length; i++) {
+      if (argument[i] == "firefox") {
+        flag = true;
+        return browsers.firefox;
+      }
+      else if (argument[i] == "chrome_headless") {
+        flag = true;
+        return browsers.chrome_headless;
+      }
+      else if (argument[i] == "safari") {
+        flag = true;
+        return browsers.safari;
+      }
+      else if (argument[i] == "ie") {
+        flag = true;
+        return browsers.ie;
+      }
+    }
+    if (flag == false) {
+      return browsers.chrome;
+    }
+  }
 }
 
 exports.config = {
@@ -136,6 +151,7 @@ exports.config = {
     reporter: 'spec',
     compilers: ['js:babel-register'],
     timeout: debug ? 9999999 : timeoutPeriod,
+    grep: process.env.npm_config_grep
   },
   //execArgv: ['--inspect'],
 
