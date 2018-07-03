@@ -6,7 +6,7 @@ import * as Constants from 'data/constants.json';
 var schema, postResponse, getResponse, updateResponse, getAllResponse, deleteResponse, patchResponse, patchNameResponse;
 
 describe('Spaces Api', () => {
-  describe('POST /organizations/{orgId}/spaces', () => {
+  describe(`POST /organizations/{orgId}/spaces ${lib.Tags.smokeTest}`, () => {
     before((done) => {
       identity.postIdentity(lib.responseData.spaces).then(() => {
         organization.postOrganization(lib.responseData.spaces).then(() => {
