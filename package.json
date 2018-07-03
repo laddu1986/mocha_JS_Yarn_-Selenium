@@ -43,7 +43,7 @@
   },
   "scripts": {
     "web": "node_modules/.bin/wdio wdio.appcurator.js",
-    "api": "mocha test/api/specs/*Test.js --require babel-register --timeout 10000 --reporter mocha-multi-reporters --reporter-options configFile=./test/api/Config/mocha-config.json",
+    "api": "mocha test/api/specs/*Test.js --opts test/api/config/mocha.opts",
     "report": "allure generate allure-results --clean -o allure-report && allure open allure-report",
     "orca": "mocha test/orca/specs/loginTest.js --require babel-register",
     "test": "./node_modules/mocha/bin/mocha test/api/specs/*Test.js --require babel-register",
@@ -51,7 +51,9 @@
     "lint": "jshint .",
     "validate": "npm ls",
     "web-pipelines": "node_modules/.bin/wdio wdio.bitbucket-pipelines.js",
-    "api-pipelines": "mocha test/api/specs/*Test.js --require babel-register --timeout 10000"
+    "api-pipelines": "mocha test/api/specs/*Test.js --require babel-register --timeout 10000",
+    "web-smoke-tests": "node_modules/.bin/wdio wdio.appcurator.js --mochaOpts.grep=@smoke",
+    "api-smoke-tests": "mocha test/api/specs/*Test.js --opts test/api/config/mocha.opts --grep @smoke"
   },
   "repository": {
     "type": "git",

@@ -15,11 +15,12 @@ const responseData = {
   invites: [],
   spaces: [],
   spaceKey: [],
+  metrics: [],
   negMembership: [],
   negIdentity: [],
   negInvites: [],
   negOrganization: [],
-  metrics: []
+  negSpace: []
 };
 
 const testData = {
@@ -27,6 +28,10 @@ const testData = {
   organizationsData: [],
   invitesData: [],
   spacesData: []
+}
+
+const Tags = {
+  smokeTest: "@smoke"
 }
 // uri end points
 const orca = config.orca.base;
@@ -68,6 +73,7 @@ function del(any) {
 }
 
 export {
+  Tags,
   loader,
   joi,
   testData,
