@@ -5,7 +5,27 @@ image:
 options:
   docker: true
 pipelines:
+   branches:
     default:
+      - parallel:   
+          - step:
+              name: API Tests
+              caches:
+                - docker
+                - node
+              script:
+                - yarn install
+                - yarn run api-smoke-tests 
+          - step:
+              name: WEB Tests
+              caches:
+                - docker
+                - node
+              script:
+               - yarn install
+               - sh ./scripts/start.sh
+               - yarn run web-smoke-tests
+    nightly:
       - parallel:   
           - step:
               name: API Tests
