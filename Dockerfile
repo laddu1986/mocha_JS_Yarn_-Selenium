@@ -27,7 +27,9 @@ RUN apt-get install -y -q \
   xfonts-100dpi \
   xfonts-75dpi \
   xfonts-scalable \
-  xfonts-cyrillic
+  xfonts-cyrillic \
+  xclip \
+  xsel
 
 #============================================
 # Google Chrome
@@ -49,7 +51,7 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 #========================================
-# Add normal user who can start selenium-standalone
+# Add normal user who can start selenium
 #========================================
 RUN useradd -d /home/seleuser -m seleuser
 RUN mkdir -p /home/seleuser/chrome
