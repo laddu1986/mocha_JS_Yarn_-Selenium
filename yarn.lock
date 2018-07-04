@@ -5317,6 +5317,13 @@ wcwidth@^1.0.0:
   dependencies:
     defaults "^1.0.3"
 
+wdio-dot-reporter@^5.0.0-alpha.7:
+  version "5.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/wdio-dot-reporter/-/wdio-dot-reporter-5.0.0-alpha.7.tgz#1d28cc3efbce836ba45d5fba6583e162531f6465"
+  dependencies:
+    chalk "^2.3.0"
+    wdio-reporter "^5.0.0-alpha.7"
+
 wdio-dot-reporter@~0.0.8:
   version "0.0.9"
   resolved "https://registry.yarnpkg.com/wdio-dot-reporter/-/wdio-dot-reporter-0.0.9.tgz#929b2adafd49d6b0534fda068e87319b47e38fe5"
@@ -5342,6 +5349,10 @@ wdio-mocha-framework@^0.5.13:
     babel-runtime "^6.23.0"
     mocha "^5.0.0"
     wdio-sync "0.7.1"
+
+wdio-reporter@^5.0.0-alpha.7:
+  version "5.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/wdio-reporter/-/wdio-reporter-5.0.0-alpha.7.tgz#43addac156148283138e6818cec9161e31ba54e2"
 
 wdio-spec-reporter@^0.1.4:
   version "0.1.4"
