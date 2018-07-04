@@ -3,7 +3,6 @@ import * as spaces from 'api/actions/spaces';
 import * as organization from 'api/actions/organization';
 import * as identity from 'api/actions/identity';
 import * as Constants from 'data/constants.json';
-
 var schema, postResponse, getResponse, revokeResponse, reactivateResponse, deleteResponse;
 
 describe('Space Keys Api', () => {

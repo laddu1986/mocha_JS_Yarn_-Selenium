@@ -20,7 +20,8 @@ const responseData = {
   negIdentity: [],
   negInvites: [],
   negOrganization: [],
-  negSpace: []
+  negSpace: [],
+  negSpaceKey: []
 };
 
 const testData = {
