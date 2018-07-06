@@ -1,7 +1,7 @@
 class HomePage {
   get navbar() { return browser.element('#navbar'); }
   get profileMenu() { return browser.element("//div[@data-qa='menu:profile']//div[@data-qa='btn:menu']"); }
-  get switchOrCreateOrganizations() { return browser.element("//*[@data-qa='nav:menu']"); }
+  get switchOrCreateOrganizations() { return browser.element("//*[@data-qa='submenu:trigger']"); }
   get createOrg() { return browser.element("//*[@data-qa='nav:create-org']"); }
   get createOrgInput() { return browser.element("//input[@data-qa='input:org-name']"); }
   get createOrgErr() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:error']"); }
@@ -15,8 +15,8 @@ class HomePage {
   get settingsAnchor() { return browser.element("//*[@data-qa='nav:org-settings']"); }
   get profileDetailsAnchor() { return browser.element("//*[@data-qa='nav:profile']"); }
   get orgSettingsAnchor() { return browser.element("//*[@data-qa='link:settings']"); }
-  get teamAnchor() { return browser.element("//*[@data-qa='link:team']"); }
-  get orgNameAnchor() { return browser.element("//*[@data-qa='link:dashboard']"); }
+  get teamAnchor() { return browser.element("//*[@data-qa='nav:team']"); }
+  get orgNameAnchor() { return browser.element("//*[@data-qa='link:org-ctx']"); }
 
 
   // Help
