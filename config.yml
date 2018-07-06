@@ -4,10 +4,10 @@ orca:
 
 web:
   path: "/sign-in"
-  base: "https://appcurator.io" #IO
+  # base: "https://appcurator.io" #IO
   # base: "https://appcurator.qa" #QA
   #base: "https://my.appcurator.com" #(DEV-URL)
-  # base: "https://squad-tenancy.web.appcurator.qa" #(QA-URL)
+  base: "https://squad-foundation.web.appcurator.qa" #(QA-URL)
 
 api:
   organizations: "https://hub.appcurator.io/org/api/v1/organizations/"

@@ -37,7 +37,7 @@ export function sendInvite(inviteMail) {
 export function goToTeammatesPage() {
   NavBar.profileMenu.click();
   NavBar.settingsAnchor.click();
-  browser.waitUntil(() => NavBar.teamNavLink.getText() === ('Team'), 5000, 'Team link is not displayed', 200);
+  browser.waitUntil(() => NavBar.teamNavLink.getText() === ('Teammates'), 5000, 'Teammates link is not displayed', 200);
   NavBar.teamNavLink.click();
 }
 

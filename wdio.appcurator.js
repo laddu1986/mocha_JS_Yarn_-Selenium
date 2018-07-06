@@ -101,7 +101,7 @@ exports.config = {
   capabilities: [getBrowser()],
   updateJob: false,
   specs: [
-    './test/web/specs/*/*Test.js', //master
+    './test/web/specs/*/createOrganizationTest.js', //master
   ],
   // Patterns to exclude.
   exclude: [
