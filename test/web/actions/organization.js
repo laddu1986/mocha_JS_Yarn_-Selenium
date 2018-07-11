@@ -7,7 +7,7 @@ import CommonPage from 'web/page_objects/common'
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
 
 export function createOrg(orgname) {
-  HomePage.profileMenu.click();
+  NavBar.profileMenu.click();
   HomePage.switchOrCreateOrganizations.click();
   HomePage.createOrg.click();
   createNewOrg(orgname);
@@ -27,7 +27,7 @@ export function deleteAccount() {
 }
 
 export function goToCreateOrgPageFromNavbar() {
-  HomePage.profileMenu.click();
+  NavBar.profileMenu.click();
   HomePage.switchOrCreateOrganizations.click();
   HomePage.createOrg.click();
 }
@@ -50,7 +50,7 @@ export function verifyOrgNameOnDashBoard() {
 }
 
 export function gotoOrgSettings() {
-  HomePage.profileMenu.click();
+  NavBar.profileMenu.click();
   OrgDashboardPage.orgSettingsNavMenu.click();
 }
 
