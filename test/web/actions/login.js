@@ -1,6 +1,6 @@
 import * as lib from '../../common';
 import CommonPage from 'web/page_objects/common'
-import HomePage from 'web/page_objects/homePage'
+import NavBar from 'web/page_objects/navBar'
 import SignInPage from 'web/page_objects/signInPage'
 
 export function verifyIncorrectSignIn() {
@@ -8,7 +8,7 @@ export function verifyIncorrectSignIn() {
 }
 
 export function verifySignIn() {
-    return HomePage.profileMenu.isVisible()
+    return NavBar.profileMenu.isVisible()
 }
 
 export function signIn(email, password) {
