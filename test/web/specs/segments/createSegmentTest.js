@@ -1,18 +1,19 @@
 import * as lib from '../../../common';
 import SignInPage from 'web/page_objects/signInPage'
 import { createAccount } from 'web/actions/account';
-import * as createSpaceActions from 'web/actions/space';
-import { verifyAllSegmentsPage, verifySegmentCardColour, selectColour, verifyTagAndTitleOnCard, inputSegmentDetails, clickCreateSegmentLink, verifyUntitledSegment, clickCreateSegmentButton, clickOnAudienceLink, verifySegmentDetailpage } from 'web/actions/segment';
+import { createSpace } from 'web/actions/space';
+import * as Constants from 'data/constants.json';
+import { verifyAllSegmentsPage, verifySegmentCardColour, selectColour, verifyTagAndTitleOnCard, inputSegmentDetails, clickCreateSegmentLink, verifySegment, clickCreateSegmentButton, clickOnAudienceLink, verifySegmentDetailpage } from 'web/actions/segment';
 var title, tagline;
 
 describe('Create Segment Tests', () => {
     before(() => {
         SignInPage.open();
         createAccount();
-        createSpaceActions.createSpace();
+        createSpace();
     });
 
-    it(`\nGo to create a segment page --> verify create segment button and hover over + link\n`, () => {
+    it('Go to create a segment page --> verify create segment button and hover over + link', () => {
         clickOnAudienceLink();
         expect(verifyAllSegmentsPage()).to.equal(true);
     });
@@ -23,12 +24,12 @@ describe('Create Segment Tests', () => {
     });
 
     it('Verify untitled segment is created', () => {
-        expect(verifyUntitledSegment("0")).to.equal(true);
+        expect(verifySegment(Constants.SegmentAttributes.Title, "Untitled segment")).to.equal(true);
     });
 
     it('Verify untitled segment on all segments page', () => {
         clickOnAudienceLink();
-        expect(verifyUntitledSegment("0")).to.equal(true);
+        expect(verifySegment(Constants.SegmentAttributes.Title, "Untitled segment")).to.equal(true);
     });
 
     it('Create named segment using hover over + link', () => {
