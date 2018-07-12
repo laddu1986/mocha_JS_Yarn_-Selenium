@@ -14,7 +14,7 @@ describe('Update Organization name', () => {
     createOrg(org2);
   });
 
-  it(`\nVerify Settings Page\n`, () => {
+  it('Verify Settings Page', () => {
     gotoOrgSettings();
     expect(browser.getUrl()).to.include((`/${org2}/edit`).toLowerCase());
     expect(isSaveButtonEnabled()).to.equal(false);
