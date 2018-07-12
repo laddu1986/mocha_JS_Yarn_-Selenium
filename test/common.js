@@ -2,7 +2,6 @@ import "app-module-path/register";
 const server = require('chakram');
 var joi = require('joi');
 global.expect = server.expect;
-const config = require('config-yml');
 var randomString = require("randomstring");
 var NodeESModuleLoader = require('node-es-module-loader');
 var loader = new NodeESModuleLoader();
@@ -34,13 +33,10 @@ const testData = {
 const Tags = {
   smokeTest: "@smoke"
 }
-// uri end points
-const orca = config.orca.base;
-const web = config.web.base;
 
 const Sequelize = require('sequelize');
-const mysql = new Sequelize('organization_dev', 'rouser', 'R34d0nlyK3y', {
-  host: 'dev-nextdb.cdiceoz5vyus.ap-southeast-2.rds.amazonaws.com',
+const mysql = new Sequelize(process.env.SQL_DBNAME, process.env.SQL_USERNAME, process.env.SQL_PASSWORD, {
+  host: process.env.SQL_HOSTNAME,
   dialect: 'mysql',
   operatorsAliases: false,
   pool: {
@@ -78,9 +74,6 @@ export {
   loader,
   joi,
   testData,
-  // uri
-  orca,
-  web,
   // api calls
   post,
   get,
@@ -88,7 +81,6 @@ export {
   patch,
   del,
   // library
-  config,
   server,
   // db
   Sequelize,
