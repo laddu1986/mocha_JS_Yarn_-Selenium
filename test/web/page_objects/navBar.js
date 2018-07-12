@@ -2,12 +2,18 @@ import Page from './page';
 
 class NavBar extends Page {
 
-  // settings
-  get settingsAnchor() { return browser.element("//*[@data-qa='nav:org-settings']"); }
+  //common
+  get profileMenu() { return browser.element("//div[@data-qa='md-profile']//div[@data-qa='btn:menu']"); }
+
+  //org
+  get orgSettingsAnchor() { return browser.element("//div[@data-qa='md-profile']//*[contains(text(),'Settings')]"); }
   get backToOrgDashboardLink() { return browser.element("//a[@data-qa='link:org-ctx']"); }
 
-  get profileMenu() { return browser.element("//div[@data-qa='md-profile']//div[@data-qa='btn:menu']"); }
+  //space
+  get spaceDashboard() { return browser.element("//a[@data-qa='nav:dashboard']"); }
   get audienceLink() { return browser.element("//a[@data-qa='nav:audience']"); }
+  get spaceSettings() { return browser.element("//a[@data-qa='nav:settings']"); }
+
   // Help
   get helpMenuNav() { return browser.element("//*[@data-qa='md:help']"); }
   get teamNavLink() { return browser.element("//*[@data-qa='nav:team']"); }
@@ -17,7 +23,7 @@ class NavBar extends Page {
   get sysStatusAnchor() { return browser.element("//*[contains(text(),'System Status')]"); }
   get navOrgs() { return browser.elements("//*[@data-qa='nav:org']"); }
 
-  get signOut() { return browser.element("//*[@data-qa='nav:sign-out']"); }
+  get signOut() { return browser.element("//*[@data-qa='ul-org-list']"); }
 
   open(e) {
     super.open(e);
