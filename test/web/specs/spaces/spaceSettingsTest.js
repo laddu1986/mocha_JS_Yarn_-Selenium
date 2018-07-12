@@ -33,7 +33,7 @@ describe('Space Settings', () => {
 
     it('Delete Space --> verify passive notfication and space is deleted on dashboard', () => {
         createSpaceActions.deleteSpace();
-        expect(getNotificationMessageText()).to.contain(spaceData.spaceDeleted.text + "'" + newSpacename + "'");
+        expect(getNotificationMessageText()).to.contain(spaceData.deleteMessage.text + "'" + newSpacename + "'");
         expect(createSpaceActions.spaceIsDeleted()).to.equal(true);
     });
 
