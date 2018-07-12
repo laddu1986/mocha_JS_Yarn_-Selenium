@@ -13,7 +13,7 @@ describe(`Tests for Create Organization ${lib.Tags.smokeTest}`, () => {
     accountDetails = createAccount();
   });
 
-  it(`\nGo to organization creation page\n`, () => {
+  it('Go to organization creation page', () => {
     goToCreateOrgPageFromNavbar();
     expect(verifyCreateOrgPage()).to.equal(true);
   });
@@ -24,13 +24,13 @@ describe(`Tests for Create Organization ${lib.Tags.smokeTest}`, () => {
     expect(browser.getUrl()).to.include(orgName.toLowerCase());
   });
 
-  it(`\nSign out and back in -->Should show last accessed Org dashboard`, () => {
+  it('Sign out and back in -->Should show last accessed Org dashboard', () => {
     signOut();
     signIn(accountDetails.email, 'Pass1234');
     expect(verifyOrgNameOnDashBoard()).to.equal(orgName);
   });
 
-  it(`\n Checking Org Count in Navbar`, () => {
+  it('Checking Org Count in Navbar', () => {
     expect(getnavOrgCount()).to.equal(2);
   })
 });

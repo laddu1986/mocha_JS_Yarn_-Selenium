@@ -14,7 +14,7 @@ describe('Delete organization Tests', () => {
     createOrg(orgName);
   });
 
-  it(`\nDelete 2nd last Org --> Passive notification displays and Re-directs to choose orgs page`, () => {
+  it('Delete 2nd last Org --> Passive notification displays and Re-directs to choose orgs page', () => {
     gotoOrgSettings();
     deleteOrganization();
     expect(getNotificationMessageText()).to.include(orgNotificationData.deleteOrgMessage.text)
@@ -22,7 +22,7 @@ describe('Delete organization Tests', () => {
     expect(verifyChooseOrgspage()).to.equal(true);
   });
 
-  it(`\nDelete Last Org --> Passive notification displays and Re-directs to no orgs page\n`, () => {
+  it('Delete Last Org --> Passive notification displays and Re-directs to no orgs page', () => {
     selectOrg();
     gotoOrgSettings();
     deleteOrganization();
@@ -31,13 +31,13 @@ describe('Delete organization Tests', () => {
     expect(verifyNoOrgPage()).to.equal(true);
   });
 
-  it(`Logout and Login --> No orgs page is displayed\n`, () => {
+  it('Logout and Login --> No orgs page is displayed', () => {
     signOut();
     signIn(accountDetails.email, accountDetails.password);
     expect(verifyNoOrgPage()).to.equal(true);
   });
 
-  it(`Create new Org from No-Orgs Page`, () => {
+  it('Create new Org from No - Orgs Page', () => {
     clickCreateOrgFromNoOrgPage();
     createNewOrg(newOrgName);
     expect(verifyOrgIsCreated()).to.equal(true);
