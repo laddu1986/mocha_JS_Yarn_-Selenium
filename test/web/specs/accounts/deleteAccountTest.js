@@ -25,7 +25,7 @@ describe('Delete Account Test (Remove my Account)', () => {
 
   it(`\nRemove account --> Sign In page appears\n`, () => {
     deleteAccount();
-    expect(browser.getUrl()).to.equal(`${lib.config.web.base}/sign-in`);
+    expect(browser.getUrl()).to.equal(`${process.env.WEB_DEV}/sign-in`);
   });
 
   it('Login with same credentials --> Incorrect Details Error', () => {
