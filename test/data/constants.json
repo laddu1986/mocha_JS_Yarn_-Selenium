@@ -12,5 +12,9 @@
     "InviteStatus": {
         "Expired": "Expired",
         "Pending": "Pending"
+    },
+    "SegmentAttributes": {
+        "Title": "Title",
+        "Tagline": "Tagline"
     }
 }

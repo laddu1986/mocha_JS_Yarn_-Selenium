@@ -1,7 +1,9 @@
 import * as lib from '../../common';
 import NavBar from 'web/page_objects/navBar';
-import SegmentPage from 'web/page_objects/segmentPage'
-var colorIndex, selectedColourValue;
+import Common from 'web/page_objects/common';
+import SegmentPage from 'web/page_objects/segmentPage';
+import * as Constants from 'data/constants.json';
+var colorIndex, selectedColourValue, actualValue;;
 
 export function clickOnAudienceLink() {
     NavBar.audienceLink.click();
@@ -50,8 +52,13 @@ export function verifyTagAndTitleOnCard(name, tagline, count) {
     }
 }
 
-export function verifyUntitledSegment(count) {
-    return (SegmentPage.segmentCardTitle.value[count].getText() == 'Untitled segment')
+export function verifySegment(type, value) {
+    if (type === Constants.SegmentAttributes.Title) {
+        actualValue = SegmentPage.segmentCardTitle.getText();
+    } else {
+        actualValue = SegmentPage.segmentCardTagline.getText();
+    }
+    return (actualValue == value)
 }
 
 export function createSegment(name, tagline) {
@@ -60,3 +67,21 @@ export function createSegment(name, tagline) {
     inputSegmentDetails(name, tagline);
     clickOnAudienceLink();
 }
+
+export function goToSegmentDetailPage() {
+    SegmentPage.segmentCards.value[0].click();
+}
+
+export function updateSegment(type, value) {
+    if (type === Constants.SegmentAttributes.Title) {
+        SegmentPage.titleField.setValue(value);
+    } else {
+        SegmentPage.taglineField.setValue(value);
+    }
+}
+
+export function deleteSegment() {
+    Common.submitButton.click();
+    Common.iAmSureButton.click();
+}
+
