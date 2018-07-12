@@ -51,11 +51,11 @@ export function verifyOrgNameOnDashBoard() {
 
 export function gotoOrgSettings() {
   NavBar.profileMenu.click();
-  OrgDashboardPage.orgSettingsNavMenu.click();
+  NavBar.orgSettingsAnchor.click()
 }
 
 export function deleteOrganization() {
-  browser.pause(500); // for safari
+  //browser.pause(500); // for safari - not testing on safari at the moment
   SettingsPage.leaveOrgButton.click();
   CommonPage.submitButton.click();
 }

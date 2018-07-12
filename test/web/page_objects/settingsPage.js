@@ -8,8 +8,8 @@ class SettingsPage {
   get leaveOrgButton() { return browser.element("//button[@data-qa='btn:leave-org']"); }
   get deleteOrgButton() { return browser.element("//button[@data-qa='btn:leave-org']"); }
 
-  get orgSettingsPage() { return browser.element("//*[@data-qa='page:org-settings']"); }
-  
+  get orgSettingsPage() { return browser.element("//div[@data-qa='md-profile']//*[contains(text(),'Settings')]"); }
+
   open(e) {
     super.open(e);
   }

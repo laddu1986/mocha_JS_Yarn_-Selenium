@@ -6,6 +6,7 @@ import SpaceSettingsPage from 'web/page_objects/spaceSettingsPage';
 import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
 import HomePage from 'web/page_objects/homePage';
 import CommonPage from 'web/page_objects/common';
+import NavBar from 'web/page_objects/navBar';
 
 export function changeSpace(type) {
   var webElement = SpaceSettingsPage.spaceName;
@@ -123,3 +124,9 @@ export function verifySpaceOrder(index) {
   return OrgDashboardPage.spaceCards.value[index].getText();
 }
 
+export function selectSpace() {
+  OrgDashboardPage.spaceCards.value[0].click();
+}
+export function goToSpaceSettings() {
+  NavBar.spaceSettings.click();
+}
