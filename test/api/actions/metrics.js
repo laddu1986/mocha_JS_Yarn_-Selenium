@@ -10,7 +10,7 @@ var toDate = yyyy + '-' + mm + '-' + dd;
 
 export function getUniqueAppUsers(responseData) {
     const any = {
-        api: `${lib.config.api.metrics + responseData[1].id}/spaces/${responseData[2].id}/metrics/unique-users/count?from=${fromDate}&to=${toDate}`,
+        api: `${process.env.API_METRICS + responseData[1].id}/spaces/${responseData[2].id}/metrics/unique-users/count?from=${fromDate}&to=${toDate}`,
         data: ""
     };
     return lib.get(any);
@@ -18,7 +18,7 @@ export function getUniqueAppUsers(responseData) {
 
 export function getAPIRequests(responseData) {
     const any = {
-        api: `${lib.config.api.metrics + responseData[1].id}/spaces/${responseData[2].id}/metrics/requests/count?from=${fromDate}&to=${toDate}`,
+        api: `${process.env.API_METRICS + responseData[1].id}/spaces/${responseData[2].id}/metrics/requests/count?from=${fromDate}&to=${toDate}`,
         data: ""
     };
     return lib.get(any);
@@ -26,7 +26,7 @@ export function getAPIRequests(responseData) {
 
 export function getMetricsActive(responseData) {
     const any = {
-        api: `${lib.config.api.metrics + responseData[1].id}/spaces/${responseData[2].id}/metrics/active`,
+        api: `${process.env.API_METRICS + responseData[1].id}/spaces/${responseData[2].id}/metrics/active`,
         data: ""
     };
     return lib.get(any);
