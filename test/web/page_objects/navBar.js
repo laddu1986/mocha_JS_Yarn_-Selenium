@@ -21,10 +21,9 @@ class NavBar extends Page {
   get devPortalAnchor() { return browser.element("//*[contains(text(),'Developer Portal')]"); }
   get apiPortalAnchor() { return browser.element("//*[contains(text(),'API Portal')]"); }
   get sysStatusAnchor() { return browser.element("//*[contains(text(),'System Status')]"); }
-  get navOrgs() { return browser.elements("//*[@data-qa='nav:org']"); }
+  get navOrgs() { return browser.elements("//*[@data-qa='ul-org-list']//li"); }
 
-  get signOut() { return browser.element("//*[@data-qa='ul-org-list']"); }
-
+  get signOut() { return browser.element("//li[@data-qa='sign-out']"); }
   open(e) {
     super.open(e);
   }

@@ -24,6 +24,7 @@ describe('Delete organization Tests', () => {
 
   it('Delete Last Org --> Passive notification displays and Re-directs to no orgs page', () => {
     selectOrg();
+    browser.refresh();
     gotoOrgSettings();
     deleteOrganization();
     expect(getNotificationMessageText()).to.include(orgNotificationData.deleteMessage.text)
@@ -32,6 +33,7 @@ describe('Delete organization Tests', () => {
   });
 
   it('Logout and Login --> No orgs page is displayed', () => {
+    browser.refresh();
     signOut();
     signIn(accountDetails.email, accountDetails.password);
     expect(verifyNoOrgPage()).to.equal(true);
