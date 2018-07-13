@@ -2,7 +2,7 @@ import * as lib from '../../common';
 
 function postSpaceByOrganizationId(responseData, flag) {
   const any = {
-    api: `${lib.config.api.spaces + responseData[1].id}/spaces`,
+    api: `${process.env.API_SPACES + responseData[1].id}/spaces`,
     data: {
       name: lib.randomString.generate(10),
       createdByAccountId: responseData[0].id,
@@ -21,7 +21,7 @@ function postSpaceByOrganizationId(responseData, flag) {
 
 function getSpacesByOrganizationId(responseData) {
   const any = {
-    api: `${lib.config.api.spaces + responseData[1].id}/spaces`,
+    api: `${process.env.API_SPACES + responseData[1].id}/spaces`,
     data: ""
   };
   return lib.get(any);
@@ -29,7 +29,7 @@ function getSpacesByOrganizationId(responseData) {
 
 export function updateSpace(responseData, flag) {
   const any = {
-    api: `${lib.config.api.spaces + responseData[1].id}/spaces`,
+    api: `${process.env.API_SPACES + responseData[1].id}/spaces`,
     data: {
       id: responseData[2].id,
       name: lib.randomString.generate(5),
@@ -52,7 +52,7 @@ export function patchSpaceByOrgIdRowVersionAndSpaceId(responseData, type, flag) 
     index = 4;
   }
   const any = {
-    api: `${lib.config.api.spaces + responseData[1].id}/spaces/${responseData[2].id}?rowVersion=${responseData[index].rowVersion}`,
+    api: `${process.env.API_SPACES + responseData[1].id}/spaces/${responseData[2].id}?rowVersion=${responseData[index].rowVersion}`,
     data: [
       {
         op: "replace",
@@ -72,7 +72,7 @@ export function patchSpaceByOrgIdRowVersionAndSpaceId(responseData, type, flag) 
 
 export function getSpaceByOrgIdAndSpaceId(responseData) {
   const any = {
-    api: `${lib.config.api.spaces + responseData[1].id}/spaces/${responseData[2].id}`,
+    api: `${process.env.API_SPACES + responseData[1].id}/spaces/${responseData[2].id}`,
     data: ""
   };
   return lib.get(any);
@@ -80,7 +80,7 @@ export function getSpaceByOrgIdAndSpaceId(responseData) {
 
 export function deleteSpaceByOrgIdAndSpaceId(responseData) {
   const any = {
-    api: `${lib.config.api.spaces + responseData[1].id}/spaces/${responseData[2].id}?rowVersion=${responseData[5].rowVersion}`,
+    api: `${process.env.API_SPACES + responseData[1].id}/spaces/${responseData[2].id}?rowVersion=${responseData[5].rowVersion}`,
     data: ""
   };
   return lib.del(any);
@@ -89,7 +89,7 @@ export function deleteSpaceByOrgIdAndSpaceId(responseData) {
 //--------------------------------KEYS RELATED FUNCTIONS--------------------------
 function postKeysBySpaceId(responseData) {
   const any = {
-    api: `${lib.config.api.keys}${responseData[1].id}/keys`,
+    api: `${process.env.API_KEYS}${responseData[1].id}/keys`,
     data: {
       resource: 'space',
       id: responseData[2].id
@@ -103,7 +103,7 @@ function postKeysBySpaceId(responseData) {
 
 function getKeysBySpaceId(responseData) {
   const any = {
-    api: `${lib.config.api.keys}${responseData[1].id}/keys`,
+    api: `${process.env.API_KEYS}${responseData[1].id}/keys`,
     data: `?resource=space&ids=${responseData[2].id}`
   };
   return lib.get(any);
@@ -115,7 +115,7 @@ function patchKeyBySpaceIdAndRowVersion(responseData, status) {
     count = 4;
   }
   const any = {
-    api: `${lib.config.api.keys}${responseData[1].id}/keys/${responseData[3].value}?rowVersion=${responseData[count].rowVersion}`,
+    api: `${process.env.API_KEYS}${responseData[1].id}/keys/${responseData[3].value}?rowVersion=${responseData[count].rowVersion}`,
     data: [
       {
         "op": "replace",
@@ -132,7 +132,7 @@ function patchKeyBySpaceIdAndRowVersion(responseData, status) {
 
 function deleteKeyBySpaceIdAndRowVersion(responseData) {
   const any = {
-    api: `${lib.config.api.keys}${responseData[1].id}/keys/${responseData[5].value}?rowVersion=${responseData[5].rowVersion}`,
+    api: `${process.env.API_KEYS}${responseData[1].id}/keys/${responseData[5].value}?rowVersion=${responseData[5].rowVersion}`,
     data: ""
   };
   return lib.del(any);

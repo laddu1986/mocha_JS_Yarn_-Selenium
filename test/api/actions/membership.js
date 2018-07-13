@@ -2,7 +2,7 @@ import * as lib from '../../common';
 
 function postMembership(responseData) {
   const any = {
-    api: lib.config.api.memberships,
+    api: process.env.API_MEMBERSHIPS,
     data: {
       accountId: responseData[0].id,
       organizationId: responseData[1].id
@@ -12,7 +12,7 @@ function postMembership(responseData) {
 }
 function getMembershipByAnyID(anyId) {
   const any = {
-    api: lib.config.api.memberships,
+    api: process.env.API_MEMBERSHIPS,
     data: anyId
   };
   return lib.get(any);
@@ -25,21 +25,21 @@ function getMembershipByOrganization(responseData) {
 }
 function getMemberships(responseData) {
   const any = {
-    api: lib.config.api.memberships,
+    api: process.env.API_MEMBERSHIPS,
     data: `?orgId=${responseData[1].id}&accountId=${responseData[0].id}&pageSize=1`
   };
   return lib.get(any);
 }
 function deleteMembershipByAccountAndOrganization(responseData) {
   const any = {
-    api: lib.config.api.memberships,
+    api: process.env.API_MEMBERSHIPS,
     data: `organization/${responseData[1].id}/account/${responseData[0].id}`
   };
   return lib.del(any);
 }
 function deleteMembershipStatus(responseData) {
   const any = {
-    api: lib.config.api.memberships,
+    api: process.env.API_MEMBERSHIPS,
     data: `account/${responseData[0].id}`
   };
   return lib.get(any);
