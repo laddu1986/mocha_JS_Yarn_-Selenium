@@ -31,7 +31,7 @@ export function deleteSpace() {
 }
 
 export function spaceIsDeleted() {
-  return OrgDashboardPage.createSpaceInput.isVisible();
+  return OrgDashboardPage.createSpaceInput.waitForVisible();
 }
 
 export function createSpace() {

@@ -55,7 +55,7 @@ export function gotoOrgSettings() {
 }
 
 export function deleteOrganization() {
-  //browser.pause(500); // for safari - not testing on safari at the moment
+  browser.pause(500);
   SettingsPage.leaveOrgButton.click();
   CommonPage.submitButton.click();
 }
