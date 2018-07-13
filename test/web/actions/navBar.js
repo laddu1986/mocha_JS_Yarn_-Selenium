@@ -12,5 +12,5 @@ export function verifySignOut() {
 }
 
 export function getnavOrgCount() {
-    return NavBar.navOrgs.value.length;
+    return NavBar.navOrgs.value.length - 1;
 }
