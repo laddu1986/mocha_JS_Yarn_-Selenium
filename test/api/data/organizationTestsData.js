@@ -1,6 +1,6 @@
 import * as lib from '../../common';
 export const noName = {
-    api: lib.config.api.organizations,
+    api: process.env.API_ORGANIZATIONS,
     data: {
         createdByAccountId: lib.responseData.negOrganization[0].id
     },
@@ -8,14 +8,14 @@ export const noName = {
 };
 
 export const blankAccountId = {
-    api: lib.config.api.organizations,
+    api: process.env.API_ORGANIZATIONS,
     data: {
         name: lib.randomString.generate(10)
     },
     expected: "The Account Id field is required."
 };
 export const blankRowVersion = {
-    api: lib.config.api.organizations,
+    api: process.env.API_ORGANIZATIONS,
     data: {
         id: lib.responseData.negOrganization[1].id,
         name: lib.randomString.generate(10)
@@ -23,7 +23,7 @@ export const blankRowVersion = {
     expected: "A concurrency error has occurred."
 };
 export const blankName = {
-    api: lib.config.api.organizations,
+    api: process.env.API_ORGANIZATIONS,
     data: {
         id: lib.responseData.negOrganization[1].id,
         name: "",
@@ -32,7 +32,7 @@ export const blankName = {
     expected: "The Name field is required."
 };
 export const blankID = {
-    api: lib.config.api.organizations,
+    api: process.env.API_ORGANIZATIONS,
     data: {
         id: "",
         name: lib.randomString.generate(10),
@@ -42,7 +42,7 @@ export const blankID = {
 };
 
 export const incorrectOrgIDPut = {
-    api: lib.config.api.organizations,
+    api: process.env.API_ORGANIZATIONS,
     data: {
         id: lib.responseData.negOrganization[0].id,
         name: lib.randomString.generate(10),
@@ -51,17 +51,17 @@ export const incorrectOrgIDPut = {
 };
 
 export const incorrectOrgIDGet = {
-    api: lib.config.api.organizations,
+    api: process.env.API_ORGANIZATIONS,
     data: lib.responseData.negOrganization[0].id
 };
 
 export const incorrectOrgIdDelete = {
-    api: lib.config.api.organizations,
+    api: process.env.API_ORGANIZATIONS,
     data: `${lib.responseData.negOrganization[0].id}?rowVersion=${lib.responseData.negOrganization[1].rowVersion}`,
     expected: "A concurrency error has occurred."
 };
 
 export const blankOrgIdDelete = {
-    api: lib.config.api.organizations,
+    api: process.env.API_ORGANIZATIONS,
     data: ""
 };

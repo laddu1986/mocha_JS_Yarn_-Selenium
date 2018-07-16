@@ -5,9 +5,9 @@ allure-results
 errScreens
 .vscode
 yarn-error.log
+.env
+yarn.lock
 phantomjs.log
 **/wdio-report.html
 **/api-report.html
 **/.DS_Store
-**/yarn.lock
-**/yarn-error.log

@@ -1,16 +1,15 @@
 import * as lib from '../../common';
 
-
 function getIdentityStateById(responseData) {
   const any = {
-    api: lib.config.api.identities,
+    api: process.env.API_IDENTITIES,
     data: `${responseData[0].id}/state`
   };
   return lib.get(any);
 }
 function putIdentityById(responseData) {
   const any = {
-    api: `${lib.config.api.identities + responseData[0].id}/state`,
+    api: `${process.env.API_IDENTITIES + responseData[0].id}/state`,
     data: {
       values: {
         additionalProp1: 'string',
@@ -23,7 +22,7 @@ function putIdentityById(responseData) {
 }
 function patchIdentityStateById(responseData) {
   const any = {
-    api: `${lib.config.api.identities + responseData[0].id}/state`,
+    api: `${process.env.API_IDENTITIES + responseData[0].id}/state`,
     data: {
       values: {
         additionalProp1: '1',
