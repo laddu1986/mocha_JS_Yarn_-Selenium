@@ -95,7 +95,7 @@ export function getInviteTokenFromDB(email) {
 
 export async function invitationLink(email) {
   const token = await getInviteTokenFromDB(email)
-  return `${lib.web}/join?invite=${token}`
+  return `${process.env.WEB_DEV}/join?invite=${token}`
 }
 
 export async function updateTokenExpiryDateInDB(email) {

@@ -4,7 +4,7 @@ var emailInvited = `${lib.randomString.generate(5)}@test.co`;
 
 export function getAccessToken(responseData) {
   const any = {
-    api: lib.config.api.token,
+    api: process.env.API_TOKEN,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': 'Basic ZnJvbnRlbmRfc2VydmljZTpydHk4YTk4eGNmIXdk'
@@ -21,7 +21,7 @@ export function getAccessToken(responseData) {
 
 export function postInvitesByOrganizationId(responseData, flag) {
   const any = {
-    api: `${lib.config.api.organizations + responseData[1].id}/invites`,
+    api: `${process.env.API_ORGANIZATIONS + responseData[1].id}/invites`,
     data: [emailInvited],
     headers: {
       'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export function postInvitesByOrganizationId(responseData, flag) {
 
 export function getInvitesByOrganizationId(responseData) {
   const any = {
-    api: lib.config.api.organizations,
+    api: process.env.API_ORGANIZATIONS,
     data: `${responseData[1].id}/invites?pageSize=1`
   };
   return lib.get(any).then((response) => {
@@ -46,7 +46,7 @@ export function getInvitesByOrganizationId(responseData) {
 }
 export function getInviteDetailsByToken(responseData) {
   const any = {
-    api: `${lib.config.api.invites}${responseData[3].results[0].token}`,
+    api: `${process.env.API_INVITES}${responseData[3].results[0].token}`,
     data: ""
   };
   return lib.get(any);
@@ -54,7 +54,7 @@ export function getInviteDetailsByToken(responseData) {
 
 export function deleteInviteByOrganizationIdAndEmail(responseData) {
   const any = {
-    api: lib.config.api.organizations,
+    api: process.env.API_ORGANIZATIONS,
     data: `${responseData[1].id}/invites/?email=${emailInvited}`
   };
   return lib.del(any);
