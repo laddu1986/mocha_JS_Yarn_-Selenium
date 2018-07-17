@@ -23,3 +23,11 @@ export function signIn(email, password) {
     CommonPage.submitButton.click();
     NavBar.profileMenu.waitForVisible();
 }
+
+export function get404PageText() {
+    return CommonPage.invalidPage.getText();
+}
+
+export function clickLinkOn404Page() {
+    CommonPage.linkOnInvalidpage.click();
+}

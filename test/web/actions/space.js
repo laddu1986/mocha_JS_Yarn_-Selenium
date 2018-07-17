@@ -130,3 +130,7 @@ export function selectSpace() {
 export function goToSpaceSettings() {
   NavBar.spaceSettings.click();
 }
+
+export function verifySpaceCard() {
+  return OrgDashboardPage.spaceCards.isVisible();
+}
