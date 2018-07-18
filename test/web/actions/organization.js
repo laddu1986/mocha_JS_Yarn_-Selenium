@@ -54,10 +54,15 @@ export function gotoOrgSettings() {
   NavBar.orgSettingsAnchor.click()
 }
 
-export function deleteOrganization() {
+export function deleteOrganization(action) {
   browser.pause(500);
   SettingsPage.leaveOrgButton.click();
-  CommonPage.submitButton.click();
+  if (action == 'cancel') {
+    CommonPage.cancelButton.click()
+  } else {
+    CommonPage.confirmInput.setValue('delete')
+    CommonPage.submitButton.click();
+  }
 }
 
 export function clickCreateOrgFromNoOrgPage() {
