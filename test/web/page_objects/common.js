@@ -10,7 +10,11 @@ class common extends Page {
     //Page messages
     get invalidInvitationMsg() { return browser.element("//h1") }
     get expiredInvitationMsg() { return browser.element("//*[contains(text(),'expired')]") }
-    get iAmSureButton() { return browser.element("//button[@data-qa='btn:submit']//span[contains(text(),'sure')]") }
+    get deleteModal() { return browser.element("//form[@data-qa='modal:delete']") }
+    get confirmInput() { return browser.element("//input[@data-qa='input:confirm']") }
+    get iAmSureButton() { return browser.element("//button[@data-qa='btn:submit']") }
+    get cancelButton() { return browser.element("//button[@data-qa='btn:cancel']") }
+
 }
 
 export default new common();
