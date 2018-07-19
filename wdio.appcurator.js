@@ -113,7 +113,9 @@ exports.config = {
     organizations: ['./test/web/specs/organizations/*Test.js'],
     spaces: ['./test/web/specs/spaces/*Test.js'],
     support: ['./test/web/specs/support/*Test.js'],
-    invites: ['./test/web/specs/invites/*Test.js']
+    invites: ['./test/web/specs/invites/*Test.js'],
+    segments: ['./test/web/specs/segments/*Test.js']
+
   },
   logLevel: 'silent',
   bail: 2,

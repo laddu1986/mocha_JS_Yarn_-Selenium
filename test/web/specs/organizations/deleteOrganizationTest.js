@@ -16,7 +16,8 @@ describe('Delete organization Tests', () => {
 
   it('Delete 2nd last Org --> Passive notification displays and Re-directs to choose orgs page', () => {
     gotoOrgSettings();
-    deleteOrganization('cancel');
+    deleteOrganization(false);
+    deleteOrganization();
     expect(getNotificationMessageText()).to.include(orgNotificationData.deleteMessage.text)
     closePassiveNotification();
     expect(verifyChooseOrgspage()).to.equal(true);
@@ -25,6 +26,7 @@ describe('Delete organization Tests', () => {
   it('Delete Last Org --> Passive notification displays and Re-directs to no orgs page', () => {
     selectOrg();
     gotoOrgSettings();
+    deleteOrganization(false);
     deleteOrganization();
     expect(getNotificationMessageText()).to.include(orgNotificationData.deleteMessage.text)
     closePassiveNotification();
@@ -43,4 +45,3 @@ describe('Delete organization Tests', () => {
     expect(verifyOrgIsCreated()).to.equal(true);
   });
 });
-

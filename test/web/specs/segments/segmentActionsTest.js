@@ -40,6 +40,7 @@ describe('Segment Actions Tests', () => {
 
     it('Delete Segment --> verify the passive notification and redirection to all segments page', () => {
         goToSegmentDetailPage();
+        deleteSegment(false);
         deleteSegment();
         expect(getNotificationMessageText()).to.include(`${PassiveNotification.deleteMessage.text}\'${newName}\'.`);
         expect(verifyAllSegmentsPage()).to.equal(true);

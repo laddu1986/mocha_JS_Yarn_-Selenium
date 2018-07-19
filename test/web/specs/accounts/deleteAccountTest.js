@@ -10,9 +10,9 @@ Attempt to sign in should fail for deleted account
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
 import SignInPage from 'web/page_objects/signInPage';
-import { deleteAccount, deleteOrganization, gotoOrgSettings } from 'web/actions/organization';
+import { deleteOrganization, gotoOrgSettings } from 'web/actions/organization';
 import { verifyIncorrectSignIn, signIn } from 'web/actions/login';
-import { verifyOrgDashboardPageAppears } from 'web/actions/account';
+import { verifyOrgDashboardPageAppears, deleteAccount } from 'web/actions/account';
 var accountDetails;
 
 describe('Delete Account Test (Remove my Account)', () => {
@@ -24,6 +24,7 @@ describe('Delete Account Test (Remove my Account)', () => {
   });
 
   it(`\nRemove account --> Sign In page appears\n`, () => {
+    deleteAccount(false);
     deleteAccount();
     expect(browser.getUrl()).to.equal(`${process.env.WEB_DEV}/sign-in`);
   });
