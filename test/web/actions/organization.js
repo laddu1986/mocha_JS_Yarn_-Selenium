@@ -1,10 +1,9 @@
 import * as lib from '../../common';
 import HomePage from 'web/page_objects/homePage'
 import NavBar from 'web/page_objects/navBar'
-import SignInPage from 'web/page_objects/signInPage'
 import SettingsPage from 'web/page_objects/settingsPage'
-import CommonPage from 'web/page_objects/common'
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
+import { confirmDelete, cancelDelete } from 'web/actions/common'
 
 export function createOrg(orgname) {
   NavBar.profileMenu.click();
@@ -17,13 +16,6 @@ export function createOrg(orgname) {
 export function verifyNoOrgPage() {
   if (HomePage.createOrgButton.isVisible() == HomePage.removeAccountButton.isVisible() == true)
     return true;
-}
-
-export function deleteAccount() {
-  HomePage.removeAccountButton.waitForVisible();
-  HomePage.removeAccountButton.click();
-  CommonPage.submitButton.click();
-  SignInPage.emailInput.waitForVisible();
 }
 
 export function goToCreateOrgPageFromNavbar() {
@@ -54,14 +46,14 @@ export function gotoOrgSettings() {
   NavBar.orgSettingsAnchor.click()
 }
 
-export function deleteOrganization(action) {
+export function deleteOrganization(flag) {
   browser.pause(500);
-  SettingsPage.leaveOrgButton.click();
-  if (action == 'cancel') {
-    CommonPage.cancelButton.click()
+  if (flag == false) {
+    SettingsPage.leaveOrgButton.click();
+    cancelDelete()
   } else {
-    CommonPage.confirmInput.setValue('delete')
-    CommonPage.submitButton.click();
+    SettingsPage.leaveOrgButton.click();
+    confirmDelete()
   }
 }
 

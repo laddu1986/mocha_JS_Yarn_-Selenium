@@ -23,3 +23,16 @@ export function signIn(email, password) {
     CommonPage.submitButton.click();
     NavBar.profileMenu.waitForVisible();
 }
+
+export function confirmDelete() {
+    if (CommonPage.confirmButton.isEnabled() == false) {
+        CommonPage.confirmInput.setValue('delete');
+        CommonPage.confirmButton.click();
+    } else {
+        throw console.error();
+    }
+}
+
+export function cancelDelete() {
+    CommonPage.cancelButton.click();
+}
