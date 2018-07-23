@@ -102,6 +102,7 @@ exports.config = {
   updateJob: false,
   specs: [
     './test/web/specs/*/*Test.js', //master
+    './test/web/specs/negativeSpecs/*/*Test.js',
   ],
   // Patterns to exclude.
   exclude: [

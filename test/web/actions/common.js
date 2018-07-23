@@ -33,7 +33,6 @@ export function confirmDelete() {
     CommonPage.confirmButton.click();
 }
 
-
 export function cancelDelete(element) {
     browser.pause(500)
     try {
@@ -47,4 +46,11 @@ export function cancelDelete(element) {
 
 export function confirmButtonIsEnabled() {
     return CommonPage.confirmButton.isEnabled()
+}
+export function get404PageText() {
+    return CommonPage.invalidPage.getText();
+}
+
+export function clickLinkOn404Page() {
+    CommonPage.linkOnInvalidpage.click();
 }
