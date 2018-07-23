@@ -3,7 +3,7 @@ import SignInPage from 'web/page_objects/signInPage';
 import { createAccount } from 'web/actions/account';
 import { createSpace } from 'web/actions/space';
 import { getNotificationMessageText, confirmButtonIsEnabled, typeDeleteToConfirm, confirmDelete } from 'web/actions/common';
-import { updateSegment, deleteSegment, clickOnAudienceLink, verifySegment, createSegment, goToSegmentDetailPage, verifySegmentDetailpage, verifyAllSegmentsPage, clickDeleteSegButton } from 'web/actions/segment';
+import { updateSegment, deleteSegment, clickOnAudienceLink, verifySegment, createSegment, goToSegmentDetailPage, verifySegmentDetailpage, verifyAllSegmentsPage, clickDeleteSegButton, cancelDeleteSegment } from 'web/actions/segment';
 import * as Constants from 'data/constants.json';
 import * as PassiveNotification from 'web/data/passiveNotification.json';
 var name = lib.randomString.generate(5), tagline = lib.randomString.generate(9), newName = `${lib.randomString.generate(5)}_newName`, newTagline = `${lib.randomString.generate(5)}_newTagline`;
@@ -41,7 +41,7 @@ describe('Segment Actions Tests', () => {
     it('Delete Segment --> verify Cancel action on Delete modal', () => {
         goToSegmentDetailPage();
         clickDeleteSegButton();
-        expect(deleteSegment(false)).to.equal(true)
+        expect(cancelDeleteSegment()).to.equal(true)
     });
 
     it('Delete Segment --> verify the passive notification and redirection to all segments page', () => {

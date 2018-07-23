@@ -1,7 +1,7 @@
 import * as lib from '../../../common';
 import SignInPage from 'web/page_objects/signInPage'
 import { createAccount } from 'web/actions/account';
-import { spaceIsDeleted, verifyCreateFirstSpacePage, deleteSpace, selectSpace, verifyNewSpaceUrl, verifyNewSpaceName, goToSpaceSettings, createSpace, changeSpace, clickDeleteSpaceButton } from 'web/actions/space';
+import { spaceIsDeleted, verifyCreateFirstSpacePage, selectSpace, verifyNewSpaceUrl, verifyNewSpaceName, goToSpaceSettings, createSpace, changeSpace, clickDeleteSpaceButton, cancelDeleteSpace } from 'web/actions/space';
 import { getNotificationMessageText, closePassiveNotification, typeDeleteToConfirm, confirmButtonIsEnabled, confirmDelete } from 'web/actions/common';
 import spaceData from 'web/data/passiveNotification.json';
 import constants from 'data/constants.json';
@@ -33,11 +33,10 @@ describe('Space Settings', () => {
 
     it('Delete Space --> verify Cancel action on Delete Modal', () => {
         clickDeleteSpaceButton();
-        expect(deleteSpace(false)).to.equal(true)
+        expect(cancelDeleteSpace(false)).to.equal(true)
     })
 
     it('Delete Space --> verify passive notfication and space is deleted on dashboard', () => {
-
         clickDeleteSpaceButton()
         expect(confirmButtonIsEnabled()).to.equal(false)
         typeDeleteToConfirm();
