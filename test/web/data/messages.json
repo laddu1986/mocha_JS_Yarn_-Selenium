@@ -6,6 +6,7 @@
   "login": {
     "invalidLogin": "This is a required field"
   },
+  "confirmDeleteTxt": "delete",
   "space": {
     "spaceNotFound": "We couldn't find the Space you were after.\nSelect a space",
     "pageNotFound": "Page not found\nReturn to space"

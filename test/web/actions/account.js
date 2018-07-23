@@ -3,6 +3,7 @@ import HomePage from 'web/page_objects/homePage';
 import AccountPage from 'web/page_objects/accountPage'
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
 import CommonPage from 'web/page_objects/common'
+import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'web/actions/common'
 
 var name, email, organization, password, accountData = { name, email, organization, password };
 
@@ -62,3 +63,17 @@ export function createAccountToJoinInvitedOrg() {
   OrgDashboardPage.currentOrgName.waitForVisible();
 }
 
+export function deleteAccount() {
+  clickDeleteAccButton()
+  typeDeleteToConfirm()
+  confirmDelete()
+}
+
+export function clickDeleteAccButton() {
+  HomePage.removeAccountButton.waitForVisible();
+  HomePage.removeAccountButton.click();
+}
+
+export function cancelDeleteAccount() {
+  return cancelDelete(HomePage.removeAccountButton)
+}

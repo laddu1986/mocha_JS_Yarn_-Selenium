@@ -1,8 +1,8 @@
 import * as lib from '../../../common';
 import SignInPage from 'web/page_objects/signInPage'
 import { createAccount } from 'web/actions/account';
-import { spaceIsDeleted, verifyCreateFirstSpacePage, deleteSpace, selectSpace, verifyNewSpaceUrl, verifyNewSpaceName, goToSpaceSettings, createSpace, changeSpace } from 'web/actions/space';
-import { getNotificationMessageText, closePassiveNotification } from 'web/actions/common';
+import { spaceIsDeleted, verifyCreateFirstSpacePage, selectSpace, verifyNewSpaceUrl, verifyNewSpaceName, goToSpaceSettings, createSpace, changeSpace, clickDeleteSpaceButton, cancelDeleteSpace } from 'web/actions/space';
+import { getNotificationMessageText, closePassiveNotification, typeDeleteToConfirm, confirmButtonIsEnabled, confirmDelete } from 'web/actions/common';
 import spaceData from 'web/data/passiveNotification.json';
 import constants from 'data/constants.json';
 import { signIn, signOut } from 'web/actions/common';
@@ -31,8 +31,17 @@ describe('Space Settings', () => {
         verifyNewSpaceUrl(newSlugName);
     });
 
+    it('Delete Space --> verify Cancel action on Delete Modal', () => {
+        clickDeleteSpaceButton();
+        expect(cancelDeleteSpace(false)).to.equal(true)
+    })
+
     it('Delete Space --> verify passive notfication and space is deleted on dashboard', () => {
-        deleteSpace();
+        clickDeleteSpaceButton()
+        expect(confirmButtonIsEnabled()).to.equal(false)
+        typeDeleteToConfirm();
+        expect(confirmButtonIsEnabled()).to.equal(true)
+        confirmDelete()
         expect(spaceIsDeleted()).to.equal(true);
         expect(getNotificationMessageText()).to.contain(spaceData.deleteMessage.text + "'" + newSpacename + "'");
     });
