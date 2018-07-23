@@ -9,5 +9,9 @@
   "space": {
     "spaceNotFound": "We couldn't find the Space you were after.\nSelect a space",
     "pageNotFound": "Page not found\nReturn to space"
+  },
+  "org": {
+    "orgNotFound": "We couldn't find the page you were after.\nSelect an org",
+    "pageNotFound": "Page not found\nReturn to "
   }
 }

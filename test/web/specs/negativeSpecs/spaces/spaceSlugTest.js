@@ -54,10 +54,9 @@ describe('Negative cases --> Space Slug', () => {
     });
 
     it('No Space Association --> "Select Space" on 404 page redirects to "create space" page', () => {
-        lib.del(deleteRequest).then(() => {
-            browser.refresh();
-            clickLinkOn404Page();
-            expect(verifyCreateFirstSpacePage()).to.equal(true);
-        })
+        lib.del(deleteRequest);
+        browser.refresh();
+        clickLinkOn404Page();
+        expect(verifyCreateFirstSpacePage()).to.equal(true);
     });
 });
