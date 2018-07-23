@@ -3,7 +3,7 @@ import HomePage from 'web/page_objects/homePage'
 import NavBar from 'web/page_objects/navBar'
 import SettingsPage from 'web/page_objects/settingsPage'
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
-import { confirmDelete, cancelDelete } from 'web/actions/common'
+import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'web/actions/common'
 
 export function createOrg(orgname) {
   NavBar.profileMenu.click();
@@ -47,13 +47,12 @@ export function gotoOrgSettings() {
 }
 
 export function deleteOrganization(flag) {
-  browser.pause(500);
-  if (flag == false) {
-    SettingsPage.leaveOrgButton.click();
-    cancelDelete()
-  } else {
-    SettingsPage.leaveOrgButton.click();
+  if (flag === undefined) {
+    clickDeleteOrgButton()
+    typeDeleteToConfirm()
     confirmDelete()
+  } else {
+    return cancelDelete(SettingsPage.leaveOrgButton)
   }
 }
 
@@ -93,4 +92,9 @@ export function goBackToOrgDashboard() {
 export function verifyOrgCardStack() {
   HomePage.orgCards.waitForVisible();
   return HomePage.orgCards.value[0].getText();
+}
+
+export function clickDeleteOrgButton() {
+  browser.pause(500);
+  SettingsPage.leaveOrgButton.click();
 }
