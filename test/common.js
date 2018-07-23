@@ -21,7 +21,8 @@ const responseData = {
   negOrganization: [],
   negSpace: [],
   negSpaceKey: [],
-  spaceSlug: []
+  spaceSlug: [],
+  orgSlug: []
 };
 
 const testData = {
