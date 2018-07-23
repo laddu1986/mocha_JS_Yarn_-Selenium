@@ -50,3 +50,7 @@ export function clearPlaceholder() {
 export function submitButtonText() {
     return CommonPage.submitButton.getText();
 }
+
+export function signInPageIsVisible() {
+    return SignInPage.emailInput.isVisible()
+}

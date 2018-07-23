@@ -3,6 +3,7 @@ import CommonPage from 'web/page_objects/common';
 import NavBar from 'web/page_objects/navBar';
 
 export function signOut() {
+    browser.pause(200) // can be removed after AD-383 is resolved
     NavBar.profileMenu.click();
     NavBar.signOut.click();
 }

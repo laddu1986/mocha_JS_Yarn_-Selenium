@@ -7,6 +7,7 @@ import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
 import HomePage from 'web/page_objects/homePage';
 import CommonPage from 'web/page_objects/common';
 import NavBar from 'web/page_objects/navBar';
+import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'web/actions/common';
 
 export function changeSpace(type) {
   var webElement = SpaceSettingsPage.spaceName;
@@ -23,11 +24,6 @@ export function changeSpace(type) {
 export function verifyNewSpaceName() {
   HomePage.logo.click();
   return OrgDashboardPage.spaceCards.getText();
-}
-
-export function deleteSpace() {
-  SpaceSettingsPage.deleteSpaceButton.click();
-  CommonPage.iAmSureButton.click();
 }
 
 export function spaceIsDeleted() {
@@ -133,4 +129,18 @@ export function goToSpaceSettings() {
 
 export function verifySpaceCard() {
   return OrgDashboardPage.spaceCards.isVisible();
+}
+
+export function deleteSpace() {
+  clickDeleteSpaceButton()
+  typeDeleteToConfirm()
+  confirmDelete()
+}
+
+export function clickDeleteSpaceButton() {
+  SpaceSettingsPage.deleteSpaceButton.click();
+}
+
+export function cancelDeleteSpace() {
+  return cancelDelete(SpaceSettingsPage.deleteSpaceButton)
 }

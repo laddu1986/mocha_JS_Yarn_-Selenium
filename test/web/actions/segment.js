@@ -4,6 +4,8 @@ import Common from 'web/page_objects/common';
 import SegmentPage from 'web/page_objects/segmentPage';
 import * as Constants from 'data/constants.json';
 var colorIndex, selectedColourValue, actualValue;;
+import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'web/actions/common'
+
 
 export function clickOnAudienceLink() {
     NavBar.audienceLink.click();
@@ -81,7 +83,15 @@ export function updateSegment(type, value) {
 }
 
 export function deleteSegment() {
-    Common.submitButton.click();
-    Common.iAmSureButton.click();
+    clickDeleteSegButton()
+    typeDeleteToConfirm()
+    confirmDelete()
 }
 
+export function clickDeleteSegButton() {
+    Common.submitButton.click();
+}
+
+export function cancelDeleteSegment() {
+    return cancelDelete(Common.submitButton)
+}
