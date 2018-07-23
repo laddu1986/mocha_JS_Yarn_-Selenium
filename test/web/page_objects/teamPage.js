@@ -5,6 +5,7 @@ class TeamPage {
 
 
   //Inactive Tab
+  get inactiveTab() { return browser.element("//a[@data-qa='tab:inactive']"); }
   get revokeButton() { return browser.element("//button[@data-qa='btn:submit']//*[contains(text(),'Revoke')]") }
   get resendButton() { return browser.element("//button[@data-qa='btn:submit']//*[contains(text(),'Resend')]") }
   get inactiveRowStatus() { return browser.element("//tr[@data-qa='table:row-inactive']//td[2]") }

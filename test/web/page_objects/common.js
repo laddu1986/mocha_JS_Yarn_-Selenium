@@ -4,6 +4,8 @@ class common extends Page {
     //Common elements
     get submitButton() { return browser.element("//button[@data-qa='btn:submit']//span"); }
     get iAmSureButton() { return browser.element("//button[@data-qa='btn:submit']//span[contains(text(),'sure')]") }
+    get invalidPage() { return browser.element("//section[@data-qa='page:404']") }
+    get linkOnInvalidpage() { return browser.element("//section[@data-qa='page:404']//a") }
 
     //Passive Notifications
     get successMsg() { return browser.element("//div[@data-qa='notification:success']") }
@@ -19,8 +21,6 @@ class common extends Page {
     get confirmInput() { return browser.element("//form[@data-qa='modal:delete']//input[@data-qa='input:confirm']") }
     get cancelButton() { return browser.element("//button[@data-qa='btn:cancel']") }
     get confirmButton() { return browser.element("//form[@data-qa='modal:delete']//button[@data-qa='btn:submit']"); }
-
-
 }
 
 export default new common();
