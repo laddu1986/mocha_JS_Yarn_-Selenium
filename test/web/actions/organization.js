@@ -1,10 +1,9 @@
 import * as lib from '../../common';
 import HomePage from 'web/page_objects/homePage'
 import NavBar from 'web/page_objects/navBar'
-import SignInPage from 'web/page_objects/signInPage'
 import SettingsPage from 'web/page_objects/settingsPage'
-import CommonPage from 'web/page_objects/common'
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
+import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'web/actions/common'
 
 export function createOrg(orgname) {
   NavBar.profileMenu.click();
@@ -17,13 +16,6 @@ export function createOrg(orgname) {
 export function verifyNoOrgPage() {
   if (HomePage.createOrgButton.isVisible() == HomePage.removeAccountButton.isVisible() == true)
     return true;
-}
-
-export function deleteAccount() {
-  HomePage.removeAccountButton.waitForVisible();
-  HomePage.removeAccountButton.click();
-  CommonPage.submitButton.click();
-  SignInPage.emailInput.waitForVisible();
 }
 
 export function goToCreateOrgPageFromNavbar() {
@@ -55,9 +47,9 @@ export function gotoOrgSettings() {
 }
 
 export function deleteOrganization() {
-  browser.pause(500);
-  SettingsPage.leaveOrgButton.click();
-  CommonPage.submitButton.click();
+  clickDeleteOrgButton()
+  typeDeleteToConfirm()
+  confirmDelete()
 }
 
 export function clickCreateOrgFromNoOrgPage() {
@@ -96,4 +88,13 @@ export function goBackToOrgDashboard() {
 export function verifyOrgCardStack() {
   HomePage.orgCards.waitForVisible();
   return HomePage.orgCards.value[0].getText();
+}
+
+export function clickDeleteOrgButton() {
+  browser.pause(500);
+  SettingsPage.leaveOrgButton.click();
+}
+
+export function cancelDeleteOrg() {
+  return cancelDelete(SettingsPage.leaveOrgButton)
 }
