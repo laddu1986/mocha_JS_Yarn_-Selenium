@@ -4,7 +4,7 @@ import SignInPage from 'web/page_objects/signInPage';
 import { getNotificationMessageText, closePassiveNotification } from 'web/actions/common';
 import { createNewOrg, createOrg, selectOrg, verifyChooseOrgspage, verifyOrgIsCreated, deleteOrganization, gotoOrgSettings, verifyNoOrgPage, clickCreateOrgFromNoOrgPage, clickDeleteOrgButton } from 'web/actions/organization';
 import orgNotificationData from 'web/data/passiveNotification.json';
-import { signIn, signOut, typeDeleteToConfirm, confirmButtonIsEnabled, confirmDelete } from 'web/actions/common';
+import { signIn, signOut, } from 'web/actions/common';
 var accountDetails, orgName = `${lib.randomString.generate(10)}_Org1`, newOrgName = `${lib.randomString.generate(10)}_Org2`;
 
 describe('Delete organization Tests', () => {
