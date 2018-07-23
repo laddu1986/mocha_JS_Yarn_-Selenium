@@ -2,7 +2,7 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
 import { signOut, signIn } from 'web/actions/common';
-import { verifyOrgNameOnDashBoard, goToCreateOrgPageFromNavbar, verifyCreateOrgPage, createNewOrg, verifyOrgIsCreated } from 'web/actions/organization';
+import { verifyOrgNameOnDashBoard, goToCreateOrgPageFromNavbar, verifyCreateOrgPage, createNewOrg, verifyWecomeOrgPage } from 'web/actions/organization';
 import { getnavOrgCount } from 'web/actions/navBar';
 import SignInPage from 'web/page_objects/signInPage';
 var orgName = lib.randomString.generate(10), accountDetails;
@@ -20,7 +20,7 @@ describe(`Tests for Create Organization ${lib.Tags.smokeTest}`, () => {
 
   it('Create new organization', () => {
     createNewOrg(orgName);
-    expect(verifyOrgIsCreated()).to.equal(true);
+    expect(verifyWecomeOrgPage()).to.equal(true);
     expect(browser.getUrl()).to.include(orgName.toLowerCase());
   });
 
