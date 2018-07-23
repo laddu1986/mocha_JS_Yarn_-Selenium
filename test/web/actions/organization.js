@@ -33,7 +33,7 @@ export function createNewOrg(orgName) {
   HomePage.createOrgButton.waitForEnabled();
   HomePage.createOrgButton.click();
 }
-export function verifyOrgIsCreated() {
+export function verifyWecomeOrgPage() {
   return OrgDashboardPage.welcomeMsg.isVisible();
 }
 
