@@ -11,6 +11,8 @@ class common extends Page {
     get invalidInvitationMsg() { return browser.element("//h1") }
     get expiredInvitationMsg() { return browser.element("//*[contains(text(),'expired')]") }
     get iAmSureButton() { return browser.element("//button[@data-qa='btn:submit']//span[contains(text(),'sure')]") }
+    get invalidPage() { return browser.element("//section[@data-qa='page:404']") }
+    get linkOnInvalidpage() { return browser.element("//section[@data-qa='page:404']//a") }
 }
 
 export default new common();
