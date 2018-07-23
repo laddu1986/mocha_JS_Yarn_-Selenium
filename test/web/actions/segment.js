@@ -82,16 +82,16 @@ export function updateSegment(type, value) {
     }
 }
 
-export function deleteSegment(flag) {
-    if (flag === undefined) {
-        clickDeleteSegButton()
-        typeDeleteToConfirm()
-        confirmDelete()
-    } else {
-        return cancelDelete(Common.submitButton)
-    }
+export function deleteSegment() {
+    clickDeleteSegButton()
+    typeDeleteToConfirm()
+    confirmDelete()
 }
 
 export function clickDeleteSegButton() {
     Common.submitButton.click();
+}
+
+export function cancelDeleteSegment() {
+    return cancelDelete(Common.submitButton)
 }

@@ -46,14 +46,10 @@ export function gotoOrgSettings() {
   NavBar.orgSettingsAnchor.click()
 }
 
-export function deleteOrganization(flag) {
-  if (flag === undefined) {
-    clickDeleteOrgButton()
-    typeDeleteToConfirm()
-    confirmDelete()
-  } else {
-    return cancelDelete(SettingsPage.leaveOrgButton)
-  }
+export function deleteOrganization() {
+  clickDeleteOrgButton()
+  typeDeleteToConfirm()
+  confirmDelete()
 }
 
 export function clickCreateOrgFromNoOrgPage() {
@@ -97,4 +93,8 @@ export function verifyOrgCardStack() {
 export function clickDeleteOrgButton() {
   browser.pause(500);
   SettingsPage.leaveOrgButton.click();
+}
+
+export function cancelDeleteOrg() {
+  return cancelDelete(SettingsPage.leaveOrgButton)
 }

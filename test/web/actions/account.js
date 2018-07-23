@@ -63,32 +63,17 @@ export function createAccountToJoinInvitedOrg() {
   OrgDashboardPage.currentOrgName.waitForVisible();
 }
 
-
-// export function deleteAccount(flag) {
-//   if (flag == false) {
-//     HomePage.removeAccountButton.waitForVisible();
-//     HomePage.removeAccountButton.click();
-//     cancelDelete()
-//   } else {
-//     HomePage.removeAccountButton.waitForVisible();
-//     HomePage.removeAccountButton.click();
-//     confirmDelete()
-//     SignInPage.emailInput.waitForVisible();
-//   }
-// }
-
-
-export function deleteAccount(flag) {
-  if (flag === undefined) {
-    clickDeleteAccButton()
-    typeDeleteToConfirm()
-    confirmDelete()
-  } else {
-    return cancelDelete(HomePage.removeAccountButton)
-  }
+export function deleteAccount() {
+  clickDeleteAccButton()
+  typeDeleteToConfirm()
+  confirmDelete()
 }
 
 export function clickDeleteAccButton() {
   HomePage.removeAccountButton.waitForVisible();
   HomePage.removeAccountButton.click();
+}
+
+export function cancelDeleteAccount() {
+  return cancelDelete(HomePage.removeAccountButton)
 }

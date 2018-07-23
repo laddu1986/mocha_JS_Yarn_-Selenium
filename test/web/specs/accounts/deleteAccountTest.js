@@ -12,7 +12,7 @@ import SignInPage from 'web/page_objects/signInPage';
 import { createAccount } from 'web/actions/account';
 import { deleteOrganization, gotoOrgSettings } from 'web/actions/organization';
 import { verifyIncorrectSignIn, signIn, signInPageIsVisible } from 'web/actions/login';
-import { verifyOrgDashboardPageAppears, deleteAccount, clickDeleteAccButton } from 'web/actions/account';
+import { verifyOrgDashboardPageAppears, deleteAccount, clickDeleteAccButton, cancelDeleteAccount } from 'web/actions/account';
 import { confirmButtonIsEnabled, confirmDelete, typeDeleteToConfirm } from 'web/actions/common'
 var accountDetails;
 
@@ -26,7 +26,7 @@ describe('Delete Account Test (Remove my Account)', () => {
 
   it('Remove account --> verify Cancel action on Delete modal', () => {
     clickDeleteAccButton()
-    expect(deleteAccount(false)).to.equal(true)
+    expect(cancelDeleteAccount()).to.equal(true)
   });
 
   it('Remove account --> Sign In page appears', () => {

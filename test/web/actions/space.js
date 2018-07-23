@@ -131,16 +131,16 @@ export function verifySpaceCard() {
   return OrgDashboardPage.spaceCards.isVisible();
 }
 
-export function deleteSpace(flag) {
-  if (flag === undefined) {
-    clickDeleteSpaceButton()
-    typeDeleteToConfirm()
-    confirmDelete()
-  } else {
-    return cancelDelete(SpaceSettingsPage.deleteSpaceButton)
-  }
+export function deleteSpace() {
+  clickDeleteSpaceButton()
+  typeDeleteToConfirm()
+  confirmDelete()
 }
 
 export function clickDeleteSpaceButton() {
   SpaceSettingsPage.deleteSpaceButton.click();
+}
+
+export function cancelDeleteSpace() {
+  return cancelDelete(SpaceSettingsPage.deleteSpaceButton)
 }
