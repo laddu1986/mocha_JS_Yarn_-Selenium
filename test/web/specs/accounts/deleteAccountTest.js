@@ -8,11 +8,12 @@ Attempt to sign in should fail for deleted account
 */
 
 import * as lib from '../../../common';
-import { createAccount } from 'web/actions/account';
 import SignInPage from 'web/page_objects/signInPage';
+import { createAccount } from 'web/actions/account';
 import { deleteOrganization, gotoOrgSettings } from 'web/actions/organization';
-import { verifyIncorrectSignIn, signIn } from 'web/actions/login';
-import { verifyOrgDashboardPageAppears, deleteAccount } from 'web/actions/account';
+import { verifyIncorrectSignIn, signIn, signInPageIsVisible } from 'web/actions/login';
+import { verifyOrgDashboardPageAppears, deleteAccount, clickDeleteAccButton } from 'web/actions/account';
+import { confirmButtonIsEnabled, confirmDelete, typeDeleteToConfirm } from 'web/actions/common'
 var accountDetails;
 
 describe('Delete Account Test (Remove my Account)', () => {
@@ -23,9 +24,18 @@ describe('Delete Account Test (Remove my Account)', () => {
     deleteOrganization();
   });
 
-  it(`\nRemove account --> Sign In page appears\n`, () => {
-    deleteAccount(false);
-    deleteAccount();
+  it('Remove account --> verify Cancel action on Delete modal', () => {
+    clickDeleteAccButton()
+    expect(deleteAccount(false)).to.equal(true)
+  });
+
+  it('Remove account --> Sign In page appears', () => {
+    clickDeleteAccButton();
+    expect(confirmButtonIsEnabled()).to.equal(false)
+    typeDeleteToConfirm();
+    expect(confirmButtonIsEnabled()).to.equal(true)
+    confirmDelete()
+    expect(signInPageIsVisible()).to.equal(true)
     expect(browser.getUrl()).to.equal(`${process.env.WEB_DEV}/sign-in`);
   });
 
