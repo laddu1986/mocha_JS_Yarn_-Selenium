@@ -121,7 +121,6 @@ exports.config = {
   bail: 2,
   coloredLogs: true,
   // screenshotPath: './errScreens',
-  //baseUrl: 'https://my.appcurator.com/',
   waitforTimeout: debug ? 9999999 : timeoutPeriod,
   maxInstances: debug ? 1 : 10,
 

@@ -5,7 +5,7 @@ import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
 import CommonPage from 'web/page_objects/common'
 import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'web/actions/common'
 
-var name, email, organization, password, accountData = { name, email, organization, password };
+var name, email, organization, password, invcode, accountData = { name, email, invcode, organization, password, invcode };
 
 export function createAccount(email) {
   clickCreateAccountLink();
@@ -27,7 +27,8 @@ export function verifyAccountPageAppears() {
 export function inputDetails(email) {
   accountData.name = lib.randomString.generate(8);
   accountData.organization = `${lib.randomString.generate(10)}_Org`;
-  accountData.password = 'Pass1234';
+  accountData.password = process.env.ACCOUNT_PASS;
+  accountData.invcode = process.env.INV_CODE;
   AccountPage.nameInput.setValue(accountData.name);
   if (email != undefined) {
     AccountPage.emailInput.setValue(email);
@@ -38,6 +39,7 @@ export function inputDetails(email) {
   }
   AccountPage.organizationInput.setValue(accountData.organization);
   AccountPage.passwordInput.setValue(accountData.password);
+  AccountPage.codeInput.setValue(accountData.invcode);
 }
 
 export function submit() {

@@ -6,7 +6,7 @@ function postIdentity(responseData, flag) {
     data: {
       fullname: lib.randomString.generate(12),
       email: `${lib.randomString.generate(12)}@test.co`,
-      password: 'Pass1234'
+      password: process.env.ACCOUNT_PASS
     }
   };
   if (flag) {
