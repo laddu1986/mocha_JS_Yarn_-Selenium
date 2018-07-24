@@ -14,23 +14,11 @@ const testData = [{
   it: 'Adding proper details',
   expected: true
 }
-//  {
-//   data: {
-//     fields: {
-//       name: `${lib.randomString.generate(10)}`,
-//       email: `${lib.randomString.generate(10)}@test.co`,
-//       password: 'Pass1234',
-//       organizationName: `${lib.randomString.generate(10)}`,
-//     },
-//   },
-//   it: 'Adding wrong details data',
-//   expected: false,
-// },
+  
 ];
 function register(data) {
   it(`${data.it} registerAndCreateOrg`, (done) => {
     mutation.registerAndCreateOrg(done, data, responseData);
-    console.log(JSON.stringify(responseData[0])+"::::::::::::::::::::::");
     expect(responseData[0]).to.have.status(200);
   });
 }
@@ -40,11 +28,9 @@ function login(data) {
   });
 }
 function createOrganization(data) {
-  // setTimeout((done) => {
   it('create organization', (done) => {
     mutation.createOrganization(done, data, responseData);
   });
-  // }, 2);
 
 }
 function updateOrganization(data) {
@@ -63,4 +49,3 @@ describe('Mutation organization', () => {
   testData.map(data => createOrganization(data));
   testData.map(data => updateOrganization(data));
 });
-
