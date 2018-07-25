@@ -18,7 +18,7 @@ describe(`Sign In/Out Test ${lib.Tags.smokeTest}`, () => {
 
   it('Sign In with correct credentials --> successful', () => {
     clearPlaceholder();
-    signIn('testaccount@donotdeleteplease.com', 'Pass1234');
+    signIn('testaccount@donotdeleteplease.com', process.env.ACCOUNT_PASS);
     expect(verifySignIn()).to.equal(true);
   });
 
