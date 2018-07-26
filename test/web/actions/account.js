@@ -61,6 +61,7 @@ export function joinOrgText() {
 export function createAccountToJoinInvitedOrg() {
   AccountPage.nameInput.setValue(`newUser_${accountData.name}`)
   AccountPage.passwordInput.setValue(accountData.password)
+  AccountPage.codeInput.setValue(accountData.invcode);
   CommonPage.submitButton.click()
   OrgDashboardPage.currentOrgName.waitForVisible();
 }
