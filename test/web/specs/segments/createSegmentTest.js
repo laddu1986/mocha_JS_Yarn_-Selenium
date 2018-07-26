@@ -3,7 +3,8 @@ import SignInPage from 'web/page_objects/signInPage'
 import { createAccount } from 'web/actions/account';
 import { createSpace } from 'web/actions/space';
 import * as Constants from 'data/constants.json';
-import { verifyAllSegmentsPage, verifySegmentCardColour, selectColour, verifyTagAndTitleOnCard, inputSegmentDetails, clickCreateSegmentLink, verifySegment, clickCreateSegmentButton, clickOnAudienceLink, verifySegmentDetailpage } from 'web/actions/segment';
+import { clickOnAudienceLink } from 'web/actions/navBar';
+import { verifyAllSegmentsPage, verifySegmentCardColour, selectColour, verifyTagAndTitleOnCard, inputSegmentDetails, clickCreateSegmentLink, verifySegment, clickCreateSegmentButton, verifySegmentDetailpage } from 'web/actions/segment';
 var title, tagline;
 
 describe('Create Segment Tests', () => {

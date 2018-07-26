@@ -13,6 +13,7 @@ class NavBar extends Page {
   get spaceDashboard() { return browser.element("//a[@data-qa='nav:dashboard']"); }
   get audienceLink() { return browser.element("//a[@data-qa='nav:audience']"); }
   get spaceSettings() { return browser.element("//a[@data-qa='nav:settings']"); }
+  get backToSpaceDashboardLink() { return browser.element("//a[@data-qa='link:space-ctx']"); }
 
   // Help
   get helpMenuNav() { return browser.element("//*[@data-qa='md:help']"); }
