@@ -1,15 +1,10 @@
 import * as lib from '../../common';
-import NavBar from 'web/page_objects/navBar';
 import Common from 'web/page_objects/common';
 import SegmentPage from 'web/page_objects/segmentPage';
 import * as Constants from 'data/constants.json';
-var colorIndex, selectedColourValue, actualValue;;
+var colorIndex, selectedColourValue, actualValue;
+import { clickOnAudienceLink } from 'web/actions/navBar';
 import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'web/actions/common'
-
-
-export function clickOnAudienceLink() {
-    NavBar.audienceLink.click();
-}
 
 export function clickCreateSegmentButton() {
     SegmentPage.createSegmentButton.click();
