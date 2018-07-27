@@ -1,5 +1,6 @@
 import * as lib from '../../common';
 import UsersPage from 'web/page_objects/usersPage';
+import Constants from 'data/constants.json'
 var flag, finalFlag = [], i = 0, j = 0;
 export function clickOnUsersTab() {
     UsersPage.usersTab.click();
@@ -34,11 +35,22 @@ export function clickFirstRow() {
     UsersPage.userRows.value[0].click();
 }
 
-export function verifySideBar() {
-    browser.pause(1000);
-    if (UsersPage.userIDSideBar.getText() == UsersPage.userUIDRow.value[0].getText() && UsersPage.userEmailSideBar.getText() == UsersPage.userEmailRow.value[0].getText() && UsersPage.userNameSideBar.getText() == UsersPage.userNameRow.value[0].getText()) {
-        return true;
+export function verifySideBar(userType) {
+    var ID;
+    if (userType == Constants.UserType.User) {
+        ID = UsersPage.userUIDRow.value[0].getText();
+    }
+    else {
+        ID = lib.responseData.visitors[0].vid;
+    }
+    if (UsersPage.userIDSideBar.getText() == ID && UsersPage.userNameSideBar.getText() == UsersPage.userNameRow.value[0].getText()) {
+        if (userType == Constants.UserType.User) {
+            return (UsersPage.userEmailSideBar.getText() == UsersPage.userEmailRow.value[0].getText());
+        } else {
+            return true;
+        }
     } else {
         return false;
     }
+
 }
