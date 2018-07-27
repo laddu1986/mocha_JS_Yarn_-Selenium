@@ -23,3 +23,7 @@ export function backToSpaceDashboard() {
 export function clickOnAudienceLink() {
     NavBar.audienceLink.click();
 }
+
+export function clickOnSpaceDashboardLink() {
+    NavBar.spaceDashboard.click();
+}

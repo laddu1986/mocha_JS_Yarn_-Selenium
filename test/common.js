@@ -23,7 +23,8 @@ const responseData = {
   negSpaceKey: [],
   spaceSlug: [],
   orgSlug: [],
-  users: []
+  users: [],
+  visitors: []
 };
 
 const testData = {
