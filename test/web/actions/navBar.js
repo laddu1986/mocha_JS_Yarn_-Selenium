@@ -15,3 +15,11 @@ export function verifySignOut() {
 export function getnavOrgCount() {
     return NavBar.navOrgs.value.length - 1;
 }
+
+export function backToSpaceDashboard() {
+    return NavBar.backToSpaceDashboardLink.click();
+}
+
+export function clickOnAudienceLink() {
+    NavBar.audienceLink.click();
+}
