@@ -35,14 +35,11 @@ The reports will by default be saved in : .test/api/Reports and .test/web/Report
 
 
 #### Installation
-`master` always contains the latest stable code from all three layers
+`master` always contains the latest stable code
 
 `
 git checkout master
 `
-
-update *config.yml* with the URLs that you want to run tests against
-
 
 Install dependencies
 `
@@ -53,23 +50,36 @@ npm install -g yarn
 yarn install
 `
 
+create a `.env` file in the root of this repo and add the values for the keys mentioned in `.env-sample`
+
+
 Run Front End Tests
 
 `
 yarn run web
 `
 
-Run Orca Tests
+The following arguments can be appended to the above to run tests in different combinations of browsers and environments:
 
-`
-yarn run orca
-`
+`--browser:firefox` (default is `chrome`), other accepted values are  `chrome`, `chrome_headless`, `firefox`, `safari`, `ie`
+
+
+
+`--env:dev` (to run the tests in dev environment, default is `qa`), other accepted options are for `--env:` are `qa`, `squad`
+
+
+`--suite <foldername>`  for executing tests from a particular folder instead of the whole suite
+
+For executing web smoke tests only: `yarn run web-smoke-tests`
+
 
 Run API Tests
 
 `
 yarn run api
 `
+
+For executing api smoke tests: `yarn run api-smoke-tests`
 #
 
 ###  Help !
