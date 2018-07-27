@@ -64,7 +64,7 @@ function getBrowser() {
   process.argv.forEach(function (value) { //here we can overwrite variables (ex. --browser:chrome )
     if (/--.+\:/.test(value)) {
       vars = value.split(':');
-      argument.push(vars[1]);
+      if (vars[0] == '--browser') argument.push(vars[1]);
     }
   });
   if (argument.length == 0)
@@ -101,8 +101,8 @@ exports.config = {
   capabilities: [getBrowser()],
   updateJob: false,
   specs: [
-    './test/web/specs/*/*Test.js', //master
-    './test/web/specs/negativeSpecs/*/*Test.js',
+    // './test/web/specs/*/*Test.js', //master
+    './test/web/specs/negativeSpecs/spaces/*Test.js',
   ],
   // Patterns to exclude.
   exclude: [

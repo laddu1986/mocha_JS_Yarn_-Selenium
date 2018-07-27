@@ -33,6 +33,7 @@ describe('Negative cases --> Space Slug', () => {
     });
 
     it('Invalid Space slug path --> redirects to 404 page', () => {
+        console.log('BASE URL :', baseUrl)
         browser.url(`${process.env.WEB_DEV}/${OrgName}/space/abc`);
         expect(get404PageText()).to.include(Messages.space.spaceNotFound);
     });
