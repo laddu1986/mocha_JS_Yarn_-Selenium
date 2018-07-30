@@ -4,7 +4,7 @@ export const noEmail = {
     api: process.env.API_IDENTITIES,
     data: {
         fullname: lib.randomString.generate(12),
-        password: 'Pass1234'
+        password: process.env.ACCOUNT_PASS
     },
     expected: 'Email cannot be empty'
 };
@@ -13,7 +13,7 @@ export const noFullName = {
     api: process.env.API_IDENTITIES,
     data: {
         email: `${lib.randomString.generate(12)}@test.co`,
-        password: 'Pass1234'
+        password: process.env.ACCOUNT_PASS
     },
     expected: 'Full name cannot be empty'
 };
@@ -33,7 +33,7 @@ export const existingEmailData = {
     data: {
         fullname: lib.randomString.generate(12),
         email: emailDefined,
-        password: 'Pass1234'
+        password: process.env.ACCOUNT_PASS
     },
     expected: `Email id ${emailDefined} already registered`
 };

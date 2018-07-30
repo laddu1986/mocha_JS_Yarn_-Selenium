@@ -22,4 +22,3 @@ describe('Test Forgot Password Link', () => {
     expect(emailInputValue()).to.include('forgot@password.com');
   });
 });
-

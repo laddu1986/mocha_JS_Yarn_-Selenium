@@ -8,7 +8,6 @@ import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'web/actions/co
 var name, email, organization, password, invcode, accountData = { name, email, invcode, organization, password, invcode };
 
 export function createAccount(email) {
-  clickCreateAccountLink();
   inputDetails(email);
   submit();
   HomePage.logo.waitForVisible();
@@ -61,6 +60,7 @@ export function joinOrgText() {
 export function createAccountToJoinInvitedOrg() {
   AccountPage.nameInput.setValue(`newUser_${accountData.name}`)
   AccountPage.passwordInput.setValue(accountData.password)
+  AccountPage.codeInput.setValue(accountData.invcode);
   CommonPage.submitButton.click()
   OrgDashboardPage.currentOrgName.waitForVisible();
 }

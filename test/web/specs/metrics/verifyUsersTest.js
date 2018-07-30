@@ -1,5 +1,5 @@
 import * as lib from '../../../common';
-import SignInPage from 'web/page_objects/signInPage'
+import accountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { createSpace, goToAPIKeyPage, defaultAPIKey } from 'web/actions/space';
 import { backToSpaceDashboard, clickOnAudienceLink, clickOnSpaceDashboardLink } from 'web/actions/navBar';
@@ -9,7 +9,7 @@ import { clickOnUsersTab, getRecentUsersRows, verifyUsersDetails, clickFirstRow,
 var apiKey;
 describe('User Metrics Tests', () => {
     before(() => {
-        SignInPage.open();
+        accountPage.open()
         createAccount();
         createSpace();
         goToAPIKeyPage();

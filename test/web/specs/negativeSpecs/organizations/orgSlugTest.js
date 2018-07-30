@@ -2,7 +2,7 @@ import * as lib from '../../../../common';
 import * as identity from 'api/actions/identity.js';
 import * as organization from 'api/actions/organization.js';
 import * as membership from 'api/actions/membership.js';
-import SignInPage from 'web/page_objects/SignInPage.js';
+import SignInPage from 'web/page_objects/signInPage.js';
 import { signIn, get404PageText, clickLinkOn404Page } from 'web/actions/common.js';
 import { selectOrg, verifyChooseOrgspage, verifyWecomeOrgPage, verifyNoOrgPage } from 'web/actions/organization.js';
 import * as Messages from 'web/data/messages.json';
@@ -27,12 +27,12 @@ describe('Negative cases --> Org Slug', () => {
 
     before(() => {
         SignInPage.open();
-        signIn(UserName, 'Pass1234');
+        signIn(UserName, process.env.ACCOUNT_PASS);
         selectOrg();
     });
 
     it('Invalid Org slug path --> redirects to 404 page', () => {
-        browser.url(`${process.env.WEB_DEV}/abc`);
+        browser.url('abc')
         expect(get404PageText()).to.include(Messages.org.orgNotFound);
     });
 
@@ -42,12 +42,12 @@ describe('Negative cases --> Org Slug', () => {
     });
 
     it('Valid path leads to organization dashboard', () => {
-        browser.url(`${process.env.WEB_DEV}/${OrgName}`);
+        browser.url(OrgName);
         expect(verifyWecomeOrgPage()).to.equal(true);
     });
 
     it('Valid Org slug path with Invalid child path --> redirects to 404 page', () => {
-        browser.url(`${process.env.WEB_DEV}/${OrgName}/abc`);
+        browser.url(`${OrgName}/abc`);
         expect(get404PageText()).to.include(`${Messages.org.pageNotFound}${OrgName}`);
     });
 
@@ -59,7 +59,7 @@ describe('Negative cases --> Org Slug', () => {
     it('No Org Association --> "Select an Org" on 404 page redirects to "Create Org" page', () => {
         lib.del(deleteOrgRequest);
         lib.del(deleteMembershipRequest);
-        browser.url(`${process.env.WEB_DEV}/${OrgName}`);
+        browser.url(OrgName);
         clickLinkOn404Page();
         expect(verifyNoOrgPage()).to.equal(true);
     });

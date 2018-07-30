@@ -8,17 +8,17 @@ Attempt to sign in should fail for deleted account
 */
 
 import * as lib from '../../../common';
-import SignInPage from 'web/page_objects/signInPage';
+import accountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { deleteOrganization, gotoOrgSettings } from 'web/actions/organization';
 import { verifyIncorrectSignIn, signIn, signInPageIsVisible } from 'web/actions/login';
-import { verifyOrgDashboardPageAppears, deleteAccount, clickDeleteAccButton, cancelDeleteAccount } from 'web/actions/account';
+import { verifyOrgDashboardPageAppears, clickCreateAccountLink, clickDeleteAccButton, cancelDeleteAccount } from 'web/actions/account';
 import { confirmButtonIsEnabled, confirmDelete, typeDeleteToConfirm } from 'web/actions/common'
 var accountDetails;
 
 describe('Delete Account Test (Remove my Account)', () => {
   before('Create account and delete organisation', () => {
-    SignInPage.open();
+    accountPage.open()
     accountDetails = createAccount();
     gotoOrgSettings();
     deleteOrganization();
@@ -40,11 +40,12 @@ describe('Delete Account Test (Remove my Account)', () => {
   });
 
   it('Login with same credentials --> Incorrect Details Error', () => {
-    signIn(accountDetails.email, 'Pass1234');
+    signIn(accountDetails.email, process.env.ACCOUNT_PASS);
     expect(verifyIncorrectSignIn()).to.include('incorrect');
   });
 
   it('Re-registeration with same email is allowed', () => {
+    clickCreateAccountLink();
     createAccount(accountDetails.email);
     expect(verifyOrgDashboardPageAppears()).to.equal(true);
   });

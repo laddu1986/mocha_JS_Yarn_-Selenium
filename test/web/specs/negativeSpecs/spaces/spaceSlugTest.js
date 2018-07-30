@@ -27,13 +27,13 @@ describe('Negative cases --> Space Slug', () => {
 
     before(() => {
         SignInPage.open();
-        signIn(UserName, 'Pass1234');
+        signIn(UserName, process.env.ACCOUNT_PASS);
         selectOrg();
         selectSpace();
     });
 
     it('Invalid Space slug path --> redirects to 404 page', () => {
-        browser.url(`${process.env.WEB_DEV}/${OrgName}/space/abc`);
+        browser.url(`${OrgName}/space/abc`);
         expect(get404PageText()).to.include(Messages.space.spaceNotFound);
     });
 
@@ -44,7 +44,7 @@ describe('Negative cases --> Space Slug', () => {
 
     it('Valid Space slug path with invalid child path --> redirects to 404 page', () => {
         selectSpace();
-        browser.url(`${process.env.WEB_DEV}/${OrgName}/space/${SpaceSlug}/abc`);
+        browser.url(`${OrgName}/space/${SpaceSlug}/abc`);
         expect(get404PageText()).to.include(Messages.space.pageNotFound);
     });
 
