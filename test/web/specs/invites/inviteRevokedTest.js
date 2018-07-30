@@ -2,9 +2,9 @@ import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
 import { invalidInvitationText, goToTeammatesPage, inviteTeammate, invitationLink, revokeInvite, goToInactiveTab } from 'web/actions/invite';
 import { getNotificationMessageText, signOut } from 'web/actions/common'
-import passiveNotification from '../../data/passiveNotification.json'
-import messagesData from '../../data/messages.json'
-import accountPage from '../../page_objects/accountPage';
+import passiveNotification from 'web/data/passiveNotification.json'
+import messagesData from 'web/data/messages.json'
+import accountPage from 'web/page_objects/accountPage';
 let newMember;
 let invitationURL;
 

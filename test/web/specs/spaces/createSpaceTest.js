@@ -1,7 +1,7 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
 import { verifySpaceOrder, verifyCreateFirstSpacePage, createSpace, verifySpacePage, goBackToOrgDashboard, clickCreateNewSpaceButton, } from 'web/actions/space';
-import accountPage from '../../page_objects/accountPage';
+import accountPage from 'web/page_objects/accountPage';
 import { signIn, signOut } from 'web/actions/common';
 var accountDetail, spaceName1, spaceName = [];
 

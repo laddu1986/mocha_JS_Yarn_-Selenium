@@ -1,6 +1,6 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
-import accountPage from '../../page_objects/accountPage';
+import accountPage from 'web/page_objects/accountPage';
 import { getNotificationMessageText, closePassiveNotification, confirmButtonIsEnabled, typeDeleteToConfirm, confirmDelete } from 'web/actions/common';
 import { createNewOrg, createOrg, selectOrg, verifyChooseOrgspage, verifyWecomeOrgPage, deleteOrganization, gotoOrgSettings, verifyNoOrgPage, clickCreateOrgFromNoOrgPage, clickDeleteOrgButton, cancelDeleteOrg } from 'web/actions/organization';
 import orgNotificationData from 'web/data/passiveNotification.json';
