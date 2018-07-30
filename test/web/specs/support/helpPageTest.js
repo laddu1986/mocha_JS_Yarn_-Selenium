@@ -8,7 +8,7 @@ let signInSuccess;
 
 function signIn() {
   setValue(SignInPage.emailInput, 'testaccount@donotdeleteplease.com');
-  setValue(SignInPage.passwordInput, 'Pass1234');
+  setValue(SignInPage.passwordInput, process.env.ACCOUNT_PASS);
   click(CommonPage.submitButton);
   waitForVisible(HomePage.logo);
   signInSuccess = HomePage.logo.isVisible();

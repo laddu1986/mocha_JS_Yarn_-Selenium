@@ -10,7 +10,7 @@ export function getAccessToken(responseData) {
       'Authorization': 'Basic ZnJvbnRlbmRfc2VydmljZTpydHk4YTk4eGNmIXdk'
     },
     data: "",
-    body: `grant_type=password&username=${responseData[0].email}&password=Pass1234&scope=backend_service&client_id=frontend_service`
+    body: `grant_type=password&username=${responseData[0].email}&password=${process.env.ACCOUNT_PASS}&scope=backend_service&client_id=frontend_service`
 
   }
   return lib.post(any).then((response) => {

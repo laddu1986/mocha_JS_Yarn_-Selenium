@@ -58,47 +58,64 @@ var browsers = {
     }
   }
 }
-var argument = [];
-function getBrowser() {
-  var vars, flag = false;
+
+var getArgs = function () {
+  var vars, browserArg, envArg;
+
   process.argv.forEach(function (value) { //here we can overwrite variables (ex. --browser:chrome )
     if (/--.+\:/.test(value)) {
       vars = value.split(':');
-      argument.push(vars[1]);
+      if (vars[0] == '--browser') browserArg = vars[1];
+      if (vars[0] == '--env') envArg = vars[1];
     }
   });
-  if (argument.length == 0)
-    return browsers.chrome;
+
+  if (browserArg == '' || browserArg === undefined)
+    browser = browsers.chrome;
   else {
-    for (var i = 0; i < argument.length; i++) {
-      if (argument[i] == "firefox") {
-        flag = true;
-        return browsers.firefox;
-      }
-      else if (argument[i] == "chrome_headless") {
-        flag = true;
-        return browsers.chrome_headless;
-      }
-      else if (argument[i] == "safari") {
-        flag = true;
-        return browsers.safari;
-      }
-      else if (argument[i] == "ie") {
-        flag = true;
-        return browsers.ie;
-      }
-    }
-    if (flag == false) {
-      return browsers.chrome;
+    switch (browserArg) {
+      case 'firefox': case 'ff':
+        browser = browsers.firefox;
+        break;
+      case 'chrome_headless': case 'ch': case 'headless_chrome':
+        browser = browsers.chrome_headless;
+        break;
+      case 'safari': case 'saf':
+        browser = browsers.safari;
+        break;
+      case 'ie':
+        browser = browsers.ie;
+        break;
+      default:
+        browser = browsers.chrome;
     }
   }
+
+  if (envArg == '' || envArg === undefined)
+    baseURL = process.env.WEB_QA
+  else {
+    switch (envArg) {
+      case 'qa': case 'QA': case 'Qa':
+        baseURL = process.env.WEB_QA
+        break;
+      case 'dev': case 'DEV': case 'Dev':
+        baseURL = process.env.WEB_DEV
+        break;
+      case 'squad': case 'SQUAD': case 'Squad':
+        baseURL = process.env.WEB_SQUAD
+        break;
+      default:
+        baseURL = process.env.WEB_DEV
+    }
+  }
+  return [browser, baseURL]
 }
 
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
   //services: ['devtools'],
   enableNetwork: true,
-  capabilities: [getBrowser()],
+  capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
     './test/web/specs/*/*Test.js', //master
@@ -114,13 +131,14 @@ exports.config = {
     spaces: ['./test/web/specs/spaces/*Test.js'],
     support: ['./test/web/specs/support/*Test.js'],
     invites: ['./test/web/specs/invites/*Test.js'],
-    segments: ['./test/web/specs/segments/*Test.js']
-
+    segments: ['./test/web/specs/segments/*Test.js'],
+    metrics: ['./test/web/specs/metrics/*Test.js']
   },
   logLevel: 'silent',
   bail: 2,
   coloredLogs: true,
   // screenshotPath: './errScreens',
+  baseUrl: getArgs()[1],
   waitforTimeout: debug ? 9999999 : timeoutPeriod,
   maxInstances: debug ? 1 : 10,
 

@@ -1,6 +1,6 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
-import SignInPage from 'web/page_objects/signInPage';
+import accountPage from 'web/page_objects/accountPage';
 import { getNotificationMessageText, closePassiveNotification, confirmButtonIsEnabled, typeDeleteToConfirm, confirmDelete } from 'web/actions/common';
 import { createNewOrg, createOrg, selectOrg, verifyChooseOrgspage, verifyWecomeOrgPage, deleteOrganization, gotoOrgSettings, verifyNoOrgPage, clickCreateOrgFromNoOrgPage, clickDeleteOrgButton, cancelDeleteOrg } from 'web/actions/organization';
 import orgNotificationData from 'web/data/passiveNotification.json';
@@ -9,7 +9,7 @@ var accountDetails, orgName = `${lib.randomString.generate(10)}_Org1`, newOrgNam
 
 describe('Delete organization Tests', () => {
   before(() => {
-    SignInPage.open();
+    accountPage.open()
     accountDetails = createAccount();
     createOrg(orgName);
   });

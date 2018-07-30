@@ -1,5 +1,5 @@
 import * as lib from '../../../common';
-import SignInPage from 'web/page_objects/signInPage'
+import accountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { defaultAPIKey, ifIconsEnabled, revokeButtonAppears, verifyAPIKeyStatus, clickUndoButton, clickRevokeButton, createSpace, goToAPIKeyPage, copyAPIKeyToClipBoard, copiedValue, deleteAPIKey } from 'web/actions/space';
 import { getNotificationMessageText } from 'web/actions/common';
@@ -8,7 +8,7 @@ import constants from 'data/constants.json';
 
 describe('Space API Key Tests', () => {
     before(() => {
-        SignInPage.open();
+        accountPage.open()
         createAccount();
         createSpace();
         goToAPIKeyPage();

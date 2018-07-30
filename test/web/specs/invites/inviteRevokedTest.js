@@ -2,15 +2,15 @@ import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
 import { invalidInvitationText, goToTeammatesPage, inviteTeammate, invitationLink, revokeInvite, goToInactiveTab } from 'web/actions/invite';
 import { getNotificationMessageText, signOut } from 'web/actions/common'
-import passiveNotification from '../../data/passiveNotification.json'
-import messagesData from '../../data/messages.json'
-import SignInPage from 'web/page_objects/signInPage'
+import passiveNotification from 'web/data/passiveNotification.json'
+import messagesData from 'web/data/messages.json'
+import accountPage from 'web/page_objects/accountPage';
 let newMember;
 let invitationURL;
 
 describe('Access a Revoked Invitation (New Account)', () => {
   before(() => {
-    SignInPage.open();
+    accountPage.open()
     createAccount()
     browser.pause(1000)
     newMember = `newmember_${lib.randomString.generate(5)}@test.co`;
