@@ -1,5 +1,5 @@
 import * as lib from '../../../common';
-import SignInPage from 'web/page_objects/signInPage';
+import accountPage from '../../page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { createSpace } from 'web/actions/space';
 import { clickOnAudienceLink } from 'web/actions/navBar';
@@ -11,7 +11,7 @@ var name = lib.randomString.generate(5), tagline = lib.randomString.generate(9),
 
 describe('Segment Actions Tests', () => {
     before(() => {
-        SignInPage.open();
+        accountPage.open()
         createAccount();
         createSpace();
         createSegment(name, tagline);

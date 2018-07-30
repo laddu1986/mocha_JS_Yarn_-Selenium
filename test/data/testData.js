@@ -54,7 +54,7 @@ const createAccountData = [
       name: lib.randomString.generate(10),
       email: (lib.randomString.generate(15) + `@test.co`),
       organization: lib.randomString.generate(14),
-      password: 'Pass1234',
+      password: process.env.ACCOUNT_PASS,
       title: 'Adding all valid details',
       expected: true,
     },
