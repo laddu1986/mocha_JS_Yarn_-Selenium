@@ -92,7 +92,7 @@ var getArgs = function () {
   }
 
   if (envArg == '' || envArg === undefined)
-    baseURL = process.env.WEB_QA
+    baseURL = process.env.WEB_DEV
   else {
     switch (envArg) {
       case 'qa': case 'QA': case 'Qa':
