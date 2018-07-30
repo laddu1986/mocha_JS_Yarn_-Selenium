@@ -4,7 +4,7 @@ import { createAccount } from 'web/actions/account';
 import { signOut, signIn } from 'web/actions/common';
 import { verifyOrgNameOnDashBoard, goToCreateOrgPageFromNavbar, verifyCreateOrgPage, createNewOrg, verifyWecomeOrgPage } from 'web/actions/organization';
 import { getnavOrgCount } from 'web/actions/navBar';
-import accountPage from '../../page_objects/accountPage';
+import accountPage from 'web/page_objects/accountPage';
 var orgName = lib.randomString.generate(10), accountDetails;
 
 describe(`Tests for Create Organization ${lib.Tags.smokeTest}`, () => {

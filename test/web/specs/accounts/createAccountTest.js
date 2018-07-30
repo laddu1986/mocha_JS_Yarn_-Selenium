@@ -1,13 +1,13 @@
 import * as lib from '../../../common';
-import SignInPage from 'web/page_objects/signInPage';
 import { clickCreateAccountLink, verifyAccountPageAppears, inputDetails, submit, verifyOrgDashboardPageAppears } from 'web/actions/account';
+import signInPage from 'web/page_objects/signInPage';
 
 describe(`Tests for Create Account ${lib.Tags.smokeTest}`, () => {
   before('Open create account page', () => {
-    SignInPage.open();
+    signInPage.open()
   });
 
-  it(`\nClick create account link \n`, () => {
+  it('Click create account link', () => {
     clickCreateAccountLink();
     expect(verifyAccountPageAppears()).to.equal(true);
   });

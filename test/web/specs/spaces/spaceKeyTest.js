@@ -1,5 +1,5 @@
 import * as lib from '../../../common';
-import accountPage from '../../page_objects/accountPage';
+import accountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { defaultAPIKey, ifIconsEnabled, revokeButtonAppears, verifyAPIKeyStatus, clickUndoButton, clickRevokeButton, createSpace, goToAPIKeyPage, copyAPIKeyToClipBoard, copiedValue, deleteAPIKey } from 'web/actions/space';
 import { getNotificationMessageText } from 'web/actions/common';

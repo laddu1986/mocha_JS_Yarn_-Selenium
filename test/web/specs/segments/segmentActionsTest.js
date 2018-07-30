@@ -1,5 +1,5 @@
 import * as lib from '../../../common';
-import accountPage from '../../page_objects/accountPage';
+import accountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { createSpace } from 'web/actions/space';
 import { clickOnAudienceLink } from 'web/actions/navBar';

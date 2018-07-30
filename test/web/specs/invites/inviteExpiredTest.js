@@ -11,10 +11,10 @@ import { submitButtonVisible } from 'web/actions/login';
 import { inviteStatus } from 'web/actions/invite';
 import { expiredInvitationText, goToTeammatesPage, inviteTeammate, invitationLink, updateTokenExpiryDateInDB, goToInactiveTab, resendInvite, } from 'web/actions/invite';
 import { getNotificationMessageText, signOut, signIn } from 'web/actions/common'
-import accountPage from '../../page_objects/accountPage';
-import SignInPage from '../../page_objects/signInPage'
-import message from '../../data/messages.json'
-import passiveNotification from '../../data/passiveNotification.json'
+import accountPage from 'web/page_objects/accountPage';
+import SignInPage from 'web/page_objects/signInPage'
+import message from 'web/data/messages.json'
+import passiveNotification from 'web/data/passiveNotification.json'
 import constants from 'data/constants.json';
 
 let newUser, invitationURL, accountData;

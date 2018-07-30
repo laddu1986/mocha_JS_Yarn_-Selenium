@@ -8,7 +8,7 @@ Attempt to sign in should fail for deleted account
 */
 
 import * as lib from '../../../common';
-import accountPage from '../../page_objects/accountPage';
+import accountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { deleteOrganization, gotoOrgSettings } from 'web/actions/organization';
 import { verifyIncorrectSignIn, signIn, signInPageIsVisible } from 'web/actions/login';

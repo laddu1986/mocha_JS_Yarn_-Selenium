@@ -1,5 +1,5 @@
 import * as lib from '../../../common';
-import accountPage from '../../page_objects/accountPage';
+import accountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { createSpace, goToAPIKeyPage, defaultAPIKey } from 'web/actions/space';
 import { backToSpaceDashboard, clickOnAudienceLink, clickOnSpaceDashboardLink } from 'web/actions/navBar';

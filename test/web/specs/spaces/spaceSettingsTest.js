@@ -1,5 +1,5 @@
 import * as lib from '../../../common';
-import accountPage from '../../page_objects/accountPage';
+import accountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { spaceIsDeleted, verifyCreateFirstSpacePage, selectSpace, verifyNewSpaceUrl, verifyNewSpaceName, goToSpaceSettings, createSpace, changeSpace, clickDeleteSpaceButton, cancelDeleteSpace } from 'web/actions/space';
 import { getNotificationMessageText, closePassiveNotification, typeDeleteToConfirm, confirmButtonIsEnabled, confirmDelete } from 'web/actions/common';

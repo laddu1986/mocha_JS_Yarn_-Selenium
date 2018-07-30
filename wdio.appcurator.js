@@ -105,7 +105,7 @@ var getArgs = function () {
         baseURL = process.env.WEB_SQUAD
         break;
       default:
-        baseURL = process.env.WEB_QA
+        baseURL = process.env.WEB_DEV
     }
   }
   return [browser, baseURL]

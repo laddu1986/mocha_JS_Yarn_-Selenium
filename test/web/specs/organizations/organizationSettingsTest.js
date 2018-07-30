@@ -1,6 +1,6 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account'
-import accountPage from '../../page_objects/accountPage';
+import accountPage from 'web/page_objects/accountPage';
 import { verifyOrgCardStack, verifyOrgNameOnDashBoard, goBackToOrgDashboard, verifyNewOrgNameInNavbar, updateOrgName, isSaveButtonEnabled, gotoOrgSettings, createOrg } from 'web/actions/organization';
 var org1 = `${lib.randomString.generate(10)}_Org1`,
   org2 = `${lib.randomString.generate(10)}_Org2`,
