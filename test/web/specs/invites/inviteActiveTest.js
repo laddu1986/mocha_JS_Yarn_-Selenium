@@ -12,13 +12,13 @@ import { inviteTeammate, invitationLink } from 'web/actions/invite';
 import { signOut } from 'web/actions/common'
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
 import { submitButtonText } from 'web/actions/login';
-import accountPage from 'web/page_objects/accountPage';
+import AccountPage from 'web/page_objects/accountPage';
 
 let newUser, accountData;
 
 describe(`New User Joins an Organization via ACTIVE invitation`, () => {
   before('Admin Invites Teammate', () => {
-    accountPage.open()
+    AccountPage.open()
     accountData = createAccount()
     browser.pause(1000)
     newUser = `newUser_${lib.randomString.generate(4)}@test.co`;
