@@ -1,13 +1,13 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
 import { verifySpaceOrder, verifyCreateFirstSpacePage, createSpace, verifySpacePage, goBackToOrgDashboard, clickCreateNewSpaceButton, } from 'web/actions/space';
-import SignInPage from 'web/page_objects/signInPage';
+import accountPage from '../../page_objects/accountPage';
 import { signIn, signOut } from 'web/actions/common';
 var accountDetail, spaceName1, spaceName = [];
 
 describe(`Space Tests ${lib.Tags.smokeTest}`, () => {
   before('Open App URL', () => {
-    SignInPage.open();
+    accountPage.open()
     accountDetail = createAccount();
   });
 
@@ -29,13 +29,13 @@ describe(`Space Tests ${lib.Tags.smokeTest}`, () => {
     }
   })
 
-  it(`\nSign out and back in --> Should show last accessed Space`, () => {
+  it('Sign out and back in --> Should show last accessed Space', () => {
     signOut();
     signIn(accountDetail.email, accountDetail.password);
     expect(verifySpacePage(spaceName[1].toLowerCase())).to.equal(true);
   });
 
-  it('\nSorting of Space cards stack', () => {
+  it('Sorting of Space cards stack', () => {
     goBackToOrgDashboard();
     expect(verifySpaceOrder('2')).to.include(spaceName1);
     expect(verifySpaceOrder('1')).to.include(spaceName[0]);
@@ -46,4 +46,3 @@ describe(`Space Tests ${lib.Tags.smokeTest}`, () => {
     signOut();
   })
 })
-

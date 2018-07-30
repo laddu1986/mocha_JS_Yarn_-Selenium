@@ -1,6 +1,6 @@
 import Page from './page';
 
-class AccountPage extends Page {
+export default new class AccountPage extends Page {
   get createAccountLink() { return browser.element("//*[@data-qa='link:register']"); }
 
   // Input Fields
@@ -19,9 +19,7 @@ class AccountPage extends Page {
   //Join Org
   get joinOrgMsg() { return browser.element("//h2") }
 
-  open(e) {
-    super.open(e);
+  open() {
+    super.open('join');
   }
 }
-
-export default new AccountPage();

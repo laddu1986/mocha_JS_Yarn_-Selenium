@@ -1,6 +1,6 @@
 import Page from './page';
 
-class SignInPage extends Page {
+export default new class SignInPage extends Page {
   get emailInput() { return browser.element("//*[@data-qa='input:email']//*[@data-qa='input:text']"); }
   get emailError() { return browser.element("//*[@data-qa='input:email']//*[@data-qa='input:error']"); }
 
@@ -13,9 +13,7 @@ class SignInPage extends Page {
   get emailSentConfirmation() { return browser.element('//h2'); }
   get backToSignIn() { return browser.element("//*[@data-qa='link:sign-in']"); }
 
-  open(e) {
-    super.open(e);
+  open() {
+    super.open('sign-in');
   }
 }
-
-export default new SignInPage();

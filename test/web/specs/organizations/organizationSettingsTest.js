@@ -1,6 +1,6 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account'
-import SignInPage from 'web/page_objects/signInPage';
+import accountPage from '../../page_objects/accountPage';
 import { verifyOrgCardStack, verifyOrgNameOnDashBoard, goBackToOrgDashboard, verifyNewOrgNameInNavbar, updateOrgName, isSaveButtonEnabled, gotoOrgSettings, createOrg } from 'web/actions/organization';
 var org1 = `${lib.randomString.generate(10)}_Org1`,
   org2 = `${lib.randomString.generate(10)}_Org2`,
@@ -8,7 +8,7 @@ var org1 = `${lib.randomString.generate(10)}_Org1`,
 
 describe('Update Organization name', () => {
   before(() => {
-    SignInPage.open();
+    accountPage.open()
     createAccount();
     createOrg(org1);
     createOrg(org2);

@@ -1,7 +1,7 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
 import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInactiveInvite, goToOrganisationDashboard } from "web/actions/invite";
-import SignInPage from 'web/page_objects/signInPage';
+import accountPage from '../../page_objects/accountPage';
 import { signOut } from 'web/actions/common';
 
 const invite_email1 = `invite_1_${lib.randomString.generate(5)}@test.co`;
@@ -11,7 +11,7 @@ const invite_email3 = `invite_3${lib.randomString.generate(5)}@test.co`;
 describe(`Invite Tests \n${lib.Tags.smokeTest}`, () => {
 
   before('Open App URL', () => {
-    SignInPage.open();
+    accountPage.open()
   });
 
   before(() => {

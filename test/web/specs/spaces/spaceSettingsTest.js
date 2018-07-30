@@ -1,5 +1,5 @@
 import * as lib from '../../../common';
-import SignInPage from 'web/page_objects/signInPage'
+import accountPage from '../../page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { spaceIsDeleted, verifyCreateFirstSpacePage, selectSpace, verifyNewSpaceUrl, verifyNewSpaceName, goToSpaceSettings, createSpace, changeSpace, clickDeleteSpaceButton, cancelDeleteSpace } from 'web/actions/space';
 import { getNotificationMessageText, closePassiveNotification, typeDeleteToConfirm, confirmButtonIsEnabled, confirmDelete } from 'web/actions/common';
@@ -10,7 +10,7 @@ var newSpacename, accountData;
 
 describe('Space Settings', () => {
     before(() => {
-        SignInPage.open();
+        accountPage.open()
         accountData = createAccount();
         createSpace();
     });

@@ -1,5 +1,5 @@
 import * as lib from '../../../common';
-import SignInPage from 'web/page_objects/signInPage'
+import accountPage from '../../page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { createSpace, goToAPIKeyPage, defaultAPIKey } from 'web/actions/space';
 import { backToSpaceDashboard, clickOnAudienceLink } from 'web/actions/navBar';
@@ -8,7 +8,7 @@ import { clickOnUsersTab, getRecentUsersRows, verifyUsersDetails, clickFirstRow,
 
 describe('User Metrics Tests', () => {
     before(() => {
-        SignInPage.open();
+        accountPage.open()
         var account = createAccount();
         console.log("*********" + account.email);
         createSpace();

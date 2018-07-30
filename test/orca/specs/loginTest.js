@@ -7,7 +7,7 @@ const testData = [{
     fields: {
       name: `${lib.randomString.generate(10)}`,
       email: `${lib.randomString.generate(10)}@test.co`,
-      password: 'Pass1234',
+      password: process.env.ACCOUNT_PASS,
       organizationName: `${lib.randomString.generate(10)}`
     }
   },

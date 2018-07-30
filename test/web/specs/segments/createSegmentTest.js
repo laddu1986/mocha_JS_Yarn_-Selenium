@@ -1,5 +1,5 @@
 import * as lib from '../../../common';
-import SignInPage from 'web/page_objects/signInPage'
+import accountPage from '../../page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { createSpace } from 'web/actions/space';
 import * as Constants from 'data/constants.json';
@@ -9,7 +9,7 @@ var title, tagline;
 
 describe('Create Segment Tests', () => {
     before(() => {
-        SignInPage.open();
+        accountPage.open()
         createAccount();
         createSpace();
     });

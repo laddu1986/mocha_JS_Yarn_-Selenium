@@ -27,5 +27,3 @@ describe(`Sign In/Out Test ${lib.Tags.smokeTest}`, () => {
     expect(verifySignOut()).to.equal(true);
   });
 });
-
-

@@ -9,17 +9,18 @@ User lands in invited Org after account creation
 import * as lib from '../../../common';
 import { createAccountToJoinInvitedOrg, createAccount } from 'web/actions/account';
 import { inviteTeammate, invitationLink } from 'web/actions/invite';
-import SignInPage from 'web/page_objects/signInPage'
 import { signOut } from 'web/actions/common'
 import AccountPage from '../../page_objects/accountPage';
 import OrgDashboardPage from '../../page_objects/orgDashboardPage';
 import { submitButtonText } from 'web/actions/login';
+import accountPage from '../../page_objects/accountPage';
 
 let newUser, accountData;
 
 describe(`New User Joins an Organization via ACTIVE invitation`, () => {
   before('Admin Invites Teammate', () => {
-    SignInPage.open();
+    // SignInPage.open();
+    accountPage.open()
     accountData = createAccount()
     browser.pause(1000)
     newUser = `newUser_${lib.randomString.generate(4)}@test.co`;

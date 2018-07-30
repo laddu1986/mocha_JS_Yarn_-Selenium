@@ -11,7 +11,8 @@ import { submitButtonVisible } from 'web/actions/login';
 import { inviteStatus } from 'web/actions/invite';
 import { expiredInvitationText, goToTeammatesPage, inviteTeammate, invitationLink, updateTokenExpiryDateInDB, goToInactiveTab, resendInvite, } from 'web/actions/invite';
 import { getNotificationMessageText, signOut, signIn } from 'web/actions/common'
-import SignInPage from 'web/page_objects/signInPage'
+import accountPage from '../../page_objects/accountPage';
+import SignInPage from '../../page_objects/signInPage'
 import message from '../../data/messages.json'
 import passiveNotification from '../../data/passiveNotification.json'
 import constants from 'data/constants.json';
@@ -20,7 +21,7 @@ let newUser, invitationURL, accountData;
 
 describe('New User accesses an Expired Invitation', () => {
   before(() => {
-    SignInPage.open();
+    accountPage.open()
     accountData = createAccount()
     browser.pause(1000)
   });
@@ -51,7 +52,7 @@ describe('New User accesses an Expired Invitation', () => {
 
 describe('Re-sending an Expired Invite', () => {
   before('Admin logs in and go to inactive inte tab', () => {
-    SignInPage.open();
+    SignInPage.open()
     signIn(accountData.email, accountData.password);
     browser.pause(1500); // workaround for Bug: ACT-299. will be removed after bugfix
     goToTeammatesPage();

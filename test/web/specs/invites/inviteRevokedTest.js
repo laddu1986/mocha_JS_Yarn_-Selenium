@@ -4,13 +4,13 @@ import { invalidInvitationText, goToTeammatesPage, inviteTeammate, invitationLin
 import { getNotificationMessageText, signOut } from 'web/actions/common'
 import passiveNotification from '../../data/passiveNotification.json'
 import messagesData from '../../data/messages.json'
-import SignInPage from 'web/page_objects/signInPage'
+import accountPage from '../../page_objects/accountPage';
 let newMember;
 let invitationURL;
 
 describe('Access a Revoked Invitation (New Account)', () => {
   before(() => {
-    SignInPage.open();
+    accountPage.open()
     createAccount()
     browser.pause(1000)
     newMember = `newmember_${lib.randomString.generate(5)}@test.co`;
