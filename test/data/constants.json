@@ -16,5 +16,9 @@
     "SegmentAttributes": {
         "Title": "Title",
         "Tagline": "Tagline"
+    },
+    "UserType": {
+        "User": "User",
+        "Visitor": "Visitor"
     }
 }

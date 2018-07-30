@@ -2,29 +2,20 @@ import * as lib from '../../../common';
 import accountPage from '../../page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { createSpace, goToAPIKeyPage, defaultAPIKey } from 'web/actions/space';
-import { backToSpaceDashboard, clickOnAudienceLink } from 'web/actions/navBar';
-import { addUsers, getUserStatsCount } from 'web/actions/metrics';
+import { backToSpaceDashboard, clickOnAudienceLink, clickOnSpaceDashboardLink } from 'web/actions/navBar';
+import { addUsers, getUserStatsCount, addVisitor } from 'web/actions/metrics';
+import Constants from 'data/constants.json'
 import { clickOnUsersTab, getRecentUsersRows, verifyUsersDetails, clickFirstRow, verifySideBar } from 'web/actions/users';
-
+var apiKey;
 describe('User Metrics Tests', () => {
     before(() => {
         accountPage.open()
-        var account = createAccount();
-        console.log("*********" + account.email);
+        createAccount();
         createSpace();
         goToAPIKeyPage();
-        var apiKey = defaultAPIKey();
+        apiKey = defaultAPIKey();
         addUsers(5, apiKey);
-    });
-    describe('Space Dashboard Page', () => {
-        it('Total Users, Active and New Count --> should be 5', () => {
-            backToSpaceDashboard();
-            browser.refresh();
-            browser.pause(1500);
-            expect(getUserStatsCount(0)).to.include(5);
-            expect(getUserStatsCount(2)).to.include(5);
-            expect(getUserStatsCount(3)).to.include(5);
-        });
+        backToSpaceDashboard();
     });
     describe('Audience->Users tab', () => {
         it('Recent Users --> should be 5', () => {
@@ -40,7 +31,26 @@ describe('User Metrics Tests', () => {
 
         it('For First User --> Verify email, UID and name in side bar', () => {
             clickFirstRow();
-            expect(verifySideBar()).to.equal(true);
+            browser.pause(1000);
+            expect(verifySideBar(Constants.UserType.User)).to.equal(true);
+        });
+
+        it('Verify Visitor on side bar', () => {
+            addVisitor(1, apiKey);
+            browser.refresh();
+            clickFirstRow();
+            browser.pause(1000);
+            expect(verifySideBar(Constants.UserType.Visitor)).to.equal(true);
+        })
+    });
+    describe('Space Dashboard Page', () => {
+        it('Total Users, Visitors, Active and New Count --> should be 5', () => {
+            clickOnSpaceDashboardLink();
+            browser.pause(1500);
+            expect(getUserStatsCount(0)).to.include(5);
+            expect(getUserStatsCount(1)).to.include(1);
+            expect(getUserStatsCount(2)).to.include(5);
+            expect(getUserStatsCount(3)).to.include(5);
         });
     });
 });
