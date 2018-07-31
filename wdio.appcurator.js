@@ -97,19 +97,24 @@ var getArgs = function () {
     switch (envArg) {
       case 'qa': case 'QA': case 'Qa':
         baseURL = process.env.WEB_QA
+        DBName = process.env.SQL_DBNAME_QA
         break;
       case 'dev': case 'DEV': case 'Dev':
         baseURL = process.env.WEB_DEV
+        DBName = process.env.SQL_DBNAME_DEV
         break;
       case 'squad': case 'SQUAD': case 'Squad':
         baseURL = process.env.WEB_SQUAD
+        DBName = process.env.SQL_DBNAME_DEV
         break;
       default:
         baseURL = process.env.WEB_DEV
+        DBName = process.env.SQL_DBNAME_DEV
     }
   }
   return [browser, baseURL]
 }
+
 
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
