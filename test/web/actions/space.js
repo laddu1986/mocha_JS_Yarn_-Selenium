@@ -38,9 +38,11 @@ export function createSpace() {
   return spacename;
 }
 
-export function goToAPIKeyPage() {
-  SpaceDashboardPage.goToAppSettings.click();
-  SpaceAPIKeyPage.devApiGuideButton.waitForVisible();
+export function goToDeveloperPortal() {
+  // SpaceDashboardPage.goToAppSettings.click();
+  // SpaceAPIKeyPage.devApiGuideButton.waitForVisible();
+  NavBar.developerLink.click()
+
 }
 
 export function verifySpacePage(spaceName) {
@@ -78,7 +80,7 @@ export function copiedValue() {
 }
 
 export function defaultAPIKey() {
-  return SpaceAPIKeyPage.APIKey.getText();
+  return SpaceDashboardPage.APIKey.getText();
 }
 
 export function verifyAPIKeyStatus(status) {
