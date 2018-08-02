@@ -3,6 +3,7 @@ const argv = require('yargs').argv;
 
 const debug = process.env.DEBUG;
 const timeoutPeriod = 30000;
+var DBName;
 
 var browsers = {
   chrome_headless: {
@@ -91,8 +92,10 @@ var getArgs = function () {
     }
   }
 
-  if (envArg == '' || envArg === undefined)
+  if (envArg == '' || envArg === undefined) {
     baseURL = process.env.WEB_DEV
+    DBName = process.env.SQL_DBNAME_DEV
+  }
   else {
     switch (envArg) {
       case 'qa': case 'QA': case 'Qa':
@@ -112,9 +115,12 @@ var getArgs = function () {
         DBName = process.env.SQL_DBNAME_DEV
     }
   }
-  return [browser, baseURL]
+  return [browser, baseURL, DBName]
 }
 
+DBName = getArgs()[2]
+console.log('DBNAME  1', DBName)
+exports.default = DBName;
 
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
