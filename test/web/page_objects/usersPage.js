@@ -7,6 +7,9 @@ class UsersPage {
     get userNameSideBar() { return browser.element("//section[@data-qa='page:space:audience']//div[2]//div//div//h3"); }
     get userIDSideBar() { return browser.element("//section[@data-qa='page:space:audience']//div[2]//div//div[2]//div//div//div"); }
     get userEmailSideBar() { return browser.element("//section[@data-qa='page:space:audience']//div[2]//div//div[2]//div//div[2]//div"); }
+    get addLabelButton() { return browser.element("//div[@data-qa='panel:details']//button[@data-qa='btn:submit']") }
+    get labelInput() { return browser.element("//div[@data-qa='panel:details']//input") }
+    get deleteLabel() { return browser.element("//div[@data-qa='panel:details']//button[@data-qa='btn:delete']") }
 
     open(e) {
         super.open(e);
