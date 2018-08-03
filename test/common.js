@@ -37,7 +37,7 @@ const testData = {
 const Tags = {
   smokeTest: "@smoke"
 }
-console.log(DBNam)
+console.log(DBName)
 
 const Sequelize = require('sequelize');
 const mysql = new Sequelize(DBName, process.env.SQL_USERNAME, process.env.SQL_PASSWORD, {

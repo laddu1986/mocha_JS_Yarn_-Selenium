@@ -115,11 +115,11 @@ var getArgs = function () {
         DBName = process.env.SQL_DBNAME_DEV
     }
   }
-  return [browser, baseURL, DBName]
+  return [browser, baseURL]
 }
 
-DBName = getArgs()[2]
-console.log('DBNAME  1', DBName)
+// DBName = getArgs()[2]
+console.log('DBName  1', DBName)
 exports.default = DBName;
 
 exports.config = {
