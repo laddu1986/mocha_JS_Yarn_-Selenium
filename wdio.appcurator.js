@@ -119,8 +119,8 @@ var getArgs = function () {
 }
 
 // DBName = getArgs()[2]
-console.log('DBName  1', DBName)
-exports.default = DBName;
+// console.log('DBName  1', DBName)
+// exports.default = DBName;
 
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
@@ -130,7 +130,7 @@ exports.config = {
   updateJob: false,
   specs: [
     // './test/web/specs/*/*Test.js', //master
-    './test/web/specs/metrics/userLabelTest.js', //master
+    './test/web/specs/accounts/signInAndOutTest.js', //master
     // './test/web/specs/negativeSpecs/*/*Test.js',
   ],
   // Patterns to exclude.
