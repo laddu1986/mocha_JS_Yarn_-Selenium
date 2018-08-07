@@ -5,7 +5,7 @@ import { createSpace, goToAPIKeyPage, defaultAPIKey } from 'web/actions/space';
 import { backToSpaceDashboard, clickOnAudienceLink, clickOnSpaceDashboardLink } from 'web/actions/navBar';
 import { addUsers, addVisitor, getCount } from 'web/actions/metrics';
 import NotificationData from 'web/data/passiveNotification.json'
-import { clickOnUsersTab, clickFirstRow, deleteUser, getFirstRowUserName } from 'web/actions/users';
+import { clickOnUsersTab, clickFirstRow, deleteUser, getFirstRowDetails } from 'web/actions/users';
 import { getNotificationMessageText } from 'web/actions/common';
 var apiKey;
 describe('Delete User Test', () => {
@@ -25,12 +25,12 @@ describe('Delete User Test', () => {
         backToSpaceDashboard();
         clickOnAudienceLink();
         clickOnUsersTab();
-        var deletedName = getFirstRowUserName();
+        var deletedName = getFirstRowDetails(Constants.UserAttributes.Name);
         clickFirstRow();
         browser.pause(1000);
         deleteUser();
         expect(getNotificationMessageText()).to.include(`${NotificationData.deleteMessage.text}\'${deletedName}`);
-        expect(getFirstRowUserName()).to.not.include(deletedName);
+        expect(getFirstRowDetails(Constants.UserAttributes.Name)).to.not.include(deletedName);
     });
 
     it('Adding the visitors ', async () => {
