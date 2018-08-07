@@ -4,7 +4,6 @@ import AccountPage from 'web/page_objects/accountPage'
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
 import CommonPage from 'web/page_objects/common'
 import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'web/actions/common'
-
 var name, email, organization, password, invcode, accountData = { name, email, invcode, organization, password, invcode };
 
 export function createAccount(email) {
