@@ -5,23 +5,24 @@ import { createSpace, goToDeveloperPortal, defaultAPIKey } from 'web/actions/spa
 import { addUsers, getUserStatsCount, addVisitor } from 'web/actions/metrics';
 import { clickOnUsersTab, getRecentUsersRows, verifyUsersDetails, clickFirstRow, verifySideBar } from 'web/actions/users';
 var apiKey;
-console.log(lib.randomString.generate(4))
+
 describe('User Metrics Tests', () => {
-  before(() => {
+  before('setup', () => {
     accountPage.open()
     createAccount();
     createSpace();
     goToDeveloperPortal();
+    browser.pause(3000)
     apiKey = defaultAPIKey();
     addUsers(5, apiKey);
     // backToSpaceDashboard();
   });
-  describe('Audience->Users tab', () => {
-    it('Recent Users --> should be 5', () => {
-      clickOnAudienceLink();
-      clickOnUsersTab();
-      browser.pause(1000);
-      expect(getRecentUsersRows()).to.equal(5);
-    });
-  })
+
+  it('Recent Users --> should be 5', () => {
+    clickOnAudienceLink();
+    clickOnUsersTab();
+    browser.pause(1000);
+    expect(getRecentUsersRows()).to.equal(5);
+  });
 })
+
