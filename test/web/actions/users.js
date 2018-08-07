@@ -1,5 +1,6 @@
 import * as lib from '../../common';
 import UsersPage from 'web/page_objects/usersPage';
+import CommonPage from 'web/page_objects/common';
 import Constants from 'data/constants.json'
 var flag, finalFlag = [], i = 0, j = 0;
 export function clickOnUsersTab() {
@@ -15,13 +16,12 @@ export function verifyUsersDetails(dataArray) {  //iterates thru the rows and ve
         finalFlag.push(flag);
         flag = false;
         while (dataArray.length != i) {
-            if (element.uid == UsersPage.userUIDRow.value[i].getText() && element.e[0].fields.email == UsersPage.userEmailRow.value[i].getText() && element.e[0].fields.displayName == UsersPage.userNameRow.value[j].getText()) {
-                i = j = 0;
+            if (element.uid == UsersPage.userUIDRow.value[i].getText() && element.e[0].fields.email == UsersPage.userEmailRow.value[i].getText() && element.e[0].fields.displayName == UsersPage.userNameRow.value[i].getText()) {
+                i = 0;
                 return flag = true;
             } else {
                 i++;
             }
-            j = j + 2;
         }
     });
     if (finalFlag.includes(false)) {
@@ -33,6 +33,10 @@ export function verifyUsersDetails(dataArray) {  //iterates thru the rows and ve
 
 export function clickFirstRow() {
     UsersPage.userRows.value[0].click();
+}
+
+export function getFirstRowUserName() {
+    return UsersPage.userNameRow.value[0].getText();
 }
 
 export function verifySideBar(userType) {
@@ -52,5 +56,9 @@ export function verifySideBar(userType) {
     } else {
         return false;
     }
+}
 
+export function deleteUser() {
+    UsersPage.deleteButton.click();
+    CommonPage.iAmSureButton.click();
 }

@@ -1,5 +1,5 @@
 import * as lib from '../../common';
-import CommonPage from 'web/page_objects/common'
+import spaceDashboardPage from 'web/page_objects/spaceDashboardPage'
 const header = {
     "Host": "client.appcurator.io",
     "Accept": "*/*",
@@ -13,7 +13,7 @@ const header = {
 
 var request, apiUrl, api;
 
-export function addVisitor(count, key) {
+export async function addVisitor(count, key) {
     api = key;
     apiUrl = `https://client.appcurator.io/e?k=${api}`
     for (var i = 0; i < count; i++) {
@@ -33,10 +33,10 @@ export function addVisitor(count, key) {
             headers: header
         }
         lib.responseData.visitors.push(request.data);
-        lib.post(request);
+        await lib.post(request);
     }
 }
-export function addUsers(count, key) {
+export async function addUsers(count, key) {
     api = key;
     apiUrl = `https://client.appcurator.io/e?k=${api}`;
     for (var i = 0; i < count; i++) {
@@ -60,10 +60,17 @@ export function addUsers(count, key) {
             headers: header
         }
         lib.responseData.users.push(request.data);
-        lib.post(request);
+        await lib.post(request);
     }
 }
 
-export function getUserStatsCount(val) {
-    return CommonPage.userStats.value[val].getText();
-}
+export function getCount(type) {
+    if (type == Constants.UserType.User)
+        return spaceDashboardPage.totalUsersCount.getText();
+    else if (type == Constants.UserType.Visitor)
+        return spaceDashboardPage.totalVisitorsCount.getText();
+    else if (type == Constants.UserType.Active)
+        return spaceDashboardPage.totalActiveCount.getText();
+    else
+        return spaceDashboardPage.totalNewCount.getText();
+} 
