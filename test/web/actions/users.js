@@ -35,8 +35,22 @@ export function clickFirstRow() {
     UsersPage.userRows.value[0].click();
 }
 
-export function getFirstRowUserName() {
-    return UsersPage.userNameRow.value[0].getText();
+export function getResultText() {
+    browser.waitUntil(() => UsersPage.resultsText.getText() === 'Results', 5000, 'Results not displayed', 200);
+    return UsersPage.resultFoundText.getText();
+}
+
+export function clearText() {
+    UsersPage.searchTextField.clearElement();
+}
+
+export function getFirstRowDetails(UserAttribute) {
+    if (UserAttribute == Constants.UserAttributes.Name)
+        return UsersPage.userNameRow.value[0].getText();
+    else if (UserAttribute == Constants.UserAttributes.Email)
+        return UsersPage.userEmailRow.value[0].getText();
+    else if (UserAttribute == Constants.UserAttributes.UID)
+        return UsersPage.userUIDRow.value[0].getText();
 }
 
 export function verifySideBar(userType) {
@@ -61,4 +75,8 @@ export function verifySideBar(userType) {
 export function deleteUser() {
     UsersPage.deleteButton.click();
     CommonPage.iAmSureButton.click();
+}
+
+export function search(value) {
+    UsersPage.searchTextField.setValue(value);
 }

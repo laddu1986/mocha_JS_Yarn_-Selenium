@@ -8,7 +8,9 @@ class UsersPage {
     get userIDSideBar() { return browser.element("//div[@data-qa='row:id']//div"); }
     get userEmailSideBar() { return browser.element("//div[@data-qa='row:email']//div"); }
     get deleteButton() { return browser.element("//div[@data-qa='panel:delete']//button[@data-qa='btn:submit']//span"); }
-
+    get searchTextField() { return browser.element("//input[@id='user-search']"); }
+    get resultFoundText() { return browser.element("//section[@data-qa='page:space:audience']//div[2]//div//p"); }
+    get resultsText() { return browser.element("//section[@data-qa='page:space:audience']//div[2]//div//h3"); }
     open(e) {
         super.open(e);
     }
