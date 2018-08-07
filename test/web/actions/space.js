@@ -34,19 +34,19 @@ export function createSpace() {
   var spacename = `${lib.randomString.generate(8)}_Space`;
   OrgDashboardPage.createSpaceInput.setValue(spacename);
   OrgDashboardPage.createSpaceButton.click();
-  // SpaceDashboardPage.goToAppSettings.waitForVisible();
+  // SpaceDashboardPage.goToDevPortal.waitForVisible();
   return spacename;
 }
 
 export function goToDeveloperPortal() {
-  // SpaceDashboardPage.goToAppSettings.click();
+  // SpaceDashboardPage.goToDevPortal.click();
   // SpaceAPIKeyPage.devApiGuideButton.waitForVisible();
   NavBar.developerLink.click()
 
 }
 
 export function verifySpacePage(spaceName) {
-  if (SpaceDashboardPage.goToAppSettings.isVisible() == true && browser.getUrl().includes(spaceName)) {
+  if (SpaceDashboardPage.goToDevPortal.isVisible() == true && browser.getUrl().includes(spaceName)) {
     return true;
   } else {
     return false;
@@ -71,17 +71,18 @@ export function verifyCreateFirstSpacePage() {
 }
 
 export function copyAPIKeyToClipBoard() {
-  SpaceDashboardPage.copyToClipboard.click();
+  SpaceDashboardPage.cURLcopyButton.click();
 }
 
 export function copiedValue() {
-  var copiedValue = copyPasteModule.paste();
+  var copiedValue = copyPasteModule.paste().split('{').pop().split('}').shift();
   return copiedValue;
 }
 
 export function defaultAPIKey() {
-  console.log('SpaceDashboardPage.APIKey  ', SpaceDashboardPage.APIKey)
-  return SpaceDashboardPage.APIKey.getText();
+
+  // return SpaceDashboardPage.APIKey.getText();
+  return copyPasteModule.paste().split('{').pop().split('}').shift();
 }
 
 export function verifyAPIKeyStatus(status) {

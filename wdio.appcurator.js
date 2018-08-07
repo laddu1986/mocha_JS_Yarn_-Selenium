@@ -128,13 +128,14 @@ exports.config = {
   capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
-    // './test/web/specs/*/*Test.js', //master
-    './test/web/specs/metrics/labelUserTest.js', //master
+    './test/web/specs/spaces/spaceSettingsTest.js', //master
+    // './test/web/specs/metrics/verifyUsersTest.js', //master
     // './test/web/specs/negativeSpecs/*/*Test.js',
   ],
   // Patterns to exclude.
   exclude: [
     './test/web/specs/support/helpPageTest.js',
+    './test/web/specs/spaces/spaceKeyTest.js',
   ],
   suites: {
     accounts: ['./test/web/specs/accounts/*Test.js'],

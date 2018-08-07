@@ -25,7 +25,7 @@ class NavBar extends Page {
   get sysStatusAnchor() { return browser.element("//*[contains(text(),'System Status')]"); }
   get navOrgs() { return browser.elements("//*[@data-qa='ul-org-list']//li"); }
 
-  get signOut() { return browser.element("//li[@data-qa='sign-out']"); }
+  get signOut() { return browser.element("//li[@data-qa='mi:sign-out']"); }
   open(e) {
     super.open(e);
   }
