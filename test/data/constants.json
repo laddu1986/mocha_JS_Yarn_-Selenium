@@ -19,6 +19,8 @@
     },
     "UserType": {
         "User": "User",
-        "Visitor": "Visitor"
+        "Visitor": "Visitor",
+        "Active": "Active",
+        "New": "New"
     }
 }
