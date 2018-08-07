@@ -3,7 +3,6 @@ const argv = require('yargs').argv;
 
 const debug = process.env.DEBUG;
 const timeoutPeriod = 30000;
-var DBName;
 
 var browsers = {
   chrome_headless: {
@@ -130,7 +129,7 @@ exports.config = {
   updateJob: false,
   specs: [
     // './test/web/specs/*/*Test.js', //master
-    './test/web/specs/accounts/signInAndOutTest.js', //master
+    './test/web/specs/metrics/labelUserTest.js', //master
     // './test/web/specs/negativeSpecs/*/*Test.js',
   ],
   // Patterns to exclude.

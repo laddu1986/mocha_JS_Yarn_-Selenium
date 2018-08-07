@@ -34,7 +34,7 @@ export function createSpace() {
   var spacename = `${lib.randomString.generate(8)}_Space`;
   OrgDashboardPage.createSpaceInput.setValue(spacename);
   OrgDashboardPage.createSpaceButton.click();
-  SpaceDashboardPage.goToAppSettings.waitForVisible();
+  // SpaceDashboardPage.goToAppSettings.waitForVisible();
   return spacename;
 }
 
@@ -71,7 +71,7 @@ export function verifyCreateFirstSpacePage() {
 }
 
 export function copyAPIKeyToClipBoard() {
-  SpaceAPIKeyPage.copyToClipboard.click();
+  SpaceDashboardPage.copyToClipboard.click();
 }
 
 export function copiedValue() {
@@ -80,6 +80,7 @@ export function copiedValue() {
 }
 
 export function defaultAPIKey() {
+  console.log('SpaceDashboardPage.APIKey  ', SpaceDashboardPage.APIKey)
   return SpaceDashboardPage.APIKey.getText();
 }
 

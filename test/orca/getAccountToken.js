@@ -7,7 +7,6 @@ const email = config.orca.email;
 const password = config.orca.password;
 const remember = config.orca.remember;
 
-console.log(email, password);
 
 const url = 'https://api.appcurator.com/';
 let cookies;
