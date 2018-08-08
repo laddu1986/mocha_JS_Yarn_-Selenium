@@ -1,6 +1,5 @@
 class HomePage {
   get navbar() { return browser.element('#navbar'); }
-  // get switchOrCreateOrganizations() { return browser.element("//span[@data-qa='org-list']"); }
   get switchOrCreateOrganizations() { return browser.element("//li[@data-qa='nav:menu']"); }
   get createOrg() { return browser.element("//ul[@data-qa='ul-org-list']//*[contains(text(),'Create')]"); }
   get createOrgInput() { return browser.element("//input[@data-qa='input:org-name']"); }
