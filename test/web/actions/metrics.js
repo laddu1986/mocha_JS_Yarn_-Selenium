@@ -1,5 +1,7 @@
 import * as lib from '../../common';
 import spaceDashboardPage from 'web/page_objects/spaceDashboardPage'
+import Constants from 'data/constants.json'
+
 const header = {
     "Host": "client.appcurator.io",
     "Accept": "*/*",

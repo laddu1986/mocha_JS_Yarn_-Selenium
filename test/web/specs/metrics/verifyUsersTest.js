@@ -22,7 +22,6 @@ describe('User Metrics Tests', () => {
 
     describe('Audience->Users tab', () => {
         it('Recent Users --> should be 5', () => {
-            backToSpaceDashboard();
             clickOnAudienceLink();
             clickOnUsersTab();
             browser.pause(1000);
