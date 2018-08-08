@@ -128,8 +128,7 @@ exports.config = {
   capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
-    './test/web/specs/spaces/spaceSettingsTest.js', //master
-    // './test/web/specs/metrics/verifyUsersTest.js', //master
+    './test/web/specs/metrics/labelUserTest.js', //master
     // './test/web/specs/negativeSpecs/*/*Test.js',
   ],
   // Patterns to exclude.

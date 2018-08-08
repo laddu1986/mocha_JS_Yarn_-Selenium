@@ -72,6 +72,7 @@ export function verifyCreateFirstSpacePage() {
 
 export function copyAPIKeyToClipBoard() {
   SpaceDashboardPage.cURLcopyButton.click();
+  CommonPage.dismissNotification.click();
 }
 
 export function copiedValue() {
@@ -80,9 +81,8 @@ export function copiedValue() {
 }
 
 export function defaultAPIKey() {
-
-  // return SpaceDashboardPage.APIKey.getText();
-  return copyPasteModule.paste().split('{').pop().split('}').shift();
+  copyAPIKeyToClipBoard()
+  return copiedValue()
 }
 
 export function verifyAPIKeyStatus(status) {
