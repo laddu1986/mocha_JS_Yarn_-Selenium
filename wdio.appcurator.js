@@ -91,8 +91,10 @@ var getArgs = function () {
     }
   }
 
-  if (envArg == '' || envArg === undefined)
+  if (envArg == '' || envArg === undefined) {
     baseURL = process.env.WEB_DEV
+    DBName = process.env.SQL_DBNAME_DEV
+  }
   else {
     switch (envArg) {
       case 'qa': case 'QA': case 'Qa':
@@ -115,6 +117,9 @@ var getArgs = function () {
   return [browser, baseURL]
 }
 
+// DBName = getArgs()[2]
+// console.log('DBName  1', DBName)
+// exports.default = DBName;
 
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
@@ -123,12 +128,13 @@ exports.config = {
   capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
-    './test/web/specs/*/*Test.js', //master
-    './test/web/specs/negativeSpecs/*/*Test.js',
+    './test/web/specs/metrics/labelUserTest.js', //master
+    // './test/web/specs/negativeSpecs/*/*Test.js',
   ],
   // Patterns to exclude.
   exclude: [
     './test/web/specs/support/helpPageTest.js',
+    './test/web/specs/spaces/spaceKeyTest.js',
   ],
   suites: {
     accounts: ['./test/web/specs/accounts/*Test.js'],

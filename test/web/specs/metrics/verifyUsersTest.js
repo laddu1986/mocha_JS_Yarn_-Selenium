@@ -1,7 +1,7 @@
 import * as lib from '../../../common';
 import AccountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
-import { createSpace, goToAPIKeyPage, defaultAPIKey } from 'web/actions/space';
+import { createSpace, goToDeveloperPortal, defaultAPIKey } from 'web/actions/space';
 import { backToSpaceDashboard, clickOnAudienceLink, clickOnSpaceDashboardLink } from 'web/actions/navBar';
 import { addUsers, getCount, addVisitor } from 'web/actions/metrics';
 import Constants from 'data/constants.json'
@@ -12,7 +12,7 @@ describe('User Metrics Tests', () => {
         AccountPage.open();
         createAccount();
         createSpace();
-        goToAPIKeyPage();
+        goToDeveloperPortal();
         apiKey = defaultAPIKey();
     });
 
@@ -22,7 +22,6 @@ describe('User Metrics Tests', () => {
 
     describe('Audience->Users tab', () => {
         it('Recent Users --> should be 5', () => {
-            backToSpaceDashboard();
             clickOnAudienceLink();
             clickOnUsersTab();
             browser.pause(1000);
