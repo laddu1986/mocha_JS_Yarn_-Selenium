@@ -14,6 +14,7 @@ class NavBar extends Page {
   get audienceLink() { return browser.element("//a[@data-qa='nav:audience']"); }
   get spaceSettings() { return browser.element("//a[@data-qa='nav:settings']"); }
   get backToSpaceDashboardLink() { return browser.element("//a[@data-qa='link:space-ctx']"); }
+  get developerLink() { return browser.element("//a[@data-qa='nav:developer']"); }
 
   // Help
   get helpMenuNav() { return browser.element("//*[@data-qa='md:help']"); }
@@ -24,7 +25,7 @@ class NavBar extends Page {
   get sysStatusAnchor() { return browser.element("//*[contains(text(),'System Status')]"); }
   get navOrgs() { return browser.elements("//*[@data-qa='ul-org-list']//li"); }
 
-  get signOut() { return browser.element("//li[@data-qa='sign-out']"); }
+  get signOut() { return browser.element("//li[@data-qa='mi:sign-out']"); }
   open(e) {
     super.open(e);
   }
