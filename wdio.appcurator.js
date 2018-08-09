@@ -178,11 +178,12 @@ exports.config = {
   },
 
   mochaOpts: {
+    slow: 0,
     ui: 'bdd',
     reporter: 'spec',
     compilers: ['js:babel-register'],
     timeout: debug ? 9999999 : timeoutPeriod,
-    grep: process.env.npm_config_grep
+    grep: process.env.npm_config_grep,
   },
   //execArgv: ['--inspect'],
 

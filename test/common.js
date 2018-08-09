@@ -72,6 +72,7 @@ function patch(any) {
 function del(any) {
   return server.delete(any.api + any.data);
 }
+const sortAlphabetically = (a, b) => a.toLowerCase().localeCompare(b.toLowerCase());
 
 export {
   Tags,
@@ -91,5 +92,6 @@ export {
   mysql,
   // data
   responseData,
-  randomString
+  randomString,
+  sortAlphabetically
 };

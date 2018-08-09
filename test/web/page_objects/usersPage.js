@@ -12,10 +12,11 @@ class UsersPage {
     get userEmailSidePanel() { return browser.element("//div[@data-qa='row:email']//div"); }
     get deleteUserButton() { return browser.element("//div[@data-qa='panel:delete']//button[@data-qa='btn:submit']//span"); }
 
-    get addLabelButton() { return browser.element("//div[@data-qa='panel:details']//button[@data-qa='btn:submit']"); }
+    get addLabelButton() { return browser.element("//div[@data-qa='panel:details']//button[@data-qa='btn:reveal-labels']"); }
     get labelInput() { return browser.element("//div[@data-qa='panel:details']//input"); }
-    get labels() { return browser.elements("//div[@data-qa='panel:details']//div[@class='css-wefl68 css-i2hauk css-i2hauk-deletable']"); }
-    get deleteLabelButton() { return browser.element("//div[@data-qa='panel:details']//button[@data-qa=tag:delete]") }
+    get labels() { return browser.elements("//div[@data-qa='panel:details']//div[@data-qa='tag:user-metrics']"); }
+    get deleteLabelButton() { return browser.element("//div[@data-qa='panel:details']//button[@data-qa='tag:user-metricsbtn:delete']") }
+    get addedLabelsDiv() { return browser.element("//div[@data-qa='panel:details']//div[2]") }
 
     open(e) {
         super.open(e);
