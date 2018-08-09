@@ -63,21 +63,18 @@ export function deleteUser() {
     CommonPage.iAmSureButton.click();
 }
 
+var userInputLabels, actualLabels = [], userInputLabels = [];
+
 export function addLabels(labelCount) {
     if (labelCount === undefined) labelCount = 2;
-    console.log(labelCount)
-    var labelList = [], label
+    var label
     clickAddLabelButton()
-    while (labelCount-- > 0) {
-        console.log(labelCount)
-
-        label = lib.randomString.generate(Math.floor((Math.random() * 10) + 1))
+    for (let i = 0; i < labelCount; i++) {
+        label = lib.randomString.generate(Math.floor((Math.random() * 10) + 3))
         inputLabelDetails(label)
-        labelList.push(label)
-        browser.keys('Enter') //workaround
+        browser.waitUntil(() => UsersPage.labels.value.length === i + 1, 5000, 'Added label is not visible', 100);
     }
-    console.log('labelList ', labelList)
-
+    // return userInputLabels;
 }
 
 export function clickAddLabelButton() {
@@ -86,10 +83,41 @@ export function clickAddLabelButton() {
 
 export function inputLabelDetails(label) {
     UsersPage.labelInput.setValue(label)
+    browser.keys('Enter') //workaround as Intercom logo overlaps '+' button and it cant be clicked
+    userInputLabels.push(label)
+    return userInputLabels = userInputLabels.sort(lib.sortAlphabetically);
 }
 
-export function verifyLabels(label, count) {
-    if (UsersPage.labels.value[count].getText() === label) {
-        return true;
+export function verifyAddedLabels() {
+    for (let l = 0; l < UsersPage.labels.value.length; l++) {
+        actualLabels.push(UsersPage.labels.value[l].getText())
     }
+    console.log('user and actual ', userInputLabels, actualLabels)
+    return (JSON.stringify(userInputLabels) == JSON.stringify(actualLabels))
+}
+
+export function deleteLabels(labelName) {
+    var deletedList = []
+    if (labelName === undefined) {
+        for (let d = UsersPage.labels.value.length; d > 0; d--) {
+            UsersPage.deleteLabelButton.click()
+            browser.pause(300) //time required for label to be deleted from DB and reflect on browser
+            deletedList = userInputLabels.filter(item => item !== labelName)
+        }
+
+    } else {
+        for (let d = 0; d < UsersPage.labels.value.length; d++) {
+            if ((UsersPage.labels.value[d].getText()) == labelName) {
+                UsersPage.deleteLabelButton.click()
+                deletedList = userInputLabels.filter(item => item !== labelName)
+            }
+        }
+    }
+    // browser.waitUntil(() => UsersPage.addedLabelsDiv.getText() === '', 5000, 'Label not Deleted', 100);
+    return deletedList
+
+}
+
+export function verifyLabelDeleted() {
+    return (UsersPage.addedLabelsDiv.getText() === '' ? true : false)
 }
