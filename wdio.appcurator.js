@@ -209,8 +209,8 @@ exports.config = {
   // Gets executed after all tests are done. You still have access to all global variables from
   // the test.
   after() {
-    var connection = require('./test/common')
-    connection.mysql.close()
+    // var connection = require('./test/common')
+    // connection.mysql.close()
   },
 
   // Gets executed after all workers got shut down and the process is about to exit. It is not

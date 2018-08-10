@@ -31,8 +31,10 @@ export function verifyUsersDetails(dataArray) {  //iterates thru the rows and ve
     }
 }
 
-export function clickFirstRow() {
-    UsersPage.userRows.value[0].click();
+export function clickUserRowNo(n) {
+    n === undefined || n <= 0 ?
+        UsersPage.userRows.value[0].click() :
+        UsersPage.userRows.value[n - 1].click();
 }
 
 export function getFirstRowUserName() {
@@ -63,18 +65,18 @@ export function deleteUser() {
     CommonPage.iAmSureButton.click();
 }
 
-var userInputLabels, actualLabels = [], userInputLabels = [];
+var userInputLabels, userInputLabels;
 
 export function addLabels(labelCount) {
     if (labelCount === undefined) labelCount = 2;
-    var label
+    var label;
     clickAddLabelButton()
+    userInputLabels = []
     for (let i = 0; i < labelCount; i++) {
         label = lib.randomString.generate(Math.floor((Math.random() * 10) + 3))
         inputLabelDetails(label)
         browser.waitUntil(() => UsersPage.labels.value.length === i + 1, 5000, 'Added label is not visible', 100);
     }
-    // return userInputLabels;
 }
 
 export function clickAddLabelButton() {
@@ -82,6 +84,7 @@ export function clickAddLabelButton() {
 }
 
 export function inputLabelDetails(label) {
+    if (userInputLabels === undefined) userInputLabels = []
     UsersPage.labelInput.setValue(label)
     browser.keys('Enter') //workaround as Intercom logo overlaps '+' button and it cant be clicked
     userInputLabels.push(label)
@@ -89,6 +92,7 @@ export function inputLabelDetails(label) {
 }
 
 export function verifyAddedLabels() {
+    var actualLabels = []
     for (let l = 0; l < UsersPage.labels.value.length; l++) {
         actualLabels.push(UsersPage.labels.value[l].getText())
     }
