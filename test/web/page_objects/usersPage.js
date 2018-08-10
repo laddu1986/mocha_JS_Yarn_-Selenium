@@ -17,6 +17,7 @@ class UsersPage {
     get labels() { return browser.elements("//div[@data-qa='panel:details']//div[@data-qa='tag:user-metrics']"); }
     get deleteLabelButton() { return browser.element("//div[@data-qa='panel:details']//button[@data-qa='tag:user-metricsbtn:delete']") }
     get addedLabelsDiv() { return browser.element("//div[@data-qa='panel:details']//div[2]") }
+    get labelErrMsg() { return browser.element("//div[@data-qa='panel:details']/div[1]/div/span") }
 
     open(e) {
         super.open(e);

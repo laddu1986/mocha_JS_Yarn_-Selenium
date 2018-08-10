@@ -5,7 +5,7 @@ import { createSpace, goToDeveloperPortal, defaultAPIKey } from 'web/actions/spa
 import { backToSpaceDashboard, clickOnAudienceLink, clickOnSpaceDashboardLink } from 'web/actions/navBar';
 import { addUsers, getCount, addVisitor } from 'web/actions/metrics';
 import Constants from 'data/constants.json'
-import { clickOnUsersTab, getRecentUsersRows, verifyUsersDetails, clickFirstRow, verifySideBar } from 'web/actions/users';
+import { clickOnUsersTab, getRecentUsersRows, verifyUsersDetails, clickUserRowNo, verifySideBar } from 'web/actions/users';
 var apiKey;
 describe('User Metrics Tests', () => {
     before(() => {
@@ -33,7 +33,7 @@ describe('User Metrics Tests', () => {
         });
 
         it('For First User --> Verify email, UID and name in side bar', () => {
-            clickFirstRow();
+            clickUserRowNo();
             browser.pause(1000);
             expect(verifySideBar(Constants.UserType.User)).to.equal(true);
         });
@@ -44,7 +44,7 @@ describe('User Metrics Tests', () => {
 
         it('Verify Visitor on side bar', () => {
             browser.refresh();
-            clickFirstRow();
+            clickUserRowNo();
             browser.pause(1000);
             expect(verifySideBar(Constants.UserType.Visitor)).to.equal(true);
         });
