@@ -6,6 +6,7 @@ class common extends Page {
     get iAmSureButton() { return browser.element("//button[@data-qa='btn:submit']//span[contains(text(),'sure')]") }
     get invalidPage() { return browser.element("//section[@data-qa='page:404']") }
     get linkOnInvalidpage() { return browser.element("//section[@data-qa='page:404']//a") }
+    get intercomIcon() { return browser.element('#intercom-frame') }
 
     //Passive Notifications
     get successMsg() { return browser.element("//div[@data-qa='notification:success']") }

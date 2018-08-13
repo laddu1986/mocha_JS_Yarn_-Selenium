@@ -1,6 +1,6 @@
 export default class Page {
   open(path) {
-    browser.windowHandleSize({ width: 1280, height: 800 });
+    browser.windowHandleSize({ width: 1080, height: 1080 });
     browser.timeouts('implicit', 10000);
     browser.url(path);
   }
