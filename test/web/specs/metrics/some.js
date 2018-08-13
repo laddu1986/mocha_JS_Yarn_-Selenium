@@ -1,7 +1,7 @@
 var arr1 = ['b', 'a', 'c', 'd', 'f'];
 // var arr1 = ['f', 'd', 'c', 'b', 'a'];
 var arr2 = ['f', 'd', 'c', 'b', 'a'];
-console.log(arr2.filter(function(item){
+console.log(arr2.filter(function (item) {
   return item != 'c'
 }))
 
@@ -21,3 +21,14 @@ const alphabetical = (a, b) => a.toLowerCase().localeCompare(b.toLowerCase());
 
 console.log('my  ', mysort.alphabetical())
 console.log('dev ', devsort)
+
+var a = 5, b = 8;
+const sum = (a, b) => a + b;
+console.log(sum());
+
+
+var s = '  drop the beat john '
+console.log(JSON.stringify(s).replace(/\s+/g, ''))
+
+var count = '+13ghgjk'
+console.log(Number(count.replace('+','')))

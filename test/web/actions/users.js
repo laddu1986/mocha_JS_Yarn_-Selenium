@@ -35,6 +35,7 @@ export function clickUserRowNo(n) {
     n === undefined || n <= 0 ?
         UsersPage.userRows.value[0].click() :
         UsersPage.userRows.value[n - 1].click();
+    browser.pause(400) // browser animation time for opening side panel
 }
 
 export function getFirstRowUserName() {
@@ -65,30 +66,35 @@ export function deleteUser() {
     CommonPage.iAmSureButton.click();
 }
 
-var userInputLabels, userInputLabels;
+var userInputLabels, userInputLabels = [], lcount;
 
 export function addLabels(labelCount) {
-    if (labelCount === undefined) labelCount = 2;
-    var label;
     clickAddLabelButton()
-    userInputLabels = []
-    for (let i = 0; i < labelCount; i++) {
-        label = lib.randomString.generate(Math.floor((Math.random() * 10) + 3))
-        inputLabelDetails(label)
-        browser.waitUntil(() => UsersPage.labels.value.length === i + 1, 5000, 'Added label is not visible', 100);
-    }
+    inputLabelDetails(undefined, labelCount)
+    return lcount = labelCount
 }
 
 export function clickAddLabelButton() {
+    UsersPage.deleteUserButton.getText()
     UsersPage.addLabelButton.click()
 }
 
-export function inputLabelDetails(label) {
-    if (userInputLabels === undefined) userInputLabels = []
-    UsersPage.labelInput.setValue(label)
-    browser.keys('Enter') //workaround as Intercom logo overlaps '+' button and it cant be clicked
-    userInputLabels.push(label)
-    return userInputLabels = userInputLabels.sort(lib.sortAlphabetically);
+export function inputLabelDetails(label, labelCount) {
+    if (labelCount === undefined) labelCount = label.length;
+    var lname;
+    userInputLabels = [];
+    for (let i = 0; i < labelCount; i++) {
+        label === undefined ? lname = lib.randomString.generate(Math.floor((Math.random() * 10) + 3)) : lname = label[i]
+        UsersPage.labelInput.setValue(lname)
+        browser.keys('Enter') //workaround as Intercom logo overlaps '+' button and it cant be clicked by WDIO
+        label === undefined
+        if (lname.length >= 2) {
+            userInputLabels.push(lname.trim())
+            browser.waitUntil(() => UsersPage.labels.value.length === i + 1, 5000, 'Label NOT Saved', 100);
+        }
+
+    }
+    return userInputLabels = userInputLabels.sort(lib.sortAlphabetically), lcount = labelCount
 }
 
 export function verifyAddedLabels() {
@@ -96,32 +102,57 @@ export function verifyAddedLabels() {
     for (let l = 0; l < UsersPage.labels.value.length; l++) {
         actualLabels.push(UsersPage.labels.value[l].getText())
     }
-    console.log('user and actual ', userInputLabels, actualLabels)
-    return (JSON.stringify(userInputLabels) == JSON.stringify(actualLabels))
+    console.log('\nuserInputLabels=', userInputLabels, '\nactualLabels=', actualLabels)
+    var match = (JSON.stringify(userInputLabels).replace(/\s+/g, '') == JSON.stringify(actualLabels).replace(/\s+/g, ''))
+    actualLabels = [], userInputLabels = []
+    return match
 }
 
-export function deleteLabels(labelName) {
-    var deletedList = []
-    if (labelName === undefined) {
-        for (let d = UsersPage.labels.value.length; d > 0; d--) {
-            UsersPage.deleteLabelButton.click()
-            browser.pause(300) //time required for label to be deleted from DB and reflect on browser
-            deletedList = userInputLabels.filter(item => item !== labelName)
-        }
+export function verifyLabelCount() {
+    return (Number(UsersPage.userRowLabelCount.getText().replace('+', '')) === (lcount - 3))
+}
 
+export function clickLabelCount() {
+    UsersPage.userRowLabelCount.click()
+}
+
+var deletedList = []
+export function deleteLabels(labelName) {
+    UsersPage.deleteUserButton.scroll()
+    deletedList = []
+    if (labelName === undefined) {
+        let d = UsersPage.deleteLabelButton.value.length
+        while (d-- !== 0) {
+            UsersPage.deleteLabelButton.value[d].click()
+            browser.pause(300) //time required for label to be deleted from backend and reflect in frontend
+        }
     } else {
-        for (let d = 0; d < UsersPage.labels.value.length; d++) {
-            if ((UsersPage.labels.value[d].getText()) == labelName) {
-                UsersPage.deleteLabelButton.click()
+        for (let d = 0; d < labelName.length; d++) {
+            if ((UsersPage.labels.value[d].getText()) == labelName[d]) {
+                UsersPage.deleteLabelButton.value[d].click()
+                browser.pause(300) //time required for label to be deleted from backend and reflect in frontend
                 deletedList = userInputLabels.filter(item => item !== labelName)
             }
         }
     }
-    // browser.waitUntil(() => UsersPage.addedLabelsDiv.getText() === '', 5000, 'Label not Deleted', 100);
     return deletedList
-
 }
 
 export function verifyLabelDeleted() {
-    return (UsersPage.addedLabelsDiv.getText() === '' ? true : false)
+    browser.waitUntil(() => UsersPage.addedLabelsDiv.getText() == '')
+    return (UsersPage.addedLabelsDiv.getText() == '' ? true : false)
+}
+
+export function labelErrMsg() {
+    return UsersPage.labelErrMsg.isVisible()
+}
+
+export function labelSuggestions() {
+    var dropDownList = []
+    browser.pause(1000) //time taken for sugesstions to load 
+    for (let s = 0; s < UsersPage.labelDropdown.value.length; s++) {
+        dropDownList.push(UsersPage.labelDropdown.value[s].getText())
+    }
+    dropDownList.sort(lib.sortAlphabetically)
+    return (JSON.stringify(dropDownList).replace(/\s+/g, '') == JSON.stringify(userInputLabels).replace(/\s+/g, ''))
 }
