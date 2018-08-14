@@ -9,9 +9,9 @@ class common extends Page {
     get intercomIcon() { return browser.element('#intercom-frame') }
 
     //Passive Notifications
-    get successMsg() { return browser.element("//div[@data-qa='notification:success']") }
-    get errorMsg() { return browser.element("//div[@data-qa='notification:error']") }
-    get dismissNotification() { return browser.element("//button[@data-qa='btn:dismiss']") }
+    get successMsg() { return browser.element("//section[@data-qa='notifications:passive']//div[@data-qa='notification:success']") }
+    get errorMsg() { return browser.element("//section[@data-qa='notifications:passive']//div[@data-qa='notification:error']") }
+    get dismissNotification() { return browser.element("//section[@data-qa='notifications:passive']//button[@data-qa='btn:dismiss']") }
 
     //Page messages
     get invalidInvitationMsg() { return browser.element("//h1") }
