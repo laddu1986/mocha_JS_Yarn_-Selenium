@@ -1,11 +1,10 @@
 import * as lib from '../../../common';
-import accountPage from 'web/page_objects/accountPage';
-import UsersPage from 'web/page_objects/usersPage';
-import { createAccount } from 'web/actions/account';
-import { createSpace, goToDeveloperPortal, defaultAPIKey } from 'web/actions/space';
-import { addUsers } from 'web/actions/metrics';
-import { clickOnAudienceLink } from 'web/actions/navBar';
-import { clickOnUsersTab, inputLabelDetails, verifyAddedLabels, clickAddLabelButton, addLabels, deleteLabels, verifyLabelDeleted, clickUserRowNo, labelErrMsg, labelSuggestions, verifyLabelCount, clickLabelCount } from 'web/actions/users';
+import accountPage from 'web/page_objects/accountPage'
+import { createAccount } from 'web/actions/account'
+import { createSpace, goToDeveloperPortal, defaultAPIKey } from 'web/actions/space'
+import { addUsers } from 'web/actions/metrics'
+import { clickOnAudienceLink } from 'web/actions/navBar'
+import { clickOnUsersTab, inputLabelDetails, verifyAddedLabels, clickAddLabelButton, addLabels, deleteLabels, verifyLabelDeleted, clickUserRowNo, labelErrMsg, labelSuggestions, verifyLabelCount, clickLabelCount, selectLabelFromSuggestions } from 'web/actions/users'
 var apiKey
 
 describe('User Labels Test', () => {
@@ -47,7 +46,6 @@ describe('User Labels Test', () => {
       expect(verifyAddedLabels()).to.equal(true, 'Label was not Added/Saved')
       inputLabelDetails(['testing duplicate label addition'])
       expect(labelErrMsg()).to.equal(true, 'Err msg is Not Visible when duplicate label is typed in Label input')
-      // expect(verifyAddedLabels()).to.equal(false, 'Duplicate Label was Added/Saved')
     })
 
     it('Verify trimming of Leading and Trailing spaces in label names while Saving ', () => {
@@ -82,14 +80,14 @@ describe('User Labels Test', () => {
       gotoUsersTab()
       clickUserRowNo(4);
       var labelCount = Math.floor((Math.random() * 10) + 2)
-      addLabels(7)
+      addLabels(labelCount)
       expect(verifyAddedLabels()).to.equal(true, 'Labels were not Added/Saved')
     })
 
     it('Verify user row label count and clicking it re-directs to label details section', () => {
       gotoUsersTab()
       expect(verifyLabelCount()).to.equal(true, 'Label count incorrect in User row')
-    });
+    })
 
     it('Delete labels and verify all labels are deleted', () => {
       clickLabelCount();
@@ -99,19 +97,23 @@ describe('User Labels Test', () => {
   })
 
   describe('Test Label suggestions', () => {
-    it('Add label to a user', () => {
+    it('Add labels to a user', () => {
       gotoUsersTab()
       clickUserRowNo(5)
       clickAddLabelButton()
       inputLabelDetails(['dropdown', 'dropbox', 'dropkick', 'drop the beat'])
     })
 
-    it('Verify added label appears in suggestion for other users', () => {
+    it('Verify added labels appears in suggestions for other users', () => {
       gotoUsersTab()
       clickUserRowNo(6)
       clickAddLabelButton()
-      UsersPage.labelInput.setValue('dr')
-      expect(labelSuggestions()).to.equal(true)
+      expect(labelSuggestions('dr')).to.equal(true)
+    })
+
+    it('Select a label from suggestions and verify it is Saved', () => {
+      selectLabelFromSuggestions('dropkick')
+      expect(verifyAddedLabels()).to.equal(true, 'Label was not Added/Saved')
     })
   })
 })

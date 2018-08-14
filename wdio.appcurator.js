@@ -24,7 +24,8 @@ var browsers = {
         '--disable-infobars',
         '--incognito',
         '--ignore-certificate-errors',
-        '--disable-gpu'],
+        '--disable-gpu',
+        '--disable-search-geolocation-disclosure'],
     }
   },
   firefox: {

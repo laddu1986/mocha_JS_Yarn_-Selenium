@@ -147,7 +147,8 @@ export function labelErrMsg() {
     return UsersPage.labelErrMsg.isVisible()
 }
 
-export function labelSuggestions() {
+export function labelSuggestions(typedChars) {
+    UsersPage.labelInput.setValue(typedChars)
     var dropDownList = []
     browser.pause(1000) //time taken for sugesstions to load 
     for (let s = 0; s < UsersPage.labelDropdown.value.length; s++) {
@@ -155,4 +156,15 @@ export function labelSuggestions() {
     }
     dropDownList.sort(lib.sortAlphabetically)
     return (JSON.stringify(dropDownList).replace(/\s+/g, '') == JSON.stringify(userInputLabels).replace(/\s+/g, ''))
+}
+
+export function selectLabelFromSuggestions(selectedLabel) {
+    userInputLabels = []
+    for (let s = 0; s < UsersPage.labelDropdown.value.length; s++) {
+        if (UsersPage.labelDropdown.value[s].getText() == selectedLabel) {
+            UsersPage.labelDropdown.value[s].click()
+            userInputLabels.push(selectedLabel)
+        }
+    }
+    return userInputLabels
 }
