@@ -14,15 +14,15 @@ class OrgDashboardPage extends Page {
   // Space
   get createYourFirstSpaceLabel() { return browser.element("//*[@data-qa='page:org-dashboard']//section//div//h2"); }
   get createSpaceInput() { return browser.element("//input[@data-qa='input:space-name']"); }
-  get createSpaceButton() { return browser.element("//button[@data-qa='button:create-space']"); }
-  get createNewSpaceButton() { return browser.element("//a[@data-qa='link:create-space']"); }
-  get spaceCards() { return browser.elements("//a[starts-with(@data-qa,'space:')]"); }
+  get createSpaceButton() { return browser.element("//button[@data-qa='btn:create-space']"); }
+  get createNewSpaceButton() { return browser.element("//a[@data-qa='btn:create-space']"); }
+  get spaceCards() { return browser.elements("//a[@data-qa='card:space']"); }
 
   // Invite
-  get inviteTeammateButton() { return browser.element("//div[contains(text(),'Invite teammate')]"); }
+  get inviteTeammateButton() { return browser.element("//button[@data-qa='btn:invite']"); }
   get inviteEmailInput() { return browser.element("//input[@data-qa='input:email']"); }
-  get sendInviteButton() { return browser.element("//button[@data-qa='button:invite']"); }
-  get pendingInviteCircle() { return browser.element("//section[@data-qa='page:org-dashboard']//div[contains(@class,'pending')]"); }
+  get sendInviteButton() { return browser.element("//form[@data-qa='form:invite']//button[@data-qa='btn:submit']"); }
+  get pendingInviteCircle() { return browser.element("//div[@data-qa='section:avatars']//div[@data-qa='data:pending-invites']"); }
   get joinButton() { return browser.element("//button[@data-qa='btn:join']") }
 
   open(e) {

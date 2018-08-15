@@ -39,7 +39,7 @@ const Tags = {
 }
 
 const Sequelize = require('sequelize');
-const mysql = new Sequelize(process.env.SQL_DBNAME, process.env.SQL_USERNAME, process.env.SQL_PASSWORD, {
+const mysql = new Sequelize(DBName, process.env.SQL_USERNAME, process.env.SQL_PASSWORD, {
   host: process.env.SQL_HOSTNAME,
   dialect: 'mysql',
   operatorsAliases: false,

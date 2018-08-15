@@ -34,17 +34,19 @@ export function createSpace() {
   var spacename = `${lib.randomString.generate(8)}_Space`;
   OrgDashboardPage.createSpaceInput.setValue(spacename);
   OrgDashboardPage.createSpaceButton.click();
-  SpaceDashboardPage.goToAppSettings.waitForVisible();
+  // SpaceDashboardPage.goToDevPortal.waitForVisible();
   return spacename;
 }
 
-export function goToAPIKeyPage() {
-  SpaceDashboardPage.goToAppSettings.click();
-  SpaceAPIKeyPage.devApiGuideButton.waitForVisible();
+export function goToDeveloperPortal() {
+  // SpaceDashboardPage.goToDevPortal.click();
+  // SpaceAPIKeyPage.devApiGuideButton.waitForVisible();
+  NavBar.developerLink.click()
+
 }
 
 export function verifySpacePage(spaceName) {
-  if (SpaceDashboardPage.goToAppSettings.isVisible() == true && browser.getUrl().includes(spaceName)) {
+  if (SpaceDashboardPage.goToDevPortal.isVisible() == true && browser.getUrl().includes(spaceName)) {
     return true;
   } else {
     return false;
@@ -69,16 +71,18 @@ export function verifyCreateFirstSpacePage() {
 }
 
 export function copyAPIKeyToClipBoard() {
-  SpaceAPIKeyPage.copyToClipboard.click();
+  SpaceDashboardPage.cURLcopyButton.click();
+  CommonPage.dismissNotification.click();
 }
 
 export function copiedValue() {
-  var copiedValue = copyPasteModule.paste();
+  var copiedValue = copyPasteModule.paste().split('{').pop().split('}').shift();
   return copiedValue;
 }
 
 export function defaultAPIKey() {
-  return SpaceAPIKeyPage.APIKey.getText();
+  copyAPIKeyToClipBoard()
+  return copiedValue()
 }
 
 export function verifyAPIKeyStatus(status) {
