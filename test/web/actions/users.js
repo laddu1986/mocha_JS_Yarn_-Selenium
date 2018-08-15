@@ -110,3 +110,4 @@ export function verifyLabels(label, count) {
     if (UsersPage.labels.value[count].getText() === label) {
         return true;
     }
+}
