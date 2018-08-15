@@ -1,19 +1,21 @@
 import * as lib from '../../../common';
 import AccountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
-import { createSpace, goToAPIKeyPage, defaultAPIKey } from 'web/actions/space';
-import { backToSpaceDashboard, clickOnAudienceLink, clickOnSpaceDashboardLink } from 'web/actions/navBar';
+import { createSpace, goToDeveloperPortal, defaultAPIKey } from 'web/actions/space';
+import { clickOnAudienceLink, clickOnSpaceDashboardLink } from 'web/actions/navBar';
 import { addUsers, addVisitor, getCount } from 'web/actions/metrics';
 import NotificationData from 'web/data/passiveNotification.json'
 import { clickOnUsersTab, clickFirstRow, deleteUser, getFirstRowDetails } from 'web/actions/users';
 import { getNotificationMessageText } from 'web/actions/common';
+import Constants from 'data/constants.json'
+
 var apiKey;
 describe('Delete User Test', () => {
     before(() => {
         AccountPage.open();
         createAccount();
         createSpace();
-        goToAPIKeyPage();
+        goToDeveloperPortal();
         apiKey = defaultAPIKey();
     });
 
@@ -22,7 +24,6 @@ describe('Delete User Test', () => {
     })
 
     it('Delete User --> Verify users tab and passive notification shows', () => {
-        backToSpaceDashboard();
         clickOnAudienceLink();
         clickOnUsersTab();
         var deletedName = getFirstRowDetails(Constants.UserAttributes.Name);

@@ -50,7 +50,7 @@ describe('Negative cases --> Space Slug', () => {
 
     it('"Select Space" link redirects to Space dashboard', () => {
         clickLinkOn404Page();
-        expect(browser.getUrl()).to.equal(`${process.env.WEB_DEV}/${OrgName}/space/${SpaceSlug}`);
+        expect(browser.getUrl()).to.equal(`${browser.options.baseUrl}/${OrgName}/space/${SpaceSlug}`);
     });
 
     it('No Space Association --> "Select Space" on 404 page redirects to "create space" page', () => {

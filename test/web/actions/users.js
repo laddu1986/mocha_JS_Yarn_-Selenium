@@ -61,9 +61,9 @@ export function verifySideBar(userType) {
     else {
         ID = lib.responseData.visitors[0].vid;
     }
-    if (UsersPage.userIDSideBar.getText() == ID && UsersPage.userNameSideBar.getText() == UsersPage.userNameRow.value[0].getText()) {
+    if (UsersPage.userIDSidePanel.getText() == ID && UsersPage.userNameSidePanel.getText() == UsersPage.userNameRow.value[0].getText()) {
         if (userType == Constants.UserType.User) {
-            return (UsersPage.userEmailSideBar.getText() == UsersPage.userEmailRow.value[0].getText());
+            return (UsersPage.userEmailSidePanel.getText() == UsersPage.userEmailRow.value[0].getText());
         } else {
             return true;
         }
@@ -73,10 +73,40 @@ export function verifySideBar(userType) {
 }
 
 export function deleteUser() {
-    UsersPage.deleteButton.click();
+    UsersPage.deleteUserButton.click();
     CommonPage.iAmSureButton.click();
 }
 
 export function search(value) {
     UsersPage.searchTextField.setValue(value);
 }
+
+export function addLabels(labelCount) {
+    if (labelCount === undefined) labelCount = 2;
+    console.log(labelCount)
+    var labelList = [], label
+    clickAddLabelButton()
+    while (labelCount-- > 0) {
+        console.log(labelCount)
+
+        label = lib.randomString.generate(Math.floor((Math.random() * 10) + 1))
+        inputLabelDetails(label)
+        labelList.push(label)
+        browser.keys('Enter') //workaround
+    }
+    console.log('labelList ', labelList)
+
+}
+
+export function clickAddLabelButton() {
+    UsersPage.addLabelButton.click()
+}
+
+export function inputLabelDetails(label) {
+    UsersPage.labelInput.setValue(label)
+}
+
+export function verifyLabels(label, count) {
+    if (UsersPage.labels.value[count].getText() === label) {
+        return true;
+    }
