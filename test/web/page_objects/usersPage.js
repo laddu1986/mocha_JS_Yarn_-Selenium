@@ -5,6 +5,10 @@ class UsersPage {
     get userNameRow() { return browser.elements("//span[@data-qa='row:name']"); }
     get userUIDRow() { return browser.elements("//span[@data-qa='row:id']"); }
     get userEmailRow() { return browser.elements("//td[@data-qa='row:email']"); }
+    
+    get searchTextField() { return browser.element("//input[@id='user-search']"); }
+    get resultFoundText() { return browser.element("//section[@data-qa='page:space:audience']//div[2]//div//p"); }
+    get resultsText() { return browser.element("//section[@data-qa='page:space:audience']//div[2]//div//h3"); }
 
     //User Side Panel
     get userNameSidePanel() { return browser.element("//h3[@data-qa='header:name']"); }

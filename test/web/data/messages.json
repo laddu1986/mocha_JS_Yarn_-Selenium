@@ -14,5 +14,9 @@
   "org": {
     "orgNotFound": "We couldn't find the page you were after.\nSelect an org",
     "pageNotFound": "Page not found\nReturn to "
+  },
+  "search": {
+    "result": "result found",
+    "results": "results found"
   }
 }

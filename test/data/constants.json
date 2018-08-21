@@ -22,5 +22,10 @@
         "Visitor": "Visitor",
         "Active": "Active",
         "New": "New"
+    },
+    "UserAttributes": {
+        "Name": "Name",
+        "Email": "Email",
+        "UID": "UID"
     }
 }
