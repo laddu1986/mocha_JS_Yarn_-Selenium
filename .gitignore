@@ -11,3 +11,4 @@ phantomjs.log
 **/wdio-report.html
 **/api-report.html
 **/.DS_Store
+personal

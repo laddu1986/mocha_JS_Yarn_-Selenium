@@ -54,3 +54,16 @@ export function get404PageText() {
 export function clickLinkOn404Page() {
     CommonPage.linkOnInvalidpage.click();
 }
+
+//hide intercom icon as it gets in the way of other elements and prevents clicking them
+export function hideIntercom() {
+    CommonPage.intercomIcon.waitForVisible()
+    browser.execute(function () {
+        const intercom = document.getElementById('intercom-container')
+        if (intercom.style.display === "none") {
+            intercom.style.display = "block";
+        } else {
+            intercom.style.display = "none";
+        }
+    })
+}

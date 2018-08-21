@@ -2,6 +2,7 @@ import * as lib from '../../common';
 import CommonPage from 'web/page_objects/common'
 import NavBar from 'web/page_objects/navBar'
 import SignInPage from 'web/page_objects/signInPage'
+import { hideIntercom } from 'web/actions/common'
 
 export function verifyIncorrectSignIn() {
     return SignInPage.incorrectDetails.getText()
@@ -20,6 +21,7 @@ export function signIn(email, password) {
 export function submitEmail() {
     SignInPage.emailInput.setValue('forgot@password.com');
     CommonPage.submitButton.click();
+    hideIntercom()
 }
 
 export function backToSignInButtonVisible() {

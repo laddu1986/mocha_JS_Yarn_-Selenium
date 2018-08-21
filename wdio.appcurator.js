@@ -129,7 +129,9 @@ exports.config = {
   capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
+    // './test/web/specs/*/*Test.js', //master
     './test/web/specs/metrics/labelUserTest.js', //master
+
     // './test/web/specs/negativeSpecs/*/*Test.js',
   ],
   // Patterns to exclude.
@@ -179,7 +181,6 @@ exports.config = {
   },
 
   mochaOpts: {
-    slow: 0,
     ui: 'bdd',
     reporter: 'spec',
     compilers: ['js:babel-register'],

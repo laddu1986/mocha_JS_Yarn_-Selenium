@@ -79,21 +79,22 @@ describe('User Labels Test', () => {
     it('Add multiple labels -> verify they are sorted alphabetically', () => {
       gotoUsersTab()
       clickUserRowNo(4);
-      var labelCount = Math.floor((Math.random() * 10) + 2)
+      var labelCount = Math.floor((Math.random() * 10) + 4)
       addLabels(labelCount)
       expect(verifyAddedLabels()).to.equal(true, 'Labels were not Added/Saved')
     })
 
+
     it('Verify user row label count and clicking it re-directs to label details section', () => {
       gotoUsersTab()
       expect(verifyLabelCount()).to.equal(true, 'Label count incorrect in User row')
+      clickLabelCount();
     })
 
     it('Delete labels and verify all labels are deleted', () => {
-      clickLabelCount();
       deleteLabels()
       expect(verifyLabelDeleted()).to.equal(true, 'Labels were not Deleted')
-    })
+    }, 2)
   })
 
   describe('Test Label suggestions', () => {
