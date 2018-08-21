@@ -35,7 +35,9 @@ export function clickUserRowNo(n) {
     n === undefined || n <= 0 ?
         UsersPage.userRows.value[0].click() :
         UsersPage.userRows.value[n - 1].click();
-    browser.pause(400) // browser animation time for opening side panel
+    //wait for browser animation for opening side panel and loading all elements
+    browser.pause(500)
+    // browser.waitUntil(() => UsersPage.revealLabelsButton.isEnabled() === true, 5000, 'User Side Panel not Visible', 300);
 }
 
 export function getFirstRowUserName() {
@@ -75,8 +77,10 @@ export function addLabels(labelCount) {
 }
 
 export function clickAddLabelButton() {
-    UsersPage.deleteUserButton.getText()
-    UsersPage.addLabelButton.click()
+    browser.waitUntil(() => UsersPage.revealLabelsButton.isEnabled() === true, 5000, 'Reveal button not Visible', 100);
+    UsersPage.revealLabelsButton.click()
+    browser.waitUntil(() => UsersPage.addLabelButton.isEnabled() === true, 5000, 'Add Label button not Enabled', 100);
+
 }
 
 export function inputLabelDetails(label, labelCount) {
@@ -85,14 +89,16 @@ export function inputLabelDetails(label, labelCount) {
     userInputLabels = [];
     for (let i = 0; i < labelCount; i++) {
         label === undefined ? lname = lib.randomString.generate(Math.floor((Math.random() * 10) + 3)) : lname = label[i]
+        console.log('UsersPage.labelInput.setValue(lname)')
         UsersPage.labelInput.setValue(lname)
-        browser.keys('Enter') //workaround as Intercom logo overlaps '+' button and it cant be clicked by WDIO
+        browser.pause(100)
+        browser.keys('Enter')
+        // UsersPage.addLabelButton.click()
         label === undefined
         if (lname.length >= 2) {
             userInputLabels.push(lname.trim())
             browser.waitUntil(() => UsersPage.labels.value.length === i + 1, 5000, 'Label NOT Saved', 100);
         }
-
     }
     return userInputLabels = userInputLabels.sort(lib.sortAlphabetically), lcount = labelCount
 }
@@ -118,7 +124,6 @@ export function clickLabelCount() {
 
 var deletedList = []
 export function deleteLabels(labelName) {
-    UsersPage.deleteUserButton.scroll()
     deletedList = []
     if (labelName === undefined) {
         let d = UsersPage.deleteLabelButton.value.length
@@ -167,4 +172,8 @@ export function selectLabelFromSuggestions(selectedLabel) {
         }
     }
     return userInputLabels
+}
+
+export function closeSidePanel() {
+    UsersPage.closeSidePanel.click()
 }

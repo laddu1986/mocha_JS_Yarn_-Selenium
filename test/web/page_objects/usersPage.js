@@ -15,7 +15,9 @@ class UsersPage {
     get closeSidePanel() { return browser.element("//button[@title='Close']") }
     get moreButton() { return browser.element("//button[@title='More']") }
 
-    get addLabelButton() { return browser.element("//div[@data-qa='panel:details']//button[@data-qa='btn:reveal-labels']"); }
+    // get revealLabelsButton() { return browser.element("//div[@data-qa='panel:details']//button[@data-qa='btn:reveal-labels']"); }
+    get revealLabelsButton() { return browser.element("//button[@data-qa='btn:reveal-labels']"); }
+    get addLabelButton() { return browser.element("//div[@data-qa='panel:details']//button[@data-qa='btn:add-label']"); }
     get labelInput() { return browser.element("//div[@data-qa='panel:details']//input"); }
     get labels() { return browser.elements("//div[@data-qa='panel:details']//div[@data-qa='tag:user-metrics']"); }
     get deleteLabelButton() { return browser.elements("//div[@data-qa='panel:details']//button[@data-qa='tag:user-metricsbtn:delete']") }
