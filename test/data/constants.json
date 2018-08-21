@@ -27,5 +27,44 @@
         "Name": "Name",
         "Email": "Email",
         "UID": "UID"
+    },
+    "SegmentFilterTypes": {
+        "AudienceType": "AudienceType",
+        "LogicalType": "LogicalType",
+        "Operator": "Operator",
+        "Property": "Property"
+    },
+    "SegmentRulesFilters": {
+        "AudienceType": {
+            "User": "Users",
+            "Visitor": "Visitors"
+        },
+        "LogicalType": {
+            "Any": "any",
+            "All": "all"
+        },
+        "Properties": {
+            "ActiveDays": "Active Days(last 30 days)",
+            "AvgSessions": "Avg Sessions(last 30 days)",
+            "AvgSessionTime": "Avg Session Time",
+            "LastSeen": "Last Seen",
+            "Created": "Created",
+            "Known": "Known",
+            "FirstSeen": "First Seen",
+            "Joined": "Joined"
+        },
+        "Operators": {
+            "IsUnknown": "is unknown",
+            "Is": "is",
+            "IsNot": "is not",
+            "GreaterThan": "greater than",
+            "LessThan": "less than",
+            "HasAnyValue": "has any value",
+            "On": "on",
+            "Exactly": "exactly",
+            "Before": "before",
+            "MoreThan": "more than",
+            "After": "after"
+        }
     }
 }
