@@ -5,6 +5,7 @@ global.expect = server.expect;
 var randomString = require("randomstring");
 var NodeESModuleLoader = require('node-es-module-loader');
 var loader = new NodeESModuleLoader();
+var dateFormat = require('dateformat');
 
 const responseData = {
   organization: [],
@@ -74,6 +75,7 @@ function del(any) {
 }
 
 export {
+  dateFormat,
   Tags,
   loader,
   joi,

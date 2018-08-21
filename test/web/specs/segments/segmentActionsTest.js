@@ -4,7 +4,7 @@ import { createAccount } from 'web/actions/account';
 import { createSpace } from 'web/actions/space';
 import { clickOnAudienceLink } from 'web/actions/navBar';
 import { getNotificationMessageText, confirmButtonIsEnabled, typeDeleteToConfirm, confirmDelete } from 'web/actions/common';
-import { updateSegment, deleteSegment, verifySegment, createSegment, goToSegmentDetailPage, verifySegmentDetailpage, verifyAllSegmentsPage, clickDeleteSegButton, cancelDeleteSegment } from 'web/actions/segment';
+import { updateSegment, verifySegment, createSegment, goToSegmentDetailPage, verifySegmentDetailpage, verifyAllSegmentsPage, clickDeleteSegButton, cancelDeleteSegment } from 'web/actions/segment';
 import * as Constants from 'data/constants.json';
 import * as PassiveNotification from 'web/data/passiveNotification.json';
 var name = lib.randomString.generate(5), tagline = lib.randomString.generate(9), newName = `${lib.randomString.generate(5)}_newName`, newTagline = `${lib.randomString.generate(5)}_newTagline`;
@@ -14,7 +14,9 @@ describe('Segment Actions Tests', () => {
         accountPage.open()
         createAccount();
         createSpace();
+        clickOnAudienceLink();
         createSegment(name, tagline);
+        clickOnAudienceLink();
     });
 
     it('Click on Segment card --> lands on card details page', () => {
