@@ -11,6 +11,20 @@ class SegmentPage extends Page {
     get segmentCardTagline() { return browser.elements("//p[@data-qa='segment:tagline']"); }
     get colourSwatch() { return browser.elements("//button[@data-qa='btn:color']//div[@data-qa='color:display']"); }
 
+    get audienceType() { return browser.element("//button[@data-qa='segment:rule:audienceType']"); }
+    get logicalType() { return browser.element("//button[@data-qa='segment:rule:logicalType']"); }
+    get addFilter() { return browser.element("//button[@data-qa='segment:rule:addFilter']"); }
+    get audienceTypeMenuItems() { return browser.elements("//div[@data-qa='segment:rule:audienceType:menu-item']"); }
+    get logicalTypeMenuItems() { return browser.elements("//div[@data-qa='segment:rule:logicalType:menu-item']"); }
+    get properties() { return browser.elements("//div[@data-qa='segment:rule:addFilter:menu-item']"); }
+    get operators() { return browser.elements("//div[@data-qa='segment:rule:menu-item']"); }
+    get segmentActionsMenu() { return browser.element("//button[@data-qa='segment:actions']"); }
+    get deleteFilter() { return browser.element("//span[@data-qa='segment:rule:delete']"); }
+    get delete() { return browser.element("//div[@data-qa='segment:actions:menu-item:delete']"); }
+    get filters() { return browser.elements("//button[@data-qa='segment:rule:filter']"); }
+    get textField() { return browser.element("//input[@data-qa='segment:rule:input']"); }
+    get todayDate() { return browser.element("//div[contains(@class,'today')]"); }
+
     open(e) {
         super.open(e);
     }

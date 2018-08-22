@@ -34,7 +34,7 @@ export function createSpace() {
   var spacename = `${lib.randomString.generate(8)}_Space`;
   OrgDashboardPage.createSpaceInput.setValue(spacename);
   OrgDashboardPage.createSpaceButton.click();
-  // SpaceDashboardPage.goToDevPortal.waitForVisible();
+  SpaceDashboardPage.goToDevPortal.waitForVisible();
   return spacename;
 }
 
