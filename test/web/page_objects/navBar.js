@@ -6,7 +6,7 @@ class NavBar extends Page {
   get profileMenu() { return browser.element("//div[@data-qa='menu:profile']//div[@data-qa='btn:menu']"); }
 
   //org
-  get orgSettingsAnchor() { return browser.element("//div[@data-qa='menu:profile']//*[contains(text(),'Settings')]"); }
+  get orgSettingsAnchor() { return browser.element("//ul[@data-qa='submenu:profile']//a[@data-qa='mi:org-settings']"); }
   get backToOrgDashboardLink() { return browser.element("//a[@data-qa='link:org-ctx']"); }
 
   //space
@@ -17,12 +17,11 @@ class NavBar extends Page {
   get developerLink() { return browser.element("//a[@data-qa='nav:developer']"); }
 
   // Help
-  get helpMenuNav() { return browser.element("//*[@data-qa='md:help']"); }
+  get helpMenuNav() { return browser.element("//div[@data-qa='menu:help']//div[@data-qa='btn:menu']"); }
   get teamNavLink() { return browser.element("//*[@data-qa='nav:team']"); }
-  get helpCenterAnchor() { return browser.element("//*[contains(text(),'Help Center')]"); }
-  get devPortalAnchor() { return browser.element("//*[contains(text(),'Developer Portal')]"); }
-  get apiPortalAnchor() { return browser.element("//*[contains(text(),'API Portal')]"); }
-  get sysStatusAnchor() { return browser.element("//*[contains(text(),'System Status')]"); }
+  get helpCenterAnchor() { return browser.element("//ul[@data-qa='submenu:help']//a[@data-qa='mi:help-centre']"); }
+  get apiPortalAnchor() { return browser.element("//ul[@data-qa='submenu:help']//a[@data-qa='mi:api-portal']"); }
+  get sysStatusAnchor() { return browser.element("//ul[@data-qa='submenu:help']//a[@data-qa='mi:system-uptime']"); }
   get navOrgs() { return browser.elements("//ul[@data-qa='submenu:org-list']//li"); }
 
   get signOut() { return browser.element("//li[@data-qa='mi:sign-out']"); }
