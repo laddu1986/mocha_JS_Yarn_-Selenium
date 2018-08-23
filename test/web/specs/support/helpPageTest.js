@@ -1,37 +1,24 @@
 import * as lib from '../../../common';
-import HomePage from 'web/page_objects/homePage';
+import NavBar from 'web/page_objects/navBar';
 import SignInPage from 'web/page_objects/signInPage';
-import CommonPage from 'web/page_objects/common';
+import { signIn } from 'web/actions/login';
 import { signOut } from 'web/actions/common'
 
-let signInSuccess;
-
-function signIn() {
-  setValue(SignInPage.emailInput, 'testaccount@donotdeleteplease.com');
-  setValue(SignInPage.passwordInput, process.env.ACCOUNT_PASS);
-  click(CommonPage.submitButton);
-  waitForVisible(HomePage.logo);
-  signInSuccess = HomePage.logo.isVisible();
-  expect(signInSuccess).to.equal(true);
-}
-
-
-xdescribe('Test Help Center', () => {
+describe('Test Help Center', () => {
   it('Open App Page', () => {
     SignInPage.open();
   });
 
   it('Sign In', () => {
-    signIn();
+    signIn('testaccount@donotdeleteplease.com', process.env.ACCOUNT_PASS);
   });
 
-
   it('Click Help Menu from Side Nav Bar', () => {
-    click(HomePage.helpMenuNav);
+    NavBar.helpMenuNav.click();
   });
 
   it('Click Help Center link', () => {
-    click(HomePage.helpCenterAnchor);
+    NavBar.helpCenterAnchor.click();
   });
 
   it('Check Help Center opened in a new Tab', () => {
@@ -47,42 +34,17 @@ xdescribe('Test Help Center', () => {
 
 });
 
-xdescribe('Test Developer Portal', () => {
+describe('Test API Portal', () => {
   it('Sign In', () => {
-    signIn();
+    signIn('testaccount@donotdeleteplease.com', process.env.ACCOUNT_PASS);
   });
 
   it('Click Help Menu from Side Nav Bar', () => {
-    click(HomePage.helpMenuNav);
-  });
-
-  it('Click Developer Portal link', () => {
-    click(HomePage.devPortalAnchor);
-  });
-
-  it('Check Developer Portal opened in a new Tab', () => {
-    const tabIds = browser.getTabIds();
-    browser.switchTab(tabIds[1]);
-    const devPortalTab = browser.windowHandle();
-
-    // expect(browser.getUrl()).to.include('https://developer.appcurator.com/');
-    browser.close(devPortalTab);
-    signOut();
-
-  });
-});
-
-xdescribe('Test API Portal', () => {
-  it('Sign In', () => {
-    signIn();
-  });
-
-  it('Click Help Menu from Side Nav Bar', () => {
-    click(HomePage.helpMenuNav);
+    NavBar.helpMenuNav.click();
   });
 
   it('Click API Portal link', () => {
-    click(HomePage.apiPortalAnchor);
+    NavBar.apiPortalAnchor.click();
   });
 
   it('Check API Portal opened in a new Tab', () => {
@@ -97,17 +59,17 @@ xdescribe('Test API Portal', () => {
   });
 });
 
-xdescribe('Test System Status', () => {
+describe('Test System Status', () => {
   it('Sign In', () => {
-    signIn();
+    signIn('testaccount@donotdeleteplease.com', process.env.ACCOUNT_PASS);
   });
 
   it('Click Help Menu from Side Nav Bar', () => {
-    click(HomePage.helpMenuNav);
+    NavBar.helpMenuNav.click();
   });
 
   it('Click System Status link', () => {
-    click(HomePage.sysStatusAnchor);
+    NavBar.sysStatusAnchor.click();
   });
 
   it('Check System Status opened in a new Tab', () => {
