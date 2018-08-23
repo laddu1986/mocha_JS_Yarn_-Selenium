@@ -128,9 +128,8 @@ exports.config = {
   capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
-    // './test/web/specs/*/*Test.js', //master
-    './test/web/specs/*/helpPageTest.js', //master
-    // './test/web/specs/negativeSpecs/*/*Test.js'
+    './test/web/specs/*/*Test.js', //master
+    './test/web/specs/negativeSpecs/*/*Test.js'
   ],
   // Patterns to exclude.
   exclude: [
