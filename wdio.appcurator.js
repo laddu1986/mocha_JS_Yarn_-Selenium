@@ -133,7 +133,7 @@ exports.config = {
   ],
   // Patterns to exclude.
   exclude: [
-    // './test/web/specs/support/helpPageTest.js',
+    './test/web/specs/support/helpPageTest.js',
     './test/web/specs/spaces/spaceKeyTest.js',
     './test/web/specs/metrics/*Test.js'    //until apikey page is final
   ],
