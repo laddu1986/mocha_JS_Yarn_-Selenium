@@ -1,7 +1,7 @@
 class HomePage {
   get navbar() { return browser.element('#navbar'); }
   get switchOrCreateOrganizations() { return browser.element("//li[@data-qa='nav:menu']"); }
-  get createOrg() { return browser.element("//ul[@data-qa='ul-org-list']//*[contains(text(),'Create')]"); }
+  get createOrg() { return browser.element("//ul[@data-qa='submenu:org-list']//a[@data-qa='mi:create-org']"); }
   get createOrgInput() { return browser.element("//input[@data-qa='input:org-name']"); }
   get createOrgErr() { return browser.element("//*[@data-qa='input:org-name']//*[@data-qa='input:error']"); }
 
