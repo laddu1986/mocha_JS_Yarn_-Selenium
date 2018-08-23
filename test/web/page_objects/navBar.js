@@ -3,10 +3,10 @@ import Page from './page';
 class NavBar extends Page {
 
   //common
-  get profileMenu() { return browser.element("//div[@data-qa='md-profile']//div[@data-qa='btn:menu']"); }
+  get profileMenu() { return browser.element("//div[@data-qa='menu:profile']//div[@data-qa='btn:menu']"); }
 
   //org
-  get orgSettingsAnchor() { return browser.element("//div[@data-qa='md-profile']//*[contains(text(),'Settings')]"); }
+  get orgSettingsAnchor() { return browser.element("//div[@data-qa='menu:profile']//*[contains(text(),'Settings')]"); }
   get backToOrgDashboardLink() { return browser.element("//a[@data-qa='link:org-ctx']"); }
 
   //space
@@ -23,7 +23,7 @@ class NavBar extends Page {
   get devPortalAnchor() { return browser.element("//*[contains(text(),'Developer Portal')]"); }
   get apiPortalAnchor() { return browser.element("//*[contains(text(),'API Portal')]"); }
   get sysStatusAnchor() { return browser.element("//*[contains(text(),'System Status')]"); }
-  get navOrgs() { return browser.elements("//*[@data-qa='ul-org-list']//li"); }
+  get navOrgs() { return browser.elements("//ul[@data-qa='submenu:org-list']//li"); }
 
   get signOut() { return browser.element("//li[@data-qa='mi:sign-out']"); }
   open(e) {

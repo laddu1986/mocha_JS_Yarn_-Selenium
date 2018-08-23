@@ -93,7 +93,8 @@ export function verifyAPIKeyStatus(status) {
 
 export function verifyNewSpaceUrl(newSlugName) {
   return browser.waitUntil(function () {
-    return browser.getUrl().includes(newSlugName)
+    console.log(browser.getUrl(), '===', newSlugName)
+    return browser.getUrl().includes(newSlugName.toLowerCase())
   }, 5000, `New Slug ${newSlugName} is not updated`);
 }
 
