@@ -144,7 +144,8 @@ exports.config = {
     support: ['./test/web/specs/support/*Test.js'],
     invites: ['./test/web/specs/invites/*Test.js'],
     segments: ['./test/web/specs/segments/*Test.js'],
-    metrics: ['./test/web/specs/metrics/*Test.js']
+    metrics: ['./test/web/specs/metrics/*Test.js'],
+    negative: ['./test/web/specs/negativeSpecs/*/*Test.js']
   },
   logLevel: 'silent',
   bail: 2,
