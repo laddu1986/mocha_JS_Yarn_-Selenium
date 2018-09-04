@@ -5,9 +5,9 @@ import * as lib from '../../common';
 const moduleSpecifier = 'api/data/spaceTestsData';
 var data, bigNameResponse, bigShortUrlResponse, blankShortUrlResponse, blankNameResponse, noRowVersionDeleteResponse, incorrectOrgIDDeleteResponse, incorrectSpaceIDDeleteResponse, blankNamePutResponse, blankShortUrlPutResponse, bigShortUrlPutResponse, bigNamePutResponse, bigShortUrlPatchResponse, noShortUrlPatchResponse, blankShortUrlPatchResponse, bigNamePatchResponse, noNamePatchResponse, blankNamePatchResponse, incorrectSpaceIDPatchResponse, incorrectOrgIDPatchResponse, incorrectRowVersionPatchResponse, incorrectOrgIDGetResponse, incorrectSpaceIDGetResponse, incorrectSpaceIDResponse, incorrectOrgIDResponse, noNamePostResponse, noShortUrlPostResponse, noAccountIdPostResponse, noNamePutResponse, noShortUrlPutResponse, noIdPutResponse, noRowVersionPutResponse;
 
-describe(`Negative Tests --> Space Api\n`, () => {
-    describe(`\nPOST /organizations/{orgId}/spaces`, () => {
-        describe(`\n400 Error Response: Mandatory fields validation\n`, () => {
+describe('Negative Tests --> Space Api', () => {
+    describe('POST /organizations/{orgId}/spaces', () => {
+        describe('400 Error Response: Mandatory fields validation', () => {
             before((done) => {
                 identity.postIdentity(lib.responseData.negSpace).then(() => {
                     organization.postOrganization(lib.responseData.negSpace).then(() => {
@@ -71,8 +71,8 @@ describe(`Negative Tests --> Space Api\n`, () => {
             });
         });
     });
-    describe(`\nPUT /organizations/{orgId}/spaces`, () => {
-        describe(`\n400 Error Response: Mandatory fields validation\n`, () => {
+    describe('PUT /organizations/{orgId}/spaces', () => {
+        describe('400 Error Response: Mandatory fields validation', () => {
             before((done) => {
                 noNamePutResponse = lib.put(data.noNamePut);
                 blankNamePutResponse = lib.put(data.blankNamePut);
@@ -126,7 +126,7 @@ describe(`Negative Tests --> Space Api\n`, () => {
                 });
             });
         });
-        describe(`\n409 Error Response: Conflict\n`, () => {
+        describe('409 Error Response: Conflict', () => {
             before((done) => {
                 noRowVersionPutResponse = lib.put(data.noRowVersionPut);
                 done();
@@ -137,7 +137,7 @@ describe(`Negative Tests --> Space Api\n`, () => {
                 });
             });
         });
-        describe(`\n404 Error Response: Not Found\n`, () => {
+        describe('404 Error Response: Not Found', () => {
             before((done) => {
                 incorrectOrgIDResponse = lib.put(data.incorrectOrgIDPut);
                 incorrectSpaceIDResponse = lib.put(data.incorrectSpaceIDPut);
@@ -155,8 +155,8 @@ describe(`Negative Tests --> Space Api\n`, () => {
             });
         });
     });
-    describe(`\nGET /organizations/{orgId}/spaces/{spaceId}`, () => {
-        describe(`\n404 Error Response: Not Found\n`, () => {
+    describe('GET /organizations/{orgId}/spaces/{spaceId}', () => {
+        describe('404 Error Response: Not Found', () => {
             before((done) => {
                 incorrectOrgIDGetResponse = lib.get(data.incorrectOrgIDGet);
                 incorrectSpaceIDGetResponse = lib.get(data.incorrectSpaceIDGet);
@@ -174,8 +174,8 @@ describe(`Negative Tests --> Space Api\n`, () => {
             });
         });
     });
-    describe(`\nPATCH /organizations/{orgId}/spaces/{spaceId}`, () => {
-        describe(`\n409 Error Response: Conflict\n`, () => {
+    describe('PATCH /organizations/{orgId}/spaces/{spaceId}', () => {
+        describe('409 Error Response: Conflict', () => {
             before((done) => {
                 incorrectRowVersionPatchResponse = lib.patch(data.incorrectRowVersionPatch);
                 done();
@@ -186,7 +186,7 @@ describe(`Negative Tests --> Space Api\n`, () => {
                 });
             });
         });
-        describe(`\n404 Error Response: Not Found\n`, () => {
+        describe('404 Error Response: Not Found', () => {
             before((done) => {
                 incorrectOrgIDPatchResponse = lib.patch(data.incorrectOrgIDPatch);
                 incorrectSpaceIDPatchResponse = lib.patch(data.incorrectSpaceIDPatch);
@@ -203,7 +203,7 @@ describe(`Negative Tests --> Space Api\n`, () => {
                 });
             });
         });
-        describe(`\n400 Error Response: Mandatory fields validation\n`, () => {
+        describe('400 Error Response: Mandatory fields validation', () => {
             before((done) => {
                 blankNamePatchResponse = lib.patch(data.blankNamePatch);
                 noNamePatchResponse = lib.patch(data.noNamePatch);
@@ -251,8 +251,8 @@ describe(`Negative Tests --> Space Api\n`, () => {
             });
         });
     });
-    describe(`\nDELETE /organizations/{orgId}/spaces/{spaceId}`, () => {
-        describe(`\n404 Error Response: Not Found\n`, () => {
+    describe('DELETE /organizations/{orgId}/spaces/{spaceId}', () => {
+        describe('404 Error Response: Not Found', () => {
             before((done) => {
                 incorrectSpaceIDDeleteResponse = lib.del(data.incorrectSpaceIDDelete);
                 incorrectOrgIDDeleteResponse = lib.del(data.incorrectOrgIDDelete);
@@ -269,7 +269,7 @@ describe(`Negative Tests --> Space Api\n`, () => {
                 });
             });
         });
-        describe(`\n409 Error Response: Conflict\n`, () => {
+        describe('409 Error Response: Conflict', () => {
             before((done) => {
                 noRowVersionDeleteResponse = lib.del(data.noRowVersionDelete);
                 done();
