@@ -17,6 +17,7 @@
     "dotenv": "^6.0.0",
     "eslint": "^4.18.2",
     "eslint-plugin-babel": "^5.1.0",
+    "git-pull-or-clone": "^1.2.0",
     "mocha-multi-reporters": "^1.1.7",
     "mocha-simple-html-reporter": "^1.1.0",
     "mysql2": "^1.5.3",
@@ -35,9 +36,12 @@
     "babel-preset-latest": "^6.24.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
     "chakram": "^1.5.0",
+    "download-git-repo": "^1.1.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
+    "grpc-caller": "^0.9.0",
     "mocha": "^5.0.5",
     "wdio-mocha-framework": "^0.5.13",
     "wdio-spec-reporter": "^0.1.4"
@@ -45,6 +49,7 @@
   "scripts": {
     "web": "node_modules/.bin/wdio wdio.appcurator.js",
     "api": "mocha test/api/specs/*Test.js --opts test/api/config/mocha.opts",
+    "grpc": "mocha test/grpc/specs/**/*Test.js --opts test/api/config/mocha.opts",
     "report": "allure generate allure-results --clean -o allure-report && allure open allure-report",
     "orca": "mocha test/orca/specs/loginTest.js --require babel-register",
     "test": "./node_modules/mocha/bin/mocha test/api/specs/*Test.js --require babel-register",
@@ -54,7 +59,8 @@
     "web-pipelines": "node_modules/.bin/wdio wdio.bitbucket-pipelines.js",
     "api-pipelines": "mocha test/api/specs/*Test.js --require babel-register --timeout 10000",
     "web-smoke-tests": "node_modules/.bin/wdio wdio.appcurator.js --mochaOpts.grep=@smoke",
-    "api-smoke-tests": "mocha test/api/specs/*Test.js --opts test/api/config/mocha.opts --grep @smoke"
+    "api-smoke-tests": "mocha test/api/specs/*Test.js --opts test/api/config/mocha.opts --grep @smoke",
+    "pull-protos": "cd /Users/abhi/Documents/services/segment-rules/api/protos/"
   },
   "repository": {
     "type": "git",
