@@ -5,8 +5,8 @@ import * as identity from 'api/actions/identity';
 
 var schema, createResponse, getByAccountIDResponse, getByOrgIDResponse, deleteResponse, getResponse;
 
-describe(`Memberships Api\n`, () => {
-  describe(`POST /memberships\n ${lib.Tags.smokeTest}`, () => {
+describe('Memberships Api', () => {
+  describe(`POST /memberships ${lib.Tags.smokeTest}`, () => {
     before((done) => {
       identity.postIdentity(lib.responseData.membership).then(() => {
         organization.postOrganization(lib.responseData.membership).then(() => {
@@ -27,7 +27,7 @@ describe(`Memberships Api\n`, () => {
     });
   });
 
-  describe(`\nGET /memberships/account/{id}\n`, () => {
+  describe('GET /memberships/account/{id}', () => {
     before((done) => {
       getByAccountIDResponse = membership.getMembershipByAccount(lib.responseData.membership);
       done();
@@ -53,7 +53,7 @@ describe(`Memberships Api\n`, () => {
     });
   });
 
-  describe(`\nGET /memberships/organization/{id}\n`, () => {
+  describe('GET /memberships/organization/{id}', () => {
     before((done) => {
       getByOrgIDResponse = membership.getMembershipByOrganization(lib.responseData.membership);
       done();
@@ -79,7 +79,7 @@ describe(`Memberships Api\n`, () => {
     });
   });
 
-  describe(`\nGET /memberships\n`, () => {
+  describe('GET /memberships', () => {
     before((done) => {
       getResponse = membership.getMemberships(lib.responseData.membership);
       done();
@@ -104,7 +104,7 @@ describe(`Memberships Api\n`, () => {
       })
     });
   });
-  describe(`\nDELETE /memberships/organization/{organizationId}/account/{accountId}\n`, () => {
+  describe('DELETE /memberships/organization/{organizationId}/account/{accountId}', () => {
     before((done) => {
       deleteResponse = membership.deleteMembershipByAccountAndOrganization(lib.responseData.membership);
       done();
