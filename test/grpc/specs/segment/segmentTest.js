@@ -4,9 +4,6 @@ const caller = require('grpc-caller')
 
 //setup assertion library
 var chai = require('chai')
-// var chaiAsPromised = require('chai-as-promised')
-// chai.use(chaiAsPromised)
-
 
 var expect = chai.expect
 
@@ -29,13 +26,8 @@ describe('Segment Service', () => {
     return client.getSegmentById({ segmentContext: { orgId: '37c9ad00-855b-4882-b33a-f3d9340aa4de', spaceId: '1f78da01-b1ac-4ac3-8952-bd646c1fbe6e', segmentId: '0rvl39E' } })
       .then((response) => {
         expect(response).to.be.an('object')
-        // expect(JSON.parse(JSON.stringify(response.title))).to.equal('UR-SEGMENT')
-        // expect(Object(response).title).to.deep.equal('UR-SEGMENT')
+        expect(Object(response).title).to.deep.equal('MY-SEGMENT')
         expect(Object(response).tagline).to.deep.equal('my tagline')
-
-        // var title = response['title']
-        // expect(title).to.equal('MY-SEGMENT1')
-
       })
   })
 
