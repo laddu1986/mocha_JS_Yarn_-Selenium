@@ -6,7 +6,7 @@ import * as Constants from 'data/constants.json';
 var schema, postResponse, getResponse, revokeResponse, reactivateResponse, deleteResponse;
 
 describe('Space Keys Api', () => {
-    describe(`\nPOST /keys\n`, () => {
+    describe('POST /keys', () => {
         before((done) => {
             identity.postIdentity(lib.responseData.spaceKey).then(() => {
                 organization.postOrganization(lib.responseData.spaceKey).then(() => {
@@ -33,7 +33,7 @@ describe('Space Keys Api', () => {
             });
         });
     });
-    describe(`\nGET /keys\n`, () => {
+    describe('GET /keys', () => {
         before((done) => {
             getResponse = spaces.getKeysBySpaceId(lib.responseData.spaceKey);
             done();
@@ -57,8 +57,8 @@ describe('Space Keys Api', () => {
             });
         });
     });
-    describe(`\nPATCH /keys/{key}\n`, () => {
-        describe(`Revoke\n`, () => {
+    describe('PATCH /keys/{key}', () => {
+        describe('Revoke', () => {
             before((done) => {
                 revokeResponse = spaces.patchKeyBySpaceIdAndRowVersion(lib.responseData.spaceKey, Constants.APIKeyStatus.Revoked);
                 done();
@@ -79,7 +79,7 @@ describe('Space Keys Api', () => {
                 });
             });
         });
-        describe(`\nRe-activate\n`, () => {
+        describe('Re-activate', () => {
             before((done) => {
                 reactivateResponse = spaces.patchKeyBySpaceIdAndRowVersion(lib.responseData.spaceKey, Constants.APIKeyStatus.Active);
                 done();
@@ -101,7 +101,7 @@ describe('Space Keys Api', () => {
             });
         });
     });
-    describe(`\nDELETE /keys/{key}\n`, () => {
+    describe('DELETE /keys/{key}', () => {
         before((done) => {
             deleteResponse = spaces.deleteKeyBySpaceIdAndRowVersion(lib.responseData.spaceKey);
             done();

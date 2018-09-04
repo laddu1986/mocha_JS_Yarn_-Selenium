@@ -6,7 +6,7 @@ const moduleSpecifier = 'api/data/membershipTestsData';
 var expectedMessageForBlankOrgId, expectedMessageForinvalidToken, getResponse, deleteResponse, blankOrgIdResponse, invalidTokenResponse;
 
 describe('Negative tests --> Membership', () => {
-  describe(`\nGET /memberships\n`, () => {
+  describe('GET /memberships', () => {
     before((done) => {
       identity.postIdentity(lib.responseData.negMembership).then(() => {
         organization.postOrganization(lib.responseData.negMembership).then(() => {
@@ -25,7 +25,7 @@ describe('Negative tests --> Membership', () => {
       })
     });
   });
-  describe(`\nPOST /memberships \n`, () => {
+  describe('POST /memberships ', () => {
     before((done) => {
       lib.loader.import(moduleSpecifier).then((dataImported) => {
         blankOrgIdResponse = lib.post(dataImported.default.blankOrgId);
@@ -48,7 +48,7 @@ describe('Negative tests --> Membership', () => {
       })
     });
   })
-  describe(`\nDelete Membership when Account is Non Existing \n`, () => {
+  describe('Delete Membership when Account is Non Existing ', () => {
     before((done) => {
       identity.deleteIdentityById(lib.responseData.negMembership).then(() => {
         deleteResponse = membership.deleteMembershipByAccountAndOrganization(lib.responseData.negMembership);
