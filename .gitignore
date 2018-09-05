@@ -12,3 +12,4 @@ phantomjs.log
 **/api-report.html
 **/.DS_Store
 /personal
+/grpc/src
