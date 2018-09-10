@@ -28,7 +28,6 @@ describe('Segment Service', () => {
         expect(response.title).to.deep.equal('MY-SEGMENT')
         expect(response.tagline).to.deep.equal('my tagline')
       })
-
   })
 
 })

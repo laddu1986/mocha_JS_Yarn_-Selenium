@@ -13,3 +13,4 @@ phantomjs.log
 **/.DS_Store
 /personal
 /grpc/src
+**/grpc-report.html
