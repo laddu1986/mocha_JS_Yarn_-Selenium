@@ -128,9 +128,8 @@ exports.config = {
   capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
-    './test/web/specs/*/inviteExpiredTest.js', //master
-    // './test/web/specs/*/*Test.js', //master
-    // './test/web/specs/negativeSpecs/*/*Test.js'
+    './test/web/specs/*/*Test.js', //master
+    './test/web/specs/negativeSpecs/*/*Test.js'
   ],
   // Patterns to exclude.
   exclude: [
@@ -203,7 +202,6 @@ exports.config = {
   // variables like `browser`. It is the perfect place to define custom commands.
   before() {
     const chai = require('chai');
-    // var onprepare = 'hey hi how are you';
     global.expect = chai.expect;
     chai.Should();
     //console.log('Before')

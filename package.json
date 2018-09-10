@@ -47,7 +47,7 @@
     "wdio-spec-reporter": "^0.1.4"
   },
   "scripts": {
-    "pull": "node /Users/abhi/Documents/qa-automaton/test/grpc/specs/segment/download.js",
+    "pull": "node test/grpc/specs/segment/download.js",
     "web": "node_modules/.bin/wdio wdio.appcurator.js",
     "api": "mocha test/api/specs/*Test.js --opts test/api/config/mocha.opts",
     "grpc": "mocha test/grpc/specs/**/*Test.js --opts test/grpc/config/mocha.opts",
