@@ -60,8 +60,7 @@
     "web-pipelines": "node_modules/.bin/wdio wdio.bitbucket-pipelines.js",
     "api-pipelines": "mocha test/api/specs/*Test.js --require babel-register --timeout 10000",
     "web-smoke-tests": "node_modules/.bin/wdio wdio.appcurator.js --mochaOpts.grep=@smoke",
-    "api-smoke-tests": "mocha test/api/specs/*Test.js --opts test/api/config/mocha.opts --grep @smoke",
-    "pull-protos": "cd /Users/abhi/Documents/services/segment-rules/api/protos/"
+    "api-smoke-tests": "mocha test/api/specs/*Test.js --opts test/api/config/mocha.opts --grep @smoke"
   },
   "repository": {
     "type": "git",
