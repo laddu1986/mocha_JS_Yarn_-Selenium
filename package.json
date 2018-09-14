@@ -47,10 +47,9 @@
     "wdio-spec-reporter": "^0.1.4"
   },
   "scripts": {
-    "pull": "node test/grpc/specs/segment/download.js",
+    "pull": "node test/api/Config/download.js",
     "web": "node_modules/.bin/wdio wdio.appcurator.js",
     "api": "mocha test/api/specs/*Test.js --opts test/api/config/mocha.opts",
-    "grpc": "mocha test/grpc/specs/**/*Test.js --opts test/grpc/config/mocha.opts",
     "report": "allure generate allure-results --clean -o allure-report && allure open allure-report",
     "orca": "mocha test/orca/specs/loginTest.js --require babel-register",
     "test": "./node_modules/mocha/bin/mocha test/api/specs/*Test.js --require babel-register",
