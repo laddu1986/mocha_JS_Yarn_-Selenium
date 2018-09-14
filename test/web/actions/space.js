@@ -46,6 +46,11 @@ export function goToDeveloperPortal() {
 }
 
 export function verifySpacePage(spaceName) {
+  console.log('coming here')
+  console.log('spaceName', spaceName)
+  console.log('SpaceDashboardPage', goToDevPortal);
+
+
   if (SpaceDashboardPage.goToDevPortal.isVisible() == true && browser.getUrl().includes(spaceName)) {
     return true;
   } else {
