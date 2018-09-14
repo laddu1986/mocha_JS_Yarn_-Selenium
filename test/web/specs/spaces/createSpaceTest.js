@@ -17,12 +17,10 @@ describe(`Space Tests ${lib.Tags.smokeTest}`, () => {
 
   it('Verify creating first Space', () => {
     spaceName1 = createSpace();
-    console.log('createSpace', spaceName1)
-
     expect(verifySpacePage(spaceName1.toLowerCase())).to.equal(true);
   });
 
-  xit('Verify creating two more spaces ', () => {
+  it('Verify creating two more spaces ', () => {
     for (var i = 0; i < 2; i++) {
       goBackToOrgDashboard();
       clickCreateNewSpaceButton();
@@ -31,13 +29,13 @@ describe(`Space Tests ${lib.Tags.smokeTest}`, () => {
     }
   })
 
-  xit('Sign out and back in --> Should show last accessed Space', () => {
+  it('Sign out and back in --> Should show last accessed Space', () => {
     signOut();
     signIn(accountDetail.email, accountDetail.password);
     expect(verifySpacePage(spaceName[1].toLowerCase())).to.equal(true);
   });
 
-  xit('Sorting of Space cards stack', () => {
+  it('Sorting of Space cards stack', () => {
     goBackToOrgDashboard();
     expect(verifySpaceOrder('2')).to.include(spaceName1);
     expect(verifySpaceOrder('1')).to.include(spaceName[0]);
