@@ -1,6 +1,0 @@
-{
-  "reporterEnabled": "mocha-simple-html-reporter, spec",
-  "mochaSimpleHtmlReporterReporterOptions": {
-    "output": "./test/grpc/reports/grpc-report.html"
-  }
-}
