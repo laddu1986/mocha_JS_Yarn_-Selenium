@@ -2,7 +2,7 @@ require('dotenv').config();
 const argv = require('yargs').argv;
 
 const debug = process.env.DEBUG;
-const timeoutPeriod = 30000;
+const timeoutPeriod = 60000;
 
 var browsers = {
   chrome_headless: {
@@ -128,8 +128,9 @@ exports.config = {
   capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
-    './test/web/specs/*/*Test.js', //master
-    './test/web/specs/negativeSpecs/*/*Test.js'
+    // './test/web/specs/*/*Test.js', //master
+    './test/web/specs/*/createSpaceTest.js', //master
+    // './test/web/specs/negativeSpecs/*/*Test.js'
   ],
   // Patterns to exclude.
   exclude: [

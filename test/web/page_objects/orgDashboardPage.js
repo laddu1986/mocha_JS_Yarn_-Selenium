@@ -12,7 +12,8 @@ class OrgDashboardPage extends Page {
   get orgCardCountAnchor() { return browser.elements("//a[@data-qa='org:card']"); }
 
   // Space
-  get createYourFirstSpaceLabel() { return browser.element("//*[@data-qa='page:org-dashboard']//section//div//h2"); }
+  // get createYourFirstSpaceLabel() { return browser.element("//*[@data-qa='page:org-dashboard']//section//div//h2"); }
+  get createYourFirstSpaceLabel() { return browser.element("//section[@data-qa='page:org-dashboard']//div//h1"); }
   get createSpaceInput() { return browser.element("//input[@data-qa='input:space-name']"); }
   get createSpaceButton() { return browser.element("//button[@data-qa='btn:create-space']"); }
   get createNewSpaceButton() { return browser.element("//a[@data-qa='btn:create-space']"); }
