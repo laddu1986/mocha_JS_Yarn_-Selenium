@@ -9,11 +9,11 @@
   "confirmDeleteTxt": "delete",
   "space": {
     "spaceNotFound": "We couldn't find the Space you were after.\nSelect a space",
-    "pageNotFound": "Page not found\nReturn to space"
+    "pageNotFound": "We're unable to find the page you're looking for.\nReturn to space"
   },
   "org": {
-    "orgNotFound": "We couldn't find the page you were after.\nSelect an org",
-    "pageNotFound": "Page not found\nReturn to "
+    "orgNotFound": "We're unable to find the page you're looking for.\nSelect an org",
+    "pageNotFound": "We're unable to find the page you're looking for.\nReturn to "
   },
   "search": {
     "result": "result found",
