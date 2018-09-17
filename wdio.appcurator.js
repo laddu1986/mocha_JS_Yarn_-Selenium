@@ -223,7 +223,17 @@ exports.config = {
     global.expect = chai.expect;
     chai.Should();
     //console.log('Before')
-    // const config = require('config-yml');
+    const Sequelize = require('sequelize');
+    const heyhi = new Sequelize(MySqlDb, MySqlUser, MySqlPass, {
+      host: MySqlHost,
+      dialect: 'mysql',
+      operatorsAliases: false,
+      pool: {
+        max: 50,
+        idle: 5000
+      },
+      logging: false
+    });
   },
 
   // Gets executed after all tests are done. You still have access to all global variables from
