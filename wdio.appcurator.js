@@ -93,43 +93,60 @@ var getArgs = function () {
 
   if (envArg == '' || envArg === undefined) {
     baseURL = process.env.WEB_DEV
-    DBName = process.env.SQL_DBNAME_DEV
+    MySqlDb = process.env.MYSQL_DBNAME_DEV
+    MySqlUser = process.env.MYSQL_USERNAME_DEV
+    MySqlPass = process.env.MYSQL_PASSWORD_DEV
+    MySqlHost = process.env.MYSQL_HOSTNAME_DEV
   }
   else {
     switch (envArg) {
       case 'qa': case 'QA': case 'Qa':
         baseURL = process.env.WEB_QA
-        DBName = process.env.SQL_DBNAME_QA
+        MySqlDb = process.env.MYSQL_DBNAME_QA
+        MySqlUser = process.env.MYSQL_USERNAME_QA
+        MySqlPass = process.env.MYSQL_PASSWORD_QA
+        MySqlHost = process.env.MYSQL_HOSTNAME_QA
         break;
       case 'dev': case 'DEV': case 'Dev':
         baseURL = process.env.WEB_DEV
-        DBName = process.env.SQL_DBNAME_DEV
+        MySqlDb = process.env.MYSQL_DBNAME_DEV
+        MySqlUser = process.env.MYSQL_USERNAME_DEV
+        MySqlPass = process.env.MYSQL_PASSWORD_DEV
+        MySqlHost = process.env.MYSQL_HOSTNAME_DEV
         break;
       case 'squad': case 'SQUAD': case 'Squad':
         baseURL = process.env.WEB_SQUAD
-        DBName = process.env.SQL_DBNAME_DEV
+        MySqlDb = process.env.MYSQL_DBNAME_DEV
+        MySqlUser = process.env.MYSQL_USERNAME_DEV
+        MySqlPass = process.env.MYSQL_PASSWORD_DEV
+        MySqlHost = process.env.MYSQL_HOSTNAME_DEV
+        break;
+      case 'prod': case 'PROD': case 'Prod':
+        baseURL = process.env.WEB_PROD
+        MySqlDb = process.env.MYSQL_DBNAME_PROD
+        MySqlUser = process.env.MYSQL_USERNAME_PROD
+        MySqlPass = process.env.MYSQL_PASSWORD_PROD
+        MySqlHost = process.env.MYSQL_HOSTNAME_PROD
         break;
       default:
         baseURL = process.env.WEB_DEV
-        DBName = process.env.SQL_DBNAME_DEV
+        MySqlDb = process.env.MYSQL_DBNAME_DEV
+        MySqlUser = process.env.MYSQL_USERNAME_DEV
+        MySqlPass = process.env.MYSQL_PASSWORD_DEV
+        MySqlHost = process.env.MYSQL_HOSTNAME_DEV
     }
   }
   return [browser, baseURL]
 }
 
-// DBName = getArgs()[2]
-// console.log('DBName  1', DBName)
-// exports.default = DBName;
-
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
-  //services: ['devtools'],
   enableNetwork: true,
   capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
     // './test/web/specs/*/*Test.js', //master
-    './test/web/specs/*/createSpaceTest.js', //master
+    './test/web/specs/*/inviteExpiredTest.js', //master
     // './test/web/specs/negativeSpecs/*/*Test.js'
   ],
   // Patterns to exclude.

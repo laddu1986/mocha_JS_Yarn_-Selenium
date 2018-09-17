@@ -39,10 +39,11 @@ const Tags = {
   smokeTest: "@smoke"
 }
 
+console.log('db=', MySqlDb, 'usr=', MySqlUser, 'pass=', MySqlPass, 'host=', MySqlHost)
 
 const Sequelize = require('sequelize');
-const mysql = new Sequelize(DBName, process.env.SQL_USERNAME, process.env.SQL_PASSWORD, {
-  host: process.env.SQL_HOSTNAME,
+const mysql = new Sequelize(MySqlDb, MySqlUser, MySqlPass, {
+  host: MySqlHost,
   dialect: 'mysql',
   operatorsAliases: false,
   pool: {
