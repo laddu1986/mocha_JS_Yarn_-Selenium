@@ -2,7 +2,7 @@ require('dotenv').config();
 const argv = require('yargs').argv;
 
 const debug = process.env.DEBUG;
-const timeoutPeriod = 30000;
+const timeoutPeriod = 20000;
 
 var browsers = {
   chrome_headless: {
@@ -117,13 +117,8 @@ var getArgs = function () {
   return [browser, baseURL]
 }
 
-// DBName = getArgs()[2]
-// console.log('DBName  1', DBName)
-// exports.default = DBName;
-
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
-  //services: ['devtools'],
   enableNetwork: true,
   capabilities: [getArgs()[0]],
   updateJob: false,
