@@ -143,7 +143,7 @@ exports.config = {
     spaces: ['./test/web/specs/spaces/*Test.js'],
     support: ['./test/web/specs/support/*Test.js'],
     invites: ['./test/web/specs/invites/*Test.js'],
-    segments: ['./test/web/specs/segments/*Test.js'],
+    tribes: ['./test/web/specs/tribes/*Test.js'],
     metrics: ['./test/web/specs/metrics/*Test.js'],
     negative: ['./test/web/specs/negativeSpecs/*/*Test.js']
   },
