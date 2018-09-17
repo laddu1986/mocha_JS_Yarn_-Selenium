@@ -21,7 +21,7 @@ export function signOut() {
 export function signIn(email, password) {
     SignInPage.emailInput.setValue(email);
     SignInPage.passwordInput.setValue(password);
-    CommonPage.submitButton.click();
+    submit();
     NavBar.profileMenu.waitForVisible();
 }
 
@@ -53,4 +53,8 @@ export function get404PageText() {
 
 export function clickLinkOn404Page() {
     CommonPage.linkOnInvalidpage.click();
+}
+
+export function submit() {
+    CommonPage.submitButton.click();
 }

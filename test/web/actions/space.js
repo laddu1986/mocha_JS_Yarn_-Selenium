@@ -1,6 +1,6 @@
 const copyPasteModule = require('copy-paste');
 import * as lib from '../../common';
-import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
+import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
 import SpaceAPIKeyPage from 'web/page_objects/spaceAPIKeyPage';
 import SpaceSettingsPage from 'web/page_objects/spaceSettingsPage';
 import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
@@ -12,7 +12,7 @@ import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'web/actions/co
 export function changeSpace(type) {
   var webElement = SpaceSettingsPage.spaceName;
   var name = `${lib.randomString.generate(8)}_Space`;
-  if (type == "slug") {
+  if (type == 'slug') {
     webElement = SpaceSettingsPage.spaceSlug;
     name = `${lib.randomString.generate(8)}_Slug`;
   }
@@ -39,7 +39,7 @@ export function createSpace() {
 }
 
 export function goToDeveloperPortal() {
-  NavBar.developerLink.click()
+  NavBar.developerLink.click();
 }
 
 export function verifySpacePage(spaceName) {
@@ -60,7 +60,10 @@ export function goBackToOrgDashboard() {
 }
 
 export function verifyCreateFirstSpacePage() {
-  if (OrgDashboardPage.createSpaceButton.isEnabled() == false && OrgDashboardPage.createSpaceInput.isVisible() == true) {
+  if (
+    OrgDashboardPage.createSpaceButton.isEnabled() == false &&
+    OrgDashboardPage.createSpaceInput.isVisible() == true
+  ) {
     return OrgDashboardPage.createYourFirstSpaceLabel.getText().includes('Create your first Space');
   } else {
     return false;
@@ -72,26 +75,44 @@ export function copyAPIKeyToClipBoard() {
   CommonPage.dismissNotification.click();
 }
 
-export function copiedValue() {
-  var copiedValue = copyPasteModule.paste().split('{').pop().split('}').shift();
-  return copiedValue.replace(/\"/g, "").split(':')[1]
+export function copiedAPIKeyValue() {
+  var copiedValue = copyPasteModule
+    .paste()
+    .split('{')
+    .pop()
+    .split('}')
+    .shift();
+  return copiedValue.replace(/"/g, '').split(':')[1];
 }
 
-export function defaultAPIKey() {
-  copyAPIKeyToClipBoard()
-  return copiedValue()
+export function getAPIKey() {
+  return SpaceAPIKeyPage.APIKeyData.getText()
+    .split('{')
+    .pop()
+    .split('}')
+    .shift()
+    .replace(/"/g, '')
+    .split(':')[1];
 }
 
 export function verifyAPIKeyStatus(status) {
-  return browser.waitUntil(function () {
-    return SpaceAPIKeyPage.APIKeyStatus.getText() === status
-  }, 5000, `Api Key status is not+${status}`);
+  return browser.waitUntil(
+    function() {
+      return SpaceAPIKeyPage.APIKeyStatus.getText() === status;
+    },
+    5000,
+    `Api Key status is not+${status}`
+  );
 }
 
 export function verifyNewSpaceUrl(newSlugName) {
-  return browser.waitUntil(function () {
-    return browser.getUrl().includes(newSlugName.toLowerCase())
-  }, 5000, `New Slug ${newSlugName} is not updated`);
+  return browser.waitUntil(
+    function() {
+      return browser.getUrl().includes(newSlugName.toLowerCase());
+    },
+    5000,
+    `New Slug ${newSlugName} is not updated`
+  );
 }
 
 export function clickRevokeButton() {
@@ -133,9 +154,9 @@ export function verifySpaceCard() {
 }
 
 export function deleteSpace() {
-  clickDeleteSpaceButton()
-  typeDeleteToConfirm()
-  confirmDelete()
+  clickDeleteSpaceButton();
+  typeDeleteToConfirm();
+  confirmDelete();
 }
 
 export function clickDeleteSpaceButton() {
@@ -143,5 +164,5 @@ export function clickDeleteSpaceButton() {
 }
 
 export function cancelDeleteSpace() {
-  return cancelDelete(SpaceSettingsPage.deleteSpaceButton)
+  return cancelDelete(SpaceSettingsPage.deleteSpaceButton);
 }
