@@ -1,5 +1,5 @@
 class SpaceDashboardPage {
-    get goToDevPortal() { return browser.element("//button[@data-qa='btn:dev-portal']"); }
+    get goToDevPortal() { return browser.element("//a[@data-qa='btn:dev-portal']"); }
     get APIkey() { return browser.element("//*[@id='content']/div/section/section[2]/article[1]/div[1]/div/h2"); }
     get cURLcopyButton() { return browser.element("//button[@data-qa='btn:copy']"); }
 

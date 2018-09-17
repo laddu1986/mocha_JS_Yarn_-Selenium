@@ -13,7 +13,7 @@
         "Expired": "Expired",
         "Pending": "Pending"
     },
-    "SegmentAttributes": {
+    "TribeAttributes": {
         "Title": "Title",
         "Tagline": "Tagline"
     },
@@ -28,13 +28,13 @@
         "Email": "Email",
         "UID": "UID"
     },
-    "SegmentFilterTypes": {
+    "TribeFilterTypes": {
         "AudienceType": "AudienceType",
         "LogicalType": "LogicalType",
         "Operator": "Operator",
         "Property": "Property"
     },
-    "SegmentRulesFilters": {
+    "TribeRulesFilters": {
         "AudienceType": {
             "User": "Users",
             "Visitor": "Visitors"
@@ -44,8 +44,8 @@
             "All": "all"
         },
         "Properties": {
-            "ActiveDays": "Active Days(last 30 days)",
-            "AvgSessions": "Avg Sessions(last 30 days)",
+            "ActiveDays": "Active Days (last 30 days)",
+            "AvgSessions": "Avg Sessions (last 30 days)",
             "AvgSessionTime": "Avg Session Time",
             "LastSeen": "Last Seen",
             "Created": "Created",
