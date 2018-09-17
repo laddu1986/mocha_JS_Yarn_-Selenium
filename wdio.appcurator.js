@@ -2,7 +2,7 @@ require('dotenv').config();
 const argv = require('yargs').argv;
 
 const debug = process.env.DEBUG;
-const timeoutPeriod = 60000;
+const timeoutPeriod = 20000;
 
 var browsers = {
   chrome_headless: {
