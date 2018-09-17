@@ -98,6 +98,9 @@ export async function invitationLink(email) {
   return `${browser.options.baseUrl}/join?invite=${token}`
 }
 
+console.log('HEY HI ', heyhi)
+
+
 export async function updateTokenExpiryDateInDB(email) {
   return new Promise((resolve, reject) => {
     lib.mysql.authenticate()
