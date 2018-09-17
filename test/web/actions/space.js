@@ -34,24 +34,16 @@ export function createSpace() {
   var spacename = `${lib.randomString.generate(8)}_Space`;
   OrgDashboardPage.createSpaceInput.setValue(spacename);
   OrgDashboardPage.createSpaceButton.click();
-  SpaceDashboardPage.goToDevPortal.waitForVisible();
+  NavBar.developerLink.waitForVisible();
   return spacename;
 }
 
 export function goToDeveloperPortal() {
-  // SpaceDashboardPage.goToDevPortal.click();
-  // SpaceAPIKeyPage.devApiGuideButton.waitForVisible();
   NavBar.developerLink.click()
-
 }
 
 export function verifySpacePage(spaceName) {
-  console.log('coming here')
-  console.log('spaceName', spaceName)
-  console.log('SpaceDashboardPage', goToDevPortal);
-
-
-  if (SpaceDashboardPage.goToDevPortal.isVisible() == true && browser.getUrl().includes(spaceName)) {
+  if (NavBar.developerLink.isVisible() === true && browser.getUrl().includes(spaceName)) {
     return true;
   } else {
     return false;
