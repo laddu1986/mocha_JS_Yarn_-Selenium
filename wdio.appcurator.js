@@ -145,9 +145,9 @@ exports.config = {
   capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
-    // './test/web/specs/*/*Test.js', //master
-    './test/web/specs/*/inviteExpiredTest.js', //master
-    // './test/web/specs/negativeSpecs/*/*Test.js'
+    './test/web/specs/*/*Test.js', //master
+    // './test/web/specs/*/signInAndOutTest.js', //master
+    './test/web/specs/negativeSpecs/*/*Test.js'
   ],
   // Patterns to exclude.
   exclude: [
@@ -174,7 +174,6 @@ exports.config = {
   maxInstances: debug ? 1 : 10,
 
   plugins: {
-
     // webdrivercss: {
     //     screenshotRoot: 'my-shots',
     //     failedComparisonsRoot: 'diffs',
@@ -212,8 +211,7 @@ exports.config = {
   // =====
   // Gets executed before all workers get launched.
   onPrepare() {
-    // console.log('On Prepare')
-
+    console.log('On Prepare')
   },
 
   // Gets executed before test execution begins. At this point you will have access to all global
@@ -222,24 +220,12 @@ exports.config = {
     const chai = require('chai');
     global.expect = chai.expect;
     chai.Should();
-    //console.log('Before')
-    const Sequelize = require('sequelize');
-    const heyhi = new Sequelize(MySqlDb, MySqlUser, MySqlPass, {
-      host: MySqlHost,
-      dialect: 'mysql',
-      operatorsAliases: false,
-      pool: {
-        max: 50,
-        idle: 5000
-      },
-      logging: false
-    });
   },
 
   // Gets executed after all tests are done. You still have access to all global variables from
   // the test.
   after() {
-    var connection = require('./test/common')
+    var connection = require('./test/web/actions/invite')
     connection.mysql.close()
   },
 
@@ -248,4 +234,4 @@ exports.config = {
   onComplete() {
     //console.log('On Complete')
   },
-};
+}

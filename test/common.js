@@ -39,18 +39,6 @@ const Tags = {
   smokeTest: "@smoke"
 }
 
-const Sequelize = require('sequelize');
-const mysql = new Sequelize(MySqlDb, MySqlUser, MySqlPass, {
-  host: MySqlHost,
-  dialect: 'mysql',
-  operatorsAliases: false,
-  pool: {
-    max: 50,
-    idle: 5000
-  },
-  logging: false
-});
-
 function post(any) {
   if (any.headers == undefined) {
     any.headers = {
@@ -88,9 +76,6 @@ export {
   del,
   // library
   server,
-  // db
-  Sequelize,
-  mysql,
   // data
   responseData,
   randomString
