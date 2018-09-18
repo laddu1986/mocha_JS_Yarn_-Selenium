@@ -1,7 +1,9 @@
 import * as lib from '../../common';
+import { memberships } from '../config/getEnv'
+
 
 export const blankOrgId = {
-    api: process.env.API_MEMBERSHIPS,
+    api: memberships,
     data: {
         accountId: `${lib.responseData.negMembership[0].id}`
     },
@@ -9,7 +11,7 @@ export const blankOrgId = {
 };
 
 export const invalidToken = {
-    api: process.env.API_MEMBERSHIPS,
+    api: memberships,
     data: {
         accountId: lib.responseData.negMembership[0].id,
         organizationId: lib.responseData.negMembership[1].id,

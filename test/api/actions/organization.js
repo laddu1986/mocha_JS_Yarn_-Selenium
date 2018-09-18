@@ -1,8 +1,9 @@
 import * as lib from '../../common';
+import { organizations } from '../config/getEnv'
 
 function postOrganization(responseData, flag) {
   const any = {
-    api: process.env.API_ORGANIZATIONS,
+    api: organizations,
     data: {
       name: lib.randomString.generate(10),
       createdByAccountId: responseData[0].id
@@ -19,7 +20,7 @@ function postOrganization(responseData, flag) {
 
 function getOrganizationById(responseData) {
   const any = {
-    api: process.env.API_ORGANIZATIONS,
+    api: organizations,
     data: responseData[1].id
   };
   return lib.get(any);
@@ -27,7 +28,7 @@ function getOrganizationById(responseData) {
 
 function getOrganizations() {
   const any = {
-    api: process.env.API_ORGANIZATIONS,
+    api: organizations,
     data: ''
   };
   return lib.get(any);
@@ -35,7 +36,7 @@ function getOrganizations() {
 
 function postOrganizations(responseData) {
   const any = {
-    api: `${process.env.API_ORGANIZATIONS}list`,
+    api: `${organizations}list`,
     data:
       [
         responseData[1].id
@@ -46,7 +47,7 @@ function postOrganizations(responseData) {
 
 function deleteOrganizationById(responseData) {
   const any = {
-    api: process.env.API_ORGANIZATIONS,
+    api: organizations,
     data: `${responseData[2].id}?rowVersion=${responseData[2].rowVersion}`
   };
 
@@ -57,7 +58,7 @@ function putOrganization(responseData, flag) {
   const update = responseData[1];
   update.name = 'check update name string';
   const any = {
-    api: process.env.API_ORGANIZATIONS,
+    api: organizations,
     data: update
   };
   if (flag) {
