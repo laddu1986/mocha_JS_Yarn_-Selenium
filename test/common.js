@@ -1,5 +1,7 @@
 import "app-module-path/register";
 const server = require('chakram');
+const path = require('path');
+const caller = require('grpc-caller');
 var joi = require('joi');
 global.expect = server.expect;
 var randomString = require("randomstring");
@@ -25,8 +27,7 @@ const responseData = {
   spaceSlug: [],
   orgSlug: [],
   users: [],
-  visitors: [],
-  categories: []
+  visitors: []
 };
 
 const testData = {
@@ -39,7 +40,6 @@ const testData = {
 const Tags = {
   smokeTest: "@smoke"
 }
-
 
 const Sequelize = require('sequelize');
 const mysql = new Sequelize(DBName, process.env.SQL_USERNAME, process.env.SQL_PASSWORD, {
@@ -95,5 +95,8 @@ export {
   mysql,
   // data
   responseData,
-  randomString
+  randomString,
+  // grpc
+  path,
+  caller
 };
