@@ -1,7 +1,9 @@
 import * as lib from '../../common';
+import { identities } from '../config/getEnv'
+
 
 export const noEmail = {
-    api: process.env.API_IDENTITIES,
+    api: identities,
     data: {
         fullname: lib.randomString.generate(12),
         password: process.env.ACCOUNT_PASS
@@ -10,7 +12,7 @@ export const noEmail = {
 };
 
 export const noFullName = {
-    api: process.env.API_IDENTITIES,
+    api: identities,
     data: {
         email: `${lib.randomString.generate(12)}@test.co`,
         password: process.env.ACCOUNT_PASS
@@ -19,7 +21,7 @@ export const noFullName = {
 };
 
 export const noPwd = {
-    api: process.env.API_IDENTITIES,
+    api: identities,
     data: {
         fullname: lib.randomString.generate(12),
         email: `${lib.randomString.generate(12)}@test.co`,
@@ -29,7 +31,7 @@ export const noPwd = {
 
 var emailDefined = `${lib.randomString.generate(12)}@test.co`;
 export const existingEmailData = {
-    api: process.env.API_IDENTITIES,
+    api: identities,
     data: {
         fullname: lib.randomString.generate(12),
         email: emailDefined,

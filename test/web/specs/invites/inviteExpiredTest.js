@@ -19,6 +19,7 @@ import constants from 'data/constants.json';
 
 let newUser, invitationURL, accountData;
 
+
 describe('New User accesses an Expired Invitation', () => {
   before(() => {
     accountPage.open()
@@ -27,6 +28,7 @@ describe('New User accesses an Expired Invitation', () => {
   });
 
   it('Admin invites a New User', () => {
+
     newUser = `newUser_${lib.randomString.generate(4)}@test.co`;
     inviteTeammate(newUser, '1');
   });
