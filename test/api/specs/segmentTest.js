@@ -13,7 +13,7 @@ const LOCALHOST = process.env.LOCALHOST
 //define client
 const client = caller(LOCALHOST, PROTO_PATH, 'SegmentService')
 
-describe.only('Segment Service', () => {
+describe('Segment Service', () => {
 
   /* before('Pull latest Proto Files from BitBucket', (done) => {
 
