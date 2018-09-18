@@ -1,15 +1,16 @@
 import * as lib from '../../common';
+import { identities } from '../config/getEnv'
 
 function getIdentityStateById(responseData) {
   const any = {
-    api: process.env.API_IDENTITIES,
+    api: identities,
     data: `${responseData[0].id}/state`
   };
   return lib.get(any);
 }
 function putIdentityById(responseData) {
   const any = {
-    api: `${process.env.API_IDENTITIES + responseData[0].id}/state`,
+    api: `${identities + responseData[0].id}/state`,
     data: {
       values: {
         additionalProp1: 'string',
@@ -22,7 +23,7 @@ function putIdentityById(responseData) {
 }
 function patchIdentityStateById(responseData) {
   const any = {
-    api: `${process.env.API_IDENTITIES + responseData[0].id}/state`,
+    api: `${identities + responseData[0].id}/state`,
     data: {
       values: {
         additionalProp1: '1',
