@@ -10,7 +10,7 @@ var schemaCategory = lib.joi.object().keys({
   label: lib.joi.string().required()
 });
 
-describe.only('Categories API', () => {
+describe('Categories API', () => {
   describe('createCategory()', () => {
     before('Initialise working Space', (done) => { 
       identity.postIdentity(lib.responseData.categories).then(() => { 
