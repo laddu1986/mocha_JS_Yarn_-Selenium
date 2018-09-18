@@ -1,7 +1,7 @@
 import * as lib from '../../common';
 
 const PROTO_PATH = lib.path.resolve(process.env.PROTO_DIR + 'segmentService.proto');
-const LOCALHOST = process.env.LOCALHOST; // Use localhost while cluster is not available
+const LOCALHOST = process.env.TRIBE_HOST; // Use localhost while cluster is not available
 
 const client = lib.caller(LOCALHOST, PROTO_PATH, 'SegmentService');
 
