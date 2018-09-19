@@ -71,8 +71,7 @@ export function patchSpaceByOrgIdRowVersionAndSpaceId(responseObject, type, flag
 
 export function getSpaceByOrgIdAndSpaceId(responseObject) {
   const any = {
-    api: `${process.env.API_SPACES + responseObject.orgID}/spaces/${responseObject.spaceID}`,
-    api: `${spaces + responseData[1].id}/spaces/${responseData[2].id}`,
+    api: `${spaces + responseObject.orgID}/spaces/${responseObject.spaceID}`,
     data: ""
   };
   return lib.get(any);
