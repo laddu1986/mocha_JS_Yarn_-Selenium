@@ -6,6 +6,8 @@ var randomString = require("randomstring");
 var NodeESModuleLoader = require('node-es-module-loader');
 var loader = new NodeESModuleLoader();
 var dateFormat = require('dateformat');
+var path = require('path');
+var caller = require('grpc-caller');
 
 const responseData = {
   organization: [],
@@ -78,5 +80,7 @@ export {
   server,
   // data
   responseData,
-  randomString
+  randomString,
+  path,
+  caller
 };
