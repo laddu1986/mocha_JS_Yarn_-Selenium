@@ -92,30 +92,38 @@ var getArgs = function () {
   }
 
   if (envArg == '' || envArg === undefined) {
-    baseURL = process.env.WEB_DEV
-    DBName = process.env.SQL_DBNAME_DEV
+    getEndPointsFor('DEV')
   }
   else {
     switch (envArg) {
       case 'qa': case 'QA': case 'Qa':
-        baseURL = process.env.WEB_QA
-        DBName = process.env.SQL_DBNAME_QA
+        getEndPointsFor('QA')
         break;
       case 'dev': case 'DEV': case 'Dev':
-        baseURL = process.env.WEB_DEV
-        DBName = process.env.SQL_DBNAME_DEV
+        getEndPointsFor('DEV')
         break;
       case 'squad': case 'SQUAD': case 'Squad':
+        getEndPointsFor('DEV')
         baseURL = process.env.WEB_SQUAD
-        DBName = process.env.SQL_DBNAME_DEV
+        break;
+      case 'prod': case 'PROD': case 'Prod':
+        getEndPointsFor('PROD')
         break;
       default:
-        baseURL = process.env.WEB_DEV
-        DBName = process.env.SQL_DBNAME_DEV
+        getEndPointsFor('DEV')
     }
   }
   return [browser, baseURL]
 }
+
+function getEndPointsFor(ENV) {
+  baseURL = process.env[`WEB_${ENV}`]
+  MySqlDb = process.env[`MYSQL_DBNAME_${ENV}`]
+  MySqlUser = process.env[`MYSQL_USERNAME_${ENV}`]
+  MySqlPass = process.env[`MYSQL_PASSWORD_${ENV}`]
+  MySqlHost = process.env[`MYSQL_HOSTNAME_${ENV}`]
+}
+
 
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
@@ -151,7 +159,6 @@ exports.config = {
   maxInstances: debug ? 1 : 10,
 
   plugins: {
-
     // webdrivercss: {
     //     screenshotRoot: 'my-shots',
     //     failedComparisonsRoot: 'diffs',
@@ -190,7 +197,6 @@ exports.config = {
   // Gets executed before all workers get launched.
   onPrepare() {
     // console.log('On Prepare')
-
   },
 
   // Gets executed before test execution begins. At this point you will have access to all global
@@ -199,14 +205,12 @@ exports.config = {
     const chai = require('chai');
     global.expect = chai.expect;
     chai.Should();
-    //console.log('Before')
-    // const config = require('config-yml');
   },
 
   // Gets executed after all tests are done. You still have access to all global variables from
   // the test.
   after() {
-    var connection = require('./test/common')
+    var connection = require('./test/web/actions/invite')
     connection.mysql.close()
   },
 
@@ -215,4 +219,4 @@ exports.config = {
   onComplete() {
     //console.log('On Complete')
   },
-};
+}

@@ -1,8 +1,10 @@
 import * as lib from '../../common';
+import { identities } from '../config/getEnv'
+
 
 export function postIdentity(responseObject, flag) {
   const any = {
-    api: process.env.API_IDENTITIES,
+    api: identities,
     data: {
       fullname: lib.randomString.generate(12),
       email: `${lib.randomString.generate(12)}@test.co`,
@@ -21,7 +23,7 @@ export function postIdentity(responseObject, flag) {
 
 export function getIdentityById(responseObject) {
   const any = {
-    api: process.env.API_IDENTITIES,
+    api: identities,
     data: responseObject.identityID
   };
   return lib.get(any);
@@ -29,7 +31,7 @@ export function getIdentityById(responseObject) {
 
 export function deleteIdentityById(responseObject) {
   const any = {
-    api: process.env.API_IDENTITIES,
+    api: identities,
     data: responseObject.identityID
   };
   return lib.del(any);
