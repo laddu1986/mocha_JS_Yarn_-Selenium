@@ -1,11 +1,11 @@
 import * as lib from '../../common';
 
-function postSpaceByOrganizationId(responseData, flag) {
+function postSpaceByOrganizationId(responseObject, flag) {
   const any = {
-    api: `${process.env.API_SPACES + responseData[1].id}/spaces`,
+    api: `${process.env.API_SPACES + responseObject.orgID}/spaces`,
     data: {
       name: lib.randomString.generate(10),
-      createdByAccountId: responseData[0].id,
+      createdByAccountId: responseObject.identityID,
       shortUrl: lib.randomString.generate(6)
     }
   };
@@ -14,26 +14,27 @@ function postSpaceByOrganizationId(responseData, flag) {
     lib.testData.spacesData.push(any.data.shortUrl);
   }
   return lib.post(any).then((response) => {
-    responseData.push(response.body);
+    responseObject.spaceID = response.body.id;
+    responseObject.spaceRowVersion = response.body.rowVersion;
     return response;
   })
 }
 
-function getSpacesByOrganizationId(responseData) {
+function getSpacesByOrganizationId(responseObject) {
   const any = {
-    api: `${process.env.API_SPACES + responseData[1].id}/spaces`,
+    api: `${process.env.API_SPACES + responseObject.orgID}/spaces`,
     data: ""
   };
   return lib.get(any);
 }
 
-export function updateSpace(responseData, flag) {
+export function updateSpace(responseObject, flag) {
   const any = {
-    api: `${process.env.API_SPACES + responseData[1].id}/spaces`,
+    api: `${process.env.API_SPACES + responseObject.orgID}/spaces`,
     data: {
-      id: responseData[2].id,
+      id: responseObject.spaceID,
       name: lib.randomString.generate(5),
-      rowVersion: responseData[2].rowVersion,
+      rowVersion: responseObject.spaceRowVersion,
       shortUrl: lib.randomString.generate(6)
     }
   };
@@ -42,17 +43,13 @@ export function updateSpace(responseData, flag) {
     lib.testData.spacesData.push(any.data.shortUrl);
   }
   return lib.put(any).then((response) => {
-    responseData.push(response.body);
+    responseObject.spaceRowVersion = response.body.rowVersion;
     return response;
   });
 };
-var index = 3;
-export function patchSpaceByOrgIdRowVersionAndSpaceId(responseData, type, flag) {
-  if (type == "name") {
-    index = 4;
-  }
+export function patchSpaceByOrgIdRowVersionAndSpaceId(responseObject, type, flag) {
   const any = {
-    api: `${process.env.API_SPACES + responseData[1].id}/spaces/${responseData[2].id}?rowVersion=${responseData[index].rowVersion}`,
+    api: `${process.env.API_SPACES + responseObject.orgID}/spaces/${responseObject.spaceID}?rowVersion=${responseObject.spaceRowVersion}`,
     data: [
       {
         op: "replace",
@@ -65,22 +62,22 @@ export function patchSpaceByOrgIdRowVersionAndSpaceId(responseData, type, flag) 
     lib.testData.spacesData.push(any.data[0].value);
   }
   return lib.patch(any).then((response) => {
-    responseData.push(response.body);
+    responseObject.spaceRowVersion = response.body.rowVersion;
     return response;
   });
 }
 
-export function getSpaceByOrgIdAndSpaceId(responseData) {
+export function getSpaceByOrgIdAndSpaceId(responseObject) {
   const any = {
-    api: `${process.env.API_SPACES + responseData[1].id}/spaces/${responseData[2].id}`,
+    api: `${process.env.API_SPACES + responseObject.orgID}/spaces/${responseObject.spaceID}`,
     data: ""
   };
   return lib.get(any);
 };
 
-export function deleteSpaceByOrgIdAndSpaceId(responseData) {
+export function deleteSpaceByOrgIdAndSpaceId(responseObject) {
   const any = {
-    api: `${process.env.API_SPACES + responseData[1].id}/spaces/${responseData[2].id}?rowVersion=${responseData[5].rowVersion}`,
+    api: `${process.env.API_SPACES + responseObject.orgID}/spaces/${responseObject.spaceID}?rowVersion=${responseObject.spaceRowVersion}`,
     data: ""
   };
   return lib.del(any);

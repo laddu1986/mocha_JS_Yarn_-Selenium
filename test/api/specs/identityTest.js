@@ -2,10 +2,12 @@ import * as lib from '../../common';
 import * as identity from 'api/actions/identity';
 var schema, addResponse, getResponse, deleteResponse;
 
+const identityData = new Object();
+
 describe('Identity Api', () => {
   describe(`POST /identities ${lib.Tags.smokeTest}`, () => {
     before((done) => {
-      addResponse = identity.postIdentity(lib.responseData.identity, true);
+      addResponse = identity.postIdentity(identityData, true);
       done();
     });
 
@@ -24,7 +26,7 @@ describe('Identity Api', () => {
 
   describe('GET /identities/{id}', () => {
     before((done) => {
-      getResponse = identity.getIdentityById(lib.responseData.identity);
+      getResponse = identity.getIdentityById(identityData);
       done();
     });
     it('Get a identity by its id.', () => {
@@ -33,7 +35,7 @@ describe('Identity Api', () => {
         schema = lib.joi.object().keys({
           fullName: lib.joi.valid(lib.testData.identityData[0]).required(),
           email: lib.joi.valid(lib.testData.identityData[1]).required(),
-          id: lib.joi.valid(lib.responseData.identity[0].id).required()
+          id: lib.joi.valid(identityData.identityID).required()
         });
         lib.joi.assert(response.body, schema);
       });
@@ -42,7 +44,7 @@ describe('Identity Api', () => {
 
   describe('Delete /identities/{id}', () => {
     before((done) => {
-      deleteResponse = identity.deleteIdentityById(lib.responseData.identity);
+      deleteResponse = identity.deleteIdentityById(identityData);
       done();
     });
     it('Delete an identity by its id.', () => {
