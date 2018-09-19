@@ -1,4 +1,7 @@
 require('dotenv').config();
+const chai = require('chai');
+var expect = chai.expect;
+chai.Should();
 
 var vars,
   envArg,
@@ -60,5 +63,6 @@ export {
   token,
   invites,
   keys,
-  metrics
+  metrics,
+  expect
 }
