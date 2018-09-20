@@ -26,7 +26,7 @@ function listCategories(responseObject) {
   }).withResponseStatus(true);
 
   return req.exec().then((response) => {
-    return response
+    return response;
   });
 }
 
@@ -64,7 +64,7 @@ function deleteCategory(responseObject) {
 
   return req.exec().then((response) => {
     return response;
-  })
+  });
 }
 
 export {
