@@ -4,9 +4,7 @@ import * as spaces from 'api/actions/spaces';
 import * as organization from 'api/actions/organization';
 import * as identity from 'api/actions/identity';
 
-// Object to store generated variables and important response data that will be carried through the tests
 const categoryData = new Object();
-
 var schema, createResponse, listResponse, renameResponse, moveConfirm, deleteConfirm;
 
 var schemaCategory = lib.joi.object().keys({
@@ -15,7 +13,7 @@ var schemaCategory = lib.joi.object().keys({
   isDefault: lib.joi.boolean().optional()
 });
 
-describe('Categories API', () => {
+describe('Categories Service', () => {
   describe('createCategory()', () => {
     before('Initialise working Space', (done) => { 
       identity.postIdentity(categoryData).then(() => { 
