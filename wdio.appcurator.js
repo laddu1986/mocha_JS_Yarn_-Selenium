@@ -92,52 +92,38 @@ var getArgs = function () {
   }
 
   if (envArg == '' || envArg === undefined) {
-    baseURL = process.env.WEB_DEV
-    MySqlDb = process.env.MYSQL_DBNAME_DEV
-    MySqlUser = process.env.MYSQL_USERNAME_DEV
-    MySqlPass = process.env.MYSQL_PASSWORD_DEV
-    MySqlHost = process.env.MYSQL_HOSTNAME_DEV
+    getEndPointsFor('DEV')
   }
   else {
     switch (envArg) {
       case 'qa': case 'QA': case 'Qa':
-        baseURL = process.env.WEB_QA
-        MySqlDb = process.env.MYSQL_DBNAME_QA
-        MySqlUser = process.env.MYSQL_USERNAME_QA
-        MySqlPass = process.env.MYSQL_PASSWORD_QA
-        MySqlHost = process.env.MYSQL_HOSTNAME_QA
+        getEndPointsFor('QA')
         break;
       case 'dev': case 'DEV': case 'Dev':
-        baseURL = process.env.WEB_DEV
-        MySqlDb = process.env.MYSQL_DBNAME_DEV
-        MySqlUser = process.env.MYSQL_USERNAME_DEV
-        MySqlPass = process.env.MYSQL_PASSWORD_DEV
-        MySqlHost = process.env.MYSQL_HOSTNAME_DEV
+        getEndPointsFor('DEV')
         break;
       case 'squad': case 'SQUAD': case 'Squad':
+        getEndPointsFor('DEV')
         baseURL = process.env.WEB_SQUAD
-        MySqlDb = process.env.MYSQL_DBNAME_DEV
-        MySqlUser = process.env.MYSQL_USERNAME_DEV
-        MySqlPass = process.env.MYSQL_PASSWORD_DEV
-        MySqlHost = process.env.MYSQL_HOSTNAME_DEV
         break;
       case 'prod': case 'PROD': case 'Prod':
-        baseURL = process.env.WEB_PROD
-        MySqlDb = process.env.MYSQL_DBNAME_PROD
-        MySqlUser = process.env.MYSQL_USERNAME_PROD
-        MySqlPass = process.env.MYSQL_PASSWORD_PROD
-        MySqlHost = process.env.MYSQL_HOSTNAME_PROD
+        getEndPointsFor('PROD')
         break;
       default:
-        baseURL = process.env.WEB_DEV
-        MySqlDb = process.env.MYSQL_DBNAME_DEV
-        MySqlUser = process.env.MYSQL_USERNAME_DEV
-        MySqlPass = process.env.MYSQL_PASSWORD_DEV
-        MySqlHost = process.env.MYSQL_HOSTNAME_DEV
+        getEndPointsFor('DEV')
     }
   }
   return [browser, baseURL]
 }
+
+function getEndPointsFor(ENV) {
+  baseURL = process.env[`WEB_${ENV}`]
+  MySqlDb = process.env[`MYSQL_DBNAME_${ENV}`]
+  MySqlUser = process.env[`MYSQL_USERNAME_${ENV}`]
+  MySqlPass = process.env[`MYSQL_PASSWORD_${ENV}`]
+  MySqlHost = process.env[`MYSQL_HOSTNAME_${ENV}`]
+}
+
 
 exports.config = {
   // services: ['selenium-standalone', 'chromedriver'],
@@ -146,7 +132,6 @@ exports.config = {
   updateJob: false,
   specs: [
     './test/web/specs/*/*Test.js', //master
-    // './test/web/specs/*/signInAndOutTest.js', //master
     './test/web/specs/negativeSpecs/*/*Test.js'
   ],
   // Patterns to exclude.
@@ -211,7 +196,7 @@ exports.config = {
   // =====
   // Gets executed before all workers get launched.
   onPrepare() {
-    console.log('On Prepare')
+    // console.log('On Prepare')
   },
 
   // Gets executed before test execution begins. At this point you will have access to all global

@@ -2,7 +2,7 @@ import * as lib from '../../common';
 import { identities } from '../config/getEnv'
 
 
-function postIdentity(responseData, flag) {
+export function postIdentity(responseObject, flag) {
   const any = {
     api: identities,
     data: {
@@ -16,27 +16,23 @@ function postIdentity(responseData, flag) {
     lib.testData.identityData.push(any.data.email);
   }
   return lib.post(any).then((response) => {
-    responseData.push(response.body);
+    responseObject.identityID = response.body.id;
     return response;
   })
 }
 
-function getIdentityById(responseData) {
+export function getIdentityById(responseObject) {
   const any = {
     api: identities,
-    data: responseData[0].id
+    data: responseObject.identityID
   };
   return lib.get(any);
 }
-function deleteIdentityById(responseData) {
+
+export function deleteIdentityById(responseObject) {
   const any = {
     api: identities,
-    data: responseData[0].id
+    data: responseObject.identityID
   };
   return lib.del(any);
 }
-export {
-  postIdentity,
-  getIdentityById,
-  deleteIdentityById
-};
