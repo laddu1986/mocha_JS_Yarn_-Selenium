@@ -1,7 +1,5 @@
 import "app-module-path/register";
 const server = require('chakram');
-const path = require('path');
-const caller = require('grpc-caller');
 var joi = require('joi');
 global.expect = server.expect;
 var randomString = require("randomstring");
