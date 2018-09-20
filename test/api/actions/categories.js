@@ -1,71 +1,70 @@
 import * as lib from '../../common';
 
 const PROTO_PATH = lib.path.resolve(process.env.PROTO_DIR + 'segmentService.proto');
-const LOCALHOST = process.env.TRIBE_HOST; // Use localhost while cluster is not available
+const client = lib.caller(process.env.TRIBE_HOST, PROTO_PATH, 'SegmentService');
 
-const client = lib.caller(LOCALHOST, PROTO_PATH, 'SegmentService');
+function createCategory(responseObject, updateFlag) {
+  let label = lib.randomString.generate(8);
 
-// Object to store generated variables and important response data that will be carried through the tests
-const category = new Object();
+  const req = new client.Request('createCategory', {
+    spaceContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID },
+    label: label
+  }).withResponseStatus(true);
 
-// map response data and relevant data into category to be accessed later
-function createCategory(responseData, flag) {
-  if (flag) { // if flag is set, we update the category data, otherwise we dump
-    category.orgId = responseData[1].id;
-    category.spaceId = responseData[2].id;
-    category.label = lib.randomString.generate(8);
-  }
-
-  return client.createCategory({ 
-    spaceContext: { orgId: category.orgId, spaceId: category.spaceId }, 
-    label: category.label 
-  }).then((response) => {
-    category.createResponse = response;
-    if (flag) {
-      category.id = category.createResponse.id;
+  return req.exec().then((response) => {
+    if (updateFlag) { 
+      responseObject.label = label;
+      responseObject.id = response.response.id;
     }
     return response;
   });
 }
 
-// source refers to a category object, as above
-function listCategories(source) {
-  return client.listCategories({
-    spaceContext: { orgId: source.orgId, spaceId: source.spaceId }
-  }).then((response) => {
-    category.listResponse = response;
+function listCategories(responseObject) {
+  const req = new client.Request('listCategories', {
+    spaceContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID }
+  }).withResponseStatus(true);
+
+  return req.exec().then((response) => {
+    return response
+  });
+}
+
+function renameCategory(responseObject) {
+  let newLabel = lib.randomString.generate(7);
+  const req = new client.Request('renameCategory', {
+    categoryContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, categoryId: responseObject.id },
+    label: newLabel
+  }).withResponseStatus(true);
+
+  return req.exec().then((response) => {
+    if (response.status.code === 0) {
+      responseObject.oldLabel = responseObject.label;
+      responseObject.label = newLabel;
+    }
     return response;
   });
 }
 
-function renameCategory(source) {
-  category.renamedLabel = lib.randomString.generate(7);
-  return client.renameCategory({ 
-    categoryContext: { orgId: source.orgId, spaceId: source.spaceId, categoryId: source.id }, 
-    label: category.renamedLabel
-  }).then((response) => {
-    category.renameResponse = response;
+function moveCategory(responseObject) {
+  const req = new client.Request('moveCategory', {
+    categoryContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, categoryId: responseObject.id },
+    index: { value: 10 }
+  }).withResponseStatus(true);
+
+  return req.exec().then((response) => {
     return response;
   });
 }
 
-function moveCategory(source) {
-  return client.moveCategory({
-    categoryContext: { orgId: source.orgId, spaceId: source.spaceId, categoryId: source.id }, 
-    index: { value: 10 } // move the category to the end
-  }).then((response) => {
-    category.moveResponse = response;
-    return response;
-  });
-}
+function deleteCategory(responseObject) {
+  const req = new client.Request('deleteCategory', {
+    categoryContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, categoryId: responseObject.id }
+  }).withResponseStatus(true);
 
-function deleteCategory(source) {
-  return client.deleteCategory({
-    categoryContext: { orgId: source.orgId, spaceId: source.spaceId, categoryId: source.id }
-  }).then((response) => {
-    category.deleteRespnse = response;
+  return req.exec().then((response) => {
     return response;
-  });
+  })
 }
 
 export {
@@ -73,6 +72,5 @@ export {
   listCategories,
   renameCategory,
   moveCategory,
-  deleteCategory,
-  category
+  deleteCategory
 };
