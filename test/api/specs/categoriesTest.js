@@ -19,7 +19,7 @@ describe('Categories Service', () => {
       identity.postIdentity(categoryData).then(() => { 
         return organization.postOrganization(categoryData);
       }).then(() => {
-        return spaces.postSpaceByOrganizationId(categoryData)
+        return spaces.postSpaceByOrganizationId(categoryData);
       }).then((response) => {
         createResponse = categories.createCategory(categoryData, true);
         done();
@@ -60,7 +60,7 @@ describe('Categories Service', () => {
     it('Renames the category', () => {
       return renameResponse.then((response) => {
         expect(response.status.code).to.equal(0);
-        expect(response.response.label).to.not.equal(categoryData.oldLabel);
+        expect(response.response.label).to.not.equal(categoryData.tribeCategoryOldLabel);
         lib.joi.assert(response.response, schemaCategory);
       });
     });
@@ -99,8 +99,8 @@ describe('Categories Service', () => {
         expect(categories).to.be.an('array');
         expect(categories).to.have.lengthOf(2);
         expect(categories[1]).to.have.property('isDefault', true);
-        expect(categories[0].id).to.not.equal(categoryData.id);
-        expect(categories[1].id).to.not.equal(categoryData.id);
+        expect(categories[0].id).to.not.equal(categoryData.tribeCategoryID);
+        expect(categories[1].id).to.not.equal(categoryData.tribeCategoryID);
       });
     });
   })
