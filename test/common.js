@@ -27,8 +27,7 @@ const responseData = {
   spaceSlug: [],
   orgSlug: [],
   users: [],
-  visitors: [],
-  categories: [],
+  visitors: []
 };
 
 const testData = {
