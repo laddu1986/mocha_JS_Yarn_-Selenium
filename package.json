@@ -78,7 +78,7 @@
       "eslint --fix",
       "git add"
     ]
-  }
+  },
   "author": "QA Team",
   "license": "UNLICENSED",
   "pre-commit": []
