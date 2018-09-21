@@ -8,8 +8,8 @@ var postResponse, getInviteResponse;
 describe('Negative Cases --> Invites Api', () => {
     describe('POST /organizations/{id}/invites', () => {
         before((done) => {
-            identity.postIdentity(lib.responseData.negInvites).then(() => {
-                organization.postOrganization(lib.responseData.negInvites).then(() => {
+            identity.postIdentity(lib.invitesNegData).then(() => {
+                organization.postOrganization(lib.invitesNegData).then(() => {
                     lib.loader.import(moduleSpecifier).then((dataImported) => {
                         postResponse = lib.post(dataImported.default.inviteWithoutAuth);
                         done();
@@ -25,11 +25,11 @@ describe('Negative Cases --> Invites Api', () => {
     });
     describe('GET /invites/{token}', () => {
         before((done) => {
-            invites.getAccessToken(lib.responseData.negInvites).then(() => {
-                invites.postInvitesByOrganizationId(lib.responseData.negInvites).then(() => {
-                    invites.getInvitesByOrganizationId(lib.responseData.negInvites).then(() => {
-                        invites.deleteInviteByOrganizationIdAndEmail(lib.responseData.negInvites).then(() => {
-                            getInviteResponse = invites.getInviteDetailsByToken(lib.responseData.negInvites);
+            invites.getAccessToken(lib.invitesNegData).then(() => {
+                invites.postInvitesByOrganizationId(lib.invitesNegData).then(() => {
+                    invites.getInvitesByOrganizationId(lib.invitesNegData).then(() => {
+                        invites.deleteInviteByOrganizationIdAndEmail(lib.invitesNegData).then(() => {
+                            getInviteResponse = invites.getInviteDetailsByToken(lib.invitesNegData);
                             done();
                         });
                     });

@@ -4,14 +4,14 @@ import * as identity from '../actions/identity';
 import * as metrics from '../actions/metrics';
 import * as lib from '../../common';
 var schema, getUniqueUsersResponse, getAPIRequestsResponse, getActiveResponse;
-
+const metricsData = new Object();
 describe('Metrics Api', () => {
     describe('GET /organizations/{orgId}/spaces/{spaceId}/metrics/unique-users/count', () => {
         before((done) => {
-            identity.postIdentity(lib.responseData.metrics).then(() => {
-                organization.postOrganization(lib.responseData.metrics).then(() => {
-                    spaces.postSpaceByOrganizationId(lib.responseData.metrics).then(() => {
-                        getUniqueUsersResponse = metrics.getUniqueAppUsers(lib.responseData.metrics);
+            identity.postIdentity(metricsData).then(() => {
+                organization.postOrganization(metricsData).then(() => {
+                    spaces.postSpaceByOrganizationId(metricsData).then(() => {
+                        getUniqueUsersResponse = metrics.getUniqueAppUsers(metricsData);
                         done();
                     })
                 })
@@ -30,7 +30,7 @@ describe('Metrics Api', () => {
 
     describe('GET /organizations/{orgId}/spaces/{spaceId}/metrics/requests/count', () => {
         before((done) => {
-            getAPIRequestsResponse = metrics.getAPIRequests(lib.responseData.metrics);
+            getAPIRequestsResponse = metrics.getAPIRequests(metricsData);
             done();
         })
 
@@ -47,7 +47,7 @@ describe('Metrics Api', () => {
 
     describe('GET /organizations/{orgId}/spaces/{spaceId}/metrics/active', () => {
         before((done) => {
-            getActiveResponse = metrics.getMetricsActive(lib.responseData.metrics);
+            getActiveResponse = metrics.getMetricsActive(metricsData);
             done();
         })
 
