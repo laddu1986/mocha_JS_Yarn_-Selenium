@@ -8,11 +8,11 @@ var expectedMessageForBlankOrgId, expectedMessageForinvalidToken, getResponse, d
 describe('Negative tests --> Membership', () => {
   describe('GET /memberships', () => {
     before((done) => {
-      identity.postIdentity(lib.responseData.negMembership).then(() => {
-        organization.postOrganization(lib.responseData.negMembership).then(() => {
-          membership.postMembership(lib.responseData.negMembership).then(() => {
-            membership.deleteMembershipByAccountAndOrganization(lib.responseData.negMembership).then(() => {
-              getResponse = membership.getMembershipByAccount(lib.responseData.negMembership);
+      identity.postIdentity(lib.membershipNegData).then(() => {
+        organization.postOrganization(lib.membershipNegData).then(() => {
+          membership.postMembership(lib.membershipNegData).then(() => {
+            membership.deleteMembershipByAccountAndOrganization(lib.membershipNegData).then(() => {
+              getResponse = membership.getMembershipByAccount(lib.membershipNegData);
               done();
             })
           })
@@ -50,8 +50,8 @@ describe('Negative tests --> Membership', () => {
   })
   describe('Delete Membership when Account is Non Existing ', () => {
     before((done) => {
-      identity.deleteIdentityById(lib.responseData.negMembership).then(() => {
-        deleteResponse = membership.deleteMembershipByAccountAndOrganization(lib.responseData.negMembership);
+      identity.deleteIdentityById(lib.membershipNegData).then(() => {
+        deleteResponse = membership.deleteMembershipByAccountAndOrganization(lib.membershipNegData);
         done();
       })
     })

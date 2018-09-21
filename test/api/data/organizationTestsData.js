@@ -4,7 +4,7 @@ import { organizations } from '../config/getEnv'
 export const noName = {
     api: organizations,
     data: {
-        createdByAccountId: lib.responseData.negOrganization[0].id
+        createdByAccountId: lib.orgNegData.identityID
     },
     expected: "The Name field is required."
 };
@@ -19,7 +19,7 @@ export const blankAccountId = {
 export const blankRowVersion = {
     api: organizations,
     data: {
-        id: lib.responseData.negOrganization[1].id,
+        id: lib.orgNegData.orgID,
         name: lib.randomString.generate(10)
     },
     expected: "A concurrency error has occurred."
@@ -27,9 +27,9 @@ export const blankRowVersion = {
 export const blankName = {
     api: organizations,
     data: {
-        id: lib.responseData.negOrganization[1].id,
+        id: lib.orgNegData.orgID,
         name: "",
-        rowVersion: lib.responseData.negOrganization[1].rowVersion
+        rowVersion: lib.orgNegData.orgRowVersion
     },
     expected: "The Name field is required."
 };
@@ -38,7 +38,7 @@ export const blankID = {
     data: {
         id: "",
         name: lib.randomString.generate(10),
-        rowVersion: lib.responseData.negOrganization[1].rowVersion
+        rowVersion: lib.orgNegData.orgRowVersion
     },
     expected: "The Id field is required."
 };
@@ -46,20 +46,20 @@ export const blankID = {
 export const incorrectOrgIDPut = {
     api: organizations,
     data: {
-        id: lib.responseData.negOrganization[0].id,
+        id: lib.orgNegData.identityID,
         name: lib.randomString.generate(10),
-        rowVersion: lib.responseData.negOrganization[1].rowVersion
+        rowVersion: lib.orgNegData.orgRowVersion
     }
 };
 
 export const incorrectOrgIDGet = {
     api: organizations,
-    data: lib.responseData.negOrganization[0].id
+    data: lib.orgNegData.identityID
 };
 
 export const incorrectOrgIdDelete = {
     api: organizations,
-    data: `${lib.responseData.negOrganization[0].id}?rowVersion=${lib.responseData.negOrganization[1].rowVersion}`,
+    data: `${lib.orgNegData.identityID}?rowVersion=${lib.orgNegData.orgRowVersion}`,
     expected: "A concurrency error has occurred."
 };
 
