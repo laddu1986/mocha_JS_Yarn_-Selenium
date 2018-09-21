@@ -4,13 +4,14 @@ import * as identityState from 'api/actions/identityState';
 import * as identity from 'api/actions/identity';
 
 var schema, getResponse, putResponse, patchResponse;
+const identityStateData = new Object();
 
 describe('Identity State Api', () => {
 
   describe('GET /identities/{id}/state', () => {
     before((done) => {
-      identity.postIdentity(lib.responseData.identityState).then(() => {
-        getResponse = identityState.getIdentityStateById(lib.responseData.identityState);
+      identity.postIdentity(identityStateData).then(() => {
+        getResponse = identityState.getIdentityStateById(identityStateData);
         done();
       })
     });
@@ -28,7 +29,7 @@ describe('Identity State Api', () => {
 
   describe('PUT /identities/{id}/state', () => {
     before((done) => {
-      putResponse = identityState.putIdentityById(lib.responseData.identityState);
+      putResponse = identityState.putIdentityById(identityStateData);
       done();
     });
     it('Set identity state for an identity.', () => {
@@ -40,7 +41,7 @@ describe('Identity State Api', () => {
 
   describe('PATCH /identities/{id}/state', () => {
     before((done) => {
-      patchResponse = identityState.patchIdentityStateById(lib.responseData.identityState);
+      patchResponse = identityState.patchIdentityStateById(identityStateData);
       done();
     });
     it('Partial update identity state for an identity.', () => {
