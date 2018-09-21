@@ -15,6 +15,7 @@ export function postOrganization(responseObject, flag) {
   return lib.post(any).then((response) => {
     responseObject.orgID = response.body.id;
     responseObject.orgRowVersion = response.body.rowVersion;
+    responseObject.orgName = response.body.name;
     return response;
   })
 }

@@ -9,21 +9,13 @@ var dateFormat = require('dateformat');
 var path = require('path');
 var caller = require('grpc-caller');
 
+export const invitesNegData = new Object();
+export const membershipNegData = new Object();
+export const orgNegData = new Object();
+export const spaceNegData = new Object();
+export const spaceKeyNegData = new Object();
+
 const responseData = {
-  organization: [],
-  membership: [],
-  identity: [],
-  identityState: [],
-  invites: [],
-  spaces: [],
-  spaceKey: [],
-  metrics: [],
-  negMembership: [],
-  negIdentity: [],
-  negInvites: [],
-  negOrganization: [],
-  negSpace: [],
-  negSpaceKey: [],
   spaceSlug: [],
   orgSlug: [],
   users: [],
