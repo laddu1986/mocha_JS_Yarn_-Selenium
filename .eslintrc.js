@@ -22,7 +22,8 @@ module.exports = {
 		'xit': false
 	},
 	extends: [
-		'eslint:recommended',
+    'eslint:recommended',
+    'prettier'
 	],
 	plugins: ['mocha'],
 	rules: {
