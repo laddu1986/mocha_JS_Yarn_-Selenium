@@ -17,6 +17,8 @@ export function postIdentity(responseObject, flag) {
   }
   return lib.post(any).then((response) => {
     responseObject.identityID = response.body.id;
+    responseObject.identityEmail = response.body.email;
+    responseObject.identityFullname = response.body.fullName;
     return response;
   })
 }
