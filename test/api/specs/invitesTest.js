@@ -4,14 +4,15 @@ import * as invites from 'api/actions/invites';
 import * as organization from 'api/actions/organization';
 import * as constants from 'data/constants.json';
 var schema, postResponse, getResponse, getInviteResponse, deleteResponse;
+const inviteData = new Object();
 
 describe('Invites Api', () => {
   describe(`POST /organizations/{id}/invites ${lib.Tags.smokeTest}`, () => {
     before((done) => {
-      identity.postIdentity(lib.responseData.invites).then(() => {
-        organization.postOrganization(lib.responseData.invites).then(() => {
-          invites.getAccessToken(lib.responseData.invites).then(() => {
-            postResponse = invites.postInvitesByOrganizationId(lib.responseData.invites, true);
+      identity.postIdentity(inviteData).then(() => {
+        organization.postOrganization(inviteData).then(() => {
+          invites.getAccessToken(inviteData).then(() => {
+            postResponse = invites.postInvitesByOrganizationId(inviteData, true);
             done();
           });
         })
@@ -27,7 +28,7 @@ describe('Invites Api', () => {
 
   describe('GET /organizations/{orgId}/invites', () => {
     before((done) => {
-      getResponse = invites.getInvitesByOrganizationId(lib.responseData.invites);
+      getResponse = invites.getInvitesByOrganizationId(inviteData);
       done();
     });
     it('Search invites in the org', () => {
@@ -51,7 +52,7 @@ describe('Invites Api', () => {
 
   describe('GET /organizations/{orgId}/invites/{token}', () => {
     before((done) => {
-      getInviteResponse = invites.getInviteDetailsByToken(lib.responseData.invites);
+      getInviteResponse = invites.getInviteDetailsByToken(inviteData);
       done();
     });
     it('Get invite details', () => {
@@ -59,8 +60,8 @@ describe('Invites Api', () => {
         expect(response).to.have.status(200);
         schema = lib.joi.object().keys({
           email: lib.joi.valid(lib.testData.invitesData[0]).required(),
-          organizationId: lib.joi.string().uuid().valid(lib.responseData.invites[1].id).required(),
-          organizationName: lib.joi.valid(lib.responseData.invites[1].name).required(),
+          organizationId: lib.joi.string().uuid().valid(inviteData.orgID).required(),
+          organizationName: lib.joi.valid(inviteData.orgName).required(),
           hasAccount: lib.joi.boolean().valid(false).required(),
           status: lib.joi.valid(constants.InviteStatus.Pending).required()
         });
@@ -71,7 +72,7 @@ describe('Invites Api', () => {
 
   describe('DELETE /organizations/{orgId}/invites/?email={email}', () => {
     before((done) => {
-      deleteResponse = invites.deleteInviteByOrganizationIdAndEmail(lib.responseData.invites);
+      deleteResponse = invites.deleteInviteByOrganizationIdAndEmail(inviteData);
       done();
     });
     it('Delete an invite.', () => {

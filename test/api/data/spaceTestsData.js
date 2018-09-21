@@ -2,65 +2,65 @@ import * as lib from '../../common';
 import { spaces } from '../config/getEnv'
 
 export const noName = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
-        createdByAccountId: lib.responseData.negSpace[0].id,
+        createdByAccountId: lib.spaceNegData.identityID,
         shortUrl: lib.randomString.generate(6)
     },
     expected: "The Name field is required."
 };
 
 export const noShortUrl = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
         name: lib.randomString.generate(10),
-        createdByAccountId: lib.responseData.negSpace[0].id
+        createdByAccountId: lib.spaceNegData.identityID
     },
     expected: "The ShortUrl field is required."
 };
 
 export const blankName = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
         name: "",
-        createdByAccountId: lib.responseData.negSpace[0].id,
+        createdByAccountId: lib.spaceNegData.identityID,
         shortUrl: lib.randomString.generate(6)
     },
     expected: "The Name field is required.,The field Name must be a string with a minimum length of 1 and a maximum length of 75."
 };
 
 export const blankShortUrl = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
         name: lib.randomString.generate(10),
-        createdByAccountId: lib.responseData.negSpace[0].id,
+        createdByAccountId: lib.spaceNegData.identityID,
         shortUrl: ""
     },
     expected: "The ShortUrl field is required.,The field ShortUrl must be a string with a minimum length of 1 and a maximum length of 20."
 };
 
 export const bigName = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
         name: lib.randomString.generate(76),
-        createdByAccountId: lib.responseData.negSpace[0].id,
+        createdByAccountId: lib.spaceNegData.identityID,
         shortUrl: lib.randomString.generate(6)
     },
     expected: "The field Name must be a string with a minimum length of 1 and a maximum length of 75."
 };
 
 export const bigShortUrl = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
         name: lib.randomString.generate(10),
-        createdByAccountId: lib.responseData.negSpace[0].id,
+        createdByAccountId: lib.spaceNegData.identityID,
         shortUrl: lib.randomString.generate(21)
     },
     expected: "The field ShortUrl must be a string with a minimum length of 1 and a maximum length of 20."
 };
 
 export const noAccountId = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
         name: lib.randomString.generate(10),
         shortUrl: lib.randomString.generate(6)
@@ -70,122 +70,122 @@ export const noAccountId = {
 
 /*********************************PUT ***************************************/
 export const noNamePut = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
-        id: lib.responseData.negSpace[2].id,
-        rowVersion: lib.responseData.negSpace[2].rowVersion,
+        id: lib.spaceNegData.spaceID,
+        rowVersion: lib.spaceNegData.spaceRowVersion,
         shortUrl: lib.randomString.generate(6)
     },
     expected: "The Name field is required."
 };
 
 export const blankNamePut = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
         name: "",
-        id: lib.responseData.negSpace[2].id,
-        rowVersion: lib.responseData.negSpace[2].rowVersion,
+        id: lib.spaceNegData.spaceID,
+        rowVersion: lib.spaceNegData.spaceRowVersion,
         shortUrl: lib.randomString.generate(6)
     },
     expected: "The Name field is required.,The field Name must be a string with a minimum length of 1 and a maximum length of 75."
 };
 
 export const bigNamePut = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
         name: lib.randomString.generate(76),
-        id: lib.responseData.negSpace[2].id,
-        rowVersion: lib.responseData.negSpace[2].rowVersion,
+        id: lib.spaceNegData.spaceID,
+        rowVersion: lib.spaceNegData.spaceRowVersion,
         shortUrl: lib.randomString.generate(6)
     },
     expected: "The field Name must be a string with a minimum length of 1 and a maximum length of 75."
 };
 
 export const noIdPut = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
         name: lib.randomString.generate(5),
-        rowVersion: lib.responseData.negSpace[2].rowVersion,
+        rowVersion: lib.spaceNegData.spaceRowVersion,
         shortUrl: lib.randomString.generate(6)
     },
     expected: "The Id field is required."
 };
 
 export const noShortUrlPut = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
-        id: lib.responseData.negSpace[2].id,
+        id: lib.spaceNegData.spaceID,
         name: lib.randomString.generate(5),
-        rowVersion: lib.responseData.negSpace[2].rowVersion
+        rowVersion: lib.spaceNegData.spaceRowVersion
     },
     expected: "The ShortUrl field is required."
 };
 
 export const blankShortUrlPut = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
         name: lib.randomString.generate(5),
-        id: lib.responseData.negSpace[2].id,
-        rowVersion: lib.responseData.negSpace[2].rowVersion,
+        id: lib.spaceNegData.spaceID,
+        rowVersion: lib.spaceNegData.spaceRowVersion,
         shortUrl: ""
     },
     expected: "The ShortUrl field is required.,The field ShortUrl must be a string with a minimum length of 1 and a maximum length of 20."
 };
 
 export const bigShortUrlPut = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
         name: lib.randomString.generate(7),
-        id: lib.responseData.negSpace[2].id,
-        rowVersion: lib.responseData.negSpace[2].rowVersion,
+        id: lib.spaceNegData.spaceID,
+        rowVersion: lib.spaceNegData.spaceRowVersion,
         shortUrl: lib.randomString.generate(21)
     },
     expected: "The field ShortUrl must be a string with a minimum length of 1 and a maximum length of 20."
 };
 
 export const noRowVersionPut = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
-        id: lib.responseData.negSpace[2].id,
+        id: lib.spaceNegData.spaceID,
         name: lib.randomString.generate(5),
         shortUrl: lib.randomString.generate(6)
     }
 };
 
 export const incorrectOrgIDPut = {
-    api: `${spaces + lib.responseData.negSpace[0].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.identityID}/spaces`,
     data: {
-        id: lib.responseData.negSpace[2].id,
+        id: lib.spaceNegData.spaceID,
         name: lib.randomString.generate(5),
-        rowVersion: lib.responseData.negSpace[2].rowVersion,
+        rowVersion: lib.spaceNegData.spaceRowVersion,
         shortUrl: lib.randomString.generate(6)
     }
 };
 
 export const incorrectSpaceIDPut = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces`,
     data: {
-        id: lib.responseData.negSpace[1].id,
+        id: lib.spaceNegData.orgID,
         name: lib.randomString.generate(5),
-        rowVersion: lib.responseData.negSpace[2].rowVersion,
+        rowVersion: lib.spaceNegData.spaceRowVersion,
         shortUrl: lib.randomString.generate(6)
     }
 };
 //-------------------------------------- GET ---------------------------------
 export const incorrectOrgIDGet = {
-    api: `${spaces + lib.responseData.negSpace[0].id}/spaces/${lib.responseData.negSpace[2].id}`,
+    api: `${spaces + lib.spaceNegData.identityID}/spaces/${lib.spaceNegData.spaceID}`,
     data: ""
 };
 
 export const incorrectSpaceIDGet = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces/${lib.responseData.negSpace[0].id}`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces/${lib.spaceNegData.identityID}`,
     data: ""
 };
 
 //***************************PATCH ********************************/
 
 export const incorrectRowVersionPatch = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces/${lib.responseData.negSpace[2].id}?rowVersion= `,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces/${lib.spaceNegData.spaceID}?rowVersion= `,
     data: [
         {
             op: "replace",
@@ -195,7 +195,7 @@ export const incorrectRowVersionPatch = {
     ]
 };
 export const incorrectOrgIDPatch = {
-    api: `${spaces + lib.responseData.negSpace[0].id}/spaces/${lib.responseData.negSpace[2].id}?rowVersion=${lib.responseData.negSpace[2].rowVersion}`,
+    api: `${spaces + lib.spaceNegData.identityID}/spaces/${lib.spaceNegData.spaceID}?rowVersion=${lib.spaceNegData.spaceRowVersion}`,
     data: [
         {
             op: "replace",
@@ -205,7 +205,7 @@ export const incorrectOrgIDPatch = {
     ]
 };
 export const incorrectSpaceIDPatch = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces/${lib.responseData.negSpace[0].id}?rowVersion=${lib.responseData.negSpace[2].rowVersion}`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces/${lib.spaceNegData.identityID}?rowVersion=${lib.spaceNegData.spaceRowVersion}`,
     data: [
         {
             op: "replace",
@@ -215,7 +215,7 @@ export const incorrectSpaceIDPatch = {
     ]
 };
 export const blankNamePatch = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces/${lib.responseData.negSpace[2].id}?rowVersion=${lib.responseData.negSpace[2].rowVersion}`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces/${lib.spaceNegData.spaceID}?rowVersion=${lib.spaceNegData.spaceRowVersion}`,
     data: [
         {
             op: "replace",
@@ -226,7 +226,7 @@ export const blankNamePatch = {
     expected: "The Name field is required.,The field Name must be a string with a minimum length of 1 and a maximum length of 75."
 };
 export const noNamePatch = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces/${lib.responseData.negSpace[2].id}?rowVersion=${lib.responseData.negSpace[2].rowVersion}`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces/${lib.spaceNegData.spaceID}?rowVersion=${lib.spaceNegData.spaceRowVersion}`,
     data: [
         {
             op: "replace",
@@ -236,7 +236,7 @@ export const noNamePatch = {
     expected: "The Name field is required."
 };
 export const bigNamePatch = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces/${lib.responseData.negSpace[2].id}?rowVersion=${lib.responseData.negSpace[2].rowVersion}`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces/${lib.spaceNegData.spaceID}?rowVersion=${lib.spaceNegData.spaceRowVersion}`,
     data: [
         {
             op: "replace",
@@ -247,7 +247,7 @@ export const bigNamePatch = {
     expected: "The field Name must be a string with a minimum length of 1 and a maximum length of 75."
 };
 export const blankShortUrlPatch = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces/${lib.responseData.negSpace[2].id}?rowVersion=${lib.responseData.negSpace[2].rowVersion}`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces/${lib.spaceNegData.spaceID}?rowVersion=${lib.spaceNegData.spaceRowVersion}`,
     data: [
         {
             op: "replace",
@@ -258,7 +258,7 @@ export const blankShortUrlPatch = {
     expected: "The ShortUrl field is required.,The field ShortUrl must be a string with a minimum length of 1 and a maximum length of 20."
 };
 export const noShortUrlPatch = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces/${lib.responseData.negSpace[2].id}?rowVersion=${lib.responseData.negSpace[2].rowVersion}`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces/${lib.spaceNegData.spaceID}?rowVersion=${lib.spaceNegData.spaceRowVersion}`,
     data: [
         {
             op: "replace",
@@ -268,7 +268,7 @@ export const noShortUrlPatch = {
     expected: "The ShortUrl field is required."
 };
 export const bigShortUrlPatch = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces/${lib.responseData.negSpace[2].id}?rowVersion=${lib.responseData.negSpace[2].rowVersion}`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces/${lib.spaceNegData.spaceID}?rowVersion=${lib.spaceNegData.spaceRowVersion}`,
     data: [
         {
             op: "replace",
@@ -281,16 +281,16 @@ export const bigShortUrlPatch = {
 //---------------------------------- DELETE ---------------------------------------------
 
 export const incorrectSpaceIDDelete = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces/${lib.responseData.negSpace[0].id}?rowVersion=${lib.responseData.negSpace[2].rowVersion}`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces/${lib.spaceNegData.identityID}?rowVersion=${lib.spaceNegData.spaceRowVersion}`,
     data: ""
 };
 
 export const incorrectOrgIDDelete = {
-    api: `${spaces + lib.responseData.negSpace[0].id}/spaces/${lib.responseData.negSpace[2].id}?rowVersion=${lib.responseData.negSpace[2].rowVersion}`,
+    api: `${spaces + lib.spaceNegData.identityID}/spaces/${lib.spaceNegData.spaceID}?rowVersion=${lib.spaceNegData.spaceRowVersion}`,
     data: ""
 };
 
 export const noRowVersionDelete = {
-    api: `${spaces + lib.responseData.negSpace[1].id}/spaces/${lib.responseData.negSpace[2].id}?rowVersion=`,
+    api: `${spaces + lib.spaceNegData.orgID}/spaces/${lib.spaceNegData.spaceID}?rowVersion=`,
     data: ""
 };

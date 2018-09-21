@@ -2,7 +2,7 @@ import * as lib from '../../common';
 import { spaces, keys } from '../config/getEnv'
 
 
-function postSpaceByOrganizationId(responseObject, flag) {
+export function postSpaceByOrganizationId(responseObject, flag) {
   const any = {
     api: `${spaces + responseObject.orgID}/spaces`,
     data: {
@@ -22,7 +22,7 @@ function postSpaceByOrganizationId(responseObject, flag) {
   })
 }
 
-function getSpacesByOrganizationId(responseObject) {
+export function getSpacesByOrganizationId(responseObject) {
   const any = {
     api: `${spaces + responseObject.orgID}/spaces`,
     data: ""
@@ -86,35 +86,32 @@ export function deleteSpaceByOrgIdAndSpaceId(responseObject) {
 }
 
 //--------------------------------KEYS RELATED FUNCTIONS--------------------------
-function postKeysBySpaceId(responseData) {
+export function postKeysBySpaceId(responseObject) {
   const any = {
-    api: `${keys}${responseData[1].id}/keys`,
+    api: `${keys}${responseObject.orgID}/keys`,
     data: {
       resource: 'space',
-      id: responseData[2].id
+      id: responseObject.spaceID
     }
   };
   return lib.post(any).then((response) => {
-    responseData.push(response.body);
+    responseObject.spaceKeyValue = response.body.value;
+    responseObject.spaceKeyRowVersion = response.body.rowVersion;
     return response;
   })
 }
 
-function getKeysBySpaceId(responseData) {
+export function getKeysBySpaceId(responseObject) {
   const any = {
-    api: `${keys}${responseData[1].id}/keys`,
-    data: `?resource=space&ids=${responseData[2].id}`
+    api: `${keys}${responseObject.orgID}/keys`,
+    data: `?resource=space&ids=${responseObject.spaceID}`
   };
   return lib.get(any);
 }
 
-var count = 3;
-function patchKeyBySpaceIdAndRowVersion(responseData, status) {
-  if (status === "Active") {
-    count = 4;
-  }
+export function patchKeyBySpaceIdAndRowVersion(responseObject, status) {
   const any = {
-    api: `${keys}${responseData[1].id}/keys/${responseData[3].value}?rowVersion=${responseData[count].rowVersion}`,
+    api: `${keys}${responseObject.orgID}/keys/${responseObject.spaceKeyValue}?rowVersion=${responseObject.spaceKeyRowVersion}`,
     data: [
       {
         "op": "replace",
@@ -124,24 +121,15 @@ function patchKeyBySpaceIdAndRowVersion(responseData, status) {
     ]
   };
   return lib.patch(any).then((response) => {
-    responseData.push(response.body);
+    responseObject.spaceKeyRowVersion = response.body.rowVersion;
     return response;
   })
 }
 
-function deleteKeyBySpaceIdAndRowVersion(responseData) {
+export function deleteKeyBySpaceIdAndRowVersion(responseObject) {
   const any = {
-    api: `${keys}${responseData[1].id}/keys/${responseData[5].value}?rowVersion=${responseData[5].rowVersion}`,
+    api: `${keys}${responseObject.orgID}/keys/${responseObject.spaceKeyValue}?rowVersion=${responseObject.spaceKeyRowVersion}`,
     data: ""
   };
   return lib.del(any);
 }
-
-export {
-  postSpaceByOrganizationId,
-  getSpacesByOrganizationId,
-  postKeysBySpaceId,
-  getKeysBySpaceId,
-  patchKeyBySpaceIdAndRowVersion,
-  deleteKeyBySpaceIdAndRowVersion
-};
