@@ -5,7 +5,7 @@ import * as organization from 'api/actions/organization';
 import * as tribe from 'api/actions/tribe';
 import * as rules from 'api/actions/tribeRules'
 
-var configResponse, saveResponse, getResponse, schema;
+var configResponse, saveResponse, getResponse, evalResponse, schema;
 
 const rulesData = new Object();
 
@@ -69,12 +69,39 @@ describe.only('Tribe Rules Service', () => {
 
   describe('getRule()', () => {
     before('Get the rule', (done) => {
-      getResponse = rules.getRule(ruleData);
+      getResponse = rules.getRule(rulesData);
       done();
     });
 
     it('The rule is returned', () => {
-      //TODO: HERE CHECK AGAINST SAVED RULE
+      return getResponse.then((response) => {
+        schema = lib.joi.object().keys({
+          rule: lib.joi.object().keys({
+            audienceType: lib.joi.number().optional(),
+            logicalType: lib.joi.number().optional(),
+            filters: lib.joi.array().optional()
+          })
+        });
+        lib.joi.assert(response.response, schema);
+      });
     });
   });
+
+  describe.skip('evaluateRule()', () => {
+    before('Get the rule evalution', (done) => {
+      evalResponse = rules.evaluateRule(rulesData);
+      done();
+    });
+
+    it('Check returned status', () => {
+      return evalResponse.then((response) => {
+      });
+    });
+  });
+
+  describe.skip('evaluateRules()', () => {});
+
+  describe.skip('evaluateFilters()', () => {});
+
+  describe.skip('getSampleUsers()', () => {});
 });
