@@ -81,5 +81,5 @@
   },
   "author": "QA Team",
   "license": "UNLICENSED",
-  "pre-commit": []
+  "pre-commit": ["precommit"]
 }
