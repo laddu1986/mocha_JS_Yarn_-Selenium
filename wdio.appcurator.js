@@ -156,7 +156,7 @@ exports.config = {
   // screenshotPath: './errScreens',
   baseUrl: getArgs()[1],
   waitforTimeout: debug ? 9999999 : timeoutPeriod,
-  maxInstances: debug ? 1 : 10,
+  maxInstances: debug ? 1 : 15,
 
   plugins: {
     // webdrivercss: {
