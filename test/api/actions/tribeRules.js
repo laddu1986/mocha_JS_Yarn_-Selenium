@@ -6,7 +6,11 @@ const client = lib.caller(process.env.TRIBE_HOST, PROTO_PATH, 'SegmentRulesServi
 export function saveRule(responseObject) {
   const req = new client.Request('saveRule', {
     segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID },
-    rule: {}
+    rule: {
+      audienceType: 'USER',
+      logicalType: 'OR',
+      filters:[]
+    }
   }).withResponseStatus(true);
 
   return req.exec().then((response) => {
@@ -15,7 +19,6 @@ export function saveRule(responseObject) {
 }
 
 export function getRule(responseObject) {
-  //TODO: do this
   const req = new client.Request('getRule', {
     segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID }
   }).withResponseStatus(true);
@@ -27,31 +30,37 @@ export function getRule(responseObject) {
 }
 
 export function getConfiguration (responseObject) {
-  //TODO: do this
   const req = new client.Request('getConfiguration', {
     orgId: responseObject.orgID,
     spaceId: responseObject.spaceID
   }).withResponseStatus(true);
 
   return req.exec().then((response) => {
-    // Save our properties and operators
     responseObject.configurations = response.response;
     return response;
   });
 }
 
-export function evaluateRule() {
+/* Rule evaluation will always fail as no data */
+export function evaluateRule(responseObject) {
+  console.log(responseObject);
+  const req = new client.Request('evaluateRule', {
+    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID }
+  }).withResponseStatus(true);
 
+  return req.exec().then((response) => {
+    return response;
+  });
 }
 
 export function evaluateRules() {
-  //TODO: do this
+  //TODO: do this when we can get data
 }
 
 export function evaluateFilters() {
-  //TODO do this
+  //TODO: do this when we can get data
 }
 
 export function getSampleUsers() {
-  //TODO do this
+  //TODO: do this when we can get data
 }
