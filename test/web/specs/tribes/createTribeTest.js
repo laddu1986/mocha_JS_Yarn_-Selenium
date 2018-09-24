@@ -7,7 +7,7 @@ import { clickOnAudienceLink } from 'web/actions/navBar';
 import { verifyAllTribesPage, verifyTitleOnCard, inputTribeDetails, clickCreateTribeLink, verifyTribe, clickCreateTribeButton, verifyTribeDetailpage } from 'web/actions/tribe';
 var title, tagline;
 
-describe('Create Tribe Tests', () => {
+describe(`Create Tribe Tests ${lib.Tags.smokeTest}`, () => {
     before(() => {
         accountPage.open()
         createAccount();
