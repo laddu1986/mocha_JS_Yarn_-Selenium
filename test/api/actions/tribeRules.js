@@ -9,11 +9,11 @@ export function saveRule(responseObject) {
     rule: {
       audienceType: 'USER',
       logicalType: 'OR',
-      filters:[]
+      filters: []
     }
   }).withResponseStatus(true);
 
-  return req.exec().then((response) => {
+  return req.exec().then(response => {
     return response;
   });
 }
@@ -23,31 +23,30 @@ export function getRule(responseObject) {
     segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID }
   }).withResponseStatus(true);
 
-  return req.exec().then((response) => {
+  return req.exec().then(response => {
     responseObject.rule = response.response;
     return response;
   });
 }
 
-export function getConfiguration (responseObject) {
+export function getConfiguration(responseObject) {
   const req = new client.Request('getConfiguration', {
     orgId: responseObject.orgID,
     spaceId: responseObject.spaceID
   }).withResponseStatus(true);
 
-  return req.exec().then((response) => {
+  return req.exec().then(response => {
     responseObject.configurations = response.response;
     return response;
   });
 }
 
-/* Rule evaluation will always fail as no data */
 export function evaluateRule(responseObject) {
   const req = new client.Request('evaluateRule', {
     segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID }
   }).withResponseStatus(true);
 
-  return req.exec().then((response) => {
+  return req.exec().then(response => {
     return response;
   });
 }
@@ -55,10 +54,10 @@ export function evaluateRule(responseObject) {
 export function evaluateRules(responseObject) {
   const req = new client.Request('evaluateRules', {
     spaceContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID },
-    segmentIds: [ responseObject.tribeID ]
+    segmentIds: [responseObject.tribeID]
   }).withResponseStatus(true);
 
-  return req.exec().then((response) => {
+  return req.exec().then(response => {
     return response;
   });
 }
@@ -68,7 +67,7 @@ export function evaluateRuleFilters(responseObject) {
     segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID }
   }).withResponseStatus(true);
 
-  return req.exec().then((response) => {
+  return req.exec().then(response => {
     return response;
   });
 }
@@ -78,7 +77,7 @@ export function getSampleUsers(responseObject) {
     segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID }
   }).withResponseStatus(true);
 
-  return req.exec().then((response) => {
+  return req.exec().then(response => {
     return response;
   });
 }
