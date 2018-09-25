@@ -1,7 +1,8 @@
-import { chakram, faker, config } from '../common';
+//import { chakram, faker, config } from '../common';
+import { chakram, config } from '../common';
 
 
-const emoji = require('node-emoji');
+// const emoji = require('node-emoji');
 
 const email = config.orca.email;
 const password = config.orca.password;
@@ -37,7 +38,8 @@ describe('Authenticate User', () => {
         }
       };
 
-      const response = chakram.post(url, {
+      //const response = chakram.post(url, {
+      chakram.post(url, {
         query: `query{getAccount{id
                 name
                 email
@@ -49,15 +51,15 @@ describe('Authenticate User', () => {
             `
       }, options)
         .then((resBody) => {
-          console.log(resBody.response.body.data.getAccount);
+          //console.log(resBody.response.body.data.getAccount);
           // console.log(JSON.stringify(resBody.response.body))
           return resBody;
         });
-      console.log(`Cookie Ready ${emoji.get(':cookie:')}`);
-      console.log(`COO 1${cookies}`);
+      //console.log(`Cookie Ready ${emoji.get(':cookie:')}`);
+      //console.log(`COO 1${cookies}`);
       return getAccDetails, cookies;
     });
-    console.log(`COO 2${cookies}`);
+    // console.log(`COO 2${cookies}`);
   });
 });
 
