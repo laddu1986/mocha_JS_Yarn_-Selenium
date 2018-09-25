@@ -31,6 +31,7 @@ export function verifyUsersDetails(dataArray) {  //iterates thru the rows and ve
     }
 }
 
+<<<<<<< HEAD
 export function clickUserRowNo(n) {
     n === undefined || n <= 0 ?
         UsersPage.userRows.value[0].click() :
@@ -42,6 +43,31 @@ export function clickUserRowNo(n) {
 
 export function getFirstRowUserName() {
     return UsersPage.userNameRow.value[0].getText();
+=======
+export function clickFirstRow(type) {
+    if (type == Constants.UserType.Visitor)
+        UsersPage.visitorRows.value[0].click();
+    else
+        UsersPage.userRows.value[0].click();
+}
+
+export function getResultText() {
+    browser.waitUntil(() => UsersPage.resultsText.getText() === 'Results', 5000, 'Results not displayed', 200);
+    return UsersPage.resultFoundText.getText();
+}
+
+export function clearText() {
+    UsersPage.searchTextField.clearElement();
+}
+
+export function getFirstRowDetails(UserAttribute) {
+    if (UserAttribute == Constants.UserAttributes.Name)
+        return UsersPage.userNameRow.value[0].getText();
+    else if (UserAttribute == Constants.UserAttributes.Email)
+        return UsersPage.userEmailRow.value[0].getText();
+    else if (UserAttribute == Constants.UserAttributes.UID)
+        return UsersPage.userUIDRow.value[0].getText();
+>>>>>>> ca2d1e6cb9a0f052f70bd1b4bef3e6f911f17c6e
 }
 
 export function verifySideBar(userType) {
@@ -64,10 +90,12 @@ export function verifySideBar(userType) {
 }
 
 export function deleteUser() {
+    UsersPage.userActions.click();
     UsersPage.deleteUserButton.click();
     CommonPage.iAmSureButton.click();
 }
 
+<<<<<<< HEAD
 var userInputLabels, userInputLabels = [], lcount;
 
 export function addLabels(labelCount) {
@@ -177,3 +205,39 @@ export function selectLabelFromSuggestions(selectedLabel) {
 export function closeSidePanel() {
     UsersPage.closeSidePanel.click()
 }
+=======
+export function search(value) {
+    UsersPage.searchTextField.setValue(value);
+}
+
+export function addLabels(labelCount) {
+    if (labelCount === undefined) labelCount = 2;
+    console.log(labelCount)
+    var labelList = [], label
+    clickAddLabelButton()
+    while (labelCount-- > 0) {
+        console.log(labelCount)
+
+        label = lib.randomString.generate(Math.floor((Math.random() * 10) + 1))
+        inputLabelDetails(label)
+        labelList.push(label)
+        browser.keys('Enter') //workaround
+    }
+    console.log('labelList ', labelList)
+
+}
+
+export function clickAddLabelButton() {
+    UsersPage.addLabelButton.click()
+}
+
+export function inputLabelDetails(label) {
+    UsersPage.labelInput.setValue(label)
+}
+
+export function verifyLabels(label, count) {
+    if (UsersPage.labels.value[count].getText() === label) {
+        return true;
+    }
+}
+>>>>>>> ca2d1e6cb9a0f052f70bd1b4bef3e6f911f17c6e

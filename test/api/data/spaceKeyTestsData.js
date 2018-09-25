@@ -1,7 +1,9 @@
 import * as lib from '../../common';
+import { keys } from '../config/getEnv'
+
 
 export const noSpaceIDPost = {
-    api: `${process.env.API_KEYS}${lib.responseData.negSpaceKey[1].id}/keys`,
+    api: `${keys}${lib.spaceKeyNegData.orgID}/keys`,
     data: {
         resource: 'space'
     },
@@ -9,7 +11,7 @@ export const noSpaceIDPost = {
 };
 
 export const blankSpaceIDPost = {
-    api: `${process.env.API_KEYS}${lib.responseData.negSpaceKey[1].id}/keys`,
+    api: `${keys}${lib.spaceKeyNegData.orgID}/keys`,
     data: {
         resource: 'space',
         id: ""
@@ -18,25 +20,25 @@ export const blankSpaceIDPost = {
 };
 
 export const incorrectOrgIDPost = {
-    api: `${process.env.API_KEYS}${lib.responseData.negSpaceKey[0].id}/keys`,
+    api: `${keys}${lib.spaceKeyNegData.identityID}/keys`,
     data: {
         resource: 'space',
-        id: lib.responseData.negSpaceKey[2].id
+        id: lib.spaceKeyNegData.spaceID
     }
 };
 
 export const incorrectSpaceIDPost = {
-    api: `${process.env.API_KEYS}${lib.responseData.negSpaceKey[1].id}/keys`,
+    api: `${keys}${lib.spaceKeyNegData.orgID}/keys`,
     data: {
         resource: 'space',
-        id: lib.responseData.negSpaceKey[1].id
+        id: lib.spaceKeyNegData.orgID
     }
 };
 
 //****************PATCH***************************//
 
 export const blankStatusPatch = {
-    api: `${process.env.API_KEYS}${lib.responseData.negSpaceKey[1].id}/keys/${lib.responseData.negSpaceKey[3].value}?rowVersion=${lib.responseData.negSpaceKey[3].rowVersion}`,
+    api: `${keys}${lib.spaceKeyNegData.orgID}/keys/${lib.spaceKeyNegData.spaceKeyValue}?rowVersion=${lib.spaceKeyNegData.spaceKeyRowVersion}`,
     data: [
         {
             "op": "replace",
@@ -48,7 +50,7 @@ export const blankStatusPatch = {
 };
 
 export const incorrectKeyPatch = {
-    api: `${process.env.API_KEYS}${lib.responseData.negSpaceKey[1].id}/keys/${lib.responseData.negSpaceKey[1].id}?rowVersion=${lib.responseData.negSpaceKey[3].rowVersion}`,
+    api: `${keys}${lib.spaceKeyNegData.orgID}/keys/${lib.spaceKeyNegData.orgID}?rowVersion=${lib.spaceKeyNegData.spaceKeyRowVersion}`,
     data: [
         {
             "op": "replace",
@@ -60,7 +62,7 @@ export const incorrectKeyPatch = {
 };
 
 export const incorrectOrgIdPatch = {
-    api: `${process.env.API_KEYS}${lib.responseData.negSpaceKey[0].id}/keys/${lib.responseData.negSpaceKey[3].value}?rowVersion=${lib.responseData.negSpaceKey[3].rowVersion}`,
+    api: `${keys}${lib.spaceKeyNegData.identityID}/keys/${lib.spaceKeyNegData.spaceKeyValue}?rowVersion=${lib.spaceKeyNegData.spaceKeyRowVersion}`,
     data: [
         {
             "op": "replace",
@@ -73,12 +75,12 @@ export const incorrectOrgIdPatch = {
 //************************************ DELETE**********************************/
 
 export const incorrectKeyDelete = {
-    api: `${process.env.API_KEYS}${lib.responseData.negSpaceKey[1].id}/keys/${lib.responseData.negSpaceKey[1].id}?rowVersion=${lib.responseData.negSpaceKey[3].rowVersion}`,
+    api: `${keys}${lib.spaceKeyNegData.orgID}/keys/${lib.spaceKeyNegData.orgID}?rowVersion=${lib.spaceKeyNegData.spaceKeyRowVersion}`,
     data: "",
     expected: "Key not found"
 };
 
 export const incorrectOrgIdDelete = {
-    api: `${process.env.API_KEYS}${lib.responseData.negSpaceKey[0].id}/keys/${lib.responseData.negSpaceKey[3].value}?rowVersion=${lib.responseData.negSpaceKey[3].rowVersion}`,
+    api: `${keys}${lib.spaceKeyNegData.identityID}/keys/${lib.spaceKeyNegData.spaceKeyValue}?rowVersion=${lib.spaceKeyNegData.spaceKeyRowVersion}`,
     data: ""
 };

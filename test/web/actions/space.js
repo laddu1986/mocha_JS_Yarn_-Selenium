@@ -34,17 +34,16 @@ export function createSpace() {
   var spacename = `${lib.randomString.generate(8)}_Space`;
   OrgDashboardPage.createSpaceInput.setValue(spacename);
   OrgDashboardPage.createSpaceButton.click();
-  SpaceDashboardPage.goToDevPortal.waitForVisible();
+  NavBar.developerLink.waitForVisible();
   return spacename;
 }
 
 export function goToDeveloperPortal() {
   NavBar.developerLink.click()
-
 }
 
 export function verifySpacePage(spaceName) {
-  if (SpaceDashboardPage.goToDevPortal.isVisible() == true && browser.getUrl().includes(spaceName)) {
+  if (NavBar.developerLink.isVisible() === true && browser.getUrl().includes(spaceName)) {
     return true;
   } else {
     return false;
@@ -75,7 +74,7 @@ export function copyAPIKeyToClipBoard() {
 
 export function copiedValue() {
   var copiedValue = copyPasteModule.paste().split('{').pop().split('}').shift();
-  return copiedValue;
+  return copiedValue.replace(/\"/g, "").split(':')[1]
 }
 
 export function defaultAPIKey() {
@@ -91,7 +90,7 @@ export function verifyAPIKeyStatus(status) {
 
 export function verifyNewSpaceUrl(newSlugName) {
   return browser.waitUntil(function () {
-    return browser.getUrl().includes(newSlugName)
+    return browser.getUrl().includes(newSlugName.toLowerCase())
   }, 5000, `New Slug ${newSlugName} is not updated`);
 }
 

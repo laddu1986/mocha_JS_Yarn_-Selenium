@@ -1,4 +1,5 @@
 import * as lib from '../../common';
+import { metrics } from '../config/getEnv'
 
 var today = new Date();
 var mm = today.getMonth();
@@ -8,25 +9,25 @@ var yyyy = today.getFullYear();
 var fromDate = yyyy + '-' + mmFrom + '-' + dd;
 var toDate = yyyy + '-' + mm + '-' + dd;
 
-export function getUniqueAppUsers(responseData) {
+export function getUniqueAppUsers(responseObject) {
     const any = {
-        api: `${process.env.API_METRICS + responseData[1].id}/spaces/${responseData[2].id}/metrics/unique-users/count?from=${fromDate}&to=${toDate}`,
+        api: `${metrics + responseObject.orgID}/spaces/${responseObject.spaceID}/metrics/unique-users/count?from=${fromDate}&to=${toDate}`,
         data: ""
     };
     return lib.get(any);
 }
 
-export function getAPIRequests(responseData) {
+export function getAPIRequests(responseObject) {
     const any = {
-        api: `${process.env.API_METRICS + responseData[1].id}/spaces/${responseData[2].id}/metrics/requests/count?from=${fromDate}&to=${toDate}`,
+        api: `${metrics + responseObject.orgID}/spaces/${responseObject.spaceID}/metrics/requests/count?from=${fromDate}&to=${toDate}`,
         data: ""
     };
     return lib.get(any);
 }
 
-export function getMetricsActive(responseData) {
+export function getMetricsActive(responseObject) {
     const any = {
-        api: `${process.env.API_METRICS + responseData[1].id}/spaces/${responseData[2].id}/metrics/active`,
+        api: `${metrics + responseObject.orgID}/spaces/${responseObject.spaceID}/metrics/active`,
         data: ""
     };
     return lib.get(any);

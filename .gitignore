@@ -11,4 +11,7 @@ phantomjs.log
 **/wdio-report.html
 **/api-report.html
 **/.DS_Store
-personal
+.DS_Store
+/personal
+/grpc/src
+**/grpc-report.html
