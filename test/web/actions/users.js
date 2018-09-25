@@ -31,7 +31,6 @@ export function verifyUsersDetails(dataArray) {  //iterates thru the rows and ve
     }
 }
 
-<<<<<<< HEAD
 export function clickUserRowNo(n) {
     n === undefined || n <= 0 ?
         UsersPage.userRows.value[0].click() :
@@ -43,7 +42,7 @@ export function clickUserRowNo(n) {
 
 export function getFirstRowUserName() {
     return UsersPage.userNameRow.value[0].getText();
-=======
+}
 export function clickFirstRow(type) {
     if (type == Constants.UserType.Visitor)
         UsersPage.visitorRows.value[0].click();
@@ -67,7 +66,6 @@ export function getFirstRowDetails(UserAttribute) {
         return UsersPage.userEmailRow.value[0].getText();
     else if (UserAttribute == Constants.UserAttributes.UID)
         return UsersPage.userUIDRow.value[0].getText();
->>>>>>> ca2d1e6cb9a0f052f70bd1b4bef3e6f911f17c6e
 }
 
 export function verifySideBar(userType) {
@@ -95,7 +93,6 @@ export function deleteUser() {
     CommonPage.iAmSureButton.click();
 }
 
-<<<<<<< HEAD
 var userInputLabels, userInputLabels = [], lcount;
 
 export function addLabels(labelCount) {
@@ -134,7 +131,7 @@ export function inputLabelDetails(label, labelCount) {
 export function verifyAddedLabels() {
     var actualLabels = []
     for (let l = 0; l < UsersPage.labels.value.length; l++) {
-        actualLabels.push(UsersPage.labels.value[l].getText())
+        actualLabels.push((UsersPage.labels.value[l].getText()).slice(0, -2))
     }
     console.log('\nuserInputLabels=', userInputLabels, '\nactualLabels=', actualLabels)
     var match = (JSON.stringify(userInputLabels).replace(/\s+/g, '') == JSON.stringify(actualLabels).replace(/\s+/g, ''))
@@ -161,7 +158,9 @@ export function deleteLabels(labelName) {
         }
     } else {
         for (let d = 0; d < labelName.length; d++) {
-            if ((UsersPage.labels.value[d].getText()) == labelName[d]) {
+            console.log('coming inside else', UsersPage.labels.value[d].getText().slice(0, -2), labelName[d])
+
+            if ((UsersPage.labels.value[d].getText().slice(0, -2)) == labelName[d]) {
                 UsersPage.deleteLabelButton.value[d].click()
                 browser.pause(300) //time required for label to be deleted from backend and reflect in frontend
                 deletedList = userInputLabels.filter(item => item !== labelName)
@@ -205,11 +204,10 @@ export function selectLabelFromSuggestions(selectedLabel) {
 export function closeSidePanel() {
     UsersPage.closeSidePanel.click()
 }
-=======
 export function search(value) {
     UsersPage.searchTextField.setValue(value);
 }
-
+/* 
 export function addLabels(labelCount) {
     if (labelCount === undefined) labelCount = 2;
     console.log(labelCount)
@@ -240,4 +238,4 @@ export function verifyLabels(label, count) {
         return true;
     }
 }
->>>>>>> ca2d1e6cb9a0f052f70bd1b4bef3e6f911f17c6e
+ */

@@ -9,13 +9,6 @@
   "confirmDeleteTxt": "delete",
   "space": {
     "spaceNotFound": "We couldn't find the Space you were after.\nSelect a space",
-<<<<<<< HEAD
-    "pageNotFound": "Page not found\nReturn to space"
-  },
-  "org": {
-    "orgNotFound": "We couldn't find the page you were after.\nSelect an org",
-    "pageNotFound": "Page not found\nReturn to "
-=======
     "pageNotFound": "We're unable to find the page you're looking for.\nReturn to space"
   },
   "org": {
@@ -25,6 +18,5 @@
   "search": {
     "result": "result found",
     "results": "results found"
->>>>>>> ca2d1e6cb9a0f052f70bd1b4bef3e6f911f17c6e
   }
 }
