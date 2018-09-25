@@ -1,14 +1,15 @@
-import { chakram, faker } from '../common';
-import Cookies from './getAccountToken';
+//import { chakram, faker } from '../common';
+import { chakram } from '..common';
+// import Cookies from './getAccountToken';
 
-const name = faker.name.findName();
-const email = faker.internet.email();
-const password = 'Password@1234';
-const organizationName = faker.company.companyName();
-// console.log(Cookies.cookies)
-function getCookies() {
-  console.log(Cookies.cookies);
-}
+// const name = faker.name.findName();
+// const email = faker.internet.email();
+// const password = 'Password@1234';
+// const organizationName = faker.company.companyName();
+// // console.log(Cookies.cookies)
+// function getCookies() {
+//   console.log(Cookies.cookies);
+// }
 describe('Orca Query Tests', () => {
 
   it('getOrganization + Should GET an Organization with valid Id', () => {
@@ -63,7 +64,7 @@ describe('Orca Query Tests', () => {
   });
 
   it('getAccount + Should GET an Account by valid Id', () => {
-    console.log(Cookies.cookies);
+    //console.log(Cookies.cookies);
 
     // var options = {
     //   headers: {
