@@ -4,8 +4,9 @@ import * as spaces from 'api/actions/spaces';
 import * as organization from 'api/actions/organization';
 import * as tribe from 'api/actions/tribe';
 import * as rules from 'api/actions/tribeRules'
+import { getSampleUsers } from '../actions/tribeRules';
 
-var configResponse, saveResponse, getResponse, evalResponse, schema;
+var configResponse, saveResponse, getResponse, evalResponse, evalRulesResponse, evalFiltersResponse, sampleUsersResponse, schema;
 
 const rulesData = new Object();
 
@@ -87,6 +88,20 @@ describe.only('Tribe Rules Service', () => {
     });
   });
 
+  describe('evaluateFilters()', () => {
+    before('Get the filters evaluation', (done) => {
+      evalFiltersResponse = rules.evaluateRuleFilters(rulesData);
+      done();
+    });
+
+    it('Check returned status', () => {
+      return evalFiltersResponse.then((response) => {
+        expect(response.status.code).to.equal(0);
+      });
+    });
+  });
+
+  //  ---- Rule evaluation will always fail as no data is available on a fresh space ----
   describe.skip('evaluateRule()', () => {
     before('Get the rule evalution', (done) => {
       evalResponse = rules.evaluateRule(rulesData);
@@ -99,9 +114,32 @@ describe.only('Tribe Rules Service', () => {
     });
   });
 
-  describe.skip('evaluateRules()', () => {});
+  describe.skip('evaluateRules()', () => {
+    before('Get the rules evaluation', (done) => {
+      evalRulesResponse = rules.evaluateRules(rulesData);
+      done();
+    });
 
-  describe.skip('evaluateFilters()', () => {});
+    it('Check returned status', () => {
+      return evalRulesResponse.then((response) => {
+        console.log(response.response);
+      });
+    });
+  });
 
-  describe.skip('getSampleUsers()', () => {});
+  describe.skip('getSampleUsers()', () => {
+    before('Get the same users', (done) => {
+      sampleUsersResponse = rules.getSampleUsers(rulesData);
+    });
+
+    it('Check returned status', () => {
+      return sampleUsersResponse.then((response) => {
+        expect(response.status.code).to.equal(0);
+      })
+    });
+  });
+
+  // ---- END of failing tests
+
+
 });

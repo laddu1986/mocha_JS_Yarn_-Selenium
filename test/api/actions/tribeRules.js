@@ -43,7 +43,6 @@ export function getConfiguration (responseObject) {
 
 /* Rule evaluation will always fail as no data */
 export function evaluateRule(responseObject) {
-  console.log(responseObject);
   const req = new client.Request('evaluateRule', {
     segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID }
   }).withResponseStatus(true);
@@ -53,14 +52,33 @@ export function evaluateRule(responseObject) {
   });
 }
 
-export function evaluateRules() {
-  //TODO: do this when we can get data
+export function evaluateRules(responseObject) {
+  const req = new client.Request('evaluateRules', {
+    spaceContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID },
+    segmentIds: [ responseObject.tribeID ]
+  }).withResponseStatus(true);
+
+  return req.exec().then((response) => {
+    return response;
+  });
 }
 
-export function evaluateFilters() {
-  //TODO: do this when we can get data
+export function evaluateRuleFilters(responseObject) {
+  const req = new client.Request('evaluateRuleFilters', {
+    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID }
+  }).withResponseStatus(true);
+
+  return req.exec().then((response) => {
+    return response;
+  });
 }
 
-export function getSampleUsers() {
-  //TODO: do this when we can get data
+export function getSampleUsers(responseObject) {
+  const req = new client.Request('getSampleUsers', {
+    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID }
+  }).withResponseStatus(true);
+
+  return req.exec().then((response) => {
+    return response;
+  });
 }
