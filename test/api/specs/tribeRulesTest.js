@@ -10,7 +10,7 @@ var configResponse, saveResponse, getResponse, evalResponse, evalRulesResponse, 
 
 const rulesData = new Object();
 
-describe.only('Tribe Rules Service', () => {
+describe('Tribe Rules Service', () => {
   describe('getConfiguration()', () => {
     before('Set up the testing environment', (done) => {
       identity.postIdentity(rulesData).then(() => {
