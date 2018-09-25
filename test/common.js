@@ -16,8 +16,6 @@ export const spaceNegData = new Object();
 export const spaceKeyNegData = new Object();
 
 const responseData = {
-  spaceSlug: [],
-  orgSlug: [],
   users: [],
   visitors: []
 };

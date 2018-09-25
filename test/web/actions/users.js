@@ -31,8 +31,11 @@ export function verifyUsersDetails(dataArray) {  //iterates thru the rows and ve
     }
 }
 
-export function clickFirstRow() {
-    UsersPage.userRows.value[0].click();
+export function clickFirstRow(type) {
+    if (type == Constants.UserType.Visitor)
+        UsersPage.visitorRows.value[0].click();
+    else
+        UsersPage.userRows.value[0].click();
 }
 
 export function getResultText() {
@@ -73,6 +76,7 @@ export function verifySideBar(userType) {
 }
 
 export function deleteUser() {
+    UsersPage.userActions.click();
     UsersPage.deleteUserButton.click();
     CommonPage.iAmSureButton.click();
 }
