@@ -7,7 +7,7 @@ import { addUsers, getCount, addVisitor } from 'web/actions/metrics';
 import Constants from 'data/constants.json'
 import { clickOnUsersTab, getRecentUsersRows, verifyUsersDetails, clickFirstRow, verifySideBar } from 'web/actions/users';
 var apiKey;
-describe('User Metrics Tests', () => {
+describe(`User Metrics Tests ${lib.Tags.smokeTest}`, () => {
     before(() => {
         AccountPage.open();
         createAccount();
@@ -44,7 +44,7 @@ describe('User Metrics Tests', () => {
 
         it('Verify Visitor on side bar', () => {
             browser.refresh();
-            clickFirstRow();
+            clickFirstRow(Constants.UserType.Visitor);
             browser.pause(1000);
             expect(verifySideBar(Constants.UserType.Visitor)).to.equal(true);
         });

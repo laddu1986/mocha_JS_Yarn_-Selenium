@@ -40,7 +40,7 @@ describe('Delete User Test', () => {
 
     it('Delete Visitor --> Verify users tab and passive notification shows', () => {
         browser.refresh();
-        clickFirstRow();
+        clickFirstRow(Constants.UserType.Visitor);
         browser.pause(1000);
         deleteUser();
         expect(getNotificationMessageText()).to.include(`${NotificationData.deleteMessage.text}\'Visitor`);

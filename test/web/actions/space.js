@@ -74,7 +74,7 @@ export function copyAPIKeyToClipBoard() {
 
 export function copiedValue() {
   var copiedValue = copyPasteModule.paste().split('{').pop().split('}').shift();
-  return copiedValue;
+  return copiedValue.replace(/\"/g, "").split(':')[1]
 }
 
 export function defaultAPIKey() {
