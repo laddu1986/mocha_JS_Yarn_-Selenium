@@ -5,16 +5,10 @@ image:
 options:
   docker: true
 pipelines:
-<<<<<<< HEAD
-    default:
-      - parallel:   
-          - step:
-=======
     branches:
          kube:
          - parallel:   
            - step:
->>>>>>> ca2d1e6cb9a0f052f70bd1b4bef3e6f911f17c6e
               name: API Tests
               caches:
                 - docker
@@ -22,11 +16,7 @@ pipelines:
               script:
                 - yarn install
                 - yarn run api-smoke-tests 
-<<<<<<< HEAD
-          - step:
-=======
            - step:
->>>>>>> ca2d1e6cb9a0f052f70bd1b4bef3e6f911f17c6e
               name: WEB Tests
               caches:
                 - docker
@@ -35,16 +25,9 @@ pipelines:
                 - yarn install
                 - sh ./scripts/start.sh
                 - yarn run web-smoke-tests --browser:chrome_headless
-<<<<<<< HEAD
-    branches:
-      nightly:
-        - parallel:   
-            - step:
-=======
          nightly:
           - parallel:   
              - step:
->>>>>>> ca2d1e6cb9a0f052f70bd1b4bef3e6f911f17c6e
                 name: API Tests
                 caches:
                   - docker
@@ -52,11 +35,7 @@ pipelines:
                 script:
                   - yarn install
                   - yarn run api-pipelines 
-<<<<<<< HEAD
-            - step:
-=======
              - step:
->>>>>>> ca2d1e6cb9a0f052f70bd1b4bef3e6f911f17c6e
                 name: WEB Tests
                 caches:
                   - docker
