@@ -3,39 +3,58 @@ import * as identity from 'api/actions/identity';
 import * as spaces from 'api/actions/spaces';
 import * as organization from 'api/actions/organization';
 import * as tribe from 'api/actions/tribe';
-import * as rules from 'api/actions/tribeRules'
-import { getSampleUsers } from '../actions/tribeRules';
+import * as rules from 'api/actions/tribeRules';
 
-var configResponse, saveResponse, getResponse, evalResponse, evalRulesResponse, evalFiltersResponse, sampleUsersResponse, schema;
+var configResponse,
+  saveResponse,
+  getResponse,
+  evalResponse,
+  evalRulesResponse,
+  evalFiltersResponse,
+  sampleUsersResponse,
+  schema;
 
 const rulesData = new Object();
 
 describe('Tribe Rules Service', () => {
   describe('getConfiguration()', () => {
-    before('Set up the testing environment', (done) => {
-      identity.postIdentity(rulesData).then(() => {
-        return organization.postOrganization(rulesData);
-      }).then(() => {
-        return spaces.postSpaceByOrganizationId(rulesData);
-      }).then(() => {
-        configResponse = rules.getConfiguration(rulesData);
-        done();
-      })
+    before('Set up the testing environment', done => {
+      identity
+        .postIdentity(rulesData)
+        .then(() => {
+          return organization.postOrganization(rulesData);
+        })
+        .then(() => {
+          return spaces.postSpaceByOrganizationId(rulesData);
+        })
+        .then(() => {
+          configResponse = rules.getConfiguration(rulesData);
+          done();
+        });
     });
-    
+
     it('Gets the possible configurations for the space', () => {
-      return configResponse.then((response) => {
+      return configResponse.then(response => {
         var propertiesSchema, operatorsSchema;
         propertiesSchema = lib.joi.object().keys({
-          id: lib.joi.string().uuid().required(),
+          id: lib.joi
+            .string()
+            .uuid()
+            .required(),
           label: lib.joi.string().required(),
           type: lib.joi.number().required(),
-          allowedOperatorIds: lib.joi.array().items(lib.joi.string().uuid()).required(),
+          allowedOperatorIds: lib.joi
+            .array()
+            .items(lib.joi.string().uuid())
+            .required(),
           groupLabel: lib.joi.string().required()
         });
 
         operatorsSchema = lib.joi.object().keys({
-          id: lib.joi.string().uuid().required(),
+          id: lib.joi
+            .string()
+            .uuid()
+            .required(),
           label: lib.joi.string().required(),
           operandType: lib.joi.number().optional(),
           groupLabel: lib.joi.string().optional()
@@ -49,33 +68,33 @@ describe('Tribe Rules Service', () => {
         });
 
         lib.joi.assert(response.response, schema);
-      })
+      });
     });
   });
 
   describe('saveRule()', () => {
-    before('Save the rule', (done) => {
+    before('Save the rule', done => {
       tribe.createTribe(rulesData).then(() => {
         saveResponse = rules.saveRule(rulesData);
         done();
       });
-    })
+    });
 
     it('The rule is saved', () => {
-      return saveResponse.then((response) => {
+      return saveResponse.then(response => {
         expect(response.response.success).to.be.true;
       });
     });
   });
 
   describe('getRule()', () => {
-    before('Get the rule', (done) => {
+    before('Get the rule', done => {
       getResponse = rules.getRule(rulesData);
       done();
     });
 
     it('The rule is returned', () => {
-      return getResponse.then((response) => {
+      return getResponse.then(response => {
         schema = lib.joi.object().keys({
           rule: lib.joi.object().keys({
             audienceType: lib.joi.number().optional(),
@@ -89,13 +108,13 @@ describe('Tribe Rules Service', () => {
   });
 
   describe('evaluateFilters()', () => {
-    before('Get the filters evaluation', (done) => {
+    before('Get the filters evaluation', done => {
       evalFiltersResponse = rules.evaluateRuleFilters(rulesData);
       done();
     });
 
     it('Check returned status', () => {
-      return evalFiltersResponse.then((response) => {
+      return evalFiltersResponse.then(response => {
         expect(response.status.code).to.equal(0);
       });
     });
@@ -103,43 +122,43 @@ describe('Tribe Rules Service', () => {
 
   //  ---- Rule evaluation will always fail as no data is available on a fresh space ----
   describe.skip('evaluateRule()', () => {
-    before('Get the rule evalution', (done) => {
+    before('Get the rule evalution', done => {
       evalResponse = rules.evaluateRule(rulesData);
       done();
     });
 
     it('Check returned status', () => {
-      return evalResponse.then((response) => {
+      return evalResponse.then(response => {
+        expect(response.status.code).to.equal(0);
       });
     });
   });
 
   describe.skip('evaluateRules()', () => {
-    before('Get the rules evaluation', (done) => {
+    before('Get the rules evaluation', done => {
       evalRulesResponse = rules.evaluateRules(rulesData);
       done();
     });
 
     it('Check returned status', () => {
-      return evalRulesResponse.then((response) => {
-        console.log(response.response);
+      return evalRulesResponse.then(response => {
+        expect(response.status.code).to.equal(0);
       });
     });
   });
 
   describe.skip('getSampleUsers()', () => {
-    before('Get the same users', (done) => {
+    before('Get the same users', done => {
       sampleUsersResponse = rules.getSampleUsers(rulesData);
+      done();
     });
 
     it('Check returned status', () => {
-      return sampleUsersResponse.then((response) => {
+      return sampleUsersResponse.then(response => {
         expect(response.status.code).to.equal(0);
-      })
+      });
     });
   });
 
   // ---- END of failing tests
-
-
 });
