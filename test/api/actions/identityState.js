@@ -1,15 +1,17 @@
 import * as lib from '../../common';
+import { identities } from '../config/getEnv'
 
-function getIdentityStateById(responseData) {
+export function getIdentityStateById(responseObject) {
   const any = {
-    api: process.env.API_IDENTITIES,
-    data: `${responseData[0].id}/state`
+    api: identities,
+    data: `${responseObject.identityID}/state`
   };
   return lib.get(any);
 }
-function putIdentityById(responseData) {
+
+export function putIdentityById(responseObject) {
   const any = {
-    api: `${process.env.API_IDENTITIES + responseData[0].id}/state`,
+    api: `${identities + responseObject.identityID}/state`,
     data: {
       values: {
         additionalProp1: 'string',
@@ -20,9 +22,9 @@ function putIdentityById(responseData) {
   };
   return lib.put(any);
 }
-function patchIdentityStateById(responseData) {
+export function patchIdentityStateById(responseObject) {
   const any = {
-    api: `${process.env.API_IDENTITIES + responseData[0].id}/state`,
+    api: `${identities + responseObject.identityID}/state`,
     data: {
       values: {
         additionalProp1: '1',
@@ -33,8 +35,3 @@ function patchIdentityStateById(responseData) {
   };
   return lib.patch(any);
 }
-export {
-  getIdentityStateById,
-  putIdentityById,
-  patchIdentityStateById
-};

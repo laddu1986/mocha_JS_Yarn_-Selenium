@@ -1,79 +1,75 @@
 import * as lib from '../../common';
+import { organizations } from '../config/getEnv'
 
-function postOrganization(responseData, flag) {
+export function postOrganization(responseObject, flag) {
   const any = {
-    api: process.env.API_ORGANIZATIONS,
+    api: organizations,
     data: {
       name: lib.randomString.generate(10),
-      createdByAccountId: responseData[0].id
+      createdByAccountId: responseObject.identityID
     }
   };
   if (flag) {
     lib.testData.organizationsData.push(any.data.name);
   }
   return lib.post(any).then((response) => {
-    responseData.push(response.body);
+    responseObject.orgID = response.body.id;
+    responseObject.orgRowVersion = response.body.rowVersion;
+    responseObject.orgName = response.body.name;
     return response;
   })
 }
 
-function getOrganizationById(responseData) {
+export function getOrganizations() {
   const any = {
-    api: process.env.API_ORGANIZATIONS,
-    data: responseData[1].id
+    data: '',
+    api: organizations
   };
   return lib.get(any);
 }
 
-function getOrganizations() {
+export function getOrganizationById(responseObject) {
   const any = {
-    api: process.env.API_ORGANIZATIONS,
-    data: ''
+    data: responseObject.orgID,
+    api: organizations,
   };
   return lib.get(any);
 }
 
-function postOrganizations(responseData) {
+export function postOrganizations(responseObject) {
   const any = {
-    api: `${process.env.API_ORGANIZATIONS}list`,
+    api: `${organizations}list`,
     data:
       [
-        responseData[1].id
+        responseObject.orgID
       ]
   };
   return lib.post(any)
 }
 
-function deleteOrganizationById(responseData) {
+export function putOrganization(responseObject, flag) {
   const any = {
-    api: process.env.API_ORGANIZATIONS,
-    data: `${responseData[2].id}?rowVersion=${responseData[2].rowVersion}`
-  };
-
-  return lib.del(any);
-}
-
-function putOrganization(responseData, flag) {
-  const update = responseData[1];
-  update.name = 'check update name string';
-  const any = {
-    api: process.env.API_ORGANIZATIONS,
-    data: update
+    api: organizations,
+    data: {
+      id: responseObject.orgID,
+      name: 'check update name string',
+      rowVersion: responseObject.orgRowVersion
+    }
   };
   if (flag) {
     lib.testData.organizationsData.push(any.data.name);
   }
   return lib.put(any).then((response) => {
-    responseData.push(response.body);
+    responseObject.orgRowVersion = response.body.rowVersion;
     return response;
   })
 }
 
-export {
-  postOrganization,
-  getOrganizationById,
-  getOrganizations,
-  postOrganizations,
-  deleteOrganizationById,
-  putOrganization
-};
+export function deleteOrganizationById(responseObject) {
+  const any = {
+    api: organizations,
+    data: `${responseObject.orgID}?rowVersion=${responseObject.orgRowVersion}`
+  };
+
+  return lib.del(any);
+}

@@ -4,14 +4,14 @@ import * as organization from 'api/actions/organization';
 import * as identity from 'api/actions/identity';
 import * as Constants from 'data/constants.json';
 var schema, postResponse, getResponse, revokeResponse, reactivateResponse, deleteResponse;
-
+const spaceKeyData = new Object();
 describe('Space Keys Api', () => {
-    describe(`\nPOST /keys\n`, () => {
+    describe('POST /keys', () => {
         before((done) => {
-            identity.postIdentity(lib.responseData.spaceKey).then(() => {
-                organization.postOrganization(lib.responseData.spaceKey).then(() => {
-                    spaces.postSpaceByOrganizationId(lib.responseData.spaceKey).then(() => {
-                        postResponse = spaces.postKeysBySpaceId(lib.responseData.spaceKey);
+            identity.postIdentity(spaceKeyData).then(() => {
+                organization.postOrganization(spaceKeyData).then(() => {
+                    spaces.postSpaceByOrganizationId(spaceKeyData).then(() => {
+                        postResponse = spaces.postKeysBySpaceId(spaceKeyData);
                         done();
                     });
                 });
@@ -25,7 +25,7 @@ describe('Space Keys Api', () => {
                     value: lib.joi.string().uuid().required(),
                     rowVersion: lib.joi.date().required(),
                     rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required(),
-                    resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+                    resourceId: lib.joi.valid(spaceKeyData.spaceID).required(),
                     resourceType: lib.joi.valid('Space').required(),
                     resourceName: lib.joi.valid(null).required(),
                 });
@@ -33,9 +33,9 @@ describe('Space Keys Api', () => {
             });
         });
     });
-    describe(`\nGET /keys\n`, () => {
+    describe('GET /keys', () => {
         before((done) => {
-            getResponse = spaces.getKeysBySpaceId(lib.responseData.spaceKey);
+            getResponse = spaces.getKeysBySpaceId(spaceKeyData);
             done();
         });
 
@@ -43,13 +43,13 @@ describe('Space Keys Api', () => {
             return getResponse.then((response) => {
                 expect(response).to.have.status(200);
                 const schemaObject = lib.joi.object().keys({
-                    value: lib.joi.valid(lib.responseData.spaceKey[3].value).required(),
+                    value: lib.joi.valid(spaceKeyData.spaceKeyValue).required(),
                     rowVersion: lib.joi.date().required(),
                     rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required()
                 });
                 const keysSchemaObject = lib.joi.object().keys({
                     keys: lib.joi.array().items(schemaObject),
-                    resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+                    resourceId: lib.joi.valid(spaceKeyData.spaceID).required(),
                     resourceType: lib.joi.valid('Space').required(),
                 });
                 schema = lib.joi.array().items(keysSchemaObject);
@@ -57,10 +57,10 @@ describe('Space Keys Api', () => {
             });
         });
     });
-    describe(`\nPATCH /keys/{key}\n`, () => {
-        describe(`Revoke\n`, () => {
+    describe('PATCH /keys/{key}', () => {
+        describe('Revoke', () => {
             before((done) => {
-                revokeResponse = spaces.patchKeyBySpaceIdAndRowVersion(lib.responseData.spaceKey, Constants.APIKeyStatus.Revoked);
+                revokeResponse = spaces.patchKeyBySpaceIdAndRowVersion(spaceKeyData, Constants.APIKeyStatus.Revoked);
                 done();
             });
 
@@ -68,10 +68,10 @@ describe('Space Keys Api', () => {
                 return revokeResponse.then((response) => {
                     expect(response).to.have.status(200);
                     schema = lib.joi.object().keys({
-                        value: lib.joi.valid(lib.responseData.spaceKey[3].value).required(),
+                        value: lib.joi.valid(spaceKeyData.spaceKeyValue).required(),
                         rowVersion: lib.joi.date().required(),
                         rowStatus: lib.joi.valid(Constants.APIKeyStatus.Revoked).required(),
-                        resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+                        resourceId: lib.joi.valid(spaceKeyData.spaceID).required(),
                         resourceType: lib.joi.valid('Space').required(),
                         resourceName: lib.joi.valid(null).required(),
                     });
@@ -79,9 +79,9 @@ describe('Space Keys Api', () => {
                 });
             });
         });
-        describe(`\nRe-activate\n`, () => {
+        describe('Re-activate', () => {
             before((done) => {
-                reactivateResponse = spaces.patchKeyBySpaceIdAndRowVersion(lib.responseData.spaceKey, Constants.APIKeyStatus.Active);
+                reactivateResponse = spaces.patchKeyBySpaceIdAndRowVersion(spaceKeyData, Constants.APIKeyStatus.Active);
                 done();
             });
 
@@ -89,10 +89,10 @@ describe('Space Keys Api', () => {
                 return reactivateResponse.then((response) => {
                     expect(response).to.have.status(200);
                     schema = lib.joi.object().keys({
-                        value: lib.joi.valid(lib.responseData.spaceKey[3].value).required(),
+                        value: lib.joi.valid(spaceKeyData.spaceKeyValue).required(),
                         rowVersion: lib.joi.date().required(),
                         rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required(),
-                        resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+                        resourceId: lib.joi.valid(spaceKeyData.spaceID).required(),
                         resourceType: lib.joi.valid('Space').required(),
                         resourceName: lib.joi.valid(null).required(),
                     });
@@ -101,9 +101,9 @@ describe('Space Keys Api', () => {
             });
         });
     });
-    describe(`\nDELETE /keys/{key}\n`, () => {
+    describe('DELETE /keys/{key}', () => {
         before((done) => {
-            deleteResponse = spaces.deleteKeyBySpaceIdAndRowVersion(lib.responseData.spaceKey);
+            deleteResponse = spaces.deleteKeyBySpaceIdAndRowVersion(spaceKeyData);
             done();
         });
 
@@ -111,10 +111,10 @@ describe('Space Keys Api', () => {
             return deleteResponse.then((response) => {
                 expect(response).to.have.status(200);
                 schema = lib.joi.object().keys({
-                    value: lib.joi.valid(lib.responseData.spaceKey[3].value).required(),
+                    value: lib.joi.valid(spaceKeyData.spaceKeyValue).required(),
                     rowVersion: lib.joi.date().required(),
                     rowStatus: lib.joi.valid((Constants.APIKeyStatus.PendingDelete).replace(/\s/g, '')).required(),
-                    resourceId: lib.joi.valid(lib.responseData.spaceKey[2].id).required(),
+                    resourceId: lib.joi.valid(spaceKeyData.spaceID).required(),
                     resourceType: lib.joi.valid('Space').required(),
                     resourceName: lib.joi.valid(null).required(),
                 });

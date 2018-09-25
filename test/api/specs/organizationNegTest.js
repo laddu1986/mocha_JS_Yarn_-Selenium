@@ -4,12 +4,12 @@ import * as lib from '../../common';
 const moduleSpecifier = 'api/data/organizationTestsData';
 var blankOrgIdDeleteResponse, incorrectOrgIDDeleteResponse, data, noNamePostResponse, noIDPostResponse, noRowVersionPutResponse, blankNamePutResponse, blankIDPutResponse, incorrectIDPutResponse, getResponse;
 
-describe(`Negative Tests --> Organizations Api\n`, () => {
+describe('Negative Tests --> Organizations Api', () => {
     describe('POST /organizations', () => {
-        describe(`\n400 Error Response: Mandatory fields validation\n`, () => {
+        describe('400 Error Response: Mandatory fields validation', () => {
             before((done) => {
-                identity.postIdentity(lib.responseData.negOrganization).then(() => {
-                    organization.postOrganization(lib.responseData.negOrganization).then(() => {
+                identity.postIdentity(lib.orgNegData).then(() => {
+                    organization.postOrganization(lib.orgNegData).then(() => {
                         lib.loader.import(moduleSpecifier).then((dataImported) => {
                             data = dataImported.default;
                             noNamePostResponse = lib.post(data.noName);
@@ -33,7 +33,7 @@ describe(`Negative Tests --> Organizations Api\n`, () => {
             });
         });
     });
-    describe(`\nPUT /organizations\n`, () => {
+    describe('PUT /organizations', () => {
         before((done) => {
             noRowVersionPutResponse = lib.put(data.blankRowVersion);
             blankNamePutResponse = lib.put(data.blankName);
@@ -65,7 +65,7 @@ describe(`Negative Tests --> Organizations Api\n`, () => {
             });
         });
     });
-    describe(`\nGET /organizations/{id}\n`, () => {
+    describe('GET /organizations/{id}', () => {
         before((done) => {
             getResponse = lib.get(data.incorrectOrgIDGet);
             done();
@@ -76,7 +76,7 @@ describe(`Negative Tests --> Organizations Api\n`, () => {
             });
         });
     });
-    describe(`\nDELETE /organizations/{id}\n`, () => {
+    describe('DELETE /organizations/{id}', () => {
         before((done) => {
             incorrectOrgIDDeleteResponse = lib.del(data.incorrectOrgIdDelete);
             blankOrgIdDeleteResponse = lib.del(data.blankOrgIdDelete);

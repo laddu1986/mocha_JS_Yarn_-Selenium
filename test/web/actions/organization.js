@@ -75,10 +75,16 @@ export function updateOrgName(updatedOrgName) {
   SettingsPage.orgInput.clearElement();
   SettingsPage.orgInput.setValue(updatedOrgName);
   SettingsPage.saveOrgNameButton.click();
+  browser.waitUntil(function () {
+    return SettingsPage.saveOrgNameButton.isEnabled() === false
+  }, 5000, 'Save changes button did not Grey out after saving changes', 200);
 }
 
 export function verifyNewOrgNameInNavbar(updatedOrgName) {
-  browser.waitUntil(() => NavBar.backToOrgDashboardLink.getText() === updatedOrgName, 5000, 'Expect orgname to change in the side nav bar', 200);
+
+  browser.waitUntil(function () {
+    return NavBar.backToOrgDashboardLink.getText().includes(updatedOrgName)
+  }, 5000, 'New OrgName was not updated in the side Nav Bar', 200);
 }
 
 export function goBackToOrgDashboard() {

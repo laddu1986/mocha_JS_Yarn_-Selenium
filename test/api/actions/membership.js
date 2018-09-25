@@ -1,55 +1,53 @@
 import * as lib from '../../common';
+import { memberships } from '../config/getEnv'
 
-function postMembership(responseData) {
+export function postMembership(responseObject) {
   const any = {
-    api: process.env.API_MEMBERSHIPS,
+    api: memberships,
     data: {
-      accountId: responseData[0].id,
-      organizationId: responseData[1].id
+      accountId: responseObject.identityID,
+      organizationId: responseObject.orgID
     }
   };
   return lib.post(any);
 }
-function getMembershipByAnyID(anyId) {
+
+export function getMembershipByAnyID(anyId) {
   const any = {
-    api: process.env.API_MEMBERSHIPS,
+    api: memberships,
     data: anyId
   };
   return lib.get(any);
 }
-function getMembershipByAccount(responseData) {
-  return getMembershipByAnyID(`?accountId=${responseData[0].id}&pageSize=1`);
+
+export function getMembershipByAccount(responseObject) {
+  return getMembershipByAnyID(`?accountId=${responseObject.identityID}&pageSize=1`);
 }
-function getMembershipByOrganization(responseData) {
-  return getMembershipByAnyID(`?orgId=${responseData[1].id}&pageSize=1`);
+
+export function getMembershipByOrganization(responseObject) {
+  return getMembershipByAnyID(`?orgId=${responseObject.orgID}&pageSize=1`);
 }
-function getMemberships(responseData) {
+
+export function getMemberships(responseObject) {
   const any = {
-    api: process.env.API_MEMBERSHIPS,
-    data: `?orgId=${responseData[1].id}&accountId=${responseData[0].id}&pageSize=1`
-  };
-  return lib.get(any);
-}
-function deleteMembershipByAccountAndOrganization(responseData) {
-  const any = {
-    api: process.env.API_MEMBERSHIPS,
-    data: `organization/${responseData[1].id}/account/${responseData[0].id}`
-  };
-  return lib.del(any);
-}
-function deleteMembershipStatus(responseData) {
-  const any = {
-    api: process.env.API_MEMBERSHIPS,
-    data: `account/${responseData[0].id}`
+    api: memberships,
+    data: `?orgId=${responseObject.orgID}&accountId=${responseObject.identityID}&pageSize=1`
   };
   return lib.get(any);
 }
 
-export {
-  postMembership,
-  getMembershipByAccount,
-  getMembershipByOrganization,
-  getMemberships,
-  deleteMembershipStatus,
-  deleteMembershipByAccountAndOrganization
-};
+export function deleteMembershipByAccountAndOrganization(responseObject) {
+  const any = {
+    api: memberships,
+    data: `organization/${responseObject.orgID}/account/${responseObject.identityID}`
+  };
+  return lib.del(any);
+}
+
+export function deleteMembershipStatus(responseObject) {
+  const any = {
+    api: memberships,
+    data: `account/${responseObject.identityIDd}`
+  };
+  return lib.get(any);
+}

@@ -4,6 +4,10 @@ import * as identity from 'api/actions/identity.js';
 import * as identityState from 'api/actions/identityState.js';
 import * as validationErrors from 'api/data/validationErrorsData.json';
 var noEmailResponse, noFullNameResponse, noPwdResponse, emailExistsResponse, getResponse, putResponse, patchResponse;
+<<<<<<< HEAD
+=======
+const identityNegData = new Object();
+>>>>>>> ca2d1e6cb9a0f052f70bd1b4bef3e6f911f17c6e
 
 describe('Negative Cases --> Identity Api', () => {
     describe('POST /identities ', () => {
@@ -54,9 +58,15 @@ describe('Negative Cases --> Identity Api', () => {
     describe('GET /identities/{id} ', () => {
         describe('404 - Not found validation ', () => {
             before((done) => {
+<<<<<<< HEAD
                 identity.postIdentity(lib.responseData.negIdentity).then(() => {
                     identity.deleteIdentityById(lib.responseData.negIdentity).then(() => {
                         getResponse = identity.getIdentityById(lib.responseData.negIdentity);
+=======
+                identity.postIdentity(identityNegData).then(() => {
+                    identity.deleteIdentityById(identityNegData).then(() => {
+                        getResponse = identity.getIdentityById(identityNegData);
+>>>>>>> ca2d1e6cb9a0f052f70bd1b4bef3e6f911f17c6e
                         done();
                     })
                 })
@@ -71,7 +81,11 @@ describe('Negative Cases --> Identity Api', () => {
     });
     describe('PUT /identities/{id}/state ', () => {
         before((done) => {
+<<<<<<< HEAD
             putResponse = identityState.putIdentityById(lib.responseData.negIdentity)
+=======
+            putResponse = identityState.putIdentityById(identityNegData)
+>>>>>>> ca2d1e6cb9a0f052f70bd1b4bef3e6f911f17c6e
             done();
         });
         it('400 - Invalid userState entered ', () => {
@@ -83,7 +97,11 @@ describe('Negative Cases --> Identity Api', () => {
     });
     describe('PATCH /identities/{id}/state ', () => {
         before((done) => {
+<<<<<<< HEAD
             patchResponse = identityState.patchIdentityStateById(lib.responseData.negIdentity)
+=======
+            patchResponse = identityState.patchIdentityStateById(identityNegData)
+>>>>>>> ca2d1e6cb9a0f052f70bd1b4bef3e6f911f17c6e
             done();
         });
         it('400 - Invalid userState entered ', () => {

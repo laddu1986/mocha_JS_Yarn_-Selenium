@@ -5,24 +5,17 @@ global.expect = server.expect;
 var randomString = require("randomstring");
 var NodeESModuleLoader = require('node-es-module-loader');
 var loader = new NodeESModuleLoader();
+var dateFormat = require('dateformat');
+var path = require('path');
+var caller = require('grpc-caller');
+
+export const invitesNegData = new Object();
+export const membershipNegData = new Object();
+export const orgNegData = new Object();
+export const spaceNegData = new Object();
+export const spaceKeyNegData = new Object();
 
 const responseData = {
-  organization: [],
-  membership: [],
-  identity: [],
-  identityState: [],
-  invites: [],
-  spaces: [],
-  spaceKey: [],
-  metrics: [],
-  negMembership: [],
-  negIdentity: [],
-  negInvites: [],
-  negOrganization: [],
-  negSpace: [],
-  negSpaceKey: [],
-  spaceSlug: [],
-  orgSlug: [],
   users: [],
   visitors: []
 };
@@ -37,18 +30,6 @@ const testData = {
 const Tags = {
   smokeTest: "@smoke"
 }
-
-const Sequelize = require('sequelize');
-const mysql = new Sequelize(DBName, process.env.SQL_USERNAME, process.env.SQL_PASSWORD, {
-  host: process.env.SQL_HOSTNAME,
-  dialect: 'mysql',
-  operatorsAliases: false,
-  pool: {
-    max: 50,
-    idle: 5000
-  },
-  logging: false
-});
 
 function post(any) {
   if (any.headers == undefined) {
@@ -75,6 +56,7 @@ function del(any) {
 const sortAlphabetically = (a, b) => a.toLowerCase().localeCompare(b.toLowerCase());
 
 export {
+  dateFormat,
   Tags,
   loader,
   joi,
@@ -87,11 +69,9 @@ export {
   del,
   // library
   server,
-  // db
-  Sequelize,
-  mysql,
   // data
   responseData,
   randomString,
-  sortAlphabetically
+  path,
+  caller
 };

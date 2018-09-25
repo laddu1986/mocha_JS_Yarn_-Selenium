@@ -6,13 +6,13 @@ const moduleSpecifier = 'api/data/spaceKeyTestsData.js';
 var data, incorrectKeyDeleteResponse, incorrectOrgIdDeleteResponse, incorrectOrgIdPatchResponse, blankStatusPatchResponse, incorrectKeyPatchResponse, noSpaceIDPostResponse, blankSpaceIDPostResponse, incorrectOrgIDPostResponse, incorrectSpaceIDPostResponse, incorrectSpaceIDGetResponse, incorrectOrgIDGetResponse;
 
 describe('Negative Tests -> Space Keys Api', () => {
-    describe(`\nPOST /organizations/{orgId}/keys\n`, () => {
-        describe(`\n400 Error Response : Mandatory fields validation\n`, () => {
+    describe('POST /organizations/{orgId}/keys', () => {
+        describe('400 Error Response : Mandatory fields validation', () => {
             before((done) => {
-                identity.postIdentity(lib.responseData.negSpaceKey).then(() => {
-                    organization.postOrganization(lib.responseData.negSpaceKey).then(() => {
-                        spaces.postSpaceByOrganizationId(lib.responseData.negSpaceKey).then(() => {
-                            spaces.postKeysBySpaceId(lib.responseData.negSpaceKey).then(() => {
+                identity.postIdentity(lib.spaceKeyNegData).then(() => {
+                    organization.postOrganization(lib.spaceKeyNegData).then(() => {
+                        spaces.postSpaceByOrganizationId(lib.spaceKeyNegData).then(() => {
+                            spaces.postKeysBySpaceId(lib.spaceKeyNegData).then(() => {
                                 lib.loader.import(moduleSpecifier).then((dataImported) => {
                                     data = dataImported.default;
                                     noSpaceIDPostResponse = lib.post(data.noSpaceIDPost);
@@ -35,7 +35,7 @@ describe('Negative Tests -> Space Keys Api', () => {
                 });
             });
         });
-        xdescribe(`\n404 Error Response : Not Found\n`, () => { //to be enabled when AF-171 is fixed
+        xdescribe('404 Error Response : Not Found', () => { //to be enabled when AF-171 is fixed
             before((done) => {
                 incorrectOrgIDPostResponse = lib.post(data.incorrectOrgIDPost);
                 incorrectSpaceIDPostResponse = lib.post(data.incorrectSpaceIDPost);
@@ -53,8 +53,8 @@ describe('Negative Tests -> Space Keys Api', () => {
             });
         });
     });
-    describe(`\nGET /organizations/{orgId}/keys\n`, () => {
-        describe(`\n404 Error Response : Not Found\n`, () => {
+    describe('GET /organizations/{orgId}/keys', () => {
+        describe('404 Error Response : Not Found', () => {
             before((done) => {
                 incorrectOrgIDGetResponse = lib.get(data.incorrectSpaceIDPost);
                 incorrectSpaceIDGetResponse = lib.get(data.incorrectSpaceIDPost);
@@ -72,7 +72,7 @@ describe('Negative Tests -> Space Keys Api', () => {
             });
         });
     });
-    describe(`\nPATCH /organizations/{orgId}/keys/{key}\n`, () => {
+    describe('PATCH /organizations/{orgId}/keys/{key}', () => {
         before((done) => {
             incorrectKeyPatchResponse = lib.patch(data.incorrectKeyPatch);
             blankStatusPatchResponse = lib.patch(data.blankStatusPatch);
@@ -97,7 +97,7 @@ describe('Negative Tests -> Space Keys Api', () => {
             });
         });
     });
-    describe(`\nDELETE /organizations/{orgId}/keys/{key}\n`, () => {
+    describe('DELETE /organizations/{orgId}/keys/{key}', () => {
         before((done) => {
             incorrectKeyDeleteResponse = lib.del(data.incorrectKeyDelete);
             incorrectOrgIdDeleteResponse = lib.del(data.incorrectOrgIdDelete);

@@ -8,14 +8,26 @@ import { closePassiveNotification } from '../actions/common'
 var id;
 var createdTime;
 
+const Sequelize = require('sequelize');
+export const mysql = new Sequelize(MySqlDb, MySqlUser, MySqlPass, {
+  host: MySqlHost,
+  dialect: 'mysql',
+  operatorsAliases: false,
+  pool: {
+    max: 50,
+    idle: 5000
+  },
+  logging: false
+});
+
 //define SQL model for specific table eg: Invites
-const Invites = lib.mysql.define(
+const Invites = mysql.define(
   'Invites',
   {
-    Id: { type: lib.Sequelize.STRING },
-    Email: { type: lib.Sequelize.STRING },
-    ExpiryDate: { type: lib.Sequelize.DATE },
-    CreatedTime: { type: lib.Sequelize.DATE }
+    Id: { type: Sequelize.STRING },
+    Email: { type: Sequelize.STRING },
+    ExpiryDate: { type: Sequelize.DATE },
+    CreatedTime: { type: Sequelize.DATE }
   },
   { timestamps: false }
 )
@@ -37,7 +49,7 @@ export function sendInvite(inviteMail) {
 export function goToTeammatesPage() {
   NavBar.profileMenu.click();
   NavBar.orgSettingsAnchor.click();
-  browser.waitUntil(() => NavBar.teamNavLink.getText() === ('Teammates'), 5000, 'Teammates link is not displayed', 200);
+  browser.waitUntil(() => NavBar.teamNavLink.isVisible() === true, 5000, 'Teammates link is not displayed', 200);
   NavBar.teamNavLink.click();
 }
 
@@ -75,12 +87,12 @@ export function goToInactiveTab() {
 
 export function getInviteTokenFromDB(email) {
   return new Promise((resolve, reject) => {
-    lib.mysql.authenticate()
+    mysql.authenticate()
       .then(function () {
         Invites.findAll({
           attributes: ['Id', 'Email', 'CreatedTime'],
           where: { Email: `${email}` },
-          order: [lib.mysql.fn('max', lib.mysql.col('CreatedTime'))],
+          order: [mysql.fn('max', mysql.col('CreatedTime'))],
         }).then(function (result) {
           id = result[0].dataValues.Id
           resolve(id)
@@ -100,12 +112,12 @@ export async function invitationLink(email) {
 
 export async function updateTokenExpiryDateInDB(email) {
   return new Promise((resolve, reject) => {
-    lib.mysql.authenticate()
+    mysql.authenticate()
       .then(function () {
         Invites.findAll({
           attributes: ['Id', 'Email', 'CreatedTime'],
           where: { Email: `${email}` },
-          order: [lib.mysql.fn('max', lib.mysql.col('CreatedTime'))],
+          order: [mysql.fn('max', mysql.col('CreatedTime'))],
         }).then(function (result) {
           id = result[0].dataValues.Id
           createdTime = result[0].dataValues.CreatedTime

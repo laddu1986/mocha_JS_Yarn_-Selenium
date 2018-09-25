@@ -1,18 +1,19 @@
 import * as lib from '../../common';
+import { memberships } from '../config/getEnv'
 
 export const blankOrgId = {
-    api: process.env.API_MEMBERSHIPS,
+    api: memberships,
     data: {
-        accountId: `${lib.responseData.negMembership[0].id}`
+        accountId: `${lib.membershipNegData.identityID}`
     },
     expected: "Must provide OrganizationId or InviteToken. Both cannot be empty."
 };
 
 export const invalidToken = {
-    api: process.env.API_MEMBERSHIPS,
+    api: memberships,
     data: {
-        accountId: lib.responseData.negMembership[0].id,
-        organizationId: lib.responseData.negMembership[1].id,
+        accountId: lib.membershipNegData.identityID,
+        organizationId: lib.membershipNegData.orgID,
         inviteToken: " "
     },
     expected: "Invalid/Not Found"
