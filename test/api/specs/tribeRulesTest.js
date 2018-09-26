@@ -75,7 +75,7 @@ describe('Tribe Rules Service', () => {
   describe('saveRule()', () => {
     before('Save the rule', done => {
       tribe.createTribe(rulesData).then(() => {
-        saveResponse = rules.saveRule(rulesData);
+        saveResponse = rules.saveRule(rulesData); //TODO: Check this for saving a rule and validate filters on getRule
         done();
       });
     });
@@ -99,7 +99,33 @@ describe('Tribe Rules Service', () => {
           rule: lib.joi.object().keys({
             audienceType: lib.joi.number().optional(),
             logicalType: lib.joi.number().optional(),
-            filters: lib.joi.array().optional()
+            filters: lib.joi
+              .array()
+              .items(
+                lib.joi.object().keys({
+                  filterId: lib.joi.string().optional(),
+                  value: lib.joi.string().optional(),
+                  filterIdVal: lib.joi
+                    .string()
+                    .uuid()
+                    .optional(),
+                  filterIdIsNull: lib.joi.bool().optional(),
+                  propertyId: lib.joi
+                    .string()
+                    .uuid()
+                    .optional(),
+                  operatorId: lib.joi
+                    .string()
+                    .uuid()
+                    .optional(),
+                  intValue: lib.joi
+                    .number()
+                    .integer()
+                    .optional(),
+                  stValue: lib.joi.string().optional()
+                })
+              )
+              .optional()
           })
         });
         lib.joi.assert(response.response, schema);
@@ -107,7 +133,7 @@ describe('Tribe Rules Service', () => {
     });
   });
 
-  describe('evaluateFilters()', () => {
+  describe('evaluateRuleFilters()', () => {
     before('Get the filters evaluation', done => {
       evalFiltersResponse = rules.evaluateRuleFilters(rulesData);
       done();
@@ -116,11 +142,28 @@ describe('Tribe Rules Service', () => {
     it('Check returned status', () => {
       return evalFiltersResponse.then(response => {
         expect(response.status.code).to.equal(0);
+        schema = lib.joi.object().keys({
+          filterEstimates: lib.joi
+            .array()
+            .items(
+              lib.joi.object().keys({
+                filterId: lib.joi.string().optional(),
+                filterIdVal: lib.joi
+                  .string()
+                  .uuid()
+                  .optional(),
+                filterIdIsNull: lib.joi.bool().optional(),
+                userCount: lib.joi.number().optional()
+              })
+            )
+            .optional()
+        });
+        lib.joi.assert(response.response, schema);
       });
     });
   });
 
-  //  ---- Rule evaluation will always fail as no data is available on a fresh space ----
+  // TODO: these have been fixed, problem due to incorrect configuration of deployed services
   describe.skip('evaluateRule()', () => {
     before('Get the rule evalution', done => {
       evalResponse = rules.evaluateRule(rulesData);
@@ -159,6 +202,4 @@ describe('Tribe Rules Service', () => {
       });
     });
   });
-
-  // ---- END of failing tests
 });

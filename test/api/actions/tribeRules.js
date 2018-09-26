@@ -1,15 +1,39 @@
 import * as lib from '../../common';
+import * as constants from 'data/constants.json';
 
 const PROTO_PATH = lib.path.resolve(process.env.TRIBE_PROTO_DIR + 'segmentRulesService.proto');
 const client = lib.caller(process.env.TRIBE_HOST, PROTO_PATH, 'SegmentRulesService');
+
+export function getConfiguration(responseObject) {
+  const req = new client.Request('getConfiguration', {
+    orgId: responseObject.orgID,
+    spaceId: responseObject.spaceID
+  }).withResponseStatus(true);
+
+  return req.exec().then(response => {
+    // Saving a valid rule combination as if rule is not set correctly, it will not be saved correctly
+    responseObject.ActiveDaysProperty = response.response.configuration.properties.filter(function(arrayItem) {
+      return arrayItem.label === constants.TribeRulesFilters.Properties.ActiveDays;
+    });
+    responseObject.AnyValueOperator = response.response.configuration.operators.filter(function(arrayItem) {
+      return arrayItem.label === constants.TribeRulesFilters.Operators.HasAnyValue && arrayItem.groupLabel == undefined;
+    });
+    return response;
+  });
+}
 
 export function saveRule(responseObject) {
   const req = new client.Request('saveRule', {
     segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID },
     rule: {
-      audienceType: 'USER',
-      logicalType: 'OR',
-      filters: []
+      audienceType: 'User',
+      logicalType: 'And',
+      filters: [
+        {
+          propertyId: responseObject.ActiveDaysProperty[0].id,
+          operatorId: responseObject.AnyValueOperator[0].id
+        }
+      ]
     }
   }).withResponseStatus(true);
 
@@ -24,19 +48,6 @@ export function getRule(responseObject) {
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    responseObject.rule = response.response;
-    return response;
-  });
-}
-
-export function getConfiguration(responseObject) {
-  const req = new client.Request('getConfiguration', {
-    orgId: responseObject.orgID,
-    spaceId: responseObject.spaceID
-  }).withResponseStatus(true);
-
-  return req.exec().then(response => {
-    responseObject.configurations = response.response;
     return response;
   });
 }
