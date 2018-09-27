@@ -7,7 +7,7 @@ import { getNotificationMessageText } from 'web/actions/common';
 import { deleteTribe, updateTribe, verifyTribe, createTribe, goToTribeDetailPage, verifyTribeDetailpage, verifyAllTribesPage } from 'web/actions/tribe';
 import * as Constants from 'data/constants.json';
 import * as PassiveNotification from 'web/data/passiveNotification.json';
-var name = lib.randomString.generate(5), tagline = lib.randomString.generate(9), newName = `${lib.randomString.generate(5)}_newName`;
+var name = lib.randomString.generate(5), newName = `${lib.randomString.generate(5)}_newName`;
 
 describe('Tribe Actions Tests', () => {
     before(() => {
@@ -15,7 +15,7 @@ describe('Tribe Actions Tests', () => {
         createAccount();
         createSpace();
         clickOnAudienceLink();
-        createTribe(name, tagline);
+        createTribe(name);
         clickOnAudienceLink();
     });
 
