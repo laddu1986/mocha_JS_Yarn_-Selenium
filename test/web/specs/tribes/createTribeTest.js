@@ -5,7 +5,7 @@ import { createSpace } from 'web/actions/space';
 import * as Constants from 'data/constants.json';
 import { clickOnAudienceLink } from 'web/actions/navBar';
 import { verifyAllTribesPage, verifyTitleOnCard, inputTribeDetails, clickCreateTribeLink, verifyTribe, clickCreateTribeButton, verifyTribeDetailpage } from 'web/actions/tribe';
-var title, tagline;
+var title;
 
 describe(`Create Tribe Tests ${lib.Tags.smokeTest}`, () => {
     before(() => {
@@ -35,9 +35,8 @@ describe(`Create Tribe Tests ${lib.Tags.smokeTest}`, () => {
 
     it('Create named tribe using hover over + link', () => {
         title = lib.randomString.generate(5);
-        tagline = lib.randomString.generate(9);
         clickCreateTribeLink();
-        inputTribeDetails(title, tagline);
+        inputTribeDetails(title);
         expect(verifyTitleOnCard(title, "0")).to.equal(true);
     });
 
