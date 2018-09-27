@@ -19,11 +19,11 @@ const rulesData = new Object();
 const evalRuleSchema = joi
   .object()
   .keys({
-    userCount: joi.number(),
-    prevUserCount: joi.number(),
-    activeUserCount: joi.number(),
-    prevActiveUserCount: joi.number(),
-    totalUsers: joi.number()
+    userCount: joi.number().integer(),
+    prevUserCount: joi.number().integer(),
+    activeUserCount: joi.number().integer(),
+    prevActiveUserCount: joi.number().integer(),
+    totalUsers: joi.number().integer()
   })
   .required();
 
@@ -56,7 +56,10 @@ describe('Tribe Rules Service', () => {
                   .uuid()
                   .required(),
                 label: joi.string().required(),
-                type: joi.number().required(),
+                type: joi
+                  .number()
+                  .max(5)
+                  .required(),
                 allowedOperatorIds: joi
                   .array()
                   .items(joi.string().uuid())
@@ -117,12 +120,12 @@ describe('Tribe Rules Service', () => {
       return getResponse.then(response => {
         schema = joi.object().keys({
           rule: joi.object().keys({
-            audienceType: joi.number(),
-            logicalType: joi.number(),
+            audienceType: joi.number().max(1),
+            logicalType: joi.number().max(1),
             filters: joi.array().items(
               joi.object().keys({
-                filterId: joi.string(),
-                value: joi.string(),
+                filterId: joi.string().regex(/filter_id_val/),
+                value: joi.string().regex(/int_value/),
                 filterIdVal: joi.string().uuid(),
                 filterIdIsNull: joi.bool(),
                 propertyId: joi.string().uuid(),
@@ -150,10 +153,10 @@ describe('Tribe Rules Service', () => {
         schema = joi.object().keys({
           filterEstimates: joi.array().items(
             joi.object().keys({
-              filterId: joi.string(),
+              filterId: joi.string().regex(/filter_id_val/),
               filterIdVal: joi.string().uuid(),
               filterIdIsNull: joi.bool(),
-              userCount: joi.number()
+              userCount: joi.number().integer()
             })
           )
         });
@@ -191,7 +194,7 @@ describe('Tribe Rules Service', () => {
             .array()
             .items(
               joi.object().keys({
-                value: joi.string(),
+                value: joi.string().regex(/estimation_value/),
                 estimationValue: evalRuleSchema,
                 isNull: joi.bool()
               })
@@ -213,7 +216,7 @@ describe('Tribe Rules Service', () => {
       return sampleUsersResponse.then(response => {
         expect(response.status.code).to.equal(0);
         schema = joi.object().keys({
-          userIds: joi.array().items(joi.string())
+          userIds: joi.array().items(joi.string().uuid())
         });
         joi.assert(response.response, schema);
       });
