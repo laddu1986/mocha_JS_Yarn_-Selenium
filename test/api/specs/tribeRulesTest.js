@@ -77,8 +77,16 @@ describe('Tribe Rules Service', () => {
             )
           })
         });
-
         joi.assert(response.response, schema);
+        return rules
+          .expectConfig(response.response.configuration.properties, true)
+          .then(result => {
+            expect(result.actualFilters).to.deep.equal(result.expectedFilters);
+            return rules.expectConfig(response.response.configuration.operators, false);
+          })
+          .then(result => {
+            expect(result.actualFilters).to.include.members(result.expectedFilters);
+          });
       });
     });
   });

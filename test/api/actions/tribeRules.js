@@ -11,7 +11,6 @@ export function getConfiguration(responseObject) {
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    // Saving a valid rule combination as if rule is not set correctly, it will not be saved correctly
     responseObject.ActiveDaysProperty = response.response.configuration.properties.filter(function(arrayItem) {
       return arrayItem.label === constants.TribeRulesFilters.Properties.ActiveDays;
     });
@@ -19,6 +18,26 @@ export function getConfiguration(responseObject) {
       return arrayItem.label === constants.TribeRulesFilters.Operators.HasAnyValue && arrayItem.groupLabel == undefined;
     });
     return response;
+  });
+}
+
+export function expectConfig(configObject, isProperties) {
+  return new Promise(resolve => {
+    var actualFilters = [];
+    var expectedFilters = [];
+    if (isProperties) {
+      expectedFilters = Object.values(constants.TribeRulesFilters.Properties);
+    } else {
+      expectedFilters = Object.values(constants.TribeRulesFilters.Operators);
+    }
+    for (var key in configObject) {
+      actualFilters.push(configObject[key].label);
+    }
+    actualFilters.sort();
+    expectedFilters.sort();
+    resolve({ actualFilters, expectedFilters });
+  }).catch(err => {
+    return err;
   });
 }
 
