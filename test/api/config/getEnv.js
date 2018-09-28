@@ -1,6 +1,4 @@
 require('dotenv').config();
-const chai = require('chai');
-var expect = chai.expect;
 
 var vars, envArg, identities, organizations, memberships, spaces, token, invites, keys, metrics;
 
