@@ -60,11 +60,6 @@ exports.config = {
   // Gets executed before test execution begins. At this point you will have access to all global
   // variables like `browser`. It is the perfect place to define custom commands.
   before() {
-    const chai = require('chai');
-    global.expect = chai.expect;
-    chai.Should();
-    //console.log('Before')
-    // const config = require('config-yml');
   },
 
   // Gets executed after all tests are done. You still have access to all global variables from

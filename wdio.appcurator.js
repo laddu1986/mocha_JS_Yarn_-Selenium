@@ -153,8 +153,6 @@ exports.config = {
   },
   onPrepare() {},
   before() {
-    const chai = require('chai');
-    global.expect = chai.expect;
   },
   after() {
     var connection = require('./test/web/actions/invite');
