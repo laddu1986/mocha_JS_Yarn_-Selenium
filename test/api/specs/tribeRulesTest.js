@@ -27,7 +27,7 @@ const evalRuleSchema = joi
   })
   .required();
 
-describe('Tribe Rules Service', () => {
+describe.only('Tribe Rules Service', () => {
   describe('getConfiguration()', () => {
     before('Set up the testing environment', done => {
       identity
@@ -81,12 +81,23 @@ describe('Tribe Rules Service', () => {
           })
         });
         joi.assert(response.response, schema);
+      });
+    });
+
+    it('Verifies the configuration properties', () => {
+      return configResponse.then(response => {
         return rules
           .expectConfig(response.response.configuration.properties, true)
           .then(result => {
             expect(result.actualFilters).to.deep.equal(result.expectedFilters);
-            return rules.expectConfig(response.response.configuration.operators, false);
-          })
+          });
+      });
+    });
+
+    it('Verifies the configuration operators', () => {
+      return configResponse.then(response => {
+        return rules
+          .expectConfig(response.response.configuration.operators, false)
           .then(result => {
             expect(result.actualFilters).to.include.members(result.expectedFilters);
           });
