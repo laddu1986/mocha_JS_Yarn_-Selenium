@@ -4,6 +4,9 @@ import * as constants from 'data/constants.json';
 const PROTO_PATH = lib.path.resolve(process.env.TRIBE_PROTO_DIR + 'segmentRulesService.proto');
 const client = lib.caller(process.env.TRIBE_HOST, PROTO_PATH, 'SegmentRulesService');
 
+export var ActualFilters = [];
+export var ExpectedFilters = [];
+
 export function getConfiguration(responseObject) {
   const req = new client.Request('getConfiguration', {
     orgId: responseObject.orgID,
@@ -25,23 +28,16 @@ export function getConfiguration(responseObject) {
 }
 
 export function expectConfig(configObject, isProperties) {
-  return new Promise(resolve => {
-    var actualFilters = [];
-    var expectedFilters = [];
-    if (isProperties) {
-      expectedFilters = Object.values(constants.TribeRulesFilters.Properties);
-    } else {
-      expectedFilters = Object.values(constants.TribeRulesFilters.Operators);
-    }
-    for (var key in configObject) {
-      actualFilters.push(configObject[key].label);
-    }
-    actualFilters.sort();
-    expectedFilters.sort();
-    resolve({ actualFilters, expectedFilters });
-  }).catch(err => {
-    return err;
-  });
+  if (isProperties) {
+    ExpectedFilters = Object.values(constants.TribeRulesFilters.Properties);
+  } else {
+    ExpectedFilters = Object.values(constants.TribeRulesFilters.Operators);
+  }
+  for (var key in configObject) {
+    ActualFilters.push(configObject[key].label);
+  }
+  ActualFilters.sort();
+  ExpectedFilters.sort();
 }
 
 export function saveRule(responseObject) {
