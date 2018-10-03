@@ -44,8 +44,8 @@ export function saveRule(responseObject) {
   const req = new client.Request('saveRule', {
     segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID },
     rule: {
-      audienceType: 'User',
-      logicalType: 'And',
+      audienceType: 'USER',
+      logicalType: 'AND',
       filters: [
         {
           propertyId: responseObject.ActiveDaysProperty,
