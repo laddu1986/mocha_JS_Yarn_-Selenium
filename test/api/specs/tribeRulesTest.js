@@ -125,7 +125,7 @@ describe('Tribe Rules Service', () => {
       return getResponse.then(response => {
         schema = joi.object().keys({
           rule: joi.object().keys({
-            audienceType: joi.number().max(1),
+            audienceType: joi.number().max(1).required(),
             logicalType: joi.number().max(1),
             filters: joi.array().items(
               joi.object().keys({
@@ -159,7 +159,7 @@ describe('Tribe Rules Service', () => {
           filterEstimates: joi.array().items(
             joi.object().keys({
               filterId: joi.string().regex(/filter_id_val/),
-              filterIdVal: joi.string().uuid(),
+              filterIdVal: joi.string().uuid().required(),
               filterIdIsNull: joi.bool(),
               userCount: joi.number().integer()
             })
