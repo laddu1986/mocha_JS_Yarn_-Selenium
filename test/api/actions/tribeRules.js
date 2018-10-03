@@ -17,6 +17,9 @@ export function getConfiguration(responseObject) {
     responseObject.AnyValueOperator = response.response.configuration.operators.filter(function(arrayItem) {
       return arrayItem.label === constants.TribeRulesFilters.Operators.HasAnyValue && arrayItem.groupLabel == undefined;
     });
+
+    responseObject.ActiveDaysProperty = responseObject.ActiveDaysProperty[0].id;
+    responseObject.AnyValueOperator = responseObject.AnyValueOperator[0].id;
     return response;
   });
 }
@@ -49,8 +52,8 @@ export function saveRule(responseObject) {
       logicalType: 'And',
       filters: [
         {
-          propertyId: responseObject.ActiveDaysProperty[0].id,
-          operatorId: responseObject.AnyValueOperator[0].id
+          propertyId: responseObject.ActiveDaysProperty,
+          operatorId: responseObject.AnyValueOperator
         }
       ]
     }
