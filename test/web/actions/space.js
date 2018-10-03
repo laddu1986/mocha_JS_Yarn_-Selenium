@@ -1,13 +1,14 @@
-const copyPasteModule = require('copy-paste');
 import * as lib from '../../common';
 import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
-import SpaceAPIKeyPage from 'web/page_objects/spaceAPIKeyPage';
+import SpaceDevelopersPage from 'web/page_objects/spaceDevelopersPage';
 import SpaceSettingsPage from 'web/page_objects/spaceSettingsPage';
 import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
 import HomePage from 'web/page_objects/homePage';
 import CommonPage from 'web/page_objects/common';
 import NavBar from 'web/page_objects/navBar';
 import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'web/actions/common';
+
+const clipboardy = require('clipboardy');
 
 export function changeSpace(type) {
   var webElement = SpaceSettingsPage.spaceName;
@@ -76,8 +77,8 @@ export function copyAPIKeyToClipBoard() {
 }
 
 export function copiedAPIKeyValue() {
-  var copiedValue = copyPasteModule
-    .paste()
+  var copiedValue = clipboardy
+    .readSync()
     .split('{')
     .pop()
     .split('}')
@@ -86,23 +87,13 @@ export function copiedAPIKeyValue() {
 }
 
 export function getAPIKey() {
-  return SpaceAPIKeyPage.APIKeyData.getText()
+  return SpaceDevelopersPage.APIKeyData.getText()
     .split('{')
     .pop()
     .split('}')
     .shift()
     .replace(/"/g, '')
     .split(':')[1];
-}
-
-export function verifyAPIKeyStatus(status) {
-  return browser.waitUntil(
-    function() {
-      return SpaceAPIKeyPage.APIKeyStatus.getText() === status;
-    },
-    5000,
-    `Api Key status is not+${status}`
-  );
 }
 
 export function verifyNewSpaceUrl(newSlugName) {
@@ -113,29 +104,6 @@ export function verifyNewSpaceUrl(newSlugName) {
     5000,
     `New Slug ${newSlugName} is not updated`
   );
-}
-
-export function clickRevokeButton() {
-  SpaceAPIKeyPage.revokeButton.click();
-}
-
-export function clickUndoButton() {
-  SpaceAPIKeyPage.undoButton.click();
-}
-
-export function deleteAPIKey() {
-  SpaceAPIKeyPage.deleteButton.click();
-  CommonPage.submitButton.click();
-}
-
-export function ifIconsEnabled() {
-  if (SpaceAPIKeyPage.deleteButton.isEnabled() === false && SpaceAPIKeyPage.undoButton.isEnabled() === false) {
-    return false;
-  }
-}
-
-export function revokeButtonAppears() {
-  return SpaceAPIKeyPage.revokeButton.isVisible();
 }
 
 export function verifySpaceOrder(index) {
