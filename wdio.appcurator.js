@@ -115,11 +115,7 @@ exports.config = {
     './test/web/specs/negativeSpecs/*/*Test.js'
   ],
   // Patterns to exclude.
-  exclude: [
-    './test/web/specs/support/helpPageTest.js',
-    './test/web/specs/spaces/spaceKeyTest.js',
-    './test/web/specs/metrics/labelUserTest.js'
-  ],
+  exclude: ['./test/web/specs/support/helpPageTest.js', './test/web/specs/metrics/labelUserTest.js'],
   suites: {
     accounts: ['./test/web/specs/accounts/*Test.js'],
     organizations: ['./test/web/specs/organizations/*Test.js'],
@@ -152,8 +148,7 @@ exports.config = {
     grep: process.env.npm_config_grep
   },
   onPrepare() {},
-  before() {
-  },
+  before() {},
   after() {
     var connection = require('./test/web/actions/invite');
     connection.mysql.close();
