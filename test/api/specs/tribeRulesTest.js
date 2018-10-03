@@ -27,7 +27,7 @@ const evalRuleSchema = joi
   })
   .required();
 
-describe.only('Tribe Rules Service', () => {
+describe('Tribe Rules Service', () => {
   describe('getConfiguration()', () => {
     before('Set up the testing environment', done => {
       identity
