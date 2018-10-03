@@ -1,4 +1,4 @@
-import { joi } from 'common';
+import { joi } from '../../common';
 import * as identity from 'api/actions/identity';
 import * as spaces from 'api/actions/spaces';
 import * as organization from 'api/actions/organization';
@@ -131,19 +131,19 @@ describe.only('Tribe Rules Service', () => {
       return getResponse.then(response => {
         schema = joi.object().keys({
           rule: joi.object().keys({
-            audienceType: joi.number().max(1),
+            audienceType: joi.number().max(1).required(),
             logicalType: joi.number().max(1),
             filters: joi.array().items(
               joi.object().keys({
                 filterId: joi.string().regex(/filter_id_val/),
                 value: joi.string().regex(/int_value/),
-                filterIdVal: joi.string().uuid(),
+                filterIdVal: joi.string().uuid().required(),
                 filterIdIsNull: joi.bool(),
-                propertyId: joi.string().uuid(),
-                operatorId: joi.string().uuid(),
+                propertyId: joi.string().uuid().required(),
+                operatorId: joi.string().uuid().required(),
                 intValue: joi.number().integer(),
                 stValue: joi.string()
-              })
+              }).required()
             )
           })
         });
