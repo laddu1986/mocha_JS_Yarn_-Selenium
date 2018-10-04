@@ -1,6 +1,4 @@
-import {
-  joi
-} from '../../common';
+import { joi } from '../../common';
 
 const UserCount = joi.number().integer();
 
@@ -14,8 +12,14 @@ const Configuration = joi.object().keys({
       joi.object().keys({
         id: UUID.required(),
         label: joi.string().required(),
-        type: joi.number().max(5).required(),
-        allowedOperatorIds: joi.array().items(UUID).required(),
+        type: joi
+          .number()
+          .max(5)
+          .required(),
+        allowedOperatorIds: joi
+          .array()
+          .items(UUID)
+          .required(),
         groupLabel: joi.string().required()
       })
     ),
@@ -32,19 +36,25 @@ const Configuration = joi.object().keys({
 
 const Rule = joi.object().keys({
   rule: joi.object().keys({
-    audienceType: joi.number().max(1).required(),
+    audienceType: joi
+      .number()
+      .max(1)
+      .required(),
     logicalType: joi.number().max(1),
     filters: joi.array().items(
-      joi.object().keys({
-        filterId: FilterIdVal,
-        value: joi.string().regex(/int_value/),
-        filterIdVal: UUID.required(),
-        filterIdIsNull: joi.bool(),
-        propertyId: UUID.required(),
-        operatorId: UUID.required(),
-        intValue: joi.number().integer(),
-        stValue: joi.string()
-      }).required()
+      joi
+        .object()
+        .keys({
+          filterId: FilterIdVal,
+          value: joi.string().regex(/int_value/),
+          filterIdVal: UUID.required(),
+          filterIdIsNull: joi.bool(),
+          propertyId: UUID.required(),
+          operatorId: UUID.required(),
+          intValue: joi.number().integer(),
+          stValue: joi.string()
+        })
+        .required()
     )
   })
 });
@@ -69,24 +79,18 @@ const EvaluateRule = joi.object().keys({
 });
 
 const EvaluateRules = joi.object().keys({
-  ruleEstimates: joi.array().items(
+  ruleEstimates: joi
+    .array()
+    .items(
       joi.object().keys({
         value: joi.string().regex(/estimation_value/),
-        estimationValue:  EvaluateRule,
+        estimationValue: EvaluateRule,
         isNull: joi.bool()
       })
-    ).required()
+    )
+    .required()
 });
 
-const SampleUsers = joi.object().keys({
-  userIds: joi.array().items(UUID)
-});
+const SampleUsers = joi.object().keys({ userIds: joi.array().items(UUID) });
 
-export {
-  EvaluateRule,
-  EvaluateRules,
-  Configuration,
-  Rule,
-  EvaluateFilters,
-  SampleUsers
-}
+export { EvaluateRule, EvaluateRules, Configuration, Rule, EvaluateFilters, SampleUsers };
