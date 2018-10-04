@@ -52,8 +52,8 @@ const Rule = joi.object().keys({
 const EvaluateFilters = joi.object().keys({
   filterEstimates: joi.array().items(
     joi.object().keys({
-      filterId: joi.string().regex(/filter_id_val/),
-      filterIdVal: joi.string().uuid().required(),
+      filterId: FilterIdVal,
+      filterIdVal: UUID.required(),
       filterIdIsNull: joi.bool(),
       userCount: joi.number().integer()
     })
@@ -79,7 +79,7 @@ const EvaluateRules = joi.object().keys({
 });
 
 const SampleUsers = joi.object().keys({
-  userIds: joi.array().items(joi.string().uuid())
+  userIds: joi.array().items(UUID)
 });
 
 export {
