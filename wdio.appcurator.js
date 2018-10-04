@@ -112,8 +112,7 @@ exports.config = {
   updateJob: false,
   specs: [
     './test/web/specs/*/*Test.js', //master
-    //'./test/web/specs/negativeSpecs/*/*Test.js'
-    //'./test/web/specs/accounts/signInAndOutTest.js'
+    './test/web/specs/negativeSpecs/*/*Test.js'
   ],
   // Patterns to exclude.
   exclude: [
@@ -152,10 +151,10 @@ exports.config = {
     timeout: debug ? 9999999 : timeoutPeriod,
     grep: process.env.npm_config_grep
   },
-  execArgv: debug ? ['--inspect'] : [],
+  debug: debug ? true : false,
+  execArgv: debug ? ['--inspect=127.0.0.1:5858'] : [],
   onPrepare() {},
-  before() {
-  },
+  before() {},
   after() {
     var connection = require('./test/web/actions/invite');
     connection.mysql.close();
