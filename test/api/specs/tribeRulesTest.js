@@ -4,7 +4,7 @@ import * as spaces from 'api/actions/spaces';
 import * as organization from 'api/actions/organization';
 import * as tribe from 'api/actions/tribe';
 import * as rules from 'api/actions/tribeRules';
-import * as schemas from 'api/data/tribeRulesData'
+import * as schemas from 'api/data/tribeRulesData';
 
 var configResponse,
   saveResponse,
@@ -19,17 +19,18 @@ const rulesData = new Object();
 describe('Tribe Rules Service', () => {
   describe('getConfiguration()', () => {
     before('Set up the testing environment', done => {
-      identity.postIdentity(rulesData)
-      .then(() => {
-        return organization.postOrganization(rulesData);
-      })
-      .then(() => {
-        return spaces.postSpaceByOrganizationId(rulesData);
-      })
-      .then(() => {
-        configResponse = rules.getConfiguration(rulesData);
-        done();
-      });
+      identity
+        .postIdentity(rulesData)
+        .then(() => {
+          return organization.postOrganization(rulesData);
+        })
+        .then(() => {
+          return spaces.postSpaceByOrganizationId(rulesData);
+        })
+        .then(() => {
+          configResponse = rules.getConfiguration(rulesData);
+          done();
+        });
     });
 
     it('Gets the possible configurations for the space', () => {
@@ -48,7 +49,7 @@ describe('Tribe Rules Service', () => {
 
     it('Verifies the configuration operators', () => {
       return configResponse.then(response => {
-        rules.expectConfig(response.response.configuration.operators, false)
+        rules.expectConfig(response.response.configuration.operators, false);
         expect(rules.ActualFilters).to.include.members(rules.ExpectedFilters);
       });
     });
