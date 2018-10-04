@@ -16,21 +16,20 @@ var configResponse,
 
 const rulesData = new Object();
 
-describe.only('Tribe Rules Service', () => {
+describe('Tribe Rules Service', () => {
   describe('getConfiguration()', () => {
     before('Set up the testing environment', done => {
-      identity
-        .postIdentity(rulesData)
-        .then(() => {
-          return organization.postOrganization(rulesData);
-        })
-        .then(() => {
-          return spaces.postSpaceByOrganizationId(rulesData);
-        })
-        .then(() => {
-          configResponse = rules.getConfiguration(rulesData);
-          done();
-        });
+      identity.postIdentity(rulesData)
+      .then(() => {
+        return organization.postOrganization(rulesData);
+      })
+      .then(() => {
+        return spaces.postSpaceByOrganizationId(rulesData);
+      })
+      .then(() => {
+        configResponse = rules.getConfiguration(rulesData);
+        done();
+      });
     });
 
     it('Gets the possible configurations for the space', () => {
