@@ -1,18 +1,17 @@
-import { chakram, faker } from '../common';
-import Cookies from './getAccountToken';
+//import { chakram, faker } from '../common';
+import { chakram } from '..common';
+// import Cookies from './getAccountToken';
 
-const name = faker.name.findName();
-const email = faker.internet.email();
-const password = 'Password@1234';
-const organizationName = faker.company.companyName();
-// console.log(Cookies.cookies)
-function getCookies() {
-  console.log(Cookies.cookies);
-}
+// const name = faker.name.findName();
+// const email = faker.internet.email();
+// const password = 'Password@1234';
+// const organizationName = faker.company.companyName();
+// // console.log(Cookies.cookies)
+// function getCookies() {
+//   console.log(Cookies.cookies);
+// }
 describe('Orca Query Tests', () => {
-
   it('getOrganization + Should GET an Organization with valid Id', () => {
-
     const request = chakram.post('https://api.appcurator.com/', {
       query: `
         query{
@@ -63,7 +62,7 @@ describe('Orca Query Tests', () => {
   });
 
   it('getAccount + Should GET an Account by valid Id', () => {
-    console.log(Cookies.cookies);
+    //console.log(Cookies.cookies);
 
     // var options = {
     //   headers: {
@@ -93,11 +92,9 @@ describe('Orca Query Tests', () => {
       expect(request).to.have.json('data.getAccount.organizations[0].id', '08d589af-1572-0648-aaa0-2427e3b1903a'),
       expect(request).to.have.json('data.getAccount.organizations[0].name', 'Mass Update')
     ]);
-
   });
 
   it('getAccount - Should throw Errors when Getting an Account by invalid Id', () => {
-
     const request = chakram.post('https://api.appcurator.com/', {
       query: `
         query{
@@ -119,7 +116,5 @@ describe('Orca Query Tests', () => {
       expect(request).to.have.json('errors[0].type', 'ServiceError'),
       expect(request).to.have.json('errors[0].message', 'User with Id invalid-id not found')
     ]);
-
   });
-
 });

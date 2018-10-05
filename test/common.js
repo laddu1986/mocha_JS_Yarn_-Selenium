@@ -1,8 +1,8 @@
-import "app-module-path/register";
+import 'app-module-path/register';
 const server = require('chakram');
 var joi = require('joi');
 global.expect = server.expect;
-var randomString = require("randomstring");
+var randomString = require('randomstring');
 var NodeESModuleLoader = require('node-es-module-loader');
 var loader = new NodeESModuleLoader();
 var dateFormat = require('dateformat');
@@ -16,8 +16,6 @@ export const spaceNegData = new Object();
 export const spaceKeyNegData = new Object();
 
 const responseData = {
-  spaceSlug: [],
-  orgSlug: [],
   users: [],
   visitors: []
 };
@@ -27,11 +25,11 @@ const testData = {
   organizationsData: [],
   invitesData: [],
   spacesData: []
-}
+};
 
 const Tags = {
-  smokeTest: "@smoke"
-}
+  smokeTest: '@smoke'
+};
 
 function post(any) {
   if (any.headers == undefined) {
