@@ -151,6 +151,8 @@ exports.config = {
     timeout: debug ? 9999999 : timeoutPeriod,
     grep: process.env.npm_config_grep
   },
+  debug: debug ? true : false,
+  execArgv: debug ? ['--inspect=127.0.0.1:5858'] : [],
   onPrepare() {},
   before() {},
   after() {
