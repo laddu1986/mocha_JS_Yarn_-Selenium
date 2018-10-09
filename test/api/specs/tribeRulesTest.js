@@ -94,7 +94,7 @@ describe('Tribe Rules Service', () => {
     it('Verifies the configuration operators', () => {
       return configResponse.then(response => {
         rules.expectConfig(response.response.configuration.operators, false);
-        expect(rules.ActualFilters).to.include.members(rules.ExpectedFilters);
+        expect(rules.ExpectedFilters).to.include.members(rules.ActualFilters);
       });
     });
   });
