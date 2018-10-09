@@ -117,7 +117,7 @@ exports.config = {
     // './test/web/specs/negativeSpecs/*/*Test.js',
   ],
   // Patterns to exclude.
-  exclude: ['./test/web/specs/support/helpPageTest.js', './test/web/specs/spaces/spaceKeyTest.js'],
+  exclude: ['./test/web/specs/support/helpPageTest.js'],
   suites: {
     accounts: ['./test/web/specs/accounts/*Test.js'],
     organizations: ['./test/web/specs/organizations/*Test.js'],
