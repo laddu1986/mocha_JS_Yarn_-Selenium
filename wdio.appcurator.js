@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const debug = process.env.DEBUG;
-const timeoutPeriod = 20000;
+const timeoutPeriod = 30000;
 
 var browsers = {
   chrome_headless: {
