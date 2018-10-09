@@ -93,8 +93,8 @@ describe('Tribe Rules Service', () => {
 
     it('Verifies the configuration operators', () => {
       return configResponse.then(response => {
-        rules.expectConfig(response.response.configuration.operators, false)
-        expect(rules.ActualFilters).to.include.members(rules.ExpectedFilters);
+        rules.expectConfig(response.response.configuration.operators, false);
+        expect(rules.ExpectedFilters).to.include.members(rules.ActualFilters);
       });
     });
   });
@@ -125,19 +125,34 @@ describe('Tribe Rules Service', () => {
       return getResponse.then(response => {
         schema = joi.object().keys({
           rule: joi.object().keys({
-            audienceType: joi.number().max(1).required(),
+            audienceType: joi
+              .number()
+              .max(1)
+              .required(),
             logicalType: joi.number().max(1),
             filters: joi.array().items(
-              joi.object().keys({
-                filterId: joi.string().regex(/filter_id_val/),
-                value: joi.string().regex(/int_value/),
-                filterIdVal: joi.string().uuid().required(),
-                filterIdIsNull: joi.bool(),
-                propertyId: joi.string().uuid().required(),
-                operatorId: joi.string().uuid().required(),
-                intValue: joi.number().integer(),
-                stValue: joi.string()
-              }).required()
+              joi
+                .object()
+                .keys({
+                  filterId: joi.string().regex(/filter_id_val/),
+                  value: joi.string().regex(/int_value/),
+                  filterIdVal: joi
+                    .string()
+                    .uuid()
+                    .required(),
+                  filterIdIsNull: joi.bool(),
+                  propertyId: joi
+                    .string()
+                    .uuid()
+                    .required(),
+                  operatorId: joi
+                    .string()
+                    .uuid()
+                    .required(),
+                  intValue: joi.number().integer(),
+                  stValue: joi.string()
+                })
+                .required()
             )
           })
         });
@@ -159,7 +174,10 @@ describe('Tribe Rules Service', () => {
           filterEstimates: joi.array().items(
             joi.object().keys({
               filterId: joi.string().regex(/filter_id_val/),
-              filterIdVal: joi.string().uuid().required(),
+              filterIdVal: joi
+                .string()
+                .uuid()
+                .required(),
               filterIdIsNull: joi.bool(),
               userCount: joi.number().integer()
             })
