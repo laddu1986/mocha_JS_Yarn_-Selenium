@@ -105,17 +105,8 @@ export function clickDeleteSegButton() {
   TribePage.delete.click();
 }
 
-var TribeRulesFilters = [
-  Constants.TribeRulesFilters.Properties.Created,
-  Constants.TribeRulesFilters.Properties.Known,
-  Constants.TribeRulesFilters.Properties.FirstSeen,
-  Constants.TribeRulesFilters.Properties.Joined,
-  Constants.TribeRulesFilters.Properties.ActiveDays,
-  Constants.TribeRulesFilters.Properties.AvgSessions,
-  Constants.TribeRulesFilters.Properties.AvgSessionTime,
-  Constants.TribeRulesFilters.Properties.LastSeen
-];
-
+var expectedPropertyFilters = Object.values(Constants.TribeRulesFilters.Properties);
+var actualPropertyFilters = [];
 export function verifyFilterOptions(type) {
   if (type == Constants.TribeFilterTypes.AudienceType)
     return (
@@ -140,50 +131,39 @@ export function verifyFilterOptions(type) {
         .trim() == Constants.TribeRulesFilters.LogicalType.All
     );
   if (type == Constants.TribeFilterTypes.Property) {
-    for (var i = 0; i < TribePage.properties.length; i++) {
-      if (TribePage.properties.value[i].getText() != TribeRulesFilters[i]) {
-        return false;
-      }
+    for (var i = 0; i < TribePage.properties.value.length; i++) {
+      actualPropertyFilters.push(
+        TribePage.properties.value[i]
+          .getText()
+          .replace(/>/g, '')
+          .trim()
+      );
     }
-    return true;
+    actualPropertyFilters.sort();
+    expectedPropertyFilters.sort();
+    return JSON.stringify(actualPropertyFilters) == JSON.stringify(expectedPropertyFilters);
   }
 }
-var Active_Average_Operators = [
-  Constants.TribeRulesFilters.Operators.GreaterThan,
-  Constants.TribeRulesFilters.Operators.LessThan,
-  Constants.TribeRulesFilters.Operators.Is,
-  Constants.TribeRulesFilters.Operators.IsNot,
-  Constants.TribeRulesFilters.Operators.IsUnknown,
-  Constants.TribeRulesFilters.Operators.HasAnyValue
-];
-var Other_Operators = [
-  Constants.TribeRulesFilters.Operators.MoreThan,
-  Constants.TribeRulesFilters.Operators.Exactly,
-  Constants.TribeRulesFilters.Operators.LessThan,
-  Constants.TribeRulesFilters.Operators.After,
-  Constants.TribeRulesFilters.Operators.On,
-  Constants.TribeRulesFilters.Operators.Before,
-  Constants.TribeRulesFilters.Operators.IsUnknown,
-  Constants.TribeRulesFilters.Operators.HasAnyValue
-];
 
+var ActiveAverageOperators = Object.values(Constants.TribeRulesFilters.ActiveAverageOperators);
+var OtherOperators = Object.values(Constants.TribeRulesFilters.OtherOperators);
+var actualOperatorFilters = [];
 export function verifyOperators(type) {
+  actualOperatorFilters.length = 0;
   if (type == 'Avg') {
-    for (var i = 0; i < Active_Average_Operators.length; i++) {
-      if (TribePage.operators.value[i].getText() != Active_Average_Operators[i]) {
-        console.log(Active_Average_Operators[i] + ' is showing as' + TribePage.operators.value[i].getText()); // eslint-disable-line
-        return false;
-      }
+    for (var i = 0; i < ActiveAverageOperators.length; i++) {
+      actualOperatorFilters.push(TribePage.operators.value[i].getText());
     }
-    return true;
+    ActiveAverageOperators.sort();
+    actualOperatorFilters.sort();
+    return JSON.stringify(actualOperatorFilters) == JSON.stringify(ActiveAverageOperators);
   } else {
-    for (i = 0; i < Other_Operators.length; i++) {
-      if (TribePage.operators.value[i].getText() != Other_Operators[i]) {
-        console.log(Other_Operators[i] + ' is showing as ' + TribePage.operators.value[i].getText()); // eslint-disable-line
-        return false;
-      }
+    for (i = 0; i < OtherOperators.length; i++) {
+      actualOperatorFilters.push(TribePage.operators.value[i].getText());
     }
-    return true;
+    OtherOperators.sort();
+    actualOperatorFilters.sort();
+    return JSON.stringify(actualOperatorFilters) == JSON.stringify(OtherOperators);
   }
 }
 

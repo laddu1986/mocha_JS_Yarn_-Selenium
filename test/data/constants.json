@@ -1,70 +1,83 @@
 {
-    "APIKeyStatus": {
-        "Active": "Active",
-        "Revoked": "Revoked",
-        "PendingDelete": "Pending Delete"
+  "APIKeyStatus": {
+    "Active": "Active",
+    "Revoked": "Revoked",
+    "PendingDelete": "Pending Delete"
+  },
+  "SpaceAttributes": {
+    "Name": "name",
+    "Slug": "slug",
+    "ShortUrl": "shortUrl"
+  },
+  "InviteStatus": {
+    "Expired": "Expired",
+    "Pending": "Pending"
+  },
+  "TribeAttributes": {
+    "Title": "Title",
+    "Tagline": "Tagline"
+  },
+  "UserType": {
+    "User": "User",
+    "Visitor": "Visitor",
+    "Active": "Active",
+    "New": "New"
+  },
+  "UserAttributes": {
+    "Name": "Name",
+    "Email": "Email",
+    "UID": "UID"
+  },
+  "TribeFilterTypes": {
+    "AudienceType": "AudienceType",
+    "LogicalType": "LogicalType",
+    "Operator": "Operator",
+    "Property": "Property"
+  },
+  "TribeRulesFilters": {
+    "AudienceType": {
+      "User": "Users",
+      "Visitor": "Visitors"
     },
-    "SpaceAttributes": {
-        "Name": "name",
-        "Slug": "slug",
-        "ShortUrl": "shortUrl"
+    "APIAudienceType": {
+      "User": "USER",
+      "Visitor": "VISITOR"
     },
-    "InviteStatus": {
-        "Expired": "Expired",
-        "Pending": "Pending"
+    "LogicalType": {
+      "Any": "any",
+      "All": "all"
     },
-    "TribeAttributes": {
-        "Title": "Title",
-        "Tagline": "Tagline"
+    "APILogicalType": {
+      "And": "AND",
+      "Or": "OR"
     },
-    "UserType": {
-        "User": "User",
-        "Visitor": "Visitor",
-        "Active": "Active",
-        "New": "New"
+    "Properties": {
+      "ActiveDays": "Active Days (last 30 days)",
+      "AvgSessions": "Avg Sessions (last 30 days)",
+      "AvgSessionTime": "Avg Session Time",
+      "LastSeen": "Last Seen",
+      "Created": "Created",
+      "Known": "Known",
+      "FirstSeen": "First Seen",
+      "Joined": "Joined"
     },
-    "UserAttributes": {
-        "Name": "Name",
-        "Email": "Email",
-        "UID": "UID"
+    "OtherOperators": {
+      "MoreThan": "more than",
+      "Exactly": "exactly",
+      "LessThan": "less than",
+      "After": "after",
+      "On": "on",
+      "Before": "before",
+      "IsUnknown": "is unknown",
+      "HasAnyValue": "has any value"
     },
-    "TribeFilterTypes": {
-        "AudienceType": "AudienceType",
-        "LogicalType": "LogicalType",
-        "Operator": "Operator",
-        "Property": "Property"
-    },
-    "TribeRulesFilters": {
-        "AudienceType": {
-            "User": "Users",
-            "Visitor": "Visitors"
-        },
-        "LogicalType": {
-            "Any": "any",
-            "All": "all"
-        },
-        "Properties": {
-            "ActiveDays": "Active Days (last 30 days)",
-            "AvgSessions": "Avg Sessions (last 30 days)",
-            "AvgSessionTime": "Avg Session Time",
-            "LastSeen": "Last Seen",
-            "Created": "Created",
-            "Known": "Known",
-            "FirstSeen": "First Seen",
-            "Joined": "Joined"
-        },
-        "Operators": {
-            "IsUnknown": "is unknown",
-            "Is": "is",
-            "IsNot": "is not",
-            "GreaterThan": "greater than",
-            "LessThan": "less than",
-            "HasAnyValue": "has any value",
-            "On": "on",
-            "Exactly": "exactly",
-            "Before": "before",
-            "MoreThan": "more than",
-            "After": "after"
-        }
+    "ActiveAverageOperators": {
+      "GreaterThan": "greater than",
+      "LessThan": "less than",
+      "Is": "is",
+      "IsNot": "is not",
+      "IsUnknown": "is unknown",
+      "HasAnyValue": "has any value"
     }
+  }
 }
