@@ -23,6 +23,7 @@ export function signIn(email, password) {
   SignInPage.passwordInput.setValue(password);
   submit();
   NavBar.profileMenu.waitForVisible();
+  hideIntercom();
 }
 
 export function typeDeleteToConfirm() {
@@ -56,9 +57,9 @@ export function clickLinkOn404Page() {
 }
 
 //hide intercom icon as it gets in the way of other elements and prevents clicking them
-export function hideIntercom() {
+export async function hideIntercom() {
   CommonPage.intercomIcon.waitForVisible();
-  browser.execute(function() {
+  await browser.execute(function() {
     const intercom = document.getElementById('intercom-container');
     if (intercom.style.display === 'none') {
       intercom.style.display = 'block';
