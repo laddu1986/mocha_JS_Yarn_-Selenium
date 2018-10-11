@@ -46,19 +46,18 @@ export function verifyUsersDetails(dataArray) {
   }
 }
 
-export function clickUserRowNo(n) {
-  n === undefined || n <= 0 ? UsersPage.userRows.value[0].click() : UsersPage.userRows.value[n - 1].click();
+export function clickUserRow(rowNum, rowType) {
+  if (rowType == Constants.UserType.Visitor) UsersPage.visitorRows.value[0].click();
+  else
+    rowNum === undefined || rowNum <= 0
+      ? UsersPage.userRows.value[0].click()
+      : UsersPage.userRows.value[rowNum - 1].click();
   //wait for browser animation for opening side panel and loading all elements
   browser.pause(500);
-  // browser.waitUntil(() => UsersPage.revealLabelsButton.isEnabled() === true, 5000, 'User Side Panel not Visible', 300);
 }
 
 export function getFirstRowUserName() {
   return UsersPage.userNameRow.value[0].getText();
-}
-export function clickFirstRow(type) {
-  if (type == Constants.UserType.Visitor) UsersPage.visitorRows.value[0].click();
-  else UsersPage.userRows.value[0].click();
 }
 
 export function getResultText() {
@@ -115,6 +114,7 @@ export function addLabels(labelCount) {
 export function clickAddLabelButton() {
   browser.waitUntil(() => UsersPage.revealLabelsButton.isEnabled() === true, 5000, 'Reveal button not Visible', 100);
   UsersPage.revealLabelsButton.click();
+  browser.pause(600);
   browser.waitUntil(() => UsersPage.addLabelButton.isEnabled() === true, 5000, 'Add Label button not Enabled', 100);
 }
 
@@ -125,7 +125,7 @@ export function inputLabelDetails(label, labelCount) {
   for (let i = 0; i < labelCount; i++) {
     label === undefined ? (lname = lib.randomString.generate(Math.floor(Math.random() * 10 + 3))) : (lname = label[i]);
     UsersPage.labelInput.setValue(lname);
-    browser.pause(100);
+    // browser.pause(500);
     UsersPage.addLabelButton.click();
     label === undefined;
     if (lname.length >= 2) {
@@ -133,7 +133,7 @@ export function inputLabelDetails(label, labelCount) {
       browser.waitUntil(() => UsersPage.labels.value.length === i + 1, 5000, 'Label NOT Saved', 100);
     }
   }
-  return (userInputLabels = userInputLabels.sort(lib.sortAlphabetically)), (lcount = labelCount);
+  userInputLabels = userInputLabels.sort(lib.sortAlphabetically);
 }
 
 export function verifyAddedLabels() {
@@ -144,7 +144,7 @@ export function verifyAddedLabels() {
     actualLabels.push(labelTxt);
   }
   var match = JSON.stringify(userInputLabels).replace(/\s+/g, '') == JSON.stringify(actualLabels).replace(/\s+/g, '');
-  (actualLabels = []), (userInputLabels = []);
+  userInputLabels = [];
   return match;
 }
 
@@ -183,7 +183,7 @@ export function verifyLabelDeleted() {
 }
 
 export function labelErrMsg() {
-  return UsersPage.labelErrMsg.isVisible();
+  return UsersPage.labelErrMsg.getText();
 }
 
 export function labelSuggestions(typedChars) {
