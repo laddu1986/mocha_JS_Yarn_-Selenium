@@ -130,7 +130,7 @@ exports.config = {
   coloredLogs: true,
   baseUrl: getArgs()[1],
   waitforTimeout: debug ? 9999999 : timeoutPeriod,
-  maxInstances: debug ? 1 : 10,
+  maxInstances: debug ? 1 : 5,
   plugins: {},
   framework: 'mocha',
   reporters: ['spec', 'html-format'],

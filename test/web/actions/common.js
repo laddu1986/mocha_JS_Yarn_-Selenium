@@ -57,9 +57,9 @@ export function clickLinkOn404Page() {
 }
 
 //hide intercom icon as it gets in the way of other elements and prevents clicking them
-export async function hideIntercom() {
+export function hideIntercom() {
   CommonPage.intercomIcon.waitForVisible();
-  await browser.execute(function() {
+  browser.execute(function() {
     const intercom = document.getElementById('intercom-container');
     if (intercom.style.display === 'none') {
       intercom.style.display = 'block';

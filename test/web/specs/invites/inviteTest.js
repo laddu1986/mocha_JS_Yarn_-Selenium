@@ -1,6 +1,14 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
-import { sendInviteButtonEnabled, sendInvite, verifyInviteCount, clickInviteTeammateButton, goToTeammatesPage, verifyInactiveInvite, goToOrganisationDashboard } from "web/actions/invite";
+import {
+  sendInviteButtonEnabled,
+  sendInvite,
+  verifyInviteCount,
+  clickInviteTeammateButton,
+  goToTeammatesPage,
+  verifyInactiveInvite,
+  goToOrganisationDashboard
+} from 'web/actions/invite';
 import accountPage from 'web/page_objects/accountPage';
 import { signOut } from 'web/actions/common';
 
@@ -8,19 +16,17 @@ const invite_email1 = `invite_1_${lib.randomString.generate(5)}@test.co`;
 const invite_email2 = `invite_2${lib.randomString.generate(5)}@test.co`;
 const invite_email3 = `invite_3${lib.randomString.generate(5)}@test.co`;
 
-describe(`Invite Tests \n${lib.Tags.smokeTest}`, () => {
-
+describe(`Invite Tests ${lib.Tags.smokeTest}`, () => {
   before('Open App URL', () => {
-    accountPage.open()
+    accountPage.open();
   });
 
   before(() => {
     createAccount();
-    browser.pause(1000)
+    browser.pause(1000);
   });
 
   describe('Organisation Dashboard page', () => {
-
     it('Verify Send Invite button is disabled', () => {
       clickInviteTeammateButton();
       expect(sendInviteButtonEnabled()).to.equal(false);
@@ -39,7 +45,6 @@ describe(`Invite Tests \n${lib.Tags.smokeTest}`, () => {
   });
 
   describe('Teammates page', () => {
-
     it('Verify Send Invite button is disabled', () => {
       goToTeammatesPage();
       expect(sendInviteButtonEnabled()).to.equal(false);
