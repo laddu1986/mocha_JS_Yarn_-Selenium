@@ -2,7 +2,7 @@ import '../../../common';
 import accountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { createSpace, goToDeveloperPortal, getAPIKey } from 'web/actions/space';
-import { addUsers } from 'web/actions/metrics';
+import { addUsers, verifyUsersAreAdded } from 'web/actions/metrics';
 import { clickOnAudienceLink } from 'web/actions/navBar';
 import { clickOnUsersTab, clickFirstRow, addLabels } from 'web/actions/users';
 var apiKey;
@@ -20,9 +20,13 @@ describe('Labels Test', () => {
     await addUsers(2, apiKey);
   });
 
-  it('Add one or more labels with more than 2 chars length ', () => {
+  before(() => {
     clickOnAudienceLink();
     clickOnUsersTab();
+    verifyUsersAreAdded();
+  });
+
+  it('Add one or more labels with more than 2 chars length ', () => {
     clickFirstRow();
     browser.pause(1000);
     addLabels();
