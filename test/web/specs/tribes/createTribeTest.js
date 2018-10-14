@@ -7,7 +7,7 @@ import { clickOnAudienceLink } from 'web/actions/navBar';
 import { verifyAllTribesPage, verifyTitleOnCard, inputTribeDetails, clickCreateTribeLink, verifyTribe, clickCreateTribeButton, verifyTribeDetailpage } from 'web/actions/tribe';
 var title;
 
-describe(`Create Tribe Tests ${lib.Tags.smokeTest}`, () => {
+describe('Create Tribe Tests', () => {
     before(() => {
         accountPage.open()
         createAccount();
@@ -19,12 +19,12 @@ describe(`Create Tribe Tests ${lib.Tags.smokeTest}`, () => {
         expect(verifyAllTribesPage()).to.equal(true);
     });
 
-    it('Go to tribe detail page using create tribe button', () => {
+    it(`Go to tribe detail page using create tribe button ${lib.Tags.smokeTest}`, () => {
         clickCreateTribeButton();
         expect(verifyTribeDetailpage()).to.equal(true);
     });
 
-    it('Verify untitled tribe is created', () => {
+    it(`Verify untitled tribe is created ${lib.Tags.smokeTest}`, () => {
         expect(verifyTribe(Constants.TribeAttributes.Title, "Untitled")).to.equal(true);
     });
 

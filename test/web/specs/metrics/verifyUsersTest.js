@@ -13,7 +13,7 @@ import {
   verifySideBar
 } from 'web/actions/users';
 var apiKey;
-describe(`User Metrics Tests ${lib.Tags.smokeTest}`, () => {
+describe(`User Metrics Tests`, () => {
   before(() => {
     AccountPage.open();
     createAccount();
