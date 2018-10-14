@@ -8,7 +8,7 @@ const invite_email1 = `invite_1_${lib.randomString.generate(5)}@test.co`;
 const invite_email2 = `invite_2${lib.randomString.generate(5)}@test.co`;
 const invite_email3 = `invite_3${lib.randomString.generate(5)}@test.co`;
 
-describe(`Invite Tests \n${lib.Tags.smokeTest}`, () => {
+describe('Invite Tests', () => {
 
   before('Open App URL', () => {
     accountPage.open()
@@ -19,7 +19,7 @@ describe(`Invite Tests \n${lib.Tags.smokeTest}`, () => {
     browser.pause(1000)
   });
 
-  describe('Organisation Dashboard page', () => {
+  describe(`Organisation Dashboard page  ${lib.Tags.smokeTest}`, () => {
 
     it('Verify Send Invite button is disabled', () => {
       clickInviteTeammateButton();
