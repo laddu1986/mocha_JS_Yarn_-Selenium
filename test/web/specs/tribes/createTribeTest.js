@@ -14,7 +14,7 @@ describe('Create Tribe Tests', () => {
         createSpace();
     });
 
-    it('Go to create a tribe page --> verify create tribe button and hover over + link', () => {
+    it(`Go to create a tribe page --> verify create tribe button and hover over + link ${lib.Tags.smokeTest}`, () => {
         clickOnAudienceLink();
         expect(verifyAllTribesPage()).to.equal(true);
     });
@@ -28,7 +28,7 @@ describe('Create Tribe Tests', () => {
         expect(verifyTribe(Constants.TribeAttributes.Title, "Untitled")).to.equal(true);
     });
 
-    it('Verify untitled tribe on all tribes page', () => {
+    it(`Verify untitled tribe on all tribes page ${lib.Tags.smokeTest}`, () => {
         clickOnAudienceLink();
         expect(verifyTribe(Constants.TribeAttributes.Title, "Untitled")).to.equal(true);
     });
