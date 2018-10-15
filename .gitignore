@@ -14,3 +14,4 @@ phantomjs.log
 /personal
 /grpc/src
 **/grpc-report.html
+jsconfig.json
