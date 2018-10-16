@@ -2,7 +2,7 @@ import '../../../common';
 import accountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { createSpace, goToDeveloperPortal, getAPIKey } from 'web/actions/space';
-import { addUsers } from 'web/actions/metrics';
+import { addUsers, verifyUsersAreAdded } from 'web/actions/metrics';
 import {
   gotoUsersTab,
   inputLabelDetails,
@@ -32,12 +32,13 @@ describe('User Labels Test', () => {
     await addUsers(6, apiKey);
   });
 
-  describe('Test Add and Delete a Label', () => {
-    it('Click on a user row to open side Panel', () => {
-      gotoUsersTab();
-      clickUserRow(3);
-    });
+  before(() => {
+    gotoUsersTab();
+    verifyUsersAreAdded();
+    clickUserRow(3);
+  });
 
+  describe('Test Add and Delete a Label', () => {
     it('Enter a label and verify it gets Saved', () => {
       clickAddLabelButton();
       inputLabelDetails(['testLabel123']);

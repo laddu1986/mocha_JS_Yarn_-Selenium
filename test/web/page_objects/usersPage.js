@@ -3,6 +3,9 @@ class UsersPage {
   get usersTab() {
     return browser.element("//a[@data-qa='tab:users']");
   }
+  get noUsersRow() {
+    return browser.element("//table[@data-qa='table:users']//tr//td");
+  }
   get userRows() {
     return browser.elements("//tr[@data-qa='table:row-user']");
   }
