@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const debug = process.env.DEBUG;
-const timeoutPeriod = 20000;
+const timeoutPeriod = 30000;
 
 var browsers = {
   chrome_headless: {
@@ -111,10 +111,10 @@ exports.config = {
   capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
-    './test/web/specs/**/*Test.js', //master
+    './test/web/specs/**/*Test.js' //master
   ],
   // Patterns to exclude.
-  exclude: ['./test/web/specs/support/helpPageTest.js', './test/web/specs/metrics/labelUserTest.js'],
+  exclude: ['./test/web/specs/support/helpPageTest.js'],
   suites: {
     accounts: ['./test/web/specs/accounts/*Test.js'],
     organizations: ['./test/web/specs/organizations/*Test.js'],
@@ -130,7 +130,7 @@ exports.config = {
   coloredLogs: true,
   baseUrl: getArgs()[1],
   waitforTimeout: debug ? 9999999 : timeoutPeriod,
-  maxInstances: debug ? 1 : 10,
+  maxInstances: debug ? 1 : 5,
   plugins: {},
   framework: 'mocha',
   reporters: ['spec', 'html-format'],

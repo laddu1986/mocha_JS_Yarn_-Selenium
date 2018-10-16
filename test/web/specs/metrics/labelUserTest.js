@@ -3,11 +3,23 @@ import accountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { createSpace, goToDeveloperPortal, getAPIKey } from 'web/actions/space';
 import { addUsers, verifyUsersAreAdded } from 'web/actions/metrics';
-import { clickOnAudienceLink } from 'web/actions/navBar';
-import { clickOnUsersTab, clickFirstRow, addLabels } from 'web/actions/users';
+import {
+  gotoUsersTab,
+  inputLabelDetails,
+  verifyAddedLabels,
+  clickAddLabelButton,
+  addLabels,
+  deleteLabels,
+  verifyLabelDeleted,
+  clickUserRow,
+  labelSuggestions,
+  verifyLabelCount,
+  clickLabelCount,
+  selectLabelFromSuggestions
+} from 'web/actions/users';
 var apiKey;
 
-describe('Labels Test', () => {
+describe('User Labels Test', () => {
   before('Setup', () => {
     accountPage.open();
     createAccount();
@@ -17,31 +29,62 @@ describe('Labels Test', () => {
   });
 
   before(async () => {
-    await addUsers(2, apiKey);
+    await addUsers(6, apiKey);
   });
 
   before(() => {
-    clickOnAudienceLink();
-    clickOnUsersTab();
+    gotoUsersTab();
     verifyUsersAreAdded();
+    clickUserRow(3);
   });
 
-  it('Add one or more labels with more than 2 chars length ', () => {
-    clickFirstRow();
-    browser.pause(1000);
-    addLabels();
-    /* clickAddLabelButton();
-    var labelCount = Math.floor((Math.random() * 10) + 2)
-    var labelList = []
-    while (labelCount-- > 0) {
-      label = lib.randomString.generate(Math.floor((Math.random() * 20) + 1))
-      inputLabelDetails(label)
-      labelList.push(label)
-      browser.keys('Enter') //workaround
-    } */
-    // console.log('labelList ', labelList)
-    browser.pause(5000);
-    // clickAddLabelButton();
-    // expect(verifyLabels(label, '2')).to.equal(true);
+  describe('Test Add and Delete a Label', () => {
+    it('Enter a label and verify it gets Saved', () => {
+      clickAddLabelButton();
+      inputLabelDetails(['testLabel123']);
+      expect(verifyAddedLabels()).to.equal(true, 'Label was not Added/Saved');
+    });
+
+    it('Delete the added Label', () => {
+      deleteLabels(['testLabel123']);
+      expect(verifyLabelDeleted()).to.equal(true, 'Label was not Deleted');
+    });
+  });
+
+  describe('Test with Multiple Labels and Sorting', () => {
+    it('Add multiple labels -> verify they are sorted alphabetically', () => {
+      gotoUsersTab();
+      clickUserRow(4);
+      var labelCount = Math.floor(Math.random() * 10 + 4);
+      addLabels(labelCount);
+      expect(verifyAddedLabels()).to.equal(true, 'Labels were not Added/Saved');
+    });
+
+    it('Verify label count on user row and clicking it re-directs to label details section', () => {
+      gotoUsersTab();
+      expect(verifyLabelCount()).to.equal(true, 'Label count incorrect in User row');
+      clickLabelCount();
+    });
+  });
+
+  describe('Test Label suggestions', () => {
+    it('Add labels to a user', () => {
+      gotoUsersTab();
+      clickUserRow(5);
+      clickAddLabelButton();
+      inputLabelDetails(['dropdown', 'dropbox', 'dropkick', 'drop the beat']);
+    });
+
+    it('Verify added labels appears in suggestions for other users', () => {
+      gotoUsersTab();
+      clickUserRow(6);
+      clickAddLabelButton();
+      expect(labelSuggestions('dr')).to.equal(true, 'Label Suggestion did not appear');
+    });
+
+    it('Select a label from suggestions and verify it is Saved', () => {
+      selectLabelFromSuggestions('dropkick');
+      expect(verifyAddedLabels()).to.equal(true, 'Label was not Added/Saved');
+    });
   });
 });

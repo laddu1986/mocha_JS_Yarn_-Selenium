@@ -9,7 +9,7 @@ import {
   clickOnUsersTab,
   getRecentUsersRows,
   verifyUsersDetails,
-  clickFirstRow,
+  clickUserRow,
   verifySideBar
 } from 'web/actions/users';
 var apiKey;
@@ -42,7 +42,7 @@ describe(`User Metrics Tests ${lib.Tags.smokeTest}`, () => {
     });
 
     it('For First User --> Verify email, UID and name in side bar', () => {
-      clickFirstRow();
+      clickUserRow();
       browser.pause(1000);
       expect(verifySideBar(Constants.UserType.User)).to.equal(true);
     });
@@ -53,7 +53,7 @@ describe(`User Metrics Tests ${lib.Tags.smokeTest}`, () => {
 
     it('Verify Visitor on side bar', () => {
       browser.refresh();
-      clickFirstRow(Constants.UserType.Visitor);
+      clickUserRow(undefined, Constants.UserType.Visitor);
       browser.pause(1000);
       expect(verifySideBar(Constants.UserType.Visitor)).to.equal(true);
     });

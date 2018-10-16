@@ -8,42 +8,48 @@ const inviteData = new Object();
 
 describe('Invites Api', () => {
   describe(`POST /organizations/{id}/invites ${lib.Tags.smokeTest}`, () => {
-    before((done) => {
+    before(done => {
       identity.postIdentity(inviteData).then(() => {
         organization.postOrganization(inviteData).then(() => {
           invites.getAccessToken(inviteData).then(() => {
             postResponse = invites.postInvitesByOrganizationId(inviteData, true);
             done();
           });
-        })
-      })
+        });
+      });
     });
 
     it('Create a new invite.', () => {
-      return postResponse.then((response) => {
+      return postResponse.then(response => {
         expect(response).to.have.status(201);
       });
     });
   });
 
   describe('GET /organizations/{orgId}/invites', () => {
-    before((done) => {
+    before(done => {
       getResponse = invites.getInvitesByOrganizationId(inviteData);
       done();
     });
     it('Search invites in the org', () => {
-      return getResponse.then((response) => {
+      return getResponse.then(response => {
         expect(response).to.have.status(200);
         const objectSchema = lib.joi.object().keys({
-          token: lib.joi.string().uuid().required(),
+          token: lib.joi
+            .string()
+            .uuid()
+            .required(),
           email: lib.joi.valid(lib.testData.invitesData[0]).required(),
           createdTime: lib.joi.date().required(),
           status: lib.joi.valid(constants.InviteStatus.Pending).required(),
           expiryDate: lib.joi.date().required()
-        })
+        });
         schema = lib.joi.object().keys({
           totalRows: lib.joi.valid(1).required(),
-          results: lib.joi.array().items(objectSchema).required()
+          results: lib.joi
+            .array()
+            .items(objectSchema)
+            .required()
         });
         lib.joi.assert(response.body, schema);
       });
@@ -51,18 +57,25 @@ describe('Invites Api', () => {
   });
 
   describe('GET /organizations/{orgId}/invites/{token}', () => {
-    before((done) => {
+    before(done => {
       getInviteResponse = invites.getInviteDetailsByToken(inviteData);
       done();
     });
     it('Get invite details', () => {
-      return getInviteResponse.then((response) => {
+      return getInviteResponse.then(response => {
         expect(response).to.have.status(200);
         schema = lib.joi.object().keys({
           email: lib.joi.valid(lib.testData.invitesData[0]).required(),
-          organizationId: lib.joi.string().uuid().valid(inviteData.orgID).required(),
+          organizationId: lib.joi
+            .string()
+            .uuid()
+            .valid(inviteData.orgID)
+            .required(),
           organizationName: lib.joi.valid(inviteData.orgName).required(),
-          hasAccount: lib.joi.boolean().valid(false).required(),
+          hasAccount: lib.joi
+            .boolean()
+            .valid(false)
+            .required(),
           status: lib.joi.valid(constants.InviteStatus.Pending).required()
         });
         lib.joi.assert(response.body, schema);
@@ -71,12 +84,12 @@ describe('Invites Api', () => {
   });
 
   describe('DELETE /organizations/{orgId}/invites/?email={email}', () => {
-    before((done) => {
+    before(done => {
       deleteResponse = invites.deleteInviteByOrganizationIdAndEmail(inviteData);
       done();
     });
     it('Delete an invite.', () => {
-      return deleteResponse.then((response) => {
+      return deleteResponse.then(response => {
         expect(response).to.have.status(204);
       });
     });
