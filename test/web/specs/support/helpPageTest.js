@@ -1,8 +1,8 @@
-import * as lib from '../../../common';
+import '../../../common';
 import NavBar from 'web/page_objects/navBar';
 import SignInPage from 'web/page_objects/signInPage';
 import { signIn } from 'web/actions/login';
-import { signOut } from 'web/actions/common'
+import { signOut } from 'web/actions/common';
 
 describe('Test Help Center', () => {
   it('Open App Page', () => {
@@ -31,7 +31,6 @@ describe('Test Help Center', () => {
 
     signOut();
   });
-
 });
 
 describe('Test API Portal', () => {
@@ -55,7 +54,6 @@ describe('Test API Portal', () => {
     expect(browser.getUrl()).to.include('https://api.appcurator.com/');
     browser.close(apiPortalTab);
     signOut();
-
   });
 });
 
@@ -80,6 +78,5 @@ describe('Test System Status', () => {
     expect(browser.getUrl()).to.include('https://stats.uptimerobot.com/');
     browser.close(sysStatusTab);
     signOut();
-
   });
 });

@@ -1,17 +1,22 @@
 import * as lib from '../../common';
 import HomePage from 'web/page_objects/homePage';
-import AccountPage from 'web/page_objects/accountPage'
-import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
-import CommonPage from 'web/page_objects/common'
-import { confirmDelete, cancelDelete, typeDeleteToConfirm, hideIntercom } from 'web/actions/common'
-var name, email, organization, password, invcode, accountData = { name, email, invcode, organization, password, invcode };
+import AccountPage from 'web/page_objects/accountPage';
+import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
+import CommonPage from 'web/page_objects/common';
+import { confirmDelete, cancelDelete, typeDeleteToConfirm, hideIntercom } from 'web/actions/common';
+var name,
+  email,
+  organization,
+  password,
+  invcode,
+  accountData = { name, email, invcode, organization, password };
 
 export function createAccount(email) {
   inputDetails(email);
   submit();
   HomePage.logo.waitForVisible();
   OrgDashboardPage.currentOrgName.waitForVisible();
-  hideIntercom()
+  hideIntercom();
   return accountData;
 }
 
@@ -33,7 +38,7 @@ export function inputDetails(email) {
     AccountPage.emailInput.setValue(email);
     accountData.email = email;
   } else {
-    accountData.email = `${lib.randomString.generate(15)}@test.co`
+    accountData.email = `${lib.randomString.generate(15)}@test.co`;
     AccountPage.emailInput.setValue(accountData.email);
   }
   AccountPage.organizationInput.setValue(accountData.organization);
@@ -46,7 +51,7 @@ export function submit() {
 }
 
 export function verifyOrgDashboardPageAppears() {
-  if ((HomePage.logo).isVisible() == true & (OrgDashboardPage.currentOrgName).isVisible() == true) {
+  if ((HomePage.logo.isVisible() == true) & (OrgDashboardPage.currentOrgName.isVisible() == true)) {
     return true;
   } else {
     return false;
@@ -58,17 +63,17 @@ export function joinOrgText() {
 }
 
 export function createAccountToJoinInvitedOrg() {
-  AccountPage.nameInput.setValue(`newUser_${accountData.name}`)
-  AccountPage.passwordInput.setValue(accountData.password)
+  AccountPage.nameInput.setValue(`newUser_${accountData.name}`);
+  AccountPage.passwordInput.setValue(accountData.password);
   AccountPage.codeInput.setValue(accountData.invcode);
-  CommonPage.submitButton.click()
+  CommonPage.submitButton.click();
   OrgDashboardPage.currentOrgName.waitForVisible();
 }
 
 export function deleteAccount() {
-  clickDeleteAccButton()
-  typeDeleteToConfirm()
-  confirmDelete()
+  clickDeleteAccButton();
+  typeDeleteToConfirm();
+  confirmDelete();
 }
 
 export function clickDeleteAccButton() {
@@ -77,5 +82,5 @@ export function clickDeleteAccButton() {
 }
 
 export function cancelDeleteAccount() {
-  return cancelDelete(HomePage.removeAccountButton)
+  return cancelDelete(HomePage.removeAccountButton);
 }

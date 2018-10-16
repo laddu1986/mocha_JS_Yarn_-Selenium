@@ -3,7 +3,7 @@ import AccountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { createSpace, goToDeveloperPortal, getAPIKey } from 'web/actions/space';
 import { clickOnAudienceLink, clickOnSpaceDashboardLink } from 'web/actions/navBar';
-import { addUsers, addVisitor, getCount } from 'web/actions/metrics';
+import { addUsers, addVisitor, getCount, verifyUsersAreAdded } from 'web/actions/metrics';
 import NotificationData from 'web/data/passiveNotification.json';
 import { clickOnUsersTab, clickUserRow, deleteUser, getFirstRowDetails } from 'web/actions/users';
 import { getNotificationMessageText } from 'web/actions/common';
@@ -23,9 +23,13 @@ describe('Delete User Test', () => {
     await addUsers(2, apiKey);
   });
 
-  it('Delete User --> Verify users tab and passive notification shows', () => {
+  before(() => {
     clickOnAudienceLink();
     clickOnUsersTab();
+    verifyUsersAreAdded();
+  });
+
+  it('Delete User --> Verify users tab and passive notification shows', () => {
     var deletedName = getFirstRowDetails(Constants.UserAttributes.Name);
     clickUserRow(undefined, Constants.UserType.User);
     browser.pause(1000);
