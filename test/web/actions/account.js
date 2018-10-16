@@ -9,7 +9,7 @@ var name,
   organization,
   password,
   invcode,
-  accountData = { name, email, organization, password, invcode };
+  accountData = { name, email, invcode, organization, password };
 
 export function createAccount(email) {
   inputDetails(email);

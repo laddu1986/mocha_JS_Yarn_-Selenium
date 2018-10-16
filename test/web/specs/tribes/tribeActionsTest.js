@@ -30,21 +30,27 @@ describe('Tribe Actions Tests', () => {
 
   it('Click on Tribe card --> lands on card details page', () => {
     goToTribeDetailPage();
-    expect(verifyTribeDetailpage()).to.equal(true);
+    expect(verifyTribeDetailpage()).to.equal(true, 'Tribe Details page is not displayed');
   });
 
   it('Update the Tribe Title --> verify new name on all tribes and tribe detail page', () => {
     updateTribe(Constants.TribeAttributes.Title, newName);
-    expect(verifyTribe(Constants.TribeAttributes.Title, newName)).to.equal(true);
+    expect(verifyTribe(Constants.TribeAttributes.Title, newName)).to.equal(
+      true,
+      'New Tribe name does not appear on tribe detail page'
+    );
     clickOnAudienceLink();
     browser.refresh();
-    expect(verifyTribe(Constants.TribeAttributes.Title, newName)).to.equal(true);
+    expect(verifyTribe(Constants.TribeAttributes.Title, newName)).to.equal(
+      true,
+      'New Tribe name does not appear on all tribes page'
+    );
   });
 
   it('Delete Tribe --> verify the passive notification and redirection to all tribes page', () => {
     goToTribeDetailPage();
     deleteTribe();
     expect(getNotificationMessageText()).to.include(`${PassiveNotification.deleteMessage.text}'${newName}'.`);
-    expect(verifyAllTribesPage()).to.equal(true);
+    expect(verifyAllTribesPage()).to.equal(true, 'After deleting tribe redirection to all tribes page did not work');
   });
 });
