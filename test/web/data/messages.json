@@ -18,5 +18,10 @@
   "search": {
     "result": "result found",
     "results": "results found"
+  },
+  "label": {
+    "invalidChar": "Labels can contain alphanumeric characters as well as - _ . / \\ :",
+    "minimumChar": "A label has a minimum of 2 characters",
+    "duplicateLabel": "This user already has the label"
   }
 }
