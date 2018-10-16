@@ -7,18 +7,18 @@ import { getnavOrgCount } from 'web/actions/navBar';
 import accountPage from 'web/page_objects/accountPage';
 var orgName = lib.randomString.generate(10), accountDetails;
 
-describe(`Tests for Create Organization ${lib.Tags.smokeTest}`, () => {
+describe('Tests for Create Organization', () => {
   before(() => {
     accountPage.open()
     accountDetails = createAccount();
   });
 
-  it('Go to organization creation page', () => {
+  it(`Go to organization creation page ${lib.Tags.smokeTest}`, () => {
     goToCreateOrgPageFromNavbar();
     expect(verifyCreateOrgPage()).to.equal(true);
   });
 
-  it('Create new organization', () => {
+  it(`Create new organization ${lib.Tags.smokeTest}`, () => {
     createNewOrg(orgName);
     expect(verifyWecomeOrgPage()).to.equal(true);
     expect(browser.getUrl()).to.include(orgName.toLowerCase());
