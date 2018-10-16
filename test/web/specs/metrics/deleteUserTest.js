@@ -5,7 +5,7 @@ import { createSpace, goToDeveloperPortal, getAPIKey } from 'web/actions/space';
 import { clickOnAudienceLink, clickOnSpaceDashboardLink } from 'web/actions/navBar';
 import { addUsers, addVisitor, getCount, verifyUsersAreAdded } from 'web/actions/metrics';
 import NotificationData from 'web/data/passiveNotification.json';
-import { clickOnUsersTab, clickFirstRow, deleteUser, getFirstRowDetails } from 'web/actions/users';
+import { clickOnUsersTab, clickUserRow, deleteUser, getFirstRowDetails } from 'web/actions/users';
 import { getNotificationMessageText } from 'web/actions/common';
 import Constants from 'data/constants.json';
 
@@ -31,7 +31,7 @@ describe('Delete User Test', () => {
 
   it('Delete User --> Verify users tab and passive notification shows', () => {
     var deletedName = getFirstRowDetails(Constants.UserAttributes.Name);
-    clickFirstRow();
+    clickUserRow(undefined, Constants.UserType.User);
     browser.pause(1000);
     deleteUser();
     expect(getNotificationMessageText()).to.include(`${NotificationData.deleteMessage.text}'${deletedName}'`);
@@ -44,7 +44,7 @@ describe('Delete User Test', () => {
 
   it('Delete Visitor --> Verify users tab and passive notification shows', () => {
     browser.refresh();
-    clickFirstRow(Constants.UserType.Visitor);
+    clickUserRow(undefined, Constants.UserType.Visitor);
     browser.pause(1000);
     deleteUser();
     expect(getNotificationMessageText()).to.include(`${NotificationData.deleteMessage.text}'Visitor'`);

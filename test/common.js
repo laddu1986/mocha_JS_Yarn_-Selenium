@@ -1,8 +1,8 @@
-import "app-module-path/register";
+import 'app-module-path/register';
 const server = require('chakram');
 var joi = require('joi');
 global.expect = server.expect;
-var randomString = require("randomstring");
+var randomString = require('randomstring');
 var NodeESModuleLoader = require('node-es-module-loader');
 var loader = new NodeESModuleLoader();
 var dateFormat = require('dateformat');
@@ -25,11 +25,11 @@ const testData = {
   organizationsData: [],
   invitesData: [],
   spacesData: []
-}
+};
 
 const Tags = {
-  smokeTest: "@smoke"
-}
+  smokeTest: '@smoke'
+};
 
 function post(any) {
   if (any.headers == undefined) {
@@ -53,6 +53,7 @@ function patch(any) {
 function del(any) {
   return server.delete(any.api + any.data);
 }
+const sortAlphabetically = (a, b) => a.toLowerCase().localeCompare(b.toLowerCase());
 
 export {
   dateFormat,
@@ -71,6 +72,7 @@ export {
   // data
   responseData,
   randomString,
+  sortAlphabetically,
   path,
   caller
 };

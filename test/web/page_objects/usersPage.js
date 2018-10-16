@@ -31,6 +31,9 @@ class UsersPage {
   get resultsText() {
     return browser.element("//section[@data-qa='page:space:audience']//div[2]//div//h3");
   }
+  get userRowLabelCount() {
+    return browser.element("//a[@data-qa='tag:user-row:count']");
+  }
 
   //User Side Panel
   get userNameSidePanel() {
@@ -42,26 +45,42 @@ class UsersPage {
   get userEmailSidePanel() {
     return browser.element("//div[@data-qa='row:email']//div");
   }
+  get closeSidePanel() {
+    return browser.element("//button[@title='Close']");
+  }
+  get moreButton() {
+    return browser.element("//button[@title='More']");
+  }
+
+  get revealLabelsButton() {
+    return browser.element("//button[@data-qa='btn:reveal-labels']");
+  }
+  get addLabelButton() {
+    return browser.element("//div[@data-qa='panel:details']//button[@data-qa='btn:add-label']");
+  }
+  get labelInput() {
+    return browser.element("//input[@data-qa='input:add-label']");
+  }
+  get labels() {
+    return browser.elements("//div[@data-qa='panel:details']//div[@data-qa='tag:user-metrics']");
+  }
+  get deleteLabelButton() {
+    return browser.elements("//div[@data-qa='panel:details']//button[@data-qa='tag:user-metricsbtn:delete']");
+  }
+  get addedLabelsDiv() {
+    return browser.element("//div[@data-qa='panel:details']//div[2]");
+  }
+  get labelErrMsg() {
+    return browser.element("//div[@data-qa='panel:details']/div[1]/div/span");
+  }
+  get labelDropdown() {
+    return browser.elements("//div[@data-qa='panel:details']//div[contains(@id,'downshift')]");
+  }
   get userActions() {
     return browser.element("//section[@data-qa='page:space:audience']//div[2]//button[1]");
   }
   get deleteUserButton() {
     return browser.element("//button[@data-qa='menu-item:delete']");
-  }
-
-  get addLabelButton() {
-    return browser.element("//div[@data-qa='panel:details']//button[@data-qa='btn:submit']");
-  }
-  get labelInput() {
-    return browser.element("//div[@data-qa='panel:details']//input");
-  }
-  get labels() {
-    return browser.elements(
-      "//div[@data-qa='panel:details']//div[@class='css-wefl68 css-i2hauk css-i2hauk-deletable']"
-    );
-  }
-  get deleteLabelButton() {
-    return browser.element("//div[@data-qa='panel:details']//button[@data-qa=tag:delete]");
   }
 
   open(e) {
