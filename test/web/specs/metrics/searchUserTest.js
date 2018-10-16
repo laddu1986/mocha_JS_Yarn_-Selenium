@@ -3,7 +3,7 @@ import AccountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { createSpace, goToDeveloperPortal, getAPIKey } from 'web/actions/space';
 import { clickOnAudienceLink } from 'web/actions/navBar';
-import { addUsers } from 'web/actions/metrics';
+import { addUsers, verifyUsersAreAdded } from 'web/actions/metrics';
 import Constants from 'data/constants.json';
 import Messages from 'web/data/messages.json';
 import {
@@ -28,9 +28,13 @@ describe('Search User Test', () => {
     await addUsers(1, apiKey);
   });
 
-  it('Search user by email', () => {
+  before(() => {
     clickOnAudienceLink();
     clickOnUsersTab();
+    verifyUsersAreAdded();
+  });
+
+  it('Search user by email', () => {
     var Email = getFirstRowDetails(Constants.UserAttributes.Email);
     search(Email);
     expect(getResultText()).to.equal(`1 ${Messages.search.result}`);
