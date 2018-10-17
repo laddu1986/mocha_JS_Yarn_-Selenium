@@ -6,14 +6,14 @@ import { clickOnAudienceLink } from 'web/actions/navBar';
 import { renameCategory, deleteCategory } from 'web/actions/tribeCategories';
 import tribePage from 'web/page_objects/tribePage';
 
-describe('Create Tribe Categories', () => {
+describe('Tribe Categoies Actions', () => {
   before(() => {
     accountPage.open();
     createAccount();
     createSpace();
     clickOnAudienceLink();
   });
-  it('Verify untitled category is created', () => {
+  it('Create a new category', () => {
     tribePage.insertCategoryButton.click();
     browser.waitUntil(
       () => {
@@ -23,12 +23,12 @@ describe('Create Tribe Categories', () => {
       'Category took too long to create'
     );
   });
-  it('Can rename the category', () => {
+  it('Rename a category', () => {
     const categoryTitle = lib.randomString.generate(5);
     renameCategory(categoryTitle);
     expect(tribePage.categoryTitle.getAttribute('value')).to.equal(categoryTitle);
   });
-  it('Can delete an existing category', () => {
+  it('Delete an existing category', () => {
     deleteCategory();
     expect(tribePage.categoryTitle.isVisible()).to.be.false;
     expect(tribePage.categoryMoreButton.isVisible()).to.be.false;
