@@ -1,48 +1,48 @@
-import * as lib from '../../common';
+import { joi, orgData, organizationsSchemaData } from '../../common';
 import * as Constants from 'data/constants.json';
 import * as organization from 'api/actions/organization';
 
-export const createOrgSchema = lib.joi.object().keys({
-  id: lib.joi
+export const createOrgSchema = joi.object().keys({
+  id: joi
     .string()
     .uuid()
     .required(),
-  name: lib.joi.valid(lib.organizationsSchemaData.name).required(),
-  createdByAccountId: lib.joi.valid(lib.orgData.identityID).required(),
-  rowVersion: lib.joi.date().required(),
-  createdTime: lib.joi.date().required(),
-  modifiedTime: lib.joi.valid(null).required(),
-  rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required()
+  name: joi.valid(organizationsSchemaData.name).required(),
+  createdByAccountId: joi.valid(orgData.identityID).required(),
+  rowVersion: joi.date().required(),
+  createdTime: joi.date().required(),
+  modifiedTime: joi.valid(null).required(),
+  rowStatus: joi.valid(Constants.APIKeyStatus.Active).required()
 });
-export const getOrganizationByIdSchema = lib.joi.object().keys({
-  id: lib.joi.valid(lib.orgData.orgID).required(),
-  name: lib.joi.valid(lib.organizationsSchemaData.name).required(),
-  createdByAccountId: lib.joi.valid(lib.orgData.identityID).required(),
-  rowVersion: lib.joi.date().required(),
-  createdTime: lib.joi.date().required(),
-  modifiedTime: lib.joi.valid(null).required(),
-  rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active.replace(/\s/g, '')).required()
+export const getOrganizationByIdSchema = joi.object().keys({
+  id: joi.valid(orgData.orgID).required(),
+  name: joi.valid(organizationsSchemaData.name).required(),
+  createdByAccountId: joi.valid(orgData.identityID).required(),
+  rowVersion: joi.date().required(),
+  createdTime: joi.date().required(),
+  modifiedTime: joi.valid(null).required(),
+  rowStatus: joi.valid(Constants.APIKeyStatus.Active.replace(/\s/g, '')).required()
 });
-const objectSchema = lib.joi.object().keys({
-  id: lib.joi.valid(lib.orgData.orgID).required(),
-  name: lib.joi.valid(lib.organizationsSchemaData.name).required(),
-  createdByAccountId: lib.joi.valid(lib.orgData.identityID).required(),
-  rowVersion: lib.joi.date().required(),
-  createdTime: lib.joi.date().required(),
-  modifiedTime: lib.joi.valid(null).required(),
-  rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required()
+const objectSchema = joi.object().keys({
+  id: joi.valid(orgData.orgID).required(),
+  name: joi.valid(organizationsSchemaData.name).required(),
+  createdByAccountId: joi.valid(orgData.identityID).required(),
+  rowVersion: joi.date().required(),
+  createdTime: joi.date().required(),
+  modifiedTime: joi.valid(null).required(),
+  rowStatus: joi.valid(Constants.APIKeyStatus.Active).required()
 });
-export const postOrganizationsSchema = lib.joi
+export const postOrganizationsSchema = joi
   .array()
   .items(objectSchema)
   .required();
 
-export const putOrgSchema = lib.joi.object().keys({
-  id: lib.joi.valid(lib.orgData.orgID).required(),
-  name: lib.joi.valid(organization.newName).required(),
-  createdByAccountId: lib.joi.valid(lib.orgData.identityID).required(),
-  rowVersion: lib.joi.date().required(),
-  createdTime: lib.joi.date().required(),
-  modifiedTime: lib.joi.date().required(),
-  rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required()
+export const putOrgSchema = joi.object().keys({
+  id: joi.valid(orgData.orgID).required(),
+  name: joi.valid(organization.newName).required(),
+  createdByAccountId: joi.valid(orgData.identityID).required(),
+  rowVersion: joi.date().required(),
+  createdTime: joi.date().required(),
+  modifiedTime: joi.date().required(),
+  rowStatus: joi.valid(Constants.APIKeyStatus.Active).required()
 });

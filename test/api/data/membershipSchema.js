@@ -1,59 +1,59 @@
-import * as lib from '../../common';
+import { joi, membershipData } from '../../common';
 
-export const createMembershipSchema = lib.joi.object().keys({
-  accountId: lib.joi.valid(lib.membershipData.identityID).required(),
-  organizationId: lib.joi.valid(lib.membershipData.orgID).required()
+export const createMembershipSchema = joi.object().keys({
+  accountId: joi.valid(membershipData.identityID).required(),
+  organizationId: joi.valid(membershipData.orgID).required()
 });
-const objectSchema1 = lib.joi.object().keys({
-  isAdmin: lib.joi
+const objectSchema1 = joi.object().keys({
+  isAdmin: joi
     .boolean()
     .valid(true)
     .required(),
-  fullName: lib.joi.valid(lib.membershipData.identityFullname).required(),
-  email: lib.joi.valid(lib.membershipData.identityEmail).required(),
-  organizationName: lib.joi.valid(lib.membershipData.orgName).required(),
-  accountId: lib.joi.valid(lib.membershipData.identityID).required(),
-  organizationId: lib.joi.valid(lib.membershipData.orgID).required()
+  fullName: joi.valid(membershipData.identityFullname).required(),
+  email: joi.valid(membershipData.identityEmail).required(),
+  organizationName: joi.valid(membershipData.orgName).required(),
+  accountId: joi.valid(membershipData.identityID).required(),
+  organizationId: joi.valid(membershipData.orgID).required()
 });
-export const listMembershipSchema = lib.joi.object().keys({
-  totalRows: lib.joi.valid(1).required(),
-  results: lib.joi
+export const listMembershipSchema = joi.object().keys({
+  totalRows: joi.valid(1).required(),
+  results: joi
     .array()
     .items(objectSchema1)
     .required()
 });
-const objectSchema2 = lib.joi.object().keys({
-  isAdmin: lib.joi
+const objectSchema2 = joi.object().keys({
+  isAdmin: joi
     .boolean()
     .valid(true)
     .required(),
-  fullName: lib.joi.valid(lib.membershipData.identityFullname).required(),
-  email: lib.joi.valid(lib.membershipData.identityEmail).required(),
-  organizationName: lib.joi.valid(lib.membershipData.orgName).required(),
-  accountId: lib.joi.valid(lib.membershipData.identityID).required(),
-  organizationId: lib.joi.valid(lib.membershipData.orgID).required()
+  fullName: joi.valid(membershipData.identityFullname).required(),
+  email: joi.valid(membershipData.identityEmail).required(),
+  organizationName: joi.valid(membershipData.orgName).required(),
+  accountId: joi.valid(membershipData.identityID).required(),
+  organizationId: joi.valid(membershipData.orgID).required()
 });
-export const getMembershipByOrdIDSchema = lib.joi.object().keys({
-  totalRows: lib.joi.valid(1).required(),
-  results: lib.joi
+export const getMembershipByOrdIDSchema = joi.object().keys({
+  totalRows: joi.valid(1).required(),
+  results: joi
     .array()
     .items(objectSchema2)
     .required()
 });
-const objectSchema3 = lib.joi.object().keys({
-  isAdmin: lib.joi
+const objectSchema3 = joi.object().keys({
+  isAdmin: joi
     .boolean()
     .valid(true)
     .required(),
-  fullName: lib.joi.valid(lib.membershipData.identityFullname).required(),
-  email: lib.joi.valid(lib.membershipData.identityEmail).required(),
-  organizationName: lib.joi.valid(lib.membershipData.orgName).required(),
-  accountId: lib.joi.valid(lib.membershipData.identityID).required(),
-  organizationId: lib.joi.valid(lib.membershipData.orgID).required()
+  fullName: joi.valid(membershipData.identityFullname).required(),
+  email: joi.valid(membershipData.identityEmail).required(),
+  organizationName: joi.valid(membershipData.orgName).required(),
+  accountId: joi.valid(membershipData.identityID).required(),
+  organizationId: joi.valid(membershipData.orgID).required()
 });
-export const getMembershipByAccountIDSchema = lib.joi.object().keys({
-  totalRows: lib.joi.valid(1).required(),
-  results: lib.joi
+export const getMembershipByAccountIDSchema = joi.object().keys({
+  totalRows: joi.valid(1).required(),
+  results: joi
     .array()
     .items(objectSchema3)
     .required()

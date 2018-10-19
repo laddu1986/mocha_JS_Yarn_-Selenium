@@ -1,4 +1,4 @@
-import * as lib from '../../common';
+import { inviteData, loader, Tags, joi } from '../../common';
 import * as identity from 'api/actions/identity';
 import * as invites from 'api/actions/invites';
 import * as organization from 'api/actions/organization';
@@ -6,12 +6,12 @@ const schemas = 'api/data/invitesSchema';
 var importedSchema, postResponse, getResponse, getInviteResponse, deleteResponse;
 
 describe('Invites Api', () => {
-  describe(`POST /organizations/{id}/invites ${lib.Tags.smokeTest}`, () => {
+  describe(`POST /organizations/{id}/invites ${Tags.smokeTest}`, () => {
     before(done => {
-      identity.postIdentity(lib.inviteData).then(() => {
-        organization.postOrganization(lib.inviteData).then(() => {
-          invites.getAccessToken(lib.inviteData).then(() => {
-            postResponse = invites.postInvitesByOrganizationId(lib.inviteData, true);
+      identity.postIdentity(inviteData).then(() => {
+        organization.postOrganization(inviteData).then(() => {
+          invites.getAccessToken(inviteData).then(() => {
+            postResponse = invites.postInvitesByOrganizationId(inviteData, true);
             done();
           });
         });
@@ -27,36 +27,36 @@ describe('Invites Api', () => {
 
   describe('GET /organizations/{orgId}/invites', () => {
     before(done => {
-      lib.loader.import(schemas).then(dataImported => {
+      loader.import(schemas).then(dataImported => {
         importedSchema = dataImported.default;
-        getResponse = invites.getInvitesByOrganizationId(lib.inviteData);
+        getResponse = invites.getInvitesByOrganizationId(inviteData);
         done();
       });
     });
     it('Search invites in the org', () => {
       return getResponse.then(response => {
         expect(response).to.have.status(200);
-        lib.joi.assert(response.body, importedSchema.getInviteSchema);
+        joi.assert(response.body, importedSchema.getInviteSchema);
       });
     });
   });
 
   describe('GET /organizations/{orgId}/invites/{token}', () => {
     before(done => {
-      getInviteResponse = invites.getInviteDetailsByToken(lib.inviteData);
+      getInviteResponse = invites.getInviteDetailsByToken(inviteData);
       done();
     });
     it('Get invite details', () => {
       return getInviteResponse.then(response => {
         expect(response).to.have.status(200);
-        lib.joi.assert(response.body, importedSchema.getInviteByTokenSchema);
+        joi.assert(response.body, importedSchema.getInviteByTokenSchema);
       });
     });
   });
 
   describe('DELETE /organizations/{orgId}/invites/?email={email}', () => {
     before(done => {
-      deleteResponse = invites.deleteInviteByOrganizationIdAndEmail(lib.inviteData);
+      deleteResponse = invites.deleteInviteByOrganizationIdAndEmail(inviteData);
       done();
     });
     it('Delete an invite.', () => {
