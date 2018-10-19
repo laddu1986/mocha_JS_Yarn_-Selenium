@@ -7,7 +7,7 @@ export function getAccessToken(responseObject) {
     api: token,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: 'Basic ZnJvbnRlbmRfc2VydmljZTpydHk4YTk4eGNmIXdk'
+      Authorization: `Basic ${process.env.AUTH_CODE}`
     },
     data: '',
     body: `grant_type=password&username=${responseObject.identityEmail}&password=${

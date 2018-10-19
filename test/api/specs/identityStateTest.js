@@ -14,7 +14,7 @@ describe('Identity State Api', () => {
     });
 
     it('Return identity state by identity id.', () => {
-      return getResponse.then(function(response) {
+      return getResponse.then(response => {
         expect(response).to.have.status(200);
         schema = lib.joi.object().keys({
           values: lib.joi.required()
@@ -30,7 +30,7 @@ describe('Identity State Api', () => {
       done();
     });
     it('Set identity state for an identity.', () => {
-      return putResponse.then(function(response) {
+      return putResponse.then(response => {
         expect(response).to.have.status(204);
       });
     });
@@ -42,7 +42,7 @@ describe('Identity State Api', () => {
       done();
     });
     it('Partial update identity state for an identity.', () => {
-      return patchResponse.then(function(response) {
+      return patchResponse.then(response => {
         expect(response).to.have.status(200);
         schema = lib.joi.object().keys({
           values: lib.joi.object().keys({
