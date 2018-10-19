@@ -1,4 +1,4 @@
-import * as lib from '../../common';
+import { randomString, spaceSchemaData, post, get, put, patch, del } from '../../common';
 import { spaces, keys } from '../config/getEnv';
 import * as Constants from 'data/constants.json';
 
@@ -6,16 +6,16 @@ export function postSpaceByOrganizationId(responseObject, flag) {
   const any = {
     api: `${spaces + responseObject.orgID}/spaces`,
     data: {
-      name: lib.randomString.generate(10),
+      name: randomString.generate(10),
       createdByAccountId: responseObject.identityID,
-      shortUrl: lib.randomString.generate(6)
+      shortUrl: randomString.generate(6)
     }
   };
   if (flag) {
-    lib.spaceSchemaData.name = any.data.name;
-    lib.spaceSchemaData.shortUrl = any.data.shortUrl;
+    spaceSchemaData.name = any.data.name;
+    spaceSchemaData.shortUrl = any.data.shortUrl;
   }
-  return lib.post(any).then(response => {
+  return post(any).then(response => {
     responseObject.spaceID = response.body.id;
     responseObject.spaceRowVersion = response.body.rowVersion;
     return response;
@@ -27,7 +27,7 @@ export function getSpacesByOrganizationId(responseObject) {
     api: `${spaces + responseObject.orgID}/spaces`,
     data: ''
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function updateSpace(responseObject, flag) {
@@ -35,16 +35,16 @@ export function updateSpace(responseObject, flag) {
     api: `${spaces + responseObject.orgID}/spaces`,
     data: {
       id: responseObject.spaceID,
-      name: lib.randomString.generate(5),
+      name: randomString.generate(5),
       rowVersion: responseObject.spaceRowVersion,
-      shortUrl: lib.randomString.generate(6)
+      shortUrl: randomString.generate(6)
     }
   };
   if (flag) {
-    lib.spaceSchemaData.newName = any.data.name;
-    lib.spaceSchemaData.newShortUrl = any.data.shortUrl;
+    spaceSchemaData.newName = any.data.name;
+    spaceSchemaData.newShortUrl = any.data.shortUrl;
   }
-  return lib.put(any).then(response => {
+  return put(any).then(response => {
     responseObject.spaceRowVersion = response.body.rowVersion;
     return response;
   });
@@ -58,16 +58,16 @@ export function patchSpaceByOrgIdRowVersionAndSpaceId(responseObject, type) {
       {
         op: 'replace',
         path: `/${type}`,
-        value: lib.randomString.generate(6)
+        value: randomString.generate(6)
       }
     ]
   };
   if (type == Constants.SpaceAttributes.ShortUrl) {
-    lib.spaceSchemaData.patchedShortUrl = any.data[0].value;
+    spaceSchemaData.patchedShortUrl = any.data[0].value;
   } else {
-    lib.spaceSchemaData.patchedName = any.data[0].value;
+    spaceSchemaData.patchedName = any.data[0].value;
   }
-  return lib.patch(any).then(response => {
+  return patch(any).then(response => {
     responseObject.spaceRowVersion = response.body.rowVersion;
     return response;
   });
@@ -78,7 +78,7 @@ export function getSpaceByOrgIdAndSpaceId(responseObject) {
     api: `${spaces + responseObject.orgID}/spaces/${responseObject.spaceID}`,
     data: ''
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function deleteSpaceByOrgIdAndSpaceId(responseObject) {
@@ -88,7 +88,7 @@ export function deleteSpaceByOrgIdAndSpaceId(responseObject) {
     }`,
     data: ''
   };
-  return lib.del(any);
+  return del(any);
 }
 
 //--------------------------------KEYS RELATED FUNCTIONS--------------------------
@@ -100,7 +100,7 @@ export function postKeysBySpaceId(responseObject) {
       id: responseObject.spaceID
     }
   };
-  return lib.post(any).then(response => {
+  return post(any).then(response => {
     responseObject.spaceKeyValue = response.body.value;
     responseObject.spaceKeyRowVersion = response.body.rowVersion;
     return response;
@@ -112,7 +112,7 @@ export function getKeysBySpaceId(responseObject) {
     api: `${keys}${responseObject.orgID}/keys`,
     data: `?resource=space&ids=${responseObject.spaceID}`
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function patchKeyBySpaceIdAndRowVersion(responseObject, status) {
@@ -128,7 +128,7 @@ export function patchKeyBySpaceIdAndRowVersion(responseObject, status) {
       }
     ]
   };
-  return lib.patch(any).then(response => {
+  return patch(any).then(response => {
     responseObject.spaceKeyRowVersion = response.body.rowVersion;
     return response;
   });
@@ -141,5 +141,5 @@ export function deleteKeyBySpaceIdAndRowVersion(responseObject) {
     }`,
     data: ''
   };
-  return lib.del(any);
+  return del(any);
 }

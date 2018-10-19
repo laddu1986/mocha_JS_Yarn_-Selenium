@@ -1,20 +1,20 @@
-import * as lib from '../../common';
+import { randomString, identitySchemaData, post, get, del, put, patch } from '../../common';
 import { identities } from '../config/getEnv';
 
 export function postIdentity(responseObject, flag) {
   const any = {
     api: identities,
     data: {
-      fullname: lib.randomString.generate(12),
-      email: `${lib.randomString.generate(12)}@test.co`,
+      fullname: randomString.generate(12),
+      email: `${randomString.generate(12)}@test.co`,
       password: process.env.ACCOUNT_PASS
     }
   };
   if (flag) {
-    lib.identitySchemaData.name = any.data.fullname;
-    lib.identitySchemaData.email = any.data.email;
+    identitySchemaData.name = any.data.fullname;
+    identitySchemaData.email = any.data.email;
   }
-  return lib.post(any).then(response => {
+  return post(any).then(response => {
     responseObject.identityID = response.body.id;
     responseObject.identityEmail = response.body.email;
     responseObject.identityFullname = response.body.fullName;
@@ -27,7 +27,7 @@ export function getIdentityById(responseObject) {
     api: identities,
     data: responseObject.identityID
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function deleteIdentityById(responseObject) {
@@ -35,7 +35,7 @@ export function deleteIdentityById(responseObject) {
     api: identities,
     data: responseObject.identityID
   };
-  return lib.del(any);
+  return del(any);
 }
 
 //----------------------- Identity state-----------------------
@@ -45,7 +45,7 @@ export function getIdentityStateById(responseObject) {
     api: identities,
     data: `${responseObject.identityID}/state`
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function putIdentityById(responseObject) {
@@ -59,7 +59,7 @@ export function putIdentityById(responseObject) {
       }
     }
   };
-  return lib.put(any);
+  return put(any);
 }
 export function patchIdentityStateById(responseObject) {
   const any = {
@@ -72,5 +72,5 @@ export function patchIdentityStateById(responseObject) {
       }
     }
   };
-  return lib.patch(any);
+  return patch(any);
 }
