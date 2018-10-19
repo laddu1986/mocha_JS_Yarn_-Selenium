@@ -1,53 +1,53 @@
-import * as lib from '../../common';
+import { spaceKeyData, joi } from '../../common';
 import * as Constants from 'data/constants.json';
 
-export const createKeySchema = lib.joi.object().keys({
-  value: lib.joi
+export const createKeySchema = joi.object().keys({
+  value: joi
     .string()
     .uuid()
     .required(),
-  rowVersion: lib.joi.date().required(),
-  rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required(),
-  resourceId: lib.joi.valid(lib.spaceKeyData.spaceID).required(),
-  resourceType: lib.joi.valid('Space').required(),
-  resourceName: lib.joi.valid(null).required()
+  rowVersion: joi.date().required(),
+  rowStatus: joi.valid(Constants.APIKeyStatus.Active).required(),
+  resourceId: joi.valid(spaceKeyData.spaceID).required(),
+  resourceType: joi.valid('Space').required(),
+  resourceName: joi.valid(null).required()
 });
 
-const schemaObject = lib.joi.object().keys({
-  value: lib.joi.valid(lib.spaceKeyData.spaceKeyValue).required(),
-  rowVersion: lib.joi.date().required(),
-  rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required()
+const schemaObject = joi.object().keys({
+  value: joi.valid(spaceKeyData.spaceKeyValue).required(),
+  rowVersion: joi.date().required(),
+  rowStatus: joi.valid(Constants.APIKeyStatus.Active).required()
 });
-const keysSchemaObject = lib.joi.object().keys({
-  keys: lib.joi.array().items(schemaObject),
-  resourceId: lib.joi.valid(lib.spaceKeyData.spaceID).required(),
-  resourceType: lib.joi.valid('Space').required()
+const keysSchemaObject = joi.object().keys({
+  keys: joi.array().items(schemaObject),
+  resourceId: joi.valid(spaceKeyData.spaceID).required(),
+  resourceType: joi.valid('Space').required()
 });
-export const getKeysBySpaceIdSchema = lib.joi.array().items(keysSchemaObject);
+export const getKeysBySpaceIdSchema = joi.array().items(keysSchemaObject);
 
-export const revokeKeyBySpaceIdAndRowVersionSchema = lib.joi.object().keys({
-  value: lib.joi.valid(lib.spaceKeyData.spaceKeyValue).required(),
-  rowVersion: lib.joi.date().required(),
-  rowStatus: lib.joi.valid(Constants.APIKeyStatus.Revoked).required(),
-  resourceId: lib.joi.valid(lib.spaceKeyData.spaceID).required(),
-  resourceType: lib.joi.valid('Space').required(),
-  resourceName: lib.joi.valid(null).required()
-});
-
-export const reactivateKeyBySpaceIdAndRowVersionSchema = lib.joi.object().keys({
-  value: lib.joi.valid(lib.spaceKeyData.spaceKeyValue).required(),
-  rowVersion: lib.joi.date().required(),
-  rowStatus: lib.joi.valid(Constants.APIKeyStatus.Active).required(),
-  resourceId: lib.joi.valid(lib.spaceKeyData.spaceID).required(),
-  resourceType: lib.joi.valid('Space').required(),
-  resourceName: lib.joi.valid(null).required()
+export const revokeKeyBySpaceIdAndRowVersionSchema = joi.object().keys({
+  value: joi.valid(spaceKeyData.spaceKeyValue).required(),
+  rowVersion: joi.date().required(),
+  rowStatus: joi.valid(Constants.APIKeyStatus.Revoked).required(),
+  resourceId: joi.valid(spaceKeyData.spaceID).required(),
+  resourceType: joi.valid('Space').required(),
+  resourceName: joi.valid(null).required()
 });
 
-export const deleteKeyBySpaceIdAndRowVersionSchema = lib.joi.object().keys({
-  value: lib.joi.valid(lib.spaceKeyData.spaceKeyValue).required(),
-  rowVersion: lib.joi.date().required(),
-  rowStatus: lib.joi.valid(Constants.APIKeyStatus.PendingDelete.replace(/\s/g, '')).required(),
-  resourceId: lib.joi.valid(lib.spaceKeyData.spaceID).required(),
-  resourceType: lib.joi.valid('Space').required(),
-  resourceName: lib.joi.valid(null).required()
+export const reactivateKeyBySpaceIdAndRowVersionSchema = joi.object().keys({
+  value: joi.valid(spaceKeyData.spaceKeyValue).required(),
+  rowVersion: joi.date().required(),
+  rowStatus: joi.valid(Constants.APIKeyStatus.Active).required(),
+  resourceId: joi.valid(spaceKeyData.spaceID).required(),
+  resourceType: joi.valid('Space').required(),
+  resourceName: joi.valid(null).required()
+});
+
+export const deleteKeyBySpaceIdAndRowVersionSchema = joi.object().keys({
+  value: joi.valid(spaceKeyData.spaceKeyValue).required(),
+  rowVersion: joi.date().required(),
+  rowStatus: joi.valid(Constants.APIKeyStatus.PendingDelete.replace(/\s/g, '')).required(),
+  resourceId: joi.valid(spaceKeyData.spaceID).required(),
+  resourceType: joi.valid('Space').required(),
+  resourceName: joi.valid(null).required()
 });

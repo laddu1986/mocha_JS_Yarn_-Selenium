@@ -1,21 +1,21 @@
-import * as lib from '../../common';
+import { joi, loader, Tags, identityData } from '../../common';
 import * as identity from 'api/actions/identity';
 const schemas = 'api/data/identitySchema';
 var addResponse, getResponse, deleteResponse, importedSchema;
 
 describe('Identity Api', () => {
-  describe(`POST /identities ${lib.Tags.smokeTest}`, () => {
+  describe(`POST /identities ${Tags.smokeTest}`, () => {
     before(done => {
-      addResponse = identity.postIdentity(lib.identityData, true);
+      addResponse = identity.postIdentity(identityData, true);
       done();
     });
 
     it('Add a new user identity.', () => {
       return addResponse.then(function(response) {
-        return lib.loader.import(schemas).then(dataImported => {
+        return loader.import(schemas).then(dataImported => {
           importedSchema = dataImported.default;
           expect(response).to.have.status(201);
-          lib.joi.assert(response.body, importedSchema.postIdentitySchema);
+          joi.assert(response.body, importedSchema.postIdentitySchema);
         });
       });
     });
@@ -23,20 +23,20 @@ describe('Identity Api', () => {
 
   describe('GET /identities/{id}', () => {
     before(done => {
-      getResponse = identity.getIdentityById(lib.identityData);
+      getResponse = identity.getIdentityById(identityData);
       done();
     });
     it('Get a identity by its id.', () => {
       return getResponse.then(function(response) {
         expect(response).to.have.status(200);
-        lib.joi.assert(response.body, importedSchema.getIdentitySchema);
+        joi.assert(response.body, importedSchema.getIdentitySchema);
       });
     });
   });
 
   describe('Delete /identities/{id}', () => {
     before(done => {
-      deleteResponse = identity.deleteIdentityById(lib.identityData);
+      deleteResponse = identity.deleteIdentityById(identityData);
       done();
     });
     it('Delete an identity by its id.', () => {

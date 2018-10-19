@@ -1,35 +1,35 @@
-import * as lib from '../../common';
+import { joi, invitesSchemaData, inviteData } from '../../common';
 import * as Constants from 'data/constants.json';
 
-const objectSchema = lib.joi.object().keys({
-  token: lib.joi
+const objectSchema = joi.object().keys({
+  token: joi
     .string()
     .uuid()
     .required(),
-  email: lib.joi.valid(lib.invitesSchemaData.email).required(),
-  createdTime: lib.joi.date().required(),
-  status: lib.joi.valid(Constants.InviteStatus.Pending).required(),
-  expiryDate: lib.joi.date().required()
+  email: joi.valid(invitesSchemaData.email).required(),
+  createdTime: joi.date().required(),
+  status: joi.valid(Constants.InviteStatus.Pending).required(),
+  expiryDate: joi.date().required()
 });
-export const getInviteSchema = lib.joi.object().keys({
-  totalRows: lib.joi.valid(1).required(),
-  results: lib.joi
+export const getInviteSchema = joi.object().keys({
+  totalRows: joi.valid(1).required(),
+  results: joi
     .array()
     .items(objectSchema)
     .required()
 });
 
-export const getInviteByTokenSchema = lib.joi.object().keys({
-  email: lib.joi.valid(lib.invitesSchemaData.email).required(),
-  organizationId: lib.joi
+export const getInviteByTokenSchema = joi.object().keys({
+  email: joi.valid(invitesSchemaData.email).required(),
+  organizationId: joi
     .string()
     .uuid()
-    .valid(lib.inviteData.orgID)
+    .valid(inviteData.orgID)
     .required(),
-  organizationName: lib.joi.valid(lib.inviteData.orgName).required(),
-  hasAccount: lib.joi
+  organizationName: joi.valid(inviteData.orgName).required(),
+  hasAccount: joi
     .boolean()
     .valid(false)
     .required(),
-  status: lib.joi.valid(Constants.InviteStatus.Pending).required()
+  status: joi.valid(Constants.InviteStatus.Pending).required()
 });

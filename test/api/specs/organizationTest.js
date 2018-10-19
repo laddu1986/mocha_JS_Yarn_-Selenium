@@ -1,5 +1,5 @@
 import * as identity from '../actions/identity';
-import * as lib from '../../common';
+import { joi, Tags, orgData, loader } from '../../common';
 import * as organization from 'api/actions/organization';
 const schemas = 'api/data/organizationSchema';
 var importedSchema,
@@ -11,20 +11,20 @@ var importedSchema,
   deleteResponse;
 
 describe('Organizations Api', () => {
-  describe(`POST /organizations ${lib.Tags.smokeTest}`, () => {
+  describe(`POST /organizations ${Tags.smokeTest}`, () => {
     before(done => {
-      identity.postIdentity(lib.orgData).then(() => {
-        organization.postOrganization(lib.orgData, true).then(response => {
+      identity.postIdentity(orgData).then(() => {
+        organization.postOrganization(orgData, true).then(response => {
           createOrgResponse = response;
           done();
         });
       });
     });
     it('Create a new organization.', () => {
-      return lib.loader.import(schemas).then(dataImported => {
+      return loader.import(schemas).then(dataImported => {
         importedSchema = dataImported.default;
         expect(createOrgResponse).to.have.status(201);
-        lib.joi.assert(createOrgResponse.body, importedSchema.createOrgSchema);
+        joi.assert(createOrgResponse.body, importedSchema.createOrgSchema);
       });
     });
   });
@@ -44,20 +44,20 @@ describe('Organizations Api', () => {
 
   describe('GET /organizations/{id}', () => {
     before(done => {
-      getOrgResponse = organization.getOrganizationById(lib.orgData);
+      getOrgResponse = organization.getOrganizationById(orgData);
       done();
     });
     it('Get an organization by its id.', () => {
       return getOrgResponse.then(response => {
         expect(response).to.have.status(200);
-        lib.joi.assert(response.body, importedSchema.getOrganizationByIdSchema);
+        joi.assert(response.body, importedSchema.getOrganizationByIdSchema);
       });
     });
   });
 
   describe('POST /organizations/list', () => {
     before(done => {
-      listOrgsByIDResponse = organization.postOrganizations(lib.orgData);
+      listOrgsByIDResponse = organization.postOrganizations(orgData);
       done();
     });
 
@@ -65,28 +65,28 @@ describe('Organizations Api', () => {
       return listOrgsByIDResponse.then(response => {
         expect(response.body).to.be.an('array');
         expect(response).to.have.status(200);
-        lib.joi.assert(response.body, importedSchema.postOrganizationsSchema);
+        joi.assert(response.body, importedSchema.postOrganizationsSchema);
       });
     });
   });
 
   describe('PUT /organization', () => {
     before(done => {
-      updateResponse = organization.putOrganization(lib.orgData, true);
+      updateResponse = organization.putOrganization(orgData, true);
       done();
     });
     it('Update an existing organization.', () => {
       return updateResponse.then(response => {
         expect(response).to.have.status(200);
         expect(response.body.name).to.equal('check update name string');
-        lib.joi.assert(response.body, importedSchema.putOrgSchema);
+        joi.assert(response.body, importedSchema.putOrgSchema);
       });
     });
   });
 
   describe('DELETE /organizations/{id}', () => {
     before(done => {
-      deleteResponse = organization.deleteOrganizationById(lib.orgData);
+      deleteResponse = organization.deleteOrganizationById(orgData);
       done();
     });
     it('Delete a organization.', () => {
