@@ -1,5 +1,5 @@
 import * as lib from '../../common';
-import { organizations, invites, token } from '../config/getEnv'
+import { organizations, invites, token } from '../config/getEnv';
 var emailInvited = `${lib.randomString.generate(5)}@test.co`;
 
 export function getAccessToken(responseObject) {
@@ -7,14 +7,15 @@ export function getAccessToken(responseObject) {
     api: token,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Basic ZnJvbnRlbmRfc2VydmljZTpydHk4YTk4eGNmIXdk'
+      Authorization: 'Basic ZnJvbnRlbmRfc2VydmljZTpydHk4YTk4eGNmIXdk'
     },
-    data: "",
-    body: `grant_type=password&username=${responseObject.identityEmail}&password=${process.env.ACCOUNT_PASS}&scope=backend_service&client_id=frontend_service`
-
-  }
-  return lib.post(any).then((response) => {
-    responseObject.accessToken = response.body.access_token
+    data: '',
+    body: `grant_type=password&username=${responseObject.identityEmail}&password=${
+      process.env.ACCOUNT_PASS
+    }&scope=backend_service&client_id=frontend_service`
+  };
+  return lib.post(any).then(response => {
+    responseObject.accessToken = response.body.access_token;
     return response;
   });
 }
@@ -25,11 +26,11 @@ export function postInvitesByOrganizationId(responseObject, flag) {
     data: [emailInvited],
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${responseObject.accessToken}`
+      Authorization: `Bearer ${responseObject.accessToken}`
     }
   };
   if (flag) {
-    lib.testData.invitesData.push(emailInvited);
+    lib.invitesSchemaData.email = emailInvited;
   }
   return lib.post(any);
 }
@@ -39,15 +40,15 @@ export function getInvitesByOrganizationId(responseObject) {
     api: organizations,
     data: `${responseObject.orgID}/invites?pageSize=1`
   };
-  return lib.get(any).then((response) => {
+  return lib.get(any).then(response => {
     responseObject.token = response.body.results[0].token;
     return response;
-  })
+  });
 }
 export function getInviteDetailsByToken(responseObject) {
   const any = {
     api: `${invites}${responseObject.token}`,
-    data: ""
+    data: ''
   };
   return lib.get(any);
 }
