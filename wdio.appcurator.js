@@ -120,7 +120,6 @@ exports.config = {
       './test/web/specs/accounts/createAccountTest.js',
       './test/web/specs/accounts/signInAndOutTest.js',
       './test/web/specs/invites/inviteTest.js',
-      './test/web/specs/metrics/verifyUsersTest.js',
       './test/web/specs/organizations/createOrganizationTest.js',
       './test/web/specs/spaces/createSpaceTest.js',
       './test/web/specs/tribes/createTribeTest.js'
