@@ -47,7 +47,7 @@
     "pull": "node test/api/Config/download.js",
     "web": "node_modules/.bin/wdio wdio.appcurator.js",
     "web-debug": "DEBUG=true ./node_modules/.bin/wdio wdio.appcurator.js",
-    "api": "mocha test/api/specs/tribesTest.js --opts test/api/config/mocha.opts",
+    "api": "mocha test/api/specs/*Test.js --opts test/api/config/mocha.opts",
     "api-debug": "mocha --inspect-brk=127.0.0.1:5858 test/api/specs/*Test.js --opts test/api/config/mocha.opts",
     "report": "allure generate allure-results --clean -o allure-report && allure open allure-report",
     "orca": "mocha test/orca/specs/loginTest.js --require babel-register",
