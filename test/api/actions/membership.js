@@ -1,5 +1,5 @@
-import * as lib from '../../common';
-import { memberships } from '../config/getEnv'
+import { post, get, del } from '../../common';
+import { memberships } from '../config/getEnv';
 
 export function postMembership(responseObject) {
   const any = {
@@ -9,7 +9,7 @@ export function postMembership(responseObject) {
       organizationId: responseObject.orgID
     }
   };
-  return lib.post(any);
+  return post(any);
 }
 
 export function getMembershipByAnyID(anyId) {
@@ -17,7 +17,7 @@ export function getMembershipByAnyID(anyId) {
     api: memberships,
     data: anyId
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function getMembershipByAccount(responseObject) {
@@ -33,7 +33,7 @@ export function getMemberships(responseObject) {
     api: memberships,
     data: `?orgId=${responseObject.orgID}&accountId=${responseObject.identityID}&pageSize=1`
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function deleteMembershipByAccountAndOrganization(responseObject) {
@@ -41,7 +41,7 @@ export function deleteMembershipByAccountAndOrganization(responseObject) {
     api: memberships,
     data: `organization/${responseObject.orgID}/account/${responseObject.identityID}`
   };
-  return lib.del(any);
+  return del(any);
 }
 
 export function deleteMembershipStatus(responseObject) {
@@ -49,5 +49,5 @@ export function deleteMembershipStatus(responseObject) {
     api: memberships,
     data: `account/${responseObject.identityIDd}`
   };
-  return lib.get(any);
+  return get(any);
 }

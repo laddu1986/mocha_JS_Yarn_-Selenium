@@ -1,13 +1,12 @@
-import * as lib from '../../common';
+import { inviteData, loader, Tags, joi } from '../../common';
 import * as identity from 'api/actions/identity';
 import * as invites from 'api/actions/invites';
 import * as organization from 'api/actions/organization';
-import * as constants from 'data/constants.json';
-var schema, postResponse, getResponse, getInviteResponse, deleteResponse;
-const inviteData = new Object();
+const schemas = 'api/data/invitesSchema';
+var importedSchema, postResponse, getResponse, getInviteResponse, deleteResponse;
 
 describe('Invites Api', () => {
-  describe(`POST /organizations/{id}/invites ${lib.Tags.smokeTest}`, () => {
+  describe(`POST /organizations/{id}/invites ${Tags.smokeTest}`, () => {
     before(done => {
       identity.postIdentity(inviteData).then(() => {
         organization.postOrganization(inviteData).then(() => {
@@ -28,30 +27,16 @@ describe('Invites Api', () => {
 
   describe('GET /organizations/{orgId}/invites', () => {
     before(done => {
-      getResponse = invites.getInvitesByOrganizationId(inviteData);
-      done();
+      loader.import(schemas).then(dataImported => {
+        importedSchema = dataImported.default;
+        getResponse = invites.getInvitesByOrganizationId(inviteData);
+        done();
+      });
     });
     it('Search invites in the org', () => {
       return getResponse.then(response => {
         expect(response).to.have.status(200);
-        const objectSchema = lib.joi.object().keys({
-          token: lib.joi
-            .string()
-            .uuid()
-            .required(),
-          email: lib.joi.valid(lib.testData.invitesData[0]).required(),
-          createdTime: lib.joi.date().required(),
-          status: lib.joi.valid(constants.InviteStatus.Pending).required(),
-          expiryDate: lib.joi.date().required()
-        });
-        schema = lib.joi.object().keys({
-          totalRows: lib.joi.valid(1).required(),
-          results: lib.joi
-            .array()
-            .items(objectSchema)
-            .required()
-        });
-        lib.joi.assert(response.body, schema);
+        joi.assert(response.body, importedSchema.getInviteSchema);
       });
     });
   });
@@ -64,21 +49,7 @@ describe('Invites Api', () => {
     it('Get invite details', () => {
       return getInviteResponse.then(response => {
         expect(response).to.have.status(200);
-        schema = lib.joi.object().keys({
-          email: lib.joi.valid(lib.testData.invitesData[0]).required(),
-          organizationId: lib.joi
-            .string()
-            .uuid()
-            .valid(inviteData.orgID)
-            .required(),
-          organizationName: lib.joi.valid(inviteData.orgName).required(),
-          hasAccount: lib.joi
-            .boolean()
-            .valid(false)
-            .required(),
-          status: lib.joi.valid(constants.InviteStatus.Pending).required()
-        });
-        lib.joi.assert(response.body, schema);
+        joi.assert(response.body, importedSchema.getInviteByTokenSchema);
       });
     });
   });
