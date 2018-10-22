@@ -3,7 +3,7 @@ import * as identity from 'api/actions/identity';
 import * as spaces from 'api/actions/spaces';
 import * as organization from 'api/actions/organization';
 import * as tribe from 'api/actions/tribe';
-var createTribeResponse, updateTribeResponse, getResponse, deleteResponse;
+var moveResponse, createTribeResponse, updateTribeResponse, getResponse, deleteResponse;
 const tribeData = new Object();
 
 describe('Tribe Service', () => {
@@ -54,6 +54,21 @@ describe('Tribe Service', () => {
         expect(response).to.be.an('object');
         expect(response.status.code).to.equal(0);
         expect(response.response.title).to.include('_newName');
+      });
+    });
+  });
+
+  describe('Move Tribe', () => {
+    before(done => {
+      tribe.createTribe(tribeData).then(() => {
+        moveResponse = tribe.moveTribe(tribeData);
+        done();
+      });
+    });
+
+    it('MoveTribe', () => {
+      return moveResponse.then(response => {
+        expect(response.status.code).to.equal(0);
       });
     });
   });
