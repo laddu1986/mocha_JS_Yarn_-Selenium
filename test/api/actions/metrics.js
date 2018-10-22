@@ -36,3 +36,23 @@ export function getMetricsActive(responseObject) {
   };
   return get(any);
 }
+
+export function getActiveUsersByDay(responseObject) {
+  const any = {
+    api: `${metrics + responseObject.orgID}/spaces/${
+      responseObject.spaceID
+    }/metrics/daily/active-users?from=${fromDate}&to=${toDate}`,
+    data: ''
+  };
+  return get(any);
+}
+
+export function getNewUsersByDay(responseObject) {
+  const any = {
+    api: `${metrics + responseObject.orgID}/spaces/${
+      responseObject.spaceID
+    }/metrics/daily/new-users?from=${fromDate}&to=${toDate}`,
+    data: ''
+  };
+  return get(any);
+}
