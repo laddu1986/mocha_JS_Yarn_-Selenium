@@ -3,7 +3,17 @@ import * as organization from '../actions/organization';
 import * as identity from '../actions/identity';
 import * as metrics from '../actions/metrics';
 import { joi } from '../../common';
-var schema, getUniqueUsersResponse, getAPIRequestsResponse, getActiveResponse;
+import {
+  metricsByDaySchema,
+  uniqueAPIRequestsSchema,
+  activeDaySchema,
+  uniqueUsersSchema
+} from 'api/data/metricsSchema';
+var getUniqueUsersResponse,
+  getAPIRequestsResponse,
+  getActiveResponse,
+  getActiveUsersByDayResponse,
+  getNewUsersByDayResponse;
 const metricsData = new Object();
 describe('Metrics Api', () => {
   describe('GET /organizations/{orgId}/spaces/{spaceId}/metrics/unique-users/count', () => {
@@ -20,10 +30,7 @@ describe('Metrics Api', () => {
     it('Returns the number of unique users that visited the space in a given time period', () => {
       return getUniqueUsersResponse.then(response => {
         expect(response).to.have.status(200);
-        schema = joi.object().keys({
-          uniqueUsers: joi.number().required()
-        });
-        joi.assert(response.body, schema);
+        joi.assert(response.body, uniqueUsersSchema());
       });
     });
   });
@@ -37,10 +44,7 @@ describe('Metrics Api', () => {
     it('Returns the number of api requests from a space in a given time period', () => {
       return getAPIRequestsResponse.then(response => {
         expect(response).to.have.status(200);
-        schema = joi.object().keys({
-          uniqueRequests: joi.number().required()
-        });
-        joi.assert(response.body, schema);
+        joi.assert(response.body, uniqueAPIRequestsSchema());
       });
     });
   });
@@ -54,10 +58,35 @@ describe('Metrics Api', () => {
     it('Returns whether the space is active or not', () => {
       return getActiveResponse.then(response => {
         expect(response).to.have.status(200);
-        schema = joi.object().keys({
-          isActive: joi.boolean().required()
-        });
-        joi.assert(response.body, schema);
+        joi.assert(response.body, activeDaySchema());
+      });
+    });
+  });
+
+  describe('GET /organizations/{orgId}/spaces/{spaceId}/metrics/daily/active-users', () => {
+    before(done => {
+      getActiveUsersByDayResponse = metrics.getActiveUsersByDay(metricsData);
+      done();
+    });
+
+    it('Returns the number of active users by days for a space in a given time period', () => {
+      return getActiveUsersByDayResponse.then(response => {
+        expect(response).to.have.status(200);
+        joi.assert(response.body, metricsByDaySchema());
+      });
+    });
+  });
+
+  describe('GET /organizations/{orgId}/spaces/{spaceId}/metrics/daily/new-users', () => {
+    before(done => {
+      getNewUsersByDayResponse = metrics.getNewUsersByDay(metricsData);
+      done();
+    });
+
+    it('Returns the number of new users by days for a space in a given time period', () => {
+      return getNewUsersByDayResponse.then(response => {
+        expect(response).to.have.status(200);
+        joi.assert(response.body, metricsByDaySchema());
       });
     });
   });
