@@ -4,6 +4,7 @@ import { createAccount } from 'web/actions/account';
 import { createSpace } from 'web/actions/space';
 import { clickOnAudienceLink } from 'web/actions/navBar';
 import { renameCategory, deleteCategory } from 'web/actions/tribeCategories';
+import { clickCreateTribeButton } from 'web/actions/tribe';
 import tribePage from 'web/page_objects/tribePage';
 
 describe('Tribe Categoies Actions', () => {
@@ -24,13 +25,16 @@ describe('Tribe Categoies Actions', () => {
     );
   });
   it('Rename a category', () => {
-    const categoryTitle = lib.randomString.generate(5);
+    let categoryTitle = lib.randomString.generate(5);
     renameCategory(categoryTitle);
     expect(tribePage.categoryTitle.getAttribute('value')).to.equal(categoryTitle);
   });
-  it('Delete an existing category', () => {
+  it('Delete an existing category with a tribe', () => {
+    clickCreateTribeButton();
+    clickOnAudienceLink(); // Moving away from keyboard focus
+    clickOnAudienceLink(); // Actually click the audience link
     deleteCategory();
-    expect(tribePage.categoryTitle.isVisible()).to.be.false;
-    expect(tribePage.categoryMoreButton.isVisible()).to.be.false;
+    expect(tribePage.categoryTitle.getAttribute('value')).to.equal('');
+    expect(tribePage.tribeCards.value.length).to.equal(1);
   });
 });
