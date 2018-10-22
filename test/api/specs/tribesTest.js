@@ -1,7 +1,8 @@
-import '../../common';
+import { randomString } from '../../common';
 import * as identity from 'api/actions/identity';
 import * as spaces from 'api/actions/spaces';
 import * as organization from 'api/actions/organization';
+import * as categories from 'api/actions/categories';
 import * as tribe from 'api/actions/tribe';
 var moveResponse, createTribeResponse, updateTribeResponse, getResponse, deleteResponse;
 const tribeData = new Object();
@@ -58,21 +59,6 @@ describe('Tribe Service', () => {
     });
   });
 
-  describe('Move Tribe', () => {
-    before(done => {
-      tribe.createTribe(tribeData).then(() => {
-        moveResponse = tribe.moveTribe(tribeData);
-        done();
-      });
-    });
-
-    it('MoveTribe', () => {
-      return moveResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-      });
-    });
-  });
-
   describe('Delete Tribe', () => {
     before(done => {
       deleteResponse = tribe.deleteTribe(tribeData);
@@ -82,6 +68,31 @@ describe('Tribe Service', () => {
     it('DeleteSegment', () => {
       return deleteResponse.then(response => {
         expect(response.status.code).to.equal(0);
+      });
+    });
+  });
+
+  var tribename1 = `${randomString.generate(7)}_1`,
+    tribename2 = `${randomString.generate(7)}_2`;
+  describe('Move Tribe', () => {
+    before(done => {
+      categories.createCategory(tribeData, true).then(() => {
+        tribe.createTribeWithCategoryID(tribeData, tribename1).then(() => {
+          tribe.createTribeWithCategoryID(tribeData, tribename2).then(() => {
+            moveResponse = tribe.moveTribe(tribeData);
+            done();
+          });
+        });
+      });
+    });
+
+    it('MoveTribe', () => {
+      return moveResponse.then(response => {
+        expect(response.status.code).to.equal(0);
+        categories.listCategories(tribeData).then(res => {
+          expect(res.response.categories[0].segments[0].title).to.equal(tribename2);
+          expect(res.response.categories[0].segments[1].title).to.equal(tribename1);
+        });
       });
     });
   });

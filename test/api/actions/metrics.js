@@ -1,4 +1,4 @@
-import * as lib from '../../common';
+import { get } from '../../common';
 import { metrics } from '../config/getEnv';
 
 var today = new Date();
@@ -16,7 +16,7 @@ export function getUniqueAppUsers(responseObject) {
     }/metrics/unique-users/count?from=${fromDate}&to=${toDate}`,
     data: ''
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function getAPIRequests(responseObject) {
@@ -26,7 +26,7 @@ export function getAPIRequests(responseObject) {
     }/metrics/requests/count?from=${fromDate}&to=${toDate}`,
     data: ''
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function getMetricsActive(responseObject) {
@@ -34,7 +34,7 @@ export function getMetricsActive(responseObject) {
     api: `${metrics + responseObject.orgID}/spaces/${responseObject.spaceID}/metrics/active`,
     data: ''
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function getActiveUsersByDay(responseObject) {
@@ -44,7 +44,7 @@ export function getActiveUsersByDay(responseObject) {
     }/metrics/daily/active-users?from=${fromDate}&to=${toDate}`,
     data: ''
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function getNewUsersByDay(responseObject) {
@@ -54,5 +54,5 @@ export function getNewUsersByDay(responseObject) {
     }/metrics/daily/new-users?from=${fromDate}&to=${toDate}`,
     data: ''
   };
-  return lib.get(any);
+  return get(any);
 }

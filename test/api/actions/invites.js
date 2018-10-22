@@ -1,20 +1,21 @@
-import * as lib from '../../common';
-import { organizations, invites, token } from '../config/getEnv'
-var emailInvited = `${lib.randomString.generate(5)}@test.co`;
+import { randomString, post, invitesSchemaData, get, del } from '../../common';
+import { organizations, invites, token } from '../config/getEnv';
+var emailInvited = `${randomString.generate(5)}@test.co`;
 
 export function getAccessToken(responseObject) {
   const any = {
     api: token,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Basic ZnJvbnRlbmRfc2VydmljZTpydHk4YTk4eGNmIXdk'
+      Authorization: `Basic ${process.env.AUTH_CODE}`
     },
-    data: "",
-    body: `grant_type=password&username=${responseObject.identityEmail}&password=${process.env.ACCOUNT_PASS}&scope=backend_service&client_id=frontend_service`
-
-  }
-  return lib.post(any).then((response) => {
-    responseObject.accessToken = response.body.access_token
+    data: '',
+    body: `grant_type=password&username=${responseObject.identityEmail}&password=${
+      process.env.ACCOUNT_PASS
+    }&scope=backend_service&client_id=frontend_service`
+  };
+  return post(any).then(response => {
+    responseObject.accessToken = response.body.access_token;
     return response;
   });
 }
@@ -25,13 +26,13 @@ export function postInvitesByOrganizationId(responseObject, flag) {
     data: [emailInvited],
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${responseObject.accessToken}`
+      Authorization: `Bearer ${responseObject.accessToken}`
     }
   };
   if (flag) {
-    lib.testData.invitesData.push(emailInvited);
+    invitesSchemaData.email = emailInvited;
   }
-  return lib.post(any);
+  return post(any);
 }
 
 export function getInvitesByOrganizationId(responseObject) {
@@ -39,17 +40,17 @@ export function getInvitesByOrganizationId(responseObject) {
     api: organizations,
     data: `${responseObject.orgID}/invites?pageSize=1`
   };
-  return lib.get(any).then((response) => {
+  return get(any).then(response => {
     responseObject.token = response.body.results[0].token;
     return response;
-  })
+  });
 }
 export function getInviteDetailsByToken(responseObject) {
   const any = {
     api: `${invites}${responseObject.token}`,
-    data: ""
+    data: ''
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function deleteInviteByOrganizationIdAndEmail(responseObject) {
@@ -57,5 +58,5 @@ export function deleteInviteByOrganizationIdAndEmail(responseObject) {
     api: organizations,
     data: `${responseObject.orgID}/invites/?email=${emailInvited}`
   };
-  return lib.del(any);
+  return del(any);
 }
