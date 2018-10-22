@@ -14,17 +14,20 @@ export const membershipNegData = new Object();
 export const orgNegData = new Object();
 export const spaceNegData = new Object();
 export const spaceKeyNegData = new Object();
+export const identitySchemaData = new Object();
+export const invitesSchemaData = new Object();
+export const identityData = new Object();
+export const inviteData = new Object();
+export const membershipData = new Object();
+export const organizationsSchemaData = new Object();
+export const orgData = new Object();
+export const spaceKeyData = new Object();
+export const spaceSchemaData = new Object();
+export const spaceData = new Object();
 
 const responseData = {
   users: [],
   visitors: []
-};
-
-const testData = {
-  identityData: [],
-  organizationsData: [],
-  invitesData: [],
-  spacesData: []
 };
 
 const Tags = {
@@ -60,7 +63,6 @@ export {
   Tags,
   loader,
   joi,
-  testData,
   // api calls
   post,
   get,

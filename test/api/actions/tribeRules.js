@@ -1,8 +1,8 @@
-import * as lib from '../../common';
+import { path, caller } from '../../common';
 import * as constants from 'data/constants.json';
 
-const PROTO_PATH = lib.path.resolve(process.env.TRIBE_PROTO_DIR + 'segmentRulesService.proto');
-const client = lib.caller(process.env.TRIBE_HOST, PROTO_PATH, 'SegmentRulesService');
+const PROTO_PATH = path.resolve(process.env.TRIBE_PROTO_DIR + 'segmentRulesService.proto');
+const client = caller(process.env.TRIBE_HOST, PROTO_PATH, 'SegmentRulesService');
 
 export var ActualFilters = [];
 export var ExpectedFilters = [];
