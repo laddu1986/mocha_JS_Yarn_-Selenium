@@ -2,7 +2,7 @@ import * as spaces from '../actions/spaces';
 import * as organization from '../actions/organization';
 import * as identity from '../actions/identity';
 import * as metrics from '../actions/metrics';
-import * as lib from '../../common';
+import { joi } from '../../common';
 import {
   metricsByDaySchema,
   uniqueAPIRequestsSchema,
@@ -30,7 +30,7 @@ describe('Metrics Api', () => {
     it('Returns the number of unique users that visited the space in a given time period', () => {
       return getUniqueUsersResponse.then(response => {
         expect(response).to.have.status(200);
-        lib.joi.assert(response.body, uniqueUsersSchema());
+        joi.assert(response.body, uniqueUsersSchema());
       });
     });
   });
@@ -44,7 +44,7 @@ describe('Metrics Api', () => {
     it('Returns the number of api requests from a space in a given time period', () => {
       return getAPIRequestsResponse.then(response => {
         expect(response).to.have.status(200);
-        lib.joi.assert(response.body, uniqueAPIRequestsSchema());
+        joi.assert(response.body, uniqueAPIRequestsSchema());
       });
     });
   });
@@ -58,7 +58,7 @@ describe('Metrics Api', () => {
     it('Returns whether the space is active or not', () => {
       return getActiveResponse.then(response => {
         expect(response).to.have.status(200);
-        lib.joi.assert(response.body, activeDaySchema());
+        joi.assert(response.body, activeDaySchema());
       });
     });
   });
@@ -72,7 +72,7 @@ describe('Metrics Api', () => {
     it('Returns the number of active users by days for a space in a given time period', () => {
       return getActiveUsersByDayResponse.then(response => {
         expect(response).to.have.status(200);
-        lib.joi.assert(response.body, metricsByDaySchema());
+        joi.assert(response.body, metricsByDaySchema());
       });
     });
   });
@@ -86,7 +86,7 @@ describe('Metrics Api', () => {
     it('Returns the number of new users by days for a space in a given time period', () => {
       return getNewUsersByDayResponse.then(response => {
         expect(response).to.have.status(200);
-        lib.joi.assert(response.body, metricsByDaySchema());
+        joi.assert(response.body, metricsByDaySchema());
       });
     });
   });
