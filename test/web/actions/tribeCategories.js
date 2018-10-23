@@ -19,7 +19,7 @@ export function renameCategory(newTitle) {
   tribePage.categoryMoreButton.click();
   tribePage.categoryMoreRename.click();
   tribePage.categoryTitle.setValue(newTitle);
-  return browser.keys('\uE007');
+  browser.keys('\uE007');
 }
 
 export function verifyRenamedTitle(title) {
@@ -30,7 +30,7 @@ export function deleteCategory() {
   do {
     tribePage.categoryMoreButton.click();
   } while (!tribePage.categoryMoreDelete.isVisible());
-  return tribePage.categoryMoreDelete.click();
+  tribePage.categoryMoreDelete.click();
 }
 
 export function verifyLastCategoryDeleted() {
