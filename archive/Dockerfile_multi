@@ -1,0 +1,26 @@
+FROM node:8.10.0-slim AS build-deps
+
+RUN apt-get update -y
+RUN apt-get install -y -q \
+  x11-utils\
+  x11vnc \
+  xvfb \
+  xclip \
+  xsel
+
+COPY package.json /tmp/package.json
+RUN cd /tmp && yarn install
+RUN mkdir -p /usr/src/app && cp -a /tmp/node_modules /usr/src/app/
+
+
+FROM kkarczmarczyk/node-yarn:6.9-slim
+
+WORKDIR /usr/src/app
+COPY . /usr/src/app/
+COPY --from=build-deps /usr/src/app/ /usr/src/app/
+COPY ./scripts/test.sh /
+COPY ./scripts/start.sh /
+
+ENTRYPOINT ["/bin/bash"]
+CMD ["scripts/start.sh"]
+# CMD ["scripts/test.sh"]

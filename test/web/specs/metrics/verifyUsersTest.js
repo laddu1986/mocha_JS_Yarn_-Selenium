@@ -3,17 +3,17 @@ import AccountPage from 'web/page_objects/accountPage';
 import { createAccount } from 'web/actions/account';
 import { createSpace, goToDeveloperPortal, getAPIKey } from 'web/actions/space';
 import { clickOnAudienceLink, clickOnSpaceDashboardLink } from 'web/actions/navBar';
-import { addUsers, getCount, addVisitor } from 'web/actions/metrics';
+import { addUsers, getCount, addVisitor, verifyUsersAreAdded } from 'web/actions/metrics';
 import Constants from 'data/constants.json';
 import {
   clickOnUsersTab,
   getRecentUsersRows,
   verifyUsersDetails,
-  clickFirstRow,
+  clickUserRow,
   verifySideBar
 } from 'web/actions/users';
 var apiKey;
-describe(`User Metrics Tests ${lib.Tags.smokeTest}`, () => {
+describe(`User Metrics Tests`, () => {
   before(() => {
     AccountPage.open();
     createAccount();
@@ -26,11 +26,14 @@ describe(`User Metrics Tests ${lib.Tags.smokeTest}`, () => {
     await addUsers(5, apiKey);
   });
 
+  before(() => {
+    clickOnAudienceLink();
+    clickOnUsersTab();
+    verifyUsersAreAdded();
+  });
+
   describe('Audience->Users tab', () => {
     it('Recent Users --> should be 5', () => {
-      clickOnAudienceLink();
-      clickOnUsersTab();
-      browser.pause(1000);
       expect(getRecentUsersRows()).to.equal(5);
     });
 
@@ -39,7 +42,7 @@ describe(`User Metrics Tests ${lib.Tags.smokeTest}`, () => {
     });
 
     it('For First User --> Verify email, UID and name in side bar', () => {
-      clickFirstRow();
+      clickUserRow();
       browser.pause(1000);
       expect(verifySideBar(Constants.UserType.User)).to.equal(true);
     });
@@ -50,7 +53,7 @@ describe(`User Metrics Tests ${lib.Tags.smokeTest}`, () => {
 
     it('Verify Visitor on side bar', () => {
       browser.refresh();
-      clickFirstRow(Constants.UserType.Visitor);
+      clickUserRow(undefined, Constants.UserType.Visitor);
       browser.pause(1000);
       expect(verifySideBar(Constants.UserType.Visitor)).to.equal(true);
     });

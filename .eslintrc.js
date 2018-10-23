@@ -18,7 +18,9 @@ module.exports = {
     browser: false,
     before: false,
     after: false,
-    xit: false
+    xit: false,
+    $: false,
+    $$: false
   },
   extends: ['eslint:recommended', 'prettier'],
   plugins: ['mocha'],

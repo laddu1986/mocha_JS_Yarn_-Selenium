@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const debug = process.env.DEBUG;
-const timeoutPeriod = 20000;
+const timeoutPeriod = 30000;
 
 var browsers = {
   chrome_headless: {
@@ -111,16 +111,19 @@ exports.config = {
   capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
-    './test/web/specs/*/*Test.js', //master
-    './test/web/specs/negativeSpecs/*/*Test.js'
+    './test/web/specs/**/*Test.js' //master
   ],
   // Patterns to exclude.
-  exclude: [
-    './test/web/specs/support/helpPageTest.js',
-    './test/web/specs/spaces/spaceKeyTest.js',
-    './test/web/specs/metrics/labelUserTest.js'
-  ],
+  exclude: ['./test/web/specs/support/helpPageTest.js'],
   suites: {
+    smoke: [
+      './test/web/specs/accounts/createAccountTest.js',
+      './test/web/specs/accounts/signInAndOutTest.js',
+      './test/web/specs/invites/inviteTest.js',
+      './test/web/specs/organizations/createOrganizationTest.js',
+      './test/web/specs/spaces/createSpaceTest.js',
+      './test/web/specs/tribes/createTribeTest.js'
+    ],
     accounts: ['./test/web/specs/accounts/*Test.js'],
     organizations: ['./test/web/specs/organizations/*Test.js'],
     spaces: ['./test/web/specs/spaces/*Test.js'],
@@ -135,7 +138,7 @@ exports.config = {
   coloredLogs: true,
   baseUrl: getArgs()[1],
   waitforTimeout: debug ? 9999999 : timeoutPeriod,
-  maxInstances: debug ? 1 : 10,
+  maxInstances: debug ? 1 : 5,
   plugins: {},
   framework: 'mocha',
   reporters: ['spec', 'html-format'],

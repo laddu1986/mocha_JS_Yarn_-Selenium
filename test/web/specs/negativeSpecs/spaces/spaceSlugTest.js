@@ -3,7 +3,7 @@ import * as identity from 'api/actions/identity.js';
 import * as organization from 'api/actions/organization.js';
 import * as membership from 'api/actions/membership.js';
 import * as space from 'api/actions/spaces.js';
-import SignInPage from 'web/page_objects/SignInPage.js';
+import SignInPage from 'web/page_objects/signInPage.js';
 import { selectOrg } from 'web/actions/organization.js';
 import { spaces } from 'api/config/getEnv';
 import { signIn, get404PageText, clickLinkOn404Page } from 'web/actions/common.js';

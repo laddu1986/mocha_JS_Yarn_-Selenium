@@ -1,0 +1,46 @@
+options:
+  docker: true
+pipelines:
+  branches:
+    kube:
+      - step:
+          name: Build and Push Image to DockerHub
+          services:
+            - docker
+          caches:
+            - docker
+          script:
+            #define custom date-time version
+            - export VERSION="v$(date "+%y%m%d-%H%M%S")"
+            - echo "VERSION - ${VERSION}"
+            - export IMAGE_NAME="massiveinteractive/qa-ci:$BITBUCKET_COMMIT-qa-web"
+            - docker login -u $docker_user -p $docker_user_pwd
+            #build and push image with above version
+            - docker build --build-arg Version=$VERSION -t $IMAGE_NAME .
+            - docker push $IMAGE_NAME
+            #tag bitbucket build with this version
+            - git config user.email "autobuilduser@appcurator.com"
+            - git config user.name "Autobuilder"
+            - git tag -f -a $VERSION -m "Release $VERSION"
+            - git push origin -f --tags
+  tags:
+    "v*":
+      - step:
+          name: Run Web Tests in QA
+          image:
+            name: massiveinteractive/curator-k8s-cd:alpine-3.7-kubectl-1.9.0
+            username: $docker_user
+            password: $docker_user_pwd
+          deployment: qa
+          services:
+            - docker
+          caches:
+            - docker
+          script:
+            - export KUBE_NAMESPACE="qa"
+            #script from massiveinteractive/curator-k8s-cd configures cluster to accept our deployment
+            - /scripts/configure-kubectl.sh https://api.next.kube.axisnext.xyz $k8s_deployment_token $KUBE_NAMESPACE
+            #script pulls the image from dockerhub with the specific tag defined in step 1
+            - export IMAGE_NAME="massiveinteractive/qa-ci:$BITBUCKET_TAG"
+            #script applies the deployment by reading our yaml file specs
+            - /scripts/apply-deployment.sh deployment/jobs/web-smoke-test-job.yaml massiveinteractive/qa-ci $IMAGE_NAME

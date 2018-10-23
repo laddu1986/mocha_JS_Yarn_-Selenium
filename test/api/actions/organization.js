@@ -1,23 +1,23 @@
-import * as lib from '../../common';
-import { organizations } from '../config/getEnv'
+import { randomString, organizationsSchemaData, post, get, put, del } from '../../common';
+import { organizations } from '../config/getEnv';
 
 export function postOrganization(responseObject, flag) {
   const any = {
     api: organizations,
     data: {
-      name: lib.randomString.generate(10),
+      name: randomString.generate(10),
       createdByAccountId: responseObject.identityID
     }
   };
   if (flag) {
-    lib.testData.organizationsData.push(any.data.name);
+    organizationsSchemaData.name = any.data.name;
   }
-  return lib.post(any).then((response) => {
+  return post(any).then(response => {
     responseObject.orgID = response.body.id;
     responseObject.orgRowVersion = response.body.rowVersion;
     responseObject.orgName = response.body.name;
     return response;
-  })
+  });
 }
 
 export function getOrganizations() {
@@ -25,44 +25,41 @@ export function getOrganizations() {
     data: '',
     api: organizations
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function getOrganizationById(responseObject) {
   const any = {
     data: responseObject.orgID,
-    api: organizations,
+    api: organizations
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function postOrganizations(responseObject) {
   const any = {
     api: `${organizations}list`,
-    data:
-      [
-        responseObject.orgID
-      ]
+    data: [responseObject.orgID]
   };
-  return lib.post(any)
+  return post(any);
 }
-
+export var newName = 'check update name string';
 export function putOrganization(responseObject, flag) {
   const any = {
     api: organizations,
     data: {
       id: responseObject.orgID,
-      name: 'check update name string',
+      name: newName,
       rowVersion: responseObject.orgRowVersion
     }
   };
   if (flag) {
-    lib.testData.organizationsData.push(any.data.name);
+    organizationsSchemaData.name = newName;
   }
-  return lib.put(any).then((response) => {
+  return put(any).then(response => {
     responseObject.orgRowVersion = response.body.rowVersion;
     return response;
-  })
+  });
 }
 
 export function deleteOrganizationById(responseObject) {
@@ -71,5 +68,5 @@ export function deleteOrganizationById(responseObject) {
     data: `${responseObject.orgID}?rowVersion=${responseObject.orgRowVersion}`
   };
 
-  return lib.del(any);
+  return del(any);
 }

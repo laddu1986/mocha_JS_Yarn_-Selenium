@@ -4,6 +4,7 @@ import * as spaces from 'api/actions/spaces';
 import * as organization from 'api/actions/organization';
 import * as tribe from 'api/actions/tribe';
 import * as rules from 'api/actions/tribeRules';
+import * as schemas from 'api/data/tribeRulesSchema';
 
 var configResponse,
   saveResponse,
@@ -11,21 +12,9 @@ var configResponse,
   evalResponse,
   evalRulesResponse,
   evalFiltersResponse,
-  sampleUsersResponse,
-  schema;
+  sampleUsersResponse;
 
 const rulesData = new Object();
-
-const evalRuleSchema = joi
-  .object()
-  .keys({
-    userCount: joi.number().integer(),
-    prevUserCount: joi.number().integer(),
-    activeUserCount: joi.number().integer(),
-    prevActiveUserCount: joi.number().integer(),
-    totalUsers: joi.number().integer()
-  })
-  .required();
 
 describe('Tribe Rules Service', () => {
   describe('getConfiguration()', () => {
@@ -47,40 +36,7 @@ describe('Tribe Rules Service', () => {
     it('Gets the possible configurations for the space', () => {
       return configResponse.then(response => {
         expect(response.status.code).to.equal(0);
-        schema = joi.object().keys({
-          configuration: joi.object().keys({
-            properties: joi.array().items(
-              joi.object().keys({
-                id: joi
-                  .string()
-                  .uuid()
-                  .required(),
-                label: joi.string().required(),
-                type: joi
-                  .number()
-                  .max(5)
-                  .required(),
-                allowedOperatorIds: joi
-                  .array()
-                  .items(joi.string().uuid())
-                  .required(),
-                groupLabel: joi.string().required()
-              })
-            ),
-            operators: joi.array().items(
-              joi.object().keys({
-                id: joi
-                  .string()
-                  .uuid()
-                  .required(),
-                label: joi.string().required(),
-                operandType: joi.number(),
-                groupLabel: joi.string()
-              })
-            )
-          })
-        });
-        joi.assert(response.response, schema);
+        joi.assert(response.response, schemas.Configuration);
       });
     });
 
@@ -123,40 +79,7 @@ describe('Tribe Rules Service', () => {
 
     it('The rule is returned', () => {
       return getResponse.then(response => {
-        schema = joi.object().keys({
-          rule: joi.object().keys({
-            audienceType: joi
-              .number()
-              .max(1)
-              .required(),
-            logicalType: joi.number().max(1),
-            filters: joi.array().items(
-              joi
-                .object()
-                .keys({
-                  filterId: joi.string().regex(/filter_id_val/),
-                  value: joi.string().regex(/int_value/),
-                  filterIdVal: joi
-                    .string()
-                    .uuid()
-                    .required(),
-                  filterIdIsNull: joi.bool(),
-                  propertyId: joi
-                    .string()
-                    .uuid()
-                    .required(),
-                  operatorId: joi
-                    .string()
-                    .uuid()
-                    .required(),
-                  intValue: joi.number().integer(),
-                  stValue: joi.string()
-                })
-                .required()
-            )
-          })
-        });
-        joi.assert(response.response, schema);
+        joi.assert(response.response, schemas.Rule);
       });
     });
   });
@@ -170,20 +93,7 @@ describe('Tribe Rules Service', () => {
     it('Check returned status', () => {
       return evalFiltersResponse.then(response => {
         expect(response.status.code).to.equal(0);
-        schema = joi.object().keys({
-          filterEstimates: joi.array().items(
-            joi.object().keys({
-              filterId: joi.string().regex(/filter_id_val/),
-              filterIdVal: joi
-                .string()
-                .uuid()
-                .required(),
-              filterIdIsNull: joi.bool(),
-              userCount: joi.number().integer()
-            })
-          )
-        });
-        joi.assert(response.response, schema);
+        joi.assert(response.response, schemas.EvaluateFilters);
       });
     });
   });
@@ -197,8 +107,7 @@ describe('Tribe Rules Service', () => {
     it('Check returned status', () => {
       return evalResponse.then(response => {
         expect(response.status.code).to.equal(0);
-        schema = evalRuleSchema;
-        joi.assert(response.response, schema);
+        joi.assert(response.response, schemas.EvaluateRule);
       });
     });
   });
@@ -212,19 +121,7 @@ describe('Tribe Rules Service', () => {
     it('Check returned status', () => {
       return evalRulesResponse.then(response => {
         expect(response.status.code).to.equal(0);
-        schema = joi.object().keys({
-          ruleEstimates: joi
-            .array()
-            .items(
-              joi.object().keys({
-                value: joi.string().regex(/estimation_value/),
-                estimationValue: evalRuleSchema,
-                isNull: joi.bool()
-              })
-            )
-            .required()
-        });
-        joi.assert(response.response, schema);
+        joi.assert(response.response, schemas.EvaluateRules);
       });
     });
   });
@@ -238,10 +135,7 @@ describe('Tribe Rules Service', () => {
     it('Check returned status', () => {
       return sampleUsersResponse.then(response => {
         expect(response.status.code).to.equal(0);
-        schema = joi.object().keys({
-          userIds: joi.array().items(joi.string().uuid())
-        });
-        joi.assert(response.response, schema);
+        joi.assert(response.response, schemas.SampleUsers);
       });
     });
   });

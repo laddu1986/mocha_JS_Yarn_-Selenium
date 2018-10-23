@@ -1,0 +1,18 @@
+pipelines:
+  branches:
+    kube:
+      - step:
+          name: Build and Push Image to DockerHub
+          script:
+            - export VERSION="v$(date "+%y%m%d-%H%M%S")"
+            - echo "VERSION - ${VERSION}"
+            - git config user.email "autobuilduser@appcurator.com"
+            - git config user.name "Autobuilder"
+            - git tag -f -a $VERSION -m "Release $VERSION"
+            - git push origin -f --tags
+  tags:
+    "v*":
+      - step:
+          script:
+            - echo "VERSION2 - ${VERSION}"
+            - echo "BITBUCKET_TAG - ${BITBUCKET_TAG}"

@@ -1,13 +1,22 @@
 import * as lib from '../../../common';
 import { createAccount } from 'web/actions/account';
-import { verifySpaceOrder, verifyCreateFirstSpacePage, createSpace, verifySpacePage, goBackToOrgDashboard, clickCreateNewSpaceButton, } from 'web/actions/space';
+import {
+  verifySpaceOrder,
+  verifyCreateFirstSpacePage,
+  createSpace,
+  verifySpacePage,
+  goBackToOrgDashboard,
+  clickCreateNewSpaceButton
+} from 'web/actions/space';
 import accountPage from 'web/page_objects/accountPage';
 import { signIn, signOut } from 'web/actions/common';
-var accountDetail, spaceName1, spaceName = [];
+var accountDetail,
+  spaceName1,
+  spaceName = [];
 
-describe(`Space Tests ${lib.Tags.smokeTest}`, () => {
+describe('Space Tests', () => {
   before('Open App URL', () => {
-    accountPage.open()
+    accountPage.open();
     accountDetail = createAccount();
   });
 
@@ -15,7 +24,7 @@ describe(`Space Tests ${lib.Tags.smokeTest}`, () => {
     expect(verifyCreateFirstSpacePage()).to.equal(true);
   });
 
-  it('Verify creating first Space', () => {
+  it(`Verify creating first Space ${lib.Tags.smokeTest}`, () => {
     spaceName1 = createSpace();
     expect(verifySpacePage(spaceName1.toLowerCase())).to.equal(true);
   });
@@ -27,7 +36,7 @@ describe(`Space Tests ${lib.Tags.smokeTest}`, () => {
       spaceName[i] = createSpace();
       expect(verifySpacePage(spaceName[i].toLowerCase())).to.equal(true);
     }
-  })
+  });
 
   it('Sign out and back in --> Should show last accessed Space', () => {
     signOut();
@@ -44,5 +53,5 @@ describe(`Space Tests ${lib.Tags.smokeTest}`, () => {
 
   after('Sign Out', () => {
     signOut();
-  })
-})
+  });
+});

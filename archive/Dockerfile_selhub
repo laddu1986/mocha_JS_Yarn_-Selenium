@@ -1,0 +1,38 @@
+FROM node:8.10.0-slim AS build-deps
+#FROM node:8.10.0-slim
+# RUN sudo apk add python make g++ 
+
+# WORKDIR /app
+
+# COPY package.json /app
+
+# RUN yarn install --frozen-lockfile
+
+# COPY . /app
+
+# COPY ./scripts/test.sh /
+
+# ENTRYPOINT ["/bin/bash"]
+
+# CMD ["scripts/test.sh"]
+
+RUN apt-get update -y
+RUN apt-get install -y -q \
+  x11-utils\
+  x11vnc \
+  xvfb \
+  xclip \
+  xsel
+
+COPY package.json /tmp/package.json
+RUN cd /tmp && yarn install
+RUN mkdir -p /usr/src/app && cp -a /tmp/node_modules /usr/src/app/
+
+WORKDIR /usr/src/app
+COPY . /usr/src/app/
+COPY ./scripts/test.sh /
+COPY ./scripts/start.sh /
+
+ENTRYPOINT ["/bin/bash"]
+CMD ["scripts/start.sh"]
+# CMD ["scripts/test.sh"]

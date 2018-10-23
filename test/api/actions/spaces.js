@@ -1,33 +1,33 @@
-import * as lib from '../../common';
-import { spaces, keys } from '../config/getEnv'
-
+import { randomString, spaceSchemaData, post, get, put, patch, del } from '../../common';
+import { spaces, keys } from '../config/getEnv';
+import * as Constants from 'data/constants.json';
 
 export function postSpaceByOrganizationId(responseObject, flag) {
   const any = {
     api: `${spaces + responseObject.orgID}/spaces`,
     data: {
-      name: lib.randomString.generate(10),
+      name: randomString.generate(10),
       createdByAccountId: responseObject.identityID,
-      shortUrl: lib.randomString.generate(6)
+      shortUrl: randomString.generate(6)
     }
   };
   if (flag) {
-    lib.testData.spacesData.push(any.data.name);
-    lib.testData.spacesData.push(any.data.shortUrl);
+    spaceSchemaData.name = any.data.name;
+    spaceSchemaData.shortUrl = any.data.shortUrl;
   }
-  return lib.post(any).then((response) => {
+  return post(any).then(response => {
     responseObject.spaceID = response.body.id;
     responseObject.spaceRowVersion = response.body.rowVersion;
     return response;
-  })
+  });
 }
 
 export function getSpacesByOrganizationId(responseObject) {
   const any = {
     api: `${spaces + responseObject.orgID}/spaces`,
-    data: ""
+    data: ''
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function updateSpace(responseObject, flag) {
@@ -35,35 +35,39 @@ export function updateSpace(responseObject, flag) {
     api: `${spaces + responseObject.orgID}/spaces`,
     data: {
       id: responseObject.spaceID,
-      name: lib.randomString.generate(5),
+      name: randomString.generate(5),
       rowVersion: responseObject.spaceRowVersion,
-      shortUrl: lib.randomString.generate(6)
+      shortUrl: randomString.generate(6)
     }
   };
   if (flag) {
-    lib.testData.spacesData.push(any.data.name);
-    lib.testData.spacesData.push(any.data.shortUrl);
+    spaceSchemaData.newName = any.data.name;
+    spaceSchemaData.newShortUrl = any.data.shortUrl;
   }
-  return lib.put(any).then((response) => {
+  return put(any).then(response => {
     responseObject.spaceRowVersion = response.body.rowVersion;
     return response;
   });
-};
-export function patchSpaceByOrgIdRowVersionAndSpaceId(responseObject, type, flag) {
+}
+export function patchSpaceByOrgIdRowVersionAndSpaceId(responseObject, type) {
   const any = {
-    api: `${spaces + responseObject.orgID}/spaces/${responseObject.spaceID}?rowVersion=${responseObject.spaceRowVersion}`,
+    api: `${spaces + responseObject.orgID}/spaces/${responseObject.spaceID}?rowVersion=${
+      responseObject.spaceRowVersion
+    }`,
     data: [
       {
-        op: "replace",
+        op: 'replace',
         path: `/${type}`,
-        value: lib.randomString.generate(6)
+        value: randomString.generate(6)
       }
     ]
   };
-  if (flag) {
-    lib.testData.spacesData.push(any.data[0].value);
+  if (type == Constants.SpaceAttributes.ShortUrl) {
+    spaceSchemaData.patchedShortUrl = any.data[0].value;
+  } else {
+    spaceSchemaData.patchedName = any.data[0].value;
   }
-  return lib.patch(any).then((response) => {
+  return patch(any).then(response => {
     responseObject.spaceRowVersion = response.body.rowVersion;
     return response;
   });
@@ -72,17 +76,19 @@ export function patchSpaceByOrgIdRowVersionAndSpaceId(responseObject, type, flag
 export function getSpaceByOrgIdAndSpaceId(responseObject) {
   const any = {
     api: `${spaces + responseObject.orgID}/spaces/${responseObject.spaceID}`,
-    data: ""
+    data: ''
   };
-  return lib.get(any);
-};
+  return get(any);
+}
 
 export function deleteSpaceByOrgIdAndSpaceId(responseObject) {
   const any = {
-    api: `${spaces + responseObject.orgID}/spaces/${responseObject.spaceID}?rowVersion=${responseObject.spaceRowVersion}`,
-    data: ""
+    api: `${spaces + responseObject.orgID}/spaces/${responseObject.spaceID}?rowVersion=${
+      responseObject.spaceRowVersion
+    }`,
+    data: ''
   };
-  return lib.del(any);
+  return del(any);
 }
 
 //--------------------------------KEYS RELATED FUNCTIONS--------------------------
@@ -94,11 +100,11 @@ export function postKeysBySpaceId(responseObject) {
       id: responseObject.spaceID
     }
   };
-  return lib.post(any).then((response) => {
+  return post(any).then(response => {
     responseObject.spaceKeyValue = response.body.value;
     responseObject.spaceKeyRowVersion = response.body.rowVersion;
     return response;
-  })
+  });
 }
 
 export function getKeysBySpaceId(responseObject) {
@@ -106,30 +112,34 @@ export function getKeysBySpaceId(responseObject) {
     api: `${keys}${responseObject.orgID}/keys`,
     data: `?resource=space&ids=${responseObject.spaceID}`
   };
-  return lib.get(any);
+  return get(any);
 }
 
 export function patchKeyBySpaceIdAndRowVersion(responseObject, status) {
   const any = {
-    api: `${keys}${responseObject.orgID}/keys/${responseObject.spaceKeyValue}?rowVersion=${responseObject.spaceKeyRowVersion}`,
+    api: `${keys}${responseObject.orgID}/keys/${responseObject.spaceKeyValue}?rowVersion=${
+      responseObject.spaceKeyRowVersion
+    }`,
     data: [
       {
-        "op": "replace",
-        "path": "/rowStatus",
-        "value": status
+        op: 'replace',
+        path: '/rowStatus',
+        value: status
       }
     ]
   };
-  return lib.patch(any).then((response) => {
+  return patch(any).then(response => {
     responseObject.spaceKeyRowVersion = response.body.rowVersion;
     return response;
-  })
+  });
 }
 
 export function deleteKeyBySpaceIdAndRowVersion(responseObject) {
   const any = {
-    api: `${keys}${responseObject.orgID}/keys/${responseObject.spaceKeyValue}?rowVersion=${responseObject.spaceKeyRowVersion}`,
-    data: ""
+    api: `${keys}${responseObject.orgID}/keys/${responseObject.spaceKeyValue}?rowVersion=${
+      responseObject.spaceKeyRowVersion
+    }`,
+    data: ''
   };
-  return lib.del(any);
+  return del(any);
 }
