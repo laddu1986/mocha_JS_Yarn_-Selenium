@@ -42,6 +42,6 @@ describe('Update Organization name', () => {
 
   it('Choose org page has updated Org at top of org cards', () => {
     browser.url(`${browser.options.baseUrl}/organizations`);
-    expect(verifyOrgCardStack()).to.include(updatedOrgName);
+    verifyOrgCardStack(updatedOrgName);
   });
 });
