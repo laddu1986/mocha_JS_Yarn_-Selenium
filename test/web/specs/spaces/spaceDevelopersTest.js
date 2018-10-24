@@ -1,15 +1,9 @@
-import '../../../common';
-import accountPage from 'web/page_objects/accountPage';
-import { createAccount } from 'web/actions/account';
-import {
-  getAPIKey,
-  createSpace,
-  goToDeveloperPortal,
-  copyAPIKeyToClipBoard,
-  copiedAPIKeyValue
-} from 'web/actions/space';
-import { getNotificationMessageText } from 'web/actions/common';
-import spaceData from 'web/data/passiveNotification.json';
+import '../../common';
+import accountPage from 'page_objects/accountPage';
+import { createAccount } from 'actions/account';
+import { getAPIKey, createSpace, goToDeveloperPortal, copyAPIKeyToClipBoard, copiedAPIKeyValue } from 'actions/space';
+import { getNotificationMessageText } from 'actions/common';
+import spaceData from 'data/passiveNotification.json';
 
 describe('Space API Key Tests', () => {
   before(() => {

@@ -111,7 +111,7 @@ exports.config = {
   capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
-    './test/web/specs/**/*Test.js' //master
+    'specs/invites/*Test.js' //master
   ],
   // Patterns to exclude.
   exclude: ['./test/web/specs/support/helpPageTest.js'],
@@ -159,7 +159,7 @@ exports.config = {
   onPrepare() {},
   before() {},
   after() {
-    var connection = require('./test/web/actions/invite');
+    var connection = require('./actions/invite');
     connection.mysql.close();
   },
   onComplete() {}

@@ -1,5 +1,5 @@
-import { randomString, identitySchemaData, post, get, del, put, patch } from '../../common';
-import { identities } from '../config/getEnv';
+import { randomString, identitySchemaData, post, get, del, put, patch } from '../common';
+import { identities } from 'config/getEnv';
 
 export function postIdentity(responseObject, flag) {
   const any = {

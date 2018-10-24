@@ -1,6 +1,6 @@
-import { joi, orgData, organizationsSchemaData } from '../../common';
-import * as Constants from 'data/constants.json';
-import * as organization from 'api/actions/organization';
+import { joi, orgData, organizationsSchemaData } from '../common';
+import * as Constants from 'constants.json';
+import * as organization from 'actions/organization';
 
 export const createOrgSchema = joi.object().keys({
   id: joi

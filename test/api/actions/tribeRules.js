@@ -1,5 +1,5 @@
-import { path, caller } from '../../common';
-import * as constants from 'data/constants.json';
+import { path, caller } from '../common';
+import * as constants from 'constants.json';
 
 const PROTO_PATH = path.resolve(process.env.TRIBE_PROTO_DIR + 'segmentRulesService.proto');
 const client = caller(process.env.TRIBE_HOST, PROTO_PATH, 'SegmentRulesService');

@@ -1,8 +1,8 @@
-import { inviteData, loader, Tags, joi } from '../../common';
-import * as identity from 'api/actions/identity';
-import * as invites from 'api/actions/invites';
-import * as organization from 'api/actions/organization';
-const schemas = 'api/data/invitesSchema';
+import { inviteData, loader, Tags, joi } from '../common';
+import * as identity from 'actions/identity';
+import * as invites from 'actions/invites';
+import * as organization from 'actions/organization';
+const schemas = 'data/invitesSchema';
 var importedSchema, postResponse, getResponse, getInviteResponse, deleteResponse;
 
 describe('Invites Api', () => {

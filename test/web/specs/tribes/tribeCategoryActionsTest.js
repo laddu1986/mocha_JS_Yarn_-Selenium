@@ -1,8 +1,8 @@
-import * as lib from '../../../common';
-import accountPage from 'web/page_objects/accountPage';
-import { createAccount } from 'web/actions/account';
-import { createSpace } from 'web/actions/space';
-import { clickOnAudienceLink } from 'web/actions/navBar';
+import * as lib from '../../common';
+import accountPage from 'page_objects/accountPage';
+import { createAccount } from 'actions/account';
+import { createSpace } from 'actions/space';
+import { clickOnAudienceLink } from 'actions/navBar';
 import {
   createCategory,
   renameCategory,
@@ -10,8 +10,8 @@ import {
   waitForCategoryOptions,
   verifyRenamedTitle,
   verifyLastCategoryDeleted
-} from 'web/actions/tribeCategories';
-import { clickCreateTribeButton } from 'web/actions/tribe';
+} from 'actions/tribeCategories';
+import { clickCreateTribeButton } from 'actions/tribe';
 
 describe('Tribe Categories Actions', () => {
   before(() => {

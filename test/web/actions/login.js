@@ -1,7 +1,8 @@
-import CommonPage from 'web/page_objects/common';
-import NavBar from 'web/page_objects/navBar';
-import SignInPage from 'web/page_objects/signInPage';
-import { hideIntercom } from 'web/actions/common';
+import '../common';
+import CommonPage from 'page_objects/common';
+import NavBar from 'page_objects/navBar';
+import SignInPage from 'page_objects/signInPage';
+import { hideIntercom } from 'actions/common';
 
 export function verifyIncorrectSignIn() {
   return SignInPage.incorrectDetails.getText();

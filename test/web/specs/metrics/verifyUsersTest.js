@@ -1,17 +1,11 @@
-import * as lib from '../../../common';
-import AccountPage from 'web/page_objects/accountPage';
-import { createAccount } from 'web/actions/account';
-import { createSpace, goToDeveloperPortal, getAPIKey } from 'web/actions/space';
-import { clickOnAudienceLink, clickOnSpaceDashboardLink } from 'web/actions/navBar';
-import { addUsers, getCount, addVisitor, verifyUsersAreAdded } from 'web/actions/metrics';
-import Constants from 'data/constants.json';
-import {
-  clickOnUsersTab,
-  getRecentUsersRows,
-  verifyUsersDetails,
-  clickUserRow,
-  verifySideBar
-} from 'web/actions/users';
+import * as lib from '../../common';
+import AccountPage from 'page_objects/accountPage';
+import { createAccount } from 'actions/account';
+import { createSpace, goToDeveloperPortal, getAPIKey } from 'actions/space';
+import { clickOnAudienceLink, clickOnSpaceDashboardLink } from 'actions/navBar';
+import { addUsers, getCount, addVisitor, verifyUsersAreAdded } from 'actions/metrics';
+import Constants from 'constants.json';
+import { clickOnUsersTab, getRecentUsersRows, verifyUsersDetails, clickUserRow, verifySideBar } from 'actions/users';
 var apiKey;
 describe(`User Metrics Tests`, () => {
   before(() => {

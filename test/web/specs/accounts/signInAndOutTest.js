@@ -1,8 +1,8 @@
-import * as lib from '../../../common';
-import SignInPage from 'web/page_objects/signInPage';
-import { signIn, clearPlaceholder, verifySignIn } from 'web/actions/login';
-import { signOut, verifySignOut } from 'web/actions/navBar';
-import * as validationMessage from 'web/data/messages';
+import * as lib from '../../common';
+import SignInPage from 'page_objects/signInPage';
+import { signIn, clearPlaceholder, verifySignIn } from 'actions/login';
+import { signOut, verifySignOut } from 'actions/navBar';
+import * as validationMessage from 'data/messages';
 
 describe(`Sign In/Out Test ${lib.Tags.smokeTest}`, () => {
   before('Open Sign In page', () => {

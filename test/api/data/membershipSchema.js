@@ -1,4 +1,4 @@
-import { joi, membershipData } from '../../common';
+import { joi, membershipData } from '../common';
 
 export const createMembershipSchema = joi.object().keys({
   accountId: joi.valid(membershipData.identityID).required(),

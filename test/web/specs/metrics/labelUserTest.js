@@ -1,8 +1,8 @@
-import '../../../common';
-import accountPage from 'web/page_objects/accountPage';
-import { createAccount } from 'web/actions/account';
-import { createSpace, goToDeveloperPortal, getAPIKey } from 'web/actions/space';
-import { addUsers, verifyUsersAreAdded } from 'web/actions/metrics';
+import '../../common';
+import accountPage from 'page_objects/accountPage';
+import { createAccount } from 'actions/account';
+import { createSpace, goToDeveloperPortal, getAPIKey } from 'actions/space';
+import { addUsers, verifyUsersAreAdded } from 'actions/metrics';
 import {
   gotoUsersTab,
   inputLabelDetails,
@@ -16,7 +16,7 @@ import {
   verifyLabelCount,
   clickLabelCount,
   selectLabelFromSuggestions
-} from 'web/actions/users';
+} from 'actions/users';
 var apiKey;
 
 describe('User Labels Test', () => {

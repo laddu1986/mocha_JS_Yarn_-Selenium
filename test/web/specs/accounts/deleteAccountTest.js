@@ -7,35 +7,40 @@ After confirming to delete the account, member should be redirected to 'Sign in'
 Attempt to sign in should fail for deleted account
 */
 
-import * as lib from '../../../common';
-import accountPage from 'web/page_objects/accountPage';
-import { createAccount } from 'web/actions/account';
-import { deleteOrganization, gotoOrgSettings } from 'web/actions/organization';
-import { verifyIncorrectSignIn, signIn, signInPageIsVisible } from 'web/actions/login';
-import { verifyOrgDashboardPageAppears, clickCreateAccountLink, clickDeleteAccButton, cancelDeleteAccount } from 'web/actions/account';
-import { confirmButtonIsEnabled, confirmDelete, typeDeleteToConfirm } from 'web/actions/common'
+import '../../common';
+import accountPage from 'page_objects/accountPage';
+import { createAccount } from 'actions/account';
+import { deleteOrganization, gotoOrgSettings } from 'actions/organization';
+import { verifyIncorrectSignIn, signIn, signInPageIsVisible } from 'actions/login';
+import {
+  verifyOrgDashboardPageAppears,
+  clickCreateAccountLink,
+  clickDeleteAccButton,
+  cancelDeleteAccount
+} from 'actions/account';
+import { confirmButtonIsEnabled, confirmDelete, typeDeleteToConfirm } from 'actions/common';
 var accountDetails;
 
 describe('Delete Account Test (Remove my Account)', () => {
   before('Create account and delete organisation', () => {
-    accountPage.open()
+    accountPage.open();
     accountDetails = createAccount();
     gotoOrgSettings();
     deleteOrganization();
   });
 
   it('Remove account --> verify Cancel action on Delete modal', () => {
-    clickDeleteAccButton()
-    expect(cancelDeleteAccount()).to.equal(true)
+    clickDeleteAccButton();
+    expect(cancelDeleteAccount()).to.equal(true);
   });
 
   it('Remove account --> Sign In page appears', () => {
     clickDeleteAccButton();
-    expect(confirmButtonIsEnabled()).to.equal(false)
+    expect(confirmButtonIsEnabled()).to.equal(false);
     typeDeleteToConfirm();
-    expect(confirmButtonIsEnabled()).to.equal(true)
-    confirmDelete()
-    expect(signInPageIsVisible()).to.equal(true)
+    expect(confirmButtonIsEnabled()).to.equal(true);
+    confirmDelete();
+    expect(signInPageIsVisible()).to.equal(true);
     expect(browser.getUrl()).to.equal(`${browser.options.baseUrl}/sign-in`);
   });
 

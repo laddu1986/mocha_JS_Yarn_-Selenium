@@ -1,14 +1,15 @@
-import * as lib from '../../common';
-import NavBar from 'web/page_objects/navBar'
-import TeamPage from '../page_objects/teamPage';
-import Common from '../page_objects/common'
-import OrgDashboardPage from '../page_objects/orgDashboardPage';
-import { closePassiveNotification } from '../actions/common'
+import '../common';
+import NavBar from 'page_objects/navBar';
+import TeamPage from 'page_objects/teamPage';
+import Common from 'page_objects/common';
+import OrgDashboardPage from 'page_objects/orgDashboardPage';
+import { closePassiveNotification } from 'actions/common';
 
 var id;
 var createdTime;
 
 const Sequelize = require('sequelize');
+/*eslint-disable */
 export const mysql = new Sequelize(MySqlDb, MySqlUser, MySqlPass, {
   host: MySqlHost,
   dialect: 'mysql',
@@ -19,6 +20,7 @@ export const mysql = new Sequelize(MySqlDb, MySqlUser, MySqlPass, {
   },
   logging: false
 });
+/*eslint-enable */
 
 //define SQL model for specific table eg: Invites
 const Invites = mysql.define(
@@ -30,7 +32,7 @@ const Invites = mysql.define(
     CreatedTime: { type: Sequelize.DATE }
   },
   { timestamps: false }
-)
+);
 
 export function clickInviteTeammateButton() {
   OrgDashboardPage.inviteTeammateButton.click();
@@ -59,7 +61,12 @@ export function verifyInactiveInvite() {
 }
 
 export function verifyInviteCount(count) {
-  browser.waitUntil(() => OrgDashboardPage.pendingInviteCircle.getText() === (`+${count}`), 5000, 'Expect pending invite circle to increment by 1', 200);
+  browser.waitUntil(
+    () => OrgDashboardPage.pendingInviteCircle.getText() === `+${count}`,
+    5000,
+    'Expect pending invite circle to increment by 1',
+    200
+  );
 }
 
 export function goToOrganisationDashboard() {
@@ -67,76 +74,76 @@ export function goToOrganisationDashboard() {
 }
 
 export function inviteTeammate(mail, counta) {
-  clickInviteTeammateButton()
-  sendInvite(mail)
-  verifyInviteCount(counta)
+  clickInviteTeammateButton();
+  sendInvite(mail);
+  verifyInviteCount(counta);
 }
 
 export function revokeInvite() {
-  TeamPage.revokeButton.click()
-  Common.iAmSureButton.click()
+  TeamPage.revokeButton.click();
+  Common.iAmSureButton.click();
 }
 
 export function resendInvite() {
-  TeamPage.resendButton.click()
+  TeamPage.resendButton.click();
 }
 
 export function goToInactiveTab() {
-  TeamPage.inactiveTab.click()
+  TeamPage.inactiveTab.click();
 }
 
 export function getInviteTokenFromDB(email) {
   return new Promise((resolve, reject) => {
-    mysql.authenticate()
-      .then(function () {
+    mysql
+      .authenticate()
+      .then(function() {
         Invites.findAll({
           attributes: ['Id', 'Email', 'CreatedTime'],
           where: { Email: `${email}` },
-          order: [mysql.fn('max', mysql.col('CreatedTime'))],
-        }).then(function (result) {
-          id = result[0].dataValues.Id
-          resolve(id)
-        })
+          order: [mysql.fn('max', mysql.col('CreatedTime'))]
+        }).then(function(result) {
+          id = result[0].dataValues.Id;
+          resolve(id);
+        });
       })
       .catch(err => {
-        console.error('Unable to connect to the database:', err);
-        reject(err)
+        console.error('Unable to connect to the database:', err); //eslint-disable-line
+        reject(err);
       });
-  })
+  });
 }
 
 export async function invitationLink(email) {
-  const token = await getInviteTokenFromDB(email)
-  return `${browser.options.baseUrl}/join?invite=${token}`
+  const token = await getInviteTokenFromDB(email);
+  return `${browser.options.baseUrl}/join?invite=${token}`;
 }
 
 export async function updateTokenExpiryDateInDB(email) {
   return new Promise((resolve, reject) => {
-    mysql.authenticate()
-      .then(function () {
+    mysql
+      .authenticate()
+      .then(function() {
         Invites.findAll({
           attributes: ['Id', 'Email', 'CreatedTime'],
           where: { Email: `${email}` },
-          order: [mysql.fn('max', mysql.col('CreatedTime'))],
-        }).then(function (result) {
-          id = result[0].dataValues.Id
-          createdTime = result[0].dataValues.CreatedTime
-          Invites.update(
-            { ExpiryDate: createdTime },
-            { where: { Id: id } }).then(function () {
-              resolve(id)
-            })
-        })
+          order: [mysql.fn('max', mysql.col('CreatedTime'))]
+        }).then(function(result) {
+          id = result[0].dataValues.Id;
+          createdTime = result[0].dataValues.CreatedTime;
+          Invites.update({ ExpiryDate: createdTime }, { where: { Id: id } }).then(function() {
+            resolve(id);
+          });
+        });
       })
       .catch(err => {
-        console.error('Unable to connect to the database:', err);
-        reject(err)
+        console.error('Unable to connect to the database:', err); //eslint-disable-line
+        reject(err);
       });
-  })
+  });
 }
 
 export function invalidInvitationText() {
-  return Common.invalidInvitationMsg.getText()
+  return Common.invalidInvitationMsg.getText();
 }
 
 export function expiredInvitationText() {

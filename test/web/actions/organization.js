@@ -1,9 +1,9 @@
-import * as lib from '../../common';
-import HomePage from 'web/page_objects/homePage'
-import NavBar from 'web/page_objects/navBar'
-import SettingsPage from 'web/page_objects/settingsPage'
-import OrgDashboardPage from 'web/page_objects/orgDashboardPage'
-import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'web/actions/common'
+import '../common';
+import HomePage from 'page_objects/homePage';
+import NavBar from 'page_objects/navBar';
+import SettingsPage from 'page_objects/settingsPage';
+import OrgDashboardPage from 'page_objects/orgDashboardPage';
+import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'actions/common';
 
 export function createOrg(orgname) {
   NavBar.profileMenu.click();
@@ -14,8 +14,7 @@ export function createOrg(orgname) {
 }
 
 export function verifyNoOrgPage() {
-  if (HomePage.createOrgButton.isVisible() == HomePage.removeAccountButton.isVisible() == true)
-    return true;
+  if ((HomePage.createOrgButton.isVisible() == HomePage.removeAccountButton.isVisible()) == true) return true;
 }
 
 export function goToCreateOrgPageFromNavbar() {
@@ -43,13 +42,13 @@ export function verifyOrgNameOnDashBoard() {
 
 export function gotoOrgSettings() {
   NavBar.profileMenu.click();
-  NavBar.orgSettingsAnchor.click()
+  NavBar.orgSettingsAnchor.click();
 }
 
 export function deleteOrganization() {
-  clickDeleteOrgButton()
-  typeDeleteToConfirm()
-  confirmDelete()
+  clickDeleteOrgButton();
+  typeDeleteToConfirm();
+  confirmDelete();
 }
 
 export function clickCreateOrgFromNoOrgPage() {
@@ -58,9 +57,11 @@ export function clickCreateOrgFromNoOrgPage() {
 
 export function verifyChooseOrgspage() {
   const orgCount = [HomePage.orgCards].length;
-  if (HomePage.orgCards.isVisible() && orgCount == "1") {
-    return true
-  } else { return false };
+  if (HomePage.orgCards.isVisible() && orgCount == '1') {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 export function selectOrg() {
@@ -75,16 +76,25 @@ export function updateOrgName(updatedOrgName) {
   SettingsPage.orgInput.clearElement();
   SettingsPage.orgInput.setValue(updatedOrgName);
   SettingsPage.saveOrgNameButton.click();
-  browser.waitUntil(function () {
-    return SettingsPage.saveOrgNameButton.isEnabled() === false
-  }, 5000, 'Save changes button did not Grey out after saving changes', 200);
+  browser.waitUntil(
+    function() {
+      return SettingsPage.saveOrgNameButton.isEnabled() === false;
+    },
+    5000,
+    'Save changes button did not Grey out after saving changes',
+    200
+  );
 }
 
 export function verifyNewOrgNameInNavbar(updatedOrgName) {
-
-  browser.waitUntil(function () {
-    return NavBar.backToOrgDashboardLink.getText().includes(updatedOrgName)
-  }, 5000, 'New OrgName was not updated in the side Nav Bar', 200);
+  browser.waitUntil(
+    function() {
+      return NavBar.backToOrgDashboardLink.getText().includes(updatedOrgName);
+    },
+    5000,
+    'New OrgName was not updated in the side Nav Bar',
+    200
+  );
 }
 
 export function goBackToOrgDashboard() {
@@ -102,5 +112,5 @@ export function clickDeleteOrgButton() {
 }
 
 export function cancelDeleteOrg() {
-  return cancelDelete(SettingsPage.leaveOrgButton)
+  return cancelDelete(SettingsPage.leaveOrgButton);
 }

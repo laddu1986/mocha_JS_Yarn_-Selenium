@@ -1,5 +1,5 @@
-import * as lib from '../../../common';
-import { createAccount } from 'web/actions/account';
+import * as lib from '../../common';
+import { createAccount } from 'actions/account';
 import {
   sendInviteButtonEnabled,
   sendInvite,
@@ -8,9 +8,9 @@ import {
   goToTeammatesPage,
   verifyInactiveInvite,
   goToOrganisationDashboard
-} from 'web/actions/invite';
-import accountPage from 'web/page_objects/accountPage';
-import { signOut } from 'web/actions/common';
+} from 'actions/invite';
+import accountPage from 'page_objects/accountPage';
+import { signOut } from 'actions/common';
 
 const invite_email1 = `invite_1_${lib.randomString.generate(5)}@test.co`;
 const invite_email2 = `invite_2${lib.randomString.generate(5)}@test.co`;

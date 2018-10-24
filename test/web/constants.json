@@ -1,0 +1,53 @@
+{
+  "SpaceAttributes": {
+    "Name": "name",
+    "Slug": "slug",
+    "ShortUrl": "shortUrl"
+  },
+  "InviteStatus": {
+    "Expired": "Expired",
+    "Pending": "Pending"
+  },
+  "TribeRulesFilters": {
+    "AudienceType": {
+      "User": "Users",
+      "Visitor": "Visitors"
+    },
+    "APIAudienceType": {
+      "User": "USER",
+      "Visitor": "VISITOR"
+    },
+    "LogicalType": {
+      "Any": "any",
+      "All": "all"
+    },
+    "Properties": {
+      "ActiveDays": "Active Days (last 30 days)",
+      "AvgSessions": "Avg Sessions (last 30 days)",
+      "AvgSessionTime": "Avg Session Time",
+      "LastSeen": "Last Seen",
+      "Created": "Created",
+      "Known": "Known",
+      "FirstSeen": "First Seen",
+      "Joined": "Joined"
+    },
+    "OtherOperators": {
+      "MoreThan": "more than",
+      "Exactly": "exactly",
+      "LessThan": "less than",
+      "After": "after",
+      "On": "on",
+      "Before": "before",
+      "IsUnknown": "is unknown",
+      "HasAnyValue": "has any value"
+    },
+    "ActiveAverageOperators": {
+      "GreaterThan": "greater than",
+      "LessThan": "less than",
+      "Is": "is",
+      "IsNot": "is not",
+      "IsUnknown": "is unknown",
+      "HasAnyValue": "has any value"
+    }
+  }
+}

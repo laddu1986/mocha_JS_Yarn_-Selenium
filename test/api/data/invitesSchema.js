@@ -1,5 +1,5 @@
-import { joi, invitesSchemaData, inviteData } from '../../common';
-import * as Constants from 'data/constants.json';
+import { joi, invitesSchemaData, inviteData } from '../common';
+import * as Constants from 'constants.json';
 
 const objectSchema = joi.object().keys({
   token: joi
