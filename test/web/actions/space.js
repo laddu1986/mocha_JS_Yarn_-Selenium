@@ -1,12 +1,12 @@
-import * as lib from '../../common';
-import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
-import SpaceDevelopersPage from 'web/page_objects/spaceDevelopersPage';
-import SpaceSettingsPage from 'web/page_objects/spaceSettingsPage';
-import SpaceDashboardPage from 'web/page_objects/spaceDashboardPage';
-import HomePage from 'web/page_objects/homePage';
-import CommonPage from 'web/page_objects/common';
-import NavBar from 'web/page_objects/navBar';
-import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'web/actions/common';
+import * as lib from '../common';
+import OrgDashboardPage from 'page_objects/orgDashboardPage';
+import SpaceDevelopersPage from 'page_objects/spaceDevelopersPage';
+import SpaceSettingsPage from 'page_objects/spaceSettingsPage';
+import SpaceDashboardPage from 'page_objects/spaceDashboardPage';
+import HomePage from 'page_objects/homePage';
+import CommonPage from 'page_objects/common';
+import NavBar from 'page_objects/navBar';
+import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'actions/common';
 
 const clipboardy = require('clipboardy');
 

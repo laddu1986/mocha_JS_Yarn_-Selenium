@@ -1,9 +1,9 @@
-import * as lib from '../../../common';
-import accountPage from 'web/page_objects/accountPage';
-import { createAccount } from 'web/actions/account';
-import { createSpace } from 'web/actions/space';
-import * as Constants from 'data/constants.json';
-import { clickOnAudienceLink } from 'web/actions/navBar';
+import * as lib from '../../common';
+import accountPage from 'page_objects/accountPage';
+import { createAccount } from 'actions/account';
+import { createSpace } from 'actions/space';
+import * as Constants from 'constants.json';
+import { clickOnAudienceLink } from 'actions/navBar';
 import {
   verifyAllTribesPage,
   verifyTitleOnCard,
@@ -12,7 +12,7 @@ import {
   verifyTribe,
   clickCreateTribeButton,
   verifyTribeDetailpage
-} from 'web/actions/tribe';
+} from 'actions/tribe';
 var title;
 
 describe(`Create Tribe Tests ${lib.Tags.smokeTest}`, () => {

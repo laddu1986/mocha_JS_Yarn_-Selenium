@@ -1,7 +1,7 @@
-import * as identity from '../actions/identity';
-import { joi, Tags, orgData, loader } from '../../common';
-import * as organization from 'api/actions/organization';
-const schemas = 'api/data/organizationSchema';
+import { joi, Tags, orgData, loader } from '../common';
+import * as identity from 'actions/identity';
+import * as organization from 'actions/organization';
+const schemas = 'data/organizationSchema';
 var importedSchema,
   createOrgResponse,
   getOrgResponse,

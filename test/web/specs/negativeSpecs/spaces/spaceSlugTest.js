@@ -1,14 +1,14 @@
-import * as lib from '../../../../common';
+import * as lib from '../../../common';
 import * as identity from 'api/actions/identity.js';
 import * as organization from 'api/actions/organization.js';
 import * as membership from 'api/actions/membership.js';
 import * as space from 'api/actions/spaces.js';
-import SignInPage from 'web/page_objects/signInPage.js';
-import { selectOrg } from 'web/actions/organization.js';
+import SignInPage from 'page_objects/signInPage.js';
+import { selectOrg } from 'actions/organization.js';
 import { spaces } from 'api/config/getEnv';
-import { signIn, get404PageText, clickLinkOn404Page } from 'web/actions/common.js';
-import { verifyCreateFirstSpacePage, verifySpaceCard, selectSpace } from 'web/actions/space.js';
-import * as Messages from 'web/data/messages.json';
+import { signIn, get404PageText, clickLinkOn404Page } from 'actions/common.js';
+import { verifyCreateFirstSpacePage, verifySpaceCard, selectSpace } from 'actions/space.js';
+import * as Messages from 'data/messages.json';
 var UserName, OrgName, SpaceSlug, deleteRequest;
 
 const spaceSlugData = new Object();

@@ -1,4 +1,4 @@
-import { path, caller, randomString } from '../../common';
+import { path, caller, randomString } from '../common';
 
 const PROTO_PATH = path.resolve(process.env.TRIBE_PROTO_DIR + 'segmentService.proto');
 const client = caller(process.env.TRIBE_HOST, PROTO_PATH, 'SegmentService');

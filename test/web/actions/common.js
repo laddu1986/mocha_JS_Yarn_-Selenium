@@ -1,7 +1,8 @@
-import NavBar from '../page_objects/navBar';
-import CommonPage from '../page_objects/common';
-import SignInPage from '../page_objects/signInPage';
-import { confirmDeleteTxt } from 'web/data/messages.json';
+import '../common';
+import NavBar from 'page_objects/navBar';
+import CommonPage from 'page_objects/common';
+import SignInPage from 'page_objects/signInPage';
+import { confirmDeleteTxt } from 'data/messages.json';
 
 export function getNotificationMessageText() {
   CommonPage.successMsg.waitForVisible();

@@ -1,8 +1,8 @@
-import '../../../common';
-import NavBar from 'web/page_objects/navBar';
-import SignInPage from 'web/page_objects/signInPage';
-import { signIn } from 'web/actions/login';
-import { signOut } from 'web/actions/common';
+import '../../common';
+import NavBar from 'page_objects/navBar';
+import SignInPage from 'page_objects/signInPage';
+import { signIn } from 'actions/login';
+import { signOut } from 'actions/common';
 
 describe('Test Help Center', () => {
   it('Open App Page', () => {

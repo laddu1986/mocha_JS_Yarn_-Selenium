@@ -1,9 +1,9 @@
-import * as lib from '../../../common';
-import accountPage from 'web/page_objects/accountPage';
-import { createAccount } from 'web/actions/account';
-import { createSpace } from 'web/actions/space';
-import { clickOnAudienceLink } from 'web/actions/navBar';
-import { getNotificationMessageText } from 'web/actions/common';
+import * as lib from '../../common';
+import accountPage from 'page_objects/accountPage';
+import { createAccount } from 'actions/account';
+import { createSpace } from 'actions/space';
+import { clickOnAudienceLink } from 'actions/navBar';
+import { getNotificationMessageText } from 'actions/common';
 import {
   deleteTribe,
   updateTribe,
@@ -12,9 +12,9 @@ import {
   goToTribeDetailPage,
   verifyTribeDetailpage,
   verifyAllTribesPage
-} from 'web/actions/tribe';
-import * as Constants from 'data/constants.json';
-import * as PassiveNotification from 'web/data/passiveNotification.json';
+} from 'actions/tribe';
+import * as Constants from 'constants.json';
+import * as PassiveNotification from 'data/passiveNotification.json';
 var name = lib.randomString.generate(5),
   newName = `${lib.randomString.generate(5)}_newName`;
 

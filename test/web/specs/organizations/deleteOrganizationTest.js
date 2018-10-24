@@ -1,15 +1,35 @@
-import * as lib from '../../../common';
-import { createAccount } from 'web/actions/account';
-import accountPage from 'web/page_objects/accountPage';
-import { getNotificationMessageText, closePassiveNotification, confirmButtonIsEnabled, typeDeleteToConfirm, confirmDelete } from 'web/actions/common';
-import { createNewOrg, createOrg, selectOrg, verifyChooseOrgspage, verifyWecomeOrgPage, deleteOrganization, gotoOrgSettings, verifyNoOrgPage, clickCreateOrgFromNoOrgPage, clickDeleteOrgButton, cancelDeleteOrg } from 'web/actions/organization';
-import orgNotificationData from 'web/data/passiveNotification.json';
-import { signIn, signOut, } from 'web/actions/common';
-var accountDetails, orgName = `${lib.randomString.generate(10)}_Org1`, newOrgName = `${lib.randomString.generate(10)}_Org2`;
+import * as lib from '../../common';
+import { createAccount } from 'actions/account';
+import accountPage from 'page_objects/accountPage';
+import {
+  getNotificationMessageText,
+  closePassiveNotification,
+  confirmButtonIsEnabled,
+  typeDeleteToConfirm,
+  confirmDelete
+} from 'actions/common';
+import {
+  createNewOrg,
+  createOrg,
+  selectOrg,
+  verifyChooseOrgspage,
+  verifyWecomeOrgPage,
+  deleteOrganization,
+  gotoOrgSettings,
+  verifyNoOrgPage,
+  clickCreateOrgFromNoOrgPage,
+  clickDeleteOrgButton,
+  cancelDeleteOrg
+} from 'actions/organization';
+import orgNotificationData from 'data/passiveNotification.json';
+import { signIn, signOut } from 'actions/common';
+var accountDetails,
+  orgName = `${lib.randomString.generate(10)}_Org1`,
+  newOrgName = `${lib.randomString.generate(10)}_Org2`;
 
 describe('Delete organization Tests', () => {
   before(() => {
-    accountPage.open()
+    accountPage.open();
     accountDetails = createAccount();
     createOrg(orgName);
   });
@@ -17,16 +37,16 @@ describe('Delete organization Tests', () => {
   it('Delete Org --> verify Cancel action on Delete modal', () => {
     gotoOrgSettings();
     clickDeleteOrgButton();
-    expect(cancelDeleteOrg()).to.equal(true)
+    expect(cancelDeleteOrg()).to.equal(true);
   });
 
   it('Delete 2nd last Org --> Passive notification displays and Re-directs to choose orgs page', () => {
     clickDeleteOrgButton();
-    expect(confirmButtonIsEnabled()).to.equal(false)
+    expect(confirmButtonIsEnabled()).to.equal(false);
     typeDeleteToConfirm();
-    expect(confirmButtonIsEnabled()).to.equal(true)
-    confirmDelete()
-    expect(getNotificationMessageText()).to.include(orgNotificationData.deleteMessage.text)
+    expect(confirmButtonIsEnabled()).to.equal(true);
+    confirmDelete();
+    expect(getNotificationMessageText()).to.include(orgNotificationData.deleteMessage.text);
     closePassiveNotification();
     expect(verifyChooseOrgspage()).to.equal(true);
   });
@@ -35,7 +55,7 @@ describe('Delete organization Tests', () => {
     selectOrg();
     gotoOrgSettings();
     deleteOrganization();
-    expect(getNotificationMessageText()).to.include(orgNotificationData.deleteMessage.text)
+    expect(getNotificationMessageText()).to.include(orgNotificationData.deleteMessage.text);
     closePassiveNotification();
     expect(verifyNoOrgPage()).to.equal(true);
   });

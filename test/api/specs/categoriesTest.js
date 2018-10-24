@@ -1,33 +1,40 @@
-import * as lib from '../../common';
-import * as categories from 'api/actions/categories'
-import * as spaces from 'api/actions/spaces';
-import * as organization from 'api/actions/organization';
-import * as identity from 'api/actions/identity';
+import * as lib from '../common';
+import * as categories from 'actions/categories';
+import * as spaces from 'actions/spaces';
+import * as organization from 'actions/organization';
+import * as identity from 'actions/identity';
 
 const categoryData = new Object();
 var schema, createResponse, listResponse, renameResponse, moveConfirm, deleteConfirm;
 
 var schemaCategory = lib.joi.object().keys({
-  id: lib.joi.number().integer().required(),
+  id: lib.joi
+    .number()
+    .integer()
+    .required(),
   label: lib.joi.string().optional(),
   isDefault: lib.joi.boolean().optional()
 });
 
 describe('Categories Service', () => {
   describe('createCategory()', () => {
-    before('Initialise working Space', (done) => { 
-      identity.postIdentity(categoryData).then(() => { 
-        return organization.postOrganization(categoryData);
-      }).then(() => {
-        return spaces.postSpaceByOrganizationId(categoryData);
-      }).then((response) => {
-        createResponse = categories.createCategory(categoryData, true);
-        done();
-      });
+    before('Initialise working Space', done => {
+      identity
+        .postIdentity(categoryData)
+        .then(() => {
+          return organization.postOrganization(categoryData);
+        })
+        .then(() => {
+          return spaces.postSpaceByOrganizationId(categoryData);
+        })
+        .then(() => {
+          createResponse = categories.createCategory(categoryData, true);
+          done();
+        });
     });
 
     it('Creates a category', () => {
-      return createResponse.then((response) => {
+      return createResponse.then(response => {
         expect(response.status.code).to.equal(0);
         lib.joi.assert(response.response, schemaCategory);
       });
@@ -35,13 +42,13 @@ describe('Categories Service', () => {
   });
 
   describe('listCategories()', () => {
-    before('get the current list', (done) => {
+    before('get the current list', done => {
       listResponse = categories.listCategories(categoryData);
       done();
     });
 
     it('Lists all Categories', () => {
-      return listResponse.then((response) => {
+      return listResponse.then(response => {
         expect(response.status.code).to.equal(0);
         schema = lib.joi.object().keys({
           categories: lib.joi.array().items(schemaCategory)
@@ -52,13 +59,13 @@ describe('Categories Service', () => {
   });
 
   describe('renameCategory()', () => {
-    before('Send rename request', (done) => {
+    before('Send rename request', done => {
       renameResponse = categories.renameCategory(categoryData);
       done();
     });
 
     it('Renames the category', () => {
-      return renameResponse.then((response) => {
+      return renameResponse.then(response => {
         expect(response.status.code).to.equal(0);
         expect(response.response.label).to.not.equal(categoryData.tribeCategoryOldLabel);
         lib.joi.assert(response.response, schemaCategory);
@@ -67,35 +74,38 @@ describe('Categories Service', () => {
   });
 
   describe('moveCategory()', () => {
-    before('Send move request', (done) => {
-      categories.createCategory(categoryData).then(() => {
-        return categories.moveCategory(categoryData);
-      }).then((response) => {
-        expect(response.status.code).to.equal(0);
-        moveConfirm = categories.listCategories(categoryData);
-        done();
-      })
+    before('Send move request', done => {
+      categories
+        .createCategory(categoryData)
+        .then(() => {
+          return categories.moveCategory(categoryData);
+        })
+        .then(response => {
+          expect(response.status.code).to.equal(0);
+          moveConfirm = categories.listCategories(categoryData);
+          done();
+        });
     });
 
     it('Moves the category', () => {
-      return moveConfirm.then((response) => {
-       expect(response.response.categories[0].id > response.response.categories[1].id).to.be.true;
-      })
+      return moveConfirm.then(response => {
+        expect(response.response.categories[0].id > response.response.categories[1].id).to.be.true;
+      });
     });
   });
 
   describe('deleteCategory()', () => {
-    before('Send delete request', (done) => {
-      categories.deleteCategory(categoryData).then((response) => {
+    before('Send delete request', done => {
+      categories.deleteCategory(categoryData).then(response => {
         expect(response.status.code).to.equal(0);
         deleteConfirm = categories.listCategories(categoryData);
         done();
-      })
+      });
     });
-    
+
     it('Deletes the category', () => {
-      return deleteConfirm.then((response) => {
-        let categories = response.response.categories
+      return deleteConfirm.then(response => {
+        let categories = response.response.categories;
         expect(categories).to.be.an('array');
         expect(categories).to.have.lengthOf(2);
         expect(categories[1]).to.have.property('isDefault', true);
@@ -103,5 +113,5 @@ describe('Categories Service', () => {
         expect(categories[1].id).to.not.equal(categoryData.tribeCategoryID);
       });
     });
-  })
+  });
 });

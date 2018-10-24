@@ -1,13 +1,13 @@
-import '../../../common';
-import AccountPage from 'web/page_objects/accountPage';
-import { createAccount } from 'web/actions/account';
-import { createSpace, goToDeveloperPortal, getAPIKey } from 'web/actions/space';
-import { clickOnAudienceLink, clickOnSpaceDashboardLink } from 'web/actions/navBar';
-import { addUsers, addVisitor, getCount, verifyUsersAreAdded } from 'web/actions/metrics';
-import NotificationData from 'web/data/passiveNotification.json';
-import { clickOnUsersTab, clickUserRow, deleteUser, getFirstRowDetails } from 'web/actions/users';
-import { getNotificationMessageText } from 'web/actions/common';
-import Constants from 'data/constants.json';
+import '../../common';
+import AccountPage from 'page_objects/accountPage';
+import { createAccount } from 'actions/account';
+import { createSpace, goToDeveloperPortal, getAPIKey } from 'actions/space';
+import { clickOnAudienceLink, clickOnSpaceDashboardLink } from 'actions/navBar';
+import { addUsers, addVisitor, getCount, verifyUsersAreAdded } from 'actions/metrics';
+import NotificationData from 'data/passiveNotification.json';
+import { clickOnUsersTab, clickUserRow, deleteUser, getFirstRowDetails } from 'actions/users';
+import { getNotificationMessageText } from 'actions/common';
+import Constants from 'constants.json';
 
 var apiKey;
 describe('Delete User Test', () => {

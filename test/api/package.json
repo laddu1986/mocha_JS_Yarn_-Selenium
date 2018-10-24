@@ -1,0 +1,64 @@
+{
+  "name": "qa-automation",
+  "version": "1.0.0",
+  "description": "qa-automation framework for e2e testing using node and mocha",
+  "dependencies": {
+    "app-module-path": "^2.2.0",
+    "babel-cli": "^6.18.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "babel-runtime": "^6.18.0",
+    "chakram": "^1.5.0",
+    "chakram-joi": "^1.0.0",
+    "config-yml": "^0.8.0",
+    "dateformat": "^3.0.3",
+    "dotenv": "^6.0.0",
+    "grpc": "^1.15.1",
+    "grpc-caller": "^0.9.0",
+    "mocha": "^5.0.5",
+    "mocha-multi-reporters": "^1.1.7",
+    "node-es-module-loader": "^0.3.8",
+    "npm": "^6.0.0",
+    "pngjs": "^3.3.3",
+    "randomstring": "^1.1.5"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "eslint": "^4.18.2",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-plugin-babel": "^5.1.0",
+    "eslint-plugin-mocha": "^5.2.0",
+    "lint-staged": "^7.3.0",
+    "prettier": "1.14.3"
+  },
+  "scripts": {
+    "api": "mocha specs/organizationTest.js --opts config/mocha.opts",
+    "api-debug": "mocha --inspect-brk=127.0.0.1:5858 specs/*Test.js --opts config/mocha.opts",
+    "clean": "node_modules/.bin/eslint 'test/**/*.js' --fix",
+    "lint": "node_modules/.bin/eslint 'test/**/*.js'",
+    "precommit": "lint-staged",
+    "api-pipelines": "mocha specs/*Test.js --require babel-register --timeout 10000",
+    "api-smoke-tests": "mocha specs/*Test.js --opts config/mocha.opts --grep @smoke"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/appcurator/qa-automation"
+  },
+  "lint-staged": {
+    "*.{js,json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "author": "QA Team",
+  "license": "UNLICENSED",
+  "pre-commit": [
+    "precommit"
+  ]
+}

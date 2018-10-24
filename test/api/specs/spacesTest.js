@@ -1,8 +1,8 @@
-import * as spaces from '../actions/spaces';
-import * as organization from '../actions/organization';
-import * as identity from '../actions/identity';
-import { joi, Tags, spaceData } from '../../common';
-import * as Constants from 'data/constants.json';
+import { joi, Tags, spaceData } from '../common';
+import * as spaces from 'actions/spaces';
+import * as organization from 'actions/organization';
+import * as identity from 'actions/identity';
+import * as Constants from 'constants.json';
 import {
   patchSpaceNameSchema,
   patchSpaceShortUrlSchema,
@@ -10,7 +10,7 @@ import {
   updateSpaceSchema,
   getSpacesByOrganizationIdSchema,
   getSpaceByOrgIdAndSpaceIdSchema
-} from 'api/data/spaceSchema';
+} from 'data/spaceSchema';
 var postResponse, getResponse, updateResponse, getAllResponse, deleteResponse, patchResponse, patchNameResponse;
 
 describe('Spaces Api', () => {
