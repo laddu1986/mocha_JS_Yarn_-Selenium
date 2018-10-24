@@ -226,8 +226,8 @@ export function verifyLogoTab() {
 }
 
 export function uploadImage(type) {
-  if (type == 'Logo') browser.chooseFile("//input[@type='file']", './test/web/resources/Logo.png');
-  else browser.chooseFile("//input[@type='file']", './test/web/resources/Wallpaper.jpg');
+  if (type == 'Logo') browser.chooseFile("//input[@type='file']", 'resources/Logo.png');
+  else browser.chooseFile("//input[@type='file']", 'resources/Wallpaper.jpg');
 }
 
 export function waitForWallpaperPreview() {

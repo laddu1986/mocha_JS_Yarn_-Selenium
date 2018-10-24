@@ -103,6 +103,10 @@ function getEndPointsFor(ENV) {
   MySqlUser = process.env[`MYSQL_USERNAME_${ENV}`];
   MySqlPass = process.env[`MYSQL_PASSWORD_${ENV}`];
   MySqlHost = process.env[`MYSQL_HOSTNAME_${ENV}`];
+  identities = process.env[`API_IDENTITIES_${ENV}`];
+  organizations = process.env[`API_ORGANIZATIONS_${ENV}`];
+  memberships = process.env[`API_MEMBERSHIPS_${ENV}`];
+  spaces = process.env[`API_SPACES_${ENV}`];
 }
 /* eslint-enable no-undef */
 exports.config = {
@@ -111,27 +115,27 @@ exports.config = {
   capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
-    'specs/invites/*Test.js' //master
+    'specs/**/*Test.js' //master
   ],
   // Patterns to exclude.
-  exclude: ['./test/web/specs/support/helpPageTest.js'],
+  exclude: ['specs/support/helpPageTest.js'],
   suites: {
     smoke: [
-      './test/web/specs/accounts/createAccountTest.js',
-      './test/web/specs/accounts/signInAndOutTest.js',
-      './test/web/specs/invites/inviteTest.js',
-      './test/web/specs/organizations/createOrganizationTest.js',
-      './test/web/specs/spaces/createSpaceTest.js',
-      './test/web/specs/tribes/createTribeTest.js'
+      'specs/accounts/createAccountTest.js',
+      'specs/accounts/signInAndOutTest.js',
+      'specs/invites/inviteTest.js',
+      'specs/organizations/createOrganizationTest.js',
+      'specs/spaces/createSpaceTest.js',
+      'specs/tribes/createTribeTest.js'
     ],
-    accounts: ['./test/web/specs/accounts/*Test.js'],
-    organizations: ['./test/web/specs/organizations/*Test.js'],
-    spaces: ['./test/web/specs/spaces/*Test.js'],
-    support: ['./test/web/specs/support/*Test.js'],
-    invites: ['./test/web/specs/invites/*Test.js'],
-    tribes: ['./test/web/specs/tribes/*Test.js'],
-    metrics: ['./test/web/specs/metrics/*Test.js'],
-    negative: ['./test/web/specs/negativeSpecs/*/*Test.js']
+    accounts: ['specs/accounts/*Test.js'],
+    organizations: ['specs/organizations/*Test.js'],
+    spaces: ['specs/spaces/*Test.js'],
+    support: ['specs/support/*Test.js'],
+    invites: ['specs/invites/*Test.js'],
+    tribes: ['specs/tribes/*Test.js'],
+    metrics: ['specs/metrics/*Test.js'],
+    negative: ['specs/negativeSpecs/*/*Test.js']
   },
   logLevel: 'silent',
   bail: 2,
@@ -144,7 +148,7 @@ exports.config = {
   reporters: ['spec', 'html-format'],
   reporterOptions: {
     htmlFormat: {
-      outputDir: './test/web/reports'
+      outputDir: 'reports'
     }
   },
   mochaOpts: {
