@@ -4,6 +4,27 @@
     "Slug": "slug",
     "ShortUrl": "shortUrl"
   },
+  "TribeAttributes": {
+    "Title": "Title",
+    "Tagline": "Tagline"
+  },
+  "UserType": {
+    "User": "User",
+    "Visitor": "Visitor",
+    "Active": "Active",
+    "New": "New"
+  },
+  "UserAttributes": {
+    "Name": "Name",
+    "Email": "Email",
+    "UID": "UID"
+  },
+  "TribeFilterTypes": {
+    "AudienceType": "AudienceType",
+    "LogicalType": "LogicalType",
+    "Operator": "Operator",
+    "Property": "Property"
+  },
   "InviteStatus": {
     "Expired": "Expired",
     "Pending": "Pending"

@@ -101,9 +101,17 @@ export function goBackToOrgDashboard() {
   NavBar.backToOrgDashboardLink.click();
 }
 
-export function verifyOrgCardStack() {
+export function verifyOrgCardStack(updatedOrgName) {
   HomePage.orgCards.waitForVisible();
-  return HomePage.orgCards.value[0].getText();
+  browser.refresh();
+  browser.waitUntil(
+    function() {
+      return HomePage.orgCards.value[0].getText().includes(updatedOrgName);
+    },
+    5000,
+    'Organisation name did not update to new name',
+    200
+  );
 }
 
 export function clickDeleteOrgButton() {

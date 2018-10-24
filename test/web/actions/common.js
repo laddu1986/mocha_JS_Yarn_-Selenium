@@ -1,4 +1,4 @@
-import '../common';
+import { post, randomString } from '../common';
 import NavBar from 'page_objects/navBar';
 import CommonPage from 'page_objects/common';
 import SignInPage from 'page_objects/signInPage';
@@ -72,4 +72,68 @@ export function hideIntercom() {
 
 export function submit() {
   CommonPage.submitButton.click();
+}
+
+export function postIdentity(responseObject) {
+  const any = {
+    /*eslint-disable */
+    api: identities,
+    /*eslint-enable */
+    data: {
+      fullname: randomString.generate(12),
+      email: `${randomString.generate(12)}@test.co`,
+      password: process.env.ACCOUNT_PASS
+    }
+  };
+  return post(any).then(response => {
+    responseObject.identityID = response.body.id;
+    return response;
+  });
+}
+
+export function postOrganization(responseObject) {
+  const any = {
+    /*eslint-disable */
+    api: organizations,
+    /*eslint-enable */
+    data: {
+      name: randomString.generate(10),
+      createdByAccountId: responseObject.identityID
+    }
+  };
+  return post(any).then(response => {
+    responseObject.orgID = response.body.id;
+    return response;
+  });
+}
+
+export function postMembership(responseObject) {
+  const any = {
+    /*eslint-disable */
+    api: memberships,
+    /*eslint-enable */
+    data: {
+      accountId: responseObject.identityID,
+      organizationId: responseObject.orgID
+    }
+  };
+  return post(any);
+}
+
+export function postSpaceByOrganizationId(responseObject) {
+  const any = {
+    /*eslint-disable */
+    api: `${spaces + responseObject.orgID}/spaces`,
+    /*eslint-enable */
+    data: {
+      name: randomString.generate(10),
+      createdByAccountId: responseObject.identityID,
+      shortUrl: randomString.generate(6)
+    }
+  };
+  return post(any).then(response => {
+    responseObject.spaceID = response.body.id;
+    responseObject.spaceRowVersion = response.body.rowVersion;
+    return response;
+  });
 }
