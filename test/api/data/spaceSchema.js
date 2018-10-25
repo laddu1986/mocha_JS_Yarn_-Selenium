@@ -1,5 +1,5 @@
-import { joi, spaceData, spaceSchemaData } from '../../common';
-import * as Constants from 'data/constants.json';
+import { joi, spaceData, spaceSchemaData } from '../common';
+import * as Constants from 'constants.json';
 
 export function postSpaceByOrganizationIdSchema() {
   var schema = joi.object().keys({

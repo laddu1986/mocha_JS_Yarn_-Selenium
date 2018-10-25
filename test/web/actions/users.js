@@ -1,8 +1,8 @@
-import * as lib from '../../common';
-import UsersPage from 'web/page_objects/usersPage';
-import CommonPage from 'web/page_objects/common';
-import Constants from 'data/constants.json';
-import { clickOnAudienceLink } from 'web/actions/navBar';
+import * as lib from '../common';
+import UsersPage from 'page_objects/usersPage';
+import CommonPage from 'page_objects/common';
+import Constants from 'constants.json';
+import { clickOnAudienceLink } from 'actions/navBar';
 
 var flag,
   finalFlag = [],

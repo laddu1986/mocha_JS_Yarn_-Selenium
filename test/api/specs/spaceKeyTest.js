@@ -1,9 +1,9 @@
-import { spaceKeyData, joi, loader } from '../../common';
-import * as spaces from 'api/actions/spaces';
-import * as organization from 'api/actions/organization';
-import * as identity from 'api/actions/identity';
-import * as Constants from 'data/constants.json';
-const schemas = 'api/data/spaceKeySchema';
+import { spaceKeyData, joi, loader } from '../common';
+import * as spaces from 'actions/spaces';
+import * as organization from 'actions/organization';
+import * as identity from 'actions/identity';
+import * as Constants from 'constants.json';
+const schemas = 'data/spaceKeySchema';
 var postResponse, getResponse, revokeResponse, reactivateResponse, deleteResponse, importedSchema;
 
 describe('Space Keys Api', () => {

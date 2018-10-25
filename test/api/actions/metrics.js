@@ -1,5 +1,5 @@
-import { get } from '../../common';
-import { metrics } from '../config/getEnv';
+import { get } from '../common';
+import { metrics } from 'config/getEnv';
 
 var today = new Date();
 var mm = today.getMonth();

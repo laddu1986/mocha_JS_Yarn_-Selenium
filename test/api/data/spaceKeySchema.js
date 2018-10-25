@@ -1,5 +1,5 @@
-import { spaceKeyData, joi } from '../../common';
-import * as Constants from 'data/constants.json';
+import { spaceKeyData, joi } from '../common';
+import * as Constants from 'constants.json';
 
 export const createKeySchema = joi.object().keys({
   value: joi

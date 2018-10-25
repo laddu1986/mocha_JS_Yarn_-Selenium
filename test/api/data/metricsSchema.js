@@ -1,4 +1,4 @@
-import { joi } from '../../common';
+import { joi } from '../common';
 
 export function metricsByDaySchema() {
   var objectSchema = joi.object().keys({

@@ -1,9 +1,9 @@
-import * as lib from '../../common';
-import HomePage from 'web/page_objects/homePage';
-import AccountPage from 'web/page_objects/accountPage';
-import OrgDashboardPage from 'web/page_objects/orgDashboardPage';
-import CommonPage from 'web/page_objects/common';
-import { confirmDelete, cancelDelete, typeDeleteToConfirm, hideIntercom } from 'web/actions/common';
+import * as lib from '../common';
+import HomePage from 'page_objects/homePage';
+import AccountPage from 'page_objects/accountPage';
+import OrgDashboardPage from 'page_objects/orgDashboardPage';
+import CommonPage from 'page_objects/common';
+import { confirmDelete, cancelDelete, typeDeleteToConfirm, hideIntercom } from 'actions/common';
 var name,
   email,
   organization,

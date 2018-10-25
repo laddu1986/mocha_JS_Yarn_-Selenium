@@ -1,7 +1,7 @@
-import * as lib from '../../common';
-import Common from 'web/page_objects/common';
-import TribePage from 'web/page_objects/tribePage';
-import * as Constants from 'data/constants.json';
+import * as lib from '../common';
+import Common from 'page_objects/common';
+import TribePage from 'page_objects/tribePage';
+import * as Constants from 'constants.json';
 var colorIndex, selectedColourValue, actualValue;
 
 export function clickCreateTribeButton() {
@@ -226,8 +226,8 @@ export function verifyLogoTab() {
 }
 
 export function uploadImage(type) {
-  if (type == 'Logo') browser.chooseFile("//input[@type='file']", './test/web/resources/Logo.png');
-  else browser.chooseFile("//input[@type='file']", './test/web/resources/Wallpaper.jpg');
+  if (type == 'Logo') browser.chooseFile("//input[@type='file']", 'resources/Logo.png');
+  else browser.chooseFile("//input[@type='file']", 'resources/Wallpaper.jpg');
 }
 
 export function waitForWallpaperPreview() {

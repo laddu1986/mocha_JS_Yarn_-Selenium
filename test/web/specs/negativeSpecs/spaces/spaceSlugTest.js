@@ -1,24 +1,27 @@
-import * as lib from '../../../../common';
-import * as identity from 'api/actions/identity.js';
-import * as organization from 'api/actions/organization.js';
-import * as membership from 'api/actions/membership.js';
-import * as space from 'api/actions/spaces.js';
-import SignInPage from 'web/page_objects/signInPage.js';
-import { selectOrg } from 'web/actions/organization.js';
-import { spaces } from 'api/config/getEnv';
-import { signIn, get404PageText, clickLinkOn404Page } from 'web/actions/common.js';
-import { verifyCreateFirstSpacePage, verifySpaceCard, selectSpace } from 'web/actions/space.js';
-import * as Messages from 'web/data/messages.json';
+import * as lib from '../../../common';
+import SignInPage from 'page_objects/signInPage.js';
+import { selectOrg } from 'actions/organization.js';
+import {
+  signIn,
+  get404PageText,
+  clickLinkOn404Page,
+  postSpaceByOrganizationId,
+  postMembership,
+  postOrganization,
+  postIdentity
+} from 'actions/common.js';
+import { verifyCreateFirstSpacePage, verifySpaceCard, selectSpace } from 'actions/space.js';
+import * as Messages from 'data/messages.json';
 var UserName, OrgName, SpaceSlug, deleteRequest;
 
 const spaceSlugData = new Object();
 
 describe('Negative cases --> Space Slug', () => {
   before(async () => {
-    var indentityRes = await identity.postIdentity(spaceSlugData);
-    var orgRes = await organization.postOrganization(spaceSlugData);
-    await membership.postMembership(spaceSlugData);
-    var spaceRes1 = await space.postSpaceByOrganizationId(spaceSlugData);
+    var indentityRes = await postIdentity(spaceSlugData);
+    var orgRes = await postOrganization(spaceSlugData);
+    await postMembership(spaceSlugData);
+    var spaceRes1 = await postSpaceByOrganizationId(spaceSlugData);
     UserName = JSON.stringify(indentityRes.body.email).replace(/"/g, '');
     SpaceSlug = JSON.stringify(spaceRes1.body.shortUrl)
       .replace(/"/g, '')
@@ -27,7 +30,9 @@ describe('Negative cases --> Space Slug', () => {
       .replace(/"/g, '')
       .toLowerCase();
     deleteRequest = {
+      /*eslint-disable */
       api: `${spaces + spaceSlugData.orgID}/spaces/${spaceSlugData.spaceID}?rowVersion=${
+        /*eslint-enable */
         spaceSlugData.spaceRowVersion
       }`,
       data: ''
