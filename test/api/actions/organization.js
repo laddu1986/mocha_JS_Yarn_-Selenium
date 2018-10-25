@@ -1,5 +1,5 @@
-import { randomString, organizationsSchemaData, post, get, put, del } from '../../common';
-import { organizations } from '../config/getEnv';
+import { randomString, organizationsSchemaData, post, get, put, del } from '../common';
+import { organizations } from 'config/getEnv';
 
 export function postOrganization(responseObject, flag) {
   const any = {

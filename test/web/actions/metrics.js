@@ -1,7 +1,7 @@
-import * as lib from '../../common';
-import spaceDashboardPage from 'web/page_objects/spaceDashboardPage';
-import UsersPage from 'web/page_objects/usersPage';
-import Constants from 'data/constants.json';
+import * as lib from '../common';
+import spaceDashboardPage from 'page_objects/spaceDashboardPage';
+import UsersPage from 'page_objects/usersPage';
+import Constants from 'constants.json';
 
 const header = {
   Host: 'client.appcurator.io',

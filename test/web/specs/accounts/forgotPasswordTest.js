@@ -1,6 +1,13 @@
-import * as lib from '../../../common';
-import SignInPage from 'web/page_objects/signInPage';
-import { emailInputValue, clickBackToSignIn, clickForgotPassword, submitButtonVisible, submitEmail, backToSignInButtonVisible } from 'web/actions/login';
+import '../../common';
+import SignInPage from 'page_objects/signInPage';
+import {
+  emailInputValue,
+  clickBackToSignIn,
+  clickForgotPassword,
+  submitButtonVisible,
+  submitEmail,
+  backToSignInButtonVisible
+} from 'actions/login';
 
 describe('Test Forgot Password Link', () => {
   before('Open App URL', () => {

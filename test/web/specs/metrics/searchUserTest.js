@@ -1,11 +1,11 @@
-import '../../../common';
-import AccountPage from 'web/page_objects/accountPage';
-import { createAccount } from 'web/actions/account';
-import { createSpace, goToDeveloperPortal, getAPIKey } from 'web/actions/space';
-import { clickOnAudienceLink } from 'web/actions/navBar';
-import { addUsers, verifyUsersAreAdded } from 'web/actions/metrics';
-import Constants from 'data/constants.json';
-import Messages from 'web/data/messages.json';
+import '../../common';
+import AccountPage from 'page_objects/accountPage';
+import { createAccount } from 'actions/account';
+import { createSpace, goToDeveloperPortal, getAPIKey } from 'actions/space';
+import { clickOnAudienceLink } from 'actions/navBar';
+import { addUsers, verifyUsersAreAdded } from 'actions/metrics';
+import Constants from 'constants.json';
+import Messages from 'data/messages.json';
 import {
   clickOnUsersTab,
   getFirstRowDetails,
@@ -13,7 +13,7 @@ import {
   getRecentUsersRows,
   getResultText,
   clearText
-} from 'web/actions/users';
+} from 'actions/users';
 var apiKey;
 describe('Search User Test', () => {
   before(() => {

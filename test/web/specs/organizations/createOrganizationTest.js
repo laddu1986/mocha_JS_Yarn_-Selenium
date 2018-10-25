@@ -1,16 +1,16 @@
 // Create Organization, sign out, sign back in to validate user lands in the created Org
-import * as lib from '../../../common';
-import { createAccount } from 'web/actions/account';
-import { signOut, signIn } from 'web/actions/common';
+import * as lib from '../../common';
+import { createAccount } from 'actions/account';
+import { signOut, signIn } from 'actions/common';
 import {
   verifyOrgNameOnDashBoard,
   goToCreateOrgPageFromNavbar,
   verifyCreateOrgPage,
   createNewOrg,
   verifyWecomeOrgPage
-} from 'web/actions/organization';
-import { getnavOrgCount } from 'web/actions/navBar';
-import accountPage from 'web/page_objects/accountPage';
+} from 'actions/organization';
+import { getnavOrgCount } from 'actions/navBar';
+import accountPage from 'page_objects/accountPage';
 var orgName = lib.randomString.generate(10),
   accountDetails;
 

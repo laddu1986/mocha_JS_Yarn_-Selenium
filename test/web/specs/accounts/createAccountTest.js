@@ -1,10 +1,16 @@
-import * as lib from '../../../common';
-import { clickCreateAccountLink, verifyAccountPageAppears, inputDetails, submit, verifyOrgDashboardPageAppears } from 'web/actions/account';
-import signInPage from 'web/page_objects/signInPage';
+import * as lib from '../../common';
+import {
+  clickCreateAccountLink,
+  verifyAccountPageAppears,
+  inputDetails,
+  submit,
+  verifyOrgDashboardPageAppears
+} from 'actions/account';
+import signInPage from 'page_objects/signInPage';
 
 describe(`Tests for Create Account ${lib.Tags.smokeTest}`, () => {
   before('Open create account page', () => {
-    signInPage.open()
+    signInPage.open();
   });
 
   it('Click create account link', () => {

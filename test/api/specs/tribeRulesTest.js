@@ -1,10 +1,10 @@
-import { joi } from '../../common';
-import * as identity from 'api/actions/identity';
-import * as spaces from 'api/actions/spaces';
-import * as organization from 'api/actions/organization';
-import * as tribe from 'api/actions/tribe';
-import * as rules from 'api/actions/tribeRules';
-import * as schemas from 'api/data/tribeRulesSchema';
+import { joi } from '../common';
+import * as identity from 'actions/identity';
+import * as spaces from 'actions/spaces';
+import * as organization from 'actions/organization';
+import * as tribe from 'actions/tribe';
+import * as rules from 'actions/tribeRules';
+import * as schemas from 'data/tribeRulesSchema';
 
 var configResponse,
   saveResponse,

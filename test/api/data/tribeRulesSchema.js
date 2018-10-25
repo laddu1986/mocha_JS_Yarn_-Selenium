@@ -1,4 +1,4 @@
-import { joi } from '../../common';
+import { joi } from '../common';
 
 const UserCount = joi.number().integer();
 

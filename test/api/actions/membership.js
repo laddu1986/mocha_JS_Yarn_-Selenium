@@ -1,5 +1,5 @@
-import { post, get, del } from '../../common';
-import { memberships } from '../config/getEnv';
+import { post, get, del } from '../common';
+import { memberships } from 'config/getEnv';
 
 export function postMembership(responseObject) {
   const any = {

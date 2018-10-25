@@ -1,9 +1,9 @@
-import * as lib from '../../../common';
-import accountPage from 'web/page_objects/accountPage';
-import { createAccount } from 'web/actions/account';
-import { createSpace } from 'web/actions/space';
-import { clickOnAudienceLink } from 'web/actions/navBar';
-import { submit } from 'web/actions/common';
+import * as lib from '../../common';
+import accountPage from 'page_objects/accountPage';
+import { createAccount } from 'actions/account';
+import { createSpace } from 'actions/space';
+import { clickOnAudienceLink } from 'actions/navBar';
+import { submit } from 'actions/common';
 import {
   closeModal,
   waitForWallpaperPreview,
@@ -22,7 +22,7 @@ import {
   verifyModal,
   verifyTribeCardColour,
   goToTribeDetailPage
-} from 'web/actions/tribe';
+} from 'actions/tribe';
 var name = lib.randomString.generate(5);
 
 describe('Tribe Actions Tests', () => {

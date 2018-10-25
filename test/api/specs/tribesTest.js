@@ -1,9 +1,9 @@
-import { randomString } from '../../common';
-import * as identity from 'api/actions/identity';
-import * as spaces from 'api/actions/spaces';
-import * as organization from 'api/actions/organization';
-import * as categories from 'api/actions/categories';
-import * as tribe from 'api/actions/tribe';
+import { randomString } from '../common';
+import * as identity from 'actions/identity';
+import * as spaces from 'actions/spaces';
+import * as organization from 'actions/organization';
+import * as categories from 'actions/categories';
+import * as tribe from 'actions/tribe';
 var moveResponse, createTribeResponse, updateTribeResponse, getResponse, deleteResponse;
 const tribeData = new Object();
 

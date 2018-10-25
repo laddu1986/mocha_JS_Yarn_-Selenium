@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: web-smoke-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-smoke-test
+  template:
+    metadata:
+      labels:
+        app: web-smoke-test
+    spec:
+      containers:
+        - name: web-smoke-test
+          image: massiveinteractive/qa-ci:v181025-043349
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: qa-config
+          command: ["/bin/sh", "-c"]
+          args:
+            - echo starting;
+              yarn run web --browser:ch;
+              allure generate allure-results --clean;
+              ls -a;
+              echo done;
+      restartPolicy: Always

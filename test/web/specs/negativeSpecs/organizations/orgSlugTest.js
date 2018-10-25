@@ -1,29 +1,34 @@
-import * as lib from '../../../../common';
-import * as identity from 'api/actions/identity.js';
-import * as organization from 'api/actions/organization.js';
-import * as membership from 'api/actions/membership.js';
-import { memberships } from 'api/config/getEnv';
-import SignInPage from 'web/page_objects/signInPage.js';
-import { signIn, get404PageText, clickLinkOn404Page } from 'web/actions/common.js';
-import { selectOrg, verifyChooseOrgspage, verifyWecomeOrgPage, verifyNoOrgPage } from 'web/actions/organization.js';
-import * as Messages from 'web/data/messages.json';
+import * as lib from '../../../common';
+import SignInPage from 'page_objects/signInPage.js';
+import {
+  signIn,
+  get404PageText,
+  clickLinkOn404Page,
+  postIdentity,
+  postOrganization,
+  postMembership
+} from 'actions/common.js';
+import { selectOrg, verifyChooseOrgspage, verifyWecomeOrgPage, verifyNoOrgPage } from 'actions/organization.js';
+import * as Messages from 'data/messages.json';
 var UserName, OrgName, deleteOrgRequest, deleteMembershipRequest;
 
 const orgSlugData = new Object();
 
 describe('Negative cases --> Org Slug', () => {
   before(async () => {
-    var indentityRes = await identity.postIdentity(orgSlugData);
-    var orgRes = await organization.postOrganization(orgSlugData);
-    await membership.postMembership(orgSlugData);
+    var indentityRes = await postIdentity(orgSlugData);
+    var orgRes = await postOrganization(orgSlugData);
+    await postMembership(orgSlugData);
     UserName = JSON.stringify(indentityRes.body.email).replace(/"/g, '');
     OrgName = JSON.stringify(orgRes.body.name).replace(/"/g, '');
     deleteMembershipRequest = {
+      /*eslint-disable */
       api: memberships,
       data: `organization/${orgSlugData.orgID}/account/${orgSlugData.identityID}`
     };
     deleteOrgRequest = {
       api: memberships,
+      /*eslint-enable */
       data: `${orgSlugData.orgID}?rowVersion=${orgSlugData.identityID}`
     };
   });

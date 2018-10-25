@@ -1,14 +1,10 @@
-import * as spaces from '../actions/spaces';
-import * as organization from '../actions/organization';
-import * as identity from '../actions/identity';
-import * as metrics from '../actions/metrics';
-import { joi } from '../../common';
-import {
-  metricsByDaySchema,
-  uniqueAPIRequestsSchema,
-  activeDaySchema,
-  uniqueUsersSchema
-} from 'api/data/metricsSchema';
+import { joi } from '../common';
+import * as spaces from 'actions/spaces';
+import * as organization from 'actions/organization';
+import * as identity from 'actions/identity';
+import * as metrics from 'actions/metrics';
+
+import { metricsByDaySchema, uniqueAPIRequestsSchema, activeDaySchema, uniqueUsersSchema } from 'data/metricsSchema';
 var getUniqueUsersResponse,
   getAPIRequestsResponse,
   getActiveResponse,

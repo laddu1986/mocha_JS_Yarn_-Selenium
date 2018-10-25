@@ -1,4 +1,4 @@
-import { joi, identitySchemaData, identityData } from '../../common';
+import { joi, identitySchemaData, identityData } from '../common';
 
 export const postIdentitySchema = joi.object().keys({
   fullName: joi.valid(identitySchemaData.name).required(),

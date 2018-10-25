@@ -1,5 +1,5 @@
-import * as lib from '../../common';
-import * as identity from 'api/actions/identity';
+import * as lib from '../common';
+import * as identity from 'actions/identity';
 
 var schema, getResponse, putResponse, patchResponse;
 const identityStateData = new Object();

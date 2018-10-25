@@ -1,5 +1,5 @@
-import * as lib from '../../../common';
-import { createAccount } from 'web/actions/account';
+import * as lib from '../../common';
+import { createAccount } from 'actions/account';
 import {
   verifySpaceOrder,
   verifyCreateFirstSpacePage,
@@ -7,9 +7,9 @@ import {
   verifySpacePage,
   goBackToOrgDashboard,
   clickCreateNewSpaceButton
-} from 'web/actions/space';
-import accountPage from 'web/page_objects/accountPage';
-import { signIn, signOut } from 'web/actions/common';
+} from 'actions/space';
+import accountPage from 'page_objects/accountPage';
+import { signIn, signOut } from 'actions/common';
 var accountDetail,
   spaceName1,
   spaceName = [];
