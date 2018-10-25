@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const debug = process.env.DEBUG;
-const timeoutPeriod = 30000;
+const timeoutPeriod = 20000;
 
 var browsers = {
   chrome_headless: {
@@ -138,7 +138,7 @@ exports.config = {
     negative: ['specs/negativeSpecs/*/*Test.js']
   },
   logLevel: 'silent',
-  bail: 2,
+  //bail: 2,   //If you only want to run your tests until a specific amount of tests have failed use bail (default is 0 - don’t bail, run all tests
   coloredLogs: true,
   baseUrl: getArgs()[1],
   waitforTimeout: debug ? 9999999 : timeoutPeriod,
