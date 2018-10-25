@@ -1,9 +1,9 @@
-import '../../../../common';
-import accountPage from 'web/page_objects/accountPage';
-import { createAccount } from 'web/actions/account';
-import { createSpace, goToDeveloperPortal, getAPIKey } from 'web/actions/space';
-import { addUsers } from 'web/actions/metrics';
-import * as ErrMsg from 'web/data/messages.json';
+import '../../../common';
+import accountPage from 'page_objects/accountPage';
+import { createAccount } from 'actions/account';
+import { createSpace, goToDeveloperPortal, getAPIKey } from 'actions/space';
+import { addUsers } from 'actions/metrics';
+import * as ErrMsg from 'data/messages.json';
 import {
   gotoUsersTab,
   inputLabelDetails,
@@ -11,7 +11,7 @@ import {
   clickAddLabelButton,
   clickUserRow,
   labelErrMsg
-} from 'web/actions/users';
+} from 'actions/users';
 
 var apiKey;
 

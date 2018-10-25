@@ -1,13 +1,22 @@
-import * as lib from '../../../common';
-import { createAccount } from 'web/actions/account';
-import { verifySpaceOrder, verifyCreateFirstSpacePage, createSpace, verifySpacePage, goBackToOrgDashboard, clickCreateNewSpaceButton, } from 'web/actions/space';
-import accountPage from 'web/page_objects/accountPage';
-import { signIn, signOut } from 'web/actions/common';
-var accountDetail, spaceName1, spaceName = [];
+import * as lib from '../../common';
+import { createAccount } from 'actions/account';
+import {
+  verifySpaceOrder,
+  verifyCreateFirstSpacePage,
+  createSpace,
+  verifySpacePage,
+  goBackToOrgDashboard,
+  clickCreateNewSpaceButton
+} from 'actions/space';
+import accountPage from 'page_objects/accountPage';
+import { signIn, signOut } from 'actions/common';
+var accountDetail,
+  spaceName1,
+  spaceName = [];
 
 describe('Space Tests', () => {
   before('Open App URL', () => {
-    accountPage.open()
+    accountPage.open();
     accountDetail = createAccount();
   });
 
@@ -27,7 +36,7 @@ describe('Space Tests', () => {
       spaceName[i] = createSpace();
       expect(verifySpacePage(spaceName[i].toLowerCase())).to.equal(true);
     }
-  })
+  });
 
   it('Sign out and back in --> Should show last accessed Space', () => {
     signOut();
@@ -44,5 +53,5 @@ describe('Space Tests', () => {
 
   after('Sign Out', () => {
     signOut();
-  })
-})
+  });
+});

@@ -1,5 +1,5 @@
-import { randomString, post, invitesSchemaData, get, del } from '../../common';
-import { organizations, invites, token } from '../config/getEnv';
+import { randomString, post, invitesSchemaData, get, del } from '../common';
+import { organizations, invites, token } from 'config/getEnv';
 var emailInvited = `${randomString.generate(5)}@test.co`;
 
 export function getAccessToken(responseObject) {

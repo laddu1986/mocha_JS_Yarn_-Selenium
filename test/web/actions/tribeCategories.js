@@ -1,5 +1,5 @@
-import '../../common';
-import tribePage from 'web/page_objects/tribePage';
+import '../common';
+import tribePage from 'page_objects/tribePage';
 
 export function createCategory() {
   tribePage.insertCategoryButton.click();

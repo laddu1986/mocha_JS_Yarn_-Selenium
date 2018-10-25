@@ -1,6 +1,6 @@
-import { randomString, spaceSchemaData, post, get, put, patch, del } from '../../common';
-import { spaces, keys } from '../config/getEnv';
-import * as Constants from 'data/constants.json';
+import { randomString, spaceSchemaData, post, get, put, patch, del } from '../common';
+import { spaces, keys } from 'config/getEnv';
+import * as Constants from 'constants.json';
 
 export function postSpaceByOrganizationId(responseObject, flag) {
   const any = {

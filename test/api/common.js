@@ -25,11 +25,6 @@ export const spaceKeyData = new Object();
 export const spaceSchemaData = new Object();
 export const spaceData = new Object();
 
-const responseData = {
-  users: [],
-  visitors: []
-};
-
 const Tags = {
   smokeTest: '@smoke'
 };
@@ -56,7 +51,6 @@ function patch(any) {
 function del(any) {
   return server.delete(any.api + any.data);
 }
-const sortAlphabetically = (a, b) => a.toLowerCase().localeCompare(b.toLowerCase());
 
 export {
   dateFormat,
@@ -69,12 +63,8 @@ export {
   put,
   patch,
   del,
-  // library
   server,
-  // data
-  responseData,
   randomString,
-  sortAlphabetically,
   path,
   caller
 };

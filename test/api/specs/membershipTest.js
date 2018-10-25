@@ -1,8 +1,8 @@
-import { joi, Tags, membershipData, loader } from '../../common';
-import * as organization from 'api/actions/organization';
-import * as membership from 'api/actions/membership';
-import * as identity from 'api/actions/identity';
-const schemas = 'api/data/membershipSchema';
+import { joi, Tags, membershipData, loader } from '../common';
+import * as organization from 'actions/organization';
+import * as membership from 'actions/membership';
+import * as identity from 'actions/identity';
+const schemas = 'data/membershipSchema';
 var createResponse, getByAccountIDResponse, getByOrgIDResponse, deleteResponse, getResponse, importedSchema;
 
 describe('Memberships Api', () => {

@@ -1,6 +1,6 @@
-import { joi, loader, Tags, identityData } from '../../common';
-import * as identity from 'api/actions/identity';
-const schemas = 'api/data/identitySchema';
+import { joi, loader, Tags, identityData } from '../common';
+import * as identity from 'actions/identity';
+const schemas = 'data/identitySchema';
 var addResponse, getResponse, deleteResponse, importedSchema;
 
 describe('Identity Api', () => {

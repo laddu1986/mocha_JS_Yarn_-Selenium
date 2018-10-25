@@ -1,7 +1,7 @@
-import * as lib from '../../common';
-import * as data from 'api/data/identityTestsData.js';
-import * as identity from 'api/actions/identity.js';
-import * as validationErrors from 'api/data/validationErrorsData.json';
+import * as lib from '../common';
+import * as data from 'data/identityTestsData.js';
+import * as identity from 'actions/identity.js';
+import * as validationErrors from 'data/validationErrorsData.json';
 var noEmailResponse, noFullNameResponse, noPwdResponse, emailExistsResponse, getResponse, putResponse, patchResponse;
 const identityNegData = new Object();
 
