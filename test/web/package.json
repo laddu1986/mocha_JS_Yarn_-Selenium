@@ -24,28 +24,15 @@
     "wdio-spec-reporter": "^0.1.4",
     "webdriverio": "^4.12.0"
   },
-  "devDependencies": {
-    "babel-eslint": "^8.2.2",
-    "eslint": "^4.18.2",
-    "eslint-config-prettier": "^3.0.1",
-    "eslint-plugin-babel": "^5.1.0",
-    "eslint-plugin-mocha": "^5.2.0",
-    "lint-staged": "^7.3.0",
-    "prettier": "1.14.3"
-  },
   "scripts": {
     "web": "node_modules/.bin/wdio wdio.appcurator.js",
     "web-debug": "DEBUG=true ./node_modules/.bin/wdio wdio.appcurator.js",
-    "orca": "mocha test/orca/specs/loginTest.js --require babel-register",
-    "clean": "node_modules/.bin/eslint 'test/**/*.js' --fix",
-    "lint": "node_modules/.bin/eslint 'test/**/*.js'",
-    "precommit": "lint-staged",
     "web-pipelines": "node_modules/.bin/wdio wdio.bitbucket-pipelines.js",
-    "web-smoke-tests": "node_modules/.bin/wdio wdio.appcurator.js --suite smoke --mochaOpts.grep=@smoke"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/appcurator/qa-automation"
+    "web-smoke-tests": "node_modules/.bin/wdio wdio.appcurator.js --suite smoke --mochaOpts.grep=@smoke",
+    "orca": "mocha test/orca/specs/loginTest.js --require babel-register",
+    "clean": "eslint '**/*.js' --fix",
+    "lint": "eslint '**/*.js'",
+    "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,json,md}": [
@@ -59,6 +46,15 @@
   },
   "author": "QA Team",
   "license": "UNLICENSED",
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.7.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-babel": "^5.2.1",
+    "eslint-plugin-mocha": "^5.2.0",
+    "lint-staged": "^7.3.0",
+    "prettier": "^1.14.3"
+  },
   "pre-commit": [
     "precommit"
   ]
