@@ -1,0 +1,50 @@
+{
+  "private": true,
+  "name": "qa-automation",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "yarn install && yarn run dev-web && yarn run dev-api",
+    "dev-api": "cd test/api && yarn install --frozen-lockfile",
+    "dev-web": "cd test/web && yarn install --frozen-lockfile",
+    "prod": "yarn run prod-web && yarn run prod-api",
+    "prod-api": "cd test/api && yarn install --frozen-lockfile --production",
+    "prod-web": "cd test/web && yarn install --frozen-lockfile --production",
+    "api": "cd test/api && yarn run api",
+    "api-debug": "cd test/api && yarn run api-debug",
+    "api-pipelines": "cd test/api && yarn run api-pipelines",
+    "api-smoke-tests": "cd test/api && yarn run api-smoke-tests",
+    "web": "cd test/web && yarn run web",
+    "web-debug": "cd test/web && yarn run web-debug",
+    "web-pipelines": "cd test/web && yarn run web-pipelines",
+    "web-smoke-tests": "cd test/web && yarn run web-smoke-tests",
+    "clean": "eslint 'test/**/*.js' --fix",
+    "lint": "eslint 'test/**/*.js'",
+    "precommit": "lint-staged"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "eslint": "^4.18.2",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-plugin-babel": "^5.1.0",
+    "eslint-plugin-mocha": "^5.2.0",
+    "lint-staged": "^7.3.0",
+    "prettier": "1.14.3"
+  },
+  "lint-staged": {
+    "*.{js,json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/appcurator/qa-automation"
+  },
+  "pre-commit": [
+    "precommit"
+  ]
+}
