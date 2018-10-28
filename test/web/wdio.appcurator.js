@@ -108,10 +108,22 @@ function getEndPointsFor(ENV) {
   memberships = process.env[`API_MEMBERSHIPS_${ENV}`];
   spaces = process.env[`API_SPACES_${ENV}`];
 }
+var server = {
+  protocol: 'http',
+  host: 'localhost',
+  port: '4444',
+  path: ''
+}
+if (process.env.NODE_ENV === 'production') {
+  server.host = 'selenium-hub',
+    server.path = '/wd/hub'
+}
 /* eslint-enable no-undef */
 exports.config = {
-  // services: ['selenium-standalone', 'chromedriver'],
-  enableNetwork: true,
+  protocol: server.protocol,
+  host: server.host,
+  port: server.port,
+  path: server.path,
   capabilities: [getArgs()[0]],
   updateJob: false,
   specs: [
@@ -138,7 +150,7 @@ exports.config = {
     negative: ['specs/negativeSpecs/*/*Test.js']
   },
   logLevel: 'silent',
-  //bail: 2,   //If you only want to run your tests until a specific amount of tests have failed use bail (default is 0 - donâ€™t bail, run all tests
+  //bail: 2,   //If you only want to run your tests until a specific amount of tests have failed use bail (default is 0 - don’t bail, run all tests
   coloredLogs: true,
   baseUrl: getArgs()[1],
   waitforTimeout: debug ? 9999999 : timeoutPeriod,
