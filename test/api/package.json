@@ -20,27 +20,14 @@
     "npm": "^6.0.0",
     "randomstring": "^1.1.5"
   },
-  "devDependencies": {
-    "babel-eslint": "^8.2.2",
-    "eslint": "^4.18.2",
-    "eslint-config-prettier": "^3.0.1",
-    "eslint-plugin-babel": "^5.1.0",
-    "eslint-plugin-mocha": "^5.2.0",
-    "lint-staged": "^7.3.0",
-    "prettier": "1.14.3"
-  },
   "scripts": {
     "api": "mocha specs/*Test.js --opts config/mocha.opts",
     "api-debug": "mocha --inspect-brk=127.0.0.1:5858 specs/*Test.js --opts config/mocha.opts",
-    "clean": "node_modules/.bin/eslint 'test/**/*.js' --fix",
-    "lint": "node_modules/.bin/eslint 'test/**/*.js'",
-    "precommit": "lint-staged",
     "api-pipelines": "mocha specs/*Test.js --require babel-register --timeout 10000",
-    "api-smoke-tests": "mocha specs/*Test.js --opts config/mocha.opts --grep @smoke"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/appcurator/qa-automation"
+    "api-smoke-tests": "mocha specs/*Test.js --opts config/mocha.opts --grep @smoke",
+    "clean": "eslint '**/*.js' --fix",
+    "lint": "eslint '**/*.js'",
+    "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,json,md}": [
@@ -54,6 +41,15 @@
   },
   "author": "QA Team",
   "license": "UNLICENSED",
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.7.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-babel": "^5.2.1",
+    "eslint-plugin-mocha": "^5.2.0",
+    "lint-staged": "^7.3.0",
+    "prettier": "^1.14.3"
+  },
   "pre-commit": [
     "precommit"
   ]
