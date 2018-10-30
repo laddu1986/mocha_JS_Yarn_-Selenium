@@ -4,7 +4,7 @@ export function registerAndCreateOrg(responseData) {
   var email_user = `${randomString.generate(10)}@test.co`;
   const query = {
     query:
-      'mutation CreateAccount($input: RegisterAndCreateOrgInput!) { registerAndCreateOrg(input: $input) { account { id email name state {lastOrganizationId lastSpaceId}}  } }',
+      'mutation CreateAccount($input: RegisterAndCreateOrgInput!) { registerAndCreateOrg(input: $input) { account { id email name state {lastOrganizationSlug lastSpaceSlug} }  } }',
     operationName: 'CreateAccount',
     variables: {
       input: {
@@ -58,12 +58,30 @@ export function login(responseData) {
     responseData.ccookie = JSON.stringify(res.response.headers['set-cookie'][2])
       .split(';')[0]
       .split('=')[1];
-    responseData.token = JSON.stringify(res.response.headers['set-cookie'][3])
+    responseData.token = JSON.stringify(res.response.headers['set-cookie'][1])
       .split(';')[0]
       .split('=')[1];
     responseData.pcookie = JSON.stringify(res.response.headers['set-cookie'])
       .split(';')[0]
       .split('=')[1];
+    return res;
+  });
+}
+
+export function logout() {
+  const query = {
+    query: 'mutation Logout { logout }',
+    variables: {}
+  };
+  const any = {
+    api: process.env.ORCA,
+    data: query,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  };
+  return post(any).then(res => {
     return res;
   });
 }
