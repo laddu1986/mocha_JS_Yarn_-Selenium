@@ -1,0 +1,57 @@
+{
+  "name": "qa-automation",
+  "version": "1.0.0",
+  "description": "qa-automation framework for orca testing using node and mocha",
+  "dependencies": {
+    "app-module-path": "^2.2.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "chakram": "^1.5.0",
+    "chakram-joi": "^1.0.0",
+    "dateformat": "^3.0.3",
+    "dotenv": "^6.0.0",
+    "mocha": "^5.0.5",
+    "mocha-multi-reporters": "^1.1.7",
+    "mocha-simple-html-reporter": "^1.1.0",
+    "node-es-module-loader": "^0.3.8",
+    "npm": "^6.0.0",
+    "randomstring": "^1.1.5"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.7.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-babel": "^5.2.1",
+    "eslint-plugin-mocha": "^5.2.0",
+    "lint-staged": "^7.3.0",
+    "prettier": "^1.14.3"
+  },
+  "scripts": {
+    "orca": "mocha specs/*Test.js --opts config/mocha.opts",
+    "orca-debug": "mocha --inspect-brk=127.0.0.1:5858 specs/*Test.js --opts config/mocha.opts",
+    "orca-smoke-tests": "mocha specs/*Test.js --opts config/mocha.opts --grep @smoke",
+    "clean": "eslint '**/*.js' --fix",
+    "lint": "eslint '**/*.js'",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,json,md}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/appcurator/qa-automation"
+  },
+  "author": "QA Team",
+  "license": "UNLICENSED",
+  "pre-commit": [
+    "precommit"
+  ]
+}
