@@ -3,7 +3,7 @@
   "name": "qa-automation",
   "version": "1.0.0",
   "scripts": {
-    "dev": "yarn install && yarn run dev-web && yarn run dev-api",
+    "dev": "yarn install --frozen-lockfile && yarn run dev-web && yarn run dev-api",
     "dev-api": "cd test/api && yarn install --frozen-lockfile",
     "dev-web": "cd test/web && yarn install --frozen-lockfile",
     "prod": "yarn run prod-web && yarn run prod-api",
@@ -14,8 +14,8 @@
     "api-pipelines": "cd test/api && yarn run api-pipelines",
     "api-smoke-tests": "cd test/api && yarn run api-smoke-tests",
     "web": "cd test/web && yarn run web",
+    "web-local": "cd test/web && yarn run web-local",
     "web-debug": "cd test/web && yarn run web-debug",
-    "web-pipelines": "cd test/web && yarn run web-pipelines",
     "web-smoke-tests": "cd test/web && yarn run web-smoke-tests",
     "clean": "eslint 'test/**/*.js' --fix",
     "lint": "eslint 'test/**/*.js'",
