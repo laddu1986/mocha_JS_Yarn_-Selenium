@@ -1,5 +1,4 @@
 var helper = require('./wdio.helper');
-/* eslint-enable no-undef */
 exports.config = {
   protocol: 'http',
   host: 'selenium-hub',
