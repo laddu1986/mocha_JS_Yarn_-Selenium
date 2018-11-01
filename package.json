@@ -28,7 +28,6 @@
     "eslint-plugin-babel": "^5.1.0",
     "eslint-plugin-mocha": "^5.2.0",
     "lint-staged": "^7.3.0",
-    "lodash": "^4.17.11",
     "prettier": "1.14.3"
   },
   "lint-staged": {
