@@ -1,7 +1,9 @@
 import { randomString, post } from '../common';
 
 export function registerAndCreateOrg(responseData) {
-  var email_user = `${randomString.generate(10)}@test.co`;
+  var email_account = `${randomString.generate(10)}@test.co`;
+  var name_account = `${randomString.generate(10)}`;
+  var orgNameWhileRegistering = `${randomString.generate(10)}`;
   const query = {
     query:
       'mutation CreateAccount($input: RegisterAndCreateOrgInput!) { registerAndCreateOrg(input: $input) { account { id email name state {lastOrganizationSlug lastSpaceSlug} }  } }',
@@ -9,10 +11,10 @@ export function registerAndCreateOrg(responseData) {
     variables: {
       input: {
         fields: {
-          name: `${randomString.generate(10)}`,
-          email: email_user,
+          name: name_account,
+          email: email_account,
           password: process.env.ACCOUNT_PASS,
-          organizationName: `${randomString.generate(10)}`
+          organizationName: orgNameWhileRegistering
         }
       }
     }
@@ -28,7 +30,10 @@ export function registerAndCreateOrg(responseData) {
     }
   };
   return post(any).then(response => {
-    responseData.email = email_user;
+    responseData.orgNameWhileReg = orgNameWhileRegistering;
+    responseData.AccountID = response.response.body.data.registerAndCreateOrg.account.id;
+    responseData.AccountName = name_account;
+    responseData.AccountEmail = email_account;
     return response;
   });
 }
@@ -39,7 +44,7 @@ export function login(responseData) {
     variables: {
       input: {
         fields: {
-          email: responseData.email,
+          email: responseData.AccountEmail,
           password: process.env.ACCOUNT_PASS,
           remember: true
         }
