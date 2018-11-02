@@ -11,7 +11,8 @@ var path = require('path');
 const Tags = {
   smokeTest: '@smoke'
 };
-
+export var registerAndCreateOrgObject = new Object();
+export var createOrgObject = new Object();
 function post(any) {
   if (any.headers == undefined) {
     any.headers = {
