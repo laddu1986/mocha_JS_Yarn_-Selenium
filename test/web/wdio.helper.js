@@ -49,28 +49,37 @@ function getArg(argType) {
 }
 
 function getBrowser() {
-  let browserType = getArg('browser');
-  if (browserType == '' || browserType === undefined) {
+  let args = getArg('browser');
+  if (args == '' || args === undefined) {
     return browsers.chrome_headless;
   } else {
-    switch (browserType.toLowerCase()) {
-      case 'firefox':
-      case 'ff':
-        return browsers.firefox;
-      case 'chrome':
-        return browsers.chrome;
-      case 'chrome_headless':
-      case 'ch':
-      case 'headless_chrome':
-        return browsers.chrome_headless;
-      case 'safari':
-      case 'saf':
-        return browsers.safari;
-      case 'ie':
-        return browsers.ie;
-      default:
-        return browsers.chrome_headless;
-    }
+    var targets = args.split(',');
+    var configurations = [];
+    targets.forEach(browser => {
+      configurations.push(selectBrowser(browser));
+    });
+    return configurations;
+  }
+}
+
+function selectBrowser(browser) {
+  switch (browser.toLowerCase()) {
+    case 'firefox':
+    case 'ff':
+      return browsers.firefox;
+    case 'chrome':
+      return browsers.chrome;
+    case 'chrome_headless':
+    case 'ch':
+    case 'headless_chrome':
+      return browsers.chrome_headless;
+    case 'safari':
+    case 'saf':
+      return browsers.safari;
+    case 'ie':
+      return browsers.ie;
+    default:
+      return browsers.chrome_headless;
   }
 }
 
