@@ -2,21 +2,23 @@
 
 Test Automation Framework built in Javascript for testing all three layers of Appcurator :
 
-* Front End (UI)
-* Orca (Orchestration)
-* Back End (Microservices/API)
-#
+- Front End (UI)
+- Orca (Orchestration)
+- Back End (Microservices/API)
 
+#
 
 ### More Details
 
 ### Front End
-Front End tests use the [WebdriverIO](http://webdriver.io/) library. This library is a [Webdriver](https://w3c.github.io/webdriver/webdriver-spec.html) (browser automation) module for [Node.JS](https://nodejs.org/en/). It makes possible to write super easy [Selenium](https://en.wikipedia.org/wiki/Selenium_(software)) tests in [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development) test framework.
+
+Front End tests use the [WebdriverIO](http://webdriver.io/) library. This library is a [Webdriver](https://w3c.github.io/webdriver/webdriver-spec.html) (browser automation) module for [Node.JS](https://nodejs.org/en/). It makes possible to write super easy [Selenium](<https://en.wikipedia.org/wiki/Selenium_(software)>) tests in [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development) test framework.
 
 Tests are written and executed using [Mocha](https://mochajs.org/) and
 assertions are handled using [Chai](http://www.chaijs.com/)
 
 ### Orca and Back End
+
 Orca and BackEnd API endpoints Integration tests are written using [Chakram](http://dareid.github.io/chakram/).
 
 Chakram is an API testing framework designed to perform end to end tests on JSON REST endpoints.
@@ -31,56 +33,95 @@ The reports will by default be saved in : .test/api/Reports and .test/web/Report
 ### Getting Started
 
 #### Pre-Req
+
 [Java Development Kit 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or higher
 
-
 #### Installation
+
 `master` always contains the latest stable code
 
-`
-git checkout master
-`
+`git checkout master`
 
-Install dependencies
-`
-npm install -g yarn
-`
+##### Install dependencies
 
-`
-yarn install
-`
+`npm install -g yarn`
 
-create a `.env` file in the root of this repo and add the values for the keys mentioned in `.env-sample`
+and to install dependencies for Orca, Web and Api tests you can use
 
+`yarn run dev`
 
-Run Front End Tests
+##### dotenv
 
-`
-yarn run web
-`
+Locally we use dotenv for define our environment variables.
+Create a `.env` file in the root of this repo and add the values for the keys mentioned in `.env-sample`
+
+Orca, web and api test all use these env files. We can easily manage these together through symlinks.
+Then create a symlink to `.env` in each `/test/orca`, `/test/web` and `/test/api` by changing directories to each and the linking with the following
+
+`ln-s ../../.env .env`
+
+##### Run Front End Tests
+
+`yarn run web-local`
+
+NB: You must have selenium running before you can execute the tests locally. We suggest using [Selenium Standalone](https://github.com/vvo/selenium-standalone)
 
 The following arguments can be appended to the above to run tests in different combinations of browsers and environments:
 
-`--browser:firefox` (default is `chrome`), other accepted values are  `chrome`, `chrome_headless`, `firefox`, `safari`, `ie`
-
-
+`--browser:firefox` (default is `chrome`), other accepted values are `chrome`, `chrome_headless`, `firefox`, `safari`, `ie`
 
 `--env:dev` (to run the tests in dev environment, default is `qa`), other accepted options are for `--env:` are `qa`, `squad`
 
+`--suite <foldername>` for executing tests from a particular folder instead of the whole suite
 
-`--suite <foldername>`  for executing tests from a particular folder instead of the whole suite
+##### Run API Tests
 
-For executing web smoke tests only: `yarn run web-smoke-tests`
+`yarn run api`
 
+##### Run Orca Tests
 
-Run API Tests
+`yarn run orca`
 
-`
-yarn run api
-`
+##### Debugging
 
-For executing api smoke tests: `yarn run api-smoke-tests`
-#
+If you use vscode, heres some debugger configurations you can use out of the box
 
-###  Help !
+```
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "API Debug",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "yarn",
+      "args": ["run", "api-debug"],
+      "protocol": "inspector",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "port": 5858
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Web Debug",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "yarn",
+      "args": [
+        "run",
+        "web-debug",
+        "--browser:chrome"
+      ],
+      "protocol": "inspector",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "port": 5858
+    }
+  ]
+}
+```
+
+### Help !
+
 For any queries contact [Balpreet](balpreet.kaur@massive.co) or [Abhi](abhijeet.daspatnaik@massive.co) or [Paul](paul.sanchez@massive.co)
