@@ -3,6 +3,16 @@
   "version": "1.0.0",
   "description": "qa-automation framework for e2e testing using node and webdriverio",
   "main": "wdio.appcurator.js",
+  "scripts": {
+    "web": "node_modules/.bin/wdio wdio.appcurator.js",
+    "web-local": "node_modules/.bin/wdio wdio.local.js",
+    "web-debug": "./node_modules/.bin/wdio wdio.debug.js",
+    "web-smoke-tests": "node_modules/.bin/wdio wdio.appcurator.js --suite smoke --mochaOpts.grep=@smoke",
+    "orca": "mocha test/orca/specs/loginTest.js --require babel-register",
+    "clean": "eslint '**/*.js' --fix",
+    "lint": "eslint '**/*.js'",
+    "precommit": "lint-staged"
+  },
   "dependencies": {
     "app-module-path": "^2.2.0",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -12,7 +22,6 @@
     "clipboardy": "^1.2.3",
     "config-yml": "^0.8.0",
     "dateformat": "^3.0.3",
-    "dotenv": "^6.0.0",
     "mysql2": "^1.5.3",
     "node-es-module-loader": "^0.3.8",
     "npm": "^6.0.0",
@@ -24,15 +33,16 @@
     "wdio-spec-reporter": "^0.1.4",
     "webdriverio": "^4.12.0"
   },
-  "scripts": {
-    "web": "node_modules/.bin/wdio wdio.appcurator.js",
-    "web-debug": "DEBUG=true ./node_modules/.bin/wdio wdio.appcurator.js",
-    "web-pipelines": "node_modules/.bin/wdio wdio.bitbucket-pipelines.js",
-    "web-smoke-tests": "node_modules/.bin/wdio wdio.appcurator.js --suite smoke --mochaOpts.grep=@smoke",
-    "orca": "mocha test/orca/specs/loginTest.js --require babel-register",
-    "clean": "eslint '**/*.js' --fix",
-    "lint": "eslint '**/*.js'",
-    "precommit": "lint-staged"
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "dotenv": "^6.0.0",
+    "eslint": "^5.7.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-babel": "^5.2.1",
+    "eslint-plugin-mocha": "^5.2.0",
+    "lint-staged": "^7.3.0",
+    "lodash": "^4.17.11",
+    "prettier": "^1.14.3"
   },
   "lint-staged": {
     "*.{js,json,md}": [
@@ -46,15 +56,6 @@
   },
   "author": "QA Team",
   "license": "UNLICENSED",
-  "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.7.0",
-    "eslint-config-prettier": "^3.1.0",
-    "eslint-plugin-babel": "^5.2.1",
-    "eslint-plugin-mocha": "^5.2.0",
-    "lint-staged": "^7.3.0",
-    "prettier": "^1.14.3"
-  },
   "pre-commit": [
     "precommit"
   ]
