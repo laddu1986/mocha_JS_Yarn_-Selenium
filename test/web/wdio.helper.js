@@ -45,21 +45,17 @@ function getArg(argType) {
       }
     }
   });
-  return arg;
+  return arg === undefined ? '' : arg;
 }
 
 function getBrowser() {
-  let args = getArg('browser');
-  if (args == '' || args === undefined) {
-    return browsers.chrome_headless;
-  } else {
-    var targets = args.split(',');
-    var configurations = [];
-    targets.forEach(browser => {
-      configurations.push(selectBrowser(browser));
-    });
-    return configurations;
-  }
+  var configurations = [];
+  var args = getArg('browser');
+  var targets = args.split(',');
+  targets.forEach(browser => {
+    configurations.push(selectBrowser(browser));
+  });
+  return configurations;
 }
 
 function selectBrowser(browser) {
@@ -85,11 +81,7 @@ function selectBrowser(browser) {
 
 function getEndPoints() {
   let environment = getArg('env');
-  if (environment == '' || environment === undefined) {
-    environment = 'DEV';
-  } else {
-    environment = environment.toUpperCase();
-  }
+  environment = environment == '' ? 'DEV' : environment.toUpperCase();
   /* eslint-disable no-undef */
   baseURL = process.env[`WEB_${environment}`];
   MySqlDb = process.env[`MYSQL_DBNAME_${environment}`];
