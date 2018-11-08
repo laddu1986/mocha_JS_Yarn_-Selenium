@@ -1,4 +1,4 @@
-import { randomString, post } from '../common';
+import { randomString, post, orca } from '../common';
 
 export function createOrganization(responseData) {
   var orgName = `${randomString.generate(8)}`;
@@ -14,7 +14,7 @@ export function createOrganization(responseData) {
     }
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export function updateOrganization(responseData) {
     }
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ export function getOrganization(responseData) {
     }
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ export function getOrganizationBySlug(responseData) {
     }
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ export function getOrganizations(responseData) {
     variables: {}
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
