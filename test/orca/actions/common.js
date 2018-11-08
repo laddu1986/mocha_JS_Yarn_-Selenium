@@ -21,13 +21,7 @@ export function registerAndCreateOrg(responseData) {
   };
   const any = {
     api: process.env.ORCA,
-    data: query,
-    headers: {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    }
+    data: query
   };
   return post(any).then(response => {
     responseData.orgNameWhileReg = orgNameWhileRegistering;
@@ -53,11 +47,7 @@ export function login(responseData) {
   };
   const any = {
     api: process.env.ORCA,
-    data: query,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
+    data: query
   };
   return post(any).then(res => {
     responseData.ccookie = JSON.stringify(res.response.headers['set-cookie'][2])
@@ -80,10 +70,25 @@ export function logout() {
   };
   const any = {
     api: process.env.ORCA,
+    data: query
+  };
+  return post(any).then(res => {
+    return res;
+  });
+}
+
+export function deleteAccount(responseData) {
+  const query = {
+    query: 'mutation DeleteAccount { deleteAccount }',
+    variables: {}
+  };
+  const any = {
+    api: process.env.ORCA,
     data: query,
     headers: {
       Accept: 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
     }
   };
   return post(any).then(res => {

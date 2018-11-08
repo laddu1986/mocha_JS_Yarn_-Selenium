@@ -16,8 +16,8 @@ export function registerAndCreateOrgSchema() {
           .uuid()
           .required(),
         role: joi.object().keys({
-          name: joi.string().required(), //this needs to compare with "orgAdmin" after AF-711 is resolved
-          permissionLevel: joi.number().required() //this needs to with "40" after AF-711 is resolved
+          name: joi.string().required(), //this needs to compare with "orgAdmin" after 7ch5a (clickup) is resolved
+          permissionLevel: joi.number().required() //this needs to compare with "40" after 7ch5a (clickup) is resolved
         })
       })
     })
@@ -56,8 +56,8 @@ export function organizationSchema(name) {
           .required(),
         organizationName: joi.valid(name).required(),
         role: joi.object().keys({
-          name: joi.string().required(), //this needs to compare with "orgAdmin" after AF-711 is resolved
-          permissionLevel: joi.number().required() //this needs to with "40" after AF-711 is resolved
+          name: joi.string().required(), //this needs to compare with "orgAdmin" after 7ch5a (clickup) is resolved
+          permissionLevel: joi.number().required() //this needs to compare with "40" after 7ch5a (clickup) is resolved
         }),
         currentUser: joi
           .boolean()
