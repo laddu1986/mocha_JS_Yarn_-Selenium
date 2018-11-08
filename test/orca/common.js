@@ -13,6 +13,7 @@ const Tags = {
 };
 export var registerAndCreateOrgObject = new Object();
 export var createOrgObject = new Object();
+export var createSpaceObject = new Object();
 function post(any) {
   if (any.headers == undefined) {
     any.headers = {
