@@ -6,7 +6,7 @@
   "scripts": {
     "web": "node_modules/.bin/wdio wdio.appcurator.js",
     "web-local": "node_modules/.bin/wdio wdio.local.js",
-    "web-debug": "./node_modules/.bin/wdio wdio.debug.js",
+    "web-debug": "node_modules/.bin/wdio wdio.debug.js",
     "web-smoke-tests": "node_modules/.bin/wdio wdio.appcurator.js --suite smoke --mochaOpts.grep=@smoke",
     "orca": "mocha test/orca/specs/loginTest.js --require babel-register",
     "clean": "eslint '**/*.js' --fix",
