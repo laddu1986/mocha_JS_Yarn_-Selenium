@@ -1,4 +1,4 @@
-import { randomString, post } from '../common';
+import { randomString, post, orca } from '../common';
 
 export function registerAndCreateOrg(responseData) {
   var email_account = `${randomString.generate(10)}@test.co`;
@@ -20,7 +20,7 @@ export function registerAndCreateOrg(responseData) {
     }
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     data: query
   };
   return post(any).then(response => {
@@ -46,7 +46,7 @@ export function login(responseData) {
     }
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     data: query
   };
   return post(any).then(res => {
@@ -69,7 +69,7 @@ export function logout() {
     variables: {}
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     data: query
   };
   return post(any).then(res => {
