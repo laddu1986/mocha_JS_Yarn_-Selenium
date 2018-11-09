@@ -1,4 +1,4 @@
-import { randomString, post } from '../common';
+import { randomString, post, orca } from '../common';
 
 export function createSpace(responseData) {
   var spaceName = `${randomString.generate(8)}_space`;
@@ -16,7 +16,7 @@ export function createSpace(responseData) {
     }
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export function updateSpace(responseData) {
     }
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export function deleteSpace(responseData) {
     }
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export function getSpaceBySlug(responseData) {
     }
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ export function getSpace(responseData) {
     }
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
