@@ -4,7 +4,7 @@ exports.config = {
   host: 'selenium-hub',
   port: '4444',
   path: '/wd/hub',
-  capabilities: [helper.getBrowser()],
+  capabilities: helper.getBrowser(),
   updateJob: false,
   specs: [
     'specs/**/*Test.js' //master

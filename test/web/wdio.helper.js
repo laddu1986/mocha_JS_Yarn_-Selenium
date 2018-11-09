@@ -45,42 +45,43 @@ function getArg(argType) {
       }
     }
   });
-  return arg;
+  return arg === undefined ? '' : arg;
 }
 
 function getBrowser() {
-  let browserType = getArg('browser');
-  if (browserType == '' || browserType === undefined) {
-    return browsers.chrome_headless;
-  } else {
-    switch (browserType.toLowerCase()) {
-      case 'firefox':
-      case 'ff':
-        return browsers.firefox;
-      case 'chrome':
-        return browsers.chrome;
-      case 'chrome_headless':
-      case 'ch':
-      case 'headless_chrome':
-        return browsers.chrome_headless;
-      case 'safari':
-      case 'saf':
-        return browsers.safari;
-      case 'ie':
-        return browsers.ie;
-      default:
-        return browsers.chrome_headless;
-    }
+  var configurations = [];
+  var args = getArg('browser');
+  var targets = args.split(',');
+  targets.forEach(browser => {
+    configurations.push(selectBrowser(browser));
+  });
+  return configurations;
+}
+
+function selectBrowser(browser) {
+  switch (browser.toLowerCase()) {
+    case 'firefox':
+    case 'ff':
+      return browsers.firefox;
+    case 'chrome':
+      return browsers.chrome;
+    case 'chrome_headless':
+    case 'ch':
+    case 'headless_chrome':
+      return browsers.chrome_headless;
+    case 'safari':
+    case 'saf':
+      return browsers.safari;
+    case 'ie':
+      return browsers.ie;
+    default:
+      return browsers.chrome_headless;
   }
 }
 
 function getEndPoints() {
   let environment = getArg('env');
-  if (environment == '' || environment === undefined) {
-    environment = 'DEV';
-  } else {
-    environment = environment.toUpperCase();
-  }
+  environment = environment == '' ? 'DEV' : environment.toUpperCase();
   /* eslint-disable no-undef */
   baseURL = process.env[`WEB_${environment}`];
   MySqlDb = process.env[`MYSQL_DBNAME_${environment}`];
