@@ -9,11 +9,7 @@ var createSpaceResponse, updateSpaceResponse, getSpaceResponse, getSpaceByIDResp
 describe('Spaces Tests', () => {
   before(async () => {
     await registerAndCreateOrg(createSpaceObject);
-  });
-  before(async () => {
     await login(createSpaceObject);
-  });
-  before(async () => {
     await getOrganizations(createSpaceObject);
   });
   describe('Mutation- Create Space', () => {
