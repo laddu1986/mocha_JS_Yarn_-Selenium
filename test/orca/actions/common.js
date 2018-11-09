@@ -83,7 +83,7 @@ export function deleteAccount(responseData) {
     variables: {}
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     data: query,
     headers: {
       Accept: 'application/json',

@@ -138,7 +138,7 @@ export function leaveOrganization(responseData) {
     }
   };
   const any = {
-    api: process.env.ORCA,
+    api: orca,
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
