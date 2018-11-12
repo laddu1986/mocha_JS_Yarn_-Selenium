@@ -1,20 +1,12 @@
-import * as lib from '../common';
+import { joi } from '../common';
 import * as categories from 'actions/categories';
 import * as spaces from 'actions/spaces';
 import * as organization from 'actions/organization';
 import * as identity from 'actions/identity';
+import * as schemas from 'data/categorySchema';
 
 const categoryData = new Object();
-var schema, createResponse, listResponse, renameResponse, moveConfirm, deleteConfirm;
-
-var schemaCategory = lib.joi.object().keys({
-  id: lib.joi
-    .number()
-    .integer()
-    .required(),
-  label: lib.joi.string().optional(),
-  isDefault: lib.joi.boolean().optional()
-});
+var createResponse, listResponse, renameResponse, moveConfirm, deleteConfirm;
 
 describe('Categories Service', () => {
   describe('createCategory()', () => {
@@ -36,7 +28,7 @@ describe('Categories Service', () => {
     it('Creates a category', () => {
       return createResponse.then(response => {
         expect(response.status.code).to.equal(0);
-        lib.joi.assert(response.response, schemaCategory);
+        joi.assert(response.response, schemas.schemaCategory);
       });
     });
   });
@@ -50,10 +42,7 @@ describe('Categories Service', () => {
     it('Lists all Categories', () => {
       return listResponse.then(response => {
         expect(response.status.code).to.equal(0);
-        schema = lib.joi.object().keys({
-          categories: lib.joi.array().items(schemaCategory)
-        });
-        lib.joi.assert(response.response, schema);
+        joi.assert(response.response, schemas.schemaCategories);
       });
     });
   });
@@ -68,7 +57,7 @@ describe('Categories Service', () => {
       return renameResponse.then(response => {
         expect(response.status.code).to.equal(0);
         expect(response.response.label).to.not.equal(categoryData.tribeCategoryOldLabel);
-        lib.joi.assert(response.response, schemaCategory);
+        joi.assert(response.response, schemas.schemaCategory);
       });
     });
   });
