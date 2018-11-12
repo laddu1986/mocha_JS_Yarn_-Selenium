@@ -11,8 +11,8 @@ export function postIdentity(responseObject, updateFlag) {
     }
   };
   return post(any).then(response => {
+    responseObject.identityID = response.body.id;
     if (updateFlag) {
-      responseObject.identityID = response.body.id;
       responseObject.identityEmail = any.data.email;
       responseObject.identityFullname = any.data.fullname;
     }
