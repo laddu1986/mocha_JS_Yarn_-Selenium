@@ -15,9 +15,9 @@ export function postIdentity(responseObject, flag) {
     identitySchemaData.email = any.data.email;
   }
   return post(any).then(response => {
-    responseObject.identityID = response.body.id;
-    responseObject.identityEmail = response.body.email;
-    responseObject.identityFullname = response.body.fullName;
+    responseObject.id = response.body.id;
+    responseObject.email = response.body.email;
+    responseObject.fullname = response.body.fullName;
     return response;
   });
 }
@@ -25,7 +25,7 @@ export function postIdentity(responseObject, flag) {
 export function getIdentityById(responseObject) {
   const any = {
     api: identities,
-    data: responseObject.identityID
+    data: responseObject.id
   };
   return get(any);
 }
@@ -33,7 +33,7 @@ export function getIdentityById(responseObject) {
 export function deleteIdentityById(responseObject) {
   const any = {
     api: identities,
-    data: responseObject.identityID
+    data: responseObject.id
   };
   return del(any);
 }
@@ -43,14 +43,14 @@ export function deleteIdentityById(responseObject) {
 export function getIdentityStateById(responseObject) {
   const any = {
     api: identities,
-    data: `${responseObject.identityID}/state`
+    data: `${responseObject.id}/state`
   };
   return get(any);
 }
 
 export function putIdentityById(responseObject) {
   const any = {
-    api: `${identities + responseObject.identityID}/state`,
+    api: `${identities + responseObject.id}/state`,
     data: {
       values: {
         additionalProp1: 'string',
@@ -63,7 +63,7 @@ export function putIdentityById(responseObject) {
 }
 export function patchIdentityStateById(responseObject) {
   const any = {
-    api: `${identities + responseObject.identityID}/state`,
+    api: `${identities + responseObject.id}/state`,
     data: {
       values: {
         additionalProp1: '1',
