@@ -8,7 +8,7 @@ const identityData = new Object();
 describe('Identity Api', () => {
   describe(`POST /identities ${Tags.smokeTest}`, () => {
     before(done => {
-      addResponse = identity.postIdentity(identityData, true);
+      addResponse = identity.postIdentity(identityData);
       done();
     });
 
