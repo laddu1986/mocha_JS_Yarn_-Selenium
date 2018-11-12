@@ -1,8 +1,9 @@
 import { joi, registerAndCreateOrgObject } from '../common';
-import { registerAndCreateOrg, login, logout } from 'actions/common';
+import { registerAndCreateOrg, login, logout, deleteAccount } from 'actions/common';
+import { leaveOrganization, getOrganizations } from 'actions/organization';
 import { registerAndCreateOrgSchema } from 'data/organizationSchema';
 
-var createResponse, loginResponse, logoutResponse;
+var createResponse, loginResponse, logoutResponse, leaveOrgResponse, deleteAccountResponse;
 
 describe('Mutation - registerAndCreateOrg', () => {
   before(done => {
@@ -37,6 +38,35 @@ describe('Mutation - Logout', () => {
     return logoutResponse.then(response => {
       expect(response.response.statusCode).to.equal(200);
       expect(response.body.data.logout).to.equal(true);
+    });
+  });
+});
+
+describe('Mutation - leaveOrganization', () => {
+  before(async () => {
+    await getOrganizations(registerAndCreateOrgObject);
+  });
+  before(done => {
+    leaveOrgResponse = leaveOrganization(registerAndCreateOrgObject);
+    done();
+  });
+  it('Deleting the organization', () => {
+    return leaveOrgResponse.then(response => {
+      expect(response.response.statusCode).to.equal(200);
+      expect(response.response.body.data.leaveOrg).to.equal(true);
+    });
+  });
+});
+
+describe('Mutation - deleteAccount', () => {
+  before(done => {
+    deleteAccountResponse = deleteAccount(registerAndCreateOrgObject);
+    done();
+  });
+  it('Delete user account', () => {
+    return deleteAccountResponse.then(response => {
+      expect(response.response.statusCode).to.equal(200);
+      expect(response.response.body.data.deleteAccount).to.equal(true);
     });
   });
 });
