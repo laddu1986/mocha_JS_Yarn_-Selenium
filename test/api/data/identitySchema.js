@@ -16,7 +16,7 @@ export function getIdentitySchema(identityData) {
   var schema = joi.object().keys({
     fullName: joi.valid(identityData.identityFullname).required(),
     email: joi.valid(identityData.identityEmail).required(),
-    id: joi.valid(identityData.identityId).required()
+    id: joi.valid(identityData.identityID).required()
   });
   return schema;
 }
