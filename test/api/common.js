@@ -15,9 +15,6 @@ export const orgNegData = new Object();
 export const spaceNegData = new Object();
 export const spaceKeyNegData = new Object();
 export const identitySchemaData = new Object();
-export const invitesSchemaData = new Object();
-export const inviteData = new Object();
-export const organizationsSchemaData = new Object();
 export const spaceKeyData = new Object();
 
 const Tags = {
