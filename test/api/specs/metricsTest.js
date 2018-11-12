@@ -4,7 +4,7 @@ import * as organization from 'actions/organization';
 import * as identity from 'actions/identity';
 import * as metrics from 'actions/metrics';
 
-import { metricsByDaySchema, uniqueAPIRequestsSchema, activeDaySchema, uniqueUsersSchema } from 'data/metricsSchema';
+import { metricsByDaySchema, uniqueAPIRequestsSchema, activeDaySchema, uniqueUsersSchema } from 'schemas/metricsSchema';
 var getUniqueUsersResponse,
   getAPIRequestsResponse,
   getActiveResponse,

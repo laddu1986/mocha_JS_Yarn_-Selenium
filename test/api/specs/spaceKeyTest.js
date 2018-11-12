@@ -3,7 +3,7 @@ import * as spaces from 'actions/spaces';
 import * as organization from 'actions/organization';
 import * as identity from 'actions/identity';
 import * as Constants from 'constants.json';
-import * as schemas from 'data/spaceKeySchema';
+import * as schemas from 'schemas/spaceKeySchema';
 var postResponse, getResponse, revokeResponse, reactivateResponse, deleteResponse;
 
 const spaceKeyData = new Object();

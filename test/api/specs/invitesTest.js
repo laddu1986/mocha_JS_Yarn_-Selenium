@@ -2,7 +2,7 @@ import { inviteData, loader, Tags, joi } from '../common';
 import * as identity from 'actions/identity';
 import * as invites from 'actions/invites';
 import * as organization from 'actions/organization';
-const schemas = 'data/invitesSchema';
+const schemas = 'schemas/invitesSchema';
 var importedSchema, postResponse, getResponse, getInviteResponse, deleteResponse;
 
 describe('Invites Api', () => {
