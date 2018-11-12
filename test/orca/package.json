@@ -15,7 +15,6 @@
     "mocha-multi-reporters": "^1.1.7",
     "mocha-simple-html-reporter": "^1.1.0",
     "node-es-module-loader": "^0.3.8",
-    "npm": "^6.0.0",
     "randomstring": "^1.1.5"
   },
   "devDependencies": {
@@ -28,9 +27,9 @@
     "prettier": "^1.14.3"
   },
   "scripts": {
-    "orca": "mocha specs/*Test.js --opts config/mocha.opts",
-    "orca-debug": "mocha --inspect-brk=127.0.0.1:5858 specs/*Test.js --opts config/mocha.opts",
-    "orca-smoke-tests": "mocha specs/*Test.js --opts config/mocha.opts --grep @smoke",
+    "orca": "node_modules/.bin/mocha specs/*Test.js --opts config/mocha.opts",
+    "orca-debug": "mocnode_modules/.bin/mochaha --inspect-brk=127.0.0.1:5858 specs/*Test.js --opts config/mocha.opts",
+    "orca-smoke-tests": "node_modules/.bin/mocha specs/*Test.js --opts config/mocha.opts --grep @smoke",
     "clean": "eslint '**/*.js' --fix",
     "lint": "eslint '**/*.js'",
     "precommit": "lint-staged"
