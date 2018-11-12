@@ -1,7 +1,7 @@
 import { joi } from '../common';
 
 export function postIdentitySchema(identityData) {
-  var schema = joi.object().keys({
+  return joi.object().keys({
     fullName: joi.valid(identityData.identityFullname).required(),
     email: joi.valid(identityData.identityEmail).required(),
     id: joi
@@ -9,14 +9,12 @@ export function postIdentitySchema(identityData) {
       .guid()
       .required()
   });
-  return schema;
 }
 
 export function getIdentitySchema(identityData) {
-  var schema = joi.object().keys({
+  return joi.object().keys({
     fullName: joi.valid(identityData.identityFullname).required(),
     email: joi.valid(identityData.identityEmail).required(),
     id: joi.valid(identityData.identityID).required()
   });
-  return schema;
 }
