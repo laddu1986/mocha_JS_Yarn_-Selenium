@@ -1,9 +1,11 @@
-import { joi, Tags, membershipData, loader } from '../common';
+import { joi, Tags } from '../common';
 import * as organization from 'actions/organization';
 import * as membership from 'actions/membership';
 import * as identity from 'actions/identity';
-const schemas = 'data/membershipSchema';
-var createResponse, getByAccountIDResponse, getByOrgIDResponse, deleteResponse, getResponse, importedSchema;
+import * as schemas from 'data/membershipSchema';
+var createResponse, getByAccountIDResponse, getByOrgIDResponse, deleteResponse, getResponse;
+
+const membershipData = new Object();
 
 describe('Memberships Api', () => {
   describe(`POST /memberships ${Tags.smokeTest}`, () => {
@@ -16,12 +18,9 @@ describe('Memberships Api', () => {
       });
     });
     it('Create a new membership', () => {
-      return loader.import(schemas).then(dataImported => {
-        return createResponse.then(response => {
-          importedSchema = dataImported.default;
-          expect(response).to.have.status(201);
-          joi.assert(response.body, importedSchema.createMembershipSchema);
-        });
+      return createResponse.then(response => {
+        expect(response).to.have.status(201);
+        joi.assert(response.body, schemas.createMembershipSchema(membershipData));
       });
     });
   });
@@ -35,7 +34,7 @@ describe('Memberships Api', () => {
     it('List all Memberships', () => {
       return getResponse.then(response => {
         expect(response).to.have.status(200);
-        joi.assert(response.body, importedSchema.listMembershipSchema);
+        joi.assert(response.body, schemas.listMembershipSchema(membershipData));
       });
     });
   });
@@ -49,7 +48,7 @@ describe('Memberships Api', () => {
     it('Getting membership by organization id', () => {
       return getByOrgIDResponse.then(response => {
         expect(response).to.have.status(200);
-        joi.assert(response.body, importedSchema.getMembershipByOrdIDSchema);
+        joi.assert(response.body, schemas.getMembershipByOrdIDSchema(membershipData));
       });
     });
   });
@@ -63,7 +62,7 @@ describe('Memberships Api', () => {
     it('Getting membership by account id', () => {
       return getByAccountIDResponse.then(response => {
         expect(response).to.have.status(200);
-        joi.assert(response.body, importedSchema.getMembershipByAccountIDSchema);
+        joi.assert(response.body, schemas.getMembershipByAccountIDSchema(membershipData));
       });
     });
   });
