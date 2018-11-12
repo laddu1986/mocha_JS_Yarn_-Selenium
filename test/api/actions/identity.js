@@ -13,8 +13,8 @@ export function postIdentity(responseObject, updateFlag) {
   return post(any).then(response => {
     if (updateFlag) {
       responseObject.identityID = response.body.id;
-      responseObject.identityEmail = response.body.email;
-      responseObject.identityFullname = response.body.fullName;
+      responseObject.identityEmail = any.data.email;
+      responseObject.identityFullname = any.data.fullname;
     }
     return response;
   });
