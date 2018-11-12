@@ -121,6 +121,32 @@ export function getOrganizations(responseData) {
     data: data
   };
   return post(any).then(response => {
+    (responseData.orgRowVersion = response.response.body.data.organizations[0].rowVersion),
+      (responseData.orgID = response.response.body.data.organizations[0].id);
+    return response;
+  });
+}
+
+export function leaveOrganization(responseData) {
+  const data = {
+    query: 'mutation LeaveOrg ($input: LeaveOrgInput!) { leaveOrg(input: $input) }',
+    variables: {
+      input: {
+        organizationId: responseData.orgID,
+        rowVersion: responseData.orgRowVersion
+      }
+    }
+  };
+  const any = {
+    api: orca,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
+    },
+    data: data
+  };
+  return post(any).then(response => {
     return response;
   });
 }

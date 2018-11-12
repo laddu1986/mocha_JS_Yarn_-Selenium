@@ -13,10 +13,9 @@ var createOrgResponse, updateOrgResponse, getOrgResponse, getOrgByIDResponse, ge
 describe('Mutation - Organization Tests', () => {
   before(async () => {
     await registerAndCreateOrg(createOrgObject);
-  });
-  before(async () => {
     await login(createOrgObject);
   });
+
   describe('Create Organization', () => {
     before(async () => {
       createOrgResponse = await createOrganization(createOrgObject);
