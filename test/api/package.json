@@ -20,7 +20,6 @@
     "randomstring": "^1.1.5"
   },
   "scripts": {
-    "api": "node_modules/.bin/mocha specs/*Test.js --opts config/mocha.opts",
     "api-debug": "node_modules/.bin/mocha --inspect-brk=127.0.0.1:5858 specs/*Test.js --opts config/mocha.opts",
     "api-pipelines": "node_modules/.bin/mocha specs/*Test.js --require babel-register --timeout 10000",
     "api-smoke-tests": "node_modules/.bin/mocha specs/*Test.js --opts config/mocha.opts --grep @smoke",
