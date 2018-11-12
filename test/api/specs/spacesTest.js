@@ -1,10 +1,12 @@
-import { joi, Tags, spaceData } from '../common';
+import { joi, Tags } from '../common';
 import * as spaces from 'actions/spaces';
 import * as organization from 'actions/organization';
 import * as identity from 'actions/identity';
 import * as Constants from 'constants.json';
 import * as schemas from 'data/spaceSchema';
 var postResponse, getResponse, updateResponse, getAllResponse, deleteResponse, patchResponse, patchNameResponse;
+
+const spaceData = new Object();
 
 describe('Spaces Api', () => {
   describe(`POST /organizations/{orgId}/spaces ${Tags.smokeTest}`, () => {
