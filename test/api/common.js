@@ -14,8 +14,6 @@ export const membershipNegData = new Object();
 export const orgNegData = new Object();
 export const spaceNegData = new Object();
 export const spaceKeyNegData = new Object();
-export const identitySchemaData = new Object();
-export const spaceKeyData = new Object();
 
 const Tags = {
   smokeTest: '@smoke'

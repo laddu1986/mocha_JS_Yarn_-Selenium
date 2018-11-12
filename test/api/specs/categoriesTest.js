@@ -3,7 +3,7 @@ import * as categories from 'actions/categories';
 import * as spaces from 'actions/spaces';
 import * as organization from 'actions/organization';
 import * as identity from 'actions/identity';
-import * as schemas from 'data/categorySchema';
+import * as schemas from 'schemas/categorySchema';
 
 const categoryData = new Object();
 var createResponse, listResponse, renameResponse, moveConfirm, deleteConfirm;

@@ -1,7 +1,7 @@
 import { joi, Tags } from '../common';
 import * as identity from 'actions/identity';
 import * as organization from 'actions/organization';
-import * as schemas from 'data/organizationSchema';
+import * as schemas from 'schemas/organizationSchema';
 var createOrgResponse, getOrgResponse, listOrgResponse, updateResponse, listOrgsByIDResponse, deleteResponse;
 
 const orgData = new Object();
