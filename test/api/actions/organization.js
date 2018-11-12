@@ -1,7 +1,7 @@
 import { randomString, organizationsSchemaData, post, get, put, del } from '../common';
 import { organizations } from 'config/getEnv';
 
-export function postOrganization(responseObject, flag) {
+export function postOrganization(responseObject) {
   const any = {
     api: organizations,
     data: {
@@ -9,13 +9,10 @@ export function postOrganization(responseObject, flag) {
       createdByAccountId: responseObject.identityID
     }
   };
-  if (flag) {
-    organizationsSchemaData.name = any.data.name;
-  }
   return post(any).then(response => {
     responseObject.orgID = response.body.id;
     responseObject.orgRowVersion = response.body.rowVersion;
-    responseObject.orgName = response.body.name;
+    responseObject.orgName = any.data.name;
     return response;
   });
 }
