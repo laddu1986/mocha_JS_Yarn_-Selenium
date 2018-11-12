@@ -1,7 +1,7 @@
-import { randomString, identitySchemaData, post, get, del, put, patch } from '../common';
+import { randomString, post, get, del, put, patch } from '../common';
 import { identities } from 'config/getEnv';
 
-export function postIdentity(responseObject, flag) {
+export function postIdentity(responseObject, updateFlag) {
   const any = {
     api: identities,
     data: {
@@ -10,14 +10,12 @@ export function postIdentity(responseObject, flag) {
       password: process.env.ACCOUNT_PASS
     }
   };
-  if (flag) {
-    identitySchemaData.name = any.data.fullname;
-    identitySchemaData.email = any.data.email;
-  }
   return post(any).then(response => {
-    responseObject.id = response.body.id;
-    responseObject.email = response.body.email;
-    responseObject.fullname = response.body.fullName;
+    if (updateFlag) {
+      responseObject.identityId = response.body.id;
+      responseObject.identityEmail = response.body.email;
+      responseObject.identityFullname = response.body.fullName;
+    }
     return response;
   });
 }
@@ -25,7 +23,7 @@ export function postIdentity(responseObject, flag) {
 export function getIdentityById(responseObject) {
   const any = {
     api: identities,
-    data: responseObject.id
+    data: responseObject.identityId
   };
   return get(any);
 }
@@ -33,7 +31,7 @@ export function getIdentityById(responseObject) {
 export function deleteIdentityById(responseObject) {
   const any = {
     api: identities,
-    data: responseObject.id
+    data: responseObject.identityId
   };
   return del(any);
 }
@@ -43,14 +41,14 @@ export function deleteIdentityById(responseObject) {
 export function getIdentityStateById(responseObject) {
   const any = {
     api: identities,
-    data: `${responseObject.id}/state`
+    data: `${responseObject.identityId}/state`
   };
   return get(any);
 }
 
 export function putIdentityById(responseObject) {
   const any = {
-    api: `${identities + responseObject.id}/state`,
+    api: `${identities + responseObject.identityId}/state`,
     data: {
       values: {
         additionalProp1: 'string',
@@ -63,7 +61,7 @@ export function putIdentityById(responseObject) {
 }
 export function patchIdentityStateById(responseObject) {
   const any = {
-    api: `${identities + responseObject.id}/state`,
+    api: `${identities + responseObject.identityId}/state`,
     data: {
       values: {
         additionalProp1: '1',
