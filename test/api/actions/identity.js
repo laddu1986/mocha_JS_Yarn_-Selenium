@@ -1,7 +1,7 @@
 import { randomString, post, get, del, put, patch } from '../common';
 import { identities } from 'config/getEnv';
 
-export function postIdentity(responseObject, updateFlag) {
+export function postIdentity(responseObject) {
   const any = {
     api: identities,
     data: {
@@ -11,11 +11,9 @@ export function postIdentity(responseObject, updateFlag) {
     }
   };
   return post(any).then(response => {
-    if (updateFlag) {
-      responseObject.identityID = response.body.id;
-      responseObject.identityEmail = any.data.email;
-      responseObject.identityFullname = any.data.fullname;
-    }
+    responseObject.identityID = response.body.id;
+    responseObject.identityEmail = any.data.email;
+    responseObject.identityFullname = any.data.fullname;
     return response;
   });
 }
