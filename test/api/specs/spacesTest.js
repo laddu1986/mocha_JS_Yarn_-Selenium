@@ -3,14 +3,7 @@ import * as spaces from 'actions/spaces';
 import * as organization from 'actions/organization';
 import * as identity from 'actions/identity';
 import * as Constants from 'constants.json';
-import {
-  patchSpaceNameSchema,
-  patchSpaceShortUrlSchema,
-  postSpaceByOrganizationIdSchema,
-  updateSpaceSchema,
-  getSpacesByOrganizationIdSchema,
-  getSpaceByOrgIdAndSpaceIdSchema
-} from 'data/spaceSchema';
+import * as schemas from 'data/spaceSchema';
 var postResponse, getResponse, updateResponse, getAllResponse, deleteResponse, patchResponse, patchNameResponse;
 
 describe('Spaces Api', () => {
@@ -18,7 +11,7 @@ describe('Spaces Api', () => {
     before(done => {
       identity.postIdentity(spaceData).then(() => {
         organization.postOrganization(spaceData).then(() => {
-          postResponse = spaces.postSpaceByOrganizationId(spaceData, true);
+          postResponse = spaces.postSpaceByOrganizationId(spaceData);
           done();
         });
       });
@@ -26,7 +19,7 @@ describe('Spaces Api', () => {
     it('Create a new space.', () => {
       return postResponse.then(response => {
         expect(response).to.have.status(201);
-        joi.assert(response.body, postSpaceByOrganizationIdSchema());
+        joi.assert(response.body, schemas.postSpaceByOrganizationIdSchema(spaceData));
       });
     });
   });
@@ -39,20 +32,20 @@ describe('Spaces Api', () => {
     it('Get All Spaces for an Organization', () => {
       return getAllResponse.then(response => {
         expect(response).to.have.status(200);
-        joi.assert(response.body, getSpacesByOrganizationIdSchema());
+        joi.assert(response.body, schemas.getSpacesByOrganizationIdSchema(spaceData));
       });
     });
   });
 
   describe('PUT /organizations/{orgId}/spaces', () => {
     before(done => {
-      updateResponse = spaces.updateSpace(spaceData, true);
+      updateResponse = spaces.updateSpace(spaceData);
       done();
     });
     it('Update Space for an Organization', () => {
       return updateResponse.then(response => {
         expect(response).to.have.status(200);
-        joi.assert(response.body, updateSpaceSchema());
+        joi.assert(response.body, schemas.updateSpaceSchema(spaceData));
       });
     });
   });
@@ -65,7 +58,7 @@ describe('Spaces Api', () => {
     it('Get Space for an Organization', () => {
       return getResponse.then(response => {
         expect(response).to.have.status(200);
-        joi.assert(response.body, getSpaceByOrgIdAndSpaceIdSchema());
+        joi.assert(response.body, schemas.getSpaceByOrgIdAndSpaceIdSchema(spaceData));
       });
     });
   });
@@ -77,7 +70,7 @@ describe('Spaces Api', () => {
     it('Patch a space Url', () => {
       return patchResponse.then(response => {
         expect(response).to.have.status(200);
-        joi.assert(response.body, patchSpaceShortUrlSchema());
+        joi.assert(response.body, schemas.patchSpaceShortUrlSchema(spaceData));
       });
     });
   });
@@ -90,7 +83,7 @@ describe('Spaces Api', () => {
     it('Patch a space name', () => {
       return patchNameResponse.then(response => {
         expect(response).to.have.status(200);
-        joi.assert(response.body, patchSpaceNameSchema());
+        joi.assert(response.body, schemas.patchSpaceNameSchema(spaceData));
       });
     });
   });

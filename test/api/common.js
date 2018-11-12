@@ -19,8 +19,6 @@ export const invitesSchemaData = new Object();
 export const inviteData = new Object();
 export const organizationsSchemaData = new Object();
 export const spaceKeyData = new Object();
-export const spaceSchemaData = new Object();
-export const spaceData = new Object();
 
 const Tags = {
   smokeTest: '@smoke'
