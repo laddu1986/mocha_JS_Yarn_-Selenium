@@ -27,7 +27,7 @@
     "clean": "eslint '**/*.js' --fix",
     "lint": "eslint '**/*.js'",
     "precommit": "lint-staged"
-  }  
+  },
   "lint-staged": {
     "*.{js,json,md}": [
       "prettier --write",
