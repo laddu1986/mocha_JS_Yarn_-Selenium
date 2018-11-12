@@ -10,7 +10,7 @@ const membershipData = new Object();
 describe('Memberships Api', () => {
   describe(`POST /memberships ${Tags.smokeTest}`, () => {
     before(done => {
-      identity.postIdentity(membershipData, true).then(() => {
+      identity.postIdentity(membershipData).then(() => {
         organization.postOrganization(membershipData).then(() => {
           createResponse = membership.postMembership(membershipData);
           done();
