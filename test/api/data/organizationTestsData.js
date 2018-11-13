@@ -1,67 +1,83 @@
-import * as lib from '../common';
+import { randomString } from '../common';
 import { organizations } from 'config/getEnv';
 
-export const noName = {
-  api: organizations,
-  data: {
-    createdByAccountId: lib.orgNegData.identityID
-  },
-  expected: 'The Name field is required.'
-};
-
+export function noName(orgNegData) {
+  return {
+    api: organizations,
+    data: {
+      createdByAccountId: orgNegData.identityID
+    },
+    expected: 'The Name field is required.'
+  };
+}
 export const blankAccountId = {
   api: organizations,
   data: {
-    name: lib.randomString.generate(10)
+    name: randomString.generate(10)
   },
   expected: 'The Account Id field is required.'
 };
-export const blankRowVersion = {
-  api: organizations,
-  data: {
-    id: lib.orgNegData.orgID,
-    name: lib.randomString.generate(10)
-  },
-  expected: 'A concurrency error has occurred.'
-};
-export const blankName = {
-  api: organizations,
-  data: {
-    id: lib.orgNegData.orgID,
-    name: '',
-    rowVersion: lib.orgNegData.orgRowVersion
-  },
-  expected: 'The Name field is required.'
-};
-export const blankID = {
-  api: organizations,
-  data: {
-    id: '',
-    name: lib.randomString.generate(10),
-    rowVersion: lib.orgNegData.orgRowVersion
-  },
-  expected: 'The Id field is required.'
-};
 
-export const incorrectOrgIDPut = {
-  api: organizations,
-  data: {
-    id: lib.orgNegData.identityID,
-    name: lib.randomString.generate(10),
-    rowVersion: lib.orgNegData.orgRowVersion
-  }
-};
+export function blankRowVersion(orgNegData) {
+  return {
+    api: organizations,
+    data: {
+      id: orgNegData.orgID,
+      name: randomString.generate(10)
+    },
+    expected: 'A concurrency error has occurred.'
+  };
+}
 
-export const incorrectOrgIDGet = {
-  api: organizations,
-  data: lib.orgNegData.identityID
-};
+export function blankName(orgNegData) {
+  return {
+    api: organizations,
+    data: {
+      id: orgNegData.orgID,
+      name: '',
+      rowVersion: orgNegData.orgRowVersion
+    },
+    expected: 'The Name field is required.'
+  };
+}
 
-export const incorrectOrgIdDelete = {
-  api: organizations,
-  data: `${lib.orgNegData.identityID}?rowVersion=${lib.orgNegData.orgRowVersion}`,
-  expected: 'A concurrency error has occurred.'
-};
+export function blankID(orgNegData) {
+  return {
+    api: organizations,
+    data: {
+      id: '',
+      name: randomString.generate(10),
+      rowVersion: orgNegData.orgRowVersion
+    },
+    expected: 'The Id field is required.'
+  };
+}
+
+export function incorrectOrgIDPut(orgNegData) {
+  return {
+    api: organizations,
+    data: {
+      id: orgNegData.identityID,
+      name: randomString.generate(10),
+      rowVersion: orgNegData.orgRowVersion
+    }
+  };
+}
+
+export function incorrrectOrgIDGet(orgNegData) {
+  return {
+    api: organizations,
+    data: orgNegData.identityID
+  };
+}
+
+export function incorrectOrgIDDelete(orgNegData) {
+  return {
+    api: organizations,
+    data: `${orgNegData.identityID}?rowVersion=${orgNegData.orgRowVersion}`,
+    expected: 'A concurrency error has occurred.'
+  };
+}
 
 export const blankOrgIdDelete = {
   api: organizations,
