@@ -33,13 +33,16 @@ export function registerAndCreateOrg(responseData) {
   });
 }
 
-export function login(responseData) {
+export function login(responseData, emailValue) {
+  var loginEmail;
+  if (emailValue != undefined) loginEmail = emailValue;
+  else loginEmail = responseData.LoginEmail;
   const query = {
     query: 'mutation Login($input: LoginInput!) { login(input: $input) }',
     variables: {
       input: {
         fields: {
-          email: responseData.LoginEmail,
+          email: loginEmail,
           password: process.env.ACCOUNT_PASS,
           remember: true
         }
