@@ -1,6 +1,6 @@
 import { joi, Tags } from '../common';
 import * as identity from 'actions/identity';
-import * as schemas from 'data/identitySchema';
+import * as schemas from 'schemas/identitySchema';
 var addResponse, getResponse, deleteResponse;
 
 const identityData = new Object();
