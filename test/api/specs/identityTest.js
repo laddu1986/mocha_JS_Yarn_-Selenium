@@ -1,22 +1,21 @@
-import { joi, loader, Tags, identityData } from '../common';
+import { joi, Tags } from '../common';
 import * as identity from 'actions/identity';
-const schemas = 'data/identitySchema';
-var addResponse, getResponse, deleteResponse, importedSchema;
+import * as schemas from 'data/identitySchema';
+var addResponse, getResponse, deleteResponse;
+
+const identityData = new Object();
 
 describe('Identity Api', () => {
   describe(`POST /identities ${Tags.smokeTest}`, () => {
     before(done => {
-      addResponse = identity.postIdentity(identityData, true);
+      addResponse = identity.postIdentity(identityData);
       done();
     });
 
     it('Add a new user identity.', () => {
       return addResponse.then(function(response) {
-        return loader.import(schemas).then(dataImported => {
-          importedSchema = dataImported.default;
-          expect(response).to.have.status(201);
-          joi.assert(response.body, importedSchema.postIdentitySchema);
-        });
+        expect(response).to.have.status(201);
+        joi.assert(response.body, schemas.postIdentitySchema(identityData));
       });
     });
   });
@@ -29,7 +28,7 @@ describe('Identity Api', () => {
     it('Get a identity by its id.', () => {
       return getResponse.then(function(response) {
         expect(response).to.have.status(200);
-        joi.assert(response.body, importedSchema.getIdentitySchema);
+        joi.assert(response.body, schemas.getIdentitySchema(identityData));
       });
     });
   });
