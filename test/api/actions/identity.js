@@ -1,7 +1,7 @@
-import { randomString, identitySchemaData, post, get, del, put, patch } from '../common';
+import { randomString, post, get, del, put, patch } from '../common';
 import { identities } from 'config/getEnv';
 
-export function postIdentity(responseObject, flag) {
+export function postIdentity(responseObject) {
   const any = {
     api: identities,
     data: {
@@ -10,14 +10,10 @@ export function postIdentity(responseObject, flag) {
       password: process.env.ACCOUNT_PASS
     }
   };
-  if (flag) {
-    identitySchemaData.name = any.data.fullname;
-    identitySchemaData.email = any.data.email;
-  }
   return post(any).then(response => {
     responseObject.identityID = response.body.id;
-    responseObject.identityEmail = response.body.email;
-    responseObject.identityFullname = response.body.fullName;
+    responseObject.identityEmail = any.data.email;
+    responseObject.identityFullname = any.data.fullname;
     return response;
   });
 }
