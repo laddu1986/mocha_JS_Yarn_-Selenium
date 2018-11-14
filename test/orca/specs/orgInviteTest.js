@@ -1,11 +1,15 @@
 import { joi } from '../common';
 import { registerAndCreateOrg, login, createAccount, logout } from 'actions/common';
 import { getOrganizations } from 'actions/organization';
-import { createOrgInvite, getInviteTokenDetail, acceptOrgInvite } from 'actions/orgInvite';
+import { createOrgInvite, getInviteTokenDetail, acceptOrgInvite, deleteOrgInvite } from 'actions/orgInvite';
 import { orgInviteSchema, getOrgInviteInfoSchema, acceptInviteSchema } from 'data/orgInviteSchema';
 import { createOrgSchema } from 'data/organizationSchema';
 
-var createOrgInviteResponse, getTokenDetailResponse, acceptOrgInviteResponse, createAccountResponse;
+var createOrgInviteResponse,
+  getTokenDetailResponse,
+  acceptOrgInviteResponse,
+  createAccountResponse,
+  deleteOrgInviteResponse;
 var createOrgInviteObject = new Object();
 
 describe('Create Org Invite Tests', () => {
@@ -63,6 +67,19 @@ describe('Create Org Invite Tests', () => {
         acceptOrgInviteResponse.response.body.data.acceptOrgInvite.organization,
         acceptInviteSchema(createOrgInviteObject)
       );
+    });
+  });
+
+  describe('Mutation- Delete Org Invite', () => {
+    before(async () => {
+      await logout();
+      await login(createOrgInviteObject, createOrgInviteObject.AccountEmail);
+      await createOrgInvite(createOrgInviteObject);
+      deleteOrgInviteResponse = await deleteOrgInvite(createOrgInviteObject);
+    });
+    it('Accept the organization invite', () => {
+      expect(deleteOrgInviteResponse.response.statusCode).to.equal(200);
+      expect(deleteOrgInviteResponse.response.body.data.deleteOrgInvite).to.equal(true);
     });
   });
 });

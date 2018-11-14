@@ -70,3 +70,27 @@ export function acceptOrgInvite(responseData) {
     return response;
   });
 }
+
+export function deleteOrgInvite(responseData) {
+  const data = {
+    query: 'mutation DeleteOrgInvite($input: DeleteOrgInviteInput!) { deleteOrgInvite(input: $input)} ',
+    variables: {
+      input: {
+        email: responseData.inviteEmail,
+        organizationId: responseData.orgID
+      }
+    }
+  };
+  const any = {
+    api: orca,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
+    },
+    data: data
+  };
+  return post(any).then(response => {
+    return response;
+  });
+}
