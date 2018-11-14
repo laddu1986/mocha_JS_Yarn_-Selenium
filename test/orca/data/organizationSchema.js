@@ -73,3 +73,28 @@ export function organizationSchema(name) {
   });
   return objectSchema;
 }
+
+export function createOrgSchema(object) {
+  var schema = joi.object().keys({
+    id: joi.string().required(),
+    email: [joi.valid(object.AccountEmail), joi.valid(object.inviteEmail)],
+    name: [joi.valid(object.AccountName), joi.valid(object.CreateAccountName)],
+    state: joi.object().keys({
+      lastOrganizationSlug: joi.valid(null).required(),
+      lastSpaceSlug: joi.valid(null).required()
+    }),
+    rights: joi.object().keys({
+      organizations: joi.array().items({
+        organizationId: joi
+          .string()
+          .uuid()
+          .required(),
+        role: joi.object().keys({
+          name: joi.string().required(), //this needs to compare with "orgAdmin" after 7ch5a (clickup) is resolved
+          permissionLevel: joi.number().required() //this needs to compare with "40" after 7ch5a (clickup) is resolved
+        })
+      })
+    })
+  });
+  return schema;
+}
