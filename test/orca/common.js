@@ -11,9 +11,6 @@ export var dateFormat = require('dateformat');
 export var path = require('path');
 
 // Passed variables
-export var registerAndCreateOrgObject = new Object();
-export var createOrgObject = new Object();
-export var createSpaceObject = new Object();
 export var orca = getEnv();
 
 // Test Tags
