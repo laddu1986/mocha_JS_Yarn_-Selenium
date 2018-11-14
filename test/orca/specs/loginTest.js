@@ -1,10 +1,9 @@
-import { joi, registerAndCreateOrgObject } from '../common';
+import { joi } from '../common';
 import { registerAndCreateOrg, login, logout, deleteAccount } from 'actions/common';
 import { leaveOrganization, getOrganizations } from 'actions/organization';
 import { registerAndCreateOrgSchema } from 'data/organizationSchema';
-
 var createResponse, loginResponse, logoutResponse, leaveOrgResponse, deleteAccountResponse;
-
+var registerAndCreateOrgObject = new Object();
 describe('Mutation - registerAndCreateOrg', () => {
   before(done => {
     createResponse = registerAndCreateOrg(registerAndCreateOrgObject);
@@ -13,7 +12,10 @@ describe('Mutation - registerAndCreateOrg', () => {
   it('Create new user account', () => {
     return createResponse.then(response => {
       expect(response.response.statusCode).to.equal(200);
-      joi.assert(response.response.body.data.registerAndCreateOrg.account, registerAndCreateOrgSchema());
+      joi.assert(
+        response.response.body.data.registerAndCreateOrg.account,
+        registerAndCreateOrgSchema(registerAndCreateOrgObject)
+      );
     });
   });
 });

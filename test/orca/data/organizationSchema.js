@@ -1,6 +1,6 @@
-import { joi, createOrgObject, registerAndCreateOrgObject } from '../common';
+import { joi } from '../common';
 
-export function registerAndCreateOrgSchema() {
+export function registerAndCreateOrgSchema(registerAndCreateOrgObject) {
   var schema = joi.object().keys({
     id: joi.string().required(),
     email: joi.valid(registerAndCreateOrgObject.AccountEmail).required(),
@@ -25,10 +25,11 @@ export function registerAndCreateOrgSchema() {
   return schema;
 }
 
-export function organizationSchema(name) {
+export function organizationSchema(createOrgObject, name) {
   var time;
-  if (name == createOrgObject.orgName || name == createOrgObject.orgNameWhileReg) time = joi.valid(null).required();
-  else time = joi.date().required();
+  if (name == createOrgObject.newName) {
+    time = joi.date().required();
+  } else time = joi.valid(null).required();
   var objectSchema = joi.object().keys({
     id: joi
       .string()
