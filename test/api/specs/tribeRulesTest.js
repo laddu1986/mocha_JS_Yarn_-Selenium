@@ -4,7 +4,7 @@ import * as spaces from 'actions/spaces';
 import * as organization from 'actions/organization';
 import * as tribe from 'actions/tribe';
 import * as rules from 'actions/tribeRules';
-import * as schemas from 'data/tribeRulesSchema';
+import * as schemas from 'schemas/tribeRulesSchema';
 
 var configResponse,
   saveResponse,

@@ -2,9 +2,9 @@ import * as lib from '../common';
 import * as spaces from 'actions/spaces';
 import * as organization from 'actions/organization';
 import * as identity from 'actions/identity';
-const moduleSpecifier = 'data/spaceKeyTestsData.js';
-var data,
-  incorrectKeyDeleteResponse,
+import * as data from 'data/spaceKeyTestsData';
+
+var incorrectKeyDeleteResponse,
   incorrectOrgIdDeleteResponse,
   incorrectOrgIdPatchResponse,
   blankStatusPatchResponse,
@@ -16,20 +16,19 @@ var data,
   incorrectSpaceIDGetResponse,
   incorrectOrgIDGetResponse;
 
+const spaceKeyNegData = new Object();
+
 describe('Negative Tests -> Space Keys Api', () => {
   describe('POST /organizations/{orgId}/keys', () => {
     describe('400 Error Response : Mandatory fields validation', () => {
       before(done => {
-        identity.postIdentity(lib.spaceKeyNegData).then(() => {
-          organization.postOrganization(lib.spaceKeyNegData).then(() => {
-            spaces.postSpaceByOrganizationId(lib.spaceKeyNegData).then(() => {
-              spaces.postKeysBySpaceId(lib.spaceKeyNegData).then(() => {
-                lib.loader.import(moduleSpecifier).then(dataImported => {
-                  data = dataImported.default;
-                  noSpaceIDPostResponse = lib.post(data.noSpaceIDPost);
-                  blankSpaceIDPostResponse = lib.post(data.blankSpaceIDPost);
-                  done();
-                });
+        identity.postIdentity(spaceKeyNegData).then(() => {
+          organization.postOrganization(spaceKeyNegData).then(() => {
+            spaces.postSpaceByOrganizationId(spaceKeyNegData).then(() => {
+              spaces.postKeysBySpaceId(spaceKeyNegData).then(() => {
+                noSpaceIDPostResponse = lib.post(data.noSpaceIDPost(spaceKeyNegData));
+                blankSpaceIDPostResponse = lib.post(data.blankSpaceIDPost(spaceKeyNegData));
+                done();
               });
             });
           });
@@ -49,8 +48,8 @@ describe('Negative Tests -> Space Keys Api', () => {
     xdescribe('404 Error Response : Not Found', () => {
       //to be enabled when AF-171 is fixed
       before(done => {
-        incorrectOrgIDPostResponse = lib.post(data.incorrectOrgIDPost);
-        incorrectSpaceIDPostResponse = lib.post(data.incorrectSpaceIDPost);
+        incorrectOrgIDPostResponse = lib.post(data.incorrectOrgIDPost(spaceKeyNegData));
+        incorrectSpaceIDPostResponse = lib.post(data.incorrectSpaceIDPost(spaceKeyNegData));
         done();
       });
       it('Org ID is not existing', () => {
@@ -68,8 +67,8 @@ describe('Negative Tests -> Space Keys Api', () => {
   describe('GET /organizations/{orgId}/keys', () => {
     describe('404 Error Response : Not Found', () => {
       before(done => {
-        incorrectOrgIDGetResponse = lib.get(data.incorrectSpaceIDPost);
-        incorrectSpaceIDGetResponse = lib.get(data.incorrectSpaceIDPost);
+        incorrectOrgIDGetResponse = lib.get(data.incorrectSpaceIDPost(spaceKeyNegData));
+        incorrectSpaceIDGetResponse = lib.get(data.incorrectSpaceIDPost(spaceKeyNegData));
         done();
       });
       it('Space ID is not existing', () => {
@@ -86,21 +85,21 @@ describe('Negative Tests -> Space Keys Api', () => {
   });
   describe('PATCH /organizations/{orgId}/keys/{key}', () => {
     before(done => {
-      incorrectKeyPatchResponse = lib.patch(data.incorrectKeyPatch);
-      blankStatusPatchResponse = lib.patch(data.blankStatusPatch);
-      incorrectOrgIdPatchResponse = lib.patch(data.incorrectOrgIdPatch);
+      incorrectKeyPatchResponse = lib.patch(data.incorrectKeyPatch(spaceKeyNegData));
+      blankStatusPatchResponse = lib.patch(data.blankStatusPatch(spaceKeyNegData));
+      incorrectOrgIdPatchResponse = lib.patch(data.incorrectOrgIdPatch(spaceKeyNegData));
       done();
     });
     it('404 Error Response : Key not found', () => {
       return incorrectKeyPatchResponse.then(response => {
         expect(response).to.have.status(404);
-        expect(response.body).to.equal(data.incorrectKeyPatch.expected);
+        expect(response.body).to.equal(data.incorrectKeyPatch(spaceKeyNegData).expected);
       });
     });
     it('400 Error Response : Not Valid status', () => {
       return blankStatusPatchResponse.then(response => {
         expect(response).to.have.status(400);
-        expect(response.body).to.include(data.blankStatusPatch.expected);
+        expect(response.body).to.include(data.blankStatusPatch(spaceKeyNegData).expected);
       });
     });
     xit('409 Error Response : Conflict', () => {
@@ -112,14 +111,14 @@ describe('Negative Tests -> Space Keys Api', () => {
   });
   describe('DELETE /organizations/{orgId}/keys/{key}', () => {
     before(done => {
-      incorrectKeyDeleteResponse = lib.del(data.incorrectKeyDelete);
-      incorrectOrgIdDeleteResponse = lib.del(data.incorrectOrgIdDelete);
+      incorrectKeyDeleteResponse = lib.del(data.incorrectKeyDelete(spaceKeyNegData));
+      incorrectOrgIdDeleteResponse = lib.del(data.incorrectOrgIdDelete(spaceKeyNegData));
       done();
     });
     it('404 Error Response : Key not found', () => {
       return incorrectKeyDeleteResponse.then(response => {
         expect(response).to.have.status(404);
-        expect(response.body).to.equal(data.incorrectKeyDelete.expected);
+        expect(response.body).to.equal(data.incorrectKeyDelete(spaceKeyNegData).expected);
       });
     });
     xit('409 Error Response : Conflict', () => {
