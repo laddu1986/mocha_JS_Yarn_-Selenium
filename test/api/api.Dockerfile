@@ -19,4 +19,5 @@ ENV API_INVITES_DEV https://hub.appcurator.io/org/api/v1/invites/
 ENV API_METRICS_DEV https://hub.appcurator.io/metrics/v1/organizations/
 ENV ACCOUNT_PASS Pass1234
 
-ENTRYPOINT [ "/bin/sh" ]
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]
