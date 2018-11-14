@@ -1,4 +1,4 @@
-import { randomString, post, invitesSchemaData, get, del } from '../common';
+import { randomString, post, get, del } from '../common';
 import { organizations, invites, token } from 'config/getEnv';
 var emailInvited = `${randomString.generate(5)}@test.co`;
 
@@ -20,7 +20,7 @@ export function getAccessToken(responseObject) {
   });
 }
 
-export function postInvitesByOrganizationId(responseObject, flag) {
+export function postInvitesByOrganizationId(responseObject) {
   const any = {
     api: `${organizations + responseObject.orgID}/invites`,
     data: [emailInvited],
@@ -29,9 +29,7 @@ export function postInvitesByOrganizationId(responseObject, flag) {
       Authorization: `Bearer ${responseObject.accessToken}`
     }
   };
-  if (flag) {
-    invitesSchemaData.email = emailInvited;
-  }
+  responseObject.inviteEmail = emailInvited;
   return post(any);
 }
 
