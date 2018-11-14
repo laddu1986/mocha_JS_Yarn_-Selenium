@@ -1,9 +1,9 @@
-import { createSpaceObject, joi } from '../common';
+import { joi } from '../common';
 import { registerAndCreateOrg, login } from 'actions/common';
 import { getOrganizations } from 'actions/organization';
 import { createSpace, updateSpace, getSpaceBySlug, getSpace, deleteSpace } from 'actions/space';
 import { spaceSchema } from 'data/spacesSchema';
-
+var createSpaceObject = new Object();
 var createSpaceResponse, updateSpaceResponse, getSpaceResponse, getSpaceByIDResponse, deleteSpaceResponse;
 
 describe('Spaces Tests', () => {

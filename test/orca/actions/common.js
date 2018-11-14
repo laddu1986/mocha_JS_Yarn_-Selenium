@@ -28,17 +28,21 @@ export function registerAndCreateOrg(responseData) {
     responseData.AccountID = response.response.body.data.registerAndCreateOrg.account.id;
     responseData.AccountName = name_account;
     responseData.AccountEmail = email_account;
+    responseData.LoginEmail = email_account;
     return response;
   });
 }
 
-export function login(responseData) {
+export function login(responseData, emailValue) {
+  var loginEmail;
+  if (emailValue != undefined) loginEmail = emailValue;
+  else loginEmail = responseData.LoginEmail;
   const query = {
     query: 'mutation Login($input: LoginInput!) { login(input: $input) }',
     variables: {
       input: {
         fields: {
-          email: responseData.AccountEmail,
+          email: loginEmail,
           password: process.env.ACCOUNT_PASS,
           remember: true
         }
@@ -93,5 +97,32 @@ export function deleteAccount(responseData) {
   };
   return post(any).then(res => {
     return res;
+  });
+}
+
+export function createAccount(responseData) {
+  var name_account = `${randomString.generate(10)}`;
+  const query = {
+    query:
+      'mutation CreateAccount($input: CreateAccountInput!) { createAccount(input: $input) { account { id email name state {lastOrganizationSlug lastSpaceSlug} }  } }',
+    operationName: 'CreateAccount',
+    variables: {
+      input: {
+        fields: {
+          name: name_account,
+          email: responseData.inviteEmail,
+          password: process.env.ACCOUNT_PASS
+        }
+      }
+    }
+  };
+  const any = {
+    api: orca,
+    data: query
+  };
+  return post(any).then(response => {
+    responseData.CreateAccountName = name_account;
+    responseData.LoginEmail = responseData.inviteEmail;
+    return response;
   });
 }
