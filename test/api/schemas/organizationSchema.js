@@ -1,6 +1,5 @@
 import { joi } from '../common';
 import * as Constants from 'constants.json';
-import * as organization from 'actions/organization';
 
 export function createOrgSchema(orgData) {
   return joi.object().keys({
@@ -49,7 +48,7 @@ export function postOrganizationsSchema(orgData) {
 export function putOrgSchema(orgData) {
   return joi.object().keys({
     id: joi.valid(orgData.orgID).required(),
-    name: joi.valid(organization.newName).required(),
+    name: joi.valid(orgData.newName).required(),
     createdByAccountId: joi.valid(orgData.identityID).required(),
     rowVersion: joi.date().required(),
     createdTime: joi.date().required(),
