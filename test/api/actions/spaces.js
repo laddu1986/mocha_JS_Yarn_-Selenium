@@ -1,8 +1,8 @@
-import { randomString, spaceSchemaData, post, get, put, patch, del } from '../common';
+import { randomString, post, get, put, patch, del } from '../common';
 import { spaces, keys } from 'config/getEnv';
 import * as Constants from 'constants.json';
 
-export function postSpaceByOrganizationId(responseObject, flag) {
+export function postSpaceByOrganizationId(responseObject) {
   const any = {
     api: `${spaces + responseObject.orgID}/spaces`,
     data: {
@@ -11,13 +11,11 @@ export function postSpaceByOrganizationId(responseObject, flag) {
       shortUrl: randomString.generate(6)
     }
   };
-  if (flag) {
-    spaceSchemaData.name = any.data.name;
-    spaceSchemaData.shortUrl = any.data.shortUrl;
-  }
   return post(any).then(response => {
     responseObject.spaceID = response.body.id;
     responseObject.spaceRowVersion = response.body.rowVersion;
+    responseObject.spaceName = any.data.name;
+    responseObject.spaceShortUrl = any.data.shortUrl;
     return response;
   });
 }
@@ -30,7 +28,7 @@ export function getSpacesByOrganizationId(responseObject) {
   return get(any);
 }
 
-export function updateSpace(responseObject, flag) {
+export function updateSpace(responseObject) {
   const any = {
     api: `${spaces + responseObject.orgID}/spaces`,
     data: {
@@ -40,12 +38,10 @@ export function updateSpace(responseObject, flag) {
       shortUrl: randomString.generate(6)
     }
   };
-  if (flag) {
-    spaceSchemaData.newName = any.data.name;
-    spaceSchemaData.newShortUrl = any.data.shortUrl;
-  }
   return put(any).then(response => {
     responseObject.spaceRowVersion = response.body.rowVersion;
+    responseObject.spaceNewName = any.data.name;
+    responseObject.spaceNewShortUrl = any.data.shortUrl;
     return response;
   });
 }
@@ -63,9 +59,9 @@ export function patchSpaceByOrgIdRowVersionAndSpaceId(responseObject, type) {
     ]
   };
   if (type == Constants.SpaceAttributes.ShortUrl) {
-    spaceSchemaData.patchedShortUrl = any.data[0].value;
+    responseObject.spacePatchedShortUrl = any.data[0].value;
   } else {
-    spaceSchemaData.patchedName = any.data[0].value;
+    responseObject.spacePatchedName = any.data[0].value;
   }
   return patch(any).then(response => {
     responseObject.spaceRowVersion = response.body.rowVersion;

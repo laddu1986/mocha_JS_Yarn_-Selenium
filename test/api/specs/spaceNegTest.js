@@ -1,10 +1,10 @@
-import * as lib from '../common';
+import { post, put, patch, del, get } from '../common';
 import * as identity from 'actions/identity';
 import * as organization from 'actions/organization';
 import * as spaces from 'actions/spaces';
-const moduleSpecifier = 'data/spaceTestsData';
-var data,
-  bigNameResponse,
+import * as data from 'data/spaceTestsData';
+//const moduleSpecifier = 'data/spaceTestsData';
+var bigNameResponse,
   bigShortUrlResponse,
   blankShortUrlResponse,
   blankNameResponse,
@@ -36,24 +36,23 @@ var data,
   noIdPutResponse,
   noRowVersionPutResponse;
 
+const spaceNegData = new Object();
+
 describe('Negative Tests --> Space Api', () => {
   describe('POST /organizations/{orgId}/spaces', () => {
     describe('400 Error Response: Mandatory fields validation', () => {
       before(done => {
-        identity.postIdentity(lib.spaceNegData).then(() => {
-          organization.postOrganization(lib.spaceNegData).then(() => {
-            spaces.postSpaceByOrganizationId(lib.spaceNegData).then(() => {
-              lib.loader.import(moduleSpecifier).then(dataImported => {
-                data = dataImported.default;
-                noNamePostResponse = lib.post(data.noName);
-                blankNameResponse = lib.post(data.blankName);
-                noShortUrlPostResponse = lib.post(data.noShortUrl);
-                blankShortUrlResponse = lib.post(data.blankShortUrl);
-                noAccountIdPostResponse = lib.post(data.noAccountId);
-                bigNameResponse = lib.post(data.bigName);
-                bigShortUrlResponse = lib.post(data.bigShortUrl);
-                done();
-              });
+        identity.postIdentity(spaceNegData).then(() => {
+          organization.postOrganization(spaceNegData).then(() => {
+            spaces.postSpaceByOrganizationId(spaceNegData).then(() => {
+              noNamePostResponse = post(data.noName(spaceNegData));
+              blankNameResponse = post(data.blankName(spaceNegData));
+              noShortUrlPostResponse = post(data.noShortUrl(spaceNegData));
+              blankShortUrlResponse = post(data.blankShortUrl(spaceNegData));
+              noAccountIdPostResponse = post(data.noAccountId(spaceNegData));
+              bigNameResponse = post(data.bigName(spaceNegData));
+              bigShortUrlResponse = post(data.bigShortUrl(spaceNegData));
+              done();
             });
           });
         });
@@ -61,43 +60,43 @@ describe('Negative Tests --> Space Api', () => {
       it('Name field is required', () => {
         return noNamePostResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.name).to.equal(data.noName.expected);
+          expect(response.body.validationErrors.name).to.equal(data.noName(spaceNegData).expected);
         });
       });
       it('ShortUrl field is required', () => {
         return noShortUrlPostResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.shortUrl).to.equal(data.noShortUrl.expected);
+          expect(response.body.validationErrors.shortUrl).to.equal(data.noShortUrl(spaceNegData).expected);
         });
       });
       it('Name field cannot be blank', () => {
         return blankNameResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.name).to.equal(data.blankName.expected);
+          expect(response.body.validationErrors.name).to.equal(data.blankName(spaceNegData).expected);
         });
       });
       it('ShortUrl field cannot be blank', () => {
         return blankShortUrlResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.shortUrl).to.equal(data.blankShortUrl.expected);
+          expect(response.body.validationErrors.shortUrl).to.equal(data.blankShortUrl(spaceNegData).expected);
         });
       });
       it('Name field cannot be >75 characters', () => {
         return bigNameResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.name).to.equal(data.bigName.expected);
+          expect(response.body.validationErrors.name).to.equal(data.bigName(spaceNegData).expected);
         });
       });
       it('ShortUrl field cannot be >20 characters', () => {
         return bigShortUrlResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.shortUrl).to.equal(data.bigShortUrl.expected);
+          expect(response.body.validationErrors.shortUrl).to.equal(data.bigShortUrl(spaceNegData).expected);
         });
       });
       it('AccountID field is required', () => {
         return noAccountIdPostResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.createdByAccountId).to.equal(data.noAccountId.expected);
+          expect(response.body.validationErrors.createdByAccountId).to.equal(data.noAccountId(spaceNegData).expected);
         });
       });
     });
@@ -105,63 +104,63 @@ describe('Negative Tests --> Space Api', () => {
   describe('PUT /organizations/{orgId}/spaces', () => {
     describe('400 Error Response: Mandatory fields validation', () => {
       before(done => {
-        noNamePutResponse = lib.put(data.noNamePut);
-        blankNamePutResponse = lib.put(data.blankNamePut);
-        bigNamePutResponse = lib.put(data.bigNamePut);
-        noShortUrlPutResponse = lib.put(data.noShortUrlPut);
-        blankShortUrlPutResponse = lib.put(data.blankShortUrlPut);
-        bigShortUrlPutResponse = lib.put(data.bigShortUrlPut);
-        noIdPutResponse = lib.put(data.noIdPut);
+        noNamePutResponse = put(data.noNamePut(spaceNegData));
+        blankNamePutResponse = put(data.blankNamePut(spaceNegData));
+        bigNamePutResponse = put(data.bigNamePut(spaceNegData));
+        noShortUrlPutResponse = put(data.noShortUrlPut(spaceNegData));
+        blankShortUrlPutResponse = put(data.blankShortUrlPut(spaceNegData));
+        bigShortUrlPutResponse = put(data.bigShortUrlPut(spaceNegData));
+        noIdPutResponse = put(data.noIdPut(spaceNegData));
         done();
       });
       it('Name field is required', () => {
         return noNamePutResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.name).to.equal(data.noNamePut.expected);
+          expect(response.body.validationErrors.name).to.equal(data.noNamePut(spaceNegData).expected);
         });
       });
       xit('Name cannot be >75 characters', () => {
         // to be enabled when AF-167 is resolved
         return bigNamePutResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.name).to.equal(data.bigNamePut.expected);
+          expect(response.body.validationErrors.name).to.equal(data.bigNamePut(spaceNegData).expected);
         });
       });
       xit('Name cannot be blank', () => {
         // to be enabled when AF-167 is resolved
         return blankNamePutResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.name).to.equal(data.blankNamePut.expected);
+          expect(response.body.validationErrors.name).to.equal(data.blankNamePut(spaceNegData).expected);
         });
       });
       it('ShortUrl field is required', () => {
         return noShortUrlPutResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.shortUrl).to.equal(data.noShortUrlPut.expected);
+          expect(response.body.validationErrors.shortUrl).to.equal(data.noShortUrlPut(spaceNegData).expected);
         });
       });
       it('ShortUrl field cannot be empty', () => {
         return blankShortUrlPutResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.shortUrl).to.equal(data.blankShortUrlPut.expected);
+          expect(response.body.validationErrors.shortUrl).to.equal(data.blankShortUrlPut(spaceNegData).expected);
         });
       });
       it('ShortUrl cannot be >20 characters', () => {
         return bigShortUrlPutResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.shortUrl).to.equal(data.bigShortUrlPut.expected);
+          expect(response.body.validationErrors.shortUrl).to.equal(data.bigShortUrlPut(spaceNegData).expected);
         });
       });
       it('Id field is required', () => {
         return noIdPutResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.id).to.equal(data.noIdPut.expected);
+          expect(response.body.validationErrors.id).to.equal(data.noIdPut(spaceNegData).expected);
         });
       });
     });
     describe('409 Error Response: Conflict', () => {
       before(done => {
-        noRowVersionPutResponse = lib.put(data.noRowVersionPut);
+        noRowVersionPutResponse = put(data.noRowVersionPut(spaceNegData));
         done();
       });
       it('RowVersion is not provided', () => {
@@ -172,8 +171,8 @@ describe('Negative Tests --> Space Api', () => {
     });
     describe('404 Error Response: Not Found', () => {
       before(done => {
-        incorrectOrgIDResponse = lib.put(data.incorrectOrgIDPut);
-        incorrectSpaceIDResponse = lib.put(data.incorrectSpaceIDPut);
+        incorrectOrgIDResponse = put(data.incorrectOrgIDPut(spaceNegData));
+        incorrectSpaceIDResponse = put(data.incorrectSpaceIDPut(spaceNegData));
         done();
       });
       it('Space Id is not existing', () => {
@@ -191,8 +190,8 @@ describe('Negative Tests --> Space Api', () => {
   describe('GET /organizations/{orgId}/spaces/{spaceId}', () => {
     describe('404 Error Response: Not Found', () => {
       before(done => {
-        incorrectOrgIDGetResponse = lib.get(data.incorrectOrgIDGet);
-        incorrectSpaceIDGetResponse = lib.get(data.incorrectSpaceIDGet);
+        incorrectOrgIDGetResponse = get(data.incorrectOrgIDGet(spaceNegData));
+        incorrectSpaceIDGetResponse = get(data.incorrectSpaceIDGet(spaceNegData));
         done();
       });
       it('OrgId is not existing', () => {
@@ -210,7 +209,7 @@ describe('Negative Tests --> Space Api', () => {
   describe('PATCH /organizations/{orgId}/spaces/{spaceId}', () => {
     describe('409 Error Response: Conflict', () => {
       before(done => {
-        incorrectRowVersionPatchResponse = lib.patch(data.incorrectRowVersionPatch);
+        incorrectRowVersionPatchResponse = patch(data.incorrectRowVersionPatch(spaceNegData));
         done();
       });
       it('RowVersion is not existing', () => {
@@ -221,8 +220,8 @@ describe('Negative Tests --> Space Api', () => {
     });
     describe('404 Error Response: Not Found', () => {
       before(done => {
-        incorrectOrgIDPatchResponse = lib.patch(data.incorrectOrgIDPatch);
-        incorrectSpaceIDPatchResponse = lib.patch(data.incorrectSpaceIDPatch);
+        incorrectOrgIDPatchResponse = patch(data.incorrectOrgIDPatch(spaceNegData));
+        incorrectSpaceIDPatchResponse = patch(data.incorrectSpaceIDPatch(spaceNegData));
         done();
       });
       it('OrgId is not existing', () => {
@@ -238,48 +237,48 @@ describe('Negative Tests --> Space Api', () => {
     });
     describe('400 Error Response: Mandatory fields validation', () => {
       before(done => {
-        blankNamePatchResponse = lib.patch(data.blankNamePatch);
-        noNamePatchResponse = lib.patch(data.noNamePatch);
-        bigNamePatchResponse = lib.patch(data.bigNamePatch);
-        blankShortUrlPatchResponse = lib.patch(data.blankShortUrlPatch);
-        noShortUrlPatchResponse = lib.patch(data.noShortUrlPatch);
-        bigShortUrlPatchResponse = lib.patch(data.bigShortUrlPatch);
+        blankNamePatchResponse = patch(data.blankNamePatch(spaceNegData));
+        noNamePatchResponse = patch(data.noNamePatch(spaceNegData));
+        bigNamePatchResponse = patch(data.bigNamePatch(spaceNegData));
+        blankShortUrlPatchResponse = patch(data.blankShortUrlPatch(spaceNegData));
+        noShortUrlPatchResponse = patch(data.noShortUrlPatch(spaceNegData));
+        bigShortUrlPatchResponse = patch(data.bigShortUrlPatch(spaceNegData));
         done();
       });
       it('Name cannot be blank', () => {
         return blankNamePatchResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.name).to.equal(data.blankNamePatch.expected);
+          expect(response.body.validationErrors.name).to.equal(data.blankNamePatch(spaceNegData).expected);
         });
       });
       it('Name is required', () => {
         return noNamePatchResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.name).to.equal(data.noNamePatch.expected);
+          expect(response.body.validationErrors.name).to.equal(data.noNamePatch(spaceNegData).expected);
         });
       });
       it('Name cannot be >75 characters', () => {
         return bigNamePatchResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.name).to.equal(data.bigNamePatch.expected);
+          expect(response.body.validationErrors.name).to.equal(data.bigNamePatch(spaceNegData).expected);
         });
       });
       it('ShortUrl cannot be blank', () => {
         return blankShortUrlPatchResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.shortUrl).to.equal(data.blankShortUrlPatch.expected);
+          expect(response.body.validationErrors.shortUrl).to.equal(data.blankShortUrlPatch(spaceNegData).expected);
         });
       });
       it('ShortUrl is required', () => {
         return noShortUrlPatchResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.shortUrl).to.equal(data.noShortUrlPatch.expected);
+          expect(response.body.validationErrors.shortUrl).to.equal(data.noShortUrlPatch(spaceNegData).expected);
         });
       });
       it('ShortUrl cannot be >20 characters', () => {
         return bigShortUrlPatchResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.shortUrl).to.equal(data.bigShortUrlPatch.expected);
+          expect(response.body.validationErrors.shortUrl).to.equal(data.bigShortUrlPatch(spaceNegData).expected);
         });
       });
     });
@@ -287,8 +286,8 @@ describe('Negative Tests --> Space Api', () => {
   describe('DELETE /organizations/{orgId}/spaces/{spaceId}', () => {
     describe('404 Error Response: Not Found', () => {
       before(done => {
-        incorrectSpaceIDDeleteResponse = lib.del(data.incorrectSpaceIDDelete);
-        incorrectOrgIDDeleteResponse = lib.del(data.incorrectOrgIDDelete);
+        incorrectSpaceIDDeleteResponse = del(data.incorrectSpaceIDDelete(spaceNegData));
+        incorrectOrgIDDeleteResponse = del(data.incorrectOrgIDDelete(spaceNegData));
         done();
       });
       it('Space ID is not existing', () => {
@@ -304,7 +303,7 @@ describe('Negative Tests --> Space Api', () => {
     });
     describe('409 Error Response: Conflict', () => {
       before(done => {
-        noRowVersionDeleteResponse = lib.del(data.noRowVersionDelete);
+        noRowVersionDeleteResponse = del(data.noRowVersionDelete(spaceNegData));
         done();
       });
       it('RowVersion is not existing', () => {

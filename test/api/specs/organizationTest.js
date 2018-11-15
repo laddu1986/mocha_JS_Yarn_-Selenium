@@ -1,14 +1,10 @@
-import { joi, Tags, orgData, loader } from '../common';
+import { joi, Tags } from '../common';
 import * as identity from 'actions/identity';
 import * as organization from 'actions/organization';
-const schemas = 'data/organizationSchema';
-var importedSchema,
-  createOrgResponse,
-  getOrgResponse,
-  listOrgResponse,
-  updateResponse,
-  listOrgsByIDResponse,
-  deleteResponse;
+import * as schemas from 'schemas/organizationSchema';
+var createOrgResponse, getOrgResponse, listOrgResponse, updateResponse, listOrgsByIDResponse, deleteResponse;
+
+const orgData = new Object();
 
 describe('Organizations Api', () => {
   describe(`POST /organizations ${Tags.smokeTest}`, () => {
@@ -21,11 +17,8 @@ describe('Organizations Api', () => {
       });
     });
     it('Create a new organization.', () => {
-      return loader.import(schemas).then(dataImported => {
-        importedSchema = dataImported.default;
-        expect(createOrgResponse).to.have.status(201);
-        joi.assert(createOrgResponse.body, importedSchema.createOrgSchema);
-      });
+      expect(createOrgResponse).to.have.status(201);
+      joi.assert(createOrgResponse.body, schemas.createOrgSchema(orgData));
     });
   });
   describe('GET /organizations', () => {
@@ -50,7 +43,7 @@ describe('Organizations Api', () => {
     it('Get an organization by its id.', () => {
       return getOrgResponse.then(response => {
         expect(response).to.have.status(200);
-        joi.assert(response.body, importedSchema.getOrganizationByIdSchema);
+        joi.assert(response.body, schemas.getOrganizationByIdSchema(orgData));
       });
     });
   });
@@ -65,7 +58,7 @@ describe('Organizations Api', () => {
       return listOrgsByIDResponse.then(response => {
         expect(response.body).to.be.an('array');
         expect(response).to.have.status(200);
-        joi.assert(response.body, importedSchema.postOrganizationsSchema);
+        joi.assert(response.body, schemas.postOrganizationsSchema(orgData));
       });
     });
   });
@@ -79,7 +72,7 @@ describe('Organizations Api', () => {
       return updateResponse.then(response => {
         expect(response).to.have.status(200);
         expect(response.body.name).to.equal('check update name string');
-        joi.assert(response.body, importedSchema.putOrgSchema);
+        joi.assert(response.body, schemas.putOrgSchema(orgData));
       });
     });
   });

@@ -1,21 +1,27 @@
-import { inviteData, loader, Tags, joi } from '../common';
+import { Tags, joi } from '../common';
 import * as identity from 'actions/identity';
 import * as invites from 'actions/invites';
 import * as organization from 'actions/organization';
-const schemas = 'data/invitesSchema';
-var importedSchema, postResponse, getResponse, getInviteResponse, deleteResponse;
+import * as schemas from 'schemas/invitesSchema';
+var postResponse, getResponse, getInviteResponse, deleteResponse;
+
+const inviteData = new Object();
 
 describe('Invites Api', () => {
   describe(`POST /organizations/{id}/invites ${Tags.smokeTest}`, () => {
     before(done => {
-      identity.postIdentity(inviteData).then(() => {
-        organization.postOrganization(inviteData).then(() => {
-          invites.getAccessToken(inviteData).then(() => {
-            postResponse = invites.postInvitesByOrganizationId(inviteData, true);
-            done();
-          });
+      identity
+        .postIdentity(inviteData)
+        .then(() => {
+          return organization.postOrganization(inviteData);
+        })
+        .then(() => {
+          return invites.getAccessToken(inviteData);
+        })
+        .then(() => {
+          postResponse = invites.postInvitesByOrganizationId(inviteData);
+          done();
         });
-      });
     });
 
     it('Create a new invite.', () => {
@@ -27,16 +33,13 @@ describe('Invites Api', () => {
 
   describe('GET /organizations/{orgId}/invites', () => {
     before(done => {
-      loader.import(schemas).then(dataImported => {
-        importedSchema = dataImported.default;
-        getResponse = invites.getInvitesByOrganizationId(inviteData);
-        done();
-      });
+      getResponse = invites.getInvitesByOrganizationId(inviteData);
+      done();
     });
     it('Search invites in the org', () => {
       return getResponse.then(response => {
         expect(response).to.have.status(200);
-        joi.assert(response.body, importedSchema.getInviteSchema);
+        joi.assert(response.body, schemas.getInviteSchema(inviteData));
       });
     });
   });
@@ -49,7 +52,7 @@ describe('Invites Api', () => {
     it('Get invite details', () => {
       return getInviteResponse.then(response => {
         expect(response).to.have.status(200);
-        joi.assert(response.body, importedSchema.getInviteByTokenSchema);
+        joi.assert(response.body, schemas.getInviteByTokenSchema(inviteData));
       });
     });
   });
