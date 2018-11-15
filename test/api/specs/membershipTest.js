@@ -2,7 +2,7 @@ import { joi, Tags } from '../common';
 import * as organization from 'actions/organization';
 import * as membership from 'actions/membership';
 import * as identity from 'actions/identity';
-import * as schemas from 'data/membershipSchema';
+import * as schemas from 'schemas/membershipSchema';
 var createResponse, getByAccountIDResponse, getByOrgIDResponse, deleteResponse, getResponse;
 
 const membershipData = new Object();

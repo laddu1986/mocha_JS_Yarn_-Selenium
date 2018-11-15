@@ -1,7 +1,7 @@
-import { randomString, organizationsSchemaData, post, get, put, del } from '../common';
+import { randomString, post, get, put, del } from '../common';
 import { organizations } from 'config/getEnv';
 
-export function postOrganization(responseObject, flag) {
+export function postOrganization(responseObject) {
   const any = {
     api: organizations,
     data: {
@@ -9,13 +9,10 @@ export function postOrganization(responseObject, flag) {
       createdByAccountId: responseObject.identityID
     }
   };
-  if (flag) {
-    organizationsSchemaData.name = any.data.name;
-  }
   return post(any).then(response => {
     responseObject.orgID = response.body.id;
     responseObject.orgRowVersion = response.body.rowVersion;
-    responseObject.orgName = response.body.name;
+    responseObject.orgName = any.data.name;
     return response;
   });
 }
@@ -43,8 +40,10 @@ export function postOrganizations(responseObject) {
   };
   return post(any);
 }
-export var newName = 'check update name string';
-export function putOrganization(responseObject, flag) {
+
+var newName = 'check update name string';
+
+export function putOrganization(responseObject) {
   const any = {
     api: organizations,
     data: {
@@ -53,11 +52,9 @@ export function putOrganization(responseObject, flag) {
       rowVersion: responseObject.orgRowVersion
     }
   };
-  if (flag) {
-    organizationsSchemaData.name = newName;
-  }
   return put(any).then(response => {
     responseObject.orgRowVersion = response.body.rowVersion;
+    responseObject.newName = newName;
     return response;
   });
 }

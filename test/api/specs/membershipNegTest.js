@@ -1,8 +1,8 @@
-import * as lib from '../common';
+import { post } from '../common';
 import * as identity from 'actions/identity';
 import * as organization from 'actions/organization';
 import * as membership from 'actions/membership';
-const moduleSpecifier = 'data/membershipTestsData';
+import * as data from 'data/membershipTestsData';
 var expectedMessageForBlankOrgId,
   expectedMessageForinvalidToken,
   getResponse,
@@ -10,14 +10,16 @@ var expectedMessageForBlankOrgId,
   blankOrgIdResponse,
   invalidTokenResponse;
 
+const membershipNegData = new Object();
+
 describe('Negative tests --> Membership', () => {
   describe('GET /memberships', () => {
     before(done => {
-      identity.postIdentity(lib.membershipNegData).then(() => {
-        organization.postOrganization(lib.membershipNegData).then(() => {
-          membership.postMembership(lib.membershipNegData).then(() => {
-            membership.deleteMembershipByAccountAndOrganization(lib.membershipNegData).then(() => {
-              getResponse = membership.getMembershipByAccount(lib.membershipNegData);
+      identity.postIdentity(membershipNegData).then(() => {
+        organization.postOrganization(membershipNegData).then(() => {
+          membership.postMembership(membershipNegData).then(() => {
+            membership.deleteMembershipByAccountAndOrganization(membershipNegData).then(() => {
+              getResponse = membership.getMembershipByAccount(membershipNegData);
               done();
             });
           });
@@ -32,13 +34,11 @@ describe('Negative tests --> Membership', () => {
   });
   describe('POST /memberships ', () => {
     before(done => {
-      lib.loader.import(moduleSpecifier).then(dataImported => {
-        blankOrgIdResponse = lib.post(dataImported.default.blankOrgId);
-        invalidTokenResponse = lib.post(dataImported.default.invalidToken);
-        expectedMessageForBlankOrgId = dataImported.default.blankOrgId.expected;
-        expectedMessageForinvalidToken = dataImported.default.invalidToken.expected;
-        done();
-      });
+      blankOrgIdResponse = post(data.blankOrgId(membershipNegData));
+      invalidTokenResponse = post(data.invalidToken(membershipNegData));
+      expectedMessageForBlankOrgId = data.blankOrgId(membershipNegData).expected;
+      expectedMessageForinvalidToken = data.invalidToken(membershipNegData).expected;
+      done();
     });
     it('Invalid OrgID --> Should return 400 response', () => {
       return blankOrgIdResponse.then(response => {
@@ -55,8 +55,8 @@ describe('Negative tests --> Membership', () => {
   });
   describe('Delete Membership when Account is Non Existing ', () => {
     before(done => {
-      identity.deleteIdentityById(lib.membershipNegData).then(() => {
-        deleteResponse = membership.deleteMembershipByAccountAndOrganization(lib.membershipNegData);
+      identity.deleteIdentityById(membershipNegData).then(() => {
+        deleteResponse = membership.deleteMembershipByAccountAndOrganization(membershipNegData);
         done();
       });
     });

@@ -1,10 +1,10 @@
-import * as lib from '../common';
+import { post, put, get, del } from '../common';
 import * as identity from 'actions/identity';
 import * as organization from 'actions/organization';
-const moduleSpecifier = 'data/organizationTestsData';
+import * as data from 'data/organizationTestsData';
+
 var blankOrgIdDeleteResponse,
   incorrectOrgIDDeleteResponse,
-  data,
   noNamePostResponse,
   noIDPostResponse,
   noRowVersionPutResponse,
@@ -13,25 +13,24 @@ var blankOrgIdDeleteResponse,
   incorrectIDPutResponse,
   getResponse;
 
+const orgNegData = new Object();
+
 describe('Negative Tests --> Organizations Api', () => {
   describe('POST /organizations', () => {
     describe('400 Error Response: Mandatory fields validation', () => {
       before(done => {
-        identity.postIdentity(lib.orgNegData).then(() => {
-          organization.postOrganization(lib.orgNegData).then(() => {
-            lib.loader.import(moduleSpecifier).then(dataImported => {
-              data = dataImported.default;
-              noNamePostResponse = lib.post(data.noName);
-              noIDPostResponse = lib.post(data.blankAccountId);
-              done();
-            });
+        identity.postIdentity(orgNegData).then(() => {
+          organization.postOrganization(orgNegData).then(() => {
+            noNamePostResponse = post(data.noName(orgNegData));
+            noIDPostResponse = post(data.blankAccountId);
+            done();
           });
         });
       });
       it('Name field is required', () => {
         return noNamePostResponse.then(response => {
           expect(response).to.have.status(400);
-          expect(response.body.validationErrors.name).to.equal(data.noName.expected);
+          expect(response.body.validationErrors.name).to.equal(data.noName(orgNegData).expected);
         });
       });
       xit('CreatedByAccountId field is required', () => {
@@ -45,28 +44,28 @@ describe('Negative Tests --> Organizations Api', () => {
   });
   describe('PUT /organizations', () => {
     before(done => {
-      noRowVersionPutResponse = lib.put(data.blankRowVersion);
-      blankNamePutResponse = lib.put(data.blankName);
-      blankIDPutResponse = lib.put(data.blankID);
-      incorrectIDPutResponse = lib.put(data.incorrectOrgIDPut);
+      noRowVersionPutResponse = put(data.blankRowVersion(orgNegData));
+      blankNamePutResponse = put(data.blankName(orgNegData));
+      blankIDPutResponse = put(data.blankID(orgNegData));
+      incorrectIDPutResponse = put(data.incorrectOrgIDPut(orgNegData));
       done();
     });
     it('409 Error Response: RowVersion Conflict', () => {
       return noRowVersionPutResponse.then(response => {
         expect(response).to.have.status(409);
-        expect(response.body).to.equal(data.blankRowVersion.expected);
+        expect(response.body).to.equal(data.blankRowVersion(orgNegData).expected);
       });
     });
     it('400 Error Response: Blank Name', () => {
       return blankNamePutResponse.then(response => {
         expect(response).to.have.status(400);
-        expect(response.body.validationErrors.name).to.equal(data.blankName.expected);
+        expect(response.body.validationErrors.name).to.equal(data.blankName(orgNegData).expected);
       });
     });
     it('400 Error Response: Blank ID', () => {
       return blankIDPutResponse.then(response => {
         expect(response).to.have.status(400);
-        expect(response.body.validationErrors.id).to.equal(data.blankID.expected);
+        expect(response.body.validationErrors.id).to.equal(data.blankID(orgNegData).expected);
       });
     });
     it('404 Error Response: Non Existing Org ID', () => {
@@ -77,7 +76,7 @@ describe('Negative Tests --> Organizations Api', () => {
   });
   describe('GET /organizations/{id}', () => {
     before(done => {
-      getResponse = lib.get(data.incorrectOrgIDGet);
+      getResponse = get(data.incorrrectOrgIDGet(orgNegData));
       done();
     });
     it('404 Error Response: Non Existing Org ID', () => {
@@ -88,14 +87,14 @@ describe('Negative Tests --> Organizations Api', () => {
   });
   describe('DELETE /organizations/{id}', () => {
     before(done => {
-      incorrectOrgIDDeleteResponse = lib.del(data.incorrectOrgIdDelete);
-      blankOrgIdDeleteResponse = lib.del(data.blankOrgIdDelete);
+      incorrectOrgIDDeleteResponse = del(data.incorrectOrgIDDelete(orgNegData));
+      blankOrgIdDeleteResponse = del(data.blankOrgIdDelete);
       done();
     });
     it('409 Error Response: Non Existing Org ID', () => {
       return incorrectOrgIDDeleteResponse.then(response => {
         expect(response).to.have.status(409);
-        expect(response.body).to.equal(data.incorrectOrgIdDelete.expected);
+        expect(response.body).to.equal(data.incorrectOrgIDDelete(orgNegData).expected);
       });
     });
     it('404 Error Response: Non Existing Org ID', () => {
