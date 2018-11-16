@@ -17,14 +17,9 @@ export function createSpace(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     responseData.spaceName = spaceName;
     responseData.spaceID = response.response.body.data.createSpace.space.id;
     responseData.spaceRowVersion = response.response.body.data.createSpace.space.rowVersion;
@@ -51,14 +46,9 @@ export function updateSpace(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     responseData.newSpaceName = newSpaceName;
     responseData.spaceRowVersion = response.response.body.data.updateSpace.space.rowVersion;
     return response;
@@ -78,14 +68,9 @@ export function deleteSpace(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     return response;
   });
 }
@@ -101,14 +86,9 @@ export function getSpaceBySlug(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     return response;
   });
 }
@@ -124,14 +104,9 @@ export function getSpace(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     return response;
   });
 }
