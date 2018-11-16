@@ -15,5 +15,3 @@ phantomjs.log
 /grpc/src
 **/grpc-report.html
 jsconfig.json
-**/.dockerignore
-**/Dockerfile
