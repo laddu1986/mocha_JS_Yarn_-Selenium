@@ -36,7 +36,7 @@ exports.config = {
   maxInstances: 2,
   plugins: {},
   framework: 'mocha',
-  reporters: ['spec', 'html-format'],
+  reporters: ['spec', 'html-format', 'allure'],
   reporterOptions: {
     htmlFormat: {
       outputDir: 'reports'
