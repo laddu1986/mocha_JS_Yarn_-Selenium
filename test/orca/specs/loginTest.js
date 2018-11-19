@@ -9,7 +9,7 @@ describe('Mutation - registerAndCreateOrg', () => {
     createResponse = registerAndCreateOrg(registerAndCreateOrgObject);
     done();
   });
-  it('Create new user account', () => {
+  it('C1295767 Create new user account', () => {
     return createResponse.then(response => {
       expect(response.response.statusCode).to.equal(200);
       joi.assert(
@@ -24,7 +24,7 @@ describe('Mutation - Login', () => {
   before(() => {
     loginResponse = login(registerAndCreateOrgObject);
   });
-  it('Login to the new account', () => {
+  it('C1295768 Login to the new account', () => {
     return loginResponse.then(response => {
       expect(response.response.statusCode).to.equal(200);
       expect(response.response.body.data.login).to.equal(true);
@@ -36,7 +36,7 @@ describe('Mutation - Logout', () => {
   before(() => {
     logoutResponse = logout();
   });
-  it('Logout from the account', () => {
+  it('C1295769 Logout from the account', () => {
     return logoutResponse.then(response => {
       expect(response.response.statusCode).to.equal(200);
       expect(response.body.data.logout).to.equal(true);
@@ -52,7 +52,7 @@ describe('Mutation - leaveOrganization', () => {
     leaveOrgResponse = leaveOrganization(registerAndCreateOrgObject);
     done();
   });
-  it('Deleting the organization', () => {
+  it('C1295770 Deleting the organization', () => {
     return leaveOrgResponse.then(response => {
       expect(response.response.statusCode).to.equal(200);
       expect(response.response.body.data.leaveOrg).to.equal(true);
@@ -65,7 +65,7 @@ describe('Mutation - deleteAccount', () => {
     deleteAccountResponse = deleteAccount(registerAndCreateOrgObject);
     done();
   });
-  it('Delete user account', () => {
+  it('C1295771 Delete user account', () => {
     return deleteAccountResponse.then(response => {
       expect(response.response.statusCode).to.equal(200);
       expect(response.response.body.data.deleteAccount).to.equal(true);

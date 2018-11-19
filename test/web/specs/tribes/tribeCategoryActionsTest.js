@@ -20,17 +20,17 @@ describe('Tribe Categories Actions', () => {
     createSpace();
     clickOnAudienceLink();
   });
-  it('Create a new category', () => {
+  it('C1295757 Create a new category', () => {
     createCategory();
     waitForCategoryOptions();
   });
 
-  it('Rename a category', () => {
+  it('C1295758 Rename a category', () => {
     let categoryTitle = lib.randomString.generate(5);
     renameCategory(categoryTitle);
     expect(verifyRenamedTitle(categoryTitle)).to.equal(true, 'Category was not renamed correctly');
   });
-  it('Delete an existing category with a tribe', () => {
+  it('C1295759 Delete an existing category with a tribe', () => {
     clickCreateTribeButton();
     clickOnAudienceLink(); // Moving away from keyboard focus
     clickOnAudienceLink(); // Actually click the audience link

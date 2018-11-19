@@ -20,16 +20,16 @@ describe('Space Tests', () => {
     accountDetail = createAccount();
   });
 
-  it('Verify create your first Space page', () => {
+  it('C1295711 Verify create your first Space page', () => {
     expect(verifyCreateFirstSpacePage()).to.equal(true);
   });
 
-  it(`Verify creating first Space ${lib.Tags.smokeTest}`, () => {
+  it(`C1295712 Verify creating first Space ${lib.Tags.smokeTest}`, () => {
     spaceName1 = createSpace();
     expect(verifySpacePage(spaceName1.toLowerCase())).to.equal(true);
   });
 
-  it('Verify creating two more spaces ', () => {
+  it('C1295713 Verify creating two more spaces ', () => {
     for (var i = 0; i < 2; i++) {
       goBackToOrgDashboard();
       clickCreateNewSpaceButton();
@@ -38,13 +38,13 @@ describe('Space Tests', () => {
     }
   });
 
-  it('Sign out and back in --> Should show last accessed Space', () => {
+  it('C1295714 Sign out and back in --> Should show last accessed Space', () => {
     signOut();
     signIn(accountDetail.email, accountDetail.password);
     expect(verifySpacePage(spaceName[1].toLowerCase())).to.equal(true);
   });
 
-  it('Sorting of Space cards stack', () => {
+  it('C1295715 Sorting of Space cards stack', () => {
     goBackToOrgDashboard();
     expect(verifySpaceOrder('2')).to.include(spaceName1);
     expect(verifySpaceOrder('1')).to.include(spaceName[0]);
