@@ -33,7 +33,7 @@ exports.config = {
   coloredLogs: true,
   baseUrl: helper.getEndPoints(),
   waitforTimeout: 20000,
-  maxInstances: 5,
+  maxInstances: 2,
   plugins: {},
   framework: 'mocha',
   reporters: ['spec', 'html-format'],
