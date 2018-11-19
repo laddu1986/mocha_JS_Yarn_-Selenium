@@ -1,4 +1,4 @@
-let WdioTestRailReporter = require('./packages/wdio-testrail-reporter/lib/wdio-testrail-reporter');
+let WdioTestRailReporter = require('./node_modules/wdio-testrail-reporter/lib/wdio-testrail-reporter');
 var helper = require('./wdio.helper');
 exports.config = {
   protocol: 'http',
