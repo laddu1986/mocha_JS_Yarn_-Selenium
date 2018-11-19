@@ -1,6 +1,6 @@
 import { joi } from '../common';
 
-export function createExperienceSchema(name) {
+export function createExperienceTemplateSchema(name) {
   var schema = joi.object().keys({
     id: joi.string().required(),
     label: joi.valid(name).required(),
@@ -10,7 +10,7 @@ export function createExperienceSchema(name) {
   return schema;
 }
 
-export function getExperienceSchema(object) {
+export function getExperienceTemplateSchema(object) {
   var schema = joi.object().keys({
     id: joi.valid(object.expTemplateID).required(),
     label: joi.valid(object.experienceNewName).required(),
@@ -20,7 +20,7 @@ export function getExperienceSchema(object) {
   return schema;
 }
 
-export function getExperiencesSchema(object) {
+export function getExperiencesTemplateSchema(object) {
   var schema = joi.array().items({
     id: joi.valid(object.expTemplateID).required(),
     label: joi.valid(object.experienceNewName).required(),

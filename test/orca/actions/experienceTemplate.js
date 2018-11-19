@@ -1,6 +1,6 @@
 import { randomString, post, orca } from '../common';
 
-export function createExperience(responseData) {
+export function createExperienceTemplate(responseData) {
   var name = `${randomString.generate(8)}`;
   const data = {
     query:
@@ -28,7 +28,7 @@ export function createExperience(responseData) {
   });
 }
 
-export function updateExperience(responseData) {
+export function updateExperienceTemplate(responseData) {
   var newName = `${randomString.generate(8)}_new`;
   const data = {
     query:
@@ -57,7 +57,7 @@ export function updateExperience(responseData) {
   });
 }
 
-export function getExperience(responseData) {
+export function getExperienceTemplate(responseData) {
   const data = {
     query:
       'query experienceTemplate($organizationId: ID!, $spaceId: ID!, $templateId: ID!) { experienceTemplate(organizationId: $organizationId , spaceId: $spaceId, templateId: $templateId) { id label rowVersion key }}',
@@ -76,7 +76,7 @@ export function getExperience(responseData) {
   });
 }
 
-export function getExperiences(responseData) {
+export function getExperiencesTemplate(responseData) {
   const data = {
     query:
       'query experienceTemplates($organizationId: ID!, $spaceId: ID!) { experienceTemplates(organizationId: $organizationId , spaceId: $spaceId) { id label rowVersion }}',
@@ -94,7 +94,7 @@ export function getExperiences(responseData) {
   });
 }
 
-export function deleteExperience(responseData) {
+export function deleteExperienceTemplate(responseData) {
   const data = {
     query:
       'mutation deleteExperienceTemplate($input: DeleteExperienceTemplateInput!) { deleteExperienceTemplate(input: $input)}',
