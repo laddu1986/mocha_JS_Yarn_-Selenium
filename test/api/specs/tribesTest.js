@@ -20,7 +20,7 @@ describe('Tribe Service', () => {
       });
     });
 
-    it('CreateSegment', () => {
+    it('C1295624 CreateSegment', () => {
       return createTribeResponse.then(response => {
         var id = response.response.id;
         expect(response.status.code).to.equal(0);
@@ -35,7 +35,7 @@ describe('Tribe Service', () => {
       done();
     });
 
-    it('UpdateSegment', () => {
+    it('C1295625 UpdateSegment', () => {
       return updateTribeResponse.then(response => {
         expect(response).to.be.an('object');
         expect(response.status.code).to.equal(0);
@@ -50,7 +50,7 @@ describe('Tribe Service', () => {
       done();
     });
 
-    it('GetSegmentById', () => {
+    it('C1295626 GetSegmentById', () => {
       return getResponse.then(response => {
         expect(response).to.be.an('object');
         expect(response.status.code).to.equal(0);
@@ -65,7 +65,7 @@ describe('Tribe Service', () => {
       done();
     });
 
-    it('DeleteSegment', () => {
+    it('C1295627 DeleteSegment', () => {
       return deleteResponse.then(response => {
         expect(response.status.code).to.equal(0);
       });
@@ -86,7 +86,7 @@ describe('Tribe Service', () => {
       });
     });
 
-    it('MoveTribe', () => {
+    it('C1295628 MoveTribe', () => {
       return moveResponse.then(response => {
         expect(response.status.code).to.equal(0);
         categories.listCategories(tribeData).then(res => {

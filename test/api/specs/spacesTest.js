@@ -18,7 +18,7 @@ describe('Spaces Api', () => {
         });
       });
     });
-    it('Create a new space.', () => {
+    it('C1295608 Create a new space.', () => {
       return postResponse.then(response => {
         expect(response).to.have.status(201);
         joi.assert(response.body, schemas.postSpaceByOrganizationIdSchema(spaceData));
@@ -31,7 +31,7 @@ describe('Spaces Api', () => {
       getAllResponse = spaces.getSpacesByOrganizationId(spaceData);
       done();
     });
-    it('Get All Spaces for an Organization', () => {
+    it('C1295609 Get All Spaces for an Organization', () => {
       return getAllResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, schemas.getSpacesByOrganizationIdSchema(spaceData));
@@ -44,7 +44,7 @@ describe('Spaces Api', () => {
       updateResponse = spaces.updateSpace(spaceData);
       done();
     });
-    it('Update Space for an Organization', () => {
+    it('C1295610 Update Space for an Organization', () => {
       return updateResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, schemas.updateSpaceSchema(spaceData));
@@ -57,7 +57,7 @@ describe('Spaces Api', () => {
       getResponse = spaces.getSpaceByOrgIdAndSpaceId(spaceData);
       done();
     });
-    it('Get Space for an Organization', () => {
+    it('C1295611 Get Space for an Organization', () => {
       return getResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, schemas.getSpaceByOrgIdAndSpaceIdSchema(spaceData));
@@ -69,7 +69,7 @@ describe('Spaces Api', () => {
       patchResponse = spaces.patchSpaceByOrgIdRowVersionAndSpaceId(spaceData, Constants.SpaceAttributes.ShortUrl);
       done();
     });
-    it('Patch a space Url', () => {
+    it('C1295612 Patch a space Url', () => {
       return patchResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, schemas.patchSpaceShortUrlSchema(spaceData));
@@ -82,7 +82,7 @@ describe('Spaces Api', () => {
       patchNameResponse = spaces.patchSpaceByOrgIdRowVersionAndSpaceId(spaceData, Constants.SpaceAttributes.Name);
       done();
     });
-    it('Patch a space name', () => {
+    it('C1295613 Patch a space name', () => {
       return patchNameResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, schemas.patchSpaceNameSchema(spaceData));
@@ -95,7 +95,7 @@ describe('Spaces Api', () => {
       deleteResponse = spaces.deleteSpaceByOrgIdAndSpaceId(spaceData);
       done();
     });
-    it('Delete space for an Organization', () => {
+    it('C1295614 Delete space for an Organization', () => {
       return deleteResponse.then(response => {
         expect(response).to.have.status(204);
       });

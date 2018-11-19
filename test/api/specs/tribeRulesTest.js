@@ -33,21 +33,21 @@ describe('Tribe Rules Service', () => {
         });
     });
 
-    it('Gets the possible configurations for the space', () => {
+    it('C1295615 Gets the possible configurations for the space', () => {
       return configResponse.then(response => {
         expect(response.status.code).to.equal(0);
         joi.assert(response.response, schemas.Configuration);
       });
     });
 
-    it('Verifies the configuration properties', () => {
+    it('C1295616 Verifies the configuration properties', () => {
       return configResponse.then(response => {
         rules.expectConfig(response.response.configuration.properties, true);
         expect(rules.ActualFilters).to.deep.equal(rules.ExpectedFilters);
       });
     });
 
-    it('Verifies the configuration operators', () => {
+    it('C1295617 Verifies the configuration operators', () => {
       return configResponse.then(response => {
         rules.expectConfig(response.response.configuration.operators, false);
         expect(rules.ActualFilters).to.include.members(rules.ExpectedFilters);
@@ -63,7 +63,7 @@ describe('Tribe Rules Service', () => {
       });
     });
 
-    it('The rule is saved', () => {
+    it('C1295618 The rule is saved', () => {
       return saveResponse.then(response => {
         expect(response.status.code).to.equal(0);
         expect(response.response.success).to.be.true;
@@ -77,7 +77,7 @@ describe('Tribe Rules Service', () => {
       done();
     });
 
-    it('The rule is returned', () => {
+    it('C1295619 The rule is returned', () => {
       return getResponse.then(response => {
         joi.assert(response.response, schemas.Rule);
       });
@@ -90,7 +90,7 @@ describe('Tribe Rules Service', () => {
       done();
     });
 
-    it('Check returned status', () => {
+    it('C1295620 Check returned status', () => {
       return evalFiltersResponse.then(response => {
         expect(response.status.code).to.equal(0);
         joi.assert(response.response, schemas.EvaluateFilters);
@@ -104,7 +104,7 @@ describe('Tribe Rules Service', () => {
       done();
     });
 
-    it('Check returned status', () => {
+    it('C1295621 Check returned status', () => {
       return evalResponse.then(response => {
         expect(response.status.code).to.equal(0);
         joi.assert(response.response, schemas.EvaluateRule);
@@ -118,7 +118,7 @@ describe('Tribe Rules Service', () => {
       done();
     });
 
-    it('Check returned status', () => {
+    it('C1295622 Check returned status', () => {
       return evalRulesResponse.then(response => {
         expect(response.status.code).to.equal(0);
         joi.assert(response.response, schemas.EvaluateRules);
@@ -132,7 +132,7 @@ describe('Tribe Rules Service', () => {
       done();
     });
 
-    it('Check returned status', () => {
+    it('C1295623 Check returned status', () => {
       return sampleUsersResponse.then(response => {
         expect(response.status.code).to.equal(0);
         joi.assert(response.response, schemas.SampleUsers);

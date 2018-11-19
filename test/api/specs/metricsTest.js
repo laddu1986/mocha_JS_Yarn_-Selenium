@@ -23,7 +23,7 @@ describe('Metrics Api', () => {
         });
       });
     });
-    it('Returns the number of unique users that visited the space in a given time period', () => {
+    it('C1295541 Returns the number of unique users that visited the space in a given time period', () => {
       return getUniqueUsersResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, uniqueUsersSchema());
@@ -37,7 +37,7 @@ describe('Metrics Api', () => {
       done();
     });
 
-    it('Returns the number of api requests from a space in a given time period', () => {
+    it('C1295542 Returns the number of api requests from a space in a given time period', () => {
       return getAPIRequestsResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, uniqueAPIRequestsSchema());
@@ -51,7 +51,7 @@ describe('Metrics Api', () => {
       done();
     });
 
-    it('Returns whether the space is active or not', () => {
+    it('C1295543 Returns whether the space is active or not', () => {
       return getActiveResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, activeDaySchema());
@@ -65,7 +65,7 @@ describe('Metrics Api', () => {
       done();
     });
 
-    it('Returns the number of active users by days for a space in a given time period', () => {
+    it('C1295544 Returns the number of active users by days for a space in a given time period', () => {
       return getActiveUsersByDayResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, metricsByDaySchema());
@@ -79,7 +79,7 @@ describe('Metrics Api', () => {
       done();
     });
 
-    it('Returns the number of new users by days for a space in a given time period', () => {
+    it('C1295545 Returns the number of new users by days for a space in a given time period', () => {
       return getNewUsersByDayResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, metricsByDaySchema());
