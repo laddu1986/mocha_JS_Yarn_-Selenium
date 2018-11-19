@@ -29,12 +29,12 @@ describe('Delete Account Test (Remove my Account)', () => {
     deleteOrganization();
   });
 
-  it('Remove account --> verify Cancel action on Delete modal', () => {
+  it('C1295631 Remove account --> verify Cancel action on Delete modal', () => {
     clickDeleteAccButton();
     expect(cancelDeleteAccount()).to.equal(true);
   });
 
-  it('Remove account --> Sign In page appears', () => {
+  it('C1295632 Remove account --> Sign In page appears', () => {
     clickDeleteAccButton();
     expect(confirmButtonIsEnabled()).to.equal(false);
     typeDeleteToConfirm();
@@ -44,12 +44,12 @@ describe('Delete Account Test (Remove my Account)', () => {
     expect(browser.getUrl()).to.equal(`${browser.options.baseUrl}/sign-in`);
   });
 
-  it('Login with same credentials --> Incorrect Details Error', () => {
+  it('C1295633 Login with same credentials --> Incorrect Details Error', () => {
     signIn(accountDetails.email, process.env.ACCOUNT_PASS);
     expect(verifyIncorrectSignIn()).to.include('incorrect');
   });
 
-  it('Re-registeration with same email is allowed', () => {
+  it('C1295634 Re-registeration with same email is allowed', () => {
     clickCreateAccountLink();
     createAccount(accountDetails.email);
     expect(verifyOrgDashboardPageAppears()).to.equal(true);

@@ -23,7 +23,7 @@ describe('Create Org Invite Tests', () => {
     before(async () => {
       createOrgInviteResponse = await createOrgInvite(createOrgInviteObject);
     });
-    it('Invite user to join the organization', () => {
+    it('C1295772 Invite user to join the organization', () => {
       expect(createOrgInviteResponse.response.statusCode).to.equal(200);
       joi.assert(createOrgInviteResponse.response.body.data.createOrgInvite, orgInviteSchema(createOrgInviteObject));
     });
@@ -34,7 +34,7 @@ describe('Create Org Invite Tests', () => {
       await logout();
       getTokenDetailResponse = await getInviteTokenDetail(createOrgInviteObject);
     });
-    it('Get the details of the organization invite', () => {
+    it('C1295773 Get the details of the organization invite', () => {
       expect(getTokenDetailResponse.response.statusCode).to.equal(200);
       joi.assert(
         getTokenDetailResponse.response.body.data.orgInviteTokenInfo,
@@ -48,7 +48,7 @@ describe('Create Org Invite Tests', () => {
       createAccountResponse = await createAccount(createOrgInviteObject);
       await login(createOrgInviteObject);
     });
-    it('Create account without organization', () => {
+    it('C1295774 Create account without organization', () => {
       expect(createAccountResponse.response.statusCode).to.equal(200);
       joi.assert(
         createAccountResponse.response.body.data.createAccount.account,
@@ -61,7 +61,7 @@ describe('Create Org Invite Tests', () => {
     before(async () => {
       acceptOrgInviteResponse = await acceptOrgInvite(createOrgInviteObject);
     });
-    it('Accept the organization invite', () => {
+    it('C1295775 Accept the organization invite', () => {
       expect(acceptOrgInviteResponse.response.statusCode).to.equal(200);
       joi.assert(
         acceptOrgInviteResponse.response.body.data.acceptOrgInvite.organization,
@@ -77,7 +77,7 @@ describe('Create Org Invite Tests', () => {
       await createOrgInvite(createOrgInviteObject);
       deleteOrgInviteResponse = await deleteOrgInvite(createOrgInviteObject);
     });
-    it('Accept the organization invite', () => {
+    it('C1295776 Accept the organization invite', () => {
       expect(deleteOrgInviteResponse.response.statusCode).to.equal(200);
       expect(deleteOrgInviteResponse.response.body.data.deleteOrgInvite).to.equal(true);
     });

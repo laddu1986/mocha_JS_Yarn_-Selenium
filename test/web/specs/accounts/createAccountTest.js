@@ -13,12 +13,12 @@ describe(`Tests for Create Account ${lib.Tags.smokeTest}`, () => {
     signInPage.open();
   });
 
-  it('Click create account link', () => {
+  it('C1295629 Click create account link', () => {
     clickCreateAccountLink();
     expect(verifyAccountPageAppears()).to.equal(true);
   });
 
-  it('Enter the details for creating account  --> verify org dashboard appears', () => {
+  it('C1295630 Enter the details for creating account  --> verify org dashboard appears', () => {
     inputDetails();
     submit();
     expect(verifyOrgDashboardPageAppears()).to.equal(true);

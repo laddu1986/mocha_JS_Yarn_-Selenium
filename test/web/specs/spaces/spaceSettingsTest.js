@@ -31,7 +31,7 @@ describe('Space Settings', () => {
     accountData = createAccount();
     createSpace();
   });
-  it('Edit Space name --> verify passive notfication and new space name on dashboard', () => {
+  it('C1295717 Edit Space name --> verify passive notfication and new space name on dashboard', () => {
     goToSpaceSettings();
     newSpacename = changeSpace();
     expect(getNotificationMessageText()).to.contain(spaceData.spaceDetailsSaved.text);
@@ -39,7 +39,7 @@ describe('Space Settings', () => {
     expect(verifyNewSpaceName()).to.contain(newSpacename);
   });
 
-  it('Edit Space slug --> verify passive notification and new space url', () => {
+  it('C1295718 Edit Space slug --> verify passive notification and new space url', () => {
     selectSpace();
     goToSpaceSettings();
     var newSlugName = changeSpace(constants.SpaceAttributes.Slug);
@@ -48,12 +48,12 @@ describe('Space Settings', () => {
     verifyNewSpaceUrl(newSlugName);
   });
 
-  it('Delete Space --> verify Cancel action on Delete Modal', () => {
+  it('C1295719 Delete Space --> verify Cancel action on Delete Modal', () => {
     clickDeleteSpaceButton();
     expect(cancelDeleteSpace(false)).to.equal(true);
   });
 
-  it('Delete Space --> verify passive notfication and space is deleted on dashboard', () => {
+  it('C1295720 Delete Space --> verify passive notfication and space is deleted on dashboard', () => {
     clickDeleteSpaceButton();
     expect(confirmButtonIsEnabled()).to.equal(false);
     typeDeleteToConfirm();
@@ -63,7 +63,7 @@ describe('Space Settings', () => {
     expect(getNotificationMessageText()).to.contain(spaceData.deleteMessage.text + "'" + newSpacename + "'");
   });
 
-  it('Logout and Login --> Create new space page is displayed', () => {
+  it('C1295721 Logout and Login --> Create new space page is displayed', () => {
     signOut();
     signIn(accountData.email, accountData.password);
     expect(verifyCreateFirstSpacePage()).to.equal(true);

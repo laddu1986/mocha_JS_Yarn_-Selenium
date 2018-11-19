@@ -9,20 +9,20 @@ describe(`Sign In/Out Test ${lib.Tags.smokeTest}`, () => {
     SignInPage.open();
   });
 
-  it('Sign In with Blank data --> Throws an error', () => {
+  it('C1295638 Sign In with Blank data --> Throws an error', () => {
     clearPlaceholder();
     signIn('', '');
     expect(SignInPage.emailError.getText()).to.equal(validationMessage.login.invalidLogin);
     expect(SignInPage.passwordError.getText()).to.equal(validationMessage.login.invalidLogin);
   });
 
-  it('Sign In with correct credentials --> successful', () => {
+  it('C1295639 Sign In with correct credentials --> successful', () => {
     clearPlaceholder();
     signIn('testaccount@donotdeleteplease.com', process.env.ACCOUNT_PASS);
     expect(verifySignIn()).to.equal(true);
   });
 
-  it('Sign out', () => {
+  it('C1295640 Sign out', () => {
     signOut();
     expect(verifySignOut()).to.equal(true);
   });

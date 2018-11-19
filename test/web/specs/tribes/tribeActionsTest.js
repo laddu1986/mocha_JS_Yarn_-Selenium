@@ -28,12 +28,12 @@ describe('Tribe Actions Tests', () => {
     clickOnAudienceLink();
   });
 
-  it('Click on Tribe card --> lands on card details page', () => {
+  it('C1295741 Click on Tribe card --> lands on card details page', () => {
     goToTribeDetailPage();
     expect(verifyTribeDetailpage()).to.equal(true, 'Tribe Details page is not displayed');
   });
 
-  it('Update the Tribe Title --> verify new name on all tribes and tribe detail page', () => {
+  it('C1295742 Update the Tribe Title --> verify new name on all tribes and tribe detail page', () => {
     updateTribe(Constants.TribeAttributes.Title, newName);
     expect(verifyTribe(Constants.TribeAttributes.Title, newName)).to.equal(
       true,
@@ -47,7 +47,7 @@ describe('Tribe Actions Tests', () => {
     );
   });
 
-  it('Delete Tribe --> verify the passive notification and redirection to all tribes page', () => {
+  it('C1295743 Delete Tribe --> verify the passive notification and redirection to all tribes page', () => {
     goToTribeDetailPage();
     deleteTribe();
     expect(getNotificationMessageText()).to.include(`${PassiveNotification.deleteMessage.text}'${newName}'.`);
