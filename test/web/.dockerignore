@@ -28,3 +28,4 @@ bitbucket-pipelines.yml
 .eslintignore
 .prettierignore
 .eslintignore
+reports
