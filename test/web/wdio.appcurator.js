@@ -37,7 +37,7 @@ exports.config = {
   maxInstances: 5,
   plugins: {},
   framework: 'mocha',
-  reporters: [WdioTestRailReporter],
+  reporters: [WdioTestRailReporter, 'spec'],
   testRailsOptions: {
     domain: process.env.TESTRAIL_URL,
     username: process.env.TESTRAIL_USERNAME,
