@@ -1,5 +1,5 @@
 --require babel-register 
 --timeout 20000 
---reporter mocha-multi-reporters 
---reporter-options configFile=config/mocha-config.json
+--reporter mocha-testrail-reporter
+--reporter-options <REPOTER_OPTIONS>
 --require dotenv/config
