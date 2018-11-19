@@ -10,6 +10,7 @@ RUN apk add openjdk8
 ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk/jre
 ENV PATH ${PATH}:${JAVA_HOME}/bin
 ENV NODE_ENV production
+RUN npm install -g allure-commandline
 # -------------------------------------------
 # COPY package.json /tmp/package.json
 # RUN cd /tmp && yarn install --prod --frozen-lockfile
