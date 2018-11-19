@@ -24,7 +24,7 @@ describe('Invites Api', () => {
         });
     });
 
-    it('Create a new invite.', () => {
+    it('C1295528 Create a new invite.', () => {
       return postResponse.then(response => {
         expect(response).to.have.status(201);
       });
@@ -36,7 +36,7 @@ describe('Invites Api', () => {
       getResponse = invites.getInvitesByOrganizationId(inviteData);
       done();
     });
-    it('Search invites in the org', () => {
+    it('C1295529 Search invites in the org', () => {
       return getResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, schemas.getInviteSchema(inviteData));
@@ -49,7 +49,7 @@ describe('Invites Api', () => {
       getInviteResponse = invites.getInviteDetailsByToken(inviteData);
       done();
     });
-    it('Get invite details', () => {
+    it('C1295530 Get invite details', () => {
       return getInviteResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, schemas.getInviteByTokenSchema(inviteData));
@@ -62,7 +62,7 @@ describe('Invites Api', () => {
       deleteResponse = invites.deleteInviteByOrganizationIdAndEmail(inviteData);
       done();
     });
-    it('Delete an invite.', () => {
+    it('C1295531 Delete an invite.', () => {
       return deleteResponse.then(response => {
         expect(response).to.have.status(204);
       });

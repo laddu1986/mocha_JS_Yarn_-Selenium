@@ -18,7 +18,7 @@ describe('Negative Cases --> Invites Api', () => {
         });
       });
     });
-    it('Create invite without authorization -> 401: Access token is missing or invalid', () => {
+    it('C1295526 Create invite without authorization -> 401: Access token is missing or invalid', () => {
       return postResponse.then(response => {
         expect(response).to.have.status(401);
       });
@@ -43,7 +43,7 @@ describe('Negative Cases --> Invites Api', () => {
         });
     });
 
-    it('Search for deleted invite --> 404: Not Found', () => {
+    it('C1295527 Search for deleted invite --> 404: Not Found', () => {
       return getInviteResponse.then(response => {
         expect(response).to.have.status(404);
       });

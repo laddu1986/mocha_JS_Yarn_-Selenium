@@ -15,21 +15,21 @@ describe('Negative Cases --> Identity Api', () => {
         done();
       });
 
-      it('Email cannot be empty', () => {
+      it('C1295513 Email cannot be empty', () => {
         return noEmailResponse.then(function(response) {
           expect(response).to.have.status(400);
           expect(response.body.validationErrors.email).to.include(data.noEmail.expected);
         });
       });
 
-      it('FullName cannot be emtpy', () => {
+      it('C1295514 FullName cannot be emtpy', () => {
         return noFullNameResponse.then(function(response) {
           expect(response).to.have.status(400);
           expect(response.body.validationErrors.fullName).to.include(data.noFullName.expected);
         });
       });
 
-      it('Password cannot be empty', () => {
+      it('C1295515 Password cannot be empty', () => {
         return noPwdResponse.then(function(response) {
           expect(response).to.have.status(400);
           expect(response.body.validationErrors.password).to.include(data.noPwd.expected);
@@ -43,7 +43,7 @@ describe('Negative Cases --> Identity Api', () => {
           done();
         });
       });
-      it('Email id already registered', () => {
+      it('C1295516 Email id already registered', () => {
         return emailExistsResponse.then(function(response) {
           expect(response).to.have.status(409);
           expect(response.body.message).to.equal(data.existingEmailData.expected);
@@ -61,7 +61,7 @@ describe('Negative Cases --> Identity Api', () => {
           });
         });
       });
-      it('Search the non-existing user', () => {
+      it('C1295517 Search the non-existing user', () => {
         return getResponse.then(function(response) {
           expect(response).to.have.status(404);
           expect(response.body.message).to.include(validationErrors.GetIdentity.UserNotFound);
@@ -74,7 +74,7 @@ describe('Negative Cases --> Identity Api', () => {
       putResponse = identity.putIdentityById(identityNegData);
       done();
     });
-    it('400 - Invalid userState entered ', () => {
+    it('C1295518 400 - Invalid userState entered ', () => {
       return putResponse.then(function(response) {
         expect(response).to.have.status(400);
         expect(response.body.message).to.equal(validationErrors.SetIdentity.InvalidIdentity);
@@ -86,7 +86,7 @@ describe('Negative Cases --> Identity Api', () => {
       patchResponse = identity.patchIdentityStateById(identityNegData);
       done();
     });
-    it('400 - Invalid userState entered ', () => {
+    it('C1295519 400 - Invalid userState entered ', () => {
       return patchResponse.then(function(response) {
         expect(response).to.have.status(400);
         expect(response.body.message).to.equal(validationErrors.SetIdentity.InvalidIdentity);

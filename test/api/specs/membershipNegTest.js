@@ -26,7 +26,7 @@ describe('Negative tests --> Membership', () => {
         });
       });
     });
-    it('Non existing membership -> Should return 0 rows', () => {
+    it('C1295532 Non existing membership -> Should return 0 rows', () => {
       return getResponse.then(response => {
         expect(response.body.totalRows).to.deep.equal(0);
       });
@@ -40,13 +40,13 @@ describe('Negative tests --> Membership', () => {
       expectedMessageForinvalidToken = data.invalidToken(membershipNegData).expected;
       done();
     });
-    it('Invalid OrgID --> Should return 400 response', () => {
+    it('C1295533 Invalid OrgID --> Should return 400 response', () => {
       return blankOrgIdResponse.then(response => {
         expect(response).to.have.status(400);
         expect(response.body.validationErrors.organizationId).to.equal(expectedMessageForBlankOrgId);
       });
     });
-    it('Invalid token --> Should return 404 response', () => {
+    it('C1295534 Invalid token --> Should return 404 response', () => {
       return invalidTokenResponse.then(response => {
         expect(response).to.have.status(404);
         expect(response.body.validationErrors.InviteToken).to.equal(expectedMessageForinvalidToken);
@@ -60,7 +60,7 @@ describe('Negative tests --> Membership', () => {
         done();
       });
     });
-    it('Should return 404 response', () => {
+    it('C1295535 Should return 404 response', () => {
       return deleteResponse.then(response => {
         expect(response).to.have.status(404);
       });
