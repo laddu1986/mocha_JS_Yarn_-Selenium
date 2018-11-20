@@ -1,46 +1,26 @@
-image: 
-  name: massiveinteractive/qa-ci
-  username: $docker_user
-  password: $docker_user_pwd
 options:
   docker: true
 pipelines:
-    branches:
-         kube:
-         - parallel:   
-           - step:
-              name: API Tests
-              caches:
-                - docker
-                - node
-              script:
-                - yarn install
-                - yarn run api-smoke-tests 
-           - step:
-              name: WEB Tests
-              caches:
-                - docker
-                - node
-              script:
-                - yarn install
-                - sh ./scripts/start.sh
-                - yarn run web-smoke-tests --browser:chrome_headless
-         nightly:
-          - parallel:   
-             - step:
-                name: API Tests
-                caches:
-                  - docker
-                  - node
-                script:
-                  - yarn install
-                  - yarn run api-pipelines 
-             - step:
-                name: WEB Tests
-                caches:
-                  - docker
-                  - node
-                script:
-                  - yarn install
-                  - sh ./scripts/start.sh
-                  - yarn run web-pipelines
+  branches:
+    kube:
+      - step:
+          name: Build and Push Web Test Image to DockerHub
+          services:
+            - docker
+          caches:
+            - docker
+          script:
+            #define custom date-time version
+            - export VERSION="v$(date "+%y%m%d-%H%M%S")"
+            - echo "VERSION - ${VERSION}"
+            - export IMAGE_NAME="massiveinteractive/qa-web:$VERSION"
+            - docker login -u $docker_user -p $docker_user_pwd
+            #build and push image with above version
+            - docker build --build-arg Version=$VERSION -t $IMAGE_NAME .
+            - docker push $IMAGE_NAME
+            #from this step onwards delegate "Autobuilder" to do the job for you
+            - git config user.email "autobuilduser@appcurator.com"
+            - git config user.name "Autobuilder"
+            #tag bitbucket build with this version
+            - git tag -f -a $VERSION -m "Release $VERSION"
+            - git push origin -f --tags
