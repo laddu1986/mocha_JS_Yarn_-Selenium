@@ -21,7 +21,8 @@ export function registerAndCreateOrg(responseData) {
   };
   const any = {
     api: orca,
-    data: query
+    data: query,
+    headers: { 'Content-Type': 'application/json' }
   };
   return post(any).then(response => {
     responseData.orgNameWhileReg = orgNameWhileRegistering;
@@ -52,7 +53,8 @@ export function login(responseData, emailValue) {
   };
   const any = {
     api: orca,
-    data: query
+    data: query,
+    headers: { 'Content-Type': 'application/json' }
   };
   return post(any).then(res => {
     responseData.ccookie = JSON.stringify(res.response.headers['set-cookie'][2])
@@ -76,7 +78,8 @@ export function logout() {
   };
   const any = {
     api: orca,
-    data: query
+    data: query,
+    headers: { 'Content-Type': 'application/json' }
   };
   return post(any).then(res => {
     return res;
@@ -91,14 +94,9 @@ export function deleteAccount(responseData) {
   };
   const any = {
     api: orca,
-    data: query,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    }
+    data: query
   };
-  return post(any).then(res => {
+  return post(any, responseData).then(res => {
     return res;
   });
 }
@@ -123,7 +121,7 @@ export function createAccount(responseData) {
     api: orca,
     data: query
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     responseData.CreateAccountName = name_account;
     responseData.LoginEmail = responseData.inviteEmail;
     return response;
