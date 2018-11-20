@@ -15,14 +15,9 @@ export function createOrganization(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     responseData.orgName = orgName;
     responseData.orgID = response.response.body.data.createOrganization.organization.id;
     responseData.orgRowVersion = response.response.body.data.createOrganization.organization.rowVersion;
@@ -47,14 +42,9 @@ export function updateOrganization(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     responseData.orgRowVersion = response.response.body.data.updateOrganization.organization.rowVersion;
     responseData.newName = updatedName;
     return response;
@@ -71,14 +61,9 @@ export function getOrganization(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     return response;
   });
 }
@@ -93,14 +78,9 @@ export function getOrganizationBySlug(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     return response;
   });
 }
@@ -113,16 +93,11 @@ export function getOrganizations(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
-    (responseData.orgRowVersion = response.response.body.data.organizations[0].rowVersion),
-      (responseData.orgID = response.response.body.data.organizations[0].id);
+  return post(any, responseData).then(response => {
+    responseData.orgRowVersion = response.response.body.data.organizations[0].rowVersion;
+    responseData.orgID = response.response.body.data.organizations[0].id;
     responseData.orgName = response.response.body.data.organizations[0].name;
     return response;
   });
@@ -140,14 +115,9 @@ export function leaveOrganization(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     return response;
   });
 }

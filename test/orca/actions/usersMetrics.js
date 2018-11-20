@@ -23,14 +23,9 @@ export function getUserMetrics(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     return response;
   });
 }
@@ -47,14 +42,9 @@ export function getSpaceUsers(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     return response;
   });
 }
@@ -69,14 +59,9 @@ export function getSpaceUsersOverview(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     return response;
   });
 }
@@ -92,14 +77,9 @@ export function getSpaceLabels(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     return response;
   });
 }
@@ -116,14 +96,9 @@ export function getAccessTokens(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     return response;
   });
 }
