@@ -19,12 +19,12 @@ export const Tags = {
 };
 
 // Functions
-export async function post(any) {
+export async function post(any, responseData) {
   if (any.headers == undefined) {
     any.headers = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
     };
   }
   var response = await server.post(any.api, any.data, any);
