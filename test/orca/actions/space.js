@@ -5,6 +5,7 @@ export function createSpace(responseData) {
   const data = {
     query:
       'mutation CreateSpace($input: CreateSpaceInput!) { createSpace(input: $input) { space { id name rowVersion slug apiKeys {value rowVersion rowStatus} createdByAccountId organizationId rowStatus rowVersion activated }}}',
+    operationName: CreateSpace, // eslint-disable-line
     variables: {
       input: {
         fields: {
@@ -37,6 +38,7 @@ export function updateSpace(responseData) {
   const data = {
     query:
       'mutation UpdateSpace($input: UpdateSpaceInput!) { updateSpace(input: $input) { space { id name slug apiKeys{value rowStatus rowVersion} createdByAccountId organizationId rowStatus rowVersion activated }}}',
+    operationName: UpdateSpace, // eslint-disable-line
     variables: {
       input: {
         fields: {
@@ -68,6 +70,7 @@ export function updateSpace(responseData) {
 export function deleteSpace(responseData) {
   const data = {
     query: 'mutation DeleteSpace($input: DeleteSpaceInput!) { deleteSpace(input: $input)}',
+    operationName: DeleteSpace, // eslint-disable-line
     variables: {
       input: {
         id: responseData.spaceID,
@@ -94,6 +97,7 @@ export function getSpaceBySlug(responseData) {
   const data = {
     query:
       'query GetSpaceDetails($orgSlug: String!, $spaceSlug: String!) {spaceBySlug(organizationSlug: $orgSlug, spaceSlug: $spaceSlug){id name slug apiKeys{value rowVersion rowStatus} createdByAccountId organizationId rowStatus rowVersion activated}}',
+    operationName: GetSpaceDetails, // eslint-disable-line
     variables: {
       orgSlug: responseData.orgNameWhileReg.toLowerCase(),
       spaceSlug: responseData.newSpaceName
@@ -117,6 +121,7 @@ export function getSpace(responseData) {
   const data = {
     query:
       'query GetSpaceDetails($orgId: ID!, $spaceId: ID!) {space(organizationId: $orgId, spaceId: $spaceId){id name slug apiKeys{value rowVersion rowStatus} createdByAccountId organizationId rowStatus rowVersion activated}}',
+    operationName: GetSpaceDetails, // eslint-disable-line
     variables: {
       orgId: responseData.orgID,
       spaceId: responseData.spaceID

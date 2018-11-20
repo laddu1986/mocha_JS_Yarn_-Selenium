@@ -30,7 +30,7 @@ export async function post(any) {
   var response = await server.post(any.api, any.data, any);
   if (response.response.statusCode == 200) return response;
   else
-    throw `Post request failed with Errorcode- ${response.response.statusCode} and Message- ${
+    throw `${any.data.operationName} POST request failed with Errorcode- ${response.response.statusCode} and Message- ${
       response.response.body.message
     }`;
 }
