@@ -43,6 +43,7 @@ export function verifyOrgNameOnDashBoard() {
 export function gotoOrgSettings() {
   NavBar.profileMenu.click();
   NavBar.orgSettingsAnchor.click();
+  NavBar.general.click();
 }
 
 export function deleteOrganization() {
