@@ -75,7 +75,7 @@ function selectBrowser(browser) {
     case 'ie':
       return browsers.ie;
     default:
-      return browsers.chrome_headless;
+      return browsers.chrome;
   }
 }
 
