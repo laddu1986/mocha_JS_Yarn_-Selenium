@@ -19,15 +19,20 @@ export const Tags = {
 };
 
 // Functions
-export function post(any) {
+export async function post(any, responseData) {
   if (any.headers == undefined) {
     any.headers = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
     };
   }
-  return server.post(any.api, any.data, any);
+  var response = await server.post(any.api, any.data, any);
+  if (response.response.statusCode == 200) return response;
+  else
+    throw `${any.data.operationName} POST request failed with Errorcode- ${response.response.statusCode} and Message- ${
+      response.response.body.message
+    }`;
 }
 
 export function get(any) {
