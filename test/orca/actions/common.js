@@ -7,7 +7,7 @@ export function registerAndCreateOrg(responseData) {
   const query = {
     query:
       'mutation CreateAccount($input: RegisterAndCreateOrgInput!) { registerAndCreateOrg(input: $input) { account { id email name state {lastOrganizationSlug lastSpaceSlug} }  } }',
-    operationName: 'CreateAccount',
+    operationName: 'CreateAccount', // eslint-disable-line
     variables: {
       input: {
         fields: {
@@ -21,7 +21,8 @@ export function registerAndCreateOrg(responseData) {
   };
   const any = {
     api: orca,
-    data: query
+    data: query,
+    headers: { 'Content-Type': 'application/json' }
   };
   return post(any).then(response => {
     responseData.orgNameWhileReg = orgNameWhileRegistering;
@@ -39,6 +40,7 @@ export function login(responseData, emailValue) {
   else loginEmail = responseData.LoginEmail;
   const query = {
     query: 'mutation Login($input: LoginInput!) { login(input: $input) }',
+    operationName: 'Login', // eslint-disable-line
     variables: {
       input: {
         fields: {
@@ -51,7 +53,8 @@ export function login(responseData, emailValue) {
   };
   const any = {
     api: orca,
-    data: query
+    data: query,
+    headers: { 'Content-Type': 'application/json' }
   };
   return post(any).then(res => {
     responseData.ccookie = JSON.stringify(res.response.headers['set-cookie'][2])
@@ -70,11 +73,13 @@ export function login(responseData, emailValue) {
 export function logout() {
   const query = {
     query: 'mutation Logout { logout }',
+    operationName: 'Logout', // eslint-disable-line
     variables: {}
   };
   const any = {
     api: orca,
-    data: query
+    data: query,
+    headers: { 'Content-Type': 'application/json' }
   };
   return post(any).then(res => {
     return res;
@@ -84,18 +89,14 @@ export function logout() {
 export function deleteAccount(responseData) {
   const query = {
     query: 'mutation DeleteAccount { deleteAccount }',
+    operationName: 'DeleteAccount', // eslint-disable-line
     variables: {}
   };
   const any = {
     api: orca,
-    data: query,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    }
+    data: query
   };
-  return post(any).then(res => {
+  return post(any, responseData).then(res => {
     return res;
   });
 }
@@ -105,7 +106,7 @@ export function createAccount(responseData) {
   const query = {
     query:
       'mutation CreateAccount($input: CreateAccountInput!) { createAccount(input: $input) { account { id email name state {lastOrganizationSlug lastSpaceSlug} }  } }',
-    operationName: 'CreateAccount',
+    operationName: 'CreateAccount', // eslint-disable-line
     variables: {
       input: {
         fields: {
@@ -120,7 +121,7 @@ export function createAccount(responseData) {
     api: orca,
     data: query
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     responseData.CreateAccountName = name_account;
     responseData.LoginEmail = responseData.inviteEmail;
     return response;
