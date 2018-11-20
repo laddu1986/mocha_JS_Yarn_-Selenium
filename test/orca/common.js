@@ -19,7 +19,7 @@ export const Tags = {
 };
 
 // Functions
-export function post(any) {
+export async function post(any) {
   if (any.headers == undefined) {
     any.headers = {
       headers: {
@@ -27,7 +27,9 @@ export function post(any) {
       }
     };
   }
-  return server.post(any.api, any.data, any);
+  var response = await server.post(any.api, any.data, any);
+  if (response.response.statusCode == 200) return response;
+  else throw `Post request failed with errorcode ${response.response.statusCode}`;
 }
 
 export function get(any) {
