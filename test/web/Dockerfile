@@ -10,6 +10,7 @@ RUN apk add openjdk8
 ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk/jre
 ENV PATH ${PATH}:${JAVA_HOME}/bin
 ENV NODE_ENV production
+RUN npm config set unsafe-perm true
 RUN npm install -g allure-commandline
 
 #Install node packages and copy Web-Tests
