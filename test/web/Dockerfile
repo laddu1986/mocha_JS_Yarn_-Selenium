@@ -20,3 +20,4 @@ RUN cd test/web && yarn install --frozen-lockfile --production
 COPY . test/web
 
 WORKDIR /test/web
+ENTRYPOINT ["tail", "-f", "/dev/null"]
