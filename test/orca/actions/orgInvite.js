@@ -14,15 +14,10 @@ export function createOrgInvite(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
 
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     responseData.orgInviteToken = response.response.body.data.createOrgInvite.invites[0].token;
     responseData.inviteEmail = invitedEmail;
     return response;
@@ -39,7 +34,8 @@ export function getInviteTokenDetail(responseData) {
   };
   const any = {
     api: orca,
-    data: data
+    data: data,
+    headers: { 'Content-Type': 'application/json' }
   };
 
   return post(any).then(response => {
@@ -59,14 +55,9 @@ export function acceptOrgInvite(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     return response;
   });
 }
@@ -83,14 +74,9 @@ export function deleteOrgInvite(responseData) {
   };
   const any = {
     api: orca,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
     data: data
   };
-  return post(any).then(response => {
+  return post(any, responseData).then(response => {
     return response;
   });
 }
