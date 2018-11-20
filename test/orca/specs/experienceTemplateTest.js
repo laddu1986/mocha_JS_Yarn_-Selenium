@@ -22,16 +22,15 @@ var createExperienceResponse,
 var experienceTemplateObject = new Object();
 
 describe(' Tests for experience templates for a space', () => {
+  before(async () => {
+    await registerAndCreateOrg(experienceTemplateObject);
+    await login(experienceTemplateObject);
+    await getOrganizations(experienceTemplateObject);
+    await createSpace(experienceTemplateObject);
+  });
   describe('Mutation - createExperienceTemplate', () => {
     before(async () => {
-      await registerAndCreateOrg(experienceTemplateObject);
-      await login(experienceTemplateObject);
-      await getOrganizations(experienceTemplateObject);
-      await createSpace(experienceTemplateObject);
-    });
-    before(done => {
-      createExperienceResponse = createExperienceTemplate(experienceTemplateObject);
-      done();
+      createExperienceResponse = await createExperienceTemplate(experienceTemplateObject);
     });
     it('Create new experience', () => {
       return createExperienceResponse.then(response => {
@@ -45,9 +44,8 @@ describe(' Tests for experience templates for a space', () => {
   });
 
   describe('Mutation - updateExperienceTemplate', () => {
-    before(done => {
-      updateExperienceResponse = updateExperienceTemplate(experienceTemplateObject);
-      done();
+    before(async () => {
+      updateExperienceResponse = await updateExperienceTemplate(experienceTemplateObject);
     });
     it('Update experience', () => {
       return updateExperienceResponse.then(response => {
@@ -61,9 +59,8 @@ describe(' Tests for experience templates for a space', () => {
   });
 
   describe('Query - experienceTemplate', () => {
-    before(done => {
-      experienceTemplateResponse = getExperienceTemplate(experienceTemplateObject);
-      done();
+    before(async () => {
+      experienceTemplateResponse = await getExperienceTemplate(experienceTemplateObject);
     });
     it('Get experience template details', () => {
       return experienceTemplateResponse.then(response => {
@@ -77,9 +74,8 @@ describe(' Tests for experience templates for a space', () => {
   });
 
   describe('Query - experienceTemplates', () => {
-    before(done => {
-      experienceTemplatesResponse = getExperiencesTemplate(experienceTemplateObject);
-      done();
+    before(async () => {
+      experienceTemplatesResponse = await getExperiencesTemplate(experienceTemplateObject);
     });
     it('Get all experience templates in a space', () => {
       return experienceTemplatesResponse.then(response => {
@@ -93,9 +89,8 @@ describe(' Tests for experience templates for a space', () => {
   });
 
   describe('Mutation - deleteExperienceTemplate', () => {
-    before(done => {
-      deleteExperienceResponse = deleteExperienceTemplate(experienceTemplateObject);
-      done();
+    before(async () => {
+      deleteExperienceResponse = await deleteExperienceTemplate(experienceTemplateObject);
     });
     it('Delete an experience template', () => {
       return deleteExperienceResponse.then(response => {

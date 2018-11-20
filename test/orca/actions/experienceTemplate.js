@@ -5,6 +5,7 @@ export function createExperienceTemplate(responseData) {
   const data = {
     query:
       'mutation createExperienceTemplate($input: CreateExperienceTemplateInput!) { createExperienceTemplate(input: $input) { template { id label rowVersion key }}}',
+    operationName: createExperienceTemplate, // eslint-disable-line
     variables: {
       input: {
         fields: {
@@ -33,6 +34,7 @@ export function updateExperienceTemplate(responseData) {
   const data = {
     query:
       'mutation updateExperienceTemplate($input: UpdateExperienceTemplateInput!) { updateExperienceTemplate(input: $input) { template { id label rowVersion key }}}',
+    operationName: updateExperienceTemplate, // eslint-disable-line
     variables: {
       input: {
         fields: {
@@ -61,6 +63,7 @@ export function getExperienceTemplate(responseData) {
   const data = {
     query:
       'query experienceTemplate($organizationId: ID!, $spaceId: ID!, $templateId: ID!) { experienceTemplate(organizationId: $organizationId , spaceId: $spaceId, templateId: $templateId) { id label rowVersion key }}',
+    operationName: experienceTemplate, // eslint-disable-line
     variables: {
       organizationId: responseData.orgID,
       spaceId: responseData.spaceID,
@@ -80,6 +83,7 @@ export function getExperiencesTemplate(responseData) {
   const data = {
     query:
       'query experienceTemplates($organizationId: ID!, $spaceId: ID!) { experienceTemplates(organizationId: $organizationId , spaceId: $spaceId) { id label rowVersion }}',
+    operationName: experienceTemplates, // eslint-disable-line
     variables: {
       organizationId: responseData.orgID,
       spaceId: responseData.spaceID
@@ -98,6 +102,7 @@ export function deleteExperienceTemplate(responseData) {
   const data = {
     query:
       'mutation deleteExperienceTemplate($input: DeleteExperienceTemplateInput!) { deleteExperienceTemplate(input: $input)}',
+    operationName: deleteExperienceTemplate, // eslint-disable-line
     variables: {
       input: {
         organizationId: responseData.orgID,
