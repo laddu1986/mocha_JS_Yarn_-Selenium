@@ -56,7 +56,6 @@ describe('Tribe Rules Service', () => {
   describe('getRule()', () => {
     before('Get the rule', async() => {
       getResponse = await rules.getRule(rulesData);
-      done();
     });
 
     it('The rule is returned', () => {
@@ -78,7 +77,6 @@ describe('Tribe Rules Service', () => {
   describe('evaluateRule()', () => {
     before('Get the rule evalution', async() => {
       evalResponse = await rules.evaluateRule(rulesData);
-      done();
     });
 
     it('Check returned status', () => {
@@ -90,7 +88,6 @@ describe('Tribe Rules Service', () => {
   describe('evaluateRules()', () => {
     before('Get the rules evaluation', async() => {
       evalRulesResponse = await rules.evaluateRules(rulesData);
-      done();
     });
 
     it('Check returned status', () => {
@@ -102,7 +99,6 @@ describe('Tribe Rules Service', () => {
   describe('getSampleUsers()', () => {
     before('Get the same users', async() => {
       sampleUsersResponse = await rules.getSampleUsers(rulesData);
-      done();
     });
 
     it('Check returned status', () => {
