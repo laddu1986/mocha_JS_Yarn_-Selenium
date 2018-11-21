@@ -8,89 +8,68 @@ const identityNegData = new Object();
 describe('Negative Cases --> Identity Api', () => {
   describe('POST /identities ', () => {
     describe('400 Response - Mandatory fields validation ', () => {
-      before(done => {
-        noEmailResponse = lib.post(data.noEmail);
-        noFullNameResponse = lib.post(data.noFullName);
-        noPwdResponse = lib.post(data.noPwd);
-        done();
+      before(async () => {
+        noEmailResponse = await lib.post(data.noEmail);
+        noFullNameResponse = await lib.post(data.noFullName);
+        noPwdResponse = await lib.post(data.noPwd);
       });
 
       it('Email cannot be empty', () => {
-        return noEmailResponse.then(function(response) {
-          expect(response).to.have.status(400);
-          expect(response.body.validationErrors.email).to.include(data.noEmail.expected);
-        });
+        expect(noEmailResponse).to.have.status(400);
+        expect(noEmailResponse.body.validationErrors.email).to.include(data.noEmail.expected);
       });
 
       it('FullName cannot be emtpy', () => {
-        return noFullNameResponse.then(function(response) {
-          expect(response).to.have.status(400);
-          expect(response.body.validationErrors.fullName).to.include(data.noFullName.expected);
-        });
+        expect(noFullNameResponse).to.have.status(400);
+        expect(noFullNameResponse.body.validationErrors.fullName).to.include(data.noFullName.expected);
       });
 
       it('Password cannot be empty', () => {
-        return noPwdResponse.then(function(response) {
-          expect(response).to.have.status(400);
-          expect(response.body.validationErrors.password).to.include(data.noPwd.expected);
-        });
+        expect(noPwdResponse).to.have.status(400);
+        expect(noPwdResponse.body.validationErrors.password).to.include(data.noPwd.expected);
       });
     });
+
     describe('409 Response - Conflict error for existing email', () => {
-      before(done => {
-        lib.post(data.existingEmailData).then(() => {
-          emailExistsResponse = lib.post(data.existingEmailData);
-          done();
-        });
+      before(async () => {
+        await lib.post(data.existingEmailData);
+        emailExistsResponse = await lib.post(data.existingEmailData);
       });
       it('Email id already registered', () => {
-        return emailExistsResponse.then(function(response) {
-          expect(response).to.have.status(409);
-          expect(response.body.message).to.equal(data.existingEmailData.expected);
-        });
+        expect(emailExistsResponse).to.have.status(409);
+        expect(emailExistsResponse.body.message).to.equal(data.existingEmailData.expected);
       });
     });
   });
   describe('GET /identities/{id} ', () => {
     describe('404 - Not found validation ', () => {
-      before(done => {
-        identity.postIdentity(identityNegData).then(() => {
-          identity.deleteIdentityById(identityNegData).then(() => {
-            getResponse = identity.getIdentityById(identityNegData);
-            done();
-          });
-        });
+      before(async () => {
+        await identity.postIdentity(identityNegData);
+        await identity.deleteIdentityById(identityNegData);
+        getResponse = await identity.getIdentityById(identityNegData);
       });
       it('Search the non-existing user', () => {
-        return getResponse.then(function(response) {
-          expect(response).to.have.status(404);
-          expect(response.body.message).to.include(validationErrors.GetIdentity.UserNotFound);
-        });
+        expect(getResponse).to.have.status(404);
+        expect(getResponse.body.message).to.include(validationErrors.GetIdentity.UserNotFound);
       });
     });
   });
   describe('PUT /identities/{id}/state ', () => {
-    before(done => {
-      putResponse = identity.putIdentityById(identityNegData);
-      done();
+    before(async () => {
+      putResponse = await identity.putIdentityById(identityNegData);
     });
     it('400 - Invalid userState entered ', () => {
-      return putResponse.then(function(response) {
-        expect(response).to.have.status(400);
-        expect(response.body.message).to.equal(validationErrors.SetIdentity.InvalidIdentity);
-      });
+      expect(putResponse).to.have.status(400);
+      expect(putResponse.body.message).to.equal(validationErrors.SetIdentity.InvalidIdentity);
     });
   });
   describe('PATCH /identities/{id}/state ', () => {
-    before(done => {
-      patchResponse = identity.patchIdentityStateById(identityNegData);
-      done();
+    before(async () => {
+      patchResponse = await identity.patchIdentityStateById(identityNegData);
     });
     it('400 - Invalid userState entered ', () => {
-      return patchResponse.then(function(response) {
-        expect(response).to.have.status(400);
-        expect(response.body.message).to.equal(validationErrors.SetIdentity.InvalidIdentity);
-      });
+      expect(patchResponse).to.have.status(400);
+      expect(patchResponse.body.message).to.equal(validationErrors.SetIdentity.InvalidIdentity);
     });
   });
 });
