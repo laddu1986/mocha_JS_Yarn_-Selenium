@@ -10,13 +10,12 @@ import {
 } from 'actions/organization';
 var createOrgResponse, updateOrgResponse, getOrgResponse, getOrgByIDResponse, getOrgsResponse;
 var createOrgObject = new Object();
-describe('Mutation - Organization Tests', () => {
+describe('Organization Tests', () => {
   before(async () => {
     await registerAndCreateOrg(createOrgObject);
     await login(createOrgObject);
   });
-
-  describe('Create Organization', () => {
+  describe('Mutation - Create Organization', () => {
     before(async () => {
       createOrgResponse = await createOrganization(createOrgObject);
     });
@@ -27,24 +26,22 @@ describe('Mutation - Organization Tests', () => {
         organizationSchema(createOrgObject, createOrgObject.orgName)
       );
     });
+
+    describe('Mutation - Update Organization', () => {
+      before(async () => {
+        updateOrgResponse = await updateOrganization(createOrgObject);
+      });
+      it('C1295778 update org name', () => {
+        expect(updateOrgResponse.response.statusCode).to.equal(200);
+        joi.assert(
+          updateOrgResponse.response.body.data.updateOrganization.organization,
+          organizationSchema(createOrgObject, createOrgObject.newName)
+        );
+      });
+    });
   });
 
-  describe('Update Organization', () => {
-    before(async () => {
-      updateOrgResponse = await updateOrganization(createOrgObject);
-    });
-    it('C1295778 update org name', () => {
-      expect(updateOrgResponse.response.statusCode).to.equal(200);
-      joi.assert(
-        updateOrgResponse.response.body.data.updateOrganization.organization,
-        organizationSchema(createOrgObject, createOrgObject.newName)
-      );
-    });
-  });
-});
-
-describe('Query - Organization Tests', () => {
-  describe('Get Organization', () => {
+  describe('Query - Get Organization', () => {
     before(async () => {
       getOrgResponse = await getOrganization(createOrgObject);
     });
@@ -55,48 +52,48 @@ describe('Query - Organization Tests', () => {
         organizationSchema(createOrgObject, createOrgObject.newName)
       );
     });
-  });
 
-  describe('Get Organization by Slug', () => {
-    before(async () => {
-      getOrgByIDResponse = await getOrganizationBySlug(createOrgObject);
-    });
-    it('C1295780 Get details of organization by slug', () => {
-      expect(getOrgByIDResponse.response.statusCode).to.equal(200);
-      joi.assert(
-        getOrgByIDResponse.response.body.data.organization,
-        organizationSchema(createOrgObject, createOrgObject.newName)
-      );
-    });
-  });
-
-  describe('Get Organizations', () => {
-    before(async () => {
-      getOrgsResponse = await getOrganizations(createOrgObject);
-    });
-    it('C1295781 Get details of organization by slug', () => {
-      expect(getOrgsResponse.response.statusCode).to.equal(200);
-      expect(getOrgsResponse.response.body.data.organizations).to.be.an('array');
-      if (JSON.stringify(getOrgsResponse.response.body.data.organizations[0].name).includes('updated')) {
+    describe('Query - Get Organization by Slug', () => {
+      before(async () => {
+        getOrgByIDResponse = await getOrganizationBySlug(createOrgObject);
+      });
+      it('C1295780 Get details of organization by slug', () => {
+        expect(getOrgByIDResponse.response.statusCode).to.equal(200);
         joi.assert(
-          getOrgsResponse.response.body.data.organizations[0],
+          getOrgByIDResponse.response.body.data.organization,
           organizationSchema(createOrgObject, createOrgObject.newName)
         );
-      } else
-        joi.assert(
-          getOrgsResponse.response.body.data.organizations[0],
-          organizationSchema(createOrgObject, createOrgObject.orgNameWhileReg)
-        );
-      if (JSON.stringify(getOrgsResponse.response.body.data.organizations[1].name).includes('updated')) {
-        joi.assert(
-          getOrgsResponse.response.body.data.organizations[1],
-          organizationSchema(createOrgObject, createOrgObject.newName)
-        );
-      } else
-        joi.assert(
-          getOrgsResponse.response.body.data.organizations[1],
-          organizationSchema(createOrgObject, createOrgObject.orgNameWhileReg)
-        );
+      });
+    });
+
+    describe('Query - Get Organizations', () => {
+      before(async () => {
+        getOrgsResponse = await getOrganizations(createOrgObject);
+      });
+      it('C1295781 Get details of organization by slug', () => {
+        expect(getOrgsResponse.response.statusCode).to.equal(200);
+        expect(getOrgsResponse.response.body.data.organizations).to.be.an('array');
+        if (JSON.stringify(getOrgsResponse.response.body.data.organizations[0].name).includes('updated')) {
+          joi.assert(
+            getOrgsResponse.response.body.data.organizations[0],
+            organizationSchema(createOrgObject, createOrgObject.newName)
+          );
+        } else
+          joi.assert(
+            getOrgsResponse.response.body.data.organizations[0],
+            organizationSchema(createOrgObject, createOrgObject.orgNameWhileReg)
+          );
+        if (JSON.stringify(getOrgsResponse.response.body.data.organizations[1].name).includes('updated')) {
+          joi.assert(
+            getOrgsResponse.response.body.data.organizations[1],
+            organizationSchema(createOrgObject, createOrgObject.newName)
+          );
+        } else
+          joi.assert(
+            getOrgsResponse.response.body.data.organizations[1],
+            organizationSchema(createOrgObject, createOrgObject.orgNameWhileReg)
+          );
+      });
     });
   });
 });
