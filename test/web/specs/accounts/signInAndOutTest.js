@@ -9,7 +9,7 @@ describe(`Sign In/Out Test ${lib.Tags.smokeTest}`, () => {
     SignInPage.open();
   });
 
-  xit('Sign In with Blank data --> Throws an error', () => {
+  it('Sign In with Blank data --> Throws an error', () => {
     clearPlaceholder();
     signIn('', '');
     expect(SignInPage.emailError.getText()).to.equal(validationMessage.login.invalidLogin);
