@@ -1,5 +1,5 @@
 --require babel-register 
 --timeout 20000 
 --reporter mocha-testrail-reporter
---reporter-options <REPOTER_OPTIONS>
+--reporter-options domain=$TESTRAIL_URL,username=$TESTRAIL_USERNAME,password=$TESTRAIL_PASSWORD,projectId=$TESTRAIL_PROJECT,suiteId=$TESTRAIL_ORCA
 --require dotenv/config
