@@ -8,10 +8,12 @@ var createResponse, getByAccountIDResponse, getByOrgIDResponse, deleteResponse, 
 const membershipData = new Object();
 
 describe('Memberships Api', () => {
+  before(async () => {
+    await identity.postIdentity(membershipData);
+    await organization.postOrganization(membershipData);
+  });
   describe(`POST /memberships ${Tags.smokeTest}`, () => {
     before(async () => {
-      await identity.postIdentity(membershipData);
-      await organization.postOrganization(membershipData);
       createResponse = await membership.postMembership(membershipData);
     });
     it('Create a new membership', () => {
@@ -27,7 +29,7 @@ describe('Memberships Api', () => {
 
     it('List all Memberships', () => {
       expect(getResponse).to.have.status(200);
-      joi.assert(getResponse.body, schemas.listMembershipSchema(membershipData));
+      joi.assert(getResponse.body, schemas.listMembershipSchema(membershipData)); //https://app.clickup.com/301733/t/84vwg is raised for isAdmin being false intermittently
     });
   });
 

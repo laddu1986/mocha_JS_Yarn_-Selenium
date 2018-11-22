@@ -7,12 +7,13 @@ import * as schemas from 'schemas/spaceSchema';
 var postResponse, getResponse, updateResponse, getAllResponse, deleteResponse, patchResponse, patchNameResponse;
 
 const spaceData = new Object();
-
 describe('Spaces Api', () => {
+  before(async () => {
+    await identity.postIdentity(spaceData);
+    await organization.postOrganization(spaceData);
+  });
   describe(`POST /organizations/{orgId}/spaces ${Tags.smokeTest}`, () => {
     before(async () => {
-      await identity.postIdentity(spaceData);
-      await organization.postOrganization(spaceData);
       postResponse = await spaces.postSpaceByOrganizationId(spaceData);
     });
     it('Create a new space.', () => {

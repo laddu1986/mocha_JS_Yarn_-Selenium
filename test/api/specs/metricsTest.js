@@ -14,11 +14,13 @@ var getUniqueUsersResponse,
 const metricsData = new Object();
 
 describe('Metrics Api', () => {
+  before(async () => {
+    await identity.postIdentity(metricsData);
+    await organization.postOrganization(metricsData);
+    await spaces.postSpaceByOrganizationId(metricsData);
+  });
   describe('GET /organizations/{orgId}/spaces/{spaceId}/metrics/unique-users/count', () => {
     before(async () => {
-      await identity.postIdentity(metricsData);
-      await organization.postOrganization(metricsData);
-      await spaces.postSpaceByOrganizationId(metricsData);
       getUniqueUsersResponse = await metrics.getUniqueAppUsers(metricsData);
     });
     it('Returns the number of unique users that visited the space in a given time period', () => {

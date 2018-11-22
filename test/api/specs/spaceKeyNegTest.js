@@ -19,13 +19,15 @@ var incorrectKeyDeleteResponse,
 const spaceKeyNegData = new Object();
 
 describe('Negative Tests -> Space Keys Api', () => {
+  before(async () => {
+    await identity.postIdentity(spaceKeyNegData);
+    await organization.postOrganization(spaceKeyNegData);
+    await spaces.postSpaceByOrganizationId(spaceKeyNegData);
+    await spaces.postKeysBySpaceId(spaceKeyNegData);
+  });
   describe('POST /organizations/{orgId}/keys', () => {
     describe('400 Error Response : Mandatory fields validation', () => {
       before(async () => {
-        await identity.postIdentity(spaceKeyNegData);
-        await organization.postOrganization(spaceKeyNegData);
-        await spaces.postSpaceByOrganizationId(spaceKeyNegData);
-        await spaces.postKeysBySpaceId(spaceKeyNegData);
         noSpaceIDPostResponse = await lib.post(data.noSpaceIDPost(spaceKeyNegData));
         blankSpaceIDPostResponse = await lib.post(data.blankSpaceIDPost(spaceKeyNegData));
       });

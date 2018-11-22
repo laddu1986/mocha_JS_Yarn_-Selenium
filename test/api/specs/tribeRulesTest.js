@@ -17,11 +17,13 @@ var configResponse,
 const rulesData = new Object();
 
 describe('Tribe Rules Service', () => {
+  before('Set up the testing environment', async () => {
+    await identity.postIdentity(rulesData);
+    await organization.postOrganization(rulesData);
+    await spaces.postSpaceByOrganizationId(rulesData);
+  });
   describe('getConfiguration()', () => {
-    before('Set up the testing environment', async() => {
-      await identity.postIdentity(rulesData)
-      await organization.postOrganization(rulesData);
-      await spaces.postSpaceByOrganizationId(rulesData);
+    before('Set up the testing environment', async () => {
       configResponse = await rules.getConfiguration(rulesData);
     });
 
@@ -42,8 +44,8 @@ describe('Tribe Rules Service', () => {
   });
 
   describe('saveRule()', () => {
-    before('Save the rule', async() => {
-      await tribe.createTribe(rulesData)
+    before('Save the rule', async () => {
+      await tribe.createTribe(rulesData);
       saveResponse = await rules.saveRule(rulesData);
     });
 
@@ -54,7 +56,7 @@ describe('Tribe Rules Service', () => {
   });
 
   describe('getRule()', () => {
-    before('Get the rule', async() => {
+    before('Get the rule', async () => {
       getResponse = await rules.getRule(rulesData);
     });
 
@@ -64,7 +66,7 @@ describe('Tribe Rules Service', () => {
   });
 
   describe('evaluateRuleFilters()', () => {
-    before('Get the filters evaluation', async() => {
+    before('Get the filters evaluation', async () => {
       evalFiltersResponse = await rules.evaluateRuleFilters(rulesData);
     });
 
@@ -75,7 +77,7 @@ describe('Tribe Rules Service', () => {
   });
 
   describe('evaluateRule()', () => {
-    before('Get the rule evalution', async() => {
+    before('Get the rule evalution', async () => {
       evalResponse = await rules.evaluateRule(rulesData);
     });
 
@@ -86,7 +88,7 @@ describe('Tribe Rules Service', () => {
   });
 
   describe('evaluateRules()', () => {
-    before('Get the rules evaluation', async() => {
+    before('Get the rules evaluation', async () => {
       evalRulesResponse = await rules.evaluateRules(rulesData);
     });
 
@@ -97,7 +99,7 @@ describe('Tribe Rules Service', () => {
   });
 
   describe('getSampleUsers()', () => {
-    before('Get the same users', async() => {
+    before('Get the same users', async () => {
       sampleUsersResponse = await rules.getSampleUsers(rulesData);
     });
 
