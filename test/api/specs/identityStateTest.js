@@ -6,9 +6,11 @@ var getResponse, putResponse, patchResponse;
 const identityStateData = new Object();
 
 describe('Identity State Api', () => {
+  before(async () => {
+    await identity.postIdentity(identityStateData);
+  });
   describe('GET /identities/{id}/state', () => {
     before(async () => {
-      await identity.postIdentity(identityStateData);
       getResponse = await identity.getIdentityStateById(identityStateData);
     });
 

@@ -8,11 +8,13 @@ var moveResponse, createTribeResponse, updateTribeResponse, getResponse, deleteR
 const tribeData = new Object();
 
 describe('Tribe Service', () => {
+  before(async () => {
+    await identity.postIdentity(tribeData);
+    await organization.postOrganization(tribeData);
+    await spaces.postSpaceByOrganizationId(tribeData);
+  });
   describe('Create Tribe', () => {
-    before(async() => {
-      await identity.postIdentity(tribeData)
-      await organization.postOrganization(tribeData)
-      await spaces.postSpaceByOrganizationId(tribeData)
+    before(async () => {
       createTribeResponse = await tribe.createTribe(tribeData);
     });
 
@@ -24,7 +26,7 @@ describe('Tribe Service', () => {
   });
 
   describe('Update Tribe', () => {
-    before(async() => {
+    before(async () => {
       updateTribeResponse = await tribe.updateTribe(tribeData);
     });
 
@@ -36,7 +38,7 @@ describe('Tribe Service', () => {
   });
 
   describe('Get Tribe', () => {
-    before(async() => {
+    before(async () => {
       getResponse = await tribe.getTribe(tribeData);
     });
 
@@ -48,32 +50,30 @@ describe('Tribe Service', () => {
   });
 
   describe('Delete Tribe', () => {
-    before(async() => {
+    before(async () => {
       deleteResponse = await tribe.deleteTribe(tribeData);
     });
 
     it('DeleteSegment', () => {
-      return deleteResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-      });
+      expect(deleteResponse.status.code).to.equal(0);
     });
   });
 
   var tribename1 = `${randomString.generate(7)}_1`,
     tribename2 = `${randomString.generate(7)}_2`;
   describe('Move Tribe', () => {
-    before(async() => {
-      await categories.createCategory(tribeData, true)
-      await tribe.createTribeWithCategoryID(tribeData, tribename1)
-      await tribe.createTribeWithCategoryID(tribeData, tribename2)
+    before(async () => {
+      await categories.createCategory(tribeData, true);
+      await tribe.createTribeWithCategoryID(tribeData, tribename1);
+      await tribe.createTribeWithCategoryID(tribeData, tribename2);
       moveResponse = await tribe.moveTribe(tribeData);
-      moveConfirm = await categories.listCategories(tribeData)
+      moveConfirm = await categories.listCategories(tribeData);
     });
 
     it('MoveTribe', () => {
-        expect(moveResponse.status.code).to.equal(0);
-        expect(moveConfirm.response.categories[0].segments[0].title).to.equal(tribename2);
-        expect(moveConfirm.response.categories[0].segments[1].title).to.equal(tribename1);
+      expect(moveResponse.status.code).to.equal(0);
+      expect(moveConfirm.response.categories[0].segments[0].title).to.equal(tribename2);
+      expect(moveConfirm.response.categories[0].segments[1].title).to.equal(tribename1);
     });
   });
 });

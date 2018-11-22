@@ -9,11 +9,13 @@ var postResponse, getResponse, revokeResponse, reactivateResponse, deleteRespons
 const spaceKeyData = new Object();
 
 describe('Space Keys Api', () => {
+  before(async () => {
+    await identity.postIdentity(spaceKeyData);
+    await organization.postOrganization(spaceKeyData);
+    await spaces.postSpaceByOrganizationId(spaceKeyData);
+  });
   describe('POST /keys', () => {
     before(async () => {
-      await identity.postIdentity(spaceKeyData);
-      await organization.postOrganization(spaceKeyData);
-      await spaces.postSpaceByOrganizationId(spaceKeyData);
       postResponse = await spaces.postKeysBySpaceId(spaceKeyData);
     });
 

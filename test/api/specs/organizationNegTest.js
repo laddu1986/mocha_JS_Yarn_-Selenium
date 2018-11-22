@@ -16,11 +16,13 @@ var blankOrgIdDeleteResponse,
 const orgNegData = new Object();
 
 describe('Negative Tests --> Organizations Api', () => {
+  before(async () => {
+    await identity.postIdentity(orgNegData);
+    await organization.postOrganization(orgNegData);
+  });
   describe('POST /organizations', () => {
     describe('400 Error Response: Mandatory fields validation', () => {
       before(async () => {
-        await identity.postIdentity(orgNegData);
-        await organization.postOrganization(orgNegData);
         noNamePostResponse = await post(data.noName(orgNegData));
         noIDPostResponse = await post(data.blankAccountId);
       });

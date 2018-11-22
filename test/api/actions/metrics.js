@@ -16,7 +16,13 @@ export function getUniqueAppUsers(responseObject) {
     }/metrics/unique-users/count?from=${fromDate}&to=${toDate}`,
     data: ''
   };
-  return get(any);
+  return get(any).then(response => {
+    if (response.response.statusCode == 200) return response;
+    else
+      throw `getUniqueAppUsers failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
 }
 
 export function getAPIRequests(responseObject) {
@@ -26,7 +32,13 @@ export function getAPIRequests(responseObject) {
     }/metrics/requests/count?from=${fromDate}&to=${toDate}`,
     data: ''
   };
-  return get(any);
+  return get(any).then(response => {
+    if (response.response.statusCode == 200) return response;
+    else
+      throw `getAPIRequests failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
 }
 
 export function getMetricsActive(responseObject) {
@@ -34,7 +46,13 @@ export function getMetricsActive(responseObject) {
     api: `${metrics + responseObject.orgID}/spaces/${responseObject.spaceID}/metrics/active`,
     data: ''
   };
-  return get(any);
+  return get(any).then(response => {
+    if (response.response.statusCode == 200) return response;
+    else
+      throw `getMetricsActive failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
 }
 
 export function getActiveUsersByDay(responseObject) {
@@ -44,7 +62,13 @@ export function getActiveUsersByDay(responseObject) {
     }/metrics/daily/active-users?from=${fromDate}&to=${toDate}`,
     data: ''
   };
-  return get(any);
+  return get(any).then(response => {
+    if (response.response.statusCode == 200) return response;
+    else
+      throw `getActiveUsersByDay failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
 }
 
 export function getNewUsersByDay(responseObject) {
@@ -54,5 +78,11 @@ export function getNewUsersByDay(responseObject) {
     }/metrics/daily/new-users?from=${fromDate}&to=${toDate}`,
     data: ''
   };
-  return get(any);
+  return get(any).then(response => {
+    if (response.response.statusCode == 200) return response;
+    else
+      throw `getNewUsersByDay failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
 }

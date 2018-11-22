@@ -27,7 +27,7 @@ describe('Negative Cases --> Invites Api', () => {
   });
   describe('GET /invites/{token}', () => {
     before(async () => {
-      getInviteResponse = await invites.getInviteDetailsByToken(invitesNegData);
+      getInviteResponse = await invites.getInviteDetailsByToken(invitesNegData, 'negative');
     });
     it('Search for deleted invite --> 404: Not Found', () => {
       expect(getInviteResponse).to.have.status(404);

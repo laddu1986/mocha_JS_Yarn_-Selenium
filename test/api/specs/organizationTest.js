@@ -3,13 +3,14 @@ import * as identity from 'actions/identity';
 import * as organization from 'actions/organization';
 import * as schemas from 'schemas/organizationSchema';
 var createOrgResponse, getOrgResponse, listOrgResponse, updateResponse, listOrgsByIDResponse, deleteResponse;
-
 const orgData = new Object();
 
 describe('Organizations Api', () => {
+  before(async () => {
+    await identity.postIdentity(orgData);
+  });
   describe(`POST /organizations ${Tags.smokeTest}`, () => {
     before(async () => {
-      await identity.postIdentity(orgData);
       createOrgResponse = await organization.postOrganization(orgData, true);
     });
     it('Create a new organization.', () => {

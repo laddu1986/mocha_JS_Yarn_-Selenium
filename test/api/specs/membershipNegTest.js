@@ -13,13 +13,15 @@ var expectedMessageForBlankOrgId,
 const membershipNegData = new Object();
 
 describe('Negative tests --> Membership', () => {
+  before(async () => {
+    await identity.postIdentity(membershipNegData);
+    await organization.postOrganization(membershipNegData);
+    await membership.postMembership(membershipNegData);
+    await membership.deleteMembershipByAccountAndOrganization(membershipNegData);
+  });
   describe('GET /memberships', () => {
     before(async () => {
-      await identity.postIdentity(membershipNegData);
-      await organization.postOrganization(membershipNegData);
-      await membership.postMembership(membershipNegData);
-      await membership.deleteMembershipByAccountAndOrganization(membershipNegData);
-      getResponse = await membership.getMembershipByAccount(membershipNegData);
+      getResponse = await membership.getMembershipByAccount(membershipNegData, 'negative');
     });
 
     it('Non existing membership -> Should return 0 rows', () => {
@@ -31,8 +33,8 @@ describe('Negative tests --> Membership', () => {
     before(async () => {
       blankOrgIdResponse = await post(data.blankOrgId(membershipNegData));
       invalidTokenResponse = await post(data.invalidToken(membershipNegData));
-      expectedMessageForBlankOrgId = await data.blankOrgId(membershipNegData).expected;
-      expectedMessageForinvalidToken = await data.invalidToken(membershipNegData).expected;
+      expectedMessageForBlankOrgId = data.blankOrgId(membershipNegData).expected;
+      expectedMessageForinvalidToken = data.invalidToken(membershipNegData).expected;
     });
     it('Invalid OrgID --> Should return 400 response', () => {
       expect(blankOrgIdResponse).to.have.status(400);
@@ -46,7 +48,7 @@ describe('Negative tests --> Membership', () => {
   describe('Delete Membership when Account is Non Existing ', () => {
     before(async () => {
       await identity.deleteIdentityById(membershipNegData);
-      deleteResponse = await membership.deleteMembershipByAccountAndOrganization(membershipNegData);
+      deleteResponse = await membership.deleteMembershipByAccountAndOrganization(membershipNegData, 'negative');
     });
     it('Should return 404 response', () => {
       expect(deleteResponse).to.have.status(404);

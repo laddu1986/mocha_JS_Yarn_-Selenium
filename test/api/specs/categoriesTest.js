@@ -9,11 +9,13 @@ const categoryData = new Object();
 var createResponse, listResponse, renameResponse, moveResponse, moveConfirm, deleteResponse, deleteConfirm;
 
 describe('Categories Service', () => {
+  before('Initialise working Space', async () => {
+    await identity.postIdentity(categoryData);
+    await organization.postOrganization(categoryData);
+    await spaces.postSpaceByOrganizationId(categoryData);
+  });
   describe('createCategory()', () => {
     before('Initialise working Space', async () => {
-      await identity.postIdentity(categoryData);
-      await organization.postOrganization(categoryData);
-      await spaces.postSpaceByOrganizationId(categoryData);
       createResponse = await categories.createCategory(categoryData, true);
     });
 

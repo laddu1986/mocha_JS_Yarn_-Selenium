@@ -39,12 +39,14 @@ var bigNameResponse,
 const spaceNegData = new Object();
 
 describe('Negative Tests --> Space Api', () => {
+  before(async () => {
+    await identity.postIdentity(spaceNegData);
+    await organization.postOrganization(spaceNegData);
+    await spaces.postSpaceByOrganizationId(spaceNegData);
+  });
   describe('POST /organizations/{orgId}/spaces', () => {
     describe('400 Error Response: Mandatory fields validation', () => {
       before(async () => {
-        await identity.postIdentity(spaceNegData);
-        await organization.postOrganization(spaceNegData);
-        await spaces.postSpaceByOrganizationId(spaceNegData);
         noNamePostResponse = await post(data.noName(spaceNegData));
         blankNameResponse = await post(data.blankName(spaceNegData));
         noShortUrlPostResponse = await post(data.noShortUrl(spaceNegData));

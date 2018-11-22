@@ -46,7 +46,7 @@ describe('Negative Cases --> Identity Api', () => {
       before(async () => {
         await identity.postIdentity(identityNegData);
         await identity.deleteIdentityById(identityNegData);
-        getResponse = await identity.getIdentityById(identityNegData);
+        getResponse = await identity.getIdentityById(identityNegData, 'negative');
       });
       it('Search the non-existing user', () => {
         expect(getResponse).to.have.status(404);
@@ -56,7 +56,7 @@ describe('Negative Cases --> Identity Api', () => {
   });
   describe('PUT /identities/{id}/state ', () => {
     before(async () => {
-      putResponse = await identity.putIdentityById(identityNegData);
+      putResponse = await identity.putIdentityById(identityNegData, 'negative');
     });
     it('400 - Invalid userState entered ', () => {
       expect(putResponse).to.have.status(400);
@@ -65,7 +65,7 @@ describe('Negative Cases --> Identity Api', () => {
   });
   describe('PATCH /identities/{id}/state ', () => {
     before(async () => {
-      patchResponse = await identity.patchIdentityStateById(identityNegData);
+      patchResponse = await identity.patchIdentityStateById(identityNegData, 'negative');
     });
     it('400 - Invalid userState entered ', () => {
       expect(patchResponse).to.have.status(400);
