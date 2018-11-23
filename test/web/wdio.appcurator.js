@@ -1,9 +1,9 @@
 var helper = require('./wdio.helper');
 exports.config = {
   protocol: 'http',
-  host: 'selenium-hub',
+  host: '35.225.159.254',
   port: '4444',
-  path: '/wd/hub',
+  path: '',
   capabilities: helper.getBrowser(),
   updateJob: false,
   specs: [
