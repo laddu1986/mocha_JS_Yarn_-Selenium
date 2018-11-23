@@ -8,4 +8,4 @@ COPY . test/api
 
 WORKDIR /test/api
 
-#ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]
