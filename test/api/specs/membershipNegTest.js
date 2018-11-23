@@ -13,57 +13,45 @@ var expectedMessageForBlankOrgId,
 const membershipNegData = new Object();
 
 describe('Negative tests --> Membership', () => {
+  before(async () => {
+    await identity.postIdentity(membershipNegData);
+    await organization.postOrganization(membershipNegData);
+    await membership.postMembership(membershipNegData);
+    await membership.deleteMembershipByAccountAndOrganization(membershipNegData);
+  });
   describe('GET /memberships', () => {
-    before(done => {
-      identity.postIdentity(membershipNegData).then(() => {
-        organization.postOrganization(membershipNegData).then(() => {
-          membership.postMembership(membershipNegData).then(() => {
-            membership.deleteMembershipByAccountAndOrganization(membershipNegData).then(() => {
-              getResponse = membership.getMembershipByAccount(membershipNegData);
-              done();
-            });
-          });
-        });
-      });
+    before(async () => {
+      getResponse = await membership.getMembershipByAccount(membershipNegData, 'negative');
     });
+
     it('Non existing membership -> Should return 0 rows', () => {
-      return getResponse.then(response => {
-        expect(response.body.totalRows).to.deep.equal(0);
-      });
+      expect(getResponse.body.totalRows).to.deep.equal(0);
     });
   });
+
   describe('POST /memberships ', () => {
-    before(done => {
-      blankOrgIdResponse = post(data.blankOrgId(membershipNegData));
-      invalidTokenResponse = post(data.invalidToken(membershipNegData));
+    before(async () => {
+      blankOrgIdResponse = await post(data.blankOrgId(membershipNegData));
+      invalidTokenResponse = await post(data.invalidToken(membershipNegData));
       expectedMessageForBlankOrgId = data.blankOrgId(membershipNegData).expected;
       expectedMessageForinvalidToken = data.invalidToken(membershipNegData).expected;
-      done();
     });
     it('Invalid OrgID --> Should return 400 response', () => {
-      return blankOrgIdResponse.then(response => {
-        expect(response).to.have.status(400);
-        expect(response.body.validationErrors.organizationId).to.equal(expectedMessageForBlankOrgId);
-      });
+      expect(blankOrgIdResponse).to.have.status(400);
+      expect(blankOrgIdResponse.body.validationErrors.organizationId).to.equal(expectedMessageForBlankOrgId);
     });
     it('Invalid token --> Should return 404 response', () => {
-      return invalidTokenResponse.then(response => {
-        expect(response).to.have.status(404);
-        expect(response.body.validationErrors.InviteToken).to.equal(expectedMessageForinvalidToken);
-      });
+      expect(invalidTokenResponse).to.have.status(404);
+      expect(invalidTokenResponse.body.validationErrors.InviteToken).to.equal(expectedMessageForinvalidToken);
     });
   });
   describe('Delete Membership when Account is Non Existing ', () => {
-    before(done => {
-      identity.deleteIdentityById(membershipNegData).then(() => {
-        deleteResponse = membership.deleteMembershipByAccountAndOrganization(membershipNegData);
-        done();
-      });
+    before(async () => {
+      await identity.deleteIdentityById(membershipNegData);
+      deleteResponse = await membership.deleteMembershipByAccountAndOrganization(membershipNegData, 'negative');
     });
     it('Should return 404 response', () => {
-      return deleteResponse.then(response => {
-        expect(response).to.have.status(404);
-      });
+      expect(deleteResponse).to.have.status(404);
     });
   });
 });
