@@ -37,8 +37,8 @@ export function verifyWecomeOrgPage() {
 }
 
 export function verifyOrgNameOnDashBoard() {
-  if (OrgDashboardPage.currentOrgName.isVisible())
-    return OrgDashboardPage.currentOrgName.getText();
+  OrgDashboardPage.currentOrgName.waitForVisible();
+  return OrgDashboardPage.currentOrgName.getText();
 }
 
 export function gotoOrgSettings() {
@@ -114,6 +114,6 @@ export function cancelDeleteOrg() {
   return cancelDelete(SettingsPage.leaveOrgButton);
 }
 
-export function verifyOrgNameInMenu(){
+export function verifyOrgNameInMenu() {
   NavBar.profileMenu.click();
 }
