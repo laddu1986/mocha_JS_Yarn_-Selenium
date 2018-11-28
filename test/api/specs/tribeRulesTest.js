@@ -17,126 +17,95 @@ var configResponse,
 const rulesData = new Object();
 
 describe('Tribe Rules Service', () => {
+  before('Set up the testing environment', async () => {
+    await identity.postIdentity(rulesData);
+    await organization.postOrganization(rulesData);
+    await spaces.postSpaceByOrganizationId(rulesData);
+  });
   describe('getConfiguration()', () => {
-    before('Set up the testing environment', done => {
-      identity
-        .postIdentity(rulesData)
-        .then(() => {
-          return organization.postOrganization(rulesData);
-        })
-        .then(() => {
-          return spaces.postSpaceByOrganizationId(rulesData);
-        })
-        .then(() => {
-          configResponse = rules.getConfiguration(rulesData);
-          done();
-        });
+    before('Set up the testing environment', async () => {
+      configResponse = await rules.getConfiguration(rulesData);
     });
 
     it('Gets the possible configurations for the space', () => {
-      return configResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        joi.assert(response.response, schemas.Configuration);
-      });
+      expect(configResponse.status.code).to.equal(0);
+      joi.assert(configResponse.response, schemas.Configuration);
     });
 
     it('Verifies the configuration properties', () => {
-      return configResponse.then(response => {
-        rules.expectConfig(response.response.configuration.properties, true);
-        expect(rules.ActualFilters).to.deep.equal(rules.ExpectedFilters);
-      });
+      rules.expectConfig(configResponse.response.configuration.properties, true);
+      expect(rules.ActualFilters).to.deep.equal(rules.ExpectedFilters);
     });
 
     it('Verifies the configuration operators', () => {
-      return configResponse.then(response => {
-        rules.expectConfig(response.response.configuration.operators, false);
-        expect(rules.ActualFilters).to.include.members(rules.ExpectedFilters);
-      });
+      rules.expectConfig(configResponse.response.configuration.operators, false);
+      expect(rules.ActualFilters).to.include.members(rules.ExpectedFilters);
     });
   });
 
   describe('saveRule()', () => {
-    before('Save the rule', done => {
-      tribe.createTribe(rulesData).then(() => {
-        saveResponse = rules.saveRule(rulesData);
-        done();
-      });
+    before('Save the rule', async () => {
+      await tribe.createTribe(rulesData);
+      saveResponse = await rules.saveRule(rulesData);
     });
 
     it('The rule is saved', () => {
-      return saveResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        expect(response.response.success).to.be.true;
-      });
+      expect(saveResponse.status.code).to.equal(0);
+      expect(saveResponse.response.success).to.be.true;
     });
   });
 
   describe('getRule()', () => {
-    before('Get the rule', done => {
-      getResponse = rules.getRule(rulesData);
-      done();
+    before('Get the rule', async () => {
+      getResponse = await rules.getRule(rulesData);
     });
 
     it('The rule is returned', () => {
-      return getResponse.then(response => {
-        joi.assert(response.response, schemas.Rule);
-      });
+      joi.assert(getResponse.response, schemas.Rule);
     });
   });
 
   describe('evaluateRuleFilters()', () => {
-    before('Get the filters evaluation', done => {
-      evalFiltersResponse = rules.evaluateRuleFilters(rulesData);
-      done();
+    before('Get the filters evaluation', async () => {
+      evalFiltersResponse = await rules.evaluateRuleFilters(rulesData);
     });
 
     it('Check returned status', () => {
-      return evalFiltersResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        joi.assert(response.response, schemas.EvaluateFilters);
-      });
+      expect(evalFiltersResponse.status.code).to.equal(0);
+      joi.assert(evalFiltersResponse.response, schemas.EvaluateFilters);
     });
   });
 
   describe('evaluateRule()', () => {
-    before('Get the rule evalution', done => {
-      evalResponse = rules.evaluateRule(rulesData);
-      done();
+    before('Get the rule evalution', async () => {
+      evalResponse = await rules.evaluateRule(rulesData);
     });
 
     it('Check returned status', () => {
-      return evalResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        joi.assert(response.response, schemas.EvaluateRule);
-      });
+      expect(evalResponse.status.code).to.equal(0);
+      joi.assert(evalResponse.response, schemas.EvaluateRule);
     });
   });
 
   describe('evaluateRules()', () => {
-    before('Get the rules evaluation', done => {
-      evalRulesResponse = rules.evaluateRules(rulesData);
-      done();
+    before('Get the rules evaluation', async () => {
+      evalRulesResponse = await rules.evaluateRules(rulesData);
     });
 
     it('Check returned status', () => {
-      return evalRulesResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        joi.assert(response.response, schemas.EvaluateRules);
-      });
+      expect(evalRulesResponse.status.code).to.equal(0);
+      joi.assert(evalRulesResponse.response, schemas.EvaluateRules);
     });
   });
 
   describe('getSampleUsers()', () => {
-    before('Get the same users', done => {
-      sampleUsersResponse = rules.getSampleUsers(rulesData);
-      done();
+    before('Get the same users', async () => {
+      sampleUsersResponse = await rules.getSampleUsers(rulesData);
     });
 
     it('Check returned status', () => {
-      return sampleUsersResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        joi.assert(response.response, schemas.SampleUsers);
-      });
+      expect(sampleUsersResponse.status.code).to.equal(0);
+      joi.assert(sampleUsersResponse.response, schemas.SampleUsers);
     });
   });
 });

@@ -4,96 +4,76 @@ import * as spaces from 'actions/spaces';
 import * as organization from 'actions/organization';
 import * as categories from 'actions/categories';
 import * as tribe from 'actions/tribe';
-var moveResponse, createTribeResponse, updateTribeResponse, getResponse, deleteResponse;
+var moveResponse, createTribeResponse, updateTribeResponse, getResponse, deleteResponse, moveConfirm;
 const tribeData = new Object();
 
 describe('Tribe Service', () => {
+  before(async () => {
+    await identity.postIdentity(tribeData);
+    await organization.postOrganization(tribeData);
+    await spaces.postSpaceByOrganizationId(tribeData);
+  });
   describe('Create Tribe', () => {
-    before(done => {
-      identity.postIdentity(tribeData).then(() => {
-        organization.postOrganization(tribeData).then(() => {
-          spaces.postSpaceByOrganizationId(tribeData).then(() => {
-            createTribeResponse = tribe.createTribe(tribeData);
-            done();
-          });
-        });
-      });
+    before(async () => {
+      createTribeResponse = await tribe.createTribe(tribeData);
     });
 
     it('CreateSegment', () => {
-      return createTribeResponse.then(response => {
-        var id = response.response.id;
-        expect(response.status.code).to.equal(0);
-        expect(id.length).to.equal(7);
-      });
+      var id = createTribeResponse.response.id;
+      expect(createTribeResponse.status.code).to.equal(0);
+      expect(id.length).to.equal(7);
     });
   });
 
   describe('Update Tribe', () => {
-    before(done => {
-      updateTribeResponse = tribe.updateTribe(tribeData);
-      done();
+    before(async () => {
+      updateTribeResponse = await tribe.updateTribe(tribeData);
     });
 
     it('UpdateSegment', () => {
-      return updateTribeResponse.then(response => {
-        expect(response).to.be.an('object');
-        expect(response.status.code).to.equal(0);
-        expect(response.response.title).to.include('_newName');
-      });
+      expect(updateTribeResponse).to.be.an('object');
+      expect(updateTribeResponse.status.code).to.equal(0);
+      expect(updateTribeResponse.response.title).to.include('_newName');
     });
   });
 
   describe('Get Tribe', () => {
-    before(done => {
-      getResponse = tribe.getTribe(tribeData);
-      done();
+    before(async () => {
+      getResponse = await tribe.getTribe(tribeData);
     });
 
     it('GetSegmentById', () => {
-      return getResponse.then(response => {
-        expect(response).to.be.an('object');
-        expect(response.status.code).to.equal(0);
-        expect(response.response.title).to.include('_newName');
-      });
+      expect(getResponse).to.be.an('object');
+      expect(getResponse.status.code).to.equal(0);
+      expect(getResponse.response.title).to.include('_newName');
     });
   });
 
   describe('Delete Tribe', () => {
-    before(done => {
-      deleteResponse = tribe.deleteTribe(tribeData);
-      done();
+    before(async () => {
+      deleteResponse = await tribe.deleteTribe(tribeData);
     });
 
     it('DeleteSegment', () => {
-      return deleteResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-      });
+      expect(deleteResponse.status.code).to.equal(0);
     });
   });
 
   var tribename1 = `${randomString.generate(7)}_1`,
     tribename2 = `${randomString.generate(7)}_2`;
   describe('Move Tribe', () => {
-    before(done => {
-      categories.createCategory(tribeData, true).then(() => {
-        tribe.createTribeWithCategoryID(tribeData, tribename1).then(() => {
-          tribe.createTribeWithCategoryID(tribeData, tribename2).then(() => {
-            moveResponse = tribe.moveTribe(tribeData);
-            done();
-          });
-        });
-      });
+    before(async () => {
+      await categories.createCategory(tribeData, true);
+      await tribe.createTribeWithCategoryID(tribeData, tribename1);
+      await tribe.createTribeWithCategoryID(tribeData, tribename2);
+      moveResponse = await tribe.moveTribe(tribeData);
+      moveConfirm = await categories.listCategories(tribeData);
     });
 
     it('MoveTribe', () => {
-      return moveResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        categories.listCategories(tribeData).then(res => {
-          expect(res.response.categories[0].segments[0].title).to.equal(tribename2);
-          expect(res.response.categories[0].segments[1].title).to.equal(tribename1);
-        });
-      });
+      expect(moveResponse.status.code).to.equal(0);
+      expect(moveConfirm.response.categories[0].segments[0].title).to.equal(tribename2);
+      expect(moveConfirm.response.categories[0].segments[1].title).to.equal(tribename1);
     });
   });
 });
