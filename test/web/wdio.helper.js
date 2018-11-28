@@ -10,11 +10,11 @@ var browsers = {
     }
   },
   chrome: {
-    browserName: 'chrome',
+    browserName: 'chrome'
     // chromeOptions: {
     //   args: ['--start-maximized', '--disable-infobars', '--incognito', '--ignore-certificate-errors', '--disable-gpu']
     // },
-    enableVNC: true
+    // enableVNC: true
   },
   firefox: {
     browserName: 'firefox',
