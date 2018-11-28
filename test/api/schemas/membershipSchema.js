@@ -10,15 +10,15 @@ export function createMembershipSchema(membershipData) {
 
 function memberSchema(membershipData) {
   return joi.object().keys({
-    isAdmin: joi
-      .boolean()
-      .valid(true)
-      .required(),
     fullName: joi.valid(membershipData.identityFullname).required(),
     email: joi.valid(membershipData.identityEmail).required(),
     organizationName: joi.valid(membershipData.orgName).required(),
     accountId: joi.valid(membershipData.identityID).required(),
-    organizationId: joi.valid(membershipData.orgID).required()
+    organizationId: joi.valid(membershipData.orgID).required(),
+    isAdmin: joi
+      .boolean()
+      .valid(true)
+      .required()
   });
 }
 
