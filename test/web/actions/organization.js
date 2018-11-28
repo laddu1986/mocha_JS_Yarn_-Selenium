@@ -113,7 +113,3 @@ export function clickDeleteOrgButton() {
 export function cancelDeleteOrg() {
   return cancelDelete(SettingsPage.leaveOrgButton);
 }
-
-export function verifyOrgNameInMenu() {
-  NavBar.profileMenu.click();
-}
