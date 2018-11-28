@@ -10,8 +10,8 @@ export function getNotificationMessageText() {
 }
 
 export function closePassiveNotification() {
-  browser.waitUntil(() => CommonPage.dismissNotification.isVisible() === true, 5000, 'Passive notification not shown', 200);
-  CommonPage.dismissNotification.click();
+  CommonPage.dismissNotification.waitForVisible();
+  return CommonPage.dismissNotification.click();
 }
 
 export function signOut() {

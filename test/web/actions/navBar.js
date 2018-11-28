@@ -31,14 +31,7 @@ export function clickOnSpaceDashboardLink() {
 export function verifySelectedOrgMenu() {
   browser.pause(1000);
   NavBar.profileMenu.click();
-  browser.waitUntil(
-    function () {
-      return NavBar.selectedOrg.isVisible();
-    },
-    5000,
-    'Selected org did not appear',
-    200
-  );
+  NavBar.selectedOrg.waitForVisible();
   return NavBar.selectedOrg.getText();
 }
 
