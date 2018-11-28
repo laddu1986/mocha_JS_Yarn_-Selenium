@@ -1,7 +1,7 @@
 var helper = require('./wdio.helper');
 exports.config = {
   protocol: 'http',
-  host: '35.225.159.254',
+  host: 'ab0a9e797f2a011e883b6027fc4648e0-968866016.ap-southeast-2.elb.amazonaws.com',
   port: '4444',
   path: '',
   capabilities: helper.getBrowser(),
