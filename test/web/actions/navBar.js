@@ -27,3 +27,22 @@ export function clickOnAudienceLink() {
 export function clickOnSpaceDashboardLink() {
   NavBar.spaceDashboard.click();
 }
+
+export function verifySelectedOrgMenu() {
+  browser.pause(1000);
+  NavBar.profileMenu.click();
+  browser.waitUntil(
+    function () {
+      return NavBar.selectedOrg.isVisible();
+    },
+    5000,
+    'Selected org did not appear',
+    200
+  );
+  return NavBar.selectedOrg.getText();
+}
+
+export function goToOrgPageFromNavMenu() {
+  NavBar.selectedOrg.click();
+  NavBar.firstOrg.click();
+}

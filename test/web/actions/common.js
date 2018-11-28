@@ -10,6 +10,7 @@ export function getNotificationMessageText() {
 }
 
 export function closePassiveNotification() {
+  browser.waitUntil(() => CommonPage.dismissNotification.isVisible() === true, 5000, 'Passive notification not shown', 200);
   CommonPage.dismissNotification.click();
 }
 
@@ -60,7 +61,7 @@ export function clickLinkOn404Page() {
 //hide intercom icon as it gets in the way of other elements and prevents clicking them
 export function hideIntercom() {
   CommonPage.intercomIcon.waitForVisible();
-  browser.execute(function() {
+  browser.execute(function () {
     const intercom = document.getElementById('intercom-container');
     if (intercom.style.display === 'none') {
       intercom.style.display = 'block';
