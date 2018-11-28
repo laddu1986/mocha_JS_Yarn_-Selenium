@@ -26,7 +26,7 @@ describe('Delete User Test', () => {
   before(() => {
     clickOnAudienceLink();
     clickOnUsersTab();
-    verifyUsersAreAdded();
+    verifyUsersAreAdded(); 
   });
 
   it('Delete User --> Verify users tab and passive notification shows', () => {

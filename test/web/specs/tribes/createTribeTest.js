@@ -33,15 +33,12 @@ describe(`Create Tribe Tests ${lib.Tags.smokeTest}`, () => {
   });
 
   it('Verify untitled tribe is created', () => {
-    expect(verifyTribe(Constants.TribeAttributes.Title, 'Untitled')).to.equal(true, 'Tribe title is not "Untitled"');
+    verifyTribe(Constants.TribeAttributes.Title, 'Untitled');
   });
 
   it('Verify untitled tribe on all tribes page', () => {
     clickOnAudienceLink();
-    expect(verifyTribe(Constants.TribeAttributes.Title, 'Untitled')).to.equal(
-      true,
-      'Tribe title is not "Untitled" on all tribes page'
-    );
+    verifyTribe(Constants.TribeAttributes.Title, 'Untitled');
   });
 
   it('Create named tribe using hover over + link', () => {
