@@ -12,7 +12,9 @@ var browsers = {
   chrome: {
     browserName: 'chrome'
     // chromeOptions: {
-    //   args: ['--start-maximized', '--disable-infobars', '--incognito', '--ignore-certificate-errors', '--disable-gpu']
+    //   // args: ['--start-maximized', '--disable-infobars', '--incognito', '--ignore-certificate-errors', '--disable-gpu']
+    //   args: ['--no-sandbox', '--disable-gpu', '--no-proxy-server', '--start-maximized', '--incognito', ],
+    //   binary: '/usr/bin/google-chrome-stable'
     // },
     // enableVNC: true
   },
@@ -33,6 +35,9 @@ var browsers = {
     internetExplorerOptions: {
       args: ['--disable-infobars', '--incognito', '--ignore-certificate-errors', '--disable-gpu']
     }
+  },
+  opera: {
+    browserName: 'opera'
   }
 };
 
@@ -75,6 +80,8 @@ function selectBrowser(browser) {
       return browsers.safari;
     case 'ie':
       return browsers.ie;
+    case 'opera':
+      return browsers.opera;
     default:
       return browsers.chrome;
   }
