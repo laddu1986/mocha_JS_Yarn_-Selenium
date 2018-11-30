@@ -1,10 +1,9 @@
 import { joi } from '../common';
-import { experienceTemplateObject } from 'specs/experienceTemplateTest';
 
-export function experienceTemplateSchema(name) {
+export function experienceTemplateSchema(name, object) {
   var schema = joi.object().keys({
     id: joi.number().required(),
-    key: joi.valid(experienceTemplateObject.experienceName.toLowerCase()).required(),
+    key: joi.valid(object.experienceName.toLowerCase()).required(),
     thumbnailUrl: joi.valid(null).required(),
     name: joi.valid(name).required(),
     rowVersion: joi.object().keys({
@@ -24,7 +23,7 @@ export function getExperiencesTemplateSchema(object) {
   var schema = joi.object().keys({
     templates: joi.array().items({
       id: joi.valid(object.expTemplateID).required(),
-      key: joi.valid(experienceTemplateObject.experienceName.toLowerCase()).required(),
+      key: joi.valid(object.experienceName.toLowerCase()).required(),
       rowVersion: joi.object().keys({
         seconds: joi.object().keys({
           low: joi.number().required(),

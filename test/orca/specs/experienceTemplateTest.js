@@ -36,7 +36,7 @@ describe(' Tests for experience templates for a space', () => {
       expect(createExperienceResponse.response.statusCode).to.equal(200);
       joi.assert(
         createExperienceResponse.response.body.data.createExperienceTemplate.template,
-        experienceTemplateSchema(experienceTemplateObject.experienceName)
+        experienceTemplateSchema(experienceTemplateObject.experienceName, experienceTemplateObject)
       );
     });
   });
@@ -49,7 +49,7 @@ describe(' Tests for experience templates for a space', () => {
       expect(updateExperienceResponse.response.statusCode).to.equal(200);
       joi.assert(
         updateExperienceResponse.response.body.data.updateExperienceTemplate.template,
-        experienceTemplateSchema(experienceTemplateObject.experienceNewName)
+        experienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
       );
     });
   });
@@ -62,7 +62,7 @@ describe(' Tests for experience templates for a space', () => {
       expect(experienceTemplateResponse.response.statusCode).to.equal(200);
       joi.assert(
         experienceTemplateResponse.response.body.data.experienceTemplate,
-        experienceTemplateSchema(experienceTemplateObject.experienceNewName)
+        experienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
       );
     });
   });
