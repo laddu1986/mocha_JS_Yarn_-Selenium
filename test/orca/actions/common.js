@@ -7,7 +7,7 @@ export function registerAndCreateOrg(responseData) {
   const query = {
     query:
       'mutation CreateAccount($input: RegisterAndCreateOrgInput!) { registerAndCreateOrg(input: $input) { account { id email name state {lastOrganizationSlug lastSpaceSlug} }  } }',
-    operationName: 'CreateAccount', // eslint-disable-line
+    operationName: "CreateAccount",
     variables: {
       input: {
         fields: {
