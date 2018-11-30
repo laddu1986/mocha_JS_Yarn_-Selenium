@@ -4,7 +4,7 @@ export function createTribe(responseData) {
   const data = {
     query:
       'mutation CreateSegment($input: CreateSegmentInput!) { createSegment(input: $input) {categoryId segment{id title tagline rowVersion backgroundImageUrl logoImageUrl layout colors{ key value opacity}}}}',
-    operationName: "CreateSegment", // eslint-disable-line
+    operationName: "CreateSegment", 
     variables: {
       input: {
         organizationId: responseData.orgID,
@@ -28,7 +28,7 @@ export function updateTribe(responseData) {
   const data = {
     query:
       'mutation UpdateSegment($input: UpdateSegmentInput!) { updateSegment(input: $input) {segment{id title tagline rowVersion backgroundImageUrl logoImageUrl layout colors{ key value opacity}}}}',
-    operationName: "UpdateSegment", // eslint-disable-line
+    operationName: "UpdateSegment", 
     variables: {
       input: {
         fields: {
@@ -57,7 +57,7 @@ export function getTribe(responseData) {
   const data = {
     query:
       'query Segment($spaceId: ID!, $segmentId: ID!, $organizationId: ID!) {segment(spaceId: $spaceId, organizationId: $organizationId, segmentId: $segmentId){id title tagline rowVersion layout colors{opacity value key} logoImageUrl backgroundImageUrl}}',
-    operationName: "Segment", // eslint-disable-line
+    operationName: "Segment", 
     variables: {
       segmentId: responseData.tribeID,
       organizationId: responseData.orgID,
@@ -76,7 +76,7 @@ export function getTribe(responseData) {
 export function deleteTribe(responseData) {
   const data = {
     query: 'mutation DeleteSegment($input: DeleteSegmentInput!) { deleteSegment(input: $input) {segmentId}}',
-    operationName: "DeleteSegment", // eslint-disable-line
+    operationName: "DeleteSegment", 
     variables: {
       input: {
         rowVersion: responseData.tribeRowVersion,
