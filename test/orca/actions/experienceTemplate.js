@@ -5,7 +5,7 @@ export function createExperienceTemplate(responseData) {
   const data = {
     query:
       'mutation createExperienceTemplate($input: CreateExperienceTemplateInput!) { createExperienceTemplate(input: $input) { template { id key name thumbnailUrl rowVersion properties{key}}}}',
-    operationName: "createExperienceTemplate", // eslint-disable-line
+    operationName: "createExperienceTemplate", 
     variables: {
       input: {
         fields: {
@@ -34,7 +34,7 @@ export function updateExperienceTemplate(responseData) {
   const data = {
     query:
       'mutation updateExperienceTemplate($input: UpdateExperienceTemplateInput!) { updateExperienceTemplate(input: $input) { template { id name key thumbnailUrl rowVersion properties{key}}}}',
-    operationName: "updateExperienceTemplate", // eslint-disable-line
+    operationName: "updateExperienceTemplate", 
     variables: {
       input: {
         fields: {
@@ -63,7 +63,7 @@ export function getExperienceTemplate(responseData) {
   const data = {
     query:
       'query experienceTemplate($organizationId: ID!, $spaceId: ID!, $templateId: ID!) { experienceTemplate(organizationId: $organizationId , spaceId: $spaceId, templateId: $templateId) { id name key thumbnailUrl rowVersion properties{key} }}',
-    operationName: "experienceTemplate", // eslint-disable-line
+    operationName: "experienceTemplate", 
     variables: {
       organizationId: responseData.orgID,
       spaceId: responseData.spaceID,
@@ -83,7 +83,7 @@ export function getExperiencesTemplate(responseData) {
   const data = {
     query:
       'query experienceTemplates($organizationId: ID!, $spaceId: ID!) { experienceTemplates(organizationId: $organizationId , spaceId: $spaceId) {templates{ id rowVersion key name}}}',
-    operationName: "experienceTemplates", // eslint-disable-line
+    operationName: "experienceTemplates", 
     variables: {
       organizationId: responseData.orgID,
       spaceId: responseData.spaceID
@@ -102,7 +102,7 @@ export function deleteExperienceTemplate(responseData) {
   const data = {
     query:
       'mutation deleteExperienceTemplate($input: DeleteExperienceTemplateInput!) { deleteExperienceTemplate(input: $input) {templateId}}',
-    operationName: "deleteExperienceTemplate", // eslint-disable-line
+    operationName: "deleteExperienceTemplate", 
     variables: {
       input: {
         organizationId: responseData.orgID,
