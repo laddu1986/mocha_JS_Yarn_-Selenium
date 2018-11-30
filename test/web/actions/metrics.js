@@ -81,7 +81,6 @@ export function verifyUsersAreAdded() {
 
 export function refreshUsersPage() {
   try {
-    browser.refresh();
     browser.waitUntil(
       function() {
         return UsersPage.noUsersRow.getText() == 'You have no users.';
@@ -90,6 +89,7 @@ export function refreshUsersPage() {
       'Users are not added',
       1000
     );
+    browser.refresh();
   } catch (err) {
     value = false;
     return;

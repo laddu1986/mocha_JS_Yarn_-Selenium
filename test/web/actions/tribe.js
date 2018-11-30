@@ -70,12 +70,13 @@ export function verifyTitleOnCard(name, count) {
 }
 
 export function verifyTribe(type, value) {
+  var actualWebelement;
   if (type === Constants.TribeAttributes.Title) {
-    actualValue = TribePage.tribeCardTitle.getText();
+    actualWebelement = TribePage.tribeCardTitle;
   } else {
-    actualValue = TribePage.tribeCardTagline.getText();
+    actualWebelement = TribePage.tribeCardTagline;
   }
-  return actualValue == value;
+  browser.waitUntil(() => actualWebelement.getText() == value, 5000, 'The new tribe name is not shown', 200);
 }
 
 export function createTribe(name) {
