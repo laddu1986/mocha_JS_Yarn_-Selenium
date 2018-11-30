@@ -19,7 +19,7 @@ describe('Organization Tests', () => {
     before(async () => {
       createOrgResponse = await createOrganization(createOrgObject);
     });
-    it('create org', () => {
+    it('C1295777 create org', () => {
       expect(createOrgResponse.response.statusCode).to.equal(200);
       joi.assert(
         createOrgResponse.response.body.data.createOrganization.organization,
@@ -31,7 +31,7 @@ describe('Organization Tests', () => {
       before(async () => {
         updateOrgResponse = await updateOrganization(createOrgObject);
       });
-      it('update org name', () => {
+      it('C1295778 update org name', () => {
         expect(updateOrgResponse.response.statusCode).to.equal(200);
         joi.assert(
           updateOrgResponse.response.body.data.updateOrganization.organization,
@@ -45,7 +45,7 @@ describe('Organization Tests', () => {
     before(async () => {
       getOrgResponse = await getOrganization(createOrgObject);
     });
-    it('Get details of organization by id', () => {
+    it('C1295779 Get details of organization by id', () => {
       expect(getOrgResponse.response.statusCode).to.equal(200);
       joi.assert(
         getOrgResponse.response.body.data.organization,
@@ -57,7 +57,7 @@ describe('Organization Tests', () => {
       before(async () => {
         getOrgByIDResponse = await getOrganizationBySlug(createOrgObject);
       });
-      it('Get details of organization by slug', () => {
+      it('C1295780 Get details of organization by slug', () => {
         expect(getOrgByIDResponse.response.statusCode).to.equal(200);
         joi.assert(
           getOrgByIDResponse.response.body.data.organization,
@@ -70,7 +70,7 @@ describe('Organization Tests', () => {
       before(async () => {
         getOrgsResponse = await getOrganizations(createOrgObject);
       });
-      it('Get details of organization by slug', () => {
+      it('C1295781 Get details of organization by slug', () => {
         expect(getOrgsResponse.response.statusCode).to.equal(200);
         expect(getOrgsResponse.response.body.data.organizations).to.be.an('array');
         if (JSON.stringify(getOrgsResponse.response.body.data.organizations[0].name).includes('updated')) {

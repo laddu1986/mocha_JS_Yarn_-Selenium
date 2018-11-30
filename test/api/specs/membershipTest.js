@@ -17,7 +17,7 @@ describe('Memberships Api', () => {
         });
       });
     });
-    it('Create a new membership', () => {
+    it('C1295536 Create a new membership', () => {
       return createResponse.then(response => {
         expect(response).to.have.status(201);
         joi.assert(response.body, schemas.createMembershipSchema(membershipData));
@@ -31,7 +31,7 @@ describe('Memberships Api', () => {
       done();
     });
 
-    it('List all Memberships', () => {
+    it('C1295537 List all Memberships', () => {
       return getResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, schemas.listMembershipSchema(membershipData));
@@ -45,7 +45,7 @@ describe('Memberships Api', () => {
       done();
     });
 
-    it('Getting membership by organization id', () => {
+    it('C1295538 Getting membership by organization id', () => {
       return getByOrgIDResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, schemas.getMembershipByOrdIDSchema(membershipData));
@@ -59,7 +59,7 @@ describe('Memberships Api', () => {
       done();
     });
 
-    it('Getting membership by account id', () => {
+    it('C1295539 Getting membership by account id', () => {
       return getByAccountIDResponse.then(response => {
         expect(response).to.have.status(200);
         joi.assert(response.body, schemas.getMembershipByAccountIDSchema(membershipData));
@@ -72,7 +72,7 @@ describe('Memberships Api', () => {
       done();
     });
 
-    it('Delete a membership', () => {
+    it('C1295540 Delete a membership', () => {
       return deleteResponse.then(response => {
         expect(response).to.have.status(204);
       });

@@ -32,7 +32,7 @@ describe(' Tests for experience templates for a space', () => {
     before(async () => {
       createExperienceResponse = await createExperienceTemplate(experienceTemplateObject);
     });
-    it('Create new experience', () => {
+    it('C1302057 Create new experience', () => {
       return createExperienceResponse.then(response => {
         expect(response.response.statusCode).to.equal(200);
         joi.assert(
@@ -47,7 +47,7 @@ describe(' Tests for experience templates for a space', () => {
     before(async () => {
       updateExperienceResponse = await updateExperienceTemplate(experienceTemplateObject);
     });
-    it('Update experience', () => {
+    it('C1302058 Update experience', () => {
       return updateExperienceResponse.then(response => {
         expect(response.response.statusCode).to.equal(200);
         joi.assert(
@@ -62,7 +62,7 @@ describe(' Tests for experience templates for a space', () => {
     before(async () => {
       experienceTemplateResponse = await getExperienceTemplate(experienceTemplateObject);
     });
-    it('Get experience template details', () => {
+    it('C1302059 Get experience template details', () => {
       return experienceTemplateResponse.then(response => {
         expect(response.response.statusCode).to.equal(200);
         joi.assert(
@@ -77,7 +77,7 @@ describe(' Tests for experience templates for a space', () => {
     before(async () => {
       experienceTemplatesResponse = await getExperiencesTemplate(experienceTemplateObject);
     });
-    it('Get all experience templates in a space', () => {
+    it('C1302060 Get all experience templates in a space', () => {
       return experienceTemplatesResponse.then(response => {
         expect(response.response.statusCode).to.equal(200);
         joi.assert(
@@ -92,7 +92,7 @@ describe(' Tests for experience templates for a space', () => {
     before(async () => {
       deleteExperienceResponse = await deleteExperienceTemplate(experienceTemplateObject);
     });
-    it('Delete an experience template', () => {
+    it('C1302061 Delete an experience template', () => {
       return deleteExperienceResponse.then(response => {
         expect(response.response.statusCode).to.equal(200);
         expect(response.response.body.data.deleteExperienceTemplate).to.be.true;

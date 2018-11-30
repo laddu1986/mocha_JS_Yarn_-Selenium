@@ -23,24 +23,24 @@ describe('Update Organization name', () => {
     createOrg(org2);
   });
 
-  it('Verify Settings Page', () => {
+  it('C1295707 Verify Settings Page', () => {
     gotoOrgSettings();
     expect(browser.getUrl()).to.include(`/${org2}/edit`.toLowerCase());
     expect(isSaveButtonEnabled()).to.equal(false);
   });
 
-  it('Update org name --> verify new name appears in navbar and url', () => {
+  it('C1295708 Update org name --> verify new name appears in navbar and url', () => {
     updateOrgName(updatedOrgName);
     verifyNewOrgNameInNavbar(updatedOrgName);
     expect(browser.getUrl()).to.include(`/${updatedOrgName}/edit`.toLowerCase());
   });
 
-  it('Validate Org dashboard has the updated org name', () => {
+  it('C1295709 Validate Org dashboard has the updated org name', () => {
     goBackToOrgDashboard();
     expect(verifyOrgNameOnDashBoard()).to.equal(updatedOrgName);
   });
 
-  it('Choose org page has updated Org at top of org cards', () => {
+  it('C1295710 Choose org page has updated Org at top of org cards', () => {
     browser.url(`${browser.options.baseUrl}/organizations`);
     verifyOrgCardStack(updatedOrgName);
   });

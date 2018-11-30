@@ -39,20 +39,20 @@ describe('User Labels Test', () => {
   });
 
   describe('Test Add and Delete a Label', () => {
-    it('Enter a label and verify it gets Saved', () => {
+    it('C1295666 Enter a label and verify it gets Saved', () => {
       clickAddLabelButton();
       inputLabelDetails(['testLabel123']);
       expect(verifyAddedLabels()).to.equal(true, 'Label was not Added/Saved');
     });
 
-    it('Delete the added Label', () => {
+    it('C1295667 Delete the added Label', () => {
       deleteLabels(['testLabel123']);
       expect(verifyLabelDeleted()).to.equal(true, 'Label was not Deleted');
     });
   });
 
   describe('Test with Multiple Labels and Sorting', () => {
-    it('Add multiple labels -> verify they are sorted alphabetically', () => {
+    it('C1295668 Add multiple labels -> verify they are sorted alphabetically', () => {
       gotoUsersTab();
       clickUserRow(4);
       var labelCount = Math.floor(Math.random() * 10 + 4);
@@ -60,7 +60,7 @@ describe('User Labels Test', () => {
       expect(verifyAddedLabels()).to.equal(true, 'Labels were not Added/Saved');
     });
 
-    it('Verify label count on user row and clicking it re-directs to label details section', () => {
+    it('C1295669 Verify label count on user row and clicking it re-directs to label details section', () => {
       gotoUsersTab();
       expect(verifyLabelCount()).to.equal(true, 'Label count incorrect in User row');
       clickLabelCount();
@@ -68,21 +68,21 @@ describe('User Labels Test', () => {
   });
 
   describe('Test Label suggestions', () => {
-    it('Add labels to a user', () => {
+    it('C1295670 Add labels to a user', () => {
       gotoUsersTab();
       clickUserRow(5);
       clickAddLabelButton();
       inputLabelDetails(['dropdown', 'dropbox', 'dropkick', 'drop the beat']);
     });
 
-    it('Verify added labels appears in suggestions for other users', () => {
+    it('C1295671 Verify added labels appears in suggestions for other users', () => {
       gotoUsersTab();
       clickUserRow(6);
       clickAddLabelButton();
       expect(labelSuggestions('dr')).to.equal(true, 'Label Suggestion did not appear');
     });
 
-    it('Select a label from suggestions and verify it is Saved', () => {
+    it('C1295672 Select a label from suggestions and verify it is Saved', () => {
       selectLabelFromSuggestions('dropkick');
       expect(verifyAddedLabels()).to.equal(true, 'Label was not Added/Saved');
     });

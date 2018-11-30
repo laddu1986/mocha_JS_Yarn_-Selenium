@@ -27,13 +27,13 @@ describe('Negative Tests --> Organizations Api', () => {
           });
         });
       });
-      it('Name field is required', () => {
+      it('C1295546 Name field is required', () => {
         return noNamePostResponse.then(response => {
           expect(response).to.have.status(400);
           expect(response.body.validationErrors.name).to.equal(data.noName(orgNegData).expected);
         });
       });
-      xit('CreatedByAccountId field is required', () => {
+      xit('C1295547 CreatedByAccountId field is required', () => {
         // to be enabled when ACF-212 is fixed
         return noIDPostResponse.then(response => {
           expect(response).to.have.status(400);
@@ -50,25 +50,25 @@ describe('Negative Tests --> Organizations Api', () => {
       incorrectIDPutResponse = put(data.incorrectOrgIDPut(orgNegData));
       done();
     });
-    it('409 Error Response: RowVersion Conflict', () => {
+    it('C1295548 409 Error Response: RowVersion Conflict', () => {
       return noRowVersionPutResponse.then(response => {
         expect(response).to.have.status(409);
         expect(response.body).to.equal(data.blankRowVersion(orgNegData).expected);
       });
     });
-    it('400 Error Response: Blank Name', () => {
+    it('C1295549 400 Error Response: Blank Name', () => {
       return blankNamePutResponse.then(response => {
         expect(response).to.have.status(400);
         expect(response.body.validationErrors.name).to.equal(data.blankName(orgNegData).expected);
       });
     });
-    it('400 Error Response: Blank ID', () => {
+    it('C1295550 400 Error Response: Blank ID', () => {
       return blankIDPutResponse.then(response => {
         expect(response).to.have.status(400);
         expect(response.body.validationErrors.id).to.equal(data.blankID(orgNegData).expected);
       });
     });
-    it('404 Error Response: Non Existing Org ID', () => {
+    it('C1295551 404 Error Response: Non Existing Org ID', () => {
       return incorrectIDPutResponse.then(response => {
         expect(response).to.have.status(404);
       });
@@ -79,7 +79,7 @@ describe('Negative Tests --> Organizations Api', () => {
       getResponse = get(data.incorrrectOrgIDGet(orgNegData));
       done();
     });
-    it('404 Error Response: Non Existing Org ID', () => {
+    it('C1295552 404 Error Response: Non Existing Org ID', () => {
       return getResponse.then(response => {
         expect(response).to.have.status(404);
       });
@@ -91,13 +91,13 @@ describe('Negative Tests --> Organizations Api', () => {
       blankOrgIdDeleteResponse = del(data.blankOrgIdDelete);
       done();
     });
-    it('409 Error Response: Non Existing Org ID', () => {
+    it('C1295553 409 Error Response: Non Existing Org ID', () => {
       return incorrectOrgIDDeleteResponse.then(response => {
         expect(response).to.have.status(409);
         expect(response.body).to.equal(data.incorrectOrgIDDelete(orgNegData).expected);
       });
     });
-    it('404 Error Response: Non Existing Org ID', () => {
+    it('C1295554 404 Error Response: Non Existing Org ID', () => {
       return blankOrgIdDeleteResponse.then(response => {
         expect(response).to.have.status(404);
       });

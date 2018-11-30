@@ -29,7 +29,7 @@ describe('Tribe Rule Filter Tests', () => {
     clickCreateTribeButton();
   });
 
-  it('Verify the Audience Type filter', () => {
+  it('C1295760 Verify the Audience Type filter', () => {
     clickFilter(Constants.TribeFilterTypes.AudienceType);
     expect(verifyFilterOptions(Constants.TribeFilterTypes.AudienceType)).to.equal(
       true,
@@ -37,7 +37,7 @@ describe('Tribe Rule Filter Tests', () => {
     );
   });
 
-  it('Verify the Logical Type filter', () => {
+  it('C1295761 Verify the Logical Type filter', () => {
     clickFilter(Constants.TribeFilterTypes.LogicalType);
     expect(verifyFilterOptions(Constants.TribeFilterTypes.LogicalType)).to.equal(
       true,
@@ -45,7 +45,7 @@ describe('Tribe Rule Filter Tests', () => {
     );
   });
 
-  it('Verify the Property filter', () => {
+  it('C1295762 Verify the Property filter', () => {
     clickFilter(Constants.TribeFilterTypes.Property);
     expect(verifyFilterOptions(Constants.TribeFilterTypes.Property)).to.equal(
       true,
@@ -53,7 +53,7 @@ describe('Tribe Rule Filter Tests', () => {
     );
   });
 
-  it('Verify the Operator filter', () => {
+  it('C1295763 Verify the Operator filter', () => {
     var type, name;
     for (var i = 0; i < 8; i++) {
       name = selectProperty(i);
@@ -70,7 +70,7 @@ describe('Tribe Rule Filter Tests', () => {
     }
   });
 
-  it('Verify date filter can be added', () => {
+  it('C1295764 Verify date filter can be added', () => {
     var today = new Date();
     selectProperty('0');
     selectOperator('3');
@@ -80,12 +80,12 @@ describe('Tribe Rule Filter Tests', () => {
     expect(verifyFilterValue('0')).to.include(lib.dateFormat(today, 'mmm dd yyyy'));
   });
 
-  it('Verify filter can be deleted', () => {
+  it('C1295765 Verify filter can be deleted', () => {
     removeRuleFilter();
     expect(verifyFilterExists()).to.equal(false, 'The filter is not deleted');
   });
 
-  it('Adding filter with number property for Visitor', () => {
+  it('C1295766 Adding filter with number property for Visitor', () => {
     clickFilter(Constants.TribeFilterTypes.AudienceType);
     selectAudienceType('1');
     clickFilter(Constants.TribeFilterTypes.LogicalType);
