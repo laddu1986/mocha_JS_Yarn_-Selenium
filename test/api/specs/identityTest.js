@@ -12,7 +12,7 @@ describe('Identity Api', () => {
       done();
     });
 
-    it('Add a new user identity.', () => {
+    it('C1295523 Add a new user identity.', () => {
       return addResponse.then(function(response) {
         expect(response).to.have.status(201);
         joi.assert(response.body, schemas.postIdentitySchema(identityData));
@@ -25,7 +25,7 @@ describe('Identity Api', () => {
       getResponse = identity.getIdentityById(identityData);
       done();
     });
-    it('Get a identity by its id.', () => {
+    it('C1295524 Get a identity by its id.', () => {
       return getResponse.then(function(response) {
         expect(response).to.have.status(200);
         joi.assert(response.body, schemas.getIdentitySchema(identityData));
@@ -38,7 +38,7 @@ describe('Identity Api', () => {
       deleteResponse = identity.deleteIdentityById(identityData);
       done();
     });
-    it('Delete an identity by its id.', () => {
+    it('C1295525 Delete an identity by its id.', () => {
       return deleteResponse.then(function(response) {
         expect(response).to.have.status(204);
       });

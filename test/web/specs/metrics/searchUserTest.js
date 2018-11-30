@@ -34,7 +34,7 @@ describe('Search User Test', () => {
     verifyUsersAreAdded();
   });
 
-  it('Search user by email', () => {
+  it('C1295673 Search user by email', () => {
     var Email = getFirstRowDetails(Constants.UserAttributes.Email);
     search(Email);
     expect(getResultText()).to.equal(`1 ${Messages.search.result}`);
@@ -43,7 +43,7 @@ describe('Search User Test', () => {
     clearText();
   });
 
-  it('Search user by name', () => {
+  it('C1295674 Search user by name', () => {
     var Name = getFirstRowDetails(Constants.UserAttributes.Name);
     search(Name);
     expect(getResultText()).to.equal(`1 ${Messages.search.result}`);
@@ -52,7 +52,7 @@ describe('Search User Test', () => {
     clearText();
   });
 
-  it('Search user by uid', () => {
+  it('C1295675 Search user by uid', () => {
     var UID = getFirstRowDetails(Constants.UserAttributes.UID);
     search(UID);
     expect(getResultText()).to.equal(`1 ${Messages.search.result}`);
@@ -61,7 +61,7 @@ describe('Search User Test', () => {
     clearText();
   });
 
-  it('Invalid Search --> Returns no users', () => {
+  it('C1295676 Invalid Search --> Returns no users', () => {
     search('abc');
     browser.pause(1000);
     expect(getResultText()).to.equal(`0 ${Messages.search.results}`);

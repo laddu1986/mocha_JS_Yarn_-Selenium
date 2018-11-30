@@ -34,17 +34,17 @@ describe('New User accesses an Expired Invitation', () => {
     browser.pause(1000);
   });
 
-  it('Admin invites a New User', () => {
+  it('C1295645 Admin invites a New User', () => {
     newUser = `newUser_${lib.randomString.generate(4)}@test.co`;
     inviteTeammate(newUser, '1');
   });
 
-  it('Invitation Expires', async () => {
+  it('C1295646 Invitation Expires', async () => {
     invitationURL = await invitationLink(newUser);
     await updateTokenExpiryDateInDB(newUser); //update ExpiryDate of token to a history date in db
   });
 
-  it('Inactive tab status --> shows as Expired', () => {
+  it('C1295647 Inactive tab status --> shows as Expired', () => {
     browser.refresh(); //refresh to reflect the latest expired/pending status from DB
     goToTeammatesPage();
     goToInactiveTab();
@@ -52,7 +52,7 @@ describe('New User accesses an Expired Invitation', () => {
     signOut();
   });
 
-  it('Clicking Invite link  -->  Redirects to Expired invitation page', () => {
+  it('C1295648 Clicking Invite link  -->  Redirects to Expired invitation page', () => {
     browser.url(invitationURL); //this is a replication of user clicking on Accept Invitation button from invite email
     expect(expiredInvitationText()).to.include(message.invite.expiredInvitation);
   });
@@ -67,7 +67,7 @@ describe('Re-sending an Expired Invite', () => {
     goToInactiveTab();
   });
 
-  it('Resends Expired Invitation --> validate Passive Notification', () => {
+  it('C1295649 Resends Expired Invitation --> validate Passive Notification', () => {
     resendInvite();
     const expectedPassiveNotificationMessage = `${passiveNotification.resendInviteMessage.text}${newUser}`;
     expect(getNotificationMessageText()).to.include(expectedPassiveNotificationMessage);
@@ -76,11 +76,11 @@ describe('Re-sending an Expired Invite', () => {
 });
 
 describe('User Accepts resent Invite', () => {
-  it('User gets new Invitation eMail and Accepts Invite', async () => {
+  it('C1295650 User gets new Invitation eMail and Accepts Invite', async () => {
     invitationURL = await invitationLink(newUser);
     browser.url(invitationURL);
   });
-  it('User lands on Create Account and Join org page', () => {
+  it('C1295651 User lands on Create Account and Join org page', () => {
     expect(joinOrgText()).to.include(accountData.organization);
     expect(submitButtonVisible()).to.equal(true);
   });

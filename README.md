@@ -25,10 +25,16 @@ Chakram is an API testing framework designed to perform end to end tests on JSON
 
 The library offers a BDD testing style and fully exploits javascript promises - the resulting tests are simple, clear and expressive. Chakram is built on [node.js](https://nodejs.org/), [mocha](http://mochajs.org/), [chai](http://chaijs.com/) and [request](https://github.com/request/request).
 
-###Reporting
-Currently the html reports are being generated for API(mocha) tests using "mocha-simple-html-reporter" and for UI(wdio) tests using "wdio-html-format-reporter".
-"pngjs" module is also needed.
-The reports will by default be saved in : .test/api/Reports and .test/web/Reports with names : wdio-report.html and api-report.html
+### Reporting
+This is a branch intended to work alongside the main branch with reporting to Testrail. 
+To synchronise our cases, we use [wdio-testrail-reporter](https://github.com/oxynade/wdio-testrail-reporter) which comes with a synchroniser script that can be used across Web, API and Orca tests.
+
+To synchronise, you can use the following command
+
+`node node_nodules/wdio-testrail-reporter/scripts/generate-cases <path to configuration file> <path to specs folder>`
+
+Once synchronised, test results will automatically reported to testrail on run
+
 
 ### Getting Started
 

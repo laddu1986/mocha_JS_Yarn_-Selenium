@@ -16,7 +16,7 @@ describe('Spaces Tests', () => {
     before(async () => {
       createSpaceResponse = await createSpace(createSpaceObject);
     });
-    it('Create space', () => {
+    it('C1295788 Create space', () => {
       expect(createSpaceResponse.response.statusCode).to.equal(200);
       joi.assert(createSpaceResponse.response.body.data.createSpace.space, spaceSchema(createSpaceObject.spaceName));
     });
@@ -26,7 +26,7 @@ describe('Spaces Tests', () => {
     before(async () => {
       updateSpaceResponse = await updateSpace(createSpaceObject);
     });
-    it('Update space', () => {
+    it('C1295789 Update space', () => {
       expect(updateSpaceResponse.response.statusCode).to.equal(200);
       joi.assert(updateSpaceResponse.response.body.data.updateSpace.space, spaceSchema(createSpaceObject.newSpaceName));
     });
@@ -36,7 +36,7 @@ describe('Spaces Tests', () => {
     before(async () => {
       getSpaceResponse = await getSpaceBySlug(createSpaceObject);
     });
-    it('Get space by slug', () => {
+    it('C1295790 Get space by slug', () => {
       expect(getSpaceResponse.response.statusCode).to.equal(200);
       joi.assert(getSpaceResponse.response.body.data.spaceBySlug, spaceSchema(createSpaceObject.newSpaceName));
     });
@@ -46,7 +46,7 @@ describe('Spaces Tests', () => {
     before(async () => {
       getSpaceByIDResponse = await getSpace(createSpaceObject);
     });
-    it('Get space by id', () => {
+    it('C1295791 Get space by id', () => {
       expect(getSpaceByIDResponse.response.statusCode).to.equal(200);
       joi.assert(getSpaceByIDResponse.response.body.data.space, spaceSchema(createSpaceObject.newSpaceName));
     });
@@ -56,7 +56,7 @@ describe('Spaces Tests', () => {
     before(async () => {
       deleteSpaceResponse = await deleteSpace(createSpaceObject);
     });
-    it('Delete space', () => {
+    it('C1295792 Delete space', () => {
       expect(deleteSpaceResponse.response.statusCode).to.equal(200);
       expect(deleteSpaceResponse.response.body.data.deleteSpace).to.equal(true);
     });

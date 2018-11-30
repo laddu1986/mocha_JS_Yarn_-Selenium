@@ -34,13 +34,13 @@ describe('Delete organization Tests', () => {
     createOrg(orgName);
   });
 
-  it('Delete Org --> verify Cancel action on Delete modal', () => {
+  it('C1295702 Delete Org --> verify Cancel action on Delete modal', () => {
     gotoOrgSettings();
     clickDeleteOrgButton();
     expect(cancelDeleteOrg()).to.equal(true);
   });
 
-  it('Delete 2nd last Org --> Passive notification displays and Re-directs to choose orgs page', () => {
+  it('C1295703 Delete 2nd last Org --> Passive notification displays and Re-directs to choose orgs page', () => {
     clickDeleteOrgButton();
     expect(confirmButtonIsEnabled()).to.equal(false);
     typeDeleteToConfirm();
@@ -51,7 +51,7 @@ describe('Delete organization Tests', () => {
     expect(verifyChooseOrgspage()).to.equal(true);
   });
 
-  it('Delete Last Org --> Passive notification displays and Re-directs to no orgs page', () => {
+  it('C1295704 Delete Last Org --> Passive notification displays and Re-directs to no orgs page', () => {
     selectOrg();
     gotoOrgSettings();
     deleteOrganization();
@@ -60,13 +60,13 @@ describe('Delete organization Tests', () => {
     expect(verifyNoOrgPage()).to.equal(true);
   });
 
-  it('Logout and Login --> No orgs page is displayed', () => {
+  it('C1295705 Logout and Login --> No orgs page is displayed', () => {
     signOut();
     signIn(accountDetails.email, accountDetails.password);
     expect(verifyNoOrgPage()).to.equal(true);
   });
 
-  it('Create new Org from No - Orgs Page', () => {
+  it('C1295706 Create new Org from No - Orgs Page', () => {
     clickCreateOrgFromNoOrgPage();
     createNewOrg(newOrgName);
     expect(verifyWecomeOrgPage()).to.equal(true);
