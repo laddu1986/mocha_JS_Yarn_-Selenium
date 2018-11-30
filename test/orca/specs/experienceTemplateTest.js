@@ -10,8 +10,8 @@ import {
   deleteExperienceTemplate
 } from 'actions/experienceTemplate';
 import {
-  createExperienceTemplateSchema,
-  getExperienceTemplateSchema,
+  experienceTemplateSchema,
+  deleteExperiencesTemplateSchema,
   getExperiencesTemplateSchema
 } from 'data/experienceTemplateSchema';
 var createExperienceResponse,
@@ -19,7 +19,7 @@ var createExperienceResponse,
   experienceTemplateResponse,
   experienceTemplatesResponse,
   deleteExperienceResponse;
-var experienceTemplateObject = new Object();
+export var experienceTemplateObject = new Object();
 
 describe(' Tests for experience templates for a space', () => {
   before(async () => {
@@ -33,13 +33,11 @@ describe(' Tests for experience templates for a space', () => {
       createExperienceResponse = await createExperienceTemplate(experienceTemplateObject);
     });
     it('Create new experience', () => {
-      return createExperienceResponse.then(response => {
-        expect(response.response.statusCode).to.equal(200);
-        joi.assert(
-          response.response.body.data.createExperienceTemplate.template,
-          createExperienceTemplateSchema(experienceTemplateObject.experienceName)
-        );
-      });
+      expect(createExperienceResponse.response.statusCode).to.equal(200);
+      joi.assert(
+        createExperienceResponse.response.body.data.createExperienceTemplate.template,
+        experienceTemplateSchema(experienceTemplateObject.experienceName, experienceTemplateObject)
+      );
     });
   });
 
@@ -48,13 +46,11 @@ describe(' Tests for experience templates for a space', () => {
       updateExperienceResponse = await updateExperienceTemplate(experienceTemplateObject);
     });
     it('Update experience', () => {
-      return updateExperienceResponse.then(response => {
-        expect(response.response.statusCode).to.equal(200);
-        joi.assert(
-          response.response.body.data.updateExperienceTemplate.template,
-          createExperienceTemplateSchema(experienceTemplateObject.experienceNewName)
-        );
-      });
+      expect(updateExperienceResponse.response.statusCode).to.equal(200);
+      joi.assert(
+        updateExperienceResponse.response.body.data.updateExperienceTemplate.template,
+        experienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
+      );
     });
   });
 
@@ -63,13 +59,11 @@ describe(' Tests for experience templates for a space', () => {
       experienceTemplateResponse = await getExperienceTemplate(experienceTemplateObject);
     });
     it('Get experience template details', () => {
-      return experienceTemplateResponse.then(response => {
-        expect(response.response.statusCode).to.equal(200);
-        joi.assert(
-          response.response.body.data.experienceTemplate,
-          getExperienceTemplateSchema(experienceTemplateObject)
-        );
-      });
+      expect(experienceTemplateResponse.response.statusCode).to.equal(200);
+      joi.assert(
+        experienceTemplateResponse.response.body.data.experienceTemplate,
+        experienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
+      );
     });
   });
 
@@ -78,13 +72,11 @@ describe(' Tests for experience templates for a space', () => {
       experienceTemplatesResponse = await getExperiencesTemplate(experienceTemplateObject);
     });
     it('Get all experience templates in a space', () => {
-      return experienceTemplatesResponse.then(response => {
-        expect(response.response.statusCode).to.equal(200);
-        joi.assert(
-          response.response.body.data.experienceTemplates,
-          getExperiencesTemplateSchema(experienceTemplateObject)
-        );
-      });
+      expect(experienceTemplatesResponse.response.statusCode).to.equal(200);
+      joi.assert(
+        experienceTemplatesResponse.response.body.data.experienceTemplates,
+        getExperiencesTemplateSchema(experienceTemplateObject)
+      );
     });
   });
 
@@ -93,10 +85,11 @@ describe(' Tests for experience templates for a space', () => {
       deleteExperienceResponse = await deleteExperienceTemplate(experienceTemplateObject);
     });
     it('Delete an experience template', () => {
-      return deleteExperienceResponse.then(response => {
-        expect(response.response.statusCode).to.equal(200);
-        expect(response.response.body.data.deleteExperienceTemplate).to.be.true;
-      });
+      expect(deleteExperienceResponse.response.statusCode).to.equal(200);
+      joi.assert(
+        experienceTemplatesResponse.response.body.data.deleteExperienceTemplate,
+        deleteExperiencesTemplateSchema(experienceTemplateObject)
+      );
     });
   });
 });

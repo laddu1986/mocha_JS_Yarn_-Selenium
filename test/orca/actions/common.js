@@ -7,7 +7,7 @@ export function registerAndCreateOrg(responseData) {
   const query = {
     query:
       'mutation CreateAccount($input: RegisterAndCreateOrgInput!) { registerAndCreateOrg(input: $input) { account { id email name state {lastOrganizationSlug lastSpaceSlug} }  } }',
-    operationName: 'CreateAccount', // eslint-disable-line
+    operationName: "CreateAccount",
     variables: {
       input: {
         fields: {
@@ -40,7 +40,7 @@ export function login(responseData, emailValue) {
   else loginEmail = responseData.LoginEmail;
   const query = {
     query: 'mutation Login($input: LoginInput!) { login(input: $input) }',
-    operationName: 'Login', // eslint-disable-line
+    operationName: "Login",
     variables: {
       input: {
         fields: {
@@ -73,7 +73,7 @@ export function login(responseData, emailValue) {
 export function logout() {
   const query = {
     query: 'mutation Logout { logout }',
-    operationName: 'Logout', // eslint-disable-line
+    operationName: "Logout", 
     variables: {}
   };
   const any = {
@@ -89,7 +89,7 @@ export function logout() {
 export function deleteAccount(responseData) {
   const query = {
     query: 'mutation DeleteAccount { deleteAccount }',
-    operationName: 'DeleteAccount', // eslint-disable-line
+    operationName: "DeleteAccount",
     variables: {}
   };
   const any = {
@@ -106,7 +106,7 @@ export function createAccount(responseData) {
   const query = {
     query:
       'mutation CreateAccount($input: CreateAccountInput!) { createAccount(input: $input) { account { id email name state {lastOrganizationSlug lastSpaceSlug} }  } }',
-    operationName: 'CreateAccount', // eslint-disable-line
+    operationName: "CreateAccount", 
     variables: {
       input: {
         fields: {
