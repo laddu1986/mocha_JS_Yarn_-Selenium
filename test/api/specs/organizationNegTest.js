@@ -1,10 +1,10 @@
-import * as lib from '../common';
+import { post, put, get, del } from '../common';
 import * as identity from 'actions/identity';
 import * as organization from 'actions/organization';
-const moduleSpecifier = 'data/organizationTestsData';
+import * as data from 'data/organizationTestsData';
+
 var blankOrgIdDeleteResponse,
   incorrectOrgIDDeleteResponse,
-  data,
   noNamePostResponse,
   noIDPostResponse,
   noRowVersionPutResponse,
@@ -13,95 +13,72 @@ var blankOrgIdDeleteResponse,
   incorrectIDPutResponse,
   getResponse;
 
+const orgNegData = new Object();
+
 describe('Negative Tests --> Organizations Api', () => {
+  before(async () => {
+    await identity.postIdentity(orgNegData);
+    await organization.postOrganization(orgNegData);
+  });
   describe('POST /organizations', () => {
     describe('400 Error Response: Mandatory fields validation', () => {
-      before(done => {
-        identity.postIdentity(lib.orgNegData).then(() => {
-          organization.postOrganization(lib.orgNegData).then(() => {
-            lib.loader.import(moduleSpecifier).then(dataImported => {
-              data = dataImported.default;
-              noNamePostResponse = lib.post(data.noName);
-              noIDPostResponse = lib.post(data.blankAccountId);
-              done();
-            });
-          });
-        });
+      before(async () => {
+        noNamePostResponse = await post(data.noName(orgNegData));
+        noIDPostResponse = await post(data.blankAccountId);
       });
       it('Name field is required', () => {
-        return noNamePostResponse.then(response => {
-          expect(response).to.have.status(400);
-          expect(response.body.validationErrors.name).to.equal(data.noName.expected);
-        });
+        expect(noNamePostResponse).to.have.status(400);
+        expect(noNamePostResponse.body.validationErrors.name).to.equal(data.noName(orgNegData).expected);
       });
       xit('CreatedByAccountId field is required', () => {
         // to be enabled when ACF-212 is fixed
-        return noIDPostResponse.then(response => {
-          expect(response).to.have.status(400);
-          expect(response.body.validationErrors.name).to.equal(data.blankAccountId.expected);
-        });
+        expect(noIDPostResponse).to.have.status(400);
+        expect(noIDPostResponse.body.validationErrors.name).to.equal(data.blankAccountId.expected);
       });
     });
   });
   describe('PUT /organizations', () => {
-    before(done => {
-      noRowVersionPutResponse = lib.put(data.blankRowVersion);
-      blankNamePutResponse = lib.put(data.blankName);
-      blankIDPutResponse = lib.put(data.blankID);
-      incorrectIDPutResponse = lib.put(data.incorrectOrgIDPut);
-      done();
+    before(async () => {
+      noRowVersionPutResponse = await put(data.blankRowVersion(orgNegData));
+      blankNamePutResponse = await put(data.blankName(orgNegData));
+      blankIDPutResponse = await put(data.blankID(orgNegData));
+      incorrectIDPutResponse = await put(data.incorrectOrgIDPut(orgNegData));
     });
     it('409 Error Response: RowVersion Conflict', () => {
-      return noRowVersionPutResponse.then(response => {
-        expect(response).to.have.status(409);
-        expect(response.body).to.equal(data.blankRowVersion.expected);
-      });
+      expect(noRowVersionPutResponse).to.have.status(409);
+      expect(noRowVersionPutResponse.body).to.equal(data.blankRowVersion(orgNegData).expected);
     });
     it('400 Error Response: Blank Name', () => {
-      return blankNamePutResponse.then(response => {
-        expect(response).to.have.status(400);
-        expect(response.body.validationErrors.name).to.equal(data.blankName.expected);
-      });
+      expect(blankNamePutResponse).to.have.status(400);
+      expect(blankNamePutResponse.body.validationErrors.name).to.equal(data.blankName(orgNegData).expected);
     });
     it('400 Error Response: Blank ID', () => {
-      return blankIDPutResponse.then(response => {
-        expect(response).to.have.status(400);
-        expect(response.body.validationErrors.id).to.equal(data.blankID.expected);
-      });
+      expect(blankIDPutResponse).to.have.status(400);
+      expect(blankIDPutResponse.body.validationErrors.id).to.equal(data.blankID(orgNegData).expected);
     });
     it('404 Error Response: Non Existing Org ID', () => {
-      return incorrectIDPutResponse.then(response => {
-        expect(response).to.have.status(404);
-      });
+      expect(incorrectIDPutResponse).to.have.status(404);
     });
   });
   describe('GET /organizations/{id}', () => {
-    before(done => {
-      getResponse = lib.get(data.incorrectOrgIDGet);
-      done();
+    before(async () => {
+      getResponse = await get(data.incorrrectOrgIDGet(orgNegData));
     });
     it('404 Error Response: Non Existing Org ID', () => {
-      return getResponse.then(response => {
-        expect(response).to.have.status(404);
-      });
+      expect(getResponse).to.have.status(404);
     });
   });
   describe('DELETE /organizations/{id}', () => {
-    before(done => {
-      incorrectOrgIDDeleteResponse = lib.del(data.incorrectOrgIdDelete);
-      blankOrgIdDeleteResponse = lib.del(data.blankOrgIdDelete);
-      done();
+    before(async () => {
+      incorrectOrgIDDeleteResponse = await del(data.incorrectOrgIDDelete(orgNegData));
+      blankOrgIdDeleteResponse = await del(data.blankOrgIdDelete);
     });
     it('409 Error Response: Non Existing Org ID', () => {
-      return incorrectOrgIDDeleteResponse.then(response => {
-        expect(response).to.have.status(409);
-        expect(response.body).to.equal(data.incorrectOrgIdDelete.expected);
-      });
+      expect(incorrectOrgIDDeleteResponse).to.have.status(409);
+      expect(incorrectOrgIDDeleteResponse.body).to.equal(data.incorrectOrgIDDelete(orgNegData).expected);
     });
     it('404 Error Response: Non Existing Org ID', () => {
-      return blankOrgIdDeleteResponse.then(response => {
-        expect(response).to.have.status(404);
-      });
+      expect(blankOrgIdDeleteResponse).to.have.status(404);
     });
   });
 });

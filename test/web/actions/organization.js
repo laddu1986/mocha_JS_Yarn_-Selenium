@@ -37,12 +37,14 @@ export function verifyWecomeOrgPage() {
 }
 
 export function verifyOrgNameOnDashBoard() {
+  OrgDashboardPage.currentOrgName.waitForVisible();
   return OrgDashboardPage.currentOrgName.getText();
 }
 
 export function gotoOrgSettings() {
   NavBar.profileMenu.click();
   NavBar.orgSettingsAnchor.click();
+  NavBar.general.click();
 }
 
 export function deleteOrganization() {
@@ -77,22 +79,11 @@ export function updateOrgName(updatedOrgName) {
   SettingsPage.orgInput.setValue(updatedOrgName);
   SettingsPage.saveOrgNameButton.click();
   browser.waitUntil(
-    function() {
+    function () {
       return SettingsPage.saveOrgNameButton.isEnabled() === false;
     },
     5000,
     'Save changes button did not Grey out after saving changes',
-    200
-  );
-}
-
-export function verifyNewOrgNameInNavbar(updatedOrgName) {
-  browser.waitUntil(
-    function() {
-      return NavBar.backToOrgDashboardLink.getText().includes(updatedOrgName);
-    },
-    5000,
-    'New OrgName was not updated in the side Nav Bar',
     200
   );
 }
@@ -105,7 +96,7 @@ export function verifyOrgCardStack(updatedOrgName) {
   HomePage.orgCards.waitForVisible();
   browser.refresh();
   browser.waitUntil(
-    function() {
+    function () {
       return HomePage.orgCards.value[0].getText().includes(updatedOrgName);
     },
     5000,

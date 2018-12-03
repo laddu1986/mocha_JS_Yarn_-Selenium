@@ -1,117 +1,80 @@
-import * as lib from '../common';
+import { joi } from '../common';
 import * as categories from 'actions/categories';
 import * as spaces from 'actions/spaces';
 import * as organization from 'actions/organization';
 import * as identity from 'actions/identity';
+import * as schemas from 'schemas/categorySchema';
 
 const categoryData = new Object();
-var schema, createResponse, listResponse, renameResponse, moveConfirm, deleteConfirm;
-
-var schemaCategory = lib.joi.object().keys({
-  id: lib.joi
-    .number()
-    .integer()
-    .required(),
-  label: lib.joi.string().optional(),
-  isDefault: lib.joi.boolean().optional()
-});
+var createResponse, listResponse, renameResponse, moveResponse, moveConfirm, deleteResponse, deleteConfirm;
 
 describe('Categories Service', () => {
+  before('Initialise working Space', async () => {
+    await identity.postIdentity(categoryData);
+    await organization.postOrganization(categoryData);
+    await spaces.postSpaceByOrganizationId(categoryData);
+  });
   describe('createCategory()', () => {
-    before('Initialise working Space', done => {
-      identity
-        .postIdentity(categoryData)
-        .then(() => {
-          return organization.postOrganization(categoryData);
-        })
-        .then(() => {
-          return spaces.postSpaceByOrganizationId(categoryData);
-        })
-        .then(() => {
-          createResponse = categories.createCategory(categoryData, true);
-          done();
-        });
+    before('Initialise working Space', async () => {
+      createResponse = await categories.createCategory(categoryData, true);
     });
 
     it('Creates a category', () => {
-      return createResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        lib.joi.assert(response.response, schemaCategory);
-      });
+      expect(createResponse.status.code).to.equal(0);
+      joi.assert(createResponse.response, schemas.schemaCategory);
     });
   });
 
   describe('listCategories()', () => {
-    before('get the current list', done => {
-      listResponse = categories.listCategories(categoryData);
-      done();
+    before('get the current list', async () => {
+      listResponse = await categories.listCategories(categoryData);
     });
 
     it('Lists all Categories', () => {
-      return listResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        schema = lib.joi.object().keys({
-          categories: lib.joi.array().items(schemaCategory)
-        });
-        lib.joi.assert(response.response, schema);
-      });
+      expect(listResponse.status.code).to.equal(0);
+      joi.assert(listResponse.response, schemas.schemaCategories);
     });
   });
 
   describe('renameCategory()', () => {
-    before('Send rename request', done => {
-      renameResponse = categories.renameCategory(categoryData);
-      done();
+    before('Send rename request', async () => {
+      renameResponse = await categories.renameCategory(categoryData);
     });
 
     it('Renames the category', () => {
-      return renameResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        expect(response.response.label).to.not.equal(categoryData.tribeCategoryOldLabel);
-        lib.joi.assert(response.response, schemaCategory);
-      });
+      expect(renameResponse.status.code).to.equal(0);
+      expect(renameResponse.response.label).to.not.equal(categoryData.tribeCategoryOldLabel);
+      joi.assert(renameResponse.response, schemas.schemaCategory);
     });
   });
 
   describe('moveCategory()', () => {
-    before('Send move request', done => {
-      categories
-        .createCategory(categoryData)
-        .then(() => {
-          return categories.moveCategory(categoryData);
-        })
-        .then(response => {
-          expect(response.status.code).to.equal(0);
-          moveConfirm = categories.listCategories(categoryData);
-          done();
-        });
+    before('Send move request', async () => {
+      await categories.createCategory(categoryData);
+      moveResponse = await categories.moveCategory(categoryData);
+      moveConfirm = await categories.listCategories(categoryData);
     });
 
     it('Moves the category', () => {
-      return moveConfirm.then(response => {
-        expect(response.response.categories[0].id > response.response.categories[1].id).to.be.true;
-      });
+      expect(moveResponse.status.code).to.equal(0);
+      expect(moveConfirm.response.categories[0].id > moveConfirm.response.categories[1].id).to.be.true;
     });
   });
 
   describe('deleteCategory()', () => {
-    before('Send delete request', done => {
-      categories.deleteCategory(categoryData).then(response => {
-        expect(response.status.code).to.equal(0);
-        deleteConfirm = categories.listCategories(categoryData);
-        done();
-      });
+    before('Send delete request', async () => {
+      deleteResponse = await categories.deleteCategory(categoryData);
+      deleteConfirm = await categories.listCategories(categoryData);
     });
 
     it('Deletes the category', () => {
-      return deleteConfirm.then(response => {
-        let categories = response.response.categories;
-        expect(categories).to.be.an('array');
-        expect(categories).to.have.lengthOf(2);
-        expect(categories[1]).to.have.property('isDefault', true);
-        expect(categories[0].id).to.not.equal(categoryData.tribeCategoryID);
-        expect(categories[1].id).to.not.equal(categoryData.tribeCategoryID);
-      });
+      let categories = deleteConfirm.response.categories;
+      expect(deleteResponse.status.code).to.equal(0);
+      expect(categories).to.be.an('array');
+      expect(categories).to.have.lengthOf(2);
+      expect(categories[1]).to.have.property('isDefault', true);
+      expect(categories[0].id).to.not.equal(categoryData.tribeCategoryID);
+      expect(categories[1].id).to.not.equal(categoryData.tribeCategoryID);
     });
   });
 });

@@ -1,7 +1,7 @@
-import { randomString, organizationsSchemaData, post, get, put, del } from '../common';
+import { randomString, post, get, put, del } from '../common';
 import { organizations } from 'config/getEnv';
 
-export function postOrganization(responseObject, flag) {
+export function postOrganization(responseObject) {
   const any = {
     api: organizations,
     data: {
@@ -9,14 +9,16 @@ export function postOrganization(responseObject, flag) {
       createdByAccountId: responseObject.identityID
     }
   };
-  if (flag) {
-    organizationsSchemaData.name = any.data.name;
-  }
   return post(any).then(response => {
-    responseObject.orgID = response.body.id;
-    responseObject.orgRowVersion = response.body.rowVersion;
-    responseObject.orgName = response.body.name;
-    return response;
+    if (response.response.statusCode == 201) {
+      responseObject.orgID = response.body.id;
+      responseObject.orgRowVersion = response.body.rowVersion;
+      responseObject.orgName = any.data.name;
+      return response;
+    } else
+      throw `postOrganization failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
   });
 }
 
@@ -25,7 +27,13 @@ export function getOrganizations() {
     data: '',
     api: organizations
   };
-  return get(any);
+  return get(any).then(response => {
+    if (response.response.statusCode == 200) return response;
+    else
+      throw `getOrganizations failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
 }
 
 export function getOrganizationById(responseObject) {
@@ -33,7 +41,13 @@ export function getOrganizationById(responseObject) {
     data: responseObject.orgID,
     api: organizations
   };
-  return get(any);
+  return get(any).then(response => {
+    if (response.response.statusCode == 200) return response;
+    else
+      throw `getOrganizationById failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
 }
 
 export function postOrganizations(responseObject) {
@@ -41,10 +55,18 @@ export function postOrganizations(responseObject) {
     api: `${organizations}list`,
     data: [responseObject.orgID]
   };
-  return post(any);
+  return post(any).then(response => {
+    if (response.response.statusCode == 200) return response;
+    else
+      throw `postOrganizations failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
 }
-export var newName = 'check update name string';
-export function putOrganization(responseObject, flag) {
+
+var newName = 'check update name string';
+
+export function putOrganization(responseObject) {
   const any = {
     api: organizations,
     data: {
@@ -53,12 +75,15 @@ export function putOrganization(responseObject, flag) {
       rowVersion: responseObject.orgRowVersion
     }
   };
-  if (flag) {
-    organizationsSchemaData.name = newName;
-  }
   return put(any).then(response => {
-    responseObject.orgRowVersion = response.body.rowVersion;
-    return response;
+    if (response.response.statusCode == 200) {
+      responseObject.orgRowVersion = response.body.rowVersion;
+      responseObject.newName = newName;
+      return response;
+    } else
+      throw `putOrganization failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
   });
 }
 
@@ -67,6 +92,11 @@ export function deleteOrganizationById(responseObject) {
     api: organizations,
     data: `${responseObject.orgID}?rowVersion=${responseObject.orgRowVersion}`
   };
-
-  return del(any);
+  return del(any).then(response => {
+    if (response.response.statusCode == 204) return response;
+    else
+      throw `deleteOrganizationById failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
 }
