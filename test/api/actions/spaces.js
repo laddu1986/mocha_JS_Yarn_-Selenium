@@ -12,11 +12,16 @@ export function postSpaceByOrganizationId(responseObject) {
     }
   };
   return post(any).then(response => {
-    responseObject.spaceID = response.body.id;
-    responseObject.spaceRowVersion = response.body.rowVersion;
-    responseObject.spaceName = any.data.name;
-    responseObject.spaceShortUrl = any.data.shortUrl;
-    return response;
+    if (response.response.statusCode == 201) {
+      responseObject.spaceID = response.body.id;
+      responseObject.spaceRowVersion = response.body.rowVersion;
+      responseObject.spaceName = any.data.name;
+      responseObject.spaceShortUrl = any.data.shortUrl;
+      return response;
+    } else
+      throw `postSpaceByOrganizationId failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
   });
 }
 
@@ -25,7 +30,13 @@ export function getSpacesByOrganizationId(responseObject) {
     api: `${spaces + responseObject.orgID}/spaces`,
     data: ''
   };
-  return get(any);
+  return get(any).then(response => {
+    if (response.response.statusCode == 200) return response;
+    else
+      throw `getSpacesByOrganizationId failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
 }
 
 export function updateSpace(responseObject) {
@@ -39,10 +50,15 @@ export function updateSpace(responseObject) {
     }
   };
   return put(any).then(response => {
-    responseObject.spaceRowVersion = response.body.rowVersion;
-    responseObject.spaceNewName = any.data.name;
-    responseObject.spaceNewShortUrl = any.data.shortUrl;
-    return response;
+    if (response.response.statusCode == 200) {
+      responseObject.spaceRowVersion = response.body.rowVersion;
+      responseObject.spaceNewName = any.data.name;
+      responseObject.spaceNewShortUrl = any.data.shortUrl;
+      return response;
+    } else
+      throw `updateSpace failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
   });
 }
 export function patchSpaceByOrgIdRowVersionAndSpaceId(responseObject, type) {
@@ -64,8 +80,13 @@ export function patchSpaceByOrgIdRowVersionAndSpaceId(responseObject, type) {
     responseObject.spacePatchedName = any.data[0].value;
   }
   return patch(any).then(response => {
-    responseObject.spaceRowVersion = response.body.rowVersion;
-    return response;
+    if (response.response.statusCode == 200) {
+      responseObject.spaceRowVersion = response.body.rowVersion;
+      return response;
+    } else
+      throw `patchSpaceByOrgIdRowVersionAndSpaceId failed with code ${
+        response.response.statusCode
+      } and the error ${JSON.stringify(response.response.body)}`;
   });
 }
 
@@ -74,7 +95,13 @@ export function getSpaceByOrgIdAndSpaceId(responseObject) {
     api: `${spaces + responseObject.orgID}/spaces/${responseObject.spaceID}`,
     data: ''
   };
-  return get(any);
+  return get(any).then(response => {
+    if (response.response.statusCode == 200) return response;
+    else
+      throw `getSpaceByOrgIdAndSpaceId failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
 }
 
 export function deleteSpaceByOrgIdAndSpaceId(responseObject) {
@@ -84,7 +111,13 @@ export function deleteSpaceByOrgIdAndSpaceId(responseObject) {
     }`,
     data: ''
   };
-  return del(any);
+  return del(any).then(response => {
+    if (response.response.statusCode == 204) return response;
+    else
+      throw `deleteSpaceByOrgIdAndSpaceId failed with code ${
+        response.response.statusCode
+      } and the error ${JSON.stringify(response.response.body)}`;
+  });
 }
 
 //--------------------------------KEYS RELATED FUNCTIONS--------------------------
@@ -97,9 +130,14 @@ export function postKeysBySpaceId(responseObject) {
     }
   };
   return post(any).then(response => {
-    responseObject.spaceKeyValue = response.body.value;
-    responseObject.spaceKeyRowVersion = response.body.rowVersion;
-    return response;
+    if (response.response.statusCode == 201) {
+      responseObject.spaceKeyValue = response.body.value;
+      responseObject.spaceKeyRowVersion = response.body.rowVersion;
+      return response;
+    } else
+      throw `postKeysBySpaceId failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
   });
 }
 
@@ -108,7 +146,13 @@ export function getKeysBySpaceId(responseObject) {
     api: `${keys}${responseObject.orgID}/keys`,
     data: `?resource=space&ids=${responseObject.spaceID}`
   };
-  return get(any);
+  return get(any).then(response => {
+    if (response.response.statusCode == 200) return response;
+    else
+      throw `getKeysBySpaceId failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
 }
 
 export function patchKeyBySpaceIdAndRowVersion(responseObject, status) {
@@ -125,8 +169,13 @@ export function patchKeyBySpaceIdAndRowVersion(responseObject, status) {
     ]
   };
   return patch(any).then(response => {
-    responseObject.spaceKeyRowVersion = response.body.rowVersion;
-    return response;
+    if (response.response.statusCode == 200) {
+      responseObject.spaceKeyRowVersion = response.body.rowVersion;
+      return response;
+    } else
+      throw `patchKeyBySpaceIdAndRowVersion failed with code ${
+        response.response.statusCode
+      } and the error ${JSON.stringify(response.response.body)}`;
   });
 }
 
@@ -137,5 +186,11 @@ export function deleteKeyBySpaceIdAndRowVersion(responseObject) {
     }`,
     data: ''
   };
-  return del(any);
+  return del(any).then(response => {
+    if (response.response.statusCode == 200) return response;
+    else
+      throw `deleteKeyBySpaceIdAndRowVersion failed with code ${
+        response.response.statusCode
+      } and the error ${JSON.stringify(response.response.body)}`;
+  });
 }

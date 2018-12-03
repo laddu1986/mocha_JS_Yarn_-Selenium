@@ -35,16 +35,10 @@ describe('Tribe Actions Tests', () => {
 
   it('Update the Tribe Title --> verify new name on all tribes and tribe detail page', () => {
     updateTribe(Constants.TribeAttributes.Title, newName);
-    expect(verifyTribe(Constants.TribeAttributes.Title, newName)).to.equal(
-      true,
-      'New Tribe name does not appear on tribe detail page'
-    );
+    verifyTribe(Constants.TribeAttributes.Title, newName);
     clickOnAudienceLink();
     browser.refresh();
-    expect(verifyTribe(Constants.TribeAttributes.Title, newName)).to.equal(
-      true,
-      'New Tribe name does not appear on all tribes page'
-    );
+    verifyTribe(Constants.TribeAttributes.Title, newName);
   });
 
   it('Delete Tribe --> verify the passive notification and redirection to all tribes page', () => {
