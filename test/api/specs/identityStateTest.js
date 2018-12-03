@@ -6,44 +6,36 @@ var getResponse, putResponse, patchResponse;
 const identityStateData = new Object();
 
 describe('Identity State Api', () => {
+  before(async () => {
+    await identity.postIdentity(identityStateData);
+  });
   describe('GET /identities/{id}/state', () => {
-    before(done => {
-      identity.postIdentity(identityStateData).then(() => {
-        getResponse = identity.getIdentityStateById(identityStateData);
-        done();
-      });
+    before(async () => {
+      getResponse = await identity.getIdentityStateById(identityStateData);
     });
 
     it('Return identity state by identity id.', () => {
-      return getResponse.then(response => {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, schemas.identityStateSchema);
-      });
+      expect(getResponse).to.have.status(200);
+      joi.assert(getResponse.body, schemas.identityStateSchema);
     });
   });
 
   describe('PUT /identities/{id}/state', () => {
-    before(done => {
-      putResponse = identity.putIdentityById(identityStateData);
-      done();
+    before(async () => {
+      putResponse = await identity.putIdentityById(identityStateData);
     });
     it('Set identity state for an identity.', () => {
-      return putResponse.then(response => {
-        expect(response).to.have.status(204);
-      });
+      expect(putResponse).to.have.status(204);
     });
   });
 
   describe('PATCH /identities/{id}/state', () => {
-    before(done => {
-      patchResponse = identity.patchIdentityStateById(identityStateData);
-      done();
+    before(async () => {
+      patchResponse = await identity.patchIdentityStateById(identityStateData);
     });
     it('Partial update identity state for an identity.', () => {
-      return patchResponse.then(response => {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, schemas.patchStateSchema);
-      });
+      expect(patchResponse).to.have.status(200);
+      joi.assert(patchResponse.body, schemas.patchStateSchema);
     });
   });
 });

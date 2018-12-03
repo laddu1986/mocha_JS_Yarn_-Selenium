@@ -9,44 +9,28 @@ const invitesNegData = new Object();
 var postResponse, getInviteResponse;
 
 describe('Negative Cases --> Invites Api', () => {
+  before(async () => {
+    await identity.postIdentity(invitesNegData);
+    await organization.postOrganization(invitesNegData);
+    await invites.getAccessToken(invitesNegData);
+    await invites.postInvitesByOrganizationId(invitesNegData);
+    await invites.getInvitesByOrganizationId(invitesNegData);
+    await invites.deleteInviteByOrganizationIdAndEmail(invitesNegData);
+  });
   describe('POST /organizations/{id}/invites', () => {
-    before(done => {
-      identity.postIdentity(invitesNegData).then(() => {
-        organization.postOrganization(invitesNegData).then(() => {
-          postResponse = post(inviteWithoutAuth(invitesNegData));
-          done();
-        });
-      });
+    before(async () => {
+      postResponse = await post(inviteWithoutAuth(invitesNegData));
     });
     it('Create invite without authorization -> 401: Access token is missing or invalid', () => {
-      return postResponse.then(response => {
-        expect(response).to.have.status(401);
-      });
+      expect(postResponse).to.have.status(401);
     });
   });
   describe('GET /invites/{token}', () => {
-    before(done => {
-      invites
-        .getAccessToken(invitesNegData)
-        .then(() => {
-          return invites.postInvitesByOrganizationId(invitesNegData);
-        })
-        .then(() => {
-          return invites.getInvitesByOrganizationId(invitesNegData);
-        })
-        .then(() => {
-          return invites.deleteInviteByOrganizationIdAndEmail(invitesNegData);
-        })
-        .then(() => {
-          getInviteResponse = invites.getInviteDetailsByToken(invitesNegData);
-          done();
-        });
+    before(async () => {
+      getInviteResponse = await invites.getInviteDetailsByToken(invitesNegData, 'negative');
     });
-
     it('Search for deleted invite --> 404: Not Found', () => {
-      return getInviteResponse.then(response => {
-        expect(response).to.have.status(404);
-      });
+      expect(getInviteResponse).to.have.status(404);
     });
   });
 });
