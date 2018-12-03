@@ -4,13 +4,13 @@ export function createExperienceTemplate(responseData) {
   var name = `${randomString.generate(8)}`;
   const data = {
     query:
-      'mutation createExperienceTemplate($input: CreateExperienceTemplateInput!) { createExperienceTemplate(input: $input) { template { id label rowVersion key }}}',
-    operationName: createExperienceTemplate, // eslint-disable-line
+      'mutation createExperienceTemplate($input: CreateExperienceTemplateInput!) { createExperienceTemplate(input: $input) { template { id key name thumbnailUrl rowVersion properties{key}}}}',
+    operationName: "createExperienceTemplate", 
     variables: {
       input: {
         fields: {
-          key: name,
-          label: name
+          key: name.toLowerCase(),
+          name: name
         },
         organizationId: responseData.orgID,
         spaceId: responseData.spaceID
@@ -33,13 +33,13 @@ export function updateExperienceTemplate(responseData) {
   var newName = `${randomString.generate(8)}_new`;
   const data = {
     query:
-      'mutation updateExperienceTemplate($input: UpdateExperienceTemplateInput!) { updateExperienceTemplate(input: $input) { template { id label rowVersion key }}}',
-    operationName: updateExperienceTemplate, // eslint-disable-line
+      'mutation updateExperienceTemplate($input: UpdateExperienceTemplateInput!) { updateExperienceTemplate(input: $input) { template { id name key thumbnailUrl rowVersion properties{key}}}}',
+    operationName: "updateExperienceTemplate", 
     variables: {
       input: {
         fields: {
-          key: newName,
-          label: newName
+          key: newName.toLowerCase(),
+          name: newName
         },
         organizationId: responseData.orgID,
         spaceId: responseData.spaceID,
@@ -62,8 +62,8 @@ export function updateExperienceTemplate(responseData) {
 export function getExperienceTemplate(responseData) {
   const data = {
     query:
-      'query experienceTemplate($organizationId: ID!, $spaceId: ID!, $templateId: ID!) { experienceTemplate(organizationId: $organizationId , spaceId: $spaceId, templateId: $templateId) { id label rowVersion key }}',
-    operationName: experienceTemplate, // eslint-disable-line
+      'query experienceTemplate($organizationId: ID!, $spaceId: ID!, $templateId: ID!) { experienceTemplate(organizationId: $organizationId , spaceId: $spaceId, templateId: $templateId) { id name key thumbnailUrl rowVersion properties{key} }}',
+    operationName: "experienceTemplate", 
     variables: {
       organizationId: responseData.orgID,
       spaceId: responseData.spaceID,
@@ -82,8 +82,8 @@ export function getExperienceTemplate(responseData) {
 export function getExperiencesTemplate(responseData) {
   const data = {
     query:
-      'query experienceTemplates($organizationId: ID!, $spaceId: ID!) { experienceTemplates(organizationId: $organizationId , spaceId: $spaceId) { id label rowVersion }}',
-    operationName: experienceTemplates, // eslint-disable-line
+      'query experienceTemplates($organizationId: ID!, $spaceId: ID!) { experienceTemplates(organizationId: $organizationId , spaceId: $spaceId) {templates{ id rowVersion key name}}}',
+    operationName: "experienceTemplates", 
     variables: {
       organizationId: responseData.orgID,
       spaceId: responseData.spaceID
@@ -101,8 +101,8 @@ export function getExperiencesTemplate(responseData) {
 export function deleteExperienceTemplate(responseData) {
   const data = {
     query:
-      'mutation deleteExperienceTemplate($input: DeleteExperienceTemplateInput!) { deleteExperienceTemplate(input: $input)}',
-    operationName: deleteExperienceTemplate, // eslint-disable-line
+      'mutation deleteExperienceTemplate($input: DeleteExperienceTemplateInput!) { deleteExperienceTemplate(input: $input) {templateId}}',
+    operationName: "deleteExperienceTemplate", 
     variables: {
       input: {
         organizationId: responseData.orgID,

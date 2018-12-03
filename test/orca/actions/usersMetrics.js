@@ -12,7 +12,7 @@ export function getUserMetrics(responseData) {
   const data = {
     query:
       'query GetSpaceMetrics($input: SpaceMetricsInput!) {spaceMetrics(input: $input) {totalUsers totalRequests dailyNewUsers {date count} dailyActiveUsers {date count}}}',
-    operationName: GetSpaceMetrics, // eslint-disable-line
+    operationName: "GetSpaceMetrics", 
     variables: {
       input: {
         spaceId: responseData.spaceID,
@@ -35,7 +35,7 @@ export function getSpaceUsers(responseData) {
   const data = {
     query:
       'query getSpaceUsers($spaceId: ID!, $searchTerm: String, $limit: Int) { spaceUsers(spaceId: $spaceId, searchTerm: $searchTerm, limit: $limit) {users{id}}}',
-    operationName: getSpaceUsers, // eslint-disable-line
+    operationName: "getSpaceUsers", 
     variables: {
       limit: 5,
       searchTerm: 'a',
@@ -55,7 +55,7 @@ export function getSpaceUsersOverview(responseData) {
   const data = {
     query:
       'query getSpaceUsersStats($spaceId: ID!) { spaceUsersOverview(spaceId: $spaceId){total currentlyActive newlyJoined atRisk lost visitors totalDiff currentlyActiveDiff newlyJoinedDiff atRiskDiff lostDiff visitorsDiff currentlyActivePercent newlyJoinedPercent atRiskPercent lostPercent}}',
-    operationName: getSpaceUsersStats, // eslint-disable-line
+    operationName: "getSpaceUsersStats", 
     variables: {
       spaceId: responseData.spaceID
     }
@@ -73,7 +73,7 @@ export function getSpaceLabels(responseData) {
   const data = {
     query:
       'query getSpaceLabels($spaceId: ID!, $searchTerm: String!) { getSpaceLabels(spaceId: $spaceId, searchTerm: $searchTerm)}',
-    operationName: getSpaceLabels, // eslint-disable-line
+    operationName: "getSpaceLabels", 
     variables: {
       spaceId: responseData.spaceID,
       searchTerm: 'a'
@@ -93,7 +93,7 @@ export function getAccessTokens(responseData) {
     // should add token in response once https://app.clickup.com/301733/t/7m24r is fixed, currently it returns null
     query:
       'query AccessTokens($spaceId: ID!, $userId: ID!) { spaceUserAccessTokens(spaceId: $spaceId, userId: $userId) { tokens { name active created}}}',
-    operationName: AccessTokens, // eslint-disable-line
+    operationName: "AccessTokens", 
     variables: {
       spaceId: responseData.spaceID,
       userId: responseData.AccountID

@@ -12,13 +12,11 @@ describe('Registering the new user Tests', () => {
 
   describe('Mutation - registerAndCreateOrg', () => {
     it('Create new user account', () => {
-      return createResponse.then(response => {
-        expect(response.response.statusCode).to.equal(200);
-        joi.assert(
-          response.response.body.data.registerAndCreateOrg.account,
-          registerAndCreateOrgSchema(registerAndCreateOrgObject)
-        );
-      });
+      expect(createResponse.response.statusCode).to.equal(200);
+      joi.assert(
+        createResponse.response.body.data.registerAndCreateOrg.account,
+        registerAndCreateOrgSchema(registerAndCreateOrgObject)
+      );
     });
   });
 
@@ -27,10 +25,8 @@ describe('Registering the new user Tests', () => {
       loginResponse = await login(registerAndCreateOrgObject);
     });
     it('Login to the new account', () => {
-      return loginResponse.then(response => {
-        expect(response.response.statusCode).to.equal(200);
-        expect(response.response.body.data.login).to.equal(true);
-      });
+      expect(loginResponse.response.statusCode).to.equal(200);
+      expect(loginResponse.response.body.data.login).to.equal(true);
     });
   });
 
@@ -39,10 +35,8 @@ describe('Registering the new user Tests', () => {
       logoutResponse = await logout();
     });
     it('Logout from the account', () => {
-      return logoutResponse.then(response => {
-        expect(response.response.statusCode).to.equal(200);
-        expect(response.body.data.logout).to.equal(true);
-      });
+      expect(logoutResponse.response.statusCode).to.equal(200);
+      expect(logoutResponse.body.data.logout).to.equal(true);
     });
   });
 
@@ -50,15 +44,12 @@ describe('Registering the new user Tests', () => {
     before(async () => {
       await getOrganizations(registerAndCreateOrgObject);
     });
-    before(done => {
-      leaveOrgResponse = leaveOrganization(registerAndCreateOrgObject);
-      done();
+    before(async () => {
+      leaveOrgResponse = await leaveOrganization(registerAndCreateOrgObject);
     });
     it('Deleting the organization', () => {
-      return leaveOrgResponse.then(response => {
-        expect(response.response.statusCode).to.equal(200);
-        expect(response.response.body.data.leaveOrg).to.equal(true);
-      });
+      expect(leaveOrgResponse.response.statusCode).to.equal(200);
+      expect(leaveOrgResponse.response.body.data.leaveOrg).to.equal(true);
     });
   });
 
@@ -67,10 +58,8 @@ describe('Registering the new user Tests', () => {
       deleteAccountResponse = await deleteAccount(registerAndCreateOrgObject);
     });
     it('Delete user account', () => {
-      return deleteAccountResponse.then(response => {
-        expect(response.response.statusCode).to.equal(200);
-        expect(response.response.body.data.deleteAccount).to.equal(true);
-      });
+      expect(deleteAccountResponse.response.statusCode).to.equal(200);
+      expect(deleteAccountResponse.response.body.data.deleteAccount).to.equal(true);
     });
   });
 });

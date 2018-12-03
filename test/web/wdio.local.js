@@ -4,11 +4,11 @@ var overrides = {
   protocol: 'http',
   host: 'localhost',
   port: '4444',
-  path: ''
+  path: '',
   //Modify these instead of modifying the appcurator file
-  // specs: [
-  //   'specs/**/*Test.js' //master
-  // ],
+  specs: [
+    'specs/**/*Test.js' //master
+  ]
   // // Patterns to exclude.
   // exclude: ['specs/support/helpPageTest.js']
 };
