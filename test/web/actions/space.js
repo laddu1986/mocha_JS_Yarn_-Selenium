@@ -17,6 +17,7 @@ export function changeSpace(type) {
     webElement = SpaceSettingsPage.spaceSlug;
     name = `${lib.randomString.generate(8)}_Slug`;
   }
+  webElement.clearElement();
   webElement.setValue(name);
   CommonPage.submitButton.click();
   return name;
@@ -98,7 +99,7 @@ export function getAPIKey() {
 
 export function verifyNewSpaceUrl(newSlugName) {
   return browser.waitUntil(
-    function() {
+    function () {
       return browser.getUrl().includes(newSlugName.toLowerCase());
     },
     5000,
@@ -115,6 +116,7 @@ export function selectSpace() {
 }
 export function goToSpaceSettings() {
   NavBar.spaceSettings.click();
+  NavBar.generalSpaceSettings.click();
 }
 
 export function verifySpaceCard() {

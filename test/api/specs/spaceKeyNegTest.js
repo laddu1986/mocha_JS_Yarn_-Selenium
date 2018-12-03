@@ -2,9 +2,9 @@ import * as lib from '../common';
 import * as spaces from 'actions/spaces';
 import * as organization from 'actions/organization';
 import * as identity from 'actions/identity';
-const moduleSpecifier = 'data/spaceKeyTestsData.js';
-var data,
-  incorrectKeyDeleteResponse,
+import * as data from 'data/spaceKeyTestsData';
+
+var incorrectKeyDeleteResponse,
   incorrectOrgIdDeleteResponse,
   incorrectOrgIdPatchResponse,
   blankStatusPatchResponse,
@@ -16,117 +16,90 @@ var data,
   incorrectSpaceIDGetResponse,
   incorrectOrgIDGetResponse;
 
+const spaceKeyNegData = new Object();
+
 describe('Negative Tests -> Space Keys Api', () => {
+  before(async () => {
+    await identity.postIdentity(spaceKeyNegData);
+    await organization.postOrganization(spaceKeyNegData);
+    await spaces.postSpaceByOrganizationId(spaceKeyNegData);
+    await spaces.postKeysBySpaceId(spaceKeyNegData);
+  });
   describe('POST /organizations/{orgId}/keys', () => {
     describe('400 Error Response : Mandatory fields validation', () => {
-      before(done => {
-        identity.postIdentity(lib.spaceKeyNegData).then(() => {
-          organization.postOrganization(lib.spaceKeyNegData).then(() => {
-            spaces.postSpaceByOrganizationId(lib.spaceKeyNegData).then(() => {
-              spaces.postKeysBySpaceId(lib.spaceKeyNegData).then(() => {
-                lib.loader.import(moduleSpecifier).then(dataImported => {
-                  data = dataImported.default;
-                  noSpaceIDPostResponse = lib.post(data.noSpaceIDPost);
-                  blankSpaceIDPostResponse = lib.post(data.blankSpaceIDPost);
-                  done();
-                });
-              });
-            });
-          });
-        });
+      before(async () => {
+        noSpaceIDPostResponse = await lib.post(data.noSpaceIDPost(spaceKeyNegData));
+        blankSpaceIDPostResponse = await lib.post(data.blankSpaceIDPost(spaceKeyNegData));
       });
       it('Space ID field is required', () => {
-        return noSpaceIDPostResponse.then(response => {
-          expect(response).to.have.status(400);
-        });
+        expect(noSpaceIDPostResponse).to.have.status(400);
       });
       it('Space ID cannot be blank', () => {
-        return blankSpaceIDPostResponse.then(response => {
-          expect(response).to.have.status(400);
-        });
+        expect(blankSpaceIDPostResponse).to.have.status(400);
       });
     });
+
     xdescribe('404 Error Response : Not Found', () => {
       //to be enabled when AF-171 is fixed
-      before(done => {
-        incorrectOrgIDPostResponse = lib.post(data.incorrectOrgIDPost);
-        incorrectSpaceIDPostResponse = lib.post(data.incorrectSpaceIDPost);
-        done();
+      before(async () => {
+        incorrectOrgIDPostResponse = await lib.post(data.incorrectOrgIDPost(spaceKeyNegData));
+        incorrectSpaceIDPostResponse = await lib.post(data.incorrectSpaceIDPost(spaceKeyNegData));
       });
       it('Org ID is not existing', () => {
-        return incorrectOrgIDPostResponse.then(response => {
-          expect(response).to.have.status(404);
-        });
+        expect(incorrectOrgIDPostResponse).to.have.status(404);
       });
       it('Space ID is not existing', () => {
-        return incorrectSpaceIDPostResponse.then(response => {
-          expect(response).to.have.status(404);
-        });
+        expect(incorrectSpaceIDPostResponse).to.have.status(404);
       });
     });
   });
+
   describe('GET /organizations/{orgId}/keys', () => {
     describe('404 Error Response : Not Found', () => {
-      before(done => {
-        incorrectOrgIDGetResponse = lib.get(data.incorrectSpaceIDPost);
-        incorrectSpaceIDGetResponse = lib.get(data.incorrectSpaceIDPost);
-        done();
+      before(async () => {
+        incorrectOrgIDGetResponse = await lib.get(data.incorrectSpaceIDPost(spaceKeyNegData));
+        incorrectSpaceIDGetResponse = await lib.get(data.incorrectSpaceIDPost(spaceKeyNegData));
       });
       it('Space ID is not existing', () => {
-        return incorrectSpaceIDGetResponse.then(response => {
-          expect(response).to.have.status(404);
-        });
+        expect(incorrectSpaceIDGetResponse).to.have.status(404);
       });
       it('Org ID is not existing', () => {
-        return incorrectOrgIDGetResponse.then(response => {
-          expect(response).to.have.status(404);
-        });
+        expect(incorrectOrgIDGetResponse).to.have.status(404);
       });
     });
   });
+
   describe('PATCH /organizations/{orgId}/keys/{key}', () => {
-    before(done => {
-      incorrectKeyPatchResponse = lib.patch(data.incorrectKeyPatch);
-      blankStatusPatchResponse = lib.patch(data.blankStatusPatch);
-      incorrectOrgIdPatchResponse = lib.patch(data.incorrectOrgIdPatch);
-      done();
+    before(async () => {
+      incorrectKeyPatchResponse = await lib.patch(data.incorrectKeyPatch(spaceKeyNegData));
+      blankStatusPatchResponse = await lib.patch(data.blankStatusPatch(spaceKeyNegData));
+      incorrectOrgIdPatchResponse = await lib.patch(data.incorrectOrgIdPatch(spaceKeyNegData));
     });
     it('404 Error Response : Key not found', () => {
-      return incorrectKeyPatchResponse.then(response => {
-        expect(response).to.have.status(404);
-        expect(response.body).to.equal(data.incorrectKeyPatch.expected);
-      });
+      expect(incorrectKeyPatchResponse).to.have.status(404);
+      expect(incorrectKeyPatchResponse.body).to.equal(data.incorrectKeyPatch(spaceKeyNegData).expected);
     });
     it('400 Error Response : Not Valid status', () => {
-      return blankStatusPatchResponse.then(response => {
-        expect(response).to.have.status(400);
-        expect(response.body).to.include(data.blankStatusPatch.expected);
-      });
+      expect(blankStatusPatchResponse).to.have.status(400);
+      expect(blankStatusPatchResponse.body).to.include(data.blankStatusPatch(spaceKeyNegData).expected);
     });
     xit('409 Error Response : Conflict', () => {
       //should be enabled once af-167 is resolved
-      return incorrectOrgIdPatchResponse.then(response => {
-        expect(response).to.have.status(409);
-      });
+      expect(incorrectOrgIdPatchResponse).to.have.status(409);
     });
   });
   describe('DELETE /organizations/{orgId}/keys/{key}', () => {
-    before(done => {
-      incorrectKeyDeleteResponse = lib.del(data.incorrectKeyDelete);
-      incorrectOrgIdDeleteResponse = lib.del(data.incorrectOrgIdDelete);
-      done();
+    before(async () => {
+      incorrectKeyDeleteResponse = await lib.del(data.incorrectKeyDelete(spaceKeyNegData));
+      incorrectOrgIdDeleteResponse = await lib.del(data.incorrectOrgIdDelete(spaceKeyNegData));
     });
     it('404 Error Response : Key not found', () => {
-      return incorrectKeyDeleteResponse.then(response => {
-        expect(response).to.have.status(404);
-        expect(response.body).to.equal(data.incorrectKeyDelete.expected);
-      });
+      expect(incorrectKeyDeleteResponse).to.have.status(404);
+      expect(incorrectKeyDeleteResponse.body).to.equal(data.incorrectKeyDelete(spaceKeyNegData).expected);
     });
     xit('409 Error Response : Conflict', () => {
       //should be enabled once af-167 is resolved
-      return incorrectOrgIdDeleteResponse.then(response => {
-        expect(response).to.have.status(409);
-      });
+      expect(incorrectOrgIdDeleteResponse).to.have.status(409);
     });
   });
 });

@@ -1,32 +1,99 @@
-import '../common';
+import { joi } from '../common';
 import { registerAndCreateOrg, login } from 'actions/common';
-import { createOrganization, updateOrganization } from 'actions/organization';
-
+import { organizationSchema } from 'data/organizationSchema';
+import {
+  createOrganization,
+  updateOrganization,
+  getOrganization,
+  getOrganizationBySlug,
+  getOrganizations
+} from 'actions/organization';
+var createOrgResponse, updateOrgResponse, getOrgResponse, getOrgByIDResponse, getOrgsResponse;
 var createOrgObject = new Object();
-var createOrgResponse, updateOrgResponse;
-
-describe('Mutation Organization Tests', () => {
+describe('Organization Tests', () => {
   before(async () => {
     await registerAndCreateOrg(createOrgObject);
-  });
-  before(async () => {
     await login(createOrgObject);
   });
-  describe('Create Organization', () => {
+  describe('Mutation - Create Organization', () => {
     before(async () => {
       createOrgResponse = await createOrganization(createOrgObject);
     });
-    it('create org-with auth', () => {
+    it('create org', () => {
       expect(createOrgResponse.response.statusCode).to.equal(200);
+      joi.assert(
+        createOrgResponse.response.body.data.createOrganization.organization,
+        organizationSchema(createOrgObject, createOrgObject.orgName)
+      );
+    });
+
+    describe('Mutation - Update Organization', () => {
+      before(async () => {
+        updateOrgResponse = await updateOrganization(createOrgObject);
+      });
+      it('update org name', () => {
+        expect(updateOrgResponse.response.statusCode).to.equal(200);
+        joi.assert(
+          updateOrgResponse.response.body.data.updateOrganization.organization,
+          organizationSchema(createOrgObject, createOrgObject.newName)
+        );
+      });
     });
   });
 
-  describe('Update Organization', () => {
+  describe('Query - Get Organization', () => {
     before(async () => {
-      updateOrgResponse = await updateOrganization(createOrgObject);
+      getOrgResponse = await getOrganization(createOrgObject);
     });
-    it('create org-with auth', () => {
-      expect(updateOrgResponse.response.statusCode).to.equal(200);
+    it('Get details of organization by id', () => {
+      expect(getOrgResponse.response.statusCode).to.equal(200);
+      joi.assert(
+        getOrgResponse.response.body.data.organization,
+        organizationSchema(createOrgObject, createOrgObject.newName)
+      );
+    });
+
+    describe('Query - Get Organization by Slug', () => {
+      before(async () => {
+        getOrgByIDResponse = await getOrganizationBySlug(createOrgObject);
+      });
+      it('Get details of organization by slug', () => {
+        expect(getOrgByIDResponse.response.statusCode).to.equal(200);
+        joi.assert(
+          getOrgByIDResponse.response.body.data.organization,
+          organizationSchema(createOrgObject, createOrgObject.newName)
+        );
+      });
+    });
+
+    describe('Query - Get Organizations', () => {
+      before(async () => {
+        getOrgsResponse = await getOrganizations(createOrgObject);
+      });
+      it('Get details of organization by slug', () => {
+        expect(getOrgsResponse.response.statusCode).to.equal(200);
+        expect(getOrgsResponse.response.body.data.organizations).to.be.an('array');
+        if (JSON.stringify(getOrgsResponse.response.body.data.organizations[0].name).includes('updated')) {
+          joi.assert(
+            getOrgsResponse.response.body.data.organizations[0],
+            organizationSchema(createOrgObject, createOrgObject.newName)
+          );
+        } else
+          joi.assert(
+            getOrgsResponse.response.body.data.organizations[0],
+            organizationSchema(createOrgObject, createOrgObject.orgNameWhileReg)
+          );
+        if (JSON.stringify(getOrgsResponse.response.body.data.organizations[1].name).includes('updated')) {
+          joi.assert(
+            getOrgsResponse.response.body.data.organizations[1],
+            organizationSchema(createOrgObject, createOrgObject.newName)
+          );
+        } else
+          joi.assert(
+            getOrgsResponse.response.body.data.organizations[1],
+            organizationSchema(createOrgObject, createOrgObject.orgNameWhileReg)
+          );
+      });
     });
   });
 });

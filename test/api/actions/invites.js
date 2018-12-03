@@ -1,4 +1,4 @@
-import { randomString, post, invitesSchemaData, get, del } from '../common';
+import { randomString, post, get, del } from '../common';
 import { organizations, invites, token } from 'config/getEnv';
 var emailInvited = `${randomString.generate(5)}@test.co`;
 
@@ -15,12 +15,17 @@ export function getAccessToken(responseObject) {
     }&scope=backend_service&client_id=frontend_service`
   };
   return post(any).then(response => {
-    responseObject.accessToken = response.body.access_token;
-    return response;
+    if (response.response.statusCode == 200) {
+      responseObject.accessToken = response.body.access_token;
+      return response;
+    } else
+      throw `getAccessToken failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
   });
 }
 
-export function postInvitesByOrganizationId(responseObject, flag) {
+export function postInvitesByOrganizationId(responseObject) {
   const any = {
     api: `${organizations + responseObject.orgID}/invites`,
     data: [emailInvited],
@@ -29,10 +34,14 @@ export function postInvitesByOrganizationId(responseObject, flag) {
       Authorization: `Bearer ${responseObject.accessToken}`
     }
   };
-  if (flag) {
-    invitesSchemaData.email = emailInvited;
-  }
-  return post(any);
+  responseObject.inviteEmail = emailInvited;
+  return post(any).then(response => {
+    if (response.response.statusCode == 201) return response;
+    else
+      throw `postInvitesByOrganizationId failed with code ${
+        response.response.statusCode
+      } and the error ${JSON.stringify(response.response.body)}`;
+  });
 }
 
 export function getInvitesByOrganizationId(responseObject) {
@@ -41,16 +50,31 @@ export function getInvitesByOrganizationId(responseObject) {
     data: `${responseObject.orgID}/invites?pageSize=1`
   };
   return get(any).then(response => {
-    responseObject.token = response.body.results[0].token;
-    return response;
+    if (response.response.statusCode == 200) {
+      responseObject.token = response.body.results[0].token;
+      return response;
+    } else
+      throw `getInvitesByOrganizationId failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
   });
 }
-export function getInviteDetailsByToken(responseObject) {
+export function getInviteDetailsByToken(responseObject, flag) {
   const any = {
     api: `${invites}${responseObject.token}`,
     data: ''
   };
-  return get(any);
+  return get(any).then(response => {
+    if (flag == 'negative') {
+      return response;
+    } else {
+      if (response.response.statusCode == 200) return response;
+      else
+        throw `getInviteDetailsByToken failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+          response.response.body
+        )}`;
+    }
+  });
 }
 
 export function deleteInviteByOrganizationIdAndEmail(responseObject) {
@@ -58,5 +82,11 @@ export function deleteInviteByOrganizationIdAndEmail(responseObject) {
     api: organizations,
     data: `${responseObject.orgID}/invites/?email=${emailInvited}`
   };
-  return del(any);
+  return del(any).then(response => {
+    if (response.response.statusCode == 204) return response;
+    else
+      throw `deleteInviteByOrganizationIdAndEmail failed with code ${
+        response.response.statusCode
+      } and the error ${JSON.stringify(response.response.body)}`;
+  });
 }
