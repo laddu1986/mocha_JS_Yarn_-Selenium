@@ -1,4 +1,5 @@
 import { path, caller, randomString } from '../common';
+import * as constants from 'constants.json';
 
 const PROTO_PATH = path.resolve(process.env.USER_PROTO_DIR + 'spaceUserService.proto');
 const client = caller(process.env.USER_HOST, PROTO_PATH, 'spaceUserService');
@@ -7,20 +8,16 @@ export function identifySpaceUser(userData) {
   userData.userInternalID = randomString.generate(16);
 
   const req = new client.Request('identifySpaceUser', {
-    externalId: 'AutomatedTest',
+    externalId: constants.UserDetails.ExternalID,
     organizationId: userData.orgID,
     spaceId: userData.spaceID,
     internalId: userData.userInternalID,
     email: userData.identityEmail,
-    lastIpAddress: '1.1.1.1',
-    audienceType: 'USER',
-    lastDeviceType: 'AutomatedUser',
-    displayName: 'AutomatedUser',
-    lastLocation: {
-      country: 'AU',
-      countryCode: 'AU',
-      city: 'AUTOCITY'
-    }
+    lastIpAddress: constants.UserDetails.IPAddress,
+    audienceType: constants.TribeRulesFilters.APIAudienceType.User,
+    lastDeviceType: constants.UserDetails.DeviceType,
+    displayName: constants.UserDetails.DisplayName,
+    lastLocation: constants.UserDetails.Location
   }).withResponseStatus(true);
 
   return req.exec();
