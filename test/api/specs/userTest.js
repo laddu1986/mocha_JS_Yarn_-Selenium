@@ -7,6 +7,7 @@ import { postSpaceByOrganizationId } from 'actions/spaces';
 import { postMembership } from '../actions/membership';
 
 const userData = new Object();
+var identifyUserResponse;
 
 describe('User Service', () => {
   before('Set up testing environment', async () => {
@@ -14,9 +15,9 @@ describe('User Service', () => {
     await postOrganization(userData);
     await postMembership(userData);
     await postSpaceByOrganizationId(userData);
+    identifyUserResponse = await user.identifySpaceUser(userData);
   });
   it('Identify Space User', async () => {
-    let identifyUserResponse = await user.identifySpaceUser(userData);
     expect(identifyUserResponse.status.code).to.equal(0);
   });
   it('List Space Users', async () => {
