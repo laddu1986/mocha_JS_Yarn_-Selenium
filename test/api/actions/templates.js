@@ -12,10 +12,9 @@ function spaceContext(templateData) {
 
 export function createExperienceTemplate(templateData) {
   let nameKey = randomString.generate(12);
-
   const req = new client.Request('createExperienceTemplate', {
     context: spaceContext(templateData),
-    key: nameKey,
+    key: nameKey.toLowerCase(),
     name: nameKey
   }).withResponseStatus(true);
   return req.exec().then(response => {
@@ -35,6 +34,30 @@ export function renameExperienceTemplate(templateData) {
       key: templateData.template.key,
       name: newName
     }
+  }).withResponseStatus(true);
+  return req.exec();
+}
+
+export function getExperienceTemplates(templateData) {
+  const req = new client.Request('getExperienceTemplates', {
+    context: spaceContext(templateData),
+    keyword: templateData.template.nameKey
+  }).withResponseStatus(true);
+  return req.exec();
+}
+
+export function deleteExperienceTemplate(templateData) {
+  const req = new client.Request('deleteExperienceTemplate', {
+    context: spaceContext(templateData),
+    id: templateData.template.id
+  }).withResponseStatus(true);
+  return req.exec();
+}
+
+export function getExperienceTemplateById(templateData) {
+  const req = new client.Request('getExperienceTemplateById', {
+    context: spaceContext(templateData),
+    id: templateData.template.id
   }).withResponseStatus(true);
   return req.exec();
 }

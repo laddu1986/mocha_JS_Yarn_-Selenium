@@ -11,11 +11,17 @@ const protoTimeStamp = joi.object().keys({
   nanos: joi.number()
 });
 
-export function createResponse(templateData) {
+export function templateSchema(templateData) {
   return joi.object().keys({
     id: protoLong,
-    key: templateData.template.key,
-    name: templateData.template.key,
+    key: joi.only(templateData.template.key),
+    name: joi.only(templateData.template.name),
     rowVersion: protoTimeStamp
+  });
+}
+
+export function templatesSchema(templateData) {
+  return joi.object().keys({
+    experienceTemplates: joi.array().items(templateSchema(templateData))
   });
 }
