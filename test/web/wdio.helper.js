@@ -10,12 +10,17 @@ var browsers = {
     }
   },
   chrome: {
-    browserName: 'chrome'
-    // chromeOptions: {
-    //   // args: ['--start-maximized', '--disable-infobars', '--incognito', '--ignore-certificate-errors', '--disable-gpu']
-    //   args: ['--no-sandbox', '--disable-gpu', '--no-proxy-server', '--start-maximized', '--incognito', ],
-    //   binary: '/usr/bin/google-chrome-stable'
-    // },
+    browserName: 'chrome',
+    chromeOptions: {
+      args: [
+        '--start-maximized',
+        '--disable-infobars',
+        '--incognito',
+        '--ignore-certificate-errors',
+        '--disable-gpu',
+        '--no-sandbox'
+      ]
+    }
     // enableVNC: true
   },
   firefox: {
