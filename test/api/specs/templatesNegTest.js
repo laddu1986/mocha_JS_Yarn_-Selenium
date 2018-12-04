@@ -16,7 +16,7 @@ describe('Template API', () => {
   it('Cannot have a key less than 1 char', async () => {
     let keyMinChar = templates.createExperienceTemplateValidations(templateData, data.emptyString, data.validString);
     return keyMinChar.catch(error => {
-      expect(error.code, 'Code should be 3').to.equal(3);
+      expect(error.code).to.equal(3);
     });
   });
   it('Cannot have a key more than 200 chars', async () => {
