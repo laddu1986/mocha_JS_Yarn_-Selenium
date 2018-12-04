@@ -23,6 +23,15 @@ export function createExperienceTemplate(templateData) {
   });
 }
 
+export function createExperienceTemplateValidations(templateData, key, name) {
+  const req = new client.Request('createExperienceTemplate', {
+    context: spaceContext(templateData),
+    key: key,
+    name: name
+  }).withResponseStatus(true);
+  return req.exec();
+}
+
 export function renameExperienceTemplate(templateData) {
   let newName = randomString.generate(12);
   templateData.template.name = newName;
