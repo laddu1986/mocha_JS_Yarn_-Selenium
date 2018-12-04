@@ -13,48 +13,91 @@ describe('Template API', () => {
     await postOrganization(templateData);
     await postSpaceByOrganizationId(templateData);
   });
-  it('Cannot have a key less than 1 char', async () => {
-    let keyMinChar = templates.createExperienceTemplateValidations(templateData, data.emptyString, data.validString);
-    return keyMinChar.catch(error => {
-      expect(error.code).to.equal(3);
+  describe('Create Errors', () => {
+    it('Cannot have a key less than 1 char', () => {
+      let keyMinChar = templates.createExperienceTemplateValidations(templateData, data.emptyString, data.validString);
+      return keyMinChar.catch(error => {
+        expect(error.code).to.equal(3);
+      });
     });
-  });
-  it('Cannot have a key more than 200 chars', async () => {
-    let keyMaxChar = templates.createExperienceTemplateValidations(templateData, data.longKey, data.validString);
-    return keyMaxChar.catch(error => {
-      expect(error.code).to.equal(3);
+    it('Cannot have a key more than 200 chars', () => {
+      let keyMaxChar = templates.createExperienceTemplateValidations(templateData, data.longKey, data.validString);
+      return keyMaxChar.catch(error => {
+        expect(error.code).to.equal(3);
+      });
     });
-  });
-  data.invalidChars.forEach(char => {
-    it(`Should return an error when key has ${char}`, async () => {
-      let invalidChar = templates.createExperienceTemplateValidations(templateData, char, data.validString);
-      return invalidChar.catch(error => {
+    data.invalidChars.forEach(char => {
+      it(`Cannot have ${char} in the key`, () => {
+        let invalidChar = templates.createExperienceTemplateValidations(templateData, char, data.validString);
+        return invalidChar.catch(error => {
+          expect(error.code).to.equal(3);
+        });
+      });
+    });
+    it('Cannot have a key with capital letters', () => {
+      let keyMaxChar = templates.createExperienceTemplateValidations(templateData, data.capsKey, data.validString);
+      return keyMaxChar.catch(error => {
+        expect(error.code).to.equal(3);
+      });
+    });
+    it('Cannot have a key with spaces', () => {
+      let keyMaxChar = templates.createExperienceTemplateValidations(templateData, data.keyWithSpace, data.validString);
+      return keyMaxChar.catch(error => {
+        expect(error.code).to.equal(3);
+      });
+    });
+    it('Cannot have a name with less than 1 char', () => {
+      let nameMinChar = templates.createExperienceTemplateValidations(templateData, data.validString, data.emptyString);
+      return nameMinChar.catch(error => {
+        expect(error.code).to.equal(3);
+      });
+    });
+    it('Cannot have a name with more than 200 chars', () => {
+      let nameMaxChar = templates.createExperienceTemplateValidations(templateData, data.validString, data.longKey);
+      return nameMaxChar.catch(error => {
+        expect(error.code).to.equal(3);
+      });
+    });
+    it('Must have a key provided', () => {
+      let noKey = templates.createExperienceTemplateValidations(templateData, data.validString);
+      return noKey.catch(error => {
+        expect(error.code).to.equal(3);
+      });
+    });
+    it('Must have a name provided', () => {
+      let noKey = templates.createExperienceTemplateValidations(templateData, null, data.validString);
+      return noKey.catch(error => {
         expect(error.code).to.equal(3);
       });
     });
   });
-  it('Cannot have a key with capital letters', async () => {
-    let keyMaxChar = templates.createExperienceTemplateValidations(templateData, data.capsKey, data.validString);
-    return keyMaxChar.catch(error => {
-      expect(error.code).to.equal(3);
+  describe('Rename Errors', () => {
+    before('Create a valid template to modify', async () => {
+      await templates.createExperienceTemplate(templateData);
     });
-  });
-  it('Cannot have a key with spaces', async () => {
-    let keyMaxChar = templates.createExperienceTemplateValidations(templateData, data.keyWithSpace, data.validString);
-    return keyMaxChar.catch(error => {
-      expect(error.code).to.equal(3);
+    it('Cannot have a name with less than 1 char', () => {
+      let nameMinChar = templates.renameExperienceTemplateValidations(templateData, data.emptyString);
+      return nameMinChar.catch(error => {
+        expect(error.code).to.equal(3);
+      });
     });
-  });
-  it('Cannot have a name with less than 1 char', async () => {
-    let nameMinChar = templates.createExperienceTemplateValidations(templateData, data.validString, data.emptyString);
-    return nameMinChar.catch(error => {
-      expect(error.code).to.equal(3);
+    it('Cannot have a name with more than 200 chars', () => {
+      let nameMaxChar = templates.renameExperienceTemplateValidations(templateData, data.longKey);
+      return nameMaxChar.catch(error => {
+        expect(error.code).to.equal(3);
+      });
     });
-  });
-  it('Cannot have a name with more than 200 chars', async () => {
-    let keyMaxChar = templates.createExperienceTemplateValidations(templateData, data.validString, data.longKey);
-    return keyMaxChar.catch(error => {
-      expect(error.code).to.equal(3);
+    it('Must have a name provided', () => {
+      let noKey = templates.renameExperienceTemplateValidations(templateData, null);
+      return noKey.catch(error => {
+        expect(error.code).to.equal(3);
+      });
+    });
+    it('Must have a row version provided', () => {
+      let noKey = templates.renameExperienceTemplateValidations(templateData, data.validString, true);
+      return noKey.catch(error => {
+        expect(error.code).to.equal(3);
+      });
     });
   });
 });

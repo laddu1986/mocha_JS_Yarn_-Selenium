@@ -41,7 +41,21 @@ export function renameExperienceTemplate(templateData) {
     experienceTemplate: {
       id: templateData.template.id,
       key: templateData.template.key,
-      name: newName
+      name: newName,
+      rowVersion: templateData.template.rowVersion
+    }
+  }).withResponseStatus(true);
+  return req.exec();
+}
+
+export function renameExperienceTemplateValidations(templateData, name, toggleVersionOff) {
+  const req = new client.Request('updateExperienceTemplate', {
+    context: spaceContext(templateData),
+    experienceTemplate: {
+      id: templateData.template.id,
+      key: templateData.template.key,
+      name: name,
+      rowVersion: toggleVersionOff ? null : templateData.template.rowVersion
     }
   }).withResponseStatus(true);
   return req.exec();
@@ -58,7 +72,8 @@ export function getExperienceTemplates(templateData) {
 export function deleteExperienceTemplate(templateData) {
   const req = new client.Request('deleteExperienceTemplate', {
     context: spaceContext(templateData),
-    id: templateData.template.id
+    id: templateData.template.id,
+    rowVersion: templateData.template.rowVersion
   }).withResponseStatus(true);
   return req.exec();
 }
