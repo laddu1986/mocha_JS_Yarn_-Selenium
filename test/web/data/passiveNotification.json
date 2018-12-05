@@ -16,5 +16,11 @@
     },
     "invitationSentMessage": {
         "text": "Invitation sent to "
+    },
+    "updateMessage": {
+        "text": "successfully updated"
+    },
+    "deleteTemplateMessage": {
+        "text": "Successfully deleted template"
     }
 }
