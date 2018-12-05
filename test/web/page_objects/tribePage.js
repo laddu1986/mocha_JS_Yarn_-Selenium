@@ -61,9 +61,7 @@ class TribePage extends Page {
   get removeImage() {
     return browser.element("//button[@data-qa='btn:remove']");
   }
-  get closeModal() {
-    return browser.element("//button[@data-qa='btn:close-modal']");
-  }
+  
   get audienceType() {
     return browser.element("//button[@data-qa='segment:rule:audienceType']");
   }
@@ -110,9 +108,7 @@ class TribePage extends Page {
   get categoryTitle() {
     return $("//input[@data-qa='input:category-title']");
   }
-  get categoryMoreButton() {
-    return $("//button[@data-qa='btn:more']");
-  }
+  
   get categoryMoreRename() {
     return $("//button[@data-qa='menu-item:rename']");
   }

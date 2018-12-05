@@ -7,7 +7,7 @@ var overrides = {
   path: '',
   //Modify these instead of modifying the appcurator file
   specs: [
-    'specs/**/*Test.js' //master
+    'specs/**/experienceTemplateTest.js' //master
   ]
   // // Patterns to exclude.
   // exclude: ['specs/support/helpPageTest.js']
