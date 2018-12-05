@@ -26,13 +26,22 @@ describe('Template API', () => {
         expect(error.code).to.equal(3);
       });
     });
-    data.invalidChars.forEach(char => {
-      it(`Cannot have ${char} in the key`, () => {
-        let invalidChar = templates.createExperienceTemplateValidations(templateData, char, data.validString);
-        return invalidChar.catch(error => {
-          expect(error.code).to.equal(3);
-        });
+    it(`Cannot have inavlid characters in the key`, async () => {
+      let errors = [];
+      let promiseArray = data.invalidChars.map(char => {
+        return templates
+          .createExperienceTemplateValidations(templateData, char, data.validString)
+          .then(() => {
+            errors.push(char);
+          })
+          .catch(error => {
+            if (error.code !== 3) {
+              errors.push(char);
+            }
+          });
       });
+      await Promise.all(promiseArray);
+      expect(errors, `The characters [${errors}] did not produce to right errors`).to.be.empty;
     });
     it('Cannot have a key with capital letters', () => {
       let keyMaxChar = templates.createExperienceTemplateValidations(templateData, data.capsKey, data.validString);
