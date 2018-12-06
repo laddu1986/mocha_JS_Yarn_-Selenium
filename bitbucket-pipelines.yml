@@ -40,5 +40,5 @@ pipelines:
             #append BITBUCKET_TAG to jobName in job yaml file - this is to avoid "Err: Job already exists"
             #- sed -i "s/\$BITBUCKET_TAG/$BITBUCKET_TAG/" deployment/jobs/web-smoke-test-job.yaml
             #script applies the deployment by reading cronjob yaml file specs
-            - /scripts/apply-deployment.sh deployment/jobs/web-smoke-test-job.yaml massiveinteractive/qa-ci $IMAGE_NAME
-            - echo "web-smoke-test-${BITBUCKET_TAG} created in ${KUBE_NAMESPACE} namespace"
+            - /scripts/apply-deployment.sh deployment/jobs/regression-cronjob.yaml massiveinteractive/qa-web $IMAGE_NAME
+            - echo "Regression CronJob updated in ${KUBE_NAMESPACE} namespace"
