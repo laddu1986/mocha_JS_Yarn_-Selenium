@@ -39,7 +39,3 @@ export function goToOrgPageFromNavMenu() {
   NavBar.selectedOrg.click();
   NavBar.firstOrg.click();
 }
-
-export function goToExperiencePage() {
-  NavBar.experienceMenu.click();
-}

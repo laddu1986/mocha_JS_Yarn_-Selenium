@@ -255,4 +255,6 @@ export function removeImage() {
   return TribePage.removeImage.click();
 }
 
-
+export function closeModal() {
+  return TribePage.closeModal.click();
+}
