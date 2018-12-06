@@ -18,3 +18,26 @@ pipelines:
             #build and push image with above version
             - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/web
             - docker push $IMAGE_NAME
+      # tags: "v*"
+  #     - step:
+  #         name: Run Web Smoke Tests in QA Namespace in K8s Cluster
+  #         image:
+  #           name: massiveinteractive/curator-k8s-cd:alpine-3.7-kubectl-1.9.0
+  #           username: $docker_user
+  #           password: $docker_user_pwd
+  #         deployment: staging
+  #         services:
+  #           - docker
+  #         caches:
+  #           - docker
+  #         script:
+  #           - export KUBE_NAMESPACE="qa"
+  #           #script from massiveinteractive/curator-k8s-cd configures cluster to accept our deployment
+  #           - /scripts/configure-kubectl.sh https://api.next.kube.axisnext.xyz $k8s_deployment_token $KUBE_NAMESPACE
+  #           #script pulls the image from dockerhub with the specific tag defined in step 1
+  #           - export IMAGE_NAME="massiveinteractive/qa-ci:$BITBUCKET_TAG"
+  #           #append BITBUCKET_TAG to jobName in job yaml file - this is to avoid "Err: Job already exists"
+  #           - sed -i "s/\$BITBUCKET_TAG/$BITBUCKET_TAG/" deployment/jobs/web-smoke-test-job.yaml
+  #           #script applies the deployment by reading our yaml file specs
+  #           - /scripts/apply-deployment.sh deployment/jobs/web-smoke-test-job.yaml massiveinteractive/qa-ci $IMAGE_NAME
+  #           - echo "web-smoke-test-${BITBUCKET_TAG} created in ${KUBE_NAMESPACE} namespace"
