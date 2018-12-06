@@ -37,12 +37,9 @@ export function inputDetails(email) {
   if (email != undefined) {
     AccountPage.emailInput.setValue(email);
     accountData.email = email;
-  }
-  else {
-     if (!AccountPage.emailInput.getAttribute('value').includes('@')) {
-      accountData.email = `${lib.randomString.generate(15)}@test.co`;
-      AccountPage.emailInput.setValue(accountData.email);
-    }
+  } else {
+    accountData.email = `${lib.randomString.generate(15)}@test.co`;
+    AccountPage.emailInput.setValue(accountData.email);
   }
   AccountPage.organizationInput.setValue(accountData.organization);
   AccountPage.passwordInput.setValue(accountData.password);
