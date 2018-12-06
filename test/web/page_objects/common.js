@@ -17,6 +17,12 @@ class common extends Page {
   get intercomIcon() {
     return browser.element('#intercom-container');
   }
+  get closeModal() {
+    return browser.element("//button[@data-qa='btn:close-modal']");
+  }
+  get moreButton() {
+    return $("//button[@data-qa='btn:more']");
+  }
 
   //Passive Notifications
   get successMsg() {
