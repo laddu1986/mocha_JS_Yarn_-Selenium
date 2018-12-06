@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: web-test-cron
 spec:
-  schedule: "0 */6 * * *"
+  schedule: "0 */5 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
@@ -15,13 +15,13 @@ spec:
           volumes:
             - name: test-report-web
               persistentVolumeClaim:
-                claimName: test-report    
+                claimName: test-report
           imagePullSecrets:
             - name: hs-index-docker-io-v2-autobuilder-hs
           containers:
             - name: web-test-cron
-              image: massiveinteractive/qa-web:latest
-              imagePullPolicy: IfNotPresent  
+              image: massiveinteractive/qa-web:$BITBUCKET_TAG
+              imagePullPolicy: IfNotPresent
               envFrom:
                 - configMapRef:
                     name: qa-config
@@ -36,7 +36,7 @@ spec:
               volumeMounts:
                 - mountPath: /app
                   name: test-report-web
-          terminationGracePeriodSeconds: 30        
+          terminationGracePeriodSeconds: 30
           restartPolicy: Never
           nodeSelector:
             kubernetes.io/hostname: ip-172-20-53-252.ap-southeast-2.compute.internal
