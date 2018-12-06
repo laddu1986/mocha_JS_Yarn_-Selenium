@@ -11,11 +11,17 @@ class common extends Page {
   get invalidPage() {
     return browser.element("//section[@data-qa='page:404']");
   }
+  get closeModal() {
+    return browser.element("//button[@data-qa='btn:close-modal']");
+  }
   get linkOnInvalidpage() {
     return browser.element("//section[@data-qa='page:404']//a");
   }
   get intercomIcon() {
     return browser.element('#intercom-container');
+  }
+  get moreButton() {
+    return $("//button[@data-qa='btn:more']");
   }
 
   //Passive Notifications
