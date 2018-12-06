@@ -29,7 +29,6 @@ describe(`Experience Template Tests`, () => {
     createAccount();
     createSpace();
   });
-
   it('Go to experience template page --> Create experience button and link appears', () => {
     goToExperiencePage();
     goToTemplateTab();
