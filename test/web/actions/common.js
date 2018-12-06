@@ -9,10 +9,6 @@ export function getNotificationMessageText() {
   return CommonPage.successMsg.getText();
 }
 
-export function closeModal() {
-  return CommonPage.closeModal.click();
-}
-
 export function closePassiveNotification() {
   CommonPage.dismissNotification.waitForVisible();
   return CommonPage.dismissNotification.click();

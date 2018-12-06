@@ -51,7 +51,7 @@ describe('Delete Account Test (Remove my Account)', () => {
 
   it('Re-registeration with same email is allowed', () => {
     clickCreateAccountLink();
-    createAccount();
+    createAccount(accountDetails.email);
     expect(verifyOrgDashboardPageAppears()).to.equal(true);
   });
 });
