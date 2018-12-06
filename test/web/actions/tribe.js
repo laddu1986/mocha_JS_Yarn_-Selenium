@@ -2,7 +2,7 @@ import * as lib from '../common';
 import Common from 'page_objects/common';
 import TribePage from 'page_objects/tribePage';
 import * as Constants from 'constants.json';
-var colorIndex, selectedColourValue, actualValue;
+var colorIndex, selectedColourValue;
 
 export function clickCreateTribeButton() {
   TribePage.createTribeButton.click();
@@ -253,8 +253,4 @@ export function verifyTribeCardLogo() {
 
 export function removeImage() {
   return TribePage.removeImage.click();
-}
-
-export function closeModal() {
-  return TribePage.closeModal.click();
 }
