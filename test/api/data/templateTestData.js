@@ -17,7 +17,7 @@ export const invalidChars = [
   "&", "*", "(", ")", "+", "=", 
   "|", "\\", "`", "~", "{", "}", 
   ":", ";", "'", '"', "<", ",", 
-  ">", ".", "?", "/"
+  ">", ".", "?", "/", "-"
 ];
 // prettier-ignore
 export const reservedWords = [
