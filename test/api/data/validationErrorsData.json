@@ -1,13 +1,13 @@
 {
-    "GetIdentity": {
-        "UserNotFound": "not found"
-    },
-    "SetIdentity": {
-        "InvalidIdentity": "Identity id is invalid"
-    },
-    "Template": {
-        "empty": "must not be null or empty",
-        "length": "must be between 1 and 200 characters",
-        "alphas": "only lowercase alpha-numeric, hyphen, and underscore characters are allowed"
-    }
+  "GetIdentity": {
+    "UserNotFound": "not found"
+  },
+  "SetIdentity": {
+    "InvalidIdentity": "Identity id is invalid"
+  },
+  "Templates": {
+    "empty": "must not be null or empty",
+    "length": "must be between 1 and 200 characters",
+    "alphas": "only lowercase alpha-numeric, hyphen, and underscore characters are allowed"
+  }
 }
