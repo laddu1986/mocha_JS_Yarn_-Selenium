@@ -67,8 +67,12 @@ describe('Template API', () => {
       await Promise.all(promiseArray);
       expect(errors, `The characters [${errors}] did not produce to right errors`).to.be.empty;
     });
-    it('Cannot have a key that starts with a capital letter', async () => {
-      let wordCaseName = templates.createExperienceTemplateValidations(templateData, data.wordCase, data.validString);
+    it('Cannot have a key that starts with a number', async () => {
+      let wordCaseName = templates.createExperienceTemplateValidations(
+        templateData,
+        data.numberString,
+        data.validString
+      );
       return wordCaseName.catch(error => {
         let errMsg = error.metadata._internal_repr.custom_error[0];
         let contains = CheckForAll([messages.Templates.alphas]);
