@@ -7,7 +7,8 @@
   },
   "Templates": {
     "empty": "must not be null or empty",
-    "length": "must be between 1 and 200 characters",
-    "alphas": "only lowercase alpha-numeric, hyphen, and underscore characters are allowed"
+    "lengthKey": "must be between 1 and 40 characters",
+    "lengthName": "must be between 1 and 200 characters",
+    "alphas": "only alpha-numeric and underscore characters are allowed and must not start with a number"
   }
 }
