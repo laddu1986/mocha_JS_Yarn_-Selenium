@@ -20,7 +20,7 @@ spec:
             - name: hs-index-docker-io-v2-autobuilder-hs
           containers:
             - name: web-test-cron
-              image: massiveinteractive/qa-web:vv181206-230453
+              image: massiveinteractive/qa-web:v181206-230453
               imagePullPolicy: IfNotPresent
               envFrom:
                 - configMapRef:
@@ -28,7 +28,7 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - echo START;
-                  yarn run web --browser:chrome;
+                  yarn run web --browser:chrome_headless;
                   allure generate allure-results --clean;
                   cp -R allure-report/history/ allure-results/history/;
                   cp -R allure-results/* /app;
