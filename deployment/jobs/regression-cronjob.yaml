@@ -3,13 +3,13 @@ kind: CronJob
 metadata:
   name: web-test-cron
 spec:
-  schedule: "20 * * * *"
+  schedule: "*/4 * * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       backoffLimit: 1
-      activeDeadlineSeconds: 2400
+      activeDeadlineSeconds: 210
       template:
         spec:
           volumes:
@@ -20,7 +20,7 @@ spec:
             - name: hs-index-docker-io-v2-autobuilder-hs
           containers:
             - name: web-test-cron
-              image: massiveinteractive/qa-web:v181206-230453
+              image: massiveinteractive/qa-web:v181208-021318
               imagePullPolicy: IfNotPresent
               envFrom:
                 - configMapRef:
@@ -28,9 +28,7 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - echo START;
-                  yarn run web --browser:chrome_headless;
-                  allure generate allure-results --clean;
-                  cp -R allure-report/history/ allure-results/history/;
+                  yarn run web --suite organizations --browser:chrome_headless;
                   cp -R allure-results/* /app;
                   echo END;
               volumeMounts:
