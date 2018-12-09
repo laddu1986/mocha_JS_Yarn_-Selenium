@@ -7,10 +7,10 @@ pipelines:
           name: Package Helm and Push to S3
           image:
             name: jakexks/kubectl-helm-aws
-            username: $docker_user
-            password: $docker_user_pwd
-          services:
-            - docker
+          #   username: $docker_user
+          #   password: $docker_user_pwd
+          # services:
+          #   - docker
           caches:
             - docker
           script:
@@ -20,11 +20,12 @@ pipelines:
             # - aws configure set AWS_REGION ap-southeast-2
             # - aws configure set AWS_DEFAULT_OUTPUT text
             - sh deployment/scripts/configureAWS.sh
-            - helm init --client-only
-            - helm package --version 0.1.0 test/web/helmchart
-            - helm s3 init s3://helm-job/helmchart
-            - helm repo add helmchart s3://helm-job/helmchart
-            - helm s3 push ./helmchart-0.1.0.tgz helmchart
+            # - helm init --client-only
+            # - helm package --version 0.1.0 test/web/helmchart
+            # - helm s3 init s3://helm-job/helmchart
+            # - helm repo add helmchart s3://helm-job/helmchart
+            # - helm s3 push ./helmchart-0.1.0.tgz helmchart
+            - sh deployment/scripts/helmS3push.sh
       # - step:
       #     name: Build and Push Web Test Image to DockerHub
       #     services:
