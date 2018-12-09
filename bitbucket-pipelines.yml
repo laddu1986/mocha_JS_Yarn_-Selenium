@@ -4,39 +4,33 @@ pipelines:
   branches:
     ci:
       - step:
-          name: Build and Push Web Test Image to DockerHub
+          name: Package Helm and Push to S3
+          image:
+            name: jakexks/kubectl-helm-aw
+            username: $docker_user
+            password: $docker_user_pwd
           services:
             - docker
           caches:
             - docker
           script:
-            #define custom date-time version
-            - export VERSION="v$(date "+%y%m%d-%H%M%S")"
-            - echo "VERSION - ${VERSION}"
-            - export IMAGE_NAME="massiveinteractive/qa-web:$VERSION"
-            - docker login -u $docker_user -p $docker_user_pwd
-            #build and push image with above version
-            - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/web
-            - docker push $IMAGE_NAME
+            - aws configure set AWS_ACCESS_KEY_ID AKIAIE7TXRZ3BAQTKJRQ
+            - aws configure set AWS_SECRET_ACCESS_KEY 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
+            - aws configure set AWS_DEFAULT_REGION ap-southeast-2
+            - aws configure set AWS_DEFAULT_OUTPUT text
       # - step:
-      #     name: Update Regression TestRun CronJob
-      #     image:
-      #       name: massiveinteractive/curator-k8s-cd:alpine-3.7-kubectl-1.9.0
-      #       username: $docker_user
-      #       password: $docker_user_pwd
-      #     deployment: staging
+      #     name: Build and Push Web Test Image to DockerHub
       #     services:
       #       - docker
       #     caches:
       #       - docker
       #     script:
-      #       - export KUBE_NAMESPACE="qa"
-      #       #script from massiveinteractive/curator-k8s-cd configures cluster to accept our deployment
-      #       - /scripts/configure-kubectl.sh https://api.appcurator.kube.axisnext.xyz $k8s_deployment_token $KUBE_NAMESPACE
-      #       #script pulls the image from dockerhub with the specific tag defined in step 1
-      #       - export IMAGE_NAME="massiveinteractive/qa-web:$BITBUCKET_TAG"
-      #       #append BITBUCKET_TAG to jobName in job yaml file - this is to avoid "Err: Job already exists"
-      #       - sed -i "s/\$VERSION/$BITBUCKET_TAG/" deployment/jobs/regression-cronjob.yaml
-      #       #script applies the deployment by reading cronjob yaml file specs
-      #       - /scripts/apply-deployment.sh deployment/jobs/regression-cronjob.yaml massiveinteractive/qa-web $IMAGE_NAME
-      #       - echo "Regression CronJob updated in ${KUBE_NAMESPACE} namespace"
+      #       #define custom date-time version
+      #       - export VERSION="v$(date "+%y%m%d-%H%M%S")"
+      #       - echo "VERSION - ${VERSION}"
+      #       - export IMAGE_NAME="massiveinteractive/qa-web:$VERSION"
+      #       - docker login -u $docker_user -p $docker_user_pwd
+      #       #build and push image with above version
+      #       - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/web
+      #       - docker push $IMAGE_NAME
+
