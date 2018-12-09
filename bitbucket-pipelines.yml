@@ -19,7 +19,7 @@ pipelines:
             - aws configure set AWS_DEFAULT_REGION ap-southeast-2
             - aws configure set AWS_DEFAULT_OUTPUT text
             - helm init --client-only
-            - heml package test/web/helmchart
+            - helm package test/web/helmchart
       # - step:
       #     name: Build and Push Web Test Image to DockerHub
       #     services:
