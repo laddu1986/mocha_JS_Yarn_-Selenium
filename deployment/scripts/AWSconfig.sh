@@ -1,0 +1,5 @@
+aws configure set AWS_ACCESS_KEY_ID $AWS_ACCESS_KEY_ID
+aws configure set AWS_SECRET_ACCESS_KEY $AWS_SECRET_ACCESS_KEY
+aws configure set AWS_DEFAULT_REGION $AWS_DEFAULT_REGION
+aws configure set AWS_REGION $AWS_REGION
+aws configure set AWS_DEFAULT_OUTPUT text
