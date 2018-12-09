@@ -14,16 +14,17 @@ pipelines:
           caches:
             - docker
           script:
-            - aws configure set AWS_ACCESS_KEY_ID AKIAIE7TXRZ3BAQTKJRQ
-            - aws configure set AWS_SECRET_ACCESS_KEY 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
-            - aws configure set AWS_DEFAULT_REGION ap-southeast-2
-            - aws configure set AWS_REGION ap-southeast-2
-            - aws configure set AWS_DEFAULT_OUTPUT text
+            # - aws configure set AWS_ACCESS_KEY_ID AKIAIE7TXRZ3BAQTKJRQ
+            # - aws configure set AWS_SECRET_ACCESS_KEY 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
+            # - aws configure set AWS_DEFAULT_REGION ap-southeast-2
+            # - aws configure set AWS_REGION ap-southeast-2
+            # - aws configure set AWS_DEFAULT_OUTPUT text
+            - sh deployment/scripts/configureAWS.sh
             - helm init --client-only
-            - helm package test/web/helmchart
+            - helm package --version 0.1.0 test/web/helmchart
             - helm s3 init s3://helm-job/helmchart
             - helm repo add helmchart s3://helm-job/helmchart
-            - helm s3 push ./helmchart-0.1.0.tgz helmchart
+            - helm s3 push --force ./helmchart-0.1.0.tgz helmchart
       # - step:
       #     name: Build and Push Web Test Image to DockerHub
       #     services:
