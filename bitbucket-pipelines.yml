@@ -6,7 +6,7 @@ pipelines:
       - step:
           name: Package Helm and Push to S3
           image:
-            name: jakexks/kubectl-helm-aw
+            name: jakexks/kubectl-helm-aws
             username: $docker_user
             password: $docker_user_pwd
           services:
