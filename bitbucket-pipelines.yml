@@ -4,7 +4,7 @@ pipelines:
   branches:
     ci:
       - step:
-          name: Package Helm and Push to S3
+          name: Package HelmChart and Push to S3
           image:
             name: jakexks/kubectl-helm-aws
           #   username: $docker_user
@@ -26,19 +26,18 @@ pipelines:
             # - helm repo add helmchart s3://helm-job/helmchart
             # - helm s3 push ./helmchart-0.1.0.tgz helmchart
             - sh deployment/scripts/helmS3push.sh
-      # - step:
-      #     name: Build and Push Web Test Image to DockerHub
-      #     services:
-      #       - docker
-      #     caches:
-      #       - docker
-      #     script:
-      #       #define custom date-time version
-      #       - export VERSION="v$(date "+%y%m%d-%H%M%S")"
-      #       - echo "VERSION - ${VERSION}"
-      #       - export IMAGE_NAME="massiveinteractive/qa-web:$VERSION"
-      #       - docker login -u $docker_user -p $docker_user_pwd
-      #       #build and push image with above version
-      #       - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/web
-      #       - docker push $IMAGE_NAME
-
+      - step:
+          name: Build and Push Web Test Image to DockerHub
+          services:
+            - docker
+          caches:
+            - docker
+          script:
+            #define custom date-time version
+            - export VERSION="v$(date "+%y%m%d-%H%M%S")"
+            - echo "VERSION - ${VERSION}"
+            - export IMAGE_NAME="massiveinteractive/qa-web:$VERSION"
+            - docker login -u $docker_user -p $docker_user_pwd
+            #build and push image with above version
+            - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/web
+            - docker push $IMAGE_NAME
