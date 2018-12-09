@@ -1,40 +1,23 @@
-#INSTALL aws-cli and helm
-FROM ubuntu:latest as installer
-RUN apt-get -y update && apt-get -y install curl git openssl build-essential
-
-ADD https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get /usr/local/bin/gethelm
-RUN chmod a+x /usr/local/bin/gethelm
-RUN gethelm -v latest
-
-# RUN curl -LO https://dl.google.com/go/go1.9.3.linux-amd64.tar.gz
-# RUN tar -C /usr/local -xzf go1.9.3.linux-amd64.tar.gz
-# RUN export PATH=$PATH:/root/go/bin
-
-RUN mkdir -p ~/.helm/plugins
-RUN helm plugin install https://github.com/hypnoglow/helm-s3.git
-
-
-
-#NPM install and copy Tests
 FROM node:10-alpine AS build-deps
 
+#JAVA installation for allure-command-line
 RUN apk add python make g++
-COPY aws /etc/apk/repositories
-RUN apk add --update aws-cli@testing git ca-certificates && rm -rf /var/cache/apk/*
+# RUN apk update
+# RUN apk fetch openjdk8
+# RUN apk add openjdk8
 
-COPY --from=installer /usr/local/bin/helm /usr/local/bin/helm
-COPY --from=installer /root/.helm /root/.helm
-
+# Set ENV vars
+# ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk/jre
+# ENV PATH ${PATH}:${JAVA_HOME}/bin
 ENV NODE_ENV production
+# RUN npm config set unsafe-perm true
+# RUN npm install -g allure-commandline
 
+#Install node packages and copy Web-Tests
 RUN mkdir -p test/web
 COPY package.json test/web
 RUN cd test/web && yarn install --frozen-lockfile --production
 COPY . test/web
 
-RUN aws configure set AWS_ACCESS_KEY_ID AKIAIE7TXRZ3BAQTKJRQ
-RUN aws configure set AWS_SECRET_ACCESS_KEY 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
-RUN aws configure set AWS_DEFAULT_REGION ap-southeast-2
-RUN aws configure set AWS_DEFAULT_OUTPUT text
-
 WORKDIR /test/web
+
