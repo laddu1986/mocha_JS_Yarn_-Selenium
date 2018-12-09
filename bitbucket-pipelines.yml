@@ -18,8 +18,12 @@ pipelines:
             - aws configure set AWS_SECRET_ACCESS_KEY DEB9dWjUPvEevVhUAZ5KYnd6+ykvBztDOpJiSoUk
             - aws configure set AWS_DEFAULT_REGION ap-southeast-2
             - aws configure set AWS_DEFAULT_OUTPUT text
-            - cd $BITBUCKET_CLONE DIR
-            - ls -a
+            - helm init --client-only
+            - charts=`find . -type f -name 'Chart.yaml'`
+              for c in $charts; do
+              echo "Creating package for ${c%%/Chart.yaml}..."
+              helm package ${c%%/Chart.yaml}
+              done
       # - step:
       #     name: Build and Push Web Test Image to DockerHub
       #     services:
