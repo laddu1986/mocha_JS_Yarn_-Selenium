@@ -23,7 +23,7 @@ pipelines:
             - helm package test/web/helmchart
             - helm s3 init s3://helm-job/helmchart
             - helm repo add helmchart s3://helm-job/helmchart
-            - helm s3 push ./opt/atlassian/pipelines/agent/build/helmchart-0.1.0.tgz helmchart
+            - helm s3 push ./helmchart-0.1.0.tgz helmchart
       # - step:
       #     name: Build and Push Web Test Image to DockerHub
       #     services:
