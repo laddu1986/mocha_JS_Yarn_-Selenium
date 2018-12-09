@@ -19,7 +19,7 @@ pipelines:
             # - aws configure set AWS_DEFAULT_REGION ap-southeast-2
             # - aws configure set AWS_REGION ap-southeast-2
             # - aws configure set AWS_DEFAULT_OUTPUT text
-            - sh deployment/scripts/configureAWS.sh
+            - sh deployment/scripts/AWSconfig.sh
             # - helm init --client-only
             # - helm package --version 0.1.0 test/web/helmchart
             # - helm s3 init s3://helm-job/helmchart
