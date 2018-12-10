@@ -21,13 +21,11 @@ pipelines:
           caches:
             - docker
           script:
-            - sh deployment/scripts/versioning.sh
-            - sh deployment/scripts/docker-push.sh
-            # #define custom date-time version
-            # - export VERSION="v$(date "+%y%m%d-%H%M%S")"
-            # - echo "VERSION - ${VERSION}"
-            # - export IMAGE_NAME="massiveinteractive/qa-web:$VERSION"
-            # - docker login -u $docker_user -p $docker_user_pwd
-            # #build and push image with above version
-            # - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/web
-            # - docker push $IMAGE_NAME
+            #define custom date-time version
+            - export VERSION="v$(date "+%y%m%d-%H%M%S")"
+            - echo "VERSION - ${VERSION}"
+            - export IMAGE_NAME="massiveinteractive/qa-web:$VERSION"
+            - docker login -u $docker_user -p $docker_user_pwd
+            #build and push image with above version
+            - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/web
+            - docker push $IMAGE_NAME
