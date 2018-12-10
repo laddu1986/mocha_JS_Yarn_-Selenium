@@ -5,8 +5,8 @@ apk add --no-cache python \
     && apk del --purge .awscli-build-deps
 
 echo -e '\nConfiguring AWS credentials'
-aws configure set $AWS_ACCESS_KEY_ID
-aws configure set $AWS_SECRET_ACCESS_KEY
-aws configure set $AWS_DEFAULT_REGION
-aws configure set $AWS_REGION
-aws configure set $AWS_DEFAULT_OUTPUT
+aws configure set AWS_ACCESS_KEY_ID $AWS_ACCESS_KEY_ID
+aws configure set AWS_SECRET_ACCESS_KEY $AWS_SECRET_ACCESS_KEY
+aws configure set AWS_DEFAULT_REGION $AWS_DEFAULT_REGION
+aws configure set AWS_REGION $AWS_REGION
+aws configure set AWS_DEFAULT_OUTPUT $AWS_DEFAULT_OUTPUT
