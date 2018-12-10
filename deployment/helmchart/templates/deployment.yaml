@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: web-test-cron
 spec:
-  schedule: "10 * * * *"
+  schedule: "30 * * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
