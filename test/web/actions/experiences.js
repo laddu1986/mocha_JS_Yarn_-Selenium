@@ -1,4 +1,4 @@
-import experiencesPage from 'page_objects/ExperienceTemplatePage';
+import experiencesPage from 'page_objects/experienceTemplatePage';
 import commonPage from 'page_objects/common';
 export function goToTemplateTab() {
   experiencesPage.templateTab.click();
@@ -37,18 +37,17 @@ export function verifyTemplateIsCreated(name) {
 }
 
 export function verifyTemplateCard(name) {
-  if (experiencesPage.templateCard.value.length > 0) return experiencesPage.templateCard.value[0].getText() === name;
-  else return false;
+  return experiencesPage.templateCard.getText() === name;
 }
 
 export function clickEditButton() {
   commonPage.moreButton.click();
-  experiencesPage.editTemplate.click();
+  commonPage.editOnCard.click();
 }
 
 export function clickDeleteButton() {
   commonPage.moreButton.click();
-  experiencesPage.deleteTemplate.click();
+  commonPage.deleteOnCard.click();
 }
 
 export function editTemplate(name) {

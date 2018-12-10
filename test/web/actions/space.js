@@ -118,6 +118,9 @@ export function goToSpaceSettings() {
   NavBar.spaceSettings.click();
   NavBar.generalSpaceSettings.click();
 }
+export function verifySpaceSettingsPage() {
+  return (SpaceSettingsPage.spaceName.isVisible() && SpaceSettingsPage.spaceSlug.isVisible())
+}
 
 export function verifySpaceCard() {
   return OrgDashboardPage.spaceCards.isVisible();
