@@ -9,6 +9,26 @@ export function getNotificationMessageText() {
   return CommonPage.successMsg.getText();
 }
 
+export function clickMoreButton() {
+  CommonPage.moreButton.click();
+}
+
+export function verifyMoreButton() {
+  return (CommonPage.editOnCard.isVisible() && CommonPage.deleteOnCard.isVisible());
+}
+
+export function clickSettingsFromCard() {
+  CommonPage.editOnCard.click();
+}
+
+export function clickDeleteFromCard() {
+  CommonPage.deleteOnCard.click();
+}
+
+export function verifyDeleteModal() {
+  return CommonPage.confirmInput.isVisible();
+}
+
 export function closeModal() {
   return CommonPage.closeModal.click();
 }
@@ -65,7 +85,7 @@ export function clickLinkOn404Page() {
 //hide intercom icon as it gets in the way of other elements and prevents clicking them
 export function hideIntercom() {
   CommonPage.intercomIcon.waitForVisible();
-  browser.execute(function() {
+  browser.execute(function () {
     const intercom = document.getElementById('intercom-container');
     if (intercom.style.display === 'none') {
       intercom.style.display = 'block';
