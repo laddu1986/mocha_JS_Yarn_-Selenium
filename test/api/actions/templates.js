@@ -10,8 +10,15 @@ function spaceContext(templateData) {
   };
 }
 
+export function updateExperienceTemplate(templateData, templatePayload) {
+  return new client.Request('updateExperienceTemplate', {
+    context: spaceContext(templateData),
+    experienceTemplate: templatePayload
+  }).withResponseStatus(true);
+}
+
 export function createExperienceTemplate(templateData) {
-  let nameKey = randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' });
+  let nameKey = randomString.generate({ length: 40, charset: 'alphabetic', capitalization: 'lowercase' });
   const req = new client.Request('createExperienceTemplate', {
     context: spaceContext(templateData),
     key: nameKey.toLowerCase(),
@@ -34,30 +41,25 @@ export function createExperienceTemplateValidations(templateData, key, name) {
 
 export function renameExperienceTemplate(templateData) {
   let newName = randomString.generate(12);
+  let templatePayload = {
+    id: templateData.template.id,
+    key: templateData.template.key,
+    name: newName,
+    rowVersion: templateData.template.rowVersion
+  };
   templateData.template.name = newName;
-
-  const req = new client.Request('updateExperienceTemplate', {
-    context: spaceContext(templateData),
-    experienceTemplate: {
-      id: templateData.template.id,
-      key: templateData.template.key,
-      name: newName,
-      rowVersion: templateData.template.rowVersion
-    }
-  }).withResponseStatus(true);
+  let req = updateExperienceTemplate(templateData, templatePayload);
   return req.exec();
 }
 
 export function renameExperienceTemplateValidations(templateData, name, toggleVersionOff) {
-  const req = new client.Request('updateExperienceTemplate', {
-    context: spaceContext(templateData),
-    experienceTemplate: {
-      id: templateData.template.id,
-      key: templateData.template.key,
-      name: name,
-      rowVersion: toggleVersionOff ? null : templateData.template.rowVersion
-    }
-  }).withResponseStatus(true);
+  let templatePayload = {
+    id: templateData.template.id,
+    key: templateData.template.key,
+    name: name,
+    rowVersion: toggleVersionOff ? null : templateData.template.rowVersion
+  };
+  let req = updateExperienceTemplate(templateData, templatePayload);
   return req.exec();
 }
 
