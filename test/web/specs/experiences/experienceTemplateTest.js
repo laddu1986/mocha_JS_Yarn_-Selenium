@@ -2,12 +2,10 @@ import * as lib from '../../common';
 import accountPage from 'page_objects/accountPage';
 import { createAccount } from 'actions/account';
 import { createSpace } from 'actions/space';
-import { typeDeleteToConfirm, confirmDelete, closeModal, getNotificationMessageText } from 'actions/common';
+import { typeDeleteToConfirm, confirmDelete, closeModal, getNotificationMessageText, clickMoreButton, clickSettingsFromCard, clickDeleteFromCard } from 'actions/common';
 import {
   saveTemplate,
   editTemplate,
-  clickEditButton,
-  clickDeleteButton,
   verifyTemplateCard,
   verifyCreateTemplatePage,
   goToTemplateTab,
@@ -20,8 +18,7 @@ import {
 import { goToExperiencePage } from 'actions/navBar';
 import { closePassiveNotification } from 'actions/common';
 import * as PassiveNotification from 'data/passiveNotification.json';
-var name = `${lib.randomString.generate(6)}`,
-  newName = `${lib.randomString.generate(6)}_new`;
+var name = `${lib.randomString.generate(6)}`, newName = `${lib.randomString.generate(6)}_new`;
 
 describe(`Experience Template Tests`, () => {
   before(() => {
@@ -57,7 +54,8 @@ describe(`Experience Template Tests`, () => {
   });
 
   it('Edit Template --> verify notification message and template(s) pages', () => {
-    clickEditButton();
+    clickMoreButton();
+    clickSettingsFromCard();
     editTemplate(newName);
     saveTemplate();
     expect(getNotificationMessageText()).to.include(`${PassiveNotification.updateMessage.text}`);
@@ -68,7 +66,8 @@ describe(`Experience Template Tests`, () => {
   });
 
   it('Delete Template --> verify notification message and template(s) page', () => {
-    clickDeleteButton();
+    clickMoreButton();
+    clickDeleteFromCard();
     typeDeleteToConfirm();
     confirmDelete();
     expect(getNotificationMessageText()).to.include(`${PassiveNotification.deleteTemplateMessage.text} "${newName}"`, "The passive notification after deleting template is not correct");
