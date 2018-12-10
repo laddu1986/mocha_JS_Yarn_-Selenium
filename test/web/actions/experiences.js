@@ -1,5 +1,4 @@
 import experiencesPage from 'page_objects/experienceTemplatePage';
-import commonPage from 'page_objects/common';
 export function goToTemplateTab() {
   experiencesPage.templateTab.click();
 }

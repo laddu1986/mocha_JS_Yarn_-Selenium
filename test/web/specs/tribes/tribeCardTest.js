@@ -118,7 +118,6 @@ describe('Tribe Actions Tests', () => {
     closeModal();
     expect(getTribeCardStyle()).to.include('background');
   });
-
   it('Cancel the customize model --> verify wallpaper is not saved on all tribes page', () => {
     clickOnAudienceLink();
     expect(getTribeCardStyle()).to.include('background');

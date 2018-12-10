@@ -7,7 +7,6 @@ import HomePage from 'page_objects/homePage';
 import CommonPage from 'page_objects/common';
 import NavBar from 'page_objects/navBar';
 import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'actions/common';
-
 const clipboardy = require('clipboardy');
 
 export function changeSpace(type) {
@@ -99,7 +98,7 @@ export function getAPIKey() {
 
 export function verifyNewSpaceUrl(newSlugName) {
   return browser.waitUntil(
-    function () {
+    function() {
       return browser.getUrl().includes(newSlugName.toLowerCase());
     },
     5000,
@@ -119,7 +118,7 @@ export function goToSpaceSettings() {
   NavBar.generalSpaceSettings.click();
 }
 export function verifySpaceSettingsPage() {
-  return (SpaceSettingsPage.spaceName.isVisible() && SpaceSettingsPage.spaceSlug.isVisible())
+  return SpaceSettingsPage.spaceName.isVisible() && SpaceSettingsPage.spaceSlug.isVisible();
 }
 
 export function verifySpaceCard() {

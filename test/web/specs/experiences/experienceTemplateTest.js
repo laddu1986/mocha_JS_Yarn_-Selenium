@@ -2,7 +2,15 @@ import * as lib from '../../common';
 import accountPage from 'page_objects/accountPage';
 import { createAccount } from 'actions/account';
 import { createSpace } from 'actions/space';
-import { typeDeleteToConfirm, confirmDelete, closeModal, getNotificationMessageText, clickMoreButton, clickSettingsFromCard, clickDeleteFromCard } from 'actions/common';
+import {
+  typeDeleteToConfirm,
+  confirmDelete,
+  closeModal,
+  getNotificationMessageText,
+  clickMoreButton,
+  clickSettingsFromCard,
+  clickDeleteFromCard
+} from 'actions/common';
 import {
   saveTemplate,
   editTemplate,
@@ -18,7 +26,8 @@ import {
 import { goToExperiencePage } from 'actions/navBar';
 import { closePassiveNotification } from 'actions/common';
 import * as PassiveNotification from 'data/passiveNotification.json';
-var name = `${lib.randomString.generate(6)}`, newName = `${lib.randomString.generate(6)}_new`;
+var name = `${lib.randomString.generate(6)}`,
+  newName = `${lib.randomString.generate(6)}_new`;
 
 describe(`Experience Template Tests`, () => {
   before(() => {
@@ -62,7 +71,11 @@ describe(`Experience Template Tests`, () => {
     closePassiveNotification();
     goToExperiencePage();
     goToTemplateTab();
-    expect(verifyTemplateCard(newName)).to.equal(true, 'Template card is not updated on all templates page', "The passive notification after editing template is not correct");
+    expect(verifyTemplateCard(newName)).to.equal(
+      true,
+      'Template card is not updated on all templates page',
+      'The passive notification after editing template is not correct'
+    );
   });
 
   it('Delete Template --> verify notification message and template(s) page', () => {
@@ -70,6 +83,9 @@ describe(`Experience Template Tests`, () => {
     clickDeleteFromCard();
     typeDeleteToConfirm();
     confirmDelete();
-    expect(getNotificationMessageText()).to.include(`${PassiveNotification.deleteTemplateMessage.text} "${newName}"`, "The passive notification after deleting template is not correct");
+    expect(getNotificationMessageText()).to.include(
+      `${PassiveNotification.deleteTemplateMessage.text} "${newName}"`,
+      'The passive notification after deleting template is not correct'
+    );
   });
 });
