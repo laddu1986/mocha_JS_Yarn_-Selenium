@@ -6,7 +6,7 @@ pipelines:
       - step:
           name: Package HelmChart and Push to S3
           image:
-            name: massiveinteractive/qa-ci
+            name: massiveinteractive/k8-cd
             username: $docker_user
             password: $docker_user_pwd
           caches:
