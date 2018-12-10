@@ -28,7 +28,7 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - echo START;
-                  yarn run web --suite invites --browser:chrome_headless;
+                  yarn run web --suite spaces --browser:chrome_headless;
                   cp -R allure-results/* /app;
                   echo END;
               volumeMounts:
