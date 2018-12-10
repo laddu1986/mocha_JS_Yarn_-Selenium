@@ -40,16 +40,6 @@ export function verifyTemplateCard(name) {
   return experiencesPage.templateCard.getText() === name;
 }
 
-export function clickEditButton() {
-  commonPage.moreButton.click();
-  commonPage.editOnCard.click();
-}
-
-export function clickDeleteButton() {
-  commonPage.moreButton.click();
-  commonPage.deleteOnCard.click();
-}
-
 export function editTemplate(name) {
   experiencesPage.editTemplateName.clearElement();
   experiencesPage.editTemplateName.setValue(name);
