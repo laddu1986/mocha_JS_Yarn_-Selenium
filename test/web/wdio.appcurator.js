@@ -1,7 +1,7 @@
 var helper = require('./wdio.helper');
 exports.config = {
   protocol: 'http',
-  host: 'af7e66f14f6a811e8bf6b06fd9ca3de9-513989871.ap-southeast-2.elb.amazonaws.com',
+  host: process.env.SELENIUM_HOST,
   port: '4444',
   path: '',
   capabilities: helper.getBrowser(),

@@ -9,6 +9,26 @@ export function getNotificationMessageText() {
   return CommonPage.successMsg.getText();
 }
 
+export function clickMoreButton() {
+  CommonPage.moreButton.click();
+}
+
+export function verifyMoreButton() {
+  return CommonPage.editOnCard.isVisible() && CommonPage.deleteOnCard.isVisible();
+}
+
+export function clickSettingsFromCard() {
+  CommonPage.editOnCard.click();
+}
+
+export function clickDeleteFromCard() {
+  CommonPage.deleteOnCard.click();
+}
+
+export function verifyDeleteModal() {
+  return CommonPage.confirmInput.isVisible();
+}
+
 export function closeModal() {
   return CommonPage.closeModal.click();
 }

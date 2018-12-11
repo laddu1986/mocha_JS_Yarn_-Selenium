@@ -11,7 +11,7 @@ function spaceContext(templateData) {
 }
 
 export function createExperienceTemplate(templateData) {
-  let nameKey = randomString.generate(12);
+  let nameKey = randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' });
   const req = new client.Request('createExperienceTemplate', {
     context: spaceContext(templateData),
     key: nameKey.toLowerCase(),
@@ -23,6 +23,15 @@ export function createExperienceTemplate(templateData) {
   });
 }
 
+export function createExperienceTemplateValidations(templateData, key, name) {
+  const req = new client.Request('createExperienceTemplate', {
+    context: spaceContext(templateData),
+    key: key,
+    name: name
+  }).withResponseStatus(true);
+  return req.exec();
+}
+
 export function renameExperienceTemplate(templateData) {
   let newName = randomString.generate(12);
   templateData.template.name = newName;
@@ -32,7 +41,21 @@ export function renameExperienceTemplate(templateData) {
     experienceTemplate: {
       id: templateData.template.id,
       key: templateData.template.key,
-      name: newName
+      name: newName,
+      rowVersion: templateData.template.rowVersion
+    }
+  }).withResponseStatus(true);
+  return req.exec();
+}
+
+export function renameExperienceTemplateValidations(templateData, name, toggleVersionOff) {
+  const req = new client.Request('updateExperienceTemplate', {
+    context: spaceContext(templateData),
+    experienceTemplate: {
+      id: templateData.template.id,
+      key: templateData.template.key,
+      name: name,
+      rowVersion: toggleVersionOff ? null : templateData.template.rowVersion
     }
   }).withResponseStatus(true);
   return req.exec();
@@ -49,7 +72,8 @@ export function getExperienceTemplates(templateData) {
 export function deleteExperienceTemplate(templateData) {
   const req = new client.Request('deleteExperienceTemplate', {
     context: spaceContext(templateData),
-    id: templateData.template.id
+    id: templateData.template.id,
+    rowVersion: templateData.template.rowVersion
   }).withResponseStatus(true);
   return req.exec();
 }
