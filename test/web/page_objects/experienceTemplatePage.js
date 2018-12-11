@@ -24,13 +24,7 @@ class ExperienceTemplatePage {
     return browser.element("//button[@data-qa='create-template:create']");
   }
   get templateCard() {
-    return browser.elements("//a[@data-qa='link:card']//div//h2");
-  }
-  get editTemplate() {
-    return browser.element("//a[@data-qa='menu-item:settings']");
-  }
-  get deleteTemplate() {
-    return browser.element("//button[@data-qa='menu-item:delete']");
+    return browser.element("//a[@data-qa='link:card']//div//h2");
   }
   get saveButton() {
     return browser.element("//button[@data-qa='edit-template:save']//span");

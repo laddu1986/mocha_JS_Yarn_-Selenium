@@ -19,7 +19,6 @@ import {
   clickFilter,
   selectProperty
 } from 'actions/tribe';
-
 describe('Tribe Rule Filter Tests', () => {
   before(() => {
     accountPage.open();
@@ -76,13 +75,13 @@ describe('Tribe Rule Filter Tests', () => {
     selectOperator('3');
     selectDate();
     browser.keys('Escape');
-    expect(verifyFilterExists()).to.equal(true, 'The filter does not exist');
-    expect(verifyFilterValue('0')).to.include(lib.dateFormat(today, 'mmm dd yyyy'));
+    expect(verifyFilterExists()).to.equal('>', 'The filter is not added');
+    expect(verifyFilterValue('0')).to.include(lib.dateFormat(today, 'mmm dd yyyy'), 'The date filter is not added');
   });
 
   it('Verify filter can be deleted', () => {
     removeRuleFilter();
-    expect(verifyFilterExists()).to.equal(false, 'The filter is not deleted');
+    expect(verifyFilterExists()).to.include('Add Filter', 'The filter is not deleted');
   });
 
   it('Adding filter with number property for Visitor', () => {
