@@ -6,6 +6,7 @@ import { clickOnAudienceLink } from 'actions/navBar';
 import { submit, closeModal } from 'actions/common';
 import {
   waitForWallpaperPreview,
+  getTribeCardStyle,
   waitForLogoPreview,
   removeImage,
   verifyLogoTab,
@@ -13,7 +14,7 @@ import {
   verifyTribeCardLogo,
   verifyTribeCardWallpaper,
   uploadImage,
-  verifyWallpaperTab,
+  verifyBrowseLink,
   clickWallpaperTab,
   selectColour,
   createTribe,
@@ -50,7 +51,7 @@ describe('Tribe Actions Tests', () => {
     goToTribeDetailPage();
     clickCustomizeButton();
     clickWallpaperTab();
-    expect(verifyWallpaperTab()).to.equal(true, 'Wallpaper tab  is not shown');
+    expect(verifyBrowseLink()).to.equal(true, 'Wallpaper tab browse link is not shown');
   });
 
   it('Tribe wallpaper image upload --> Shows on tribe details page', () => {
@@ -86,41 +87,39 @@ describe('Tribe Actions Tests', () => {
     clickCustomizeButton();
     clickWallpaperTab();
     removeImage();
+    expect(verifyBrowseLink()).to.equal(true, 'Tribe wallpaper browse link is not shown on tribe detail page');
     submit();
-    expect(verifyTribeCardWallpaper()).to.equal(false, 'Tribe wallpaper is still shown on tribe detail page');
+    expect(getTribeCardStyle()).to.include('background');
   });
 
   it('Remove Wallpaper --> Tribe does not have wallpaper on audience page', () => {
     clickOnAudienceLink();
-    expect(verifyTribeCardWallpaper()).to.equal(false, 'Tribe wallpaper is still shown on all tribes page');
+    expect(getTribeCardStyle()).to.include('background');
   });
 
-  it('Remove Logo --> Tribe does not have logo', () => {
+  it('Remove Logo --> Tribe card does not have logo', () => {
     goToTribeDetailPage();
     clickCustomizeButton();
     clickLogoTab();
     removeImage();
+    expect(verifyBrowseLink()).to.equal(true, 'Tribe logo browse link is not shown on customize tribe modal');
     submit();
-    expect(verifyTribeCardLogo()).to.equal(false, 'Tribe logo is still showing on tribe detail page');
-  });
-
-  it('Remove Logo --> Tribe does not have logo on audience page', () => {
-    clickOnAudienceLink();
-    expect(verifyTribeCardLogo()).to.equal(false, 'Tribe logo is still showing on all tribes page');
+    clickCustomizeButton();
+    clickLogoTab();
+    expect(verifyBrowseLink()).to.equal(true, 'Tribe logo browse link is not shown on customize tribe modal');
+    closeModal();
   });
 
   it('Cancel the customize model --> verify wallpaper is not saved on tribe detail page', () => {
-    goToTribeDetailPage();
     clickCustomizeButton();
     clickWallpaperTab();
     uploadImage();
     waitForWallpaperPreview();
     closeModal();
-    expect(verifyTribeCardWallpaper()).to.equal(false, 'Wallpaper is saved on tribe details page even after cancel');
+    expect(getTribeCardStyle()).to.include('background');
   });
-
   it('Cancel the customize model --> verify wallpaper is not saved on all tribes page', () => {
     clickOnAudienceLink();
-    expect(verifyTribeCardWallpaper()).to.equal(false, 'Wallpaper is saved on all tribes page even after cancel');
+    expect(getTribeCardStyle()).to.include('background');
   });
 });

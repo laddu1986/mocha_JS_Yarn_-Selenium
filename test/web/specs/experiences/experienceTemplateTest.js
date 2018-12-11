@@ -2,12 +2,18 @@ import * as lib from '../../common';
 import accountPage from 'page_objects/accountPage';
 import { createAccount } from 'actions/account';
 import { createSpace } from 'actions/space';
-import { typeDeleteToConfirm, confirmDelete, closeModal, getNotificationMessageText } from 'actions/common';
+import {
+  typeDeleteToConfirm,
+  confirmDelete,
+  closeModal,
+  getNotificationMessageText,
+  clickMoreButton,
+  clickSettingsFromCard,
+  clickDeleteFromCard
+} from 'actions/common';
 import {
   saveTemplate,
   editTemplate,
-  clickEditButton,
-  clickDeleteButton,
   verifyTemplateCard,
   verifyCreateTemplatePage,
   goToTemplateTab,
@@ -29,7 +35,7 @@ describe(`Experience Template Tests`, () => {
     createAccount();
     createSpace();
   });
-  it('Go to experience template page --> Create experience button and link appears', () => {
+  it(`Go to experience template page --> Create experience button and link appears ${lib.Tags.smokeTest}`, () => {
     goToExperiencePage();
     goToTemplateTab();
     expect(verifyCreateTemplatePage()).to.equal(true, 'Create Template page is not displayed');
@@ -42,13 +48,13 @@ describe(`Experience Template Tests`, () => {
     closeModal();
   });
 
-  it('Click Create Template Link --> create template modal opens', () => {
+  it(`Click Create Template Link --> create template modal opens ${lib.Tags.smokeTest}`, () => {
     clickCreateTemplate('link');
     expect(verifyCreateTemplateModal()).to.equal(true, 'Create Template Modal is not displayed');
     expect(verifyCreateButton()).to.equal(false, 'Create button is not disabled');
   });
 
-  it('Create Template --> verify the template is created on template(s) pages', () => {
+  it(`Create Template --> verify the template is created on template(s) pages ${lib.Tags.smokeTest}`, () => {
     createExperienceTemplate(name);
     expect(verifyTemplateIsCreated(name)).to.equal(true, 'The Template name is not correct on detail page');
     goToExperiencePage();
@@ -57,21 +63,29 @@ describe(`Experience Template Tests`, () => {
   });
 
   it('Edit Template --> verify notification message and template(s) pages', () => {
-    clickEditButton();
+    clickMoreButton();
+    clickSettingsFromCard();
     editTemplate(newName);
     saveTemplate();
     expect(getNotificationMessageText()).to.include(`${PassiveNotification.updateMessage.text}`);
     closePassiveNotification();
     goToExperiencePage();
     goToTemplateTab();
-    expect(verifyTemplateCard(newName)).to.equal(true, 'Template card is not updated on all templates page');
+    expect(verifyTemplateCard(newName)).to.equal(
+      true,
+      'Template card is not updated on all templates page',
+      'The passive notification after editing template is not correct'
+    );
   });
 
   it('Delete Template --> verify notification message and template(s) page', () => {
-    clickDeleteButton();
+    clickMoreButton();
+    clickDeleteFromCard();
     typeDeleteToConfirm();
     confirmDelete();
-    expect(getNotificationMessageText()).to.include(`${PassiveNotification.deleteTemplateMessage.text} "${newName}"`);
-    expect(verifyTemplateCard(newName)).to.equal(false, 'Template card is not deleted on all templates page');
+    expect(getNotificationMessageText()).to.include(
+      `${PassiveNotification.deleteTemplateMessage.text} "${newName}"`,
+      'The passive notification after deleting template is not correct'
+    );
   });
 });
