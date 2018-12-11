@@ -6,11 +6,14 @@ import { updateExperienceTemplate } from 'actions/templates';
 export function createProperty(templateData, propertyType) {
   let nameKey = randomString.generate({ length: 40, charset: 'alphabetic', capitalization: 'lowercase' });
   let propertiesArray = templateData.template.properties === undefined ? [] : templateData.template.properties;
+
   propertiesArray.push({
     name: nameKey,
     key: nameKey,
     typeKey: propertyType
   });
+  templateData.template.properties = propertiesArray;
+
   let templatePayload = {
     id: templateData.template.id,
     name: templateData.template.name,
@@ -18,10 +21,11 @@ export function createProperty(templateData, propertyType) {
     properties: propertiesArray,
     rowVersion: templateData.template.rowVersion
   };
+
   return updateExperienceTemplate(templateData, templatePayload)
     .exec()
     .then(response => {
-      templateData.template = response.response;
+      templateData.template.rowVersion = response.response.rowVersion;
       return response;
     });
 }
@@ -42,7 +46,12 @@ export function renameFirstProperty(templateData) {
     ],
     rowVersion: templateData.template.rowVersion
   };
-  return updateExperienceTemplate(templateData, templatePayload).exec();
+  return updateExperienceTemplate(templateData, templatePayload)
+    .exec()
+    .then(response => {
+      templateData.template.rowVersion = response.response.rowVersion;
+      return response;
+    });
 }
 
 export function deleteProperty(templateData) {
@@ -53,5 +62,10 @@ export function deleteProperty(templateData) {
     properties: [],
     rowVersion: templateData.template.rowVersion
   };
-  return updateExperienceTemplate(templateData, templatePayload).exec();
+  return updateExperienceTemplate(templateData, templatePayload)
+    .exec()
+    .then(response => {
+      templateData.template = response.response;
+      return response;
+    });
 }
