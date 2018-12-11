@@ -40,8 +40,9 @@ describe('Template API', () => {
     expect(renameProperty.status.code).to.equal(0);
     joi.assert(renameProperty.response, schemas.templateSchema(templateData));
   });
-  xit('Delete a text property', async () => {
+  it('Delete a text property', async () => {
     let deleteProperty = await properties.deleteProperty(templateData);
     expect(deleteProperty.status.code).to.equal(0);
+    joi.assert(deleteProperty.response, schemas.templateSchema(templateData));
   });
 });
