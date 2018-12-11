@@ -2,6 +2,7 @@ import * as lib from '../common';
 import Common from 'page_objects/common';
 import TribePage from 'page_objects/tribePage';
 import * as Constants from 'constants.json';
+import tribePage from '../page_objects/tribePage';
 var colorIndex, selectedColourValue;
 
 export function clickCreateTribeButton() {
@@ -32,6 +33,10 @@ export function selectColour() {
   });
   TribePage.colourSwatch.value[colorIndex].click();
   selectedColourValue = TribePage.colourSwatch.value[colorIndex].getAttribute('style');
+}
+
+export function getTribeCardStyle() {
+  return tribePage.tribeCards.value[0].getAttribute('style');
 }
 
 export function clickCustomizeButton() {
@@ -205,8 +210,7 @@ export function verifyFilterValue(count) {
 }
 
 export function verifyFilterExists() {
-  if (TribePage.filters.value.length > 0) return true;
-  else return false;
+  return TribePage.addFilter.getText();
 }
 
 export function removeRuleFilter() {
@@ -218,7 +222,7 @@ export function selectDate() {
   browser.keys('Escape');
 }
 
-export function verifyWallpaperTab() {
+export function verifyBrowseLink() {
   return TribePage.browseLink.isVisible();
 }
 
@@ -246,9 +250,7 @@ export function verifyTribeCardWallpaper() {
 }
 
 export function verifyTribeCardLogo() {
-  if (browser.isExisting("//*[@data-qa='segment:logo']"))
-    return TribePage.tribeCardLogo.getAttribute('style').includes('background: url("https://');
-  else return false;
+  return TribePage.tribeCardLogo.getAttribute('style').includes('background: url("https://');
 }
 
 export function removeImage() {

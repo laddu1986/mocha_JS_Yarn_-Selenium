@@ -21,7 +21,6 @@ var browsers = {
         '--no-sandbox'
       ]
     }
-    // enableVNC: true
   },
   firefox: {
     browserName: 'firefox',
@@ -88,7 +87,7 @@ function selectBrowser(browser) {
     case 'opera':
       return browsers.opera;
     default:
-      return browsers.chrome;
+      return browsers.chrome_headless;
   }
 }
 
