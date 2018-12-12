@@ -1,20 +1,26 @@
 {
-    "copyNotificationMessage": {
-        "text": "Copied to clipboard"
-    },
-    "deleteMessage": {
-        "text": "You have successfully deleted "
-    },
-    "revokeInviteMessage": {
-        "text": "Invite deleted for "
-    },
-    "spaceDetailsSaved": {
-        "text": "Space details have been successfully updated."
-    },
-    "resendInviteMessage": {
-        "text": "Resent invite to "
-    },
-    "invitationSentMessage": {
-        "text": "Invitation sent to "
-    }
+  "copyNotificationMessage": {
+    "text": "Copied to clipboard"
+  },
+  "deleteMessage": {
+    "text": "You have successfully deleted "
+  },
+  "revokeInviteMessage": {
+    "text": "Invite deleted for "
+  },
+  "spaceDetailsSaved": {
+    "text": "Space details have been successfully updated."
+  },
+  "resendInviteMessage": {
+    "text": "Resent invite to "
+  },
+  "invitationSentMessage": {
+    "text": "Invitation sent to "
+  },
+  "updateMessage": {
+    "text": "successfully updated"
+  },
+  "deleteTemplateMessage": {
+    "text": "Successfully deleted template"
+  }
 }
