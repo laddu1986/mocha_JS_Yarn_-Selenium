@@ -11,6 +11,8 @@ export const validString = 'abcdef';
 
 export const numberString = '4bstra';
 
+export const underscoreString = "_bstra"
+
 // prettier-ignore
 export const invalidChars = [
   "!", "@", "#", "$", "%", "^", 
