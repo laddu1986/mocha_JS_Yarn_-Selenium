@@ -8,11 +8,12 @@ import * as messages from 'data/validationErrorsData.json';
 
 const templateData = new Object();
 
-describe('Template API', () => {
+describe('Negative Tests -> Template API', () => {
   before('Setup the testing environment', async () => {
     await postIdentity(templateData);
     await postOrganization(templateData);
     await postSpaceByOrganizationId(templateData);
+    await templates.createExperienceTemplate(templateData);
   });
   describe('Create Errors', () => {
     it('Cannot have a key less than 1 char', () => {
@@ -79,6 +80,19 @@ describe('Template API', () => {
         expect(error.code).to.equal(3);
       });
     });
+    it('Cannot have a key that starts with an underscore', async () => {
+      let wordCaseName = templates.createExperienceTemplateValidations(
+        templateData,
+        data.underscoreString,
+        data.validString
+      );
+      return wordCaseName.catch(error => {
+        let errMsg = error.metadata._internal_repr.custom_error[0];
+        let contains = CheckForAll([messages.Templates.alphas]);
+        expect(errMsg).to.satisfy(contains);
+        expect(error.code).to.equal(3);
+      });
+    });
     it('Cannot have a key with spaces', () => {
       let keyMaxChar = templates.createExperienceTemplateValidations(templateData, data.keyWithSpace, data.validString);
       return keyMaxChar.catch(error => {
@@ -122,11 +136,18 @@ describe('Template API', () => {
         expect(error.code).to.equal(3);
       });
     });
+    it('Must have a unique key', () => {
+      let dupeKey = templates.createExperienceTemplateValidations(
+        templateData,
+        templateData.template.key,
+        templateData.template.name
+      );
+      return dupeKey.catch(error => {
+        expect(error.code).to.equal(2); // No custom error message applied for dupe key
+      });
+    });
   });
   describe('Rename Errors', () => {
-    before('Create a valid template to modify', async () => {
-      await templates.createExperienceTemplate(templateData);
-    });
     it('Cannot have a name with less than 1 char', () => {
       let nameMinChar = templates.renameExperienceTemplateValidations(templateData, data.emptyString);
       return nameMinChar.catch(error => {
