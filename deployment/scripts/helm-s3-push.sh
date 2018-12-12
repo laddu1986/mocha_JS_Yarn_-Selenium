@@ -1,10 +1,10 @@
 helm init --client-only
 
 echo -e '\nPackaging Helm chart ...'
-helm package --version 0.1.0 deployment/helmchart
+helm package --version 0.1.0 deployment/nightlyregression
 
 echo -e '\nCreating index.yaml file ...'
-helm repo index --url https://s3-$AWS_REGION.amazonaws.com/$S3_BUCKET_NAME/helmchart --home . .
+helm repo index --url https://s3-$AWS_REGION.amazonaws.com/$S3_BUCKET_NAME/nightlyregression --home . .
 
 echo -e '\nSyncing index.yaml and packaged charts to S3...'
-aws s3 sync . s3://$S3_BUCKET_NAME/helmchart --exclude "*" --include "*.tgz" --include "index.yaml" --acl public-read
+aws s3 sync . s3://$S3_BUCKET_NAME/nightlyregression --exclude "*" --include "*.tgz" --include "index.yaml"
