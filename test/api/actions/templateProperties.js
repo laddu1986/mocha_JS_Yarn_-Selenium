@@ -1,13 +1,18 @@
 import { randomString } from '../common';
 import { updateExperienceTemplate } from 'actions/templates';
 
-export function createProperty(templateData, propertyType) {
-  let nameKey = randomString.generate({ length: 40, charset: 'alphabetic', capitalization: 'lowercase' });
+export function createProperty(templateData, propertyType, name, key) {
+  let reqName =
+    name === undefined
+      ? randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
+      : name;
+  let reqKey =
+    key === undefined ? randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : key;
   let propertiesArray = templateData.template.properties === undefined ? [] : templateData.template.properties;
 
   propertiesArray.push({
-    name: nameKey,
-    key: nameKey,
+    name: reqName,
+    key: reqKey,
     typeKey: propertyType
   });
   templateData.template.properties = propertiesArray;

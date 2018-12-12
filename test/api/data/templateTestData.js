@@ -1,7 +1,6 @@
 export const emptyString = '';
 
-export const longKey =
-  '123456789-223456789-323456789-423456789-523456789-623456789-723456789-823456789-9234567890-023456789-123456789-223456789-323456789-423456789-523456789-623456789-723456789-823456789-9234567890-023456789';
+export const longKey = 'a23456789_223456789_323456789_423456789_523456789_623456789_aaaa';
 
 export const capsKey = 'Abcde';
 
@@ -11,7 +10,7 @@ export const validString = 'abcdef';
 
 export const numberString = '4bstra';
 
-export const underscoreString = "_bstra"
+export const underscoreString = '_bstra';
 
 // prettier-ignore
 export const invalidChars = [
