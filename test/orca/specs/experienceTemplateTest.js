@@ -11,6 +11,7 @@ import {
 } from 'actions/experienceTemplate';
 import {
   experienceTemplateSchema,
+  updateExperienceTemplateSchema,
   deleteExperiencesTemplateSchema,
   getExperiencesTemplateSchema
 } from 'data/experienceTemplateSchema';
@@ -49,7 +50,7 @@ describe(' Tests for experience templates for a space', () => {
       expect(updateExperienceResponse.response.statusCode).to.equal(200);
       joi.assert(
         updateExperienceResponse.response.body.data.updateExperienceTemplate.template,
-        experienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
+        updateExperienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
       );
     });
   });
@@ -62,7 +63,7 @@ describe(' Tests for experience templates for a space', () => {
       expect(experienceTemplateResponse.response.statusCode).to.equal(200);
       joi.assert(
         experienceTemplateResponse.response.body.data.experienceTemplate,
-        experienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
+        updateExperienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
       );
     });
   });
