@@ -26,40 +26,37 @@ describe(`User Metrics Tests`, () => {
     verifyUsersAreAdded();
   });
 
-  describe('Audience->Users tab', () => {
-    it('Recent Users --> should be 5', () => {
-      expect(getRecentUsersRows()).to.equal(5);
-    });
-
-    it('Verify the user details', () => {
-      expect(verifyUsersDetails(lib.responseData.users)).to.equal(true);
-    });
-
-    it('For First User --> Verify email, UID and name in side bar', () => {
-      clickUserRow();
-      browser.pause(1000);
-      expect(verifySideBar(Constants.UserType.User)).to.equal(true);
-    });
-
-    it('Adding the visitor ', async () => {
-      await addVisitor(1, apiKey);
-    });
-
-    it('Verify Visitor on side bar', () => {
-      browser.refresh();
-      clickUserRow(undefined, Constants.UserType.Visitor);
-      browser.pause(1000);
-      expect(verifySideBar(Constants.UserType.Visitor)).to.equal(true);
-    });
+  it('Audience->Users tab --> Verify User rows', () => {
+    expect(getRecentUsersRows()).to.equal(5);
   });
-  describe('Space Dashboard Page', () => {
-    it('Total Users, Visitors, Active and New Count --> should be 5', () => {
-      clickOnSpaceDashboardLink();
-      browser.pause(1500);
-      expect(getCount(Constants.UserType.User)).to.include(5);
-      expect(getCount(Constants.UserType.Visitor)).to.include(1);
-      expect(getCount(Constants.UserType.Active)).to.include(5);
-      expect(getCount(Constants.UserType.New)).to.include(5);
-    });
+
+  it('Verify the details of users', () => {
+    expect(verifyUsersDetails(lib.responseData.users)).to.equal(true);
+  });
+
+  it('For First User --> Verify email, UID and name in side bar', () => {
+    clickUserRow();
+    browser.pause(1000);
+    expect(verifySideBar(Constants.UserType.User)).to.equal(true);
+  });
+
+  it('Adding the visitor ', async () => {
+    await addVisitor(1, apiKey);
+  });
+
+  it('Verify Visitor on side bar', () => {
+    browser.refresh();
+    clickUserRow(undefined, Constants.UserType.Visitor);
+    browser.pause(1000);
+    expect(verifySideBar(Constants.UserType.Visitor)).to.equal(true);
+  });
+
+  it('Space Dashboard Page  --> Verify Total Users, Visitors, Active and New Users Count ', () => {
+    clickOnSpaceDashboardLink();
+    browser.pause(1500);
+    expect(getCount(Constants.UserType.User)).to.include(5);
+    expect(getCount(Constants.UserType.Visitor)).to.include(1);
+    expect(getCount(Constants.UserType.Active)).to.include(5);
+    expect(getCount(Constants.UserType.New)).to.include(5);
   });
 });
