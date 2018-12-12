@@ -29,7 +29,7 @@ describe('Negative Tests -> Template API', () => {
       let keyMaxChar = templates.createExperienceTemplateValidations(templateData, data.longKey, data.validString);
       return keyMaxChar.catch(error => {
         let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.alphas, messages.Templates.lengthKey]);
+        let contains = CheckForAll([messages.Templates.lengthKey]);
         expect(errMsg).to.satisfy(contains);
         expect(error.code).to.equal(3);
       });
@@ -143,7 +143,7 @@ describe('Negative Tests -> Template API', () => {
         templateData.template.name
       );
       return dupeKey.catch(error => {
-        expect(error.code).to.equal(2); // No custom error message applied for dupe key
+        expect(error.code).to.equal(6); // No custom error message applied for dupe key
       });
     });
   });
