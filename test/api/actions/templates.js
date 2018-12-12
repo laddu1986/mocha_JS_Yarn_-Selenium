@@ -18,7 +18,7 @@ export function updateExperienceTemplate(templateData, templatePayload) {
 }
 
 export function createExperienceTemplate(templateData) {
-  let nameKey = randomString.generate({ length: 40, charset: 'alphabetic', capitalization: 'lowercase' });
+  let nameKey = randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' });
   const req = new client.Request('createExperienceTemplate', {
     context: spaceContext(templateData),
     key: nameKey.toLowerCase(),
