@@ -76,8 +76,7 @@ describe('Negative Tests -> Template API', () => {
       );
       return wordCaseName.catch(error => {
         let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.alphas]);
-        expect(errMsg).to.satisfy(contains);
+        expect(errMsg).to.contain(messages.Templates.alphas);
         expect(error.code).to.equal(3);
       });
     });
@@ -98,8 +97,7 @@ describe('Negative Tests -> Template API', () => {
       let keyMaxChar = templates.createExperienceTemplateValidations(templateData, data.keyWithSpace, data.validString);
       return keyMaxChar.catch(error => {
         let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.alphas]);
-        expect(errMsg).to.satisfy(contains);
+        expect(errMsg).to.contain(messages.Templates.alphas);
         expect(error.code).to.equal(3);
       });
     });
@@ -116,8 +114,7 @@ describe('Negative Tests -> Template API', () => {
       let nameMaxChar = templates.createExperienceTemplateValidations(templateData, data.validString, data.longKey);
       return nameMaxChar.catch(error => {
         let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.lengthName]);
-        expect(errMsg).to.satisfy(contains);
+        expect(errMsg).to.contain(messages.Templates.lengthName);
         expect(error.code).to.equal(3);
       });
     });
@@ -164,8 +161,7 @@ describe('Negative Tests -> Template API', () => {
       let nameMaxChar = templates.renameExperienceTemplateValidations(templateData, data.longKey);
       return nameMaxChar.catch(error => {
         let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.lengthName]);
-        expect(errMsg).to.satisfy(contains);
+        expect(errMsg).to.contain(messages.Templates.lengthName);
         expect(error.code).to.equal(3);
       });
     });
@@ -182,8 +178,7 @@ describe('Negative Tests -> Template API', () => {
       let noKey = templates.renameExperienceTemplateValidations(templateData, data.validString, true);
       return noKey.catch(error => {
         let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.empty]);
-        expect(errMsg).to.satisfy(contains);
+        expect(errMsg).to.contain(messages.Templates.empty);
         expect(error.code).to.equal(3);
       });
     });

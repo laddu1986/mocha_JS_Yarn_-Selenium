@@ -86,5 +86,16 @@
       "bool": "boolean",
       "int": "integer"
     }
+  },
+  "UserDetails": {
+    "ExternalID": "AutomatedTest",
+    "DeviceType": "AutomatedDevice",
+    "DisplayName": "AutomatedUser",
+    "Location": {
+      "country": "AU",
+      "countryCode": "AU",
+      "city": "Autocity"
+    },
+    "IPAddress": "1.1.1.1"
   }
 }
