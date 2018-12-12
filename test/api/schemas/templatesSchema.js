@@ -1,4 +1,7 @@
 import { joi } from '../common';
+import constants from 'constants.json';
+
+const types = Object.keys(constants.TemplateProperties.Types).map(value => constants.TemplateProperties.Types[value]);
 
 const protoLong = joi.object().keys({
   low: joi.number(),
@@ -19,7 +22,7 @@ function propertiesSchema(templateData) {
       joi.object().keys({
         name: joi.valid(names),
         key: joi.valid(keys),
-        typeKey: joi.valid('text', 'boolean', 'integer')
+        typeKey: joi.valid(types)
       })
     );
   } else {

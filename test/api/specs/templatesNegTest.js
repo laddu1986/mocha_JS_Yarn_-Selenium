@@ -8,7 +8,7 @@ import * as messages from 'data/validationErrorsData.json';
 
 const templateData = new Object();
 
-describe('Template API', () => {
+describe('Negative Tests -> Template API', () => {
   before('Setup the testing environment', async () => {
     await postIdentity(templateData);
     await postOrganization(templateData);
@@ -140,11 +140,15 @@ describe('Template API', () => {
       });
     });
     it('Must have a unique key', () => {
-      let dupeKey = templates.createExperienceTemplateValidations(templateData, templateData.template.key, templateData.template.name)
+      let dupeKey = templates.createExperienceTemplateValidations(
+        templateData,
+        templateData.template.key,
+        templateData.template.name
+      );
       return dupeKey.catch(error => {
-        expect(error.code).to.equal(2) // No custom error message applied for dupe key
-      })
-    })
+        expect(error.code).to.equal(2); // No custom error message applied for dupe key
+      });
+    });
   });
   describe('Rename Errors', () => {
     it('Cannot have a name with less than 1 char', () => {

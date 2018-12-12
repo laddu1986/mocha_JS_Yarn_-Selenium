@@ -79,5 +79,12 @@
       "IsUnknown": "is unknown",
       "HasAnyValue": "has any value"
     }
+  },
+  "TemplateProperties": {
+    "Types": {
+      "text": "text",
+      "bool": "boolean",
+      "int": "integer"
+    }
   }
 }

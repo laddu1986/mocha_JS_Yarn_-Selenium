@@ -1,8 +1,6 @@
 import { randomString } from '../common';
 import { updateExperienceTemplate } from 'actions/templates';
 
-//client.updateExperienceTemplate({context:{org_id:"d9ce4920-c050-40fe-99dc-648a9cd0eb53", space_id:"29bbee2d-dc19-48cb-9091-50168909c408"}, experience_template: {id:36253, key:"key2", name:"name1","row_version":{"seconds":"1544412788","nanos": 443398400}, "properties":[{"name":"prop1_rename", "key":"prop1key","type_key":"integer"}]}}, pr)
-
 export function createProperty(templateData, propertyType) {
   let nameKey = randomString.generate({ length: 40, charset: 'alphabetic', capitalization: 'lowercase' });
   let propertiesArray = templateData.template.properties === undefined ? [] : templateData.template.properties;
