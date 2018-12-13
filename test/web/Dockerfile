@@ -1,7 +1,7 @@
 FROM node:10-alpine AS build-deps
-
-#JAVA installation for allure-command-line
+#install dependencies for Node/yarn
 RUN apk add python make g++
+
 ENV NODE_ENV production
 
 #Install node packages and copy Web-Tests
