@@ -22,7 +22,6 @@ export function createExperienceTemplate(responseData) {
     data: data
   };
   return post(any, responseData).then(response => {
-    console.log("***********" + JSON.stringify(response));
     responseData.experienceName = name;
     responseData.expTemplateID = response.response.body.data.createExperienceTemplate.template.id;
     responseData.expTemplateRowVersion = response.response.body.data.createExperienceTemplate.template.rowVersion;
