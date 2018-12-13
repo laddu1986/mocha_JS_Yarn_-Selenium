@@ -2,7 +2,7 @@ options:
   docker: true
 pipelines:
   branches:
-    master:
+    newbucket:
       - step:
           name: Package HelmChart and Push to S3
           image:
