@@ -1,46 +1,31 @@
-image: 
-  name: massiveinteractive/qa-ci
-  username: $docker_user
-  password: $docker_user_pwd
 options:
   docker: true
 pipelines:
-    branches:
-         kube:
-         - parallel:   
-           - step:
-              name: API Tests
-              caches:
-                - docker
-                - node
-              script:
-                - yarn install
-                - yarn run api-smoke-tests 
-           - step:
-              name: WEB Tests
-              caches:
-                - docker
-                - node
-              script:
-                - yarn install
-                - sh ./scripts/start.sh
-                - yarn run web-smoke-tests --browser:chrome_headless
-         nightly:
-          - parallel:   
-             - step:
-                name: API Tests
-                caches:
-                  - docker
-                  - node
-                script:
-                  - yarn install
-                  - yarn run api-pipelines 
-             - step:
-                name: WEB Tests
-                caches:
-                  - docker
-                  - node
-                script:
-                  - yarn install
-                  - sh ./scripts/start.sh
-                  - yarn run web-pipelines
+  branches:
+    master:
+      - step:
+          name: Package HelmChart and Push to S3
+          image:
+            name: massiveinteractive/k8-cd:1.1
+            username: $docker_user
+            password: $docker_user_pwd
+          caches:
+            - docker
+          script:
+            - sh deployment/scripts/aws-config.sh
+            - sh deployment/scripts/helm-s3-push.sh
+      - step:
+          name: Build and Push Web Test Image to DockerHub
+          services:
+            - docker
+          caches:
+            - docker
+          script:
+            #define custom date-time version
+            - export VERSION="v$(date "+%y%m%d-%H%M%S")"
+            - echo "VERSION - ${VERSION}"
+            - export IMAGE_NAME="massiveinteractive/qa-web:$VERSION"
+            - docker login -u $docker_user -p $docker_user_pwd
+            #build and push image with above version
+            - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/web
+            - docker push $IMAGE_NAME
