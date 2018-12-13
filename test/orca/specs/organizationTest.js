@@ -32,7 +32,6 @@ describe('Organization Tests', () => {
       updateOrgResponse.response.body.data.updateOrganization.organization,
       organizationSchema(createOrgObject, createOrgObject.newName)
     );
-
   });
 
   it('Query - Get Organization', async () => {
