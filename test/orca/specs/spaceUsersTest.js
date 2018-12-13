@@ -23,64 +23,41 @@ describe('Space Users Tests', () => {
     await login(userMetricsObject);
     await getOrganizations(userMetricsObject);
     await createSpace(userMetricsObject);
-  });
-  describe('Query- Space Metrics', () => {
-    before(async () => {
-      getMetricsResponse = await getUserMetrics(userMetricsObject);
-    });
-    it('Get metrics data for space users on Developer page', () => {
-      expect(getMetricsResponse.response.statusCode).to.equal(200);
-      joi.assert(getMetricsResponse.response.body.data.spaceMetrics, getUserMetricsSchema());
-    });
+    getMetricsResponse = await getUserMetrics(userMetricsObject);
   });
 
-  describe('Query- Space Users', () => {
-    before(async () => {
-      getSpaceUsersResponse = await getSpaceUsers(userMetricsObject);
-    });
-    it('Get details of space users on Users page', () => {
-      expect(getSpaceUsersResponse.response.statusCode).to.equal(200);
-      expect(getSpaceUsersResponse.response.body.data.spaceUsers.users).to.be.an('array');
-    });
+  it('Query- Space Metrics', async () => {
+    expect(getMetricsResponse.response.statusCode).to.equal(200);
+    joi.assert(getMetricsResponse.response.body.data.spaceMetrics, getUserMetricsSchema());
   });
 
-  describe('Query- Space Users Overview', () => {
-    before(async () => {
-      getSpaceUsersOverviewResponse = await getSpaceUsersOverview(userMetricsObject);
-    });
-    it('Get count for space users overview metrics on space Dashboard page', () => {
-      expect(getSpaceUsersOverviewResponse.response.statusCode).to.equal(200);
-      joi.assert(getSpaceUsersOverviewResponse.response.body.data.spaceUsersOverview, getSpaceUsersOverviewSchema());
-    });
+  it('Query- Space Users', async () => {
+    getSpaceUsersResponse = await getSpaceUsers(userMetricsObject);
+    expect(getSpaceUsersResponse.response.statusCode).to.equal(200);
+    expect(getSpaceUsersResponse.response.body.data.spaceUsers.users).to.be.an('array');
   });
 
-  describe('Query- Space Users Overview', () => {
-    before(async () => {
-      getSpaceUsersOverviewResponse = await getSpaceUsersOverview(userMetricsObject);
-    });
-    it('Get count for space users overview metrics on space Dashboard page', () => {
-      expect(getSpaceUsersOverviewResponse.response.statusCode).to.equal(200);
-      joi.assert(getSpaceUsersOverviewResponse.response.body.data.spaceUsersOverview, getSpaceUsersOverviewSchema());
-    });
+  it('Query- Space Users Overview', async () => {
+    getSpaceUsersOverviewResponse = await getSpaceUsersOverview(userMetricsObject);
+    expect(getSpaceUsersOverviewResponse.response.statusCode).to.equal(200);
+    joi.assert(getSpaceUsersOverviewResponse.response.body.data.spaceUsersOverview, getSpaceUsersOverviewSchema());
   });
 
-  describe('Query- Space labels', () => {
-    before(async () => {
-      getSpaceLabelsResponse = await getSpaceLabels(userMetricsObject);
-    });
-    it('Get labels for the space users under Users tab', () => {
-      expect(getSpaceLabelsResponse.response.statusCode).to.equal(200);
-      expect(getSpaceLabelsResponse.response.body.data.getSpaceLabels).to.equal(null);
-    });
+  it('Query- Space Users Overview', async () => {
+    getSpaceUsersOverviewResponse = await getSpaceUsersOverview(userMetricsObject);
+    expect(getSpaceUsersOverviewResponse.response.statusCode).to.equal(200);
+    joi.assert(getSpaceUsersOverviewResponse.response.body.data.spaceUsersOverview, getSpaceUsersOverviewSchema());
   });
 
-  describe('Query- Space access tokens', () => {
-    before(async () => {
-      getAccessTokensResponse = await getAccessTokens(userMetricsObject);
-    });
-    it('Get tokens for space users in Developers page', () => {
-      expect(getAccessTokensResponse.response.statusCode).to.equal(200);
-      joi.assert(getSpaceUsersOverviewResponse.response.body.data.spaceUserAccessTokens, getAccessTokensSchema());
-    });
+  it('Query- Space labels', async () => {
+    getSpaceLabelsResponse = await getSpaceLabels(userMetricsObject);
+    expect(getSpaceLabelsResponse.response.statusCode).to.equal(200);
+    expect(getSpaceLabelsResponse.response.body.data.getSpaceLabels).to.equal(null);
+  });
+
+  it('Query- Space access tokens', async () => {
+    getAccessTokensResponse = await getAccessTokens(userMetricsObject);
+    expect(getAccessTokensResponse.response.statusCode).to.equal(200);
+    joi.assert(getSpaceUsersOverviewResponse.response.body.data.spaceUserAccessTokens, getAccessTokensSchema());
   });
 });
