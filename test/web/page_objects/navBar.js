@@ -5,9 +5,6 @@ class NavBar extends Page {
   get profileMenu() {
     return browser.element("//div[@data-qa='menu:profile']//div[@data-qa='btn:menu']");
   }
-  get experienceMenu() {
-    return browser.element("//a[@data-qa='nav:experiences']");
-  }
   //selected org
   get selectedOrg() {
     return browser.element("//li[@data-qa='nav:menu']");
@@ -36,8 +33,8 @@ class NavBar extends Page {
   get spaceSettings() {
     return browser.element("//div[@data-qa='menu:settings']");
   }
-  get generalSpaceSettings() {
-    return browser.element("//ul[@data-qa='submenu:settings']//div[contains(text(),'General')]");
+  get generalSpaceSettings(){
+     return browser.element("//ul[@data-qa='submenu:settings']//div[contains(text(),'General')]");
   }
   get backToSpaceDashboardLink() {
     return browser.element("//a[@data-qa='link:space-ctx']");
