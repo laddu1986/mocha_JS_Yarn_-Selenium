@@ -1,9 +1,9 @@
 var helper = require('./wdio.helper');
 exports.config = {
   protocol: 'http',
-  host: 'selenium-hub',
+  host: process.env.SELENIUM_HOST,
   port: '4444',
-  path: '/wd/hub',
+  path: '',
   capabilities: helper.getBrowser(),
   updateJob: false,
   specs: [
@@ -33,10 +33,10 @@ exports.config = {
   coloredLogs: true,
   baseUrl: helper.getEndPoints(),
   waitforTimeout: 20000,
-  maxInstances: 5,
+  maxInstances: process.env.MAX_INSTANCES,
   plugins: {},
   framework: 'mocha',
-  reporters: ['spec', 'html-format'],
+  reporters: ['spec', 'html-format', 'allure'],
   reporterOptions: {
     htmlFormat: {
       outputDir: 'reports'
