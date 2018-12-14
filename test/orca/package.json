@@ -27,7 +27,7 @@
     "prettier": "^1.14.3"
   },
   "scripts": {
-    "orca": "node_modules/.bin/mocha specs/experienceTemplateTest.js --opts config/mocha.opts",
+    "orca": "node_modules/.bin/mocha specs/*Test.js --opts config/mocha.opts",
     "orca-debug": "node_modules/.bin/mocha --inspect-brk=127.0.0.1:5858 specs/*Test.js --opts config/mocha.opts",
     "orca-smoke-tests": "node_modules/.bin/mocha specs/*Test.js --opts config/mocha.opts --grep @smoke",
     "clean": "eslint '**/*.js' --fix",
