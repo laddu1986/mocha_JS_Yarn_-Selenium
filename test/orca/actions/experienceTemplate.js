@@ -24,7 +24,7 @@ export function createExperienceTemplate(responseData) {
   const data = {
     query:
       'mutation createExperienceTemplate($input: CreateExperienceTemplateInput!) { createExperienceTemplate(input: $input) { template { id key name thumbnailUrl rowVersion properties{key}}}}',
-    operationName: "createExperienceTemplate",
+    operationName: 'createExperienceTemplate',
     variables: {
       input: {
         fields: {
@@ -114,7 +114,7 @@ export function getExperiencesTemplate(responseData) {
   const data = {
     query:
       'query experienceTemplates($organizationId: ID!, $spaceId: ID!) { experienceTemplates(organizationId: $organizationId , spaceId: $spaceId) {templates{ id rowVersion key name}}}',
-    operationName: "experienceTemplates",
+    operationName: 'experienceTemplates',
     variables: {
       organizationId: responseData.orgID,
       spaceId: responseData.spaceID
@@ -133,7 +133,7 @@ export function deleteExperienceTemplate(responseData) {
   const data = {
     query:
       'mutation deleteExperienceTemplate($input: DeleteExperienceTemplateInput!) { deleteExperienceTemplate(input: $input) {templateId}}',
-    operationName: "deleteExperienceTemplate",
+    operationName: 'deleteExperienceTemplate',
     variables: {
       input: {
         organizationId: responseData.orgID,
