@@ -100,7 +100,7 @@ export function getInviteTokenFromDB(email) {
         Invites.findAll({
           attributes: ['Id', 'Email', 'CreatedTime'],
           where: { Email: `${email}` },
-          order: [mysql.fn('max', mysql.col('CreatedTime'))]
+          order: mysql.literal('CreatedTime DESC')
         }).then(function(result) {
           id = result[0].dataValues.Id;
           resolve(id);
@@ -126,7 +126,7 @@ export async function updateTokenExpiryDateInDB(email) {
         Invites.findAll({
           attributes: ['Id', 'Email', 'CreatedTime'],
           where: { Email: `${email}` },
-          order: [mysql.fn('max', mysql.col('CreatedTime'))]
+          order: mysql.literal('CreatedTime DESC')
         }).then(function(result) {
           id = result[0].dataValues.Id;
           createdTime = result[0].dataValues.CreatedTime;

@@ -42,7 +42,7 @@ export function updateExperienceTemplateSchema(name, object) {
       promptText: joi.valid(null).required(),
       helpText: joi.valid(null).required(),
       localizable: joi.valid(null).required(),
-      appliedValidations: joi.valid(null).required()
+      rules: joi.valid(null).required()
     })
   });
   return schema;
