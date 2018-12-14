@@ -3,9 +3,8 @@ import accountPage from 'page_objects/accountPage';
 import { createAccount } from 'actions/account';
 import { createSpace } from 'actions/space';
 import { clickOnAudienceLink } from 'actions/navBar';
-import { submit } from 'actions/common';
+import { submit, closeModal } from 'actions/common';
 import {
-  closeModal,
   waitForWallpaperPreview,
   getTribeCardStyle,
   waitForLogoPreview,
