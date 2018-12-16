@@ -11,6 +11,7 @@ import {
 } from 'actions/experienceTemplate';
 import {
   experienceTemplateSchema,
+  updateExperienceTemplateSchema,
   deleteExperiencesTemplateSchema,
   getExperiencesTemplateSchema
 } from 'data/experienceTemplateSchema';
@@ -21,7 +22,7 @@ var createExperienceResponse,
   deleteExperienceResponse;
 export var experienceTemplateObject = new Object();
 
-describe(' Tests for experience templates for a space', () => {
+describe('Tests for experience templates for a space', () => {
   before(async () => {
     await registerAndCreateOrg(experienceTemplateObject);
     await login(experienceTemplateObject);
@@ -29,7 +30,8 @@ describe(' Tests for experience templates for a space', () => {
     await createSpace(experienceTemplateObject);
     createExperienceResponse = await createExperienceTemplate(experienceTemplateObject);
   });
-  it('Mutation - createExperienceTemplate', async () => {
+
+  it('Mutation - createExperienceTemplate', () => {
     expect(createExperienceResponse.response.statusCode).to.equal(200);
     joi.assert(
       createExperienceResponse.response.body.data.createExperienceTemplate.template,
@@ -42,7 +44,7 @@ describe(' Tests for experience templates for a space', () => {
     expect(updateExperienceResponse.response.statusCode).to.equal(200);
     joi.assert(
       updateExperienceResponse.response.body.data.updateExperienceTemplate.template,
-      experienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
+      updateExperienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
     );
   });
 
@@ -51,7 +53,7 @@ describe(' Tests for experience templates for a space', () => {
     expect(experienceTemplateResponse.response.statusCode).to.equal(200);
     joi.assert(
       experienceTemplateResponse.response.body.data.experienceTemplate,
-      experienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
+      updateExperienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
     );
   });
 
