@@ -17,6 +17,25 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
     await postSpaceByOrganizationId(templateData);
     await createExperienceTemplate(templateData);
   });
+  it('Cannot create a property with an existing key', async () => {
+    await properties.createProperty(
+      templateData,
+      constants.TemplateProperties.Types.text,
+      undefined,
+      templateData.template.key
+    );
+    let duplicateKey = properties.createProperty(
+      templateData,
+      constants.TemplateProperties.Types.text,
+      undefined,
+      templateData.template.key
+    );
+    return duplicateKey.catch(error => {
+      let errMsg = error.metadata._internal_repr.custom_error[0];
+      expect(errMsg).to.include(messages.Templates.exists);
+      expect(error.code).to.equal(6);
+    });
+  });
   it('Cannot create a property with an empty key', () => {
     let createText = properties.createProperty(
       templateData,
