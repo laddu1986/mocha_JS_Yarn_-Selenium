@@ -10,6 +10,7 @@
     "lengthKey": "must be between 1 and 40 characters",
     "lengthName": "must be between 1 and 200 characters",
     "alphas": "only alpha-numeric and underscore characters are allowed and must not start with a number",
-    "exists": "ResourceExists"
+    "existsProperty": "property key must be unique within a template",
+    "existsTemplate": "template key must be unique"
   }
 }
