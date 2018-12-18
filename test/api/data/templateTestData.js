@@ -2,6 +2,9 @@ export const emptyString = '';
 
 export const longKey = 'a23456789_223456789_323456789_423456789_523456789_623456789_aaaa';
 
+export const longName =
+  'qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_qwertyuio_1';
+
 export const capsKey = 'Abcde';
 
 export const keyWithSpace = ' Abcde';
