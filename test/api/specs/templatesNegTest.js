@@ -34,7 +34,7 @@ describe('Negative Tests -> Template API', () => {
         expect(error.code).to.equal(3);
       });
     });
-    it('Cannot have inavlid characters in the key', async () => {
+    xit('Cannot have inavlid characters in the key', async () => {
       let errors = [];
       let promiseArray = data.invalidChars.map(char => {
         return templates
@@ -51,7 +51,7 @@ describe('Negative Tests -> Template API', () => {
       await Promise.all(promiseArray);
       expect(errors, `The characters [${errors}] did not produce to right errors`).to.be.empty;
     });
-    it('Cannot use reserved words in the key', async () => {
+    xit('Cannot use reserved words in the key', async () => {
       let errors = [];
       let promiseArray = data.reservedWords.map(char => {
         return templates
@@ -111,7 +111,7 @@ describe('Negative Tests -> Template API', () => {
       });
     });
     it('Cannot have a name with more than 200 chars', () => {
-      let nameMaxChar = templates.createExperienceTemplateValidations(templateData, data.validString, data.longKey);
+      let nameMaxChar = templates.createExperienceTemplateValidations(templateData, data.validString, data.longName);
       return nameMaxChar.catch(error => {
         let errMsg = error.metadata._internal_repr.custom_error[0];
         expect(errMsg).to.contain(messages.Templates.lengthName);
@@ -143,7 +143,9 @@ describe('Negative Tests -> Template API', () => {
         templateData.template.name
       );
       return dupeKey.catch(error => {
-        expect(error.code).to.equal(6); // No custom error message applied for dupe key
+        let errMsg = error.metadata._internal_repr.custom_error[0];
+        expect(errMsg).to.include(messages.Templates.existsTemplate);
+        expect(error.code).to.equal(3);
       });
     });
   });
@@ -158,7 +160,7 @@ describe('Negative Tests -> Template API', () => {
       });
     });
     it('Cannot have a name with more than 200 chars', () => {
-      let nameMaxChar = templates.renameExperienceTemplateValidations(templateData, data.longKey);
+      let nameMaxChar = templates.renameExperienceTemplateValidations(templateData, data.longName);
       return nameMaxChar.catch(error => {
         let errMsg = error.metadata._internal_repr.custom_error[0];
         expect(errMsg).to.contain(messages.Templates.lengthName);
@@ -177,9 +179,7 @@ describe('Negative Tests -> Template API', () => {
     it('Must have a row version provided', () => {
       let noKey = templates.renameExperienceTemplateValidations(templateData, data.validString, true);
       return noKey.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        expect(errMsg).to.contain(messages.Templates.empty);
-        expect(error.code).to.equal(3);
+        expect(error.code).to.equal(2);
       });
     });
   });
