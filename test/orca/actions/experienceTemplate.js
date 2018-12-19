@@ -49,7 +49,7 @@ export function createExperienceTemplate(responseData) {
   });
 }
 
-export function updateExperienceTemplate(responseData) {
+export function updateExperienceTemplate(responseData, propertyType) {
   var newName = `${randomString.generate(8)}_new`;
   const data = {
     query:
@@ -60,7 +60,7 @@ export function updateExperienceTemplate(responseData) {
         fields: {
           key: key,
           name: newName,
-          properties: [
+          properties: propertyType == "noProperty" ? [] : [
             { name: properties.p1, key: properties.k1, typeKey: Constants.TemplateProperties.Types.text },
             { name: properties.p2, key: properties.k2, typeKey: Constants.TemplateProperties.Types.bool },
             { name: properties.p3, key: properties.k3, typeKey: Constants.TemplateProperties.Types.int }

@@ -1,4 +1,5 @@
 import experiencesPage from 'page_objects/experienceTemplatePage';
+
 export function goToTemplateTab() {
   experiencesPage.templateTab.click();
 }
@@ -9,7 +10,7 @@ export function verifyCreateTemplatePage() {
 
 export function clickCreateTemplate(type) {
   var element;
-  if (type == 'button') element = experiencesPage.createTemplateCTA;
+  if (type == 'button' || type == undefined) element = experiencesPage.createTemplateCTA;
   if (type == 'link') element = experiencesPage.createTemplateLink;
   element.click();
 }
@@ -46,4 +47,50 @@ export function editTemplate(name) {
 
 export function saveTemplate() {
   experiencesPage.saveButton.click();
+}
+
+export function clickAddProperty() {
+  experiencesPage.addProperty.waitForVisible();
+  experiencesPage.addProperty.click();
+}
+
+export function verifyPropertyTypes() {
+  return (
+    experiencesPage.textProperty.isVisible() &&
+    experiencesPage.integerProperty.isVisible() &&
+    experiencesPage.boolProperty.isVisible()
+  );
+}
+var element;
+export function clickProperty(type) {
+  if (type == 'Text') element = experiencesPage.textProperty;
+  else if (type == 'Integer') element = experiencesPage.integerProperty;
+  else element = experiencesPage.boolProperty;
+  element.waitForVisible();
+  element.click();
+}
+
+export function verifyPropertyModal() {
+  return element.isVisible() && experiencesPage.propertyName.isVisible() && experiencesPage.propertyKey.isVisible();
+}
+
+export function addProperty(name) {
+  experiencesPage.propertyName.waitForVisible();
+  experiencesPage.propertyName.setValue(name);
+  experiencesPage.createProperty.click();
+}
+
+export function verifyPropertyIsAdded() {
+  experiencesPage.saveButton.waitForVisible();
+  //console.log("*********" + experiencesPage.properties.getText());
+  //return experiencesPage.properties.getText().includes(name);
+}
+
+export function clickBack() {
+  experiencesPage.backButton.waitForVisible();
+  experiencesPage.backButton.click();
+}
+
+export function verifyAddPropertyPage() {
+  return experiencesPage.addProperty.isVisible();
 }
