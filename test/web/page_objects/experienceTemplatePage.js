@@ -29,6 +29,35 @@ class ExperienceTemplatePage {
   get saveButton() {
     return browser.element("//button[@data-qa='edit-template:save']//span");
   }
+  get properties() {
+    return browser.element("//section[@data-qa='page:experience-template']//div//div[2]");
+  }
+
+  // property types
+  get addProperty() {
+    return browser.element("//button[contains(text(),' Add Property')]");
+  }
+  get textProperty() {
+    return browser.element("//span[contains(text(),'Text')]");
+  }
+  get integerProperty() {
+    return browser.element("//span[contains(text(),'Integer')]");
+  }
+  get boolProperty() {
+    return browser.element("//span[contains(text(),'Switch')]");
+  }
+  get propertyName() {
+    return browser.element("//div[@data-qa='create-property:name']//input[@id='inputs:name']");
+  }
+  get propertyKey() {
+    return browser.element("//input[@id='inputs:key']");
+  }
+  get createProperty() {
+    return browser.element("//button[@data-qa='create-property:create']");
+  }
+  get backButton() {
+    return browser.element("//button[@data-qa='btn:back']");
+  }
 }
 
 export default new ExperienceTemplatePage();

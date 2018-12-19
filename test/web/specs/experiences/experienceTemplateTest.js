@@ -26,8 +26,8 @@ import {
 import { goToExperiencePage } from 'actions/navBar';
 import { closePassiveNotification } from 'actions/common';
 import * as PassiveNotification from 'data/passiveNotification.json';
-var name = `${lib.randomString.generate(6)}`,
-  newName = `${lib.randomString.generate(6)}_new`;
+var name = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}`,
+  newName = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}_new`;
 
 describe(`Experience Template Tests`, () => {
   before(() => {
@@ -67,6 +67,7 @@ describe(`Experience Template Tests`, () => {
     clickSettingsFromCard();
     editTemplate(newName);
     saveTemplate();
+    saveTemplate(); // workaround for https://app.clickup.com/t/9hzau
     expect(getNotificationMessageText()).to.include(`${PassiveNotification.updateMessage.text}`);
     closePassiveNotification();
     goToExperiencePage();
