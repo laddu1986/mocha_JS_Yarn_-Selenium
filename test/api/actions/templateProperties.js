@@ -10,13 +10,11 @@ export function createProperty(templateData, propertyType, name, key) {
   let reqKey =
     key === undefined ? randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : key;
   let propertiesArray = templateData.template.properties === undefined ? [] : templateData.template.properties;
-
   propertiesArray.push({
     name: reqName,
     key: reqKey,
     typeKey: propertyType
   });
-  templateData.template.properties = propertiesArray;
 
   let templatePayload = {
     id: templateData.template.id,
@@ -30,6 +28,7 @@ export function createProperty(templateData, propertyType, name, key) {
     .exec()
     .then(response => {
       templateData.template.rowVersion = response.response.rowVersion;
+      templateData.template.properties = propertiesArray;
       return response;
     });
 }
@@ -55,9 +54,9 @@ export function createPropertyValidations(templateData, char) {
     });
 }
 
-export function renameFirstProperty(templateData) {
+export function renameProperty(templateData, type) {
   let newName = randomString.generate({ length: 40, charset: 'alphabetic', capitalization: 'lowercase' });
-  templateData.template.properties[0].name = newName;
+  templateData.template.properties[type].name = newName;
   let templatePayload = {
     id: templateData.template.id,
     name: templateData.template.name,
@@ -65,8 +64,8 @@ export function renameFirstProperty(templateData) {
     properties: [
       {
         name: newName,
-        key: templateData.template.properties[0].key,
-        typeKey: templateData.template.properties[0].typeKey
+        key: templateData.template.properties[type].key,
+        typeKey: templateData.template.properties[type].typeKey
       }
     ],
     rowVersion: templateData.template.rowVersion
@@ -79,12 +78,24 @@ export function renameFirstProperty(templateData) {
     });
 }
 
-export function deleteProperty(templateData) {
+export function deleteProperty(templateData, type) {
+  let property = [];
+  for (let i = 0; i < templateData.template.properties.length; i++) {
+    if (type == templateData.template.properties[i].typeKey) continue;
+    else {
+      property.push({
+        name: templateData.template.properties[i].name,
+        key: templateData.template.properties[i].key,
+        typeKey: templateData.template.properties[i].typeKey
+      });
+    }
+  }
+
   let templatePayload = {
     id: templateData.template.id,
     name: templateData.template.name,
     key: templateData.template.key,
-    properties: [],
+    properties: property,
     rowVersion: templateData.template.rowVersion
   };
   return updateExperienceTemplate(templateData, templatePayload)
