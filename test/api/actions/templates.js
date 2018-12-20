@@ -36,7 +36,9 @@ export function createExperienceTemplateValidations(templateData, key, name) {
     key: key,
     name: name
   }).withResponseStatus(true);
-  return req.exec();
+  return req.exec().catch(error => {
+    return error;
+  });
 }
 
 export function renameExperienceTemplate(templateData) {

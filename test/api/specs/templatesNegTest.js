@@ -29,44 +29,50 @@ describe('Negative Tests -> Template API', () => {
       let keyMaxChar = templates.createExperienceTemplateValidations(templateData, data.longKey, data.validString);
       return keyMaxChar.catch(error => {
         let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.alphas, messages.Templates.lengthKey]);
+        let contains = CheckForAll([messages.Templates.lengthKey]);
         expect(errMsg).to.satisfy(contains);
         expect(error.code).to.equal(3);
       });
     });
-    it('Cannot have inavlid characters in the key', async () => {
-      let errors = [];
-      let promiseArray = data.invalidChars.map(char => {
-        return templates
-          .createExperienceTemplateValidations(templateData, char, data.validString)
-          .then(() => {
-            errors.push(char);
-          })
-          .catch(error => {
-            if (error.code !== 3) {
-              errors.push(char);
-            }
-          });
-      });
-      await Promise.all(promiseArray);
-      expect(errors, `The characters [${errors}] did not produce to right errors`).to.be.empty;
+    it('Cannot have invalid characters in the key', async () => {
+      let errorCodeArray = [],
+        errorResponseArray = [];
+      for (var i = 0; i < data.invalidChars.length; i++) {
+        var errorResponse = await templates.createExperienceTemplateValidations(
+          templateData,
+          data.invalidChars[0],
+          data.validString
+        );
+        if (errorResponse.code !== 3) {
+          errorCodeArray.push(data.invalidChars[i]);
+        }
+        if (!errorResponse.metadata._internal_repr.custom_error[0].includes(messages.Templates.alphas)) {
+          errorResponseArray.push(data.invalidChars[i]);
+        }
+      }
+      expect(errorCodeArray, `The characters [${errorCodeArray}] did not produce the right error code`).to.be.empty;
+      expect(errorResponseArray, `The characters [${errorResponseArray}] did not produce to right error message`).to.be
+        .empty;
     });
     it('Cannot use reserved words in the key', async () => {
-      let errors = [];
-      let promiseArray = data.reservedWords.map(char => {
-        return templates
-          .createExperienceTemplateValidations(templateData, char, data.validString)
-          .then(() => {
-            errors.push(char);
-          })
-          .catch(error => {
-            if (error.code !== 3) {
-              errors.push(char);
-            }
-          });
-      });
-      await Promise.all(promiseArray);
-      expect(errors, `The characters [${errors}] did not produce to right errors`).to.be.empty;
+      let errorCodeArray = [],
+        errorResponseArray = [];
+      for (var i = 0; i < data.reservedWords.length; i++) {
+        var errorResponse = await templates.createExperienceTemplateValidations(
+          templateData,
+          data.reservedWords[0],
+          data.validString
+        );
+        if (errorResponse.code !== 3) {
+          errorCodeArray.push(data.reservedWords[i]);
+        }
+        if (!errorResponse.metadata._internal_repr.custom_error[0].includes(messages.Templates.reservedKeyword)) {
+          errorResponseArray.push(data.reservedWords[i]);
+        }
+      }
+      expect(errorCodeArray, `The characters [${errorCodeArray}] did not produce the right error code`).to.be.empty;
+      expect(errorResponseArray, `The characters [${errorResponseArray}] did not produce to right error message`).to.be
+        .empty;
     });
     it('Cannot have a key that starts with a number', async () => {
       let wordCaseName = templates.createExperienceTemplateValidations(
@@ -111,7 +117,7 @@ describe('Negative Tests -> Template API', () => {
       });
     });
     it('Cannot have a name with more than 200 chars', () => {
-      let nameMaxChar = templates.createExperienceTemplateValidations(templateData, data.validString, data.longKey);
+      let nameMaxChar = templates.createExperienceTemplateValidations(templateData, data.validString, data.longName);
       return nameMaxChar.catch(error => {
         let errMsg = error.metadata._internal_repr.custom_error[0];
         expect(errMsg).to.contain(messages.Templates.lengthName);
@@ -143,7 +149,9 @@ describe('Negative Tests -> Template API', () => {
         templateData.template.name
       );
       return dupeKey.catch(error => {
-        expect(error.code).to.equal(2); // No custom error message applied for dupe key
+        let errMsg = error.metadata._internal_repr.custom_error[0];
+        expect(errMsg).to.include(messages.Templates.existsTemplate);
+        expect(error.code).to.equal(3);
       });
     });
   });
@@ -158,7 +166,7 @@ describe('Negative Tests -> Template API', () => {
       });
     });
     it('Cannot have a name with more than 200 chars', () => {
-      let nameMaxChar = templates.renameExperienceTemplateValidations(templateData, data.longKey);
+      let nameMaxChar = templates.renameExperienceTemplateValidations(templateData, data.longName);
       return nameMaxChar.catch(error => {
         let errMsg = error.metadata._internal_repr.custom_error[0];
         expect(errMsg).to.contain(messages.Templates.lengthName);
@@ -177,9 +185,7 @@ describe('Negative Tests -> Template API', () => {
     it('Must have a row version provided', () => {
       let noKey = templates.renameExperienceTemplateValidations(templateData, data.validString, true);
       return noKey.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        expect(errMsg).to.contain(messages.Templates.empty);
-        expect(error.code).to.equal(3);
+        expect(error.code).to.equal(2);
       });
     });
   });
