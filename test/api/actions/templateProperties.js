@@ -1,13 +1,19 @@
 import { randomString } from '../common';
 import { updateExperienceTemplate } from 'actions/templates';
+import constants from 'constants.json';
 
-export function createProperty(templateData, propertyType) {
-  let nameKey = randomString.generate({ length: 40, charset: 'alphabetic', capitalization: 'lowercase' });
+export function createProperty(templateData, propertyType, name, key) {
+  let reqName =
+    name === undefined
+      ? randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
+      : name;
+  let reqKey =
+    key === undefined ? randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : key;
   let propertiesArray = templateData.template.properties === undefined ? [] : templateData.template.properties;
 
   propertiesArray.push({
-    name: nameKey,
-    key: nameKey,
+    name: reqName,
+    key: reqKey,
     typeKey: propertyType
   });
   templateData.template.properties = propertiesArray;
@@ -24,6 +30,27 @@ export function createProperty(templateData, propertyType) {
     .exec()
     .then(response => {
       templateData.template.rowVersion = response.response.rowVersion;
+      return response;
+    });
+}
+
+export function createPropertyValidations(templateData, char) {
+  let templatePayload = {
+    id: templateData.template.id,
+    name: templateData.template.name,
+    key: templateData.template.key,
+    properties: [
+      {
+        name: randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }),
+        key: char,
+        typeKey: constants.TemplateProperties.Types.int
+      }
+    ],
+    rowVersion: templateData.template.rowVersion
+  };
+  return updateExperienceTemplate(templateData, templatePayload)
+    .exec()
+    .catch(response => {
       return response;
     });
 }
