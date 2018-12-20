@@ -11,6 +11,7 @@
     "lengthName": "must be between 1 and 200 characters",
     "alphas": "only alpha-numeric and underscore characters are allowed and must not start with a number",
     "existsProperty": "property key must be unique within a template",
-    "existsTemplate": "template key must be unique"
+    "existsTemplate": "template key must be unique",
+    "reservedKeyword": "must not be a reserved keyword"
   }
 }
