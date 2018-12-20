@@ -1,5 +1,6 @@
 import { randomString } from '../common';
 import { updateExperienceTemplate } from 'actions/templates';
+import constants from 'constants.json';
 
 export function createProperty(templateData, propertyType, name, key) {
   let reqName =
@@ -29,6 +30,27 @@ export function createProperty(templateData, propertyType, name, key) {
     .exec()
     .then(response => {
       templateData.template.rowVersion = response.response.rowVersion;
+      return response;
+    });
+}
+
+export function createPropertyValidations(templateData, char) {
+  let templatePayload = {
+    id: templateData.template.id,
+    name: templateData.template.name,
+    key: templateData.template.key,
+    properties: [
+      {
+        name: randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }),
+        key: char,
+        typeKey: constants.TemplateProperties.Types.int
+      }
+    ],
+    rowVersion: templateData.template.rowVersion
+  };
+  return updateExperienceTemplate(templateData, templatePayload)
+    .exec()
+    .catch(response => {
       return response;
     });
 }
