@@ -24,7 +24,6 @@ import {
   verifyTemplateIsCreated
 } from 'actions/experiences';
 import { goToExperiencePage } from 'actions/navBar';
-import { closePassiveNotification } from 'actions/common';
 import * as PassiveNotification from 'data/passiveNotification.json';
 var name = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}`,
   newName = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}_new`;
@@ -59,24 +58,17 @@ describe(`Experience Template Tests`, () => {
     expect(verifyTemplateIsCreated(name)).to.equal(true, 'The Template name is not correct on detail page');
     goToExperiencePage();
     goToTemplateTab();
-    expect(verifyTemplateCard(name)).to.equal(true, 'The name on template card is not correct');
+    verifyTemplateCard(name);
   });
 
-  it('Edit Template --> verify notification message and template(s) pages', () => {
+  it('Edit Template --> verify template(s) pages', () => {
     clickMoreButton();
     clickSettingsFromCard();
     editTemplate(newName);
     saveTemplate();
-    saveTemplate(); // workaround for https://app.clickup.com/t/9hzau
-    expect(getNotificationMessageText()).to.include(`${PassiveNotification.updateMessage.text}`);
-    closePassiveNotification();
     goToExperiencePage();
     goToTemplateTab();
-    expect(verifyTemplateCard(newName)).to.equal(
-      true,
-      'Template card is not updated on all templates page',
-      'The passive notification after editing template is not correct'
-    );
+    verifyTemplateCard(newName)
   });
 
   it('Delete Template --> verify notification message and template(s) page', () => {

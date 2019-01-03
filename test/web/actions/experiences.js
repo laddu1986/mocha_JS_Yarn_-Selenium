@@ -1,4 +1,5 @@
 import experiencesPage from 'page_objects/experienceTemplatePage';
+import * as constants from 'constants.json';
 
 export function goToTemplateTab() {
   experiencesPage.templateTab.click();
@@ -37,7 +38,7 @@ export function verifyTemplateIsCreated(name) {
 }
 
 export function verifyTemplateCard(name) {
-  return experiencesPage.templateCard.getText() === name;
+  browser.waitUntil(() => experiencesPage.templateCard.getText() === name, 5000, 'Results not displayed', 200);
 }
 
 export function editTemplate(name) {
@@ -46,14 +47,12 @@ export function editTemplate(name) {
 }
 
 export function saveTemplate() {
-  experiencesPage.saveButton.click();
+  browser.keys('Tab');
+  browser.pause(2000);
 }
-
 export function clickAddProperty() {
-  experiencesPage.addProperty.waitForVisible();
   experiencesPage.addProperty.click();
 }
-
 export function verifyPropertyTypes() {
   return (
     experiencesPage.textProperty.isVisible() &&
@@ -61,36 +60,26 @@ export function verifyPropertyTypes() {
     experiencesPage.boolProperty.isVisible()
   );
 }
-var element;
 export function clickProperty(type) {
-  if (type == 'Text') element = experiencesPage.textProperty;
-  else if (type == 'Integer') element = experiencesPage.integerProperty;
+  let element;
+  if (type == constants.TemplateProperties.Types.text) element = experiencesPage.textProperty;
+  else if (type == constants.TemplateProperties.Types.int) element = experiencesPage.integerProperty;
   else element = experiencesPage.boolProperty;
-  element.waitForVisible();
   element.click();
 }
-
-export function verifyPropertyModal() {
-  return element.isVisible() && experiencesPage.propertyName.isVisible() && experiencesPage.propertyKey.isVisible();
-}
-
-export function addProperty(name) {
-  experiencesPage.propertyName.waitForVisible();
+export function addNameForProperty(name) {
   experiencesPage.propertyName.setValue(name);
-  experiencesPage.createProperty.click();
+  saveTemplate();
 }
-
-export function verifyPropertyIsAdded() {
-  experiencesPage.saveButton.waitForVisible();
-  //console.log("*********" + experiencesPage.properties.getText());
-  //return experiencesPage.properties.getText().includes(name);
+export function clearPropertyName() {
+  experiencesPage.propertyName.clearElement();
 }
-
-export function clickBack() {
-  experiencesPage.backButton.waitForVisible();
-  experiencesPage.backButton.click();
+export function verifyPropertyIsAdded(name) {
+  return experiencesPage.propertyTitle.getText().includes(name);
 }
-
 export function verifyAddPropertyPage() {
   return experiencesPage.addProperty.isVisible();
+}
+export function toggleProperty() {
+  experiencesPage.toggleIcon.click();
 }
