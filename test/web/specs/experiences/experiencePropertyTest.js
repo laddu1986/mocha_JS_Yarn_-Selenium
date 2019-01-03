@@ -36,7 +36,6 @@ describe(`Experience Template Tests`, () => {
     clickCreateTemplate();
     createExperienceTemplate(experienceTemplateName);
   });
-
   it('Click Add Property button --> All property types are displayed', () => {
     clickAddProperty();
     expect(verifyPropertyTypes()).to.equal(true, 'Not all property types are shown correctly');
@@ -50,59 +49,59 @@ describe(`Experience Template Tests`, () => {
     clickProperty(constants.TemplateProperties.Types.text);
     addNameForProperty(textProperty);
     browser.refresh();
-    expect(verifyPropertyIsAdded(textProperty)).to.equal(true, "Text property is not added");
+    expect(verifyPropertyIsAdded(textProperty)).to.equal(true, 'Text property is not added');
   });
   it(`Rename Text property ${lib.Tags.smokeTest}`, () => {
     toggleProperty();
     clearPropertyName();
     addNameForProperty(newTextProperty);
     browser.refresh();
-    expect(verifyPropertyIsAdded(newTextProperty)).to.equal(true, "Text property is not renamed successfully");
+    expect(verifyPropertyIsAdded(newTextProperty)).to.equal(true, 'Text property is not renamed successfully');
   });
   it(`Delete Text property ${lib.Tags.smokeTest}`, () => {
     clickMoreButton();
     clickDeleteFromCard();
     clickSureButton();
     expect(verifyAddPropertyPage()).to.equal(true, 'Text property is not deleted');
-  })
+  });
   it('Create Integer property', () => {
     clickAddProperty();
     clickProperty(constants.TemplateProperties.Types.int);
     addNameForProperty(integerProperty);
     browser.refresh();
-    expect(verifyPropertyIsAdded(integerProperty)).to.equal(true, "Integer property is not added");
+    expect(verifyPropertyIsAdded(integerProperty)).to.equal(true, 'Integer property is not added');
   });
   it(`Rename Integer property ${lib.Tags.smokeTest}`, () => {
     toggleProperty();
     clearPropertyName();
     addNameForProperty(newIntProperty);
     browser.refresh();
-    expect(verifyPropertyIsAdded(newIntProperty)).to.equal(true, "Integer property is not renamed successfully");
+    expect(verifyPropertyIsAdded(newIntProperty)).to.equal(true, 'Integer property is not renamed successfully');
   });
   it('Delete Integer property', () => {
     clickMoreButton();
     clickDeleteFromCard();
     clickSureButton();
     expect(verifyAddPropertyPage()).to.equal(true, 'Integer property is not deleted');
-  })
+  });
   it('Create Boolean property', () => {
     clickAddProperty();
     clickProperty(constants.TemplateProperties.Types.bool);
     addNameForProperty(boolProperty);
     browser.refresh();
-    expect(verifyPropertyIsAdded(boolProperty)).to.equal(true, "Boolean property is not added");
+    expect(verifyPropertyIsAdded(boolProperty)).to.equal(true, 'Boolean property is not added');
   });
   it(`Rename Boolean property ${lib.Tags.smokeTest}`, () => {
     toggleProperty();
     clearPropertyName();
     addNameForProperty(newBoolProperty);
     browser.refresh();
-    expect(verifyPropertyIsAdded(newBoolProperty)).to.equal(true, "Boolean property is not renamed successfully");
+    expect(verifyPropertyIsAdded(newBoolProperty)).to.equal(true, 'Boolean property is not renamed successfully');
   });
   it('Delete Boolean property', () => {
     clickMoreButton();
     clickDeleteFromCard();
     clickSureButton();
     expect(verifyAddPropertyPage()).to.equal(true, 'Boolean property is not deleted');
-  })
+  });
 });

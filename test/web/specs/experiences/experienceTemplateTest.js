@@ -34,6 +34,7 @@ describe(`Experience Template Tests`, () => {
     createAccount();
     createSpace();
   });
+
   it(`Go to experience template page --> Create experience button and link appears ${lib.Tags.smokeTest}`, () => {
     goToExperiencePage();
     goToTemplateTab();
@@ -68,7 +69,7 @@ describe(`Experience Template Tests`, () => {
     saveTemplate();
     goToExperiencePage();
     goToTemplateTab();
-    verifyTemplateCard(newName)
+    verifyTemplateCard(newName);
   });
 
   it('Delete Template --> verify notification message and template(s) page', () => {

@@ -56,5 +56,4 @@ class ExperienceTemplatePage {
     return browser.element("//button[@data-qa='btn:toggle-expansion']");
   }
 }
-
 export default new ExperienceTemplatePage();
