@@ -1,4 +1,5 @@
 import experiencesPage from 'page_objects/experienceTemplatePage';
+import { clickMoreButton, clickDeleteFromCard, clickSureButton } from 'actions/common';
 import * as constants from 'constants.json';
 export function goToTemplateTab() {
   experiencesPage.templateTab.click();
@@ -70,6 +71,20 @@ export function verifyPropertyIsAdded(name) {
 export function verifyAddPropertyPage() {
   return experiencesPage.addProperty.isVisible();
 }
-export function toggleProperty() {
+export function addProperty(type, name) {
+  clickAddProperty();
+  clickProperty(type);
+  addNameForProperty(name);
+  browser.refresh();
+}
+export function renameProperty(name) {
   experiencesPage.toggleIcon.click();
+  clearPropertyName();
+  addNameForProperty(name);
+  browser.refresh();
+}
+export function deleteProperty() {
+  clickMoreButton();
+  clickDeleteFromCard();
+  clickSureButton();
 }
