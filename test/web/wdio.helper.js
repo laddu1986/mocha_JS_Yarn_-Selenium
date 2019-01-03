@@ -93,7 +93,7 @@ function selectBrowser(browser) {
 
 function getEndPoints() {
   let environment = getArg('env');
-  environment = environment == '' ? 'STAGE' : environment.toUpperCase();
+  environment = environment == '' ? 'DEV' : environment.toUpperCase();
   /* eslint-disable no-undef */
   baseURL = process.env[`WEB_${environment}`];
   MySqlDb = process.env[`MYSQL_DBNAME_${environment}`];
