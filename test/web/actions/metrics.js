@@ -4,7 +4,7 @@ import UsersPage from 'page_objects/usersPage';
 import Constants from 'constants.json';
 
 const header = {
-  Host: 'client.appcurator.io',
+  Host: 'client.mtribes.io',
   Accept: '*/*',
   'Accept-Language': 'en-US,en;q=0.5',
   'Accept-Encoding': 'gzip, deflate, br',
@@ -19,7 +19,7 @@ var request, apiUrl, api;
 
 export async function addVisitor(count, key) {
   api = key;
-  apiUrl = `https://client.appcurator.io/e?k=${api}`;
+  apiUrl = `https://client.mtribes.io/e?k=${api}`;
   for (var i = 0; i < count; i++) {
     request = {
       api: apiUrl,
@@ -42,7 +42,7 @@ export async function addVisitor(count, key) {
 }
 export async function addUsers(count, key) {
   api = key;
-  apiUrl = `https://client.appcurator.io/e?k=${api}`;
+  apiUrl = `https://client.mtribes.io/e?k=${api}`;
   for (var i = 0; i < count; i++) {
     request = {
       api: apiUrl,
