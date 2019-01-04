@@ -19,6 +19,7 @@ var createExperienceResponse,
   updateExperienceResponse,
   experienceTemplateResponse,
   experienceTemplatesResponse,
+  deletePropertyResponse,
   deleteExperienceResponse;
 export var experienceTemplateObject = new Object();
 
@@ -30,7 +31,6 @@ describe('Tests for experience templates for a space', () => {
     await createSpace(experienceTemplateObject);
     createExperienceResponse = await createExperienceTemplate(experienceTemplateObject);
   });
-
   it('Mutation - createExperienceTemplate', () => {
     expect(createExperienceResponse.response.statusCode).to.equal(200);
     joi.assert(
@@ -38,7 +38,6 @@ describe('Tests for experience templates for a space', () => {
       experienceTemplateSchema(experienceTemplateObject.experienceName, experienceTemplateObject)
     );
   });
-
   it('Mutation - updateExperienceTemplate', async () => {
     updateExperienceResponse = await updateExperienceTemplate(experienceTemplateObject);
     expect(updateExperienceResponse.response.statusCode).to.equal(200);
@@ -47,7 +46,6 @@ describe('Tests for experience templates for a space', () => {
       updateExperienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
     );
   });
-
   it('Query - experienceTemplate', async () => {
     experienceTemplateResponse = await getExperienceTemplate(experienceTemplateObject);
     expect(experienceTemplateResponse.response.statusCode).to.equal(200);
@@ -56,7 +54,14 @@ describe('Tests for experience templates for a space', () => {
       updateExperienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
     );
   });
-
+  it('Mutation - updateExperienceTemplate --> Deleting properties', async () => {
+    deletePropertyResponse = await updateExperienceTemplate(experienceTemplateObject, "noProperty");
+    expect(deletePropertyResponse.response.statusCode).to.equal(200);
+    joi.assert(
+      deletePropertyResponse.response.body.data.updateExperienceTemplate.template,
+      experienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
+    );
+  });
   it('Query - experienceTemplates', async () => {
     experienceTemplatesResponse = await getExperiencesTemplate(experienceTemplateObject);
     expect(experienceTemplatesResponse.response.statusCode).to.equal(200);
@@ -65,7 +70,6 @@ describe('Tests for experience templates for a space', () => {
       getExperiencesTemplateSchema(experienceTemplateObject)
     );
   });
-
   it('Mutation - deleteExperienceTemplate', async () => {
     deleteExperienceResponse = await deleteExperienceTemplate(experienceTemplateObject);
     expect(deleteExperienceResponse.response.statusCode).to.equal(200);

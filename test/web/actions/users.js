@@ -1,6 +1,6 @@
 import * as lib from '../common';
 import UsersPage from 'page_objects/usersPage';
-import CommonPage from 'page_objects/common';
+import { clickSureButton } from 'actions/common';
 import Constants from 'constants.json';
 import { clickOnAudienceLink } from 'actions/navBar';
 
@@ -99,7 +99,7 @@ export function verifySideBar(userType) {
 export function deleteUser() {
   UsersPage.userActions.click();
   UsersPage.deleteUserButton.click();
-  CommonPage.iAmSureButton.click();
+  clickSureButton();
 }
 
 var userInputLabels = [],

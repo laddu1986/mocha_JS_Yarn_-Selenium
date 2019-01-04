@@ -24,6 +24,9 @@ export function clickSettingsFromCard() {
 export function clickDeleteFromCard() {
   CommonPage.deleteOnCard.click();
 }
+export function clickSureButton(){
+  CommonPage.iAmSureButton.click();
+}
 
 export function verifyDeleteModal() {
   return CommonPage.confirmInput.isVisible();
