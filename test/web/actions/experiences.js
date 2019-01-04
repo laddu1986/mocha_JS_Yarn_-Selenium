@@ -59,6 +59,7 @@ export function clickProperty(type) {
   element.click();
 }
 export function addNameForProperty(name) {
+  browser.pause(1000);
   experiencesPage.propertyName.setValue(name);
   saveTemplate();
 }
@@ -79,9 +80,11 @@ export function addProperty(type, name) {
 }
 export function renameProperty(name) {
   experiencesPage.toggleIcon.click();
-  clearPropertyName();
-  addNameForProperty(name);
-  browser.refresh();
+  if (experiencesPage.propertyName.isVisible()) {
+    clearPropertyName();
+    addNameForProperty(name);
+    browser.refresh();
+  }
 }
 export function deleteProperty() {
   clickMoreButton();
