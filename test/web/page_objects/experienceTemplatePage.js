@@ -26,9 +26,34 @@ class ExperienceTemplatePage {
   get templateCard() {
     return browser.element("//a[@data-qa='link:card']//div//h2");
   }
-  get saveButton() {
-    return browser.element("//button[@data-qa='edit-template:save']//span");
+  get properties() {
+    return browser.element("//section[@data-qa='page:experience-template']//div//div[2]");
+  }
+
+  // property types
+  get addProperty() {
+    return browser.element("//button[@data-qa='btn:add-property']");
+  }
+  get textProperty() {
+    return browser.element("//button[@data-qa='btn:property-type:text']");
+  }
+  get integerProperty() {
+    return browser.element("//button[@data-qa='btn:property-type:integer']");
+  }
+  get boolProperty() {
+    return browser.element("//button[@data-qa='btn:property-type:boolean']");
+  }
+  get propertyTitle() {
+    return browser.element("//h2[@data-qa='property-name']");
+  }
+  get propertyName() {
+    return browser.element("//div[@data-qa='input:name']//input[@data-qa='input:text']");
+  }
+  get propertyKey() {
+    return browser.element("//div[@data-qa='input:key']//input[@data-qa='input:text']");
+  }
+  get toggleIcon() {
+    return browser.element("//button[@data-qa='btn:toggle-expansion']");
   }
 }
-
 export default new ExperienceTemplatePage();
