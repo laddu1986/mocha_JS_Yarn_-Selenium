@@ -89,6 +89,7 @@ describe('Tribe Actions Tests', () => {
     removeImage();
     expect(verifyBrowseLink()).to.equal(true, 'Tribe wallpaper browse link is not shown on tribe detail page');
     submit();
+    browser.pause(2000);
     expect(getTribeCardStyle()).to.include('background');
   });
 
@@ -116,8 +117,9 @@ describe('Tribe Actions Tests', () => {
     uploadImage();
     waitForWallpaperPreview();
     closeModal();
-    expect(getTribeCardStyle()).to.include('background');
+    expect(getTribeCardStyle()).to.include('background', 'The wallpaper is saved even after cancelling the save');
   });
+
   it('Cancel the customize model --> verify wallpaper is not saved on all tribes page', () => {
     clickOnAudienceLink();
     expect(getTribeCardStyle()).to.include('background');

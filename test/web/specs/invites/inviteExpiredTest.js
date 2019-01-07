@@ -24,7 +24,6 @@ import SignInPage from 'page_objects/signInPage';
 import message from 'data/messages.json';
 import passiveNotification from 'data/passiveNotification.json';
 import constants from 'constants.json';
-
 let newUser, invitationURL, accountData;
 
 describe('New User accesses an Expired Invitation', () => {
@@ -50,6 +49,7 @@ describe('New User accesses an Expired Invitation', () => {
     goToInactiveTab();
     expect(inviteStatus()).to.deep.equal(constants.InviteStatus.Expired);
     signOut();
+    browser.pause(1000);
   });
 
   it('Clicking Invite link  -->  Redirects to Expired invitation page', () => {
@@ -57,7 +57,7 @@ describe('New User accesses an Expired Invitation', () => {
     expect(expiredInvitationText()).to.include(message.invite.expiredInvitation);
   });
 
-  it('Admin logs in and go to inactive invite tab', () => {
+  it('Admin logs in and goes to inactive invite tab', () => {
     SignInPage.open();
     signIn(accountData.email, accountData.password);
     browser.pause(1500); // workaround for Bug: ACT-299. will be removed after bugfix
