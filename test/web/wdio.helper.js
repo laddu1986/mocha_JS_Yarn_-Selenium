@@ -104,6 +104,9 @@ function getEndPoints() {
   organizations = process.env[`API_ORGANIZATIONS_${environment}`];
   memberships = process.env[`API_MEMBERSHIPS_${environment}`];
   spaces = process.env[`API_SPACES_${environment}`];
+  users = process.env[`API_USER_${environment}`];
+  demospace = process.env[`SPARK_${environment}`];
+  userHost = process.env[`USER_HOST_${environment}`];
   return baseURL;
   /* eslint-enable no-undef */
 }

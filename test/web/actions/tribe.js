@@ -69,9 +69,12 @@ export function verifyTribeCardColour(count) {
 }
 
 export function verifyTitleOnCard(name, count) {
-  if (TribePage.tribeCardTitle.value[count].getText() === name) {
-    return true;
-  }
+  browser.waitUntil(
+    () => TribePage.tribeCardTitle.value[count].getText() === name,
+    5000,
+    'Title on card is not correct',
+    200
+  );
 }
 
 export function verifyTribe(type, value) {
@@ -192,12 +195,16 @@ export function selectProperty(count) {
     .getText()
     .replace(/>/g, '')
     .trim();
-  TribePage.properties.value[count].click();
-  return propertyName;
+  if (TribePage.properties.value[count].isVisible()) {
+    TribePage.properties.value[count].click();
+    return propertyName;
+  }
 }
 
 export function selectOperator(count) {
-  TribePage.operators.value[count].click();
+  if (TribePage.operators.value[count].isVisible()) {
+    TribePage.operators.value[count].click();
+  }
 }
 
 export function input(data) {
