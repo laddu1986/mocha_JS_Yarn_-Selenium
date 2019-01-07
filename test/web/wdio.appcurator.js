@@ -9,7 +9,7 @@ exports.config = {
   specs: [
     'specs/**/*Test.js' //master
   ],
-  exclude: ['specs/support/helpPageTest.js'],
+  exclude: ['specs/support/helpPageTest.js', 'specs/experiences/*Test.js'],
   suites: {
     smoke: [
       'specs/accounts/createAccountTest.js',
