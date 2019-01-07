@@ -3,6 +3,7 @@ import CommonPage from 'page_objects/common';
 import NavBar from 'page_objects/navBar';
 import SignInPage from 'page_objects/signInPage';
 import { hideIntercom } from 'actions/common';
+import * as validationMessage from 'data/messages';
 
 export function verifyIncorrectSignIn() {
   return SignInPage.incorrectDetails.getText();
@@ -17,6 +18,21 @@ export function signIn(email, password) {
   SignInPage.passwordInput.setValue(password);
   CommonPage.submitButton.click();
   hideIntercom();
+}
+
+export function verifySignInError() {
+  browser.waitUntil(
+    () => SignInPage.passwordError.getText() === validationMessage.login.invalidLogin,
+    5000,
+    'Error did not appear for password field',
+    200
+  );
+  browser.waitUntil(
+    () => SignInPage.emailError.getText() === validationMessage.login.invalidLogin,
+    5000,
+    'Error did not appear for email field',
+    200
+  );
 }
 
 export function submitEmail() {
