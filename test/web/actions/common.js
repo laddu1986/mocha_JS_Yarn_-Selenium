@@ -24,7 +24,7 @@ export function clickSettingsFromCard() {
 export function clickDeleteFromCard() {
   CommonPage.deleteOnCard.click();
 }
-export function clickSureButton(){
+export function clickSureButton() {
   CommonPage.iAmSureButton.click();
 }
 

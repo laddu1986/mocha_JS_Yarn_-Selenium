@@ -45,12 +45,12 @@ describe(`Create Tribe Tests ${lib.Tags.smokeTest}`, () => {
     title = lib.randomString.generate(5);
     clickCreateTribeLink();
     inputTribeDetails(title);
-    expect(verifyTitleOnCard(title, '0')).to.equal(true, 'The title on tribe details page does not show');
+    verifyTitleOnCard(title, '0');
   });
 
   it('Verify tribe title on all tribes page', () => {
     clickOnAudienceLink();
     browser.refresh();
-    expect(verifyTitleOnCard(title, '1')).to.equal(true, 'The title on all tribes page does not show');
+    verifyTitleOnCard(title, '1');
   });
 });

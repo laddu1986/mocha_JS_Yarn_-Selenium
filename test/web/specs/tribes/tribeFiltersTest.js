@@ -44,7 +44,7 @@ describe('Tribe Rule Filter Tests', () => {
     );
   });
 
-  it('Verify the Property filter', () => {
+  xit('Verify the Property filter', () => {
     clickFilter(Constants.TribeFilterTypes.Property);
     expect(verifyFilterOptions(Constants.TribeFilterTypes.Property)).to.equal(
       true,
@@ -52,7 +52,7 @@ describe('Tribe Rule Filter Tests', () => {
     );
   });
 
-  it('Verify the Operator filter', () => {
+  xit('Verify the Operator filter', () => {
     var type, name;
     for (var i = 0; i < 8; i++) {
       name = selectProperty(i);
@@ -70,6 +70,7 @@ describe('Tribe Rule Filter Tests', () => {
   });
 
   it('Verify date filter can be added', () => {
+    clickFilter(Constants.TribeFilterTypes.Property);
     var today = new Date();
     selectProperty('0');
     selectOperator('3');
