@@ -38,53 +38,47 @@ describe('User Labels Test', () => {
     clickUserRow(3);
   });
 
-  describe('Test Add and Delete a Label', () => {
-    it('Enter a label and verify it gets Saved', () => {
-      clickAddLabelButton();
-      inputLabelDetails(['testLabel123']);
-      expect(verifyAddedLabels()).to.equal(true, 'Label was not Added/Saved');
-    });
-
-    it('Delete the added Label', () => {
-      deleteLabels(['testLabel123']);
-      expect(verifyLabelDeleted()).to.equal(true, 'Label was not Deleted');
-    });
+  it('Enter a label and verify it gets Saved', () => {
+    clickAddLabelButton();
+    inputLabelDetails(['testLabel123']);
+    expect(verifyAddedLabels()).to.equal(true, 'Label was not Added/Saved');
   });
 
-  describe('Test with Multiple Labels and Sorting', () => {
-    it('Add multiple labels -> verify they are sorted alphabetically', () => {
-      gotoUsersTab();
-      clickUserRow(4);
-      var labelCount = Math.floor(Math.random() * 10 + 4);
-      addLabels(labelCount);
-      expect(verifyAddedLabels()).to.equal(true, 'Labels were not Added/Saved');
-    });
-
-    it('Verify label count on user row and clicking it re-directs to label details section', () => {
-      gotoUsersTab();
-      expect(verifyLabelCount()).to.equal(true, 'Label count incorrect in User row');
-      clickLabelCount();
-    });
+  it('Delete the added Label', () => {
+    deleteLabels(['testLabel123']);
+    expect(verifyLabelDeleted()).to.equal(true, 'Label was not Deleted');
   });
 
-  describe('Test Label suggestions', () => {
-    it('Add labels to a user', () => {
-      gotoUsersTab();
-      clickUserRow(5);
-      clickAddLabelButton();
-      inputLabelDetails(['dropdown', 'dropbox', 'dropkick', 'drop the beat']);
-    });
+  it('Add multiple labels -> verify they are sorted alphabetically', () => {
+    gotoUsersTab();
+    clickUserRow(4);
+    var labelCount = Math.floor(Math.random() * 10 + 4);
+    addLabels(labelCount);
+    expect(verifyAddedLabels()).to.equal(true, 'Labels were not Added/Saved');
+  });
 
-    it('Verify added labels appears in suggestions for other users', () => {
-      gotoUsersTab();
-      clickUserRow(6);
-      clickAddLabelButton();
-      expect(labelSuggestions('dr')).to.equal(true, 'Label Suggestion did not appear');
-    });
+  it('Verify label count on user row and clicking it re-directs to label details section', () => {
+    gotoUsersTab();
+    expect(verifyLabelCount()).to.equal(true, 'Label count incorrect in User row');
+    clickLabelCount();
+  });
 
-    it('Select a label from suggestions and verify it is Saved', () => {
-      selectLabelFromSuggestions('dropkick');
-      expect(verifyAddedLabels()).to.equal(true, 'Label was not Added/Saved');
-    });
+  it('Add labels to a user', () => {
+    gotoUsersTab();
+    clickUserRow(5);
+    clickAddLabelButton();
+    inputLabelDetails(['dropdown', 'dropbox', 'dropkick', 'drop the beat']);
+  });
+
+  it('Verify added labels appears in suggestions for other users', () => {
+    gotoUsersTab();
+    clickUserRow(6);
+    clickAddLabelButton();
+    expect(labelSuggestions('dr')).to.equal(true, 'Label Suggestion did not appear');
+  });
+
+  it('Select a label from suggestions and verify it is Saved', () => {
+    selectLabelFromSuggestions('dropkick');
+    expect(verifyAddedLabels()).to.equal(true, 'Label was not Added/Saved');
   });
 });

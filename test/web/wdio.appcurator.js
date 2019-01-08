@@ -1,15 +1,15 @@
 var helper = require('./wdio.helper');
 exports.config = {
   protocol: 'http',
-  host: 'selenium-hub',
+  host: process.env.SELENIUM_HOST,
   port: '4444',
-  path: '/wd/hub',
+  path: '',
   capabilities: helper.getBrowser(),
   updateJob: false,
   specs: [
     'specs/**/*Test.js' //master
   ],
-  exclude: ['specs/support/helpPageTest.js'],
+  exclude: ['specs/support/helpPageTest.js', 'specs/experiences/*Test.js'],
   suites: {
     smoke: [
       'specs/accounts/createAccountTest.js',
@@ -17,7 +17,9 @@ exports.config = {
       'specs/invites/inviteTest.js',
       'specs/organizations/createOrganizationTest.js',
       'specs/spaces/createSpaceTest.js',
-      'specs/tribes/createTribeTest.js'
+      'specs/tribes/createTribeTest.js',
+      'specs/experiences/experiencePropertyTest.js',
+      'specs/experiences/experienceTemplateTest.js'
     ],
     accounts: ['specs/accounts/*Test.js'],
     organizations: ['specs/organizations/*Test.js'],
@@ -26,6 +28,7 @@ exports.config = {
     invites: ['specs/invites/*Test.js'],
     tribes: ['specs/tribes/*Test.js'],
     metrics: ['specs/metrics/*Test.js'],
+    experiences: ['specs/experiences/*Test.js'],
     negative: ['specs/negativeSpecs/*/*Test.js']
   },
   logLevel: 'silent',
@@ -33,10 +36,10 @@ exports.config = {
   coloredLogs: true,
   baseUrl: helper.getEndPoints(),
   waitforTimeout: 20000,
-  maxInstances: 5,
+  maxInstances: process.env.MAX_INSTANCES,
   plugins: {},
   framework: 'mocha',
-  reporters: ['spec', 'html-format'],
+  reporters: ['spec', 'html-format', 'allure'],
   reporterOptions: {
     htmlFormat: {
       outputDir: 'reports'
@@ -46,7 +49,7 @@ exports.config = {
     ui: 'bdd',
     reporter: 'spec',
     compilers: ['js:babel-register'],
-    timeout: 20000,
+    timeout: 40000,
     grep: process.env.npm_config_grep
   },
   debug: false,

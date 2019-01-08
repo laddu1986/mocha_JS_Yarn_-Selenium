@@ -1,9 +1,9 @@
 import * as lib from '../common';
 import UsersPage from 'page_objects/usersPage';
-import CommonPage from 'page_objects/common';
+import { clickSureButton } from 'actions/common';
 import Constants from 'constants.json';
 import { clickOnAudienceLink } from 'actions/navBar';
-
+import Messages from 'data/messages.json';
 var flag,
   finalFlag = [],
   i = 0;
@@ -60,9 +60,16 @@ export function getFirstRowUserName() {
   return UsersPage.userNameRow.value[0].getText();
 }
 
-export function getResultText() {
-  browser.waitUntil(() => UsersPage.resultsText.getText() === 'Results', 5000, 'Results not displayed', 200);
-  return UsersPage.resultFoundText.getText();
+export function getResultText(value) {
+  let message;
+  if (value == 0 || value > 1) message = `${Messages.search.results}`;
+  else message = `${Messages.search.result}`;
+  browser.waitUntil(
+    () => UsersPage.resultFoundText.getText() === `${value} ${message}`,
+    5000,
+    'Results not displayed',
+    200
+  );
 }
 
 export function clearText() {
@@ -99,7 +106,7 @@ export function verifySideBar(userType) {
 export function deleteUser() {
   UsersPage.userActions.click();
   UsersPage.deleteUserButton.click();
-  CommonPage.iAmSureButton.click();
+  clickSureButton();
 }
 
 var userInputLabels = [],

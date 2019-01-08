@@ -3,7 +3,7 @@ import NavBar from 'page_objects/navBar';
 import TeamPage from 'page_objects/teamPage';
 import Common from 'page_objects/common';
 import OrgDashboardPage from 'page_objects/orgDashboardPage';
-import { closePassiveNotification } from 'actions/common';
+import { closePassiveNotification, clickSureButton } from 'actions/common';
 
 var id;
 var createdTime;
@@ -81,7 +81,7 @@ export function inviteTeammate(mail, counta) {
 
 export function revokeInvite() {
   TeamPage.revokeButton.click();
-  Common.iAmSureButton.click();
+  clickSureButton();
 }
 
 export function resendInvite() {
@@ -96,12 +96,12 @@ export function getInviteTokenFromDB(email) {
   return new Promise((resolve, reject) => {
     mysql
       .authenticate()
-      .then(function() {
+      .then(function () {
         Invites.findAll({
           attributes: ['Id', 'Email', 'CreatedTime'],
           where: { Email: `${email}` },
-          order: [mysql.fn('max', mysql.col('CreatedTime'))]
-        }).then(function(result) {
+          order: mysql.literal('CreatedTime DESC')
+        }).then(function (result) {
           id = result[0].dataValues.Id;
           resolve(id);
         });
@@ -122,15 +122,15 @@ export async function updateTokenExpiryDateInDB(email) {
   return new Promise((resolve, reject) => {
     mysql
       .authenticate()
-      .then(function() {
+      .then(function () {
         Invites.findAll({
           attributes: ['Id', 'Email', 'CreatedTime'],
           where: { Email: `${email}` },
-          order: [mysql.fn('max', mysql.col('CreatedTime'))]
-        }).then(function(result) {
+          order: mysql.literal('CreatedTime DESC')
+        }).then(function (result) {
           id = result[0].dataValues.Id;
           createdTime = result[0].dataValues.CreatedTime;
-          Invites.update({ ExpiryDate: createdTime }, { where: { Id: id } }).then(function() {
+          Invites.update({ ExpiryDate: createdTime }, { where: { Id: id } }).then(function () {
             resolve(id);
           });
         });

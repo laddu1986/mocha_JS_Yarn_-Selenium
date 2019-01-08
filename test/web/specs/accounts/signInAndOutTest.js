@@ -1,8 +1,7 @@
 import * as lib from '../../common';
 import SignInPage from 'page_objects/signInPage';
-import { signIn, clearPlaceholder, verifySignIn } from 'actions/login';
+import { signIn, clearPlaceholder, verifySignIn, verifySignInError } from 'actions/login';
 import { signOut, verifySignOut } from 'actions/navBar';
-import * as validationMessage from 'data/messages';
 
 describe(`Sign In/Out Test ${lib.Tags.smokeTest}`, () => {
   before('Open Sign In page', () => {
@@ -12,8 +11,7 @@ describe(`Sign In/Out Test ${lib.Tags.smokeTest}`, () => {
   it('Sign In with Blank data --> Throws an error', () => {
     clearPlaceholder();
     signIn('', '');
-    expect(SignInPage.emailError.getText()).to.equal(validationMessage.login.invalidLogin);
-    expect(SignInPage.passwordError.getText()).to.equal(validationMessage.login.invalidLogin);
+    verifySignInError();
   });
 
   it('Sign In with correct credentials --> successful', () => {
