@@ -4,19 +4,13 @@ import UsersPage from 'page_objects/usersPage';
 import Constants from 'constants.json';
 
 const header = {
-  /*eslint-disable */
-  Host: userHost,
-  /*eslint-enable */
+  Host: userHost, // eslint-disable-line
   Accept: '*/*',
   'Accept-Language': 'en-US,en;q=0.5',
   'Accept-Encoding': 'gzip, deflate, br',
-  /*eslint-disable */
-  Referer: demospace,
-  /*eslint-enable */
+  Referer: demospace, // eslint-disable-line
   'Content-Type': 'text/plain',
-  /*eslint-disable */
-  Origin: demospace,
-  /*eslint-enable */
+  Origin: demospace, // eslint-disable-line
   'User-Agent':
     'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'
 };
@@ -25,9 +19,7 @@ var request, apiUrl, api;
 
 export async function addVisitor(count, key) {
   api = key;
-  /*eslint-disable */
-  apiUrl = `${users}${api}`;
-  /*eslint-enable */
+  apiUrl = `${users}${api}`; // eslint-disable-line
   for (var i = 0; i < count; i++) {
     request = {
       api: apiUrl,
@@ -50,9 +42,7 @@ export async function addVisitor(count, key) {
 }
 export async function addUsers(count, key) {
   api = key;
-  /*eslint-disable */
-  apiUrl = `${users}${api}`;
-  /*eslint-enable */
+  apiUrl = `${users}${api}`; // eslint-disable-line
   for (var i = 0; i < count; i++) {
     request = {
       api: apiUrl,
