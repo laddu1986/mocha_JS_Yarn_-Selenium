@@ -1,0 +1,40 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: web-test-cron
+spec:
+  schedule: "*/4 * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      activeDeadlineSeconds: 210
+      template:
+        spec:
+          volumes:
+            - name: test-report-web
+              persistentVolumeClaim:
+                claimName: test-report
+          imagePullSecrets:
+            - name: hs-index-docker-io-v2-autobuilder-hs
+          containers:
+            - name: web-test-cron
+              image: massiveinteractive/qa-web:v181208-034854
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - configMapRef:
+                    name: qa-config
+              command: ["/bin/sh", "-c"]
+              args:
+                - echo START;
+                  yarn run web --suite invites --browser:chrome_headless;
+                  cp -R allure-results/* /app;
+                  echo END;
+              volumeMounts:
+                - mountPath: /app
+                  name: test-report-web
+          terminationGracePeriodSeconds: 30
+          restartPolicy: Never
+          nodeSelector:
+            kubernetes.io/hostname: ip-172-20-53-252.ap-southeast-2.compute.internal

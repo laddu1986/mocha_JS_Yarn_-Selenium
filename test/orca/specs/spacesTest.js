@@ -12,53 +12,34 @@ describe('Spaces Tests', () => {
     await login(createSpaceObject);
     await getOrganizations(createSpaceObject);
   });
-  describe('Mutation- Create Space', () => {
-    before(async () => {
-      createSpaceResponse = await createSpace(createSpaceObject);
-    });
-    it('Create space', () => {
-      expect(createSpaceResponse.response.statusCode).to.equal(200);
-      joi.assert(createSpaceResponse.response.body.data.createSpace.space, spaceSchema(createSpaceObject.spaceName));
-    });
+
+  it('Mutation- Create Space', async () => {
+    createSpaceResponse = await createSpace(createSpaceObject);
+    expect(createSpaceResponse.response.statusCode).to.equal(200);
+    joi.assert(createSpaceResponse.response.body.data.createSpace.space, spaceSchema(createSpaceObject.spaceName));
   });
 
-  describe('Mutation- Update Space', () => {
-    before(async () => {
-      updateSpaceResponse = await updateSpace(createSpaceObject);
-    });
-    it('Update space', () => {
-      expect(updateSpaceResponse.response.statusCode).to.equal(200);
-      joi.assert(updateSpaceResponse.response.body.data.updateSpace.space, spaceSchema(createSpaceObject.newSpaceName));
-    });
+  it('Mutation- Update Space', async () => {
+    updateSpaceResponse = await updateSpace(createSpaceObject);
+    expect(updateSpaceResponse.response.statusCode).to.equal(200);
+    joi.assert(updateSpaceResponse.response.body.data.updateSpace.space, spaceSchema(createSpaceObject.newSpaceName));
   });
 
-  describe('Query- Get Space By Slug', () => {
-    before(async () => {
-      getSpaceResponse = await getSpaceBySlug(createSpaceObject);
-    });
-    it('Get space by slug', () => {
-      expect(getSpaceResponse.response.statusCode).to.equal(200);
-      joi.assert(getSpaceResponse.response.body.data.spaceBySlug, spaceSchema(createSpaceObject.newSpaceName));
-    });
+  it('Query- Get Space By Slug', async () => {
+    getSpaceResponse = await getSpaceBySlug(createSpaceObject);
+    expect(getSpaceResponse.response.statusCode).to.equal(200);
+    joi.assert(getSpaceResponse.response.body.data.spaceBySlug, spaceSchema(createSpaceObject.newSpaceName));
   });
 
-  describe('Query- Get Space By ID', () => {
-    before(async () => {
-      getSpaceByIDResponse = await getSpace(createSpaceObject);
-    });
-    it('Get space by id', () => {
-      expect(getSpaceByIDResponse.response.statusCode).to.equal(200);
-      joi.assert(getSpaceByIDResponse.response.body.data.space, spaceSchema(createSpaceObject.newSpaceName));
-    });
+  it('Query- Get Space By ID', async () => {
+    getSpaceByIDResponse = await getSpace(createSpaceObject);
+    expect(getSpaceByIDResponse.response.statusCode).to.equal(200);
+    joi.assert(getSpaceByIDResponse.response.body.data.space, spaceSchema(createSpaceObject.newSpaceName));
   });
 
-  describe('Mutation- Delete Space', () => {
-    before(async () => {
-      deleteSpaceResponse = await deleteSpace(createSpaceObject);
-    });
-    it('Delete space', () => {
-      expect(deleteSpaceResponse.response.statusCode).to.equal(200);
-      expect(deleteSpaceResponse.response.body.data.deleteSpace).to.equal(true);
-    });
+  it('Mutation- Delete Space', async () => {
+    deleteSpaceResponse = await deleteSpace(createSpaceObject);
+    expect(deleteSpaceResponse.response.statusCode).to.equal(200);
+    expect(deleteSpaceResponse.response.body.data.deleteSpace).to.equal(true);
   });
 });
