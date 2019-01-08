@@ -9,7 +9,7 @@ exports.config = {
   specs: [
     'specs/**/*Test.js' //master
   ],
-  exclude: ['specs/support/helpPageTest.js'],
+  exclude: ['specs/support/helpPageTest.js', 'specs/experiences/*Test.js'],
   suites: {
     smoke: [
       'specs/accounts/createAccountTest.js',
@@ -17,7 +17,9 @@ exports.config = {
       'specs/invites/inviteTest.js',
       'specs/organizations/createOrganizationTest.js',
       'specs/spaces/createSpaceTest.js',
-      'specs/tribes/createTribeTest.js'
+      'specs/tribes/createTribeTest.js',
+      'specs/experiences/experiencePropertyTest.js',
+      'specs/experiences/experienceTemplateTest.js'
     ],
     accounts: ['specs/accounts/*Test.js'],
     organizations: ['specs/organizations/*Test.js'],
@@ -26,6 +28,7 @@ exports.config = {
     invites: ['specs/invites/*Test.js'],
     tribes: ['specs/tribes/*Test.js'],
     metrics: ['specs/metrics/*Test.js'],
+    experiences: ['specs/experiences/*Test.js'],
     negative: ['specs/negativeSpecs/*/*Test.js']
   },
   logLevel: 'silent',
@@ -46,7 +49,7 @@ exports.config = {
     ui: 'bdd',
     reporter: 'spec',
     compilers: ['js:babel-register'],
-    timeout: 20000,
+    timeout: 40000,
     grep: process.env.npm_config_grep
   },
   debug: false,
