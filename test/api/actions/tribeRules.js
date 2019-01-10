@@ -4,9 +4,6 @@ import * as constants from 'constants.json';
 const PROTO_PATH = path.resolve(process.env.TRIBE_PROTO_DIR + 'segmentRulesService.proto');
 const client = caller(process.env.TRIBE_HOST, PROTO_PATH, 'SegmentRulesService');
 
-export var ActualFilters = [];
-export var ExpectedFilters = [];
-
 export function getConfiguration(responseObject) {
   const req = new client.Request('getConfiguration', {
     orgId: responseObject.orgID,
@@ -15,12 +12,12 @@ export function getConfiguration(responseObject) {
 
   return req.exec().then(response => {
     responseObject.ActiveDaysProperty = response.response.configuration.properties.filter(function(arrayItem) {
-      return arrayItem.label === constants.TribeRulesFilters.Properties.ActiveDays;
+      return arrayItem.label === constants.TribeRulesFilters.Properties.active_days;
     });
     responseObject.AnyValueOperator = response.response.configuration.operators.filter(function(arrayItem) {
       return (
-        arrayItem.label === constants.TribeRulesFilters.ActiveAverageOperators.HasAnyValue &&
-        arrayItem.groupLabel == undefined
+        arrayItem.label === constants.TribeRulesFilters.Operators.date_has_any_value &&
+        arrayItem.key == "date_has_any_value"
       );
     });
 
@@ -28,24 +25,6 @@ export function getConfiguration(responseObject) {
     responseObject.AnyValueOperator = responseObject.AnyValueOperator[0].id;
     return response;
   });
-}
-
-export function expectConfig(configObject, isProperties) {
-  if (isProperties) {
-    ExpectedFilters = Object.values(constants.TribeRulesFilters.Properties);
-  } else {
-    for (var key in constants.TribeRulesFilters.OtherOperators) {
-      ExpectedFilters.push(constants.TribeRulesFilters.OtherOperators[key]);
-    }
-    for (key in constants.TribeRulesFilters.ActiveAverageOperators) {
-      ExpectedFilters.push(constants.TribeRulesFilters.ActiveAverageOperators[key]);
-    }
-  }
-  for (key in configObject) {
-    ActualFilters.push(configObject[key].label);
-  }
-  ActualFilters.sort();
-  ExpectedFilters.sort();
 }
 
 export function saveRule(responseObject) {
