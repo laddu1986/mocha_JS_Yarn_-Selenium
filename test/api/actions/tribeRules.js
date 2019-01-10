@@ -12,13 +12,10 @@ export function getConfiguration(responseObject) {
 
   return req.exec().then(response => {
     responseObject.ActiveDaysProperty = response.response.configuration.properties.filter(function(arrayItem) {
-      return arrayItem.label === constants.TribeRulesFilters.Properties.active_days;
+      return arrayItem.key === 'active_days';
     });
     responseObject.AnyValueOperator = response.response.configuration.operators.filter(function(arrayItem) {
-      return (
-        arrayItem.label === constants.TribeRulesFilters.Operators.date_has_any_value &&
-        arrayItem.key == "date_has_any_value"
-      );
+      return arrayItem.key == 'integer_has_any_value';
     });
 
     responseObject.ActiveDaysProperty = responseObject.ActiveDaysProperty[0].id;
@@ -31,8 +28,8 @@ export function saveRule(responseObject) {
   const req = new client.Request('saveRule', {
     segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID },
     rule: {
-      audienceType: constants.TribeRulesFilters.APIAudienceType.User,
-      logicalType: constants.TribeRulesFilters.APILogicalType.And,
+      audienceType: constants.TribeRulesFilters.AudienceType.USER,
+      logicalType: constants.TribeRulesFilters.LogicalType.AND,
       filters: [
         {
           propertyId: responseObject.ActiveDaysProperty,

@@ -1,24 +1,21 @@
 import { joi } from '../common';
 import * as constants from 'constants.json';
 
-const UserCount = joi.number().integer();
-
 const UUID = joi.string().uuid();
 
-const FilterIdVal = joi.string().regex(/filter_id_val/);
-
-//const labels = Object.keys(constan)
-
-const configurationProperties =joi.array().items(
+const configurationProperties = joi.array().items(
   joi.object().keys({
     id: UUID.required(),
     label: joi.valid(Object.values(constants.TribeRulesFilters.Properties)).required(),
     type: joi.valid(Object.values(constants.TribeRulesFilters.OperandTypes)).required(),
-    allowedOperatorIds: joi.array().items(UUID).required(),
+    allowedOperatorIds: joi
+      .array()
+      .items(UUID)
+      .required(),
     groupLabel: joi.valid(constants.TribeRulesFilters.PropertyGroupLabels).required(),
     key: joi.valid(Object.keys(constants.TribeRulesFilters.Properties)).required()
   })
-)
+);
 
 const configurationOperators = joi.array().items(
   joi.object().keys({
@@ -28,44 +25,49 @@ const configurationOperators = joi.array().items(
     groupLabel: joi.valid(constants.TribeRulesFilters.OperandGroupLabels),
     key: joi.valid(Object.keys(constants.TribeRulesFilters.Operators)).required()
   })
-)
+);
 
-const Configuration = joi.object().keys({
+function filterRule(rulesData) {
+  return joi.object().keys({
+    audienceType: joi.valid(Object.values(constants.TribeRulesFilters.AudienceType)),
+    logicalType: joi.valid(Object.values(constants.TribeRulesFilters.LogicalType)),
+    filters: joi
+      .array()
+      .items(
+        joi.object().keys({
+          filterIdVal: UUID,
+          propertyId: joi.valid(rulesData.ActiveDaysProperty),
+          operatorId: joi.valid(rulesData.AnyValueOperator)
+        })
+      )
+      .required()
+  });
+}
+
+export const getConfiguration = joi.object().keys({
   configuration: joi.object().keys({
     properties: configurationProperties,
     operators: configurationOperators
   })
 });
 
-const Rule = joi.object().keys({
-  rule: joi.object().keys({
-    audienceType: joi
-      .number()
-      .max(1)
-      .required(),
-    logicalType: joi.number().max(1),
-    filters: joi.array().items(
-      joi
-        .object()
-        .keys({
-          filterId: FilterIdVal,
-          value: joi.string().regex(/int_value/),
-          filterIdVal: UUID.required(),
-          filterIdIsNull: joi.bool(),
-          propertyId: UUID.required(),
-          operatorId: UUID.required(),
-          intValue: joi.number().integer(),
-          stValue: joi.string()
-        })
-        .required()
-    )
-  })
-});
+export function saveRule(rulesData) {
+  return joi.object().keys({
+    success: joi.valid(true),
+    rule: filterRule(rulesData)
+  });
+}
 
-const EvaluateFilters = joi.object().keys({
+export function getRule(rulesData) {
+  return joi.object().keys({
+    rule: filterRule(rulesData)
+  });
+}
+
+export const evaluateRuleFilters = joi.object().keys({
   filterEstimates: joi.array().items(
     joi.object().keys({
-      filterId: FilterIdVal,
+      filterId: joi.string().regex(/filter_id_val/),
       filterIdVal: UUID.required(),
       filterIdIsNull: joi.bool(),
       userCount: joi.number().integer()
@@ -73,27 +75,25 @@ const EvaluateFilters = joi.object().keys({
   )
 });
 
-const EvaluateRule = joi.object().keys({
-  userCount: UserCount,
-  prevUserCount: UserCount,
-  activeUserCount: UserCount,
-  prevActiveUserCount: UserCount,
-  totalUsers: UserCount
+export const evaluateRule = joi.object().keys({
+  userCount: joi.number().integer(),
+  prevUserCount: joi.number().integer(),
+  activeUserCount: joi.number().integer(),
+  prevActiveUserCount: joi.number().integer(),
+  totalUsers: joi.number().integer()
 });
 
-const EvaluateRules = joi.object().keys({
+export const evaluateRules = joi.object().keys({
   ruleEstimates: joi
     .array()
     .items(
       joi.object().keys({
         value: joi.string().regex(/estimation_value/),
-        estimationValue: EvaluateRule,
+        estimationValue: evaluateRule,
         isNull: joi.bool()
       })
     )
     .required()
 });
 
-const SampleUsers = joi.object().keys({ userIds: joi.array().items(UUID) });
-
-export { EvaluateRule, EvaluateRules, Configuration, Rule, EvaluateFilters, SampleUsers };
+export const sampleUsers = joi.object().keys({ userIds: joi.array().items(UUID) });
