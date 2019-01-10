@@ -33,10 +33,10 @@ describe('Access a Revoked Invitation (New Account)', () => {
     goToInactiveTab();
     revokeInvite();
     expect(getNotificationMessageText()).to.include(passiveNotification.revokeInviteMessage.text);
-    signOut();
   });
 
   it('New User clicks on the Invite link --> Lands on Invalid invitation page', () => {
+    signOut();
     browser.url(invitationURL); //user clicks on Accept Invitation button from invite email
     expect(invalidInvitationText()).to.include(messagesData.invite.invalidInvitation);
   });

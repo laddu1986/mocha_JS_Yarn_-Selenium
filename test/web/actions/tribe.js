@@ -15,6 +15,7 @@ export function clickCreateTribeLink() {
 
 export function inputTribeDetails(name) {
   TribePage.titleField.setValue(name);
+  browser.keys('Tab');
 }
 
 export function verifyAllTribesPage() {
@@ -65,7 +66,7 @@ export function verifyTribeCardColour(count) {
     .split('rgb')[3]
     .replace(/\)/g, '')
     .trim();
-  return colorOnCard.includes(expectedColour);
+  browser.waitUntil(() => colorOnCard.includes(expectedColour), 5000, 'Tribe card colour is not correct', 200);
 }
 
 export function verifyTitleOnCard(name, count) {
@@ -97,11 +98,13 @@ export function goToTribeDetailPage() {
 }
 
 export function updateTribe(type, value) {
+  TribePage.titleField.clearElement();
   if (type === Constants.TribeAttributes.Title) {
     TribePage.titleField.setValue(value);
   } else {
     TribePage.taglineField.setValue(value);
   }
+  browser.keys('Tab');
 }
 
 export function deleteTribe() {
