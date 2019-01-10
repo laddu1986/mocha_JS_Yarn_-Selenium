@@ -14,7 +14,7 @@ export function identifySpaceUser(userData) {
     internalId: userData.userInternalID,
     email: userData.identityEmail,
     lastIpAddress: constants.UserDetails.IPAddress,
-    audienceType: constants.TribeRulesFilters.APIAudienceType.User,
+    audienceType: constants.UserType.User,
     lastDeviceType: constants.UserDetails.DeviceType,
     displayName: constants.UserDetails.DisplayName,
     lastLocation: constants.UserDetails.Location
