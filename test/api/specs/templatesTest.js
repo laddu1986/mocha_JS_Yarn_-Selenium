@@ -42,7 +42,7 @@ describe('Template API', () => {
       templateData.template.name
     );
     expect(createDuplicateTemplate.status.code).to.equal(0);
-    joi.assert(createTemplate.response, schemas.templateSchema(templateData));
+    joi.assert(createDuplicateTemplate.response, schemas.templateSchema(templateData));
   });
   it('Delete a template', async () => {
     let deleteTemplate = await templates.deleteExperienceTemplate(templateData);
