@@ -7,7 +7,7 @@ import {
   createCategory,
   renameCategory,
   deleteCategory,
-  waitForCategoryOptions,
+  verifyCategoryOptions,
   verifyRenamedTitle,
   verifyLastCategoryDeleted
 } from 'actions/tribeCategories';
@@ -22,7 +22,7 @@ describe('Tribe Categories Actions', () => {
   });
   it('Create a new category', () => {
     createCategory();
-    waitForCategoryOptions();
+    verifyCategoryOptions();
   });
 
   it('Rename a category', () => {

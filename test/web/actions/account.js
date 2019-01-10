@@ -3,6 +3,7 @@ import HomePage from 'page_objects/homePage';
 import AccountPage from 'page_objects/accountPage';
 import OrgDashboardPage from 'page_objects/orgDashboardPage';
 import CommonPage from 'page_objects/common';
+import NavBarPage from 'page_objects/navBar';
 import { confirmDelete, cancelDelete, typeDeleteToConfirm, hideIntercom } from 'actions/common';
 var name,
   email,
@@ -14,7 +15,6 @@ var name,
 export function createAccount(email) {
   inputDetails(email);
   submit();
-  HomePage.logo.waitForVisible();
   OrgDashboardPage.currentOrgName.waitForVisible();
   hideIntercom();
   return accountData;
@@ -53,15 +53,15 @@ export function submit() {
 }
 
 export function verifyOrgDashboardPageAppears() {
-  if ((HomePage.logo.isVisible() == true) & (OrgDashboardPage.currentOrgName.isVisible() == true)) {
+  if ((NavBarPage.backToOrgDashboardLink.isVisible() == true) & (OrgDashboardPage.currentOrgName.isVisible() == true)) {
     return true;
   } else {
     return false;
   }
 }
 
-export function joinOrgText() {
-  return AccountPage.joinOrgMsg.getText();
+export function verifyJoinOrgText(text) {
+  browser.waitUntil(() => AccountPage.joinOrgMsg.getText().includes(text), 5000, 'Join org text is not correct', 200);
 }
 
 export function createAccountToJoinInvitedOrg() {

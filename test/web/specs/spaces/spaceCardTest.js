@@ -27,10 +27,10 @@ describe('Space Card more button tests', () => {
   it('Clicking Settings --> takes user to settings page', () => {
     clickSettingsFromCard();
     expect(verifySpaceSettingsPage()).to.equal(true, 'Settings page is not shown correctly');
-    goBackToOrgDashboard();
-    clickMoreButton();
   });
   it('Clicking Delete --> Shows the delete modal', () => {
+    goBackToOrgDashboard();
+    clickMoreButton();
     clickDeleteFromCard();
     expect(verifyDeleteModal()).to.equal(true, 'Delete modal is not shown correctly');
   });
