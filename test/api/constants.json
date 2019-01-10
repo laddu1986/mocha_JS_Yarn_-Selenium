@@ -18,10 +18,8 @@
     "Tagline": "Tagline"
   },
   "UserType": {
-    "User": "User",
-    "Visitor": "Visitor",
-    "Active": "Active",
-    "New": "New"
+    "User": "USER",
+    "Visitor": "VISITOR"
   },
   "UserAttributes": {
     "Name": "Name",
