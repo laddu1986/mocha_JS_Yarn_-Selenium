@@ -6,7 +6,7 @@ TestCase: New User
   User accepts and lands on Join Org page
 */
 import * as lib from '../../common';
-import { createAccount, joinOrgText } from 'actions/account';
+import { createAccount, verifyJoinOrgText } from 'actions/account';
 import { submitButtonVisible } from 'actions/login';
 import { inviteStatus } from 'actions/invite';
 import {
@@ -48,11 +48,11 @@ describe('New User accesses an Expired Invitation', () => {
     goToTeammatesPage();
     goToInactiveTab();
     expect(inviteStatus()).to.deep.equal(constants.InviteStatus.Expired);
-    signOut();
-    browser.pause(1000);
   });
 
   it('Clicking Invite link  -->  Redirects to Expired invitation page', () => {
+    signOut();
+    browser.pause(1000);
     browser.url(invitationURL); //this is a replication of user clicking on Accept Invitation button from invite email
     expect(expiredInvitationText()).to.include(message.invite.expiredInvitation);
   });
@@ -63,22 +63,26 @@ describe('New User accesses an Expired Invitation', () => {
     browser.pause(1500); // workaround for Bug: ACT-299. will be removed after bugfix
     goToTeammatesPage();
     goToInactiveTab();
+    expect(inviteStatus()).to.deep.equal(constants.InviteStatus.Expired);
   });
 
   it('Resends Expired Invitation --> validate Passive Notification', () => {
     resendInvite();
-    const expectedPassiveNotificationMessage = `${passiveNotification.resendInviteMessage.text}${newUser}`;
+    let expectedPassiveNotificationMessage = `${passiveNotification.resendInviteMessage.text}${newUser}`;
     expect(getNotificationMessageText()).to.include(expectedPassiveNotificationMessage);
-    signOut();
   });
 
   it('User gets new Invitation eMail and Accepts Invite', async () => {
+    signOut();
     invitationURL = await invitationLink(newUser);
     browser.url(invitationURL);
   });
 
-  it('User lands on Create Account and Join org page', () => {
-    expect(joinOrgText()).to.include(accountData.organization);
+  it('lands on Create Account and Join Org page', () => {
+    verifyJoinOrgText(accountData.organization);
+  });
+
+  it('Submit button is visible for creating account to join org', () => {
     expect(submitButtonVisible()).to.equal(true);
   });
 });

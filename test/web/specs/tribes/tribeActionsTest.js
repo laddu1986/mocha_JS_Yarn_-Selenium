@@ -33,18 +33,24 @@ describe('Tribe Actions Tests', () => {
     expect(verifyTribeDetailpage()).to.equal(true, 'Tribe Details page is not displayed');
   });
 
-  it('Update the Tribe Title --> verify new name on all tribes and tribe detail page', () => {
+  it('Update the Tribe Title --> verify new name on all tribes', () => {
     updateTribe(Constants.TribeAttributes.Title, newName);
     verifyTribe(Constants.TribeAttributes.Title, newName);
+  });
+
+  it('Verify new name on tribe detail page', () => {
     clickOnAudienceLink();
     browser.refresh();
     verifyTribe(Constants.TribeAttributes.Title, newName);
   });
 
-  it('Delete Tribe --> verify the passive notification and redirection to all tribes page', () => {
+  it('Delete Tribe --> verify the passive notification', () => {
     goToTribeDetailPage();
     deleteTribe();
     expect(getNotificationMessageText()).to.include(`${PassiveNotification.deleteMessage.text}'${newName}'.`);
+  });
+
+  it('Verify redirection to all tribes page', () => {
     expect(verifyAllTribesPage()).to.equal(true, 'After deleting tribe redirection to all tribes page did not work');
   });
 });

@@ -8,9 +8,9 @@ const header = {
   Accept: '*/*',
   'Accept-Language': 'en-US,en;q=0.5',
   'Accept-Encoding': 'gzip, deflate, br',
-  Referer: demospace, // eslint-disable-line
+  Referer: `https://${demospace}demospace.org/`, // eslint-disable-line
   'Content-Type': 'text/plain',
-  Origin: demospace, // eslint-disable-line
+  Origin: `https://${demospace}demospace.org/`, // eslint-disable-line
   'User-Agent':
     'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'
 };
