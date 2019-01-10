@@ -1,4 +1,5 @@
 import { joi } from '../common';
+import * as constants from 'constants.json';
 
 const UserCount = joi.number().integer();
 
@@ -6,31 +7,33 @@ const UUID = joi.string().uuid();
 
 const FilterIdVal = joi.string().regex(/filter_id_val/);
 
+//const labels = Object.keys(constan)
+
+const configurationProperties =joi.array().items(
+  joi.object().keys({
+    id: UUID.required(),
+    label: joi.valid(Object.values(constants.TribeRulesFilters.Properties)).required(),
+    type: joi.valid(Object.values(constants.TribeRulesFilters.OperandTypes)).required(),
+    allowedOperatorIds: joi.array().items(UUID).required(),
+    groupLabel: joi.valid(constants.TribeRulesFilters.PropertyGroupLabels).required(),
+    key: joi.valid(Object.keys(constants.TribeRulesFilters.Properties)).required()
+  })
+)
+
+const configurationOperators = joi.array().items(
+  joi.object().keys({
+    id: UUID.required(),
+    label: joi.valid(Object.values(constants.TribeRulesFilters.Operators)).required(),
+    operandType: joi.valid(Object.values(constants.TribeRulesFilters.OperandTypes)),
+    groupLabel: joi.valid(constants.TribeRulesFilters.OperandGroupLabels),
+    key: joi.valid(Object.keys(constants.TribeRulesFilters.Operators)).required()
+  })
+)
+
 const Configuration = joi.object().keys({
   configuration: joi.object().keys({
-    properties: joi.array().items(
-      joi.object().keys({
-        id: UUID.required(),
-        label: joi.string().required(),
-        type: joi
-          .number()
-          .max(5)
-          .required(),
-        allowedOperatorIds: joi
-          .array()
-          .items(UUID)
-          .required(),
-        groupLabel: joi.string().required()
-      })
-    ),
-    operators: joi.array().items(
-      joi.object().keys({
-        id: UUID.required(),
-        label: joi.string().required(),
-        operandType: joi.number().max(5),
-        groupLabel: joi.string()
-      })
-    )
+    properties: configurationProperties,
+    operators: configurationOperators
   })
 });
 
