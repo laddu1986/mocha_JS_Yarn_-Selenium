@@ -19,9 +19,6 @@ const invite_email3 = `invite_3${lib.randomString.generate(5)}@test.co`;
 describe('Invite Tests', () => {
   before('Open App URL', () => {
     accountPage.open();
-  });
-
-  before(() => {
     createAccount();
     browser.pause(1000);
   });
@@ -47,8 +44,11 @@ describe('Invite Tests', () => {
     expect(sendInviteButtonEnabled()).to.equal(false);
   });
 
-  it('Validate inactive tab for the invites', () => {
+  it('Validate inactive tab for first invite', () => {
     expect(verifyInactiveInvite()).to.include(invite_email1);
+  });
+
+  it('Validate inactive tab for second invite', () => {
     expect(verifyInactiveInvite()).to.include(invite_email2);
   });
 

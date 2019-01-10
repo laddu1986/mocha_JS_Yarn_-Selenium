@@ -6,7 +6,7 @@ export function createCategory() {
   tribePage.insertCategoryButton.click();
 }
 
-export function waitForCategoryOptions() {
+export function verifyCategoryOptions() {
   browser.waitUntil(
     () => {
       return commonPage.moreButton.isVisible() && tribePage.categoryTitle.isVisible();
