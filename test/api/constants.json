@@ -36,20 +36,12 @@
   },
   "TribeRulesFilters": {
     "AudienceType": {
-      "User": "Users",
-      "Visitor": "Visitors"
-    },
-    "APIAudienceType": {
-      "User": "USER",
-      "Visitor": "VISITOR"
+      "VISITOR": "0",
+      "USER": "1"
     },
     "LogicalType": {
-      "Any": "any",
-      "All": "all"
-    },
-    "APILogicalType": {
-      "And": "AND",
-      "Or": "OR"
+      "AND": "0",
+      "OR": "1"
     },
     "Properties": {
       "created": "Created",
