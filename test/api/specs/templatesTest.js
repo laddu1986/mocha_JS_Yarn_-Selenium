@@ -4,7 +4,6 @@ import { postOrganization } from 'actions/organization';
 import { postSpaceByOrganizationId } from 'actions/spaces';
 import * as templates from 'actions/templates';
 import * as schemas from 'schemas/templatesSchema.js';
-
 const templateData = new Object();
 var createTemplate;
 
@@ -36,7 +35,7 @@ describe('Template API', () => {
   });
   it('Can create a template with a key existing in another space', async () => {
     await postSpaceByOrganizationId(templateData);
-    let createDuplicateTemplate = await templates.createExperienceTemplateValidations(
+    let createDuplicateTemplate = await templates.createExperienceTemplate(
       templateData,
       templateData.template.key,
       templateData.template.name
