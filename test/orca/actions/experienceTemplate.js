@@ -53,18 +53,21 @@ export function updateExperienceTemplate(responseData, propertyType) {
   var newName = `${randomString.generate(8)}_new`;
   const data = {
     query:
-      'mutation updateExperienceTemplate($input: UpdateExperienceTemplateInput!) { updateExperienceTemplate(input: $input) { template { id name key thumbnailUrl rowVersion properties{key typeKey name defaultValue appearanceKey promptText helpText localizable rules{key name}}}}}',
+      'mutation updateExperienceTemplate($input: UpdateExperienceTemplateInput!) { updateExperienceTemplate(input: $input) { template { id name key thumbnailUrl rowVersion properties{key typeKey name defaultValue appearanceKey promptText helpText localizable rules{constraint}}}}}',
     operationName: 'updateExperienceTemplate',
     variables: {
       input: {
         fields: {
           key: key,
           name: newName,
-          properties: propertyType == "noProperty" ? [] : [
-            { name: properties.p1, key: properties.k1, typeKey: Constants.TemplateProperties.Types.text },
-            { name: properties.p2, key: properties.k2, typeKey: Constants.TemplateProperties.Types.bool },
-            { name: properties.p3, key: properties.k3, typeKey: Constants.TemplateProperties.Types.int }
-          ]
+          properties:
+            propertyType == 'noProperty'
+              ? []
+              : [
+                  { name: properties.p1, key: properties.k1, typeKey: Constants.TemplateProperties.Types.Text },
+                  { name: properties.p2, key: properties.k2, typeKey: Constants.TemplateProperties.Types.Boolean },
+                  { name: properties.p3, key: properties.k3, typeKey: Constants.TemplateProperties.Types.Integer }
+                ]
         },
         organizationId: responseData.orgID,
         spaceId: responseData.spaceID,
@@ -93,7 +96,7 @@ export function updateExperienceTemplate(responseData, propertyType) {
 export function getExperienceTemplate(responseData) {
   const data = {
     query:
-      'query experienceTemplate($organizationId: ID!, $spaceId: ID!, $templateId: ID!) { experienceTemplate(organizationId: $organizationId , spaceId: $spaceId, templateId: $templateId) { id name key thumbnailUrl rowVersion properties{key typeKey name defaultValue appearanceKey promptText helpText localizable rules{key name}}}}',
+      'query experienceTemplate($organizationId: ID!, $spaceId: ID!, $templateId: ID!) { experienceTemplate(organizationId: $organizationId , spaceId: $spaceId, templateId: $templateId) { id name key thumbnailUrl rowVersion properties{key typeKey name defaultValue appearanceKey promptText helpText localizable rules{constraint}}}}',
     operationName: 'experienceTemplate',
     variables: {
       organizationId: responseData.orgID,
