@@ -1,6 +1,6 @@
 class ExperienceTemplatePage {
   get templateTab() {
-    return browser.element("//a[contains(text(),'Templates')]");
+    return browser.element("//a[@data-qa='tab:library']");
   }
   get createTemplateCTA() {
     return browser.element("//button[@data-qa='button:create-template']");

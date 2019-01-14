@@ -14,6 +14,18 @@ const protoTimeStamp = joi.object().keys({
   nanos: joi.number()
 });
 
+const textProp = joi.object().keys({
+  defaultValue: 'default_value_text',
+  rules: joi.array().items(
+    joi.object().keys({
+      required: joi.object().keys({
+        isRequired: true
+      }),
+      errorMessage: 'error_message_text'
+    })
+  )
+});
+
 function propertiesSchema(templateData) {
   if (templateData.template.properties !== undefined) {
     let names = templateData.template.properties.map(property => property.name);
@@ -22,7 +34,11 @@ function propertiesSchema(templateData) {
       joi.object().keys({
         name: joi.valid(names),
         key: joi.valid(keys),
-        typeKey: joi.valid(types)
+        typeKey: joi.valid(types),
+        text: textProp,
+        appearanceKey: joi.valid('appearance_key_text'),
+        promptText: joi.valid('prompt_text'),
+        localizable: joi.valid(true)
       })
     );
   } else {
@@ -37,6 +53,7 @@ export function templateSchema(templateData) {
       id: protoLong,
       key: joi.only(templateData.template.key),
       name: joi.only(templateData.template.name),
+      thumbnailUrl: joi.valid('thumbnail_url_text'),
       rowVersion: protoTimeStamp,
       properties: propertiesSchema(templateData)
     })
