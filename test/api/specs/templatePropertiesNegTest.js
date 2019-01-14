@@ -17,7 +17,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
     await postSpaceByOrganizationId(templateData);
     await createExperienceTemplate(templateData);
   });
-  it('Cannot create a property with an existing key', async () => {
+  it('C1458958 Cannot create a property with an existing key', async () => {
     await properties.createProperty(
       templateData,
       constants.TemplateProperties.Types.text,
@@ -36,7 +36,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
       expect(error.code).to.equal(3);
     });
   });
-  it('Cannot create a property with an empty key', () => {
+  it('C1458959 Cannot create a property with an empty key', () => {
     let createText = properties.createProperty(
       templateData,
       constants.TemplateProperties.Types.text,
@@ -50,7 +50,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
       expect(error.code).to.equal(3);
     });
   });
-  it('Cannot create a property with a key that starts with a number', () => {
+  it('C1458960 Cannot create a property with a key that starts with a number', () => {
     let createText = properties.createProperty(
       templateData,
       constants.TemplateProperties.Types.bool,
@@ -64,7 +64,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
       expect(error.code).to.equal(3);
     });
   });
-  it('Cannot create a property with a key that starts with an underscore', () => {
+  it('C1458961 Cannot create a property with a key that starts with an underscore', () => {
     let createText = properties.createProperty(
       templateData,
       constants.TemplateProperties.Types.int,
@@ -78,7 +78,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
       expect(error.code).to.equal(3);
     });
   });
-  it('Cannot create a property with a key that is greater than 40 characters', () => {
+  it('C1458962 Cannot create a property with a key that is greater than 40 characters', () => {
     let createText = properties.createProperty(
       templateData,
       constants.TemplateProperties.Types.text,
@@ -92,7 +92,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
       expect(error.code).to.equal(3);
     });
   });
-  it('Cannot create a property with a key that has a space', () => {
+  it('C1458963 Cannot create a property with a key that has a space', () => {
     let createText = properties.createProperty(
       templateData,
       constants.TemplateProperties.Types.bool,
@@ -106,7 +106,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
       expect(error.code).to.equal(3);
     });
   });
-  it('Cannot create a property with a key that has an invalid character', async () => {
+  it('C1458964 Cannot create a property with a key that has an invalid character', async () => {
     let errorCodeArray = [],
       errorResponseArray = [];
     for (var i = 0; i < data.invalidChars.length; i++) {
@@ -122,7 +122,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
     expect(errorResponseArray, `The characters [${errorResponseArray}] did not produce to right error message`).to.be
       .empty;
   });
-  it('Cannot create a property with a key that has a reserved word', async () => {
+  it('C1458965 Cannot create a property with a key that has a reserved word', async () => {
     let errorCodeArray = [],
       errorResponseArray = [];
     for (var i = 0; i < data.reservedWords.length; i++) {
