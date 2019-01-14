@@ -42,3 +42,58 @@ export const reservedWords = [
   "var", "void", "volatile", "while", 
   "with", "yield"
 ];
+
+export const textVal = {
+  defaultValue: 'default_value_text',
+  rules: [
+    {
+      characterCount: {
+        min: 1,
+        max: 10,
+        mode: 10
+      },
+      regex: {
+        pattern: 'pattern_text'
+      },
+      required: {
+        isRequired: true
+      },
+      errorMessage: 'error_message_text'
+    }
+  ]
+};
+
+export const intVal = {
+  default_value: 10,
+  rules: [
+    {
+      number_range: {
+        min: 0,
+        max: 10,
+        mode: 10
+      },
+      number_range_slider: {
+        min: 0,
+        max: 10,
+        mode: 10,
+        increment: 5
+      },
+      required: {
+        is_required: true
+      },
+      error_message: 'error_message_text'
+    }
+  ]
+};
+
+export const boolVal = {
+  default_value: true,
+  rules: [
+    {
+      required: {
+        is_required: true
+      },
+      error_message: 'error_message_text'
+    }
+  ]
+};
