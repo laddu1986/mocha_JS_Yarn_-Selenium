@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+import "spaceUserSummary.proto";
+
+package user;
+
+option go_package = "generated";
+
+message ListSpaceUsersRequest {
+    string space_id = 1;
+    string keyword = 2;
+    int32 limit = 3;
+}
+
+message ListSpaceUsersResponse {
+    repeated SpaceUserSummary users = 1;
+}

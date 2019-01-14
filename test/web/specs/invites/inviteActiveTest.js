@@ -34,12 +34,18 @@ describe(`New User Joins an Organization via ACTIVE invitation`, () => {
   it('C1295642 New User Accepts Invite and is taken to Join Org page', async () => {
     const expectedMsg = `Join ${accountData.organization}`;
     expect(AccountPage.joinOrgMsg.getText()).to.equal(expectedMsg);
-    expect(submitButtonText()).to.include('Create Account');
   });
 
-  it("C1295643 User's email field is disabled and pre-filled with invited Email", () => {
-    expect(AccountPage.emailInput.isEnabled()).to.equal(false);
-    expect(AccountPage.emailInput.getValue()).to.equal(newUser);
+  it('Verify the submit button text on join new org page', () => {
+    expect(submitButtonText()).to.include('Create Account', 'Submit button does not have create account text');
+  });
+
+  it('C1295643 User email field is disabled', () => {
+    expect(AccountPage.emailInput.isEnabled()).to.equal(false, 'Email field is not disabled');
+  });
+
+  it('User email field is pre-filled with invited Email', () => {
+    expect(AccountPage.emailInput.getValue()).to.equal(newUser, 'Email field is not pre-filled');
   });
 
   it('C1295644 Completes Account creation and lands on Invited OrgDashboard ', () => {

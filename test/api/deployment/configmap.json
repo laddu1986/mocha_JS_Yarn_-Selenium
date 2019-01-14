@@ -1,0 +1,29 @@
+{
+  "kind": "ConfigMap",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "qa-api",
+    "namespace": "development",
+    "annotations": {
+    }
+  },
+  "data": {
+    "API_ORGANIZATIONS_DEV" : "https://hub.mtribes.io/org/api/v1/organizations/",
+    "API_IDENTITIES_DEV" : "https://hub.mtribes.io/api/identities/",
+    "API_MEMBERSHIPS_DEV" : "https://hub.mtribes.io/org/api/v1/memberships/",
+    "API_SPACES_DEV" : "https://hub.mtribes.io/spaces/v1/organizations/",
+    "API_TOKEN_DEV" : "https://hub.mtribes.io/connect/token",
+    "API_KEYS_DEV" : "https://hub.mtribes.io/keys/v1/organizations/",
+    "API_INVITES_DEV" : "https://hub.mtribes.io/org/api/v1/invites/",
+    "API_METRICS_DEV" : "https://hub.mtribes.io/metrics/v1/organizations/",
+    "API_USER_DEV" : "https://client.mtribes.io/e?k=",
+    "USER_HOST_DEV" : "client.mtribes.io",
+    "SPARK_DEV" : "dev",
+    "TRIBE_HOST": "segrules-deployment.development:6823",
+    "USER_HOST": "user-deployment.development:7777",
+    "EXPERIENCE_HOST": "experience-deployment.development:7777",
+    "TRIBE_PROTO_DIR": "",
+    "USER_PROTO_DIR": "",
+    "EXPERIENCE_PROTO_DIR": ""
+  }
+ }

@@ -40,22 +40,34 @@ describe('Delete organization Tests', () => {
     expect(cancelDeleteOrg()).to.equal(true);
   });
 
-  it('C1295703 Delete 2nd last Org --> Passive notification displays and Re-directs to choose orgs page', () => {
+  it('Verify Confirm button for deleting org', () => {
     clickDeleteOrgButton();
-    expect(confirmButtonIsEnabled()).to.equal(false);
+    expect(confirmButtonIsEnabled()).to.equal(false, 'Confirm button is not disabled');
+  });
+
+  it('Verify confirm button enables after typing delete', () => {
     typeDeleteToConfirm();
-    expect(confirmButtonIsEnabled()).to.equal(true);
+    expect(confirmButtonIsEnabled()).to.equal(true, 'Confirm button is not enabled');
+  });
+
+  it('C1295703 Delete 2nd last Org --> Passive notification displays', () => {
     confirmDelete();
     expect(getNotificationMessageText()).to.include(orgNotificationData.deleteMessage.text);
+  });
+
+  it('Re-directs to choose orgs page', () => {
     closePassiveNotification();
     expect(verifyChooseOrgspage()).to.equal(true);
   });
 
-  it('C1295704 Delete Last Org --> Passive notification displays and Re-directs to no orgs page', () => {
+  it('C1295704 Delete Last Org --> Passive notification displays', () => {
     selectOrg();
     gotoOrgSettings();
     deleteOrganization();
     expect(getNotificationMessageText()).to.include(orgNotificationData.deleteMessage.text);
+  });
+
+  it('Re-directs to no orgs page', () => {
     closePassiveNotification();
     expect(verifyNoOrgPage()).to.equal(true);
   });

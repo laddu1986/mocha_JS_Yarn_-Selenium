@@ -12,7 +12,14 @@ var browsers = {
   chrome: {
     browserName: 'chrome',
     chromeOptions: {
-      args: ['--start-maximized', '--disable-infobars', '--incognito', '--ignore-certificate-errors', '--disable-gpu']
+      args: [
+        '--start-maximized',
+        '--disable-infobars',
+        '--incognito',
+        '--ignore-certificate-errors',
+        '--disable-gpu',
+        '--no-sandbox'
+      ]
     }
   },
   firefox: {
@@ -32,6 +39,9 @@ var browsers = {
     internetExplorerOptions: {
       args: ['--disable-infobars', '--incognito', '--ignore-certificate-errors', '--disable-gpu']
     }
+  },
+  opera: {
+    browserName: 'opera'
   }
 };
 
@@ -74,6 +84,8 @@ function selectBrowser(browser) {
       return browsers.safari;
     case 'ie':
       return browsers.ie;
+    case 'opera':
+      return browsers.opera;
     default:
       return browsers.chrome_headless;
   }
@@ -92,6 +104,9 @@ function getEndPoints() {
   organizations = process.env[`API_ORGANIZATIONS_${environment}`];
   memberships = process.env[`API_MEMBERSHIPS_${environment}`];
   spaces = process.env[`API_SPACES_${environment}`];
+  users = process.env[`API_USER_${environment}`];
+  demospace = process.env[`SPARK_${environment}`];
+  userHost = process.env[`USER_HOST_${environment}`];
   return baseURL;
   /* eslint-enable no-undef */
 }

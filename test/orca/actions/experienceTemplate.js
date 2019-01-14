@@ -1,16 +1,35 @@
 import { randomString, post, orca } from '../common';
+import * as Constants from '../constants.json';
+var key,
+  p1,
+  k1,
+  p2,
+  k2,
+  p3,
+  k3,
+  properties = { p1, k1, p2, k2, p3, k3 };
+properties.p1 = randomString.generate(8);
+properties.p2 = randomString.generate(8);
+properties.p3 = randomString.generate(8);
+properties.k1 = randomString.generate({ length: 6, charset: 'alphabetic' });
+properties.k2 = randomString.generate({ length: 6, charset: 'alphabetic' });
+properties.k3 = randomString.generate({ length: 6, charset: 'alphabetic' });
 
 export function createExperienceTemplate(responseData) {
   var name = `${randomString.generate(8)}`;
+  key = `${randomString.generate({
+    length: 7,
+    charset: 'alphabetic'
+  })}`;
   const data = {
     query:
-      'mutation createExperienceTemplate($input: CreateExperienceTemplateInput!) { createExperienceTemplate(input: $input) { template { id label rowVersion key }}}',
-    operationName: createExperienceTemplate, // eslint-disable-line
+      'mutation createExperienceTemplate($input: CreateExperienceTemplateInput!) { createExperienceTemplate(input: $input) { template { id key name thumbnailUrl rowVersion properties{key}}}}',
+    operationName: 'createExperienceTemplate',
     variables: {
       input: {
         fields: {
-          key: name,
-          label: name
+          key: key,
+          name: name
         },
         organizationId: responseData.orgID,
         spaceId: responseData.spaceID
@@ -23,23 +42,32 @@ export function createExperienceTemplate(responseData) {
   };
   return post(any, responseData).then(response => {
     responseData.experienceName = name;
+    responseData.experienceKey = key;
     responseData.expTemplateID = response.response.body.data.createExperienceTemplate.template.id;
     responseData.expTemplateRowVersion = response.response.body.data.createExperienceTemplate.template.rowVersion;
     return response;
   });
 }
 
-export function updateExperienceTemplate(responseData) {
+export function updateExperienceTemplate(responseData, propertyType) {
   var newName = `${randomString.generate(8)}_new`;
   const data = {
     query:
-      'mutation updateExperienceTemplate($input: UpdateExperienceTemplateInput!) { updateExperienceTemplate(input: $input) { template { id label rowVersion key }}}',
-    operationName: updateExperienceTemplate, // eslint-disable-line
+      'mutation updateExperienceTemplate($input: UpdateExperienceTemplateInput!) { updateExperienceTemplate(input: $input) { template { id name key thumbnailUrl rowVersion properties{key typeKey name defaultValue appearanceKey promptText helpText localizable rules{constraint}}}}}',
+    operationName: 'updateExperienceTemplate',
     variables: {
       input: {
         fields: {
-          key: newName,
-          label: newName
+          key: key,
+          name: newName,
+          properties:
+            propertyType == 'noProperty'
+              ? []
+              : [
+                  { name: properties.p1, key: properties.k1, typeKey: Constants.TemplateProperties.Types.Text },
+                  { name: properties.p2, key: properties.k2, typeKey: Constants.TemplateProperties.Types.Boolean },
+                  { name: properties.p3, key: properties.k3, typeKey: Constants.TemplateProperties.Types.Integer }
+                ]
         },
         organizationId: responseData.orgID,
         spaceId: responseData.spaceID,
@@ -55,6 +83,12 @@ export function updateExperienceTemplate(responseData) {
   return post(any, responseData).then(response => {
     responseData.experienceNewName = newName;
     responseData.expTemplateRowVersion = response.response.body.data.updateExperienceTemplate.template.rowVersion;
+    responseData.property1 = properties.p1;
+    responseData.property2 = properties.p2;
+    responseData.property3 = properties.p3;
+    responseData.key1 = properties.k1;
+    responseData.key2 = properties.k2;
+    responseData.key3 = properties.k3;
     return response;
   });
 }
@@ -62,8 +96,8 @@ export function updateExperienceTemplate(responseData) {
 export function getExperienceTemplate(responseData) {
   const data = {
     query:
-      'query experienceTemplate($organizationId: ID!, $spaceId: ID!, $templateId: ID!) { experienceTemplate(organizationId: $organizationId , spaceId: $spaceId, templateId: $templateId) { id label rowVersion key }}',
-    operationName: experienceTemplate, // eslint-disable-line
+      'query experienceTemplate($organizationId: ID!, $spaceId: ID!, $templateId: ID!) { experienceTemplate(organizationId: $organizationId , spaceId: $spaceId, templateId: $templateId) { id name key thumbnailUrl rowVersion properties{key typeKey name defaultValue appearanceKey promptText helpText localizable rules{constraint}}}}',
+    operationName: 'experienceTemplate',
     variables: {
       organizationId: responseData.orgID,
       spaceId: responseData.spaceID,
@@ -82,8 +116,8 @@ export function getExperienceTemplate(responseData) {
 export function getExperiencesTemplate(responseData) {
   const data = {
     query:
-      'query experienceTemplates($organizationId: ID!, $spaceId: ID!) { experienceTemplates(organizationId: $organizationId , spaceId: $spaceId) { id label rowVersion }}',
-    operationName: experienceTemplates, // eslint-disable-line
+      'query experienceTemplates($organizationId: ID!, $spaceId: ID!) { experienceTemplates(organizationId: $organizationId , spaceId: $spaceId) {templates{ id rowVersion key name}}}',
+    operationName: 'experienceTemplates',
     variables: {
       organizationId: responseData.orgID,
       spaceId: responseData.spaceID
@@ -101,8 +135,8 @@ export function getExperiencesTemplate(responseData) {
 export function deleteExperienceTemplate(responseData) {
   const data = {
     query:
-      'mutation deleteExperienceTemplate($input: DeleteExperienceTemplateInput!) { deleteExperienceTemplate(input: $input)}',
-    operationName: deleteExperienceTemplate, // eslint-disable-line
+      'mutation deleteExperienceTemplate($input: DeleteExperienceTemplateInput!) { deleteExperienceTemplate(input: $input) {templateId}}',
+    operationName: 'deleteExperienceTemplate',
     variables: {
       input: {
         organizationId: responseData.orgID,

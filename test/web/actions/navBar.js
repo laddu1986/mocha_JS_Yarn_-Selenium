@@ -27,3 +27,19 @@ export function clickOnAudienceLink() {
 export function clickOnSpaceDashboardLink() {
   NavBar.spaceDashboard.click();
 }
+
+export function verifySelectedOrgMenu() {
+  browser.pause(1000);
+  NavBar.profileMenu.click();
+  NavBar.selectedOrg.waitForVisible();
+  return NavBar.selectedOrg.getText();
+}
+
+export function goToOrgPageFromNavMenu() {
+  NavBar.selectedOrg.click();
+  NavBar.firstOrg.click();
+}
+
+export function goToExperiencePage() {
+  NavBar.experienceMenu.click();
+}

@@ -7,41 +7,32 @@ const identityData = new Object();
 
 describe('Identity Api', () => {
   describe(`POST /identities ${Tags.smokeTest}`, () => {
-    before(done => {
-      addResponse = identity.postIdentity(identityData);
-      done();
+    before(async () => {
+      addResponse = await identity.postIdentity(identityData);
     });
 
     it('C1295523 Add a new user identity.', () => {
-      return addResponse.then(function(response) {
-        expect(response).to.have.status(201);
-        joi.assert(response.body, schemas.postIdentitySchema(identityData));
-      });
+      expect(addResponse).to.have.status(201);
+      joi.assert(addResponse.body, schemas.postIdentitySchema(identityData));
     });
   });
 
   describe('GET /identities/{id}', () => {
-    before(done => {
-      getResponse = identity.getIdentityById(identityData);
-      done();
+    before(async () => {
+      getResponse = await identity.getIdentityById(identityData);
     });
     it('C1295524 Get a identity by its id.', () => {
-      return getResponse.then(function(response) {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, schemas.getIdentitySchema(identityData));
-      });
+      expect(getResponse).to.have.status(200);
+      joi.assert(getResponse.body, schemas.getIdentitySchema(identityData));
     });
   });
 
   describe('Delete /identities/{id}', () => {
-    before(done => {
-      deleteResponse = identity.deleteIdentityById(identityData);
-      done();
+    before(async () => {
+      deleteResponse = await identity.deleteIdentityById(identityData);
     });
     it('C1295525 Delete an identity by its id.', () => {
-      return deleteResponse.then(function(response) {
-        expect(response).to.have.status(204);
-      });
+      expect(deleteResponse).to.have.status(204);
     });
   });
 });

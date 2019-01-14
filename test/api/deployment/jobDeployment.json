@@ -1,0 +1,68 @@
+{
+  "kind": "CronJob",
+  "apiVersion": "batch/v1beta1",
+  "metadata": {
+    "name": "api-test-cron",
+    "namespace": "development",
+  },
+  "spec": {
+    "schedule": "*/10 * * * *",
+    "concurrencyPolicy": "Allow",
+    "suspend": false,
+    "jobTemplate": {
+      "metadata": {
+        "creationTimestamp": null
+      },
+      "spec": {
+        "activeDeadlineSeconds": 2400,
+        "backoffLimit": 1,
+        "template": {
+          "metadata": {
+            "creationTimestamp": null
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "api-test-cron",
+                "image": "api",
+                "command": [
+                  "/bin/sh",
+                  "-c"
+                ],
+                "args": [
+                  "echo TEST-STARTED; yarn run api; echo TEST-ENDED;"
+                ],
+                "envFrom": [
+                  {
+                    "configMapRef": {
+                      "name": "qa-api"
+                    }
+                  }
+                ],
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "imagePullPolicy": "IfNotPresent"
+              }
+            ],
+            "restartPolicy": "Never",
+            "terminationGracePeriodSeconds": 30,
+            "dnsPolicy": "ClusterFirst",
+            "securityContext": {},
+            "imagePullSecrets": [
+              {
+                "name": "hs-index-docker-io-v2-autobuilder-hs"
+              }
+            ],
+            "schedulerName": "default-scheduler"
+          }
+        }
+      }
+    },
+    "successfulJobsHistoryLimit": 1,
+    "failedJobsHistoryLimit": 1
+  },
+  "status": {
+    "lastScheduleTime": "2019-01-13T11:05:00Z"
+  }
+}

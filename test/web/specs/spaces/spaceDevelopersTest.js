@@ -15,7 +15,10 @@ describe('Space API Key Tests', () => {
 
   it('C1295716 Copy --> verify key is copied', () => {
     copyAPIKeyToClipBoard();
-    expect(getNotificationMessageText()).to.include(spaceData.copyNotificationMessage.text);
     expect(copiedAPIKeyValue()).to.deep.equal(getAPIKey());
+  });
+
+  it('Verify passive notification', () => {
+    expect(getNotificationMessageText()).to.include(spaceData.copyNotificationMessage.text);
   });
 });

@@ -39,6 +39,7 @@ function patch(any) {
 function del(any) {
   return server.delete(any.api + any.data);
 }
+const CheckForAll = bits => string => bits.every(bit => string.includes(bit));
 
 export {
   dateFormat,
@@ -54,5 +55,6 @@ export {
   server,
   randomString,
   path,
-  caller
+  caller,
+  CheckForAll
 };
