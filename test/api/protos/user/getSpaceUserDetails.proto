@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+import "spaceUserDetails.proto";
+
+package user;
+
+option go_package = "generated";
+
+message GetSpaceUserDetailsRequest {
+    string space_id = 1;
+    string user_id = 2;
+    int32 activity_period = 3;
+}
+
+message GetSpaceUserDetailsResponse {
+    SpaceUserDetails user = 1;
+}

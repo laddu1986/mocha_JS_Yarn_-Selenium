@@ -3,10 +3,10 @@ import accountPage from 'page_objects/accountPage';
 import { createAccount } from 'actions/account';
 import { createSpace } from 'actions/space';
 import { clickOnAudienceLink } from 'actions/navBar';
-import { submit } from 'actions/common';
+import { submit, closeModal } from 'actions/common';
 import {
-  closeModal,
   waitForWallpaperPreview,
+  getTribeCardStyle,
   waitForLogoPreview,
   removeImage,
   verifyLogoTab,
@@ -14,7 +14,7 @@ import {
   verifyTribeCardLogo,
   verifyTribeCardWallpaper,
   uploadImage,
-  verifyWallpaperTab,
+  verifyBrowseLink,
   clickWallpaperTab,
   selectColour,
   createTribe,
@@ -39,27 +39,33 @@ describe('Tribe Actions Tests', () => {
     expect(verifyModal()).to.equal(true, 'The customize button did not load edit tribe modal');
   });
 
-  it('C1295745 Choose color for tribe --> verify colour appears on card', () => {
+  it('C1295745 Choose color for tribe --> verify card color on tribe details page', () => {
     selectColour();
     submit();
-    expect(verifyTribeCardColour('0')).to.equal(true, 'Tribe card colour is not as expected on tribe details page');
+    verifyTribeCardColour('0');
+  });
+
+  it('Verify card color on audience page', () => {
     clickOnAudienceLink();
-    expect(verifyTribeCardColour('0')).to.equal(true, 'Tribe card colour is not as expected on audience page');
+    verifyTribeCardColour('0');
   });
 
   it('C1295746 Verify Wallpaper tab opens for tribe', () => {
     goToTribeDetailPage();
     clickCustomizeButton();
     clickWallpaperTab();
-    expect(verifyWallpaperTab()).to.equal(true, 'Wallpaper tab  is not shown');
+    expect(verifyBrowseLink()).to.equal(true, 'Wallpaper tab browse link is not shown');
   });
 
-  it('C1295747 Tribe wallpaper image upload --> Shows on tribe details page', () => {
+  it('C1295747 Tribe wallpaper image upload --> verify preview area', () => {
     uploadImage();
     waitForWallpaperPreview();
     expect(verifyTribeCardWallpaper()).to.equal(true, 'Uploaded wallpaper preview does not show up in preview area');
+  });
+
+  it('Verify wallpaper on tribe detail page', () => {
     submit();
-    expect(verifyTribeCardWallpaper()).to.equal(true, 'Uploaded wallpaper does not show up on segment card');
+    expect(verifyTribeCardWallpaper()).to.equal(true, 'Uploaded wallpaper does not show up on tribe card');
   });
 
   it('C1295748 Verify Logo tab opens for tribe', () => {
@@ -68,60 +74,74 @@ describe('Tribe Actions Tests', () => {
     expect(verifyLogoTab()).to.equal(true, 'Logo tab did not open');
   });
 
-  it('C1295749 Tribe logo image upload --> Shows on tribe details page', () => {
+  it('C1295749 Tribe logo image upload --> Verify preview area', () => {
     uploadImage('Logo');
     waitForLogoPreview();
     expect(verifyTribeCardLogo()).to.equal(true, 'Uploaded logo preview does not show up in preview area');
-    submit();
-    expect(verifyTribeCardLogo()).to.equal(true, 'Uploaded logo does not show up on segment card');
   });
 
-  it('C1295750 Verify Logo and Wallpaper on tribes page', () => {
+  it('Verify logo shows on tribe card details page', () => {
+    submit();
+    expect(verifyTribeCardLogo()).to.equal(true, 'Uploaded logo does not show up on tribe card');
+  });
+
+  it('C1295750 Verify Logo on all tribes page', () => {
     clickOnAudienceLink();
-    expect(verifyTribeCardWallpaper()).to.equal(true, 'Tribe wallpaper does not show on all tribes page');
+    browser.pause(1000);
     expect(verifyTribeCardLogo()).to.equal(true, 'Tribe logo does not show on all tribes page');
   });
 
-  it('C1295751 Remove Wallpaper --> Tribe does not have wallpaper', () => {
+  it('C1295751 Verify Wallpaper on all tribes page', () => {
+    expect(verifyTribeCardWallpaper()).to.equal(true, 'Tribe wallpaper does not show on all tribes page');
+  });
+
+  it('Remove Wallpaper --> Verify preview area', () => {
     goToTribeDetailPage();
     clickCustomizeButton();
     clickWallpaperTab();
     removeImage();
+    expect(verifyBrowseLink()).to.equal(true, 'Tribe wallpaper browse link is not shown on tribe detail page');
+  });
+
+  it('Remove Wallpaper --> Tribe does not have wallpaper on tribe details page', () => {
     submit();
-    expect(verifyTribeCardWallpaper()).to.equal(false, 'Tribe wallpaper is still shown on tribe detail page');
+    browser.pause(2000);
+    expect(getTribeCardStyle()).to.include('background', 'Tribe wallpaper still shows on tribe details page');
   });
 
   it('C1295752 Remove Wallpaper --> Tribe does not have wallpaper on audience page', () => {
     clickOnAudienceLink();
-    expect(verifyTribeCardWallpaper()).to.equal(false, 'Tribe wallpaper is still shown on all tribes page');
+    expect(getTribeCardStyle()).to.include('background', 'Tribe wallpaper still shows on all tribes page');
   });
 
-  it('C1295753 Remove Logo --> Tribe does not have logo', () => {
+  it('C1295753 Remove Logo --> Verify preview area', () => {
     goToTribeDetailPage();
     clickCustomizeButton();
     clickLogoTab();
+    browser.pause(2000);
     removeImage();
-    submit();
-    expect(verifyTribeCardLogo()).to.equal(false, 'Tribe logo is still showing on tribe detail page');
+    expect(verifyBrowseLink()).to.equal(true, 'Tribe logo browse link is not shown on customize tribe modal');
   });
 
-  it('C1295754 Remove Logo --> Tribe does not have logo on audience page', () => {
-    clickOnAudienceLink();
-    expect(verifyTribeCardLogo()).to.equal(false, 'Tribe logo is still showing on all tribes page');
+  it('C1295754 Remove Logo and submit --> Verify preview area', () => {
+    submit();
+    clickCustomizeButton();
+    clickLogoTab();
+    expect(verifyBrowseLink()).to.equal(true, 'Tribe logo browse link is not shown on customize tribe modal');
   });
 
   it('C1295755 Cancel the customize model --> verify wallpaper is not saved on tribe detail page', () => {
-    goToTribeDetailPage();
+    closeModal();
     clickCustomizeButton();
     clickWallpaperTab();
     uploadImage();
     waitForWallpaperPreview();
     closeModal();
-    expect(verifyTribeCardWallpaper()).to.equal(false, 'Wallpaper is saved on tribe details page even after cancel');
+    expect(getTribeCardStyle()).to.include('background', 'The wallpaper is saved even after cancelling the save');
   });
 
   it('C1295756 Cancel the customize model --> verify wallpaper is not saved on all tribes page', () => {
     clickOnAudienceLink();
-    expect(verifyTribeCardWallpaper()).to.equal(false, 'Wallpaper is saved on all tribes page even after cancel');
+    expect(getTribeCardStyle()).to.include('background');
   });
 });

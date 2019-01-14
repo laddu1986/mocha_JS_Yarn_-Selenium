@@ -1,0 +1,9 @@
+{
+  "TemplateProperties": {
+    "Types": {
+      "Text": "text",
+      "Boolean": "boolean",
+      "Integer": "integer"
+    }
+  }
+}

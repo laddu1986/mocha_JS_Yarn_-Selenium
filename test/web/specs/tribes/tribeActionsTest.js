@@ -33,24 +33,24 @@ describe('Tribe Actions Tests', () => {
     expect(verifyTribeDetailpage()).to.equal(true, 'Tribe Details page is not displayed');
   });
 
-  it('C1295742 Update the Tribe Title --> verify new name on all tribes and tribe detail page', () => {
+  it('C1295742 Update the Tribe Title --> verify new name on all tribes', () => {
     updateTribe(Constants.TribeAttributes.Title, newName);
-    expect(verifyTribe(Constants.TribeAttributes.Title, newName)).to.equal(
-      true,
-      'New Tribe name does not appear on tribe detail page'
-    );
-    clickOnAudienceLink();
-    browser.refresh();
-    expect(verifyTribe(Constants.TribeAttributes.Title, newName)).to.equal(
-      true,
-      'New Tribe name does not appear on all tribes page'
-    );
+    verifyTribe(Constants.TribeAttributes.Title, newName);
   });
 
-  it('C1295743 Delete Tribe --> verify the passive notification and redirection to all tribes page', () => {
+  it('Verify new name on tribe detail page', () => {
+    clickOnAudienceLink();
+    browser.refresh();
+    verifyTribe(Constants.TribeAttributes.Title, newName);
+  });
+
+  it('C1295743 Delete Tribe --> verify the passive notification', () => {
     goToTribeDetailPage();
     deleteTribe();
     expect(getNotificationMessageText()).to.include(`${PassiveNotification.deleteMessage.text}'${newName}'.`);
+  });
+
+  it('Verify redirection to all tribes page', () => {
     expect(verifyAllTribesPage()).to.equal(true, 'After deleting tribe redirection to all tribes page did not work');
   });
 });

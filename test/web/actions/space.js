@@ -3,11 +3,10 @@ import OrgDashboardPage from 'page_objects/orgDashboardPage';
 import SpaceDevelopersPage from 'page_objects/spaceDevelopersPage';
 import SpaceSettingsPage from 'page_objects/spaceSettingsPage';
 import SpaceDashboardPage from 'page_objects/spaceDashboardPage';
-import HomePage from 'page_objects/homePage';
+import NavBarPage from 'page_objects/navBar';
 import CommonPage from 'page_objects/common';
 import NavBar from 'page_objects/navBar';
 import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'actions/common';
-
 const clipboardy = require('clipboardy');
 
 export function changeSpace(type) {
@@ -17,13 +16,14 @@ export function changeSpace(type) {
     webElement = SpaceSettingsPage.spaceSlug;
     name = `${lib.randomString.generate(8)}_Slug`;
   }
+  webElement.clearElement();
   webElement.setValue(name);
   CommonPage.submitButton.click();
   return name;
 }
 
 export function verifyNewSpaceName() {
-  HomePage.logo.click();
+  NavBarPage.backToOrgDashboardLink.click();
   return OrgDashboardPage.spaceCards.getText();
 }
 
@@ -56,7 +56,7 @@ export function clickCreateNewSpaceButton() {
 }
 
 export function goBackToOrgDashboard() {
-  HomePage.logo.click();
+  NavBarPage.backToOrgDashboardLink.click();
   OrgDashboardPage.spaceCards.waitForVisible();
 }
 
@@ -115,6 +115,10 @@ export function selectSpace() {
 }
 export function goToSpaceSettings() {
   NavBar.spaceSettings.click();
+  NavBar.generalSpaceSettings.click();
+}
+export function verifySpaceSettingsPage() {
+  return SpaceSettingsPage.spaceName.isVisible() && SpaceSettingsPage.spaceSlug.isVisible();
 }
 
 export function verifySpaceCard() {

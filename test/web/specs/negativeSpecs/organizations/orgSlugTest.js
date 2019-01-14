@@ -10,6 +10,7 @@ import {
 } from 'actions/common.js';
 import { selectOrg, verifyChooseOrgspage, verifyWecomeOrgPage, verifyNoOrgPage } from 'actions/organization.js';
 import * as Messages from 'data/messages.json';
+import { signOut } from '../../../actions/common';
 var UserName, OrgName, deleteOrgRequest, deleteMembershipRequest;
 
 const orgSlugData = new Object();
@@ -67,7 +68,8 @@ describe('Negative cases --> Org Slug', () => {
   it('C1295692 No Org Association --> "Select an Org" on 404 page redirects to "Create Org" page', () => {
     lib.del(deleteOrgRequest);
     lib.del(deleteMembershipRequest);
-    browser.url(OrgName);
+    signOut();
+    signIn(UserName, process.env.ACCOUNT_PASS);
     clickLinkOn404Page();
     expect(verifyNoOrgPage()).to.equal(true);
   });

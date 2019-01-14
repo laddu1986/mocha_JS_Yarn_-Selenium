@@ -8,74 +8,59 @@ var createResponse, getByAccountIDResponse, getByOrgIDResponse, deleteResponse, 
 const membershipData = new Object();
 
 describe('Memberships Api', () => {
+  before(async () => {
+    await identity.postIdentity(membershipData);
+    await organization.postOrganization(membershipData);
+  });
   describe(`POST /memberships ${Tags.smokeTest}`, () => {
-    before(done => {
-      identity.postIdentity(membershipData).then(() => {
-        organization.postOrganization(membershipData).then(() => {
-          createResponse = membership.postMembership(membershipData);
-          done();
-        });
-      });
+    before(async () => {
+      createResponse = await membership.postMembership(membershipData);
     });
     it('C1295536 Create a new membership', () => {
-      return createResponse.then(response => {
-        expect(response).to.have.status(201);
-        joi.assert(response.body, schemas.createMembershipSchema(membershipData));
-      });
+      expect(createResponse).to.have.status(201);
+      joi.assert(createResponse.body, schemas.createMembershipSchema(membershipData));
     });
   });
 
   describe('GET /memberships', () => {
-    before(done => {
-      getResponse = membership.getMemberships(membershipData);
-      done();
+    before(async () => {
+      getResponse = await membership.getMemberships(membershipData);
     });
 
     it('C1295537 List all Memberships', () => {
-      return getResponse.then(response => {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, schemas.listMembershipSchema(membershipData));
-      });
+      expect(getResponse).to.have.status(200);
+      joi.assert(getResponse.body, schemas.listMembershipSchema(membershipData)); //https://app.clickup.com/301733/t/84vwg is raised for isAdmin being false intermittently
     });
   });
 
   describe('GET /memberships/organization/{id}', () => {
-    before(done => {
-      getByOrgIDResponse = membership.getMembershipByOrganization(membershipData);
-      done();
+    before(async () => {
+      getByOrgIDResponse = await membership.getMembershipByOrganization(membershipData);
     });
 
     it('C1295538 Getting membership by organization id', () => {
-      return getByOrgIDResponse.then(response => {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, schemas.getMembershipByOrdIDSchema(membershipData));
-      });
+      expect(getByOrgIDResponse).to.have.status(200);
+      joi.assert(getByOrgIDResponse.body, schemas.getMembershipByOrdIDSchema(membershipData));
     });
   });
 
   describe('GET /memberships/account/{id}', () => {
-    before(done => {
-      getByAccountIDResponse = membership.getMembershipByAccount(membershipData);
-      done();
+    before(async () => {
+      getByAccountIDResponse = await membership.getMembershipByAccount(membershipData);
     });
 
     it('C1295539 Getting membership by account id', () => {
-      return getByAccountIDResponse.then(response => {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, schemas.getMembershipByAccountIDSchema(membershipData));
-      });
+      expect(getByAccountIDResponse).to.have.status(200);
+      joi.assert(getByAccountIDResponse.body, schemas.getMembershipByAccountIDSchema(membershipData));
     });
   });
   describe('DELETE /memberships/organization/{organizationId}/account/{accountId}', () => {
-    before(done => {
-      deleteResponse = membership.deleteMembershipByAccountAndOrganization(membershipData);
-      done();
+    before(async () => {
+      deleteResponse = await membership.deleteMembershipByAccountAndOrganization(membershipData);
     });
 
     it('C1295540 Delete a membership', () => {
-      return deleteResponse.then(response => {
-        expect(response).to.have.status(204);
-      });
+      expect(deleteResponse).to.have.status(204);
     });
   });
 });

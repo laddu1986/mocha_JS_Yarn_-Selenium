@@ -23,7 +23,7 @@ import {
 import spaceData from 'data/passiveNotification.json';
 import constants from 'constants.json';
 import { signIn, signOut } from 'actions/common';
-var newSpacename, accountData;
+var newSpacename, accountData, newSlugName;
 
 describe('Space Settings', () => {
   before(() => {
@@ -36,15 +36,21 @@ describe('Space Settings', () => {
     newSpacename = changeSpace();
     expect(getNotificationMessageText()).to.contain(spaceData.spaceDetailsSaved.text);
     closePassiveNotification();
+  });
+
+  it('Edit Space name --> verify new space name on dashboard', () => {
     expect(verifyNewSpaceName()).to.contain(newSpacename);
   });
 
   it('C1295718 Edit Space slug --> verify passive notification and new space url', () => {
     selectSpace();
     goToSpaceSettings();
-    var newSlugName = changeSpace(constants.SpaceAttributes.Slug);
+    newSlugName = changeSpace(constants.SpaceAttributes.Slug);
     expect(getNotificationMessageText()).to.contain(spaceData.spaceDetailsSaved.text);
     closePassiveNotification();
+  });
+
+  it('Verify new space url', () => {
     verifyNewSpaceUrl(newSlugName);
   });
 
@@ -53,18 +59,27 @@ describe('Space Settings', () => {
     expect(cancelDeleteSpace(false)).to.equal(true);
   });
 
-  it('C1295720 Delete Space --> verify passive notfication and space is deleted on dashboard', () => {
+  it('Verify confirm button when clicking delete space', () => {
     clickDeleteSpaceButton();
     expect(confirmButtonIsEnabled()).to.equal(false);
+  });
+
+  it('Verify confirm button after typing delete text', () => {
     typeDeleteToConfirm();
     expect(confirmButtonIsEnabled()).to.equal(true);
+  });
+
+  it('Delete Space --> verify space is deleted on dashboard', () => {
     confirmDelete();
     expect(spaceIsDeleted()).to.equal(true);
+  });
+
+  it('C1295720 Verify passive notification', () => {
     expect(getNotificationMessageText()).to.contain(spaceData.deleteMessage.text + "'" + newSpacename + "'");
   });
 
   it('C1295721 Logout and Login --> Create new space page is displayed', () => {
-    signOut();
+    signOut(); // will fail due to https://app.clickup.com/301733/t/8cj6q
     signIn(accountData.email, accountData.password);
     expect(verifyCreateFirstSpacePage()).to.equal(true);
   });

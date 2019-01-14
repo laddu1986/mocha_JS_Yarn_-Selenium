@@ -7,98 +7,76 @@ import * as schemas from 'schemas/spaceSchema';
 var postResponse, getResponse, updateResponse, getAllResponse, deleteResponse, patchResponse, patchNameResponse;
 
 const spaceData = new Object();
-
 describe('Spaces Api', () => {
+  before(async () => {
+    await identity.postIdentity(spaceData);
+    await organization.postOrganization(spaceData);
+  });
   describe(`POST /organizations/{orgId}/spaces ${Tags.smokeTest}`, () => {
-    before(done => {
-      identity.postIdentity(spaceData).then(() => {
-        organization.postOrganization(spaceData).then(() => {
-          postResponse = spaces.postSpaceByOrganizationId(spaceData);
-          done();
-        });
-      });
+    before(async () => {
+      postResponse = await spaces.postSpaceByOrganizationId(spaceData);
     });
     it('C1295608 Create a new space.', () => {
-      return postResponse.then(response => {
-        expect(response).to.have.status(201);
-        joi.assert(response.body, schemas.postSpaceByOrganizationIdSchema(spaceData));
-      });
+      expect(postResponse).to.have.status(201);
+      joi.assert(postResponse.body, schemas.postSpaceByOrganizationIdSchema(spaceData));
     });
   });
 
   describe('GET /organizations/{orgId}/spaces', () => {
-    before(done => {
-      getAllResponse = spaces.getSpacesByOrganizationId(spaceData);
-      done();
+    before(async () => {
+      getAllResponse = await spaces.getSpacesByOrganizationId(spaceData);
     });
     it('C1295609 Get All Spaces for an Organization', () => {
-      return getAllResponse.then(response => {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, schemas.getSpacesByOrganizationIdSchema(spaceData));
-      });
+      expect(getAllResponse).to.have.status(200);
+      joi.assert(getAllResponse.body, schemas.getSpacesByOrganizationIdSchema(spaceData));
     });
   });
 
   describe('PUT /organizations/{orgId}/spaces', () => {
-    before(done => {
-      updateResponse = spaces.updateSpace(spaceData);
-      done();
+    before(async () => {
+      updateResponse = await spaces.updateSpace(spaceData);
     });
     it('C1295610 Update Space for an Organization', () => {
-      return updateResponse.then(response => {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, schemas.updateSpaceSchema(spaceData));
-      });
+      expect(updateResponse).to.have.status(200);
+      joi.assert(updateResponse.body, schemas.updateSpaceSchema(spaceData));
     });
   });
 
   describe('GET /organizations/{orgId}/spaces/{spaceId}', () => {
-    before(done => {
-      getResponse = spaces.getSpaceByOrgIdAndSpaceId(spaceData);
-      done();
+    before(async () => {
+      getResponse = await spaces.getSpaceByOrgIdAndSpaceId(spaceData);
     });
     it('C1295611 Get Space for an Organization', () => {
-      return getResponse.then(response => {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, schemas.getSpaceByOrgIdAndSpaceIdSchema(spaceData));
-      });
+      expect(getResponse).to.have.status(200);
+      joi.assert(getResponse.body, schemas.getSpaceByOrgIdAndSpaceIdSchema(spaceData));
     });
   });
   describe('PATCH /organizations/{orgId}/spaces/{spaceId}', () => {
-    before(done => {
-      patchResponse = spaces.patchSpaceByOrgIdRowVersionAndSpaceId(spaceData, Constants.SpaceAttributes.ShortUrl);
-      done();
+    before(async () => {
+      patchResponse = await spaces.patchSpaceByOrgIdRowVersionAndSpaceId(spaceData, Constants.SpaceAttributes.ShortUrl);
     });
     it('C1295612 Patch a space Url', () => {
-      return patchResponse.then(response => {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, schemas.patchSpaceShortUrlSchema(spaceData));
-      });
+      expect(patchResponse).to.have.status(200);
+      joi.assert(patchResponse.body, schemas.patchSpaceShortUrlSchema(spaceData));
     });
   });
 
   describe('PATCH /organizations/{orgId}/spaces/{spaceId}', () => {
-    before(done => {
-      patchNameResponse = spaces.patchSpaceByOrgIdRowVersionAndSpaceId(spaceData, Constants.SpaceAttributes.Name);
-      done();
+    before(async () => {
+      patchNameResponse = await spaces.patchSpaceByOrgIdRowVersionAndSpaceId(spaceData, Constants.SpaceAttributes.Name);
     });
     it('C1295613 Patch a space name', () => {
-      return patchNameResponse.then(response => {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, schemas.patchSpaceNameSchema(spaceData));
-      });
+      expect(patchNameResponse).to.have.status(200);
+      joi.assert(patchNameResponse.body, schemas.patchSpaceNameSchema(spaceData));
     });
   });
 
   describe('DELETE /organizations/{orgId}/spaces/{spaceId}', () => {
-    before(done => {
-      deleteResponse = spaces.deleteSpaceByOrgIdAndSpaceId(spaceData);
-      done();
+    before(async () => {
+      deleteResponse = await spaces.deleteSpaceByOrgIdAndSpaceId(spaceData);
     });
     it('C1295614 Delete space for an Organization', () => {
-      return deleteResponse.then(response => {
-        expect(response).to.have.status(204);
-      });
+      expect(deleteResponse).to.have.status(204);
     });
   });
 });

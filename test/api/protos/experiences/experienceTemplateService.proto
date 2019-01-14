@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+
+import "contexts.proto";
+import "experienceTemplate.proto";
+import "propertyType.proto";
+
+package experience;
+
+option go_package = "generated";
+
+service ExperienceService{
+    rpc CreateExperienceTemplate (CreateExperienceTemplateRequest) returns (ExperienceTemplate);
+	rpc GetExperienceTemplates (GetExperienceTemplatesRequest) returns (GetExperienceTemplatesResponse);
+	rpc GetExperienceTemplateById (GetExperienceTemplateByIdRequest) returns (ExperienceTemplate);
+	rpc UpdateExperienceTemplate (UpdateExperienceTemplateRequest) returns (ExperienceTemplate);
+	rpc DeleteExperienceTemplate (DeleteExperienceTemplateRequest) returns (google.protobuf.Empty);
+    rpc GetPropertyTypes (google.protobuf.Empty) returns (GetPropertyTypesResponse); 
+}
+
+message CreateExperienceTemplateRequest{
+    SpaceContext context = 1;
+    string key  = 2;
+    string name = 3;
+}
+
+message GetExperienceTemplatesRequest{
+	SpaceContext context = 1;
+	google.protobuf.Timestamp created_after = 2;
+	string keyword = 3; //name or key
+}
+
+message GetExperienceTemplatesResponse{
+	repeated ExperienceTemplate experience_templates = 1;
+}
+
+message GetExperienceTemplateByIdRequest{
+	SpaceContext context = 1;
+	int64 id = 2;
+}
+
+message UpdateExperienceTemplateRequest{
+	SpaceContext context = 1;
+	ExperienceTemplate experience_template = 2;
+	google.protobuf.FieldMask update_mask = 3;
+}
+
+message GetPropertyTypesResponse{
+    repeated PropertyType property_types = 1;
+}
+
+message DeleteExperienceTemplateRequest{
+	SpaceContext context = 1;
+	int64 id = 2;
+	google.protobuf.Timestamp row_version = 3;
+}

@@ -5,7 +5,6 @@ import { createSpace, goToDeveloperPortal, getAPIKey } from 'actions/space';
 import { clickOnAudienceLink } from 'actions/navBar';
 import { addUsers, verifyUsersAreAdded } from 'actions/metrics';
 import Constants from 'constants.json';
-import Messages from 'data/messages.json';
 import {
   clickOnUsersTab,
   getFirstRowDetails,
@@ -25,7 +24,7 @@ describe('Search User Test', () => {
   });
 
   before(async () => {
-    await addUsers(1, apiKey);
+    await addUsers(2, apiKey);
   });
 
   before(() => {
@@ -37,7 +36,7 @@ describe('Search User Test', () => {
   it('C1295673 Search user by email', () => {
     var Email = getFirstRowDetails(Constants.UserAttributes.Email);
     search(Email);
-    expect(getResultText()).to.equal(`1 ${Messages.search.result}`);
+    getResultText(1);
     expect(getRecentUsersRows()).to.equal(1);
     expect(getFirstRowDetails(Constants.UserAttributes.Email)).to.equal(Email);
     clearText();
@@ -46,7 +45,7 @@ describe('Search User Test', () => {
   it('C1295674 Search user by name', () => {
     var Name = getFirstRowDetails(Constants.UserAttributes.Name);
     search(Name);
-    expect(getResultText()).to.equal(`1 ${Messages.search.result}`);
+    getResultText(1);
     expect(getRecentUsersRows()).to.equal(1);
     expect(getFirstRowDetails(Constants.UserAttributes.Name)).to.equal(Name);
     clearText();
@@ -55,7 +54,7 @@ describe('Search User Test', () => {
   it('C1295675 Search user by uid', () => {
     var UID = getFirstRowDetails(Constants.UserAttributes.UID);
     search(UID);
-    expect(getResultText()).to.equal(`1 ${Messages.search.result}`);
+    getResultText(1);
     expect(getRecentUsersRows()).to.equal(1);
     expect(getFirstRowDetails(Constants.UserAttributes.UID)).to.equal(UID);
     clearText();
@@ -63,8 +62,7 @@ describe('Search User Test', () => {
 
   it('C1295676 Invalid Search --> Returns no users', () => {
     search('abc');
-    browser.pause(1000);
-    expect(getResultText()).to.equal(`0 ${Messages.search.results}`);
+    getResultText(0);
     expect(getRecentUsersRows()).to.equal(0);
   });
 });

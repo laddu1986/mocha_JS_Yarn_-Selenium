@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "generated";
+//option go_package = "bitbucket.org/appcurator/contracts/proto/common";
+
+message Location {
+    string country = 1;
+    string country_code = 2;
+    string city = 3;
+    string latitide = 4;
+    string longitude = 5;
+    string region = 6;
+    string timezone = 7;
+ }
+
+ message LocationSummary {
+    string country = 1;
+    string country_code = 2;
+    string city = 3;
+}

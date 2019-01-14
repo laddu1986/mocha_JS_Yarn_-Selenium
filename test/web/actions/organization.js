@@ -37,6 +37,7 @@ export function verifyWecomeOrgPage() {
 }
 
 export function verifyOrgNameOnDashBoard() {
+  OrgDashboardPage.currentOrgName.waitForVisible();
   return OrgDashboardPage.currentOrgName.getText();
 }
 
@@ -83,17 +84,6 @@ export function updateOrgName(updatedOrgName) {
     },
     5000,
     'Save changes button did not Grey out after saving changes',
-    200
-  );
-}
-
-export function verifyNewOrgNameInNavbar(updatedOrgName) {
-  browser.waitUntil(
-    function() {
-      return NavBar.backToOrgDashboardLink.getText().includes(updatedOrgName);
-    },
-    5000,
-    'New OrgName was not updated in the side Nav Bar',
     200
   );
 }

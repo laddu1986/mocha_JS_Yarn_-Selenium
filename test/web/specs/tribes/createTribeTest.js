@@ -33,27 +33,24 @@ describe(`Create Tribe Tests ${lib.Tags.smokeTest}`, () => {
   });
 
   it('C1295737 Verify untitled tribe is created', () => {
-    expect(verifyTribe(Constants.TribeAttributes.Title, 'Untitled')).to.equal(true, 'Tribe title is not "Untitled"');
+    verifyTribe(Constants.TribeAttributes.Title, 'Untitled');
   });
 
   it('C1295738 Verify untitled tribe on all tribes page', () => {
     clickOnAudienceLink();
-    expect(verifyTribe(Constants.TribeAttributes.Title, 'Untitled')).to.equal(
-      true,
-      'Tribe title is not "Untitled" on all tribes page'
-    );
+    verifyTribe(Constants.TribeAttributes.Title, 'Untitled');
   });
 
   it('C1295739 Create named tribe using hover over + link', () => {
     title = lib.randomString.generate(5);
     clickCreateTribeLink();
     inputTribeDetails(title);
-    expect(verifyTitleOnCard(title, '0')).to.equal(true, 'The title on tribe details page does not show');
+    verifyTitleOnCard(title, '0');
   });
 
   it('C1295740 Verify tribe title on all tribes page', () => {
     clickOnAudienceLink();
     browser.refresh();
-    expect(verifyTitleOnCard(title, '1')).to.equal(true, 'The title on all tribes page does not show');
+    verifyTitleOnCard(title, '1');
   });
 });

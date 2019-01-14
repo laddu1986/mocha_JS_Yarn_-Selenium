@@ -1,14 +1,15 @@
 import '../common';
 import tribePage from 'page_objects/tribePage';
+import commonPage from 'page_objects/common';
 
 export function createCategory() {
   tribePage.insertCategoryButton.click();
 }
 
-export function waitForCategoryOptions() {
+export function verifyCategoryOptions() {
   browser.waitUntil(
     () => {
-      return tribePage.categoryMoreButton.isVisible() && tribePage.categoryTitle.isVisible();
+      return commonPage.moreButton.isVisible() && tribePage.categoryTitle.isVisible();
     },
     3000,
     'Category took too long to create'
@@ -16,7 +17,7 @@ export function waitForCategoryOptions() {
 }
 
 export function renameCategory(newTitle) {
-  tribePage.categoryMoreButton.click();
+  commonPage.moreButton.click();
   tribePage.categoryMoreRename.click();
   tribePage.categoryTitle.setValue(newTitle);
   browser.keys('\uE007');
@@ -28,7 +29,7 @@ export function verifyRenamedTitle(title) {
 
 export function deleteCategory() {
   do {
-    tribePage.categoryMoreButton.click();
+    commonPage.moreButton.click();
   } while (!tribePage.categoryMoreDelete.isVisible());
   tribePage.categoryMoreDelete.click();
 }

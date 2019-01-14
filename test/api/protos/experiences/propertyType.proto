@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+import "google/protobuf/struct.proto";
+
+package experience;
+option go_package = "generated";
+
+message PropertyType{
+    string key = 1;
+    string name = 2;
+	string icon_url = 3;
+    repeated Appearance appearances = 4;
+    repeated RuleType rule_types = 5;
+}
+
+message Appearance{
+    string key = 1;
+    string name = 2;
+    bool is_default = 3;
+}
+
+message RuleType{
+    string key = 1;
+    string name  = 2;
+
+    //constraint_structure holds the format of each validator. 
+    //This is defined as a struct that allows us to pass an arbitarary json. Please see below links for examples
+    //https://groups.google.com/forum/#!topic/protobuf/ZWp_REiHlF4 
+    //https://github.com/dcodeIO/ProtoBuf.js/issues/338
+    //NOTE: This can be changed to a more solid definition of each type of validation rules or a simple key-value pair
+    google.protobuf.Struct constraint_structure = 3;
+}
