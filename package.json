@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "yarn install --frozen-lockfile && yarn run dev-web && yarn run dev-api && yarn run dev-orca",
-    "dev-api": "cd test/api && yarn install --frozen-lockfile",
+    "dev-api": "cd test/api && yarn install --frozen-lockfile && yarn gen-protos",
     "dev-web": "cd test/web && yarn install --frozen-lockfile",
     "dev-orca": "cd test/orca && yarn install --frozen-lockfile",
     "prod": "yarn run prod-web && yarn run prod-api && yarn run prod-orca",
@@ -24,7 +24,9 @@
     "orca-smoke-tests": "cd test/orca && yarn run orca-smoke-tests",
     "clean": "eslint 'test/**/*.js' --fix",
     "lint": "eslint 'test/**/*.js'",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "sync-api": "cd test/api && yarn sync-tests",
+    "sync-tests": "yarn sync-api"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
@@ -32,6 +34,7 @@
     "eslint-config-prettier": "^3.0.1",
     "eslint-plugin-babel": "^5.1.0",
     "eslint-plugin-mocha": "^5.2.0",
+    "fs-extra": "^7.0.1",
     "lint-staged": "^7.3.0",
     "prettier": "1.14.3"
   },
