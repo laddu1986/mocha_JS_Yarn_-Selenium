@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+import "google/protobuf/field_mask.proto";
+import "collection.proto";
+import "contexts.proto";
+
+package experience;
+option go_package = "generated";
+
+service CollectionService {
+  rpc CreateCollection(CreateCollectionRequest) returns (CreateCollectionResponse);
+  rpc GetCollectionById(GetCollectionByIdRequest) returns (GetCollectionByIdResponse);
+  rpc GetCollectionByKey(GetCollectionByKeyRequest) returns (GetCollectionByKeyResponse);
+  rpc UpdateCollection(UpdateCollectionRequest) returns (UpdateCollectionResponse);
+  rpc DuplicateCollection(DuplicateCollectionRequest) returns (DuplicateCollectionResponse);
+  rpc DeleteCollection(DeleteCollectionRequest) returns (DeleteCollectionResponse);
+
+  rpc CreateCategory(CreateCategoryRequest) returns (CreateCategoryResponse);
+  rpc GetCategories(GetCategoriesRequest) returns (GetCategoriesResponse);
+  rpc UpdateCategory(UpdateCategoryRequest) returns (UpdateCategoryResponse);
+  rpc DeleteCategory(DeleteCategoryRequest) returns (DeleteCategoryResponse);
+}
+
+message CreateCollectionRequest {
+  SpaceContext context = 1;
+  string key = 2;
+  string name = 3;
+}
+
+message CreateCollectionResponse {
+  Collection collection = 1;
+}
+
+message GetCollectionByIdRequest {
+  SpaceContext context = 1;
+  int64 id = 2;
+}
+
+message GetCollectionByIdResponse {
+  Collection collection = 1;
+}
+
+message GetCollectionByKeyRequest {
+  SpaceContext context = 1;
+  string key = 2;
+}
+
+message GetCollectionByKeyResponse {
+  Collection collection = 1;
+}
+
+message UpdateCollectionRequest {
+  SpaceContext context = 1;
+  Collection collection = 2;
+  google.protobuf.FieldMask update_mask = 3;
+}
+
+message UpdateCollectionResponse {
+  Collection collection = 1;
+}
+
+message DuplicateCollectionRequest {
+  SpaceContext context = 1;
+  int64 id = 2;
+}
+
+message DuplicateCollectionResponse {
+  Collection collection = 1;
+}
+
+message DeleteCollectionRequest {
+  SpaceContext context = 1;
+  int64 id = 2;
+}
+
+message DeleteCollectionResponse {
+}
+
+message CreateCategoryRequest {
+  SpaceContext context = 1;
+  string name = 2;
+}
+
+message CreateCategoryResponse {
+  Category category = 1;
+}
+
+message GetCategoriesRequest {
+  SpaceContext context = 1;
+}
+
+message GetCategoriesResponse {
+  repeated Category categories = 1;
+}
+
+message UpdateCategoryRequest {
+  SpaceContext context = 1;
+  string id = 2;
+  UpdateCategory category = 3;
+  google.protobuf.FieldMask update_mask = 4;
+}
+
+message UpdateCategoryResponse {
+  Category category = 1;
+}
+
+message DeleteCategoryRequest {
+  SpaceContext context = 1;
+  string id = 2;
+}
+
+message DeleteCategoryResponse {
+}

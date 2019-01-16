@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+import "propertyType.proto";
+import "rule.proto";
+
+import "google/protobuf/timestamp.proto";
+
+package experience;
+option go_package = "generated";
+
+
+message Property{
+	string name = 1;
+	string key = 2;
+	string appearance_key = 3;
+	string prompt_text = 4;
+	string help_text = 5;
+    bool localizable = 6;
+    oneof type_key {
+        TextProperty text = 7;
+        IntegerProperty integer = 8;
+        BooleanProperty boolean = 9;
+        DateProperty date = 10;
+        ColorProperty color = 11;
+        ListProperty list = 12;
+    }
+}
+
+// Property types
+
+message TextProperty{
+    string default_value = 1;
+    repeated TextConstraint rules = 2;
+}
+
+message IntegerProperty{
+    int32 default_value = 1;
+    repeated IntegerConstraint rules = 2;
+}
+
+message BooleanProperty{
+    bool default_value = 1;
+    repeated BooleanConstraint rules = 2;
+}
+
+message DateProperty{
+    google.protobuf.Timestamp default_value = 1;
+    repeated DateConstraint rules = 2;
+}
+
+message ColorProperty{
+    Color default_value = 1;
+    repeated ColorConstraint rules = 2;
+}
+
+message ListProperty{
+    List default_value = 1;
+    repeated ListConstraint rules = 2;
+}
+
+// Default values
+
+message Color{
+    string key = 1;
+    string value = 2;
+    uint32 opacity = 3;
+}
+
+message List{
+    repeated string value = 1;
+}
