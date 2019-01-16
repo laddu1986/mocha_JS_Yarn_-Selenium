@@ -1,0 +1,4 @@
+--require babel-register
+--timeout 20000
+--reporter spec
+--require dotenv/config

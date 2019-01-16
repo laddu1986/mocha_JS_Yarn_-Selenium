@@ -20,6 +20,7 @@
     "web-debug": "cd test/web && yarn run web-debug",
     "web-smoke-tests": "cd test/web && yarn run web-smoke-tests",
     "orca": "cd test/orca && yarn run orca",
+    "orca-local": "cd test/orca && yarn run orca-local",
     "orca-debug": "cd test/orca && yarn run orca-debug",
     "orca-smoke-tests": "cd test/orca && yarn run orca-smoke-tests",
     "clean": "eslint 'test/**/*.js' --fix",
