@@ -21,8 +21,8 @@
   },
   "scripts": {
     "api": "node_modules/.bin/mocha specs/*Test.js --opts config/mocha.opts --reporter-options reportName=API,domain=$TESTRAIL_URL,username=$TESTRAIL_USERNAME,password=$TESTRAIL_PASSWORD,projectId=$TESTRAIL_PROJECT,suiteId=$TESTRAIL_API",
-    "api-debug": "node_modules/.bin/mocha --inspect-brk=127.0.0.1:5858 specs/*Test.js --opts config/mocha.opts",
-    "api-pipelines": "node_modules/.bin/mocha specs/*Test.js --require babel-register --timeout 10000",
+    "api-local": "node_modules/.bin/mocha specs/*Test.js --opts config/local.opts",
+    "api-debug": "node_modules/.bin/mocha --inspect-brk=127.0.0.1:5858 specs/*Test.js --opts config/local.opts",
     "api-smoke-tests": "node_modules/.bin/mocha specs/*Test.js --opts config/mocha.opts --grep @smoke",
     "sync-tests": "node node_modules/wdio-testrail-reporter/scripts/generate-cases.js $(pwd)/wdio.testrail.js $(pwd)/specs/",
     "clean": "eslint '**/*.js' --fix",
