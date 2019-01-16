@@ -16,24 +16,24 @@ describe('Tribe Tests', () => {
     createTribeResponse = await createTribe(tribeObject);
   });
 
-  it('Mutation- Create tribe', async () => {
+  it('C1490709 Mutation- Create tribe', async () => {
     expect(createTribeResponse.response.statusCode).to.equal(200);
     joi.assert(createTribeResponse.response.body.data.createSegment, createTribeSchema(null));
   });
 
-  it('Mutation- Update tribe', async () => {
+  it('C1490710 Mutation- Update tribe', async () => {
     updateTribeResponse = await updateTribe(tribeObject);
     expect(updateTribeResponse.response.statusCode).to.equal(200);
     joi.assert(updateTribeResponse.response.body.data.updateSegment, updateTribeSchema(tribeObject.tribeNewName));
   });
 
-  it('Mutation- Get tribe', async () => {
+  it('C1490711 Mutation- Get tribe', async () => {
     getTribeResponse = await getTribe(tribeObject);
     expect(getTribeResponse.response.statusCode).to.equal(200);
     joi.assert(getTribeResponse.response.body.data, updateTribeSchema(tribeObject.tribeNewName));
   });
 
-  it('Mutation- Delete tribe', async () => {
+  it('C1490712 Mutation- Delete tribe', async () => {
     deleteTribeResponse = await deleteTribe(tribeObject);
     expect(deleteTribeResponse.response.statusCode).to.equal(200);
     expect(deleteTribeResponse.response.body.data.deleteSegment.segmentId).to.equal(tribeObject.tribeID);
