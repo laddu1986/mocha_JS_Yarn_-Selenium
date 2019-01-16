@@ -13,7 +13,7 @@
     "prod-orca": "cd test/orca && yarn install --frozen-lockfile --production",
     "api": "cd test/api && yarn run api",
     "api-debug": "cd test/api && yarn run api-debug",
-    "api-pipelines": "cd test/api && yarn run api-pipelines",
+    "api-local": "cd test/api && yarn run api-local",
     "api-smoke-tests": "cd test/api && yarn run api-smoke-tests",
     "web": "cd test/web && yarn run web",
     "web-local": "cd test/web && yarn run web-local",
@@ -36,7 +36,8 @@
     "eslint-plugin-mocha": "^5.2.0",
     "fs-extra": "^7.0.1",
     "lint-staged": "^7.3.0",
-    "prettier": "1.14.3"
+    "prettier": "1.14.3",
+    "wdio-testrail-reporter": "^1.1.5"
   },
   "lint-staged": {
     "*.{js,json,md}": [
