@@ -1,4 +1,4 @@
 --require babel-register 
---timeout 10000 
+--timeout 20000 
 --reporter mocha-testrail-reporter-custom
 --require dotenv/config
