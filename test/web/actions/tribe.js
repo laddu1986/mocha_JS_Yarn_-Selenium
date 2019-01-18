@@ -255,12 +255,12 @@ export function waitForLogoPreview() {
 
 export function verifyTribeCardWallpaper() {
   if (browser.isExisting("//*[@data-qa='segment:background']"))
-    return TribePage.tribeCardWallpaper.getAttribute('style').includes('background: url');
+    return TribePage.tribeCardWallpaper.getAttribute('style').includes('background: url("https://upe.astcdn.com/img');
   else return false;
 }
 
 export function verifyTribeCardLogo() {
-  return TribePage.tribeCardLogo.getAttribute('style').includes('background: url("https://');
+  return TribePage.tribeCardLogo.getAttribute('style').includes('background: url("https://upe.astcdn.com/img');
 }
 
 export function removeImage() {
