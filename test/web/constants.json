@@ -77,5 +77,23 @@
       "bool": "boolean",
       "int": "integer"
     }
+  },
+  "TemplateThumbnailImages": {
+    "Default": "Default",
+    "Hero": "Hero",
+    "Carousel": "Carousel",
+    "ContentRow": "ContentRow",
+    "Image": "Image",
+    "Grid": "Grid",
+    "Video": "Video",
+    "Advert": "Advert",
+    "Article": "Article",
+    "Card": "Card",
+    "Form": "Form",
+    "Heading": "Heading",
+    "Map": "Map",
+    "NavMenu": "NavMenu",
+    "Prompt": "Prompt",
+    "Other": "Other"
   }
 }
