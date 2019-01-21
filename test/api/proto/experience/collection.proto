@@ -11,9 +11,11 @@ message Collection {
   string name = 3;
   repeated string entity_ids = 4;
   string category_id = 5;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp modified_at = 7;
-  google.protobuf.Timestamp row_version = 8;
+  string created_by_account_id = 6;
+  string modified_by_account_id = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp modified_at = 9;
+  google.protobuf.Timestamp row_version = 10;
 }
 
 message Category {
@@ -21,12 +23,16 @@ message Category {
   string name = 2;
   repeated Collection collections = 3;
   bool is_default = 4;
-  google.protobuf.Timestamp created_at = 5;
-  google.protobuf.Timestamp modified_at = 6;
-  google.protobuf.Timestamp row_version = 7;
+  string created_by_account_id = 5;
+  string modified_by_account_id = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp modified_at = 8;
+  google.protobuf.Timestamp row_version = 9;
 }
 
 message UpdateCategory {
-  string name = 1;
-  repeated string collection_keys = 2;
+  string id = 1;
+  string name = 2;
+  repeated int64 collection_ids = 3;
+  google.protobuf.Timestamp row_version = 4;
 }

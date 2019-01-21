@@ -25,6 +25,7 @@ message CreateCollectionRequest {
   SpaceContext context = 1;
   string key = 2;
   string name = 3;
+  string created_by_account_id = 4;
 }
 
 message CreateCollectionResponse {
@@ -53,6 +54,7 @@ message UpdateCollectionRequest {
   SpaceContext context = 1;
   Collection collection = 2;
   google.protobuf.FieldMask update_mask = 3;
+  string modified_by_account_id = 4;
 }
 
 message UpdateCollectionResponse {
@@ -62,6 +64,7 @@ message UpdateCollectionResponse {
 message DuplicateCollectionRequest {
   SpaceContext context = 1;
   int64 id = 2;
+  string created_by_account_id = 3;
 }
 
 message DuplicateCollectionResponse {
@@ -71,6 +74,7 @@ message DuplicateCollectionResponse {
 message DeleteCollectionRequest {
   SpaceContext context = 1;
   int64 id = 2;
+  string modified_by_account_id = 3;
 }
 
 message DeleteCollectionResponse {
@@ -79,6 +83,7 @@ message DeleteCollectionResponse {
 message CreateCategoryRequest {
   SpaceContext context = 1;
   string name = 2;
+  string created_by_account_id = 3;
 }
 
 message CreateCategoryResponse {
@@ -95,9 +100,9 @@ message GetCategoriesResponse {
 
 message UpdateCategoryRequest {
   SpaceContext context = 1;
-  string id = 2;
-  UpdateCategory category = 3;
-  google.protobuf.FieldMask update_mask = 4;
+  UpdateCategory category = 2;
+  google.protobuf.FieldMask update_mask = 3;
+  string modified_by_account_id = 4;
 }
 
 message UpdateCategoryResponse {
@@ -107,6 +112,7 @@ message UpdateCategoryResponse {
 message DeleteCategoryRequest {
   SpaceContext context = 1;
   string id = 2;
+  string modified_by_account_id = 3;
 }
 
 message DeleteCategoryResponse {
