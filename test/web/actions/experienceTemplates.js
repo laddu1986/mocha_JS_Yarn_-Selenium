@@ -106,30 +106,12 @@ export function clickHeroImage() {
 export function clickConfirmButton() {
   experienceTemplatePage.confirmButton.click();
 }
-var arrayThumbnailItems = [
-  constants.TemplateThumbnailImages.Default,
-  constants.TemplateThumbnailImages.Hero,
-  constants.TemplateThumbnailImages.Carousel,
-  constants.TemplateThumbnailImages.ContentRow,
-  constants.TemplateThumbnailImages.Image,
-  constants.TemplateThumbnailImages.Grid,
-  constants.TemplateThumbnailImages.Video,
-  constants.TemplateThumbnailImages.Advert,
-  constants.TemplateThumbnailImages.Article,
-  constants.TemplateThumbnailImages.Card,
-  constants.TemplateThumbnailImages.Form,
-  constants.TemplateThumbnailImages.Heading,
-  constants.TemplateThumbnailImages.Map,
-  constants.TemplateThumbnailImages.NavMenu,
-  constants.TemplateThumbnailImages.Prompt,
-  constants.TemplateThumbnailImages.Other
-];
 var missingThumbnailItemsArray = [];
 export function verifyThumbnailImages() {
-  for (var i = 0; i < arrayThumbnailItems.length; i++) {
-    if (experienceTemplatePage.thumbnailImage.value[i].getAttribute('data-qa').includes(arrayThumbnailItems[i])) {
+  for (var i = 0; i < constants.TemplateThumbnailImages.length; i++) {
+    if (experienceTemplatePage.thumbnailImage.value[i].getAttribute('data-qa').includes(constants.TemplateThumbnailImages[i])) {
       // eslint-disable-line
-    } else missingThumbnailItemsArray.push(arrayThumbnailItems[i]);
+    } else missingThumbnailItemsArray.push(constants.TemplateThumbnailImages[i]);
   }
   return missingThumbnailItemsArray;
 }

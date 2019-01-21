@@ -78,22 +78,22 @@
       "int": "integer"
     }
   },
-  "TemplateThumbnailImages": {
-    "Default": "Default",
-    "Hero": "Hero",
-    "Carousel": "Carousel",
-    "ContentRow": "ContentRow",
-    "Image": "Image",
-    "Grid": "Grid",
-    "Video": "Video",
-    "Advert": "Advert",
-    "Article": "Article",
-    "Card": "Card",
-    "Form": "Form",
-    "Heading": "Heading",
-    "Map": "Map",
-    "NavMenu": "NavMenu",
-    "Prompt": "Prompt",
-    "Other": "Other"
-  }
+  "TemplateThumbnailImages": [
+    "Default",
+    "Hero",
+    "Carousel",
+    "ContentRow",
+    "Image",
+    "Grid",
+    "Video",
+    "Advert",
+    "Article",
+    "Card",
+    "Form",
+    "Heading",
+    "Map",
+    "NavMenu",
+    "Prompt",
+    "Other"
+  ]
 }
