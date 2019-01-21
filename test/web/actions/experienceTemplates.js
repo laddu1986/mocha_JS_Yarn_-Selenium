@@ -133,7 +133,6 @@ export function verifyThumbnailImages() {
   }
   return missingThumbnailItemsArray;
 }
-
 export function clickUploadTab() {
   experienceTemplatePage.uploadTab.click();
 }
@@ -149,4 +148,7 @@ export function verifyTemplateImage(type) {
 }
 export function clickBackToLibrary() {
   experienceTemplatePage.backToLibrary.click();
+}
+export function goToTemplateDetailPage() {
+  experienceTemplatePage.templateCardImage.click();
 }

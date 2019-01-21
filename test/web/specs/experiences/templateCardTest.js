@@ -3,6 +3,7 @@ import accountPage from 'page_objects/accountPage';
 import { createAccount } from 'actions/account';
 import { createSpace } from 'actions/space';
 import {
+  goToTemplateDetailPage,
   clickBackToLibrary,
   verifyTemplateImage,
   uploadImage,
@@ -39,17 +40,7 @@ describe(`Experience Template card image Tests`, () => {
     let missingItems = verifyThumbnailImages();
     expect(missingItems.length).to.equal(0, ` ${missingItems} Thumbnail Images do not appear correctly`);
   });
-  it('Select hero image --> Verify the passive notification', () => {
-    clickHeroImage();
-    clickConfirmButton();
-    expect(getNotificationMessageText()).to.include(
-      `${PassiveNotification.updateMessage.text}`,
-      'The passive notification after updating template image is not correct'
-    );
-    closePassiveNotification();
-  });
   it('Uploading an image --> Success passive notification', () => {
-    clickEditThumbnail();
     clickUploadTab();
     uploadImage();
     clickConfirmButton();
@@ -57,12 +48,25 @@ describe(`Experience Template card image Tests`, () => {
       `${PassiveNotification.updateMessage.text}`,
       'The passive notification after updating template image is not correct'
     );
+    closePassiveNotification();
+    browser.pause(1500);           // chrome headless does not pass without pause here
   });
+
   it('Verify the image is uploaded on template detail page', () => {
     expect(verifyTemplateImage()).to.equal(true, 'The image is not uploaded on template detail page');
   });
   it('Verify the image is uploaded on all template page', () => {
     clickBackToLibrary();
     expect(verifyTemplateImage('listPage')).to.equal(true, 'The image is not uploaded on all templates page');
+  });
+  it('Select hero image --> Verify the passive notification', () => {
+    goToTemplateDetailPage();
+    clickEditThumbnail();
+    clickHeroImage();
+    clickConfirmButton();
+    expect(getNotificationMessageText()).to.include(
+      `${PassiveNotification.updateMessage.text}`,
+      'The passive notification after updating template image is not correct'
+    );
   });
 });
