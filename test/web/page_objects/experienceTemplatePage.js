@@ -83,7 +83,7 @@ class ExperienceTemplatePage {
     return browser.element("//button[@data-qa='btn:remove']");
   }
   get backToLibrary() {
-    return browser.element("//a[contains(text(),'Back to Library')]");
+    return browser.element("//section[@data-qa='page:experience-template']//a");
   }
 }
 export default new ExperienceTemplatePage();
