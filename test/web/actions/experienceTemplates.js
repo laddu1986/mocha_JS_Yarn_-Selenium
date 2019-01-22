@@ -106,12 +106,15 @@ export function clickHeroImage() {
 export function clickConfirmButton() {
   experienceTemplatePage.confirmButton.click();
 }
-var missingThumbnailItemsArray = [];
 export function verifyThumbnailImages() {
+  let missingThumbnailItemsArray = [];
   for (var i = 0; i < constants.TemplateThumbnailImages.length; i++) {
-    if (experienceTemplatePage.thumbnailImage.value[i].getAttribute('data-qa').includes(constants.TemplateThumbnailImages[i])) {
-      // eslint-disable-line
-    } else missingThumbnailItemsArray.push(constants.TemplateThumbnailImages[i]);
+    if (
+      !experienceTemplatePage.thumbnailImage.value[i]
+        .getAttribute('data-qa')
+        .includes(constants.TemplateThumbnailImages[i])
+    )
+      missingThumbnailItemsArray.push(constants.TemplateThumbnailImages[i]);
   }
   return missingThumbnailItemsArray;
 }

@@ -49,7 +49,7 @@ describe(`Experience Template card image Tests`, () => {
       'The passive notification after updating template image is not correct'
     );
     closePassiveNotification();
-    browser.pause(1500);           // chrome headless does not pass without pause here
+    browser.pause(1500); // chrome headless does not pass without pause here
   });
 
   it('Verify the image is uploaded on template detail page', () => {
