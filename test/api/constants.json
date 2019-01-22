@@ -97,7 +97,10 @@
     "Types": {
       "text": "text",
       "bool": "boolean",
-      "int": "integer"
+      "int": "integer",
+      "color": "color",
+      "date": "date",
+      "list": "list"
     }
   },
   "UserDetails": {

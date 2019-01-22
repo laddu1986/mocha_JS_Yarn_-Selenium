@@ -2,7 +2,7 @@ import { joi } from '../common';
 import { postIdentity } from 'actions/identity';
 import { postOrganization } from 'actions/organization';
 import { postSpaceByOrganizationId } from 'actions/spaces';
-import { createExperienceTemplate, getExperienceTemplateById } from 'actions/templates';
+import { createExperienceTemplate, getExperienceTemplateById, getProperty } from 'actions/templates';
 import constants from 'constants.json';
 import * as properties from 'actions/templateProperties';
 import * as schemas from 'schemas/templatesSchema';
@@ -65,5 +65,10 @@ describe('Template API -> Template Properties', () => {
     let deleteProperty = await properties.deleteProperty(templateData, constants.TemplateProperties.Types.int);
     expect(deleteProperty.status.code).to.equal(0);
     joi.assert(deleteProperty.response, schemas.templateSchema(templateData));
+  });
+  it('getPropertyTypes', async () => {
+    let getResponse = await getProperty();
+    expect(getResponse.status.code).to.equal(0);
+    joi.assert(getResponse.response, schemas.getPropertySchema());
   });
 });
