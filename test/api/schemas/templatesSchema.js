@@ -108,7 +108,9 @@ export function getPropertySchema() {
         joi.object().keys({
           key: joi.valid(types),
           name: joi.valid(typeKeys),
-          iconUrl: joi.valid('TextIcon', 'IntegerIcon', 'ToggleIcon').required(),
+          iconUrl: joi
+            .valid('TextIcon', 'IntegerIcon', 'ToggleIcon', 'ColorIcon', 'CalendarIcon', 'ListIcon')
+            .required(),
           appearances: joi
             .alternatives()
             .when('key', {
