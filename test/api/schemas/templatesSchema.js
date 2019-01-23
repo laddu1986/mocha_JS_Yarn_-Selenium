@@ -1,10 +1,8 @@
 import { joi } from '../common';
 import constants from 'constants.json';
 
-const types = Object.keys(constants.TemplateProperties.Types).map(value => constants.TemplateProperties.Types[value]);
-const typeKeys = Object.keys(constants.TemplateProperties.Types).map(function(value) {
-  return value;
-});
+const types = Object.values(constants.TemplateProperties.Types);
+const typeKeys = Object.keys(constants.TemplateProperties.Types);
 const protoLong = joi.object().keys({
   low: joi.number(),
   high: joi.number(),
@@ -86,7 +84,7 @@ const reqRuleTypesObject = joi.object().keys({
 function commonAppearanceObject(value) {
   let nameVal = value[0].toUpperCase() + value.substring(1);
   const textApperanceObject = joi.object().keys({
-    key: joi.valid(value).required(),
+    key: joi.valid(value.toLowerCase()).required(),
     name: joi.valid(nameVal).required(),
     isDefault: joi.valid(true).required()
   });
@@ -95,8 +93,10 @@ function commonAppearanceObject(value) {
 const intApperanceObject = joi.object().keys({
   key: joi.valid('number', 'slider').required(),
   name: joi.valid('Number', 'Slider').required(),
-  isDefault: joi.valid().when('key', { is: 'number', then: joi.valid(true).required() }), // eslint-disable-line
-  isDefault: joi.valid().when('key', { is: 'slider', then: joi.valid(false).required() }) // eslint-disable-line
+  isDefault: joi
+    .alternatives()
+    .when('key', { is: 'number', then: joi.valid(true).required() })
+    .when('key', { is: 'slider', then: joi.valid(false).required() })
 });
 
 export function getPropertySchema() {
@@ -109,78 +109,94 @@ export function getPropertySchema() {
           key: joi.valid(types),
           name: joi.valid(typeKeys),
           iconUrl: joi.valid('TextIcon', 'IntegerIcon', 'ToggleIcon').required(),
-          appearances: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.Text,
-            then: joi
-              .array()
-              .items(commonAppearanceObject(constants.TemplateProperties.Types.Text))
-              .required()
-          }),
-          /*eslint-disable */
-          appearances: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.Integer,
-            then: joi
-              .array()
-              .items(intApperanceObject)
-              .required()
-          }),
-          appearances: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.Switch,
-            then: joi
-              .array()
-              .items(commonAppearanceObject(constants.TemplateProperties.Types.Switch))
-              .required()
-          }),
-          appearances: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.Color,
-            then: joi
-              .array()
-              .items(commonAppearanceObject(constants.TemplateProperties.Types.Color))
-              .required()
-          }),
-          appearances: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.List,
-            then: joi
-              .array()
-              .items(commonAppearanceObject(constants.TemplateProperties.Types.List))
-              .required()
-          }),
-          appearances: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.Date,
-            then: joi
-              .array()
-              .items(commonAppearanceObject(constants.TemplateProperties.Types.Date))
-              .required()
-          }),
-          ruleTypes: joi.array().when('key', {
-            is: (constants.TemplateProperties.Types.Text, constants.TemplateProperties.Types.List),
-            then: joi
-              .array()
-              .items(textRuleTypesObject)
-              .required()
-          }),
-          ruleTypes: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.Integer,
-            then: joi
-              .array()
-              .items(intRuleTypesObject)
-              .required()
-          }),
-          ruleTypes: joi.array().when('key', {
-            is: (constants.TemplateProperties.Types.Color, constants.TemplateProperties.Types.Switch),
-            then: joi
-              .array()
-              .items(reqRuleTypesObject)
-              .required()
-          }),
-          ruleTypes: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.Date,
-            then: joi
-              .array()
-              .items(dateRuleTypesObject)
-              .required()
-          })
-          /*eslint-enable */
+          appearances: joi
+            .alternatives()
+            .when('key', {
+              is: constants.TemplateProperties.Types.Text,
+              then: joi
+                .array()
+                .items(commonAppearanceObject(constants.TemplateProperties.Types.Text))
+                .required()
+            })
+            .when('key', {
+              is: constants.TemplateProperties.Types.Switch,
+              then: joi
+                .array()
+                .items(commonAppearanceObject(Object.keys(constants.TemplateProperties.Types)[1]))
+                .required()
+            })
+            .when('key', {
+              is: constants.TemplateProperties.Types.Integer,
+              then: joi
+                .array()
+                .items(intApperanceObject)
+                .required()
+            })
+            .when('key', {
+              is: constants.TemplateProperties.Types.Color,
+              then: joi
+                .array()
+                .items(commonAppearanceObject(constants.TemplateProperties.Types.Color))
+                .required()
+            })
+            .when('key', {
+              is: constants.TemplateProperties.Types.List,
+              then: joi
+                .array()
+                .items(commonAppearanceObject(constants.TemplateProperties.Types.List))
+                .required()
+            })
+            .when('key', {
+              is: constants.TemplateProperties.Types.Date,
+              then: joi
+                .array()
+                .items(commonAppearanceObject(constants.TemplateProperties.Types.Date))
+                .required()
+            }),
+          ruleTypes: joi
+            .alternatives()
+            .when('key', {
+              is: constants.TemplateProperties.Types.Text,
+              then: joi
+                .array()
+                .items(textRuleTypesObject)
+                .required()
+            })
+            .when('key', {
+              is: constants.TemplateProperties.Types.List,
+              then: joi
+                .array()
+                .items(textRuleTypesObject)
+                .required()
+            })
+            .when('key', {
+              is: constants.TemplateProperties.Types.Integer,
+              then: joi
+                .array()
+                .items(intRuleTypesObject)
+                .required()
+            })
+            .when('key', {
+              is: constants.TemplateProperties.Types.Color,
+              then: joi
+                .array()
+                .items(reqRuleTypesObject)
+                .required()
+            })
+            .when('key', {
+              is: constants.TemplateProperties.Types.Switch,
+              then: joi
+                .array()
+                .items(reqRuleTypesObject)
+                .required()
+            })
+            .when('key', {
+              is: constants.TemplateProperties.Types.Date,
+              then: joi
+                .array()
+                .items(dateRuleTypesObject)
+                .required()
+            })
         })
       )
   });
