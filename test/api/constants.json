@@ -95,9 +95,12 @@
   },
   "TemplateProperties": {
     "Types": {
-      "text": "text",
-      "bool": "boolean",
-      "int": "integer"
+      "Text": "text",
+      "Switch": "boolean",
+      "Integer": "integer",
+      "Color": "color",
+      "Date": "date",
+      "List": "list"
     }
   },
   "UserDetails": {

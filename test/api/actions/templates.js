@@ -74,3 +74,8 @@ export function getExperienceTemplateById(templateData) {
   }).withResponseStatus(true);
   return req.exec();
 }
+
+export function getProperty() {
+  const req = new client.Request('getPropertyTypes', {}).withResponseStatus(true);
+  return req.exec();
+}
