@@ -17,17 +17,17 @@ describe('Template API -> Template Properties', () => {
     await createExperienceTemplate(templateData);
   });
   it('Create a text property', async () => {
-    let createText = await properties.createProperty(templateData, constants.TemplateProperties.Types.text);
+    let createText = await properties.createProperty(templateData, constants.TemplateProperties.Types.Text);
     expect(createText.status.code).to.equal(0);
     //joi.assert(createText.response, schemas.templateSchema(templateData));
   });
   it('Create a boolean property', async () => {
-    let createBool = await properties.createProperty(templateData, constants.TemplateProperties.Types.bool);
+    let createBool = await properties.createProperty(templateData, constants.TemplateProperties.Types.Switch);
     expect(createBool.status.code).to.equal(0);
     //joi.assert(createBool.response, schemas.templateSchema(templateData));
   });
   it('Create a integer property', async () => {
-    let createInt = await properties.createProperty(templateData, constants.TemplateProperties.Types.int);
+    let createInt = await properties.createProperty(templateData, constants.TemplateProperties.Types.Integer);
     expect(createInt.status.code).to.equal(0);
     //joi.assert(createInt.response, schemas.templateSchema(templateData));
   });
@@ -52,17 +52,17 @@ describe('Template API -> Template Properties', () => {
     //joi.assert(renameProperty.response, schemas.templateSchema(templateData));
   });
   xit('Delete a text property', async () => {
-    let deleteProperty = await properties.deleteProperty(templateData, constants.TemplateProperties.Types.text);
+    let deleteProperty = await properties.deleteProperty(templateData, constants.TemplateProperties.Types.Text);
     expect(deleteProperty.status.code).to.equal(0);
     joi.assert(deleteProperty.response, schemas.templateSchema(templateData));
   });
   xit('Delete a boolean property', async () => {
-    let deleteProperty = await properties.deleteProperty(templateData, constants.TemplateProperties.Types.bool);
+    let deleteProperty = await properties.deleteProperty(templateData, constants.TemplateProperties.Types.Switch);
     expect(deleteProperty.status.code).to.equal(0);
     joi.assert(deleteProperty.response, schemas.templateSchema(templateData));
   });
   xit('Delete a integer property', async () => {
-    let deleteProperty = await properties.deleteProperty(templateData, constants.TemplateProperties.Types.int);
+    let deleteProperty = await properties.deleteProperty(templateData, constants.TemplateProperties.Types.Integer);
     expect(deleteProperty.status.code).to.equal(0);
     joi.assert(deleteProperty.response, schemas.templateSchema(templateData));
   });

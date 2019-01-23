@@ -2,7 +2,9 @@ import { joi } from '../common';
 import constants from 'constants.json';
 
 const types = Object.keys(constants.TemplateProperties.Types).map(value => constants.TemplateProperties.Types[value]);
-
+const typeKeys = Object.keys(constants.TemplateProperties.Types).map(function(value) {
+  return value;
+});
 const protoLong = joi.object().keys({
   low: joi.number(),
   high: joi.number(),
@@ -98,9 +100,6 @@ const intApperanceObject = joi.object().keys({
 });
 
 export function getPropertySchema() {
-  let typesUppercase = [];
-  typesUppercase = types.map(a => a.charAt(0).toUpperCase() + a.substr(1));
-  typesUppercase[1] = 'Switch';
   return joi.object().keys({
     propertyTypes: joi
       .array()
@@ -108,74 +107,74 @@ export function getPropertySchema() {
       .items(
         joi.object().keys({
           key: joi.valid(types),
-          name: joi.valid(typesUppercase),
+          name: joi.valid(typeKeys),
           iconUrl: joi.valid('TextIcon', 'IntegerIcon', 'ToggleIcon').required(),
           appearances: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.text,
+            is: constants.TemplateProperties.Types.Text,
             then: joi
               .array()
-              .items(commonAppearanceObject(constants.TemplateProperties.Types.text))
+              .items(commonAppearanceObject(constants.TemplateProperties.Types.Text))
               .required()
           }),
           /*eslint-disable */
           appearances: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.int,
+            is: constants.TemplateProperties.Types.Integer,
             then: joi
               .array()
               .items(intApperanceObject)
               .required()
           }),
           appearances: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.bool,
+            is: constants.TemplateProperties.Types.Switch,
             then: joi
               .array()
-              .items(commonAppearanceObject(constants.TemplateProperties.Types.bool))
+              .items(commonAppearanceObject(constants.TemplateProperties.Types.Switch))
               .required()
           }),
           appearances: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.color,
+            is: constants.TemplateProperties.Types.Color,
             then: joi
               .array()
-              .items(commonAppearanceObject(constants.TemplateProperties.Types.color))
+              .items(commonAppearanceObject(constants.TemplateProperties.Types.Color))
               .required()
           }),
           appearances: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.list,
+            is: constants.TemplateProperties.Types.List,
             then: joi
               .array()
-              .items(commonAppearanceObject(constants.TemplateProperties.Types.list))
+              .items(commonAppearanceObject(constants.TemplateProperties.Types.List))
               .required()
           }),
           appearances: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.date,
+            is: constants.TemplateProperties.Types.Date,
             then: joi
               .array()
-              .items(commonAppearanceObject(constants.TemplateProperties.Types.date))
+              .items(commonAppearanceObject(constants.TemplateProperties.Types.Date))
               .required()
           }),
           ruleTypes: joi.array().when('key', {
-            is: (constants.TemplateProperties.Types.text, constants.TemplateProperties.Types.list),
+            is: (constants.TemplateProperties.Types.Text, constants.TemplateProperties.Types.List),
             then: joi
               .array()
               .items(textRuleTypesObject)
               .required()
           }),
           ruleTypes: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.int,
+            is: constants.TemplateProperties.Types.Integer,
             then: joi
               .array()
               .items(intRuleTypesObject)
               .required()
           }),
           ruleTypes: joi.array().when('key', {
-            is: (constants.TemplateProperties.Types.color, constants.TemplateProperties.Types.bool),
+            is: (constants.TemplateProperties.Types.Color, constants.TemplateProperties.Types.Switch),
             then: joi
               .array()
               .items(reqRuleTypesObject)
               .required()
           }),
           ruleTypes: joi.array().when('key', {
-            is: constants.TemplateProperties.Types.date,
+            is: constants.TemplateProperties.Types.Date,
             then: joi
               .array()
               .items(dateRuleTypesObject)
