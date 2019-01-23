@@ -22,7 +22,7 @@ import {
   createExperienceTemplate,
   verifyCreateButton,
   verifyTemplateIsCreated
-} from 'actions/experiences';
+} from 'actions/experienceTemplates.js';
 import { goToExperiencePage } from 'actions/navBar';
 import * as PassiveNotification from 'data/passiveNotification.json';
 var name = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}`,
