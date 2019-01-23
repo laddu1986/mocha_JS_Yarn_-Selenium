@@ -77,5 +77,23 @@
       "bool": "boolean",
       "int": "integer"
     }
-  }
+  },
+  "TemplateThumbnailImages": [
+    "Default",
+    "Hero",
+    "Carousel",
+    "ContentRow",
+    "Image",
+    "Grid",
+    "Video",
+    "Advert",
+    "Article",
+    "Card",
+    "Form",
+    "Heading",
+    "Map",
+    "NavMenu",
+    "Prompt",
+    "Other"
+  ]
 }
