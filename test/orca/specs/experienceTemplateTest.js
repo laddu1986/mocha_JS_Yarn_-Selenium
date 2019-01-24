@@ -21,7 +21,7 @@ var createExperienceResponse,
   experienceTemplatesResponse,
   deletePropertyResponse,
   deleteExperienceResponse;
-export var experienceTemplateObject = new Object();
+var experienceTemplateObject = new Object();
 
 describe('Tests for experience templates for a space', () => {
   before(async () => {
@@ -55,7 +55,7 @@ describe('Tests for experience templates for a space', () => {
     );
   });
   it('Mutation - updateExperienceTemplate --> Deleting properties', async () => {
-    deletePropertyResponse = await updateExperienceTemplate(experienceTemplateObject, "noProperty");
+    deletePropertyResponse = await updateExperienceTemplate(experienceTemplateObject, 'noProperty');
     expect(deletePropertyResponse.response.statusCode).to.equal(200);
     joi.assert(
       deletePropertyResponse.response.body.data.updateExperienceTemplate.template,
