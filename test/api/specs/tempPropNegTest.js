@@ -109,26 +109,4 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
     expect(errorResponseArray, `The characters [${errorResponseArray}] did not produce to right error message`).to.be
       .empty;
   });
-
-  it('Cannot create a property with a key that has a reserved word', async () => {
-    let errorCodeArray = [],
-      errorResponseArray = [];
-    for (var i = 0; i < data.reservedWords.length; i++) {
-      let errorResponse = await properties.createProperty(
-        templateData,
-        constants.TemplateProperties.Types.Integer,
-        undefined,
-        data.reservedWords[i]
-      );
-      if (errorResponse.code !== 3) {
-        errorCodeArray.push(data.reservedWords[i]);
-      }
-      if (!errorResponse.metadata._internal_repr.custom_error[0].includes(messages.Templates.reservedKeyword)) {
-        errorResponseArray.push(data.reservedWords[i]);
-      }
-    }
-    expect(errorCodeArray, `The characters [${errorCodeArray}] did not produce the right error code`).to.be.empty;
-    expect(errorResponseArray, `The characters [${errorResponseArray}] did not produce to right error message`).to.be
-      .empty;
-  });
 });
