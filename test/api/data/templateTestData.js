@@ -17,83 +17,184 @@ export const underscoreString = '_bstra';
 
 // prettier-ignore
 export const invalidChars = [
-  "!", "@", "#", "$", "%", "^", 
-  "&", "*", "(", ")", "+", "=", 
-  "|", "\\", "`", "~", "{", "}", 
-  ":", ";", "'", '"', "<", ",", 
+  "!", "@", "#", "$", "%", "^",
+  "&", "*", "(", ")", "+", "=",
+  "|", "\\", "`", "~", "{", "}",
+  ":", ";", "'", '"', "<", ",",
   ">", ".", "?", "/", "-"
 ];
 // prettier-ignore
 export const reservedWords = [
-  "abstract", "await", "boolean", "break", 
-  "byte", "case", "catch", "char", 
-  "class", "const", "continue", "debugger", 
-  "default", "delete", "do", "double", 
-  "else", "enum", "export", "extends", 
-  "false", "final", "finally", "float", 
-  "for", "function", "goto", "if", 
-  "implements", "import", "in", "instanceof", 
-  "int", "interface", "let", "long", 
-  "native", "new", "null", "package", 
-  "private", "protected", "public", "return", 
-  "short", "static", "super", "switch", 
-  "synchronized", "this", "throw", "throws", 
-  "transient", "true", "try", "typeof", 
-  "var", "void", "volatile", "while", 
+  "abstract", "await", "boolean", "break",
+  "byte", "case", "catch", "char",
+  "class", "const", "continue", "debugger",
+  "default", "delete", "do", "double",
+  "else", "enum", "export", "extends",
+  "false", "final", "finally", "float",
+  "for", "function", "goto", "if",
+  "implements", "import", "in", "instanceof",
+  "int", "interface", "let", "long",
+  "native", "new", "null", "package",
+  "private", "protected", "public", "return",
+  "short", "static", "super", "switch",
+  "synchronized", "this", "throw", "throws",
+  "transient", "true", "try", "typeof",
+  "var", "void", "volatile", "while",
   "with", "yield"
 ];
 
 export const textVal = {
   defaultValue: 'default_value_text',
+  localizable: true,
   rules: [
     {
+      constraint: 'RangeInt',
       characterCount: {
         min: 1,
         max: 10,
         mode: 10
       },
+      errorMessage: 'text_range_error_message'
+    },
+    {
+      constraint: 'Regex',
       regex: {
         pattern: 'pattern_text'
       },
+      errorMessage: 'text_regex_error_message'
+    },
+    {
+      constraint: 'Required',
       required: {
         isRequired: true
       },
-      errorMessage: 'error_message_text'
+      errorMessage: 'text_required_error_message'
     }
   ]
 };
 
 export const intVal = {
-  default_value: 10,
+  defaultValue: 10,
+  localizable: true,
   rules: [
     {
-      number_range: {
-        min: 0,
+      constraint: 'RangeInt',
+      numberRange: {
+        min: 1,
         max: 10,
         mode: 10
       },
-      number_range_slider: {
-        min: 0,
+      errorMessage: 'int_rangeint_error_message_text'
+    },
+    {
+      constraint: 'RangeIntSlider',
+      numberRangeSlider: {
+        min: 1,
         max: 10,
         mode: 10,
         increment: 5
       },
+      errorMessage: 'int_rangeIntSlider_error_message_text'
+    },
+    {
+      constraint: 'Required',
       required: {
-        is_required: true
+        isRequired: true
       },
-      error_message: 'error_message_text'
+      errorMessage: 'int_required_error_message_text'
     }
   ]
 };
 
 export const boolVal = {
-  default_value: true,
+  defaultValue: true,
   rules: [
     {
+      constraint: 'Required',
       required: {
-        is_required: true
+        isRequired: true
       },
-      error_message: 'error_message_text'
+      errorMessage: 'bool_required_error_message'
+    }
+  ]
+};
+export const dateVal = {
+  defaultValue: {
+    seconds: Date.now(),
+    nanos: 0
+  },
+  localizable: true,
+  rules: [
+    {
+      constraint: 'RangeDate',
+      dateRange: {
+        min: {
+          seconds: Date.now() - 100,
+          nanos: 0
+        },
+        max: {
+          seconds: Date.now() + 100,
+          nanos: 0
+        },
+        mode: 10
+      },
+      errorMessage: 'date_range_error_message_text'
+    },
+    {
+      constraint: 'Required',
+      required: {
+        isRequired: true
+      },
+      errorMessage: 'date_req_error_message'
+    }
+  ]
+};
+
+export const colorVal = {
+  defaultValue: {
+    key: 'key_of_color',
+    value: 'value_of_color',
+    opacity: 100
+  },
+  rules: [
+    {
+      constraint: 'Required',
+      required: {
+        isRequired: true
+      },
+      errorMessage: 'color_error_message'
+    }
+  ]
+};
+
+export const listVal = {
+  defaultValue: {
+    value: ['1st_val']
+  },
+  localizable: true,
+  rules: [
+    {
+      constraint: 'RangeInt',
+      valueCount: {
+        min: 10,
+        max: 10,
+        mode: 10
+      },
+      errorMessage: 'list_range_err_msg'
+    },
+    {
+      constraint: 'Regex',
+      regex: {
+        pattern: 'regex_pattern'
+      },
+      errorMessage: 'list_regex_error_msg'
+    },
+    {
+      constraint: 'Required',
+      required: {
+        isRequired: true
+      },
+      errorMessage: 'list_req_err_msg'
     }
   ]
 };
