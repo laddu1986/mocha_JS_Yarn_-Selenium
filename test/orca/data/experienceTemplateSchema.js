@@ -33,7 +33,7 @@ export function updateExperienceTemplateSchema(name, object) {
       name: joi.valid(object.property1, object.property2, object.property3).required(),
       appearanceKey: joi.valid(null).required(),
       defaultValue: joi.valid(null).required(),
-      promptText: joi.valid(Object.keys(Constants.TemplateProperties.Types)).required(),
+      promptText: joi.valid(null).required(),
       helpText: joi.valid(null).required(),
       localizable: joi.valid(null).required(),
       rules: joi.array().required()
@@ -43,13 +43,11 @@ export function updateExperienceTemplateSchema(name, object) {
 }
 
 export function getExperiencesTemplateSchema(object) {
-  var schema = joi.object().keys({
-    templates: joi.array().items({
+  var schema = joi.array().items({
       id: joi.valid(object.expTemplateID).required(),
       key: joi.valid(object.experienceKey).required(),
       rowVersion: schemaDate.required(),
       name: joi.valid(object.experienceNewName).required()
-    })
   });
   return schema;
 }
