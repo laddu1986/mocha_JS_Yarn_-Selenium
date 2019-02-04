@@ -42,8 +42,8 @@ export const reservedWords = [
   "var", "void", "volatile", "while",
   "with", "yield"
 ];
-
-export const textVal = {
+export const properties = new Object();
+properties.text = {
   defaultValue: 'default_value_text',
   localizable: true,
   rules: [
@@ -73,7 +73,7 @@ export const textVal = {
   ]
 };
 
-export const intVal = {
+properties.integer = {
   defaultValue: 10,
   localizable: true,
   rules: [
@@ -106,7 +106,7 @@ export const intVal = {
   ]
 };
 
-export const boolVal = {
+properties.boolean = {
   defaultValue: true,
   rules: [
     {
@@ -118,7 +118,7 @@ export const boolVal = {
     }
   ]
 };
-export const dateVal = {
+properties.date = {
   defaultValue: {
     seconds: Date.now(),
     nanos: 0
@@ -150,7 +150,7 @@ export const dateVal = {
   ]
 };
 
-export const colorVal = {
+properties.color = {
   defaultValue: {
     key: 'key_of_color',
     value: 'value_of_color',
@@ -167,7 +167,7 @@ export const colorVal = {
   ]
 };
 
-export const listVal = {
+properties.list = {
   defaultValue: {
     value: ['1st_val']
   },
