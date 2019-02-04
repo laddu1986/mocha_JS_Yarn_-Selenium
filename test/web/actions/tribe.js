@@ -19,7 +19,7 @@ export function inputTribeDetails(name) {
 }
 
 export function verifyAllTribesPage() {
-  return TribePage.createTribeButton.isVisible();
+  return TribePage.createTribeButton.isVisible() && TribePage.createTribeLink.isVisible();
 }
 
 export function verifyTribeDetailpage() {
@@ -89,7 +89,7 @@ export function verifyTribe(type, value) {
 }
 
 export function createTribe(name) {
-  clickCreateTribeButton();
+  TribePage.createTribeLink.click();
   inputTribeDetails(name);
 }
 
@@ -255,12 +255,12 @@ export function waitForLogoPreview() {
 
 export function verifyTribeCardWallpaper() {
   if (browser.isExisting("//*[@data-qa='segment:background']"))
-    return TribePage.tribeCardWallpaper.getAttribute('style').includes('background: url');
+    return TribePage.tribeCardWallpaper.getAttribute('style').includes('background: url("https://upe.astcdn.com/img');
   else return false;
 }
 
 export function verifyTribeCardLogo() {
-  return TribePage.tribeCardLogo.getAttribute('style').includes('background: url("https://');
+  return TribePage.tribeCardLogo.getAttribute('style').includes('background: url("https://upe.astcdn.com/img');
 }
 
 export function removeImage() {

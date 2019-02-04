@@ -16,7 +16,7 @@ import {
   renameProperty,
   verifyAddPropertyPage,
   verifyPropertyIsAdded
-} from 'actions/experiences';
+} from 'actions/experienceTemplates.js';
 var experienceTemplateName = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}`,
   textProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}`,
   newTextProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}_new`,
@@ -25,7 +25,7 @@ var experienceTemplateName = `${lib.randomString.generate({ length: 7, charset: 
   boolProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}`,
   newBoolProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}_new`;
 
-describe(`Experience Template Tests`, () => {
+describe(`Experience Template Property Tests`, () => {
   before(() => {
     accountPage.open();
     createAccount();

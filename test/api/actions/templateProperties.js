@@ -12,9 +12,9 @@ export function createProperty(templateData, propertyType, name, key) {
     key === undefined ? randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : key;
   let propertiesArray = templateData.template.properties === undefined ? [] : templateData.template.properties;
   let propertyVal;
-  if (propertyType == constants.TemplateProperties.Types.text) propertyVal = data.textVal;
-  else if (propertyType == constants.TemplateProperties.Types.int) propertyVal = data.intVal;
-  else if (propertyType == constants.TemplateProperties.Types.bool) propertyVal = data.boolVal;
+  if (propertyType == constants.TemplateProperties.Types.Text) propertyVal = data.textVal;
+  else if (propertyType == constants.TemplateProperties.Types.Integer) propertyVal = data.intVal;
+  else if (propertyType == constants.TemplateProperties.Types.Switch) propertyVal = data.boolVal;
 
   propertiesArray.push({
     name: reqName,
@@ -75,14 +75,14 @@ export function deleteProperty(templateData, type) {
   for (let i = 0; i < templateData.template.properties.length; i++) {
     if (type == templateData.template.properties[i].typeKey) continue;
     else {
-      if (templateData.template.properties[i].typeKey == constants.TemplateProperties.Types.text) {
-        propertyType = constants.TemplateProperties.Types.text;
+      if (templateData.template.properties[i].typeKey == constants.TemplateProperties.Types.Text) {
+        propertyType = constants.TemplateProperties.Types.Text;
         typeVal = data.textVal;
-      } else if (templateData.template.properties[i].typeKey == constants.TemplateProperties.Types.bool) {
-        propertyType = constants.TemplateProperties.Types.bool;
+      } else if (templateData.template.properties[i].typeKey == constants.TemplateProperties.Types.Switch) {
+        propertyType = constants.TemplateProperties.Types.Switch;
         typeVal = data.boolVal;
-      } else if (templateData.template.properties[i].typeKey == constants.TemplateProperties.Types.int) {
-        propertyType = constants.TemplateProperties.Types.int;
+      } else if (templateData.template.properties[i].typeKey == constants.TemplateProperties.Types.Integer) {
+        propertyType = constants.TemplateProperties.Types.Integer;
         typeVal = data.intVal;
       }
       property.push({
