@@ -1,0 +1,142 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+
+package experience;
+option go_package = "generated";
+
+// containing fields that defines
+// a scenario property
+message ScenarioProperty {
+  string name = 1;
+  google.protobuf.Struct value = 2;
+}
+
+// containing fields that hold
+// localized scenario properties
+message LocalizedProperties {
+  string locale_code = 1;
+  repeated ScenarioProperty properties = 2;
+  google.protobuf.Timestamp row_version = 3;
+}
+
+// Read-only model of scenario
+message ScenarioDetails {
+  string id = 1;
+  string name = 2;
+  int32 sequence_number = 3;
+  bool is_default = 4;
+  bool is_enabled = 5;
+  repeated LocalizedProperties localized_properties = 6;
+  string created_by_account_id = 7;
+  string modified_by_account_id = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp modified_at = 10;
+  google.protobuf.Timestamp row_version = 11;
+}
+
+// Read-only model of summarised Experience Instance
+message ExperienceInstanceNodeDetails {
+  string id = 1;
+  string version_id = 2;
+  ExperienceInstanceNodeDetails parent = 3;
+  string created_by_account_id = 4;
+  string modified_by_account_id = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp modified_at = 7;
+  google.protobuf.Timestamp row_version = 8;
+  google.protobuf.Timestamp version_row_version = 9;
+}
+
+// Writable model of summarised Experience Instance
+message ExperienceInstanceNode {
+  string id = 1;
+  string version_id = 2;
+  ExperienceInstanceNode parent = 3;
+  google.protobuf.Timestamp row_version = 4;
+  google.protobuf.Timestamp version_row_version = 5;
+}
+
+// Writable model for adding child experience instance
+message NewChildExperienceInstance {
+  string template_id = 1;
+  string name = 2;
+  string key = 3;
+  bool is_enabled = 4;
+
+  // A default scenario will be created
+  // when a new child experience is added
+  // (no need to have a repeated scenario field)
+
+  // Experience instance children will also
+  // be instantiated if needed
+  // (no need to have a repeated children field)
+}
+
+// Writable model of Scenario
+message Scenario {
+  // id and row_version are read-only
+  // need to be here for the repeated
+  // children scenario field in the writable
+  // experience instance model
+  string id = 1;
+  google.protobuf.Timestamp row_version = 2;
+
+  // writable fields
+  string name = 3;
+  bool is_enabled = 4;
+  repeated LocalizedProperties localized_properties = 5;
+}
+
+// Writable model of Experience Instance
+message ExperienceInstance {
+  // id, version_id, row_version, and version_row_version
+  // are readonly
+  // need to be here for the
+  // repeated experience instance children
+  string id = 1;
+  string version_id = 2;
+  google.protobuf.Timestamp row_version = 3;
+  google.protobuf.Timestamp version_row_version = 4;
+
+  // writable fields
+  string name = 5;
+  string key = 6;
+  bool is_enabled = 7;
+  repeated Scenario scenarios = 8;
+  repeated ExperienceInstance children = 9;
+}
+
+// Read-only model of Experience Instance
+message ExperienceInstanceDetails {
+  string id = 1;
+  string template_id = 2;
+  InstanceType type = 3;
+  string version_id = 4;
+  string name = 5;
+  string key = 6;
+  bool is_enabled = 7;
+  InstanceState state = 8;
+  repeated ScenarioDetails scenarios = 9;
+  repeated ExperienceInstance children = 10;
+  string created_by_account_id = 11;
+  string modified_by_account_id = 12;
+  google.protobuf.Timestamp created_at = 13;
+  google.protobuf.Timestamp modified_at = 14;
+  google.protobuf.Timestamp row_version = 15;
+  google.protobuf.Timestamp version_row_version = 16;
+}
+
+// Instance Type enumeration
+enum InstanceType {
+  FIXED = 0;
+  FLEXI = 1;
+  COLLECTION = 2;
+}
+
+// Instance State enumeration
+enum InstanceState {
+  DRAFT = 0;
+  COMMITTED = 1;
+}

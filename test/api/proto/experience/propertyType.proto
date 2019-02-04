@@ -9,8 +9,9 @@ message PropertyType{
     string key = 1;
     string name = 2;
 	string icon_url = 3;
-    repeated Appearance appearances = 4;
-    repeated RuleType rule_types = 5;
+	bool show_localizable = 4;
+    repeated Appearance appearances = 5;
+    repeated RuleType rule_types = 6;
 }
 
 message Appearance{
