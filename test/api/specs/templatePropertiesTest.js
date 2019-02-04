@@ -66,7 +66,7 @@ describe('Template API -> Template Properties', () => {
     expect(deleteProperty.status.code).to.equal(0);
     joi.assert(deleteProperty.response, schemas.templateSchema(templateData));
   });
-  it('getPropertyTypes', async () => {
+  it('C1637414 getPropertyTypes', async () => {
     let getResponse = await getProperty();
     expect(getResponse.status.code).to.equal(0);
     joi.assert(getResponse.response, schemas.getPropertySchema());
