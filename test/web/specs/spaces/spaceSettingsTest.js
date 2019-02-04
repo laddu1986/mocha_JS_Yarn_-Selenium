@@ -79,7 +79,7 @@ describe('Space Settings', () => {
   });
 
   it('Logout and Login --> Create new space page is displayed', () => {
-    signOut(); // will fail due to https://app.clickup.com/301733/t/8cj6q
+    signOut();                                               // will fail due to https://app.clickup.com/301733/t/8cj6q
     signIn(accountData.email, accountData.password);
     expect(verifyCreateFirstSpacePage()).to.equal(true);
   });
