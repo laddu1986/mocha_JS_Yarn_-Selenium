@@ -1,6 +1,5 @@
 import { randomString } from '../common';
 import { updateExperienceTemplate } from 'actions/templates';
-import constants from 'constants.json';
 import * as data from 'data/templateTestData';
 
 export function createProperty(templateData, propertyType, name, key) {
