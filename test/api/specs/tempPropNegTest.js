@@ -17,7 +17,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
     await createExperienceTemplate(templateData);
     await properties.createProperty(
       templateData,
-      constants.TemplateProperties.Types.text,
+      constants.TemplateProperties.Types.Text,
       undefined,
       templateData.template.key
     );
@@ -25,7 +25,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
   it('C1458958 Cannot create a property with an existing key', async () => {
     let duplicateKey = await properties.createProperty(
       templateData,
-      constants.TemplateProperties.Types.text,
+      constants.TemplateProperties.Types.Text,
       undefined,
       templateData.template.key
     );
@@ -35,7 +35,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
   it('C1458959 Cannot create a property with an empty key', async () => {
     let createText = await properties.createProperty(
       templateData,
-      constants.TemplateProperties.Types.text,
+      constants.TemplateProperties.Types.Text,
       undefined,
       data.emptyString
     );
@@ -46,7 +46,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
   it('C1458960 Cannot create a property with a key that starts with a number', async () => {
     let createText = await properties.createProperty(
       templateData,
-      constants.TemplateProperties.Types.bool,
+      constants.TemplateProperties.Types.Switch,
       undefined,
       data.numberString
     );
@@ -57,7 +57,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
   it('C1458961 Cannot create a property with a key that starts with an underscore', async () => {
     let createText = await properties.createProperty(
       templateData,
-      constants.TemplateProperties.Types.int,
+      constants.TemplateProperties.Types.Integer,
       undefined,
       data.underscoreString
     );
@@ -68,7 +68,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
   it('C1458962 Cannot create a property with a key that is greater than 40 characters', async () => {
     let createText = await properties.createProperty(
       templateData,
-      constants.TemplateProperties.Types.text,
+      constants.TemplateProperties.Types.Text,
       undefined,
       data.longKey
     );
@@ -79,7 +79,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
   it('C1458963 Cannot create a property with a key that has a space', async () => {
     let createText = await properties.createProperty(
       templateData,
-      constants.TemplateProperties.Types.bool,
+      constants.TemplateProperties.Types.Switch,
       undefined,
       data.keyWithSpace
     );
@@ -94,7 +94,7 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
     for (var i = 0; i < data.invalidChars.length; i++) {
       let errorResponse = await properties.createProperty(
         templateData,
-        constants.TemplateProperties.Types.int,
+        constants.TemplateProperties.Types.Integer,
         undefined,
         data.invalidChars[i]
       );
@@ -103,28 +103,6 @@ describe('Negative Tests -> Template API -> Template Properties', () => {
       }
       if (!errorResponse.metadata._internal_repr.custom_error[0].includes(messages.Templates.alphas)) {
         errorResponseArray.push(data.invalidChars[i]);
-      }
-    }
-    expect(errorCodeArray, `The characters [${errorCodeArray}] did not produce the right error code`).to.be.empty;
-    expect(errorResponseArray, `The characters [${errorResponseArray}] did not produce to right error message`).to.be
-      .empty;
-  });
-
-  it('C1458965 Cannot create a property with a key that has a reserved word', async () => {
-    let errorCodeArray = [],
-      errorResponseArray = [];
-    for (var i = 0; i < data.reservedWords.length; i++) {
-      let errorResponse = await properties.createProperty(
-        templateData,
-        constants.TemplateProperties.Types.int,
-        undefined,
-        data.reservedWords[i]
-      );
-      if (errorResponse.code !== 3) {
-        errorCodeArray.push(data.reservedWords[i]);
-      }
-      if (!errorResponse.metadata._internal_repr.custom_error[0].includes(messages.Templates.reservedKeyword)) {
-        errorResponseArray.push(data.reservedWords[i]);
       }
     }
     expect(errorCodeArray, `The characters [${errorCodeArray}] did not produce the right error code`).to.be.empty;

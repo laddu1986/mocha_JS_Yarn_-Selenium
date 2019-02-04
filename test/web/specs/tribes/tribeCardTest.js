@@ -46,6 +46,7 @@ describe('Tribe Actions Tests', () => {
   });
 
   it('Verify card color on audience page', () => {
+    //will fail due to https://app.clickup.com/t/ab7gu
     clickOnAudienceLink();
     verifyTribeCardColour('0');
   });
@@ -86,6 +87,7 @@ describe('Tribe Actions Tests', () => {
   });
 
   it('C1295750 Verify Logo on all tribes page', () => {
+    //will fail due to https://app.clickup.com/t/ab7gu
     clickOnAudienceLink();
     browser.pause(1000);
     expect(verifyTribeCardLogo()).to.equal(true, 'Tribe logo does not show on all tribes page');
@@ -115,6 +117,7 @@ describe('Tribe Actions Tests', () => {
   });
 
   it('C1295753 Remove Logo --> Verify preview area', () => {
+    //will fail due to https://app.clickup.com/t/ab7gu
     goToTribeDetailPage();
     clickCustomizeButton();
     clickLogoTab();

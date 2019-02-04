@@ -9,7 +9,7 @@ export function createCategory() {
 export function verifyCategoryOptions() {
   browser.waitUntil(
     () => {
-      return commonPage.moreButton.isVisible() && tribePage.categoryTitle.isVisible();
+      return commonPage.moreButton.isVisible() && tribePage.categoryTitle.value[0].isVisible();
     },
     3000,
     'Category took too long to create'
@@ -19,12 +19,18 @@ export function verifyCategoryOptions() {
 export function renameCategory(newTitle) {
   commonPage.moreButton.click();
   tribePage.categoryMoreRename.click();
-  tribePage.categoryTitle.setValue(newTitle);
+  tribePage.categoryTitle.value[0].setValue(newTitle);
   browser.keys('\uE007');
 }
 
-export function verifyRenamedTitle(title) {
-  return tribePage.categoryTitle.getAttribute('value') === title;
+export function setCategoryName(name) {
+  tribePage.categoryTitle.value[1].waitForVisible();
+  tribePage.categoryTitle.value[1].setValue(name);
+  browser.keys('\uE007');
+}
+
+export function verifyRenamedTitle(title, index) {
+  return tribePage.categoryTitle.value[index].getAttribute('value') === title;
 }
 
 export function deleteCategory() {
@@ -34,6 +40,6 @@ export function deleteCategory() {
   tribePage.categoryMoreDelete.click();
 }
 
-export function verifyLastCategoryDeleted() {
-  return tribePage.categoryTitle.getAttribute('value') === '' && tribePage.tribeCards.value.length === 1;
+export function verifyCategoryIsDeleted() {
+  if (tribePage.tribeCards.value.length === 1) return tribePage.categoryTitle.getAttribute('value');
 }

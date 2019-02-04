@@ -21,7 +21,7 @@ var createExperienceResponse,
   experienceTemplatesResponse,
   deletePropertyResponse,
   deleteExperienceResponse;
-export var experienceTemplateObject = new Object();
+var experienceTemplateObject = new Object();
 
 describe('Tests for experience templates for a space', () => {
   before(async () => {

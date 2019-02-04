@@ -71,7 +71,9 @@ describe('Tribe Rule Filter Tests', () => {
 
   it('C1295764 Verify date filter can be added', () => {
     clickFilter(Constants.TribeFilterTypes.Property);
+    browser.pause(1000);
     selectProperty('0');
+    browser.pause(1000);
     selectOperator('3');
     selectDate();
     browser.keys('Escape');
@@ -94,7 +96,9 @@ describe('Tribe Rule Filter Tests', () => {
     clickFilter(Constants.TribeFilterTypes.LogicalType);
     selectLogicalType('0');
     clickFilter(Constants.TribeFilterTypes.Property);
+    browser.pause(1000);
     selectProperty(0);
+    browser.pause(1000);
     selectOperator(1);
     input('5');
     expect(verifyFilterValue('0')).to.include('5', 'The filter does not have a number');
