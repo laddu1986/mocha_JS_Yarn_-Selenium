@@ -19,7 +19,7 @@ export function inputTribeDetails(name) {
 }
 
 export function verifyAllTribesPage() {
-  return TribePage.createTribeButton.isVisible();
+  return TribePage.createTribeButton.isVisible() && TribePage.createTribeLink.isVisible();
 }
 
 export function verifyTribeDetailpage() {
@@ -89,7 +89,7 @@ export function verifyTribe(type, value) {
 }
 
 export function createTribe(name) {
-  clickCreateTribeButton();
+  TribePage.createTribeLink.click();
   inputTribeDetails(name);
 }
 
