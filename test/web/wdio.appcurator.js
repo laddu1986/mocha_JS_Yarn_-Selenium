@@ -18,8 +18,8 @@ exports.config = {
       'specs/organizations/createOrganizationTest.js',
       'specs/spaces/createSpaceTest.js',
       'specs/tribes/createTribeTest.js',
-      'specs/experiences/experiencePropertyTest.js',
-      'specs/experiences/experienceTemplateTest.js'
+      'specs/experiences/propertyTest.js',
+      'specs/experiences/templateTest.js'
     ],
     accounts: ['specs/accounts/*Test.js'],
     organizations: ['specs/organizations/*Test.js'],
