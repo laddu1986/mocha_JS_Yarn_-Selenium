@@ -11,28 +11,7 @@ export function createProperty(templateData, propertyType, name, key) {
   let reqKey =
     key === undefined ? randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : key;
   let propertiesArray = templateData.template.properties === undefined ? [] : templateData.template.properties;
-  let propertyVal;
-  switch (propertyType) {
-    case constants.TemplateProperties.Types.Text:
-      propertyVal = data.textVal;
-      break;
-    case constants.TemplateProperties.Types.Integer:
-      propertyVal = data.intVal;
-      break;
-    case constants.TemplateProperties.Types.Switch:
-      propertyVal = data.boolVal;
-      break;
-    case constants.TemplateProperties.Types.Date:
-      propertyVal = data.dateVal;
-      break;
-    case constants.TemplateProperties.Types.Color:
-      propertyVal = data.colorVal;
-      break;
-    case constants.TemplateProperties.Types.List:
-      propertyVal = data.listVal;
-      break;
-  }
-
+  let propertyVal = data.properties[propertyType];
   propertiesArray.push({
     name: reqName,
     key: reqKey,

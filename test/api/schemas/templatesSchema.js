@@ -1,6 +1,6 @@
 import { joi } from '../common';
 import constants from 'constants.json';
-
+const propertiesSchema = new Object();
 const types = Object.values(constants.TemplateProperties.Types);
 const typeKeys = Object.keys(constants.TemplateProperties.Types);
 const protoLong = joi.object().keys({
@@ -14,175 +14,143 @@ const protoTimeStamp = joi.object().keys({
   nanos: joi.number()
 });
 
-function textPropertySchema() {
-  return joi.object().keys({
-    defaultValue: joi.valid('default_value_text').required(),
-    localizable: joi.valid(true).required(),
-    rules: joi.array().items(
-      joi.object().keys({
-        characterCount: joi.object().keys({
-          min: joi.valid(1).required(),
-          max: joi.valid(10).required(),
-          mode: joi.valid(10).required()
-        }),
-        errorMessage: joi.valid('text_range_error_message').required()
+propertiesSchema.text = joi.object().keys({
+  defaultValue: joi.valid('default_value_text').required(),
+  localizable: joi.valid(true).required(),
+  rules: joi.array().items(
+    joi.object().keys({
+      characterCount: joi.object().keys({
+        min: joi.valid(1).required(),
+        max: joi.valid(10).required(),
+        mode: joi.valid(10).required()
       }),
-      joi.object().keys({
-        regex: joi.object().keys({
-          pattern: joi.valid('pattern_text').required()
-        }),
-        errorMessage: joi.valid('text_regex_error_message').required()
-      }),
-      joi.object().keys({
-        required: joi.object().keys({
-          isRequired: joi.valid(true).required()
-        }),
-        errorMessage: joi.valid('text_required_error_message').required()
-      })
-    )
-  });
-}
-
-function boolPropertiesSchema() {
-  return joi.object().keys({
-    defaultValue: joi.valid(true).required(),
-    rules: joi.array().items(
-      joi.object().keys({
-        required: joi.object().keys({
-          isRequired: joi.valid(true).required()
-        }),
-        errorMessage: joi.valid('bool_required_error_message').required()
-      })
-    )
-  });
-}
-
-function integerPropertiesSchema() {
-  return joi.object().keys({
-    defaultValue: joi.valid(10).required(),
-    rules: joi.array().items(
-      joi.object().keys({
-        numberRange: joi.object().keys({
-          min: joi.valid(1).required(),
-          max: joi.valid(10).required(),
-          mode: joi.valid(10).required()
-        }),
-        errorMessage: joi.valid('int_rangeint_error_message_text').required()
-      }),
-      joi.object().keys({
-        numberRangeSlider: joi.object().keys({
-          min: joi.valid(1).required(),
-          max: joi.valid(10).required(),
-          mode: joi.valid(10).required(),
-          increment: joi.valid(5).required()
-        }),
-        errorMessage: joi.valid('int_rangeIntSlider_error_message_text').required()
-      }),
-      joi.object().keys({
-        required: joi.object().keys({
-          isRequired: joi.valid(true).required()
-        }),
-        errorMessage: joi.valid('int_required_error_message_text').required()
-      })
-    ),
-    localizable: joi.valid(true).required()
-  });
-}
-
-function datePropertiesSchema() {
-  return joi.object().keys({
-    defaultValue: protoTimeStamp,
-    rules: joi.array().items(
-      joi.object().keys({
-        dateRange: joi.object().keys({
-          min: protoTimeStamp,
-          max: protoTimeStamp,
-          mode: joi.valid(10).required()
-        }),
-        errorMessage: joi.valid('date_range_error_message_text').required()
-      }),
-      joi.object().keys({
-        required: joi.object().keys({
-          isRequired: joi.valid(true).required()
-        }),
-        errorMessage: joi.valid('date_req_error_message').required()
-      })
-    ),
-    localizable: joi.valid(true).required()
-  });
-}
-
-function colorPropertiesSchema() {
-  return joi.object().keys({
-    defaultValue: joi.object().keys({
-      key: joi.valid('key_of_color').required(),
-      value: joi.valid('value_of_color').required(),
-      opacity: joi.valid(100).required()
+      errorMessage: joi.valid('text_range_error_message').required()
     }),
-    rules: joi.array().items(
-      joi.object().keys({
-        required: joi.object().keys({
-          isRequired: joi.valid(true).required()
-        }),
-        errorMessage: joi.valid('color_error_message').required()
-      })
-    )
-  });
-}
-
-function listPropertiesSchema() {
-  return joi.object().keys({
-    defaultValue: joi.object().keys({
-      value: joi.array().items('1st_val')
+    joi.object().keys({
+      regex: joi.object().keys({
+        pattern: joi.valid('pattern_text').required()
+      }),
+      errorMessage: joi.valid('text_regex_error_message').required()
     }),
-    localizable: joi.valid(true).required(),
-    rules: joi.array().items(
-      joi.object().keys({
-        valueCount: joi.object().keys({
-          min: joi.valid(10).required(),
-          max: joi.valid(10).required(),
-          mode: joi.valid(10).required()
-        }),
-        errorMessage: joi.valid('list_range_err_msg').required()
+    joi.object().keys({
+      required: joi.object().keys({
+        isRequired: joi.valid(true).required()
       }),
-      joi.object().keys({
-        regex: joi.object().keys({
-          pattern: joi.valid('regex_pattern').required()
-        }),
-        errorMessage: joi.valid('list_regex_error_msg').required()
+      errorMessage: joi.valid('text_required_error_message').required()
+    })
+  )
+});
+
+propertiesSchema.boolean = joi.object().keys({
+  defaultValue: joi.valid(true).required(),
+  rules: joi.array().items(
+    joi.object().keys({
+      required: joi.object().keys({
+        isRequired: joi.valid(true).required()
       }),
-      joi.object().keys({
-        required: joi.object().keys({
-          isRequired: joi.valid(true).required()
-        }),
-        errorMessage: joi.valid('list_req_err_msg').required()
-      })
-    )
-  });
-}
+      errorMessage: joi.valid('bool_required_error_message').required()
+    })
+  )
+});
+
+propertiesSchema.integer = joi.object().keys({
+  defaultValue: joi.valid(10).required(),
+  rules: joi.array().items(
+    joi.object().keys({
+      numberRange: joi.object().keys({
+        min: joi.valid(1).required(),
+        max: joi.valid(10).required(),
+        mode: joi.valid(10).required()
+      }),
+      errorMessage: joi.valid('int_rangeint_error_message_text').required()
+    }),
+    joi.object().keys({
+      numberRangeSlider: joi.object().keys({
+        min: joi.valid(1).required(),
+        max: joi.valid(10).required(),
+        mode: joi.valid(10).required(),
+        increment: joi.valid(5).required()
+      }),
+      errorMessage: joi.valid('int_rangeIntSlider_error_message_text').required()
+    }),
+    joi.object().keys({
+      required: joi.object().keys({
+        isRequired: joi.valid(true).required()
+      }),
+      errorMessage: joi.valid('int_required_error_message_text').required()
+    })
+  ),
+  localizable: joi.valid(true).required()
+});
+
+propertiesSchema.date = joi.object().keys({
+  defaultValue: protoTimeStamp,
+  rules: joi.array().items(
+    joi.object().keys({
+      dateRange: joi.object().keys({
+        min: protoTimeStamp,
+        max: protoTimeStamp,
+        mode: joi.valid(10).required()
+      }),
+      errorMessage: joi.valid('date_range_error_message_text').required()
+    }),
+    joi.object().keys({
+      required: joi.object().keys({
+        isRequired: joi.valid(true).required()
+      }),
+      errorMessage: joi.valid('date_req_error_message').required()
+    })
+  ),
+  localizable: joi.valid(true).required()
+});
+
+propertiesSchema.color = joi.object().keys({
+  defaultValue: joi.object().keys({
+    key: joi.valid('key_of_color').required(),
+    value: joi.valid('value_of_color').required(),
+    opacity: joi.valid(100).required()
+  }),
+  rules: joi.array().items(
+    joi.object().keys({
+      required: joi.object().keys({
+        isRequired: joi.valid(true).required()
+      }),
+      errorMessage: joi.valid('color_error_message').required()
+    })
+  )
+});
+
+propertiesSchema.list = joi.object().keys({
+  defaultValue: joi.object().keys({
+    value: joi.array().items('1st_val')
+  }),
+  localizable: joi.valid(true).required(),
+  rules: joi.array().items(
+    joi.object().keys({
+      valueCount: joi.object().keys({
+        min: joi.valid(10).required(),
+        max: joi.valid(10).required(),
+        mode: joi.valid(10).required()
+      }),
+      errorMessage: joi.valid('list_range_err_msg').required()
+    }),
+    joi.object().keys({
+      regex: joi.object().keys({
+        pattern: joi.valid('regex_pattern').required()
+      }),
+      errorMessage: joi.valid('list_regex_error_msg').required()
+    }),
+    joi.object().keys({
+      required: joi.object().keys({
+        isRequired: joi.valid(true).required()
+      }),
+      errorMessage: joi.valid('list_req_err_msg').required()
+    })
+  )
+});
 
 export function templatePropertySchema(templateData, type) {
-  let property;
-  switch (type) {
-    case constants.TemplateProperties.Types.Text:
-      property = textPropertySchema();
-      break;
-    case constants.TemplateProperties.Types.Switch:
-      property = boolPropertiesSchema();
-      break;
-    case constants.TemplateProperties.Types.Integer:
-      property = integerPropertiesSchema();
-      break;
-    case constants.TemplateProperties.Types.Date:
-      property = datePropertiesSchema();
-      break;
-    case constants.TemplateProperties.Types.Color:
-      property = colorPropertiesSchema();
-      break;
-    case constants.TemplateProperties.Types.List:
-      property = listPropertiesSchema();
-      break;
-  }
+  let property = propertiesSchema[type];
   return joi.object().keys({
     id: protoLong,
     key: joi.only(templateData.template.key).required(),
