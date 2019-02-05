@@ -45,7 +45,7 @@ describe('Tribe Actions Tests', () => {
     verifyTribeCardColour('0');
   });
 
-  it('Verify card color on audience page', () => {
+  it('C1640172 Verify card color on audience page', () => {
     //will fail due to https://app.clickup.com/t/ab7gu
     clickOnAudienceLink();
     verifyTribeCardColour('0');
@@ -64,7 +64,7 @@ describe('Tribe Actions Tests', () => {
     expect(verifyTribeCardWallpaper()).to.equal(true, 'Uploaded wallpaper preview does not show up in preview area');
   });
 
-  it('Verify wallpaper on tribe detail page', () => {
+  it('C1640173 Verify wallpaper on tribe detail page', () => {
     submit();
     expect(verifyTribeCardWallpaper()).to.equal(true, 'Uploaded wallpaper does not show up on tribe card');
   });
@@ -81,7 +81,7 @@ describe('Tribe Actions Tests', () => {
     expect(verifyTribeCardLogo()).to.equal(true, 'Uploaded logo preview does not show up in preview area');
   });
 
-  it('Verify logo shows on tribe card details page', () => {
+  it('C1640174 Verify logo shows on tribe card details page', () => {
     submit();
     expect(verifyTribeCardLogo()).to.equal(true, 'Uploaded logo does not show up on tribe card');
   });
@@ -97,7 +97,7 @@ describe('Tribe Actions Tests', () => {
     expect(verifyTribeCardWallpaper()).to.equal(true, 'Tribe wallpaper does not show on all tribes page');
   });
 
-  it('Remove Wallpaper --> Verify preview area', () => {
+  it('C1640175 Remove Wallpaper --> Verify preview area', () => {
     goToTribeDetailPage();
     clickCustomizeButton();
     clickWallpaperTab();
@@ -105,7 +105,7 @@ describe('Tribe Actions Tests', () => {
     expect(verifyBrowseLink()).to.equal(true, 'Tribe wallpaper browse link is not shown on tribe detail page');
   });
 
-  it('Remove Wallpaper --> Tribe does not have wallpaper on tribe details page', () => {
+  it('C1640176 Remove Wallpaper --> Tribe does not have wallpaper on tribe details page', () => {
     submit();
     browser.pause(2000);
     expect(getTribeCardStyle()).to.include('background', 'Tribe wallpaper still shows on tribe details page');

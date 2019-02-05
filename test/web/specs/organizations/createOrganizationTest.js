@@ -30,7 +30,7 @@ describe('Tests for Create Organization', () => {
     expect(verifyWecomeOrgPage()).to.equal(true);
   });
 
-  it('Verify the url contains org slug', () => {
+  it('C1640150 Verify the url contains org slug', () => {
     expect(browser.getUrl()).to.include(orgName.toLowerCase());
   });
 

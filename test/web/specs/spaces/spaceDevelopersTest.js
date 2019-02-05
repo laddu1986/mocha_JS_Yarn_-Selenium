@@ -13,7 +13,7 @@ describe('Space API Key Tests', () => {
     goToDeveloperPortal();
   });
 
-  it('Verify passive notification', () => {
+  it('C1640164 Verify passive notification', () => {
     copyAPIKeyToClipBoard();
     expect(getNotificationMessageText()).to.include(spaceData.copyNotificationMessage.text);
   });

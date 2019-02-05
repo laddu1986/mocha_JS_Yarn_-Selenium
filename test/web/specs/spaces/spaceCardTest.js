@@ -20,21 +20,21 @@ describe('Space Card more button tests', () => {
     goBackToOrgDashboard();
   });
 
-  it('Clicking More button --> Opens menu with settings and delete options', () => {
+  it('C1640160 Clicking More button --> Opens menu with settings and delete options', () => {
     clickMoreButton();
     expect(verifyMoreButton()).to.equal(true, 'More button on space card is not showing correct options');
   });
-  it('Clicking Settings --> takes user to settings page', () => {
+  it('C1640161 Clicking Settings --> takes user to settings page', () => {
     clickSettingsFromCard();
     expect(verifySpaceSettingsPage()).to.equal(true, 'Settings page is not shown correctly');
   });
-  it('Clicking Delete --> Shows the delete modal', () => {
+  it('C1640162 Clicking Delete --> Shows the delete modal', () => {
     goBackToOrgDashboard();
     clickMoreButton();
     clickDeleteFromCard();
     expect(verifyDeleteModal()).to.equal(true, 'Delete modal is not shown correctly');
   });
-  it('Delete Space --> Space is deleted', () => {
+  it('C1640163 Delete Space --> Space is deleted', () => {
     typeDeleteToConfirm();
     confirmDelete();
     expect(verifyCreateFirstSpacePage()).to.equal(true, 'Space is not deleted correctly');

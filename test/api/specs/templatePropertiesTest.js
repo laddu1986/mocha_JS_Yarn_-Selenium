@@ -72,7 +72,7 @@ describe('Template API -> Template Properties', () => {
     expect(deleteProperty.status.code).to.equal(0);
     joi.assert(deleteProperty.response, schemas.deletedTemplatePropertySchema(templateData));
   });
-  it('Create a date property', async () => {
+  it('C1640107 Create a date property', async () => {
     let createDate = await properties.createProperty(templateData, constants.TemplateProperties.Types.Date);
     expect(createDate.status.code).to.equal(0);
     joi.assert(
@@ -80,7 +80,7 @@ describe('Template API -> Template Properties', () => {
       schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Date)
     );
   });
-  it('Rename a date property', async () => {
+  it('C1640108 Rename a date property', async () => {
     let renameProperty = await properties.renameProperty(templateData);
     expect(renameProperty.status.code).to.equal(0);
     joi.assert(
@@ -88,12 +88,12 @@ describe('Template API -> Template Properties', () => {
       schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Date)
     );
   });
-  it('Delete a date property', async () => {
+  it('C1640109 Delete a date property', async () => {
     let deleteProperty = await properties.deleteProperty(templateData);
     expect(deleteProperty.status.code).to.equal(0);
     joi.assert(deleteProperty.response, schemas.deletedTemplatePropertySchema(templateData));
   });
-  it('Create a color property', async () => {
+  it('C1640110 Create a color property', async () => {
     let createColor = await properties.createProperty(templateData, constants.TemplateProperties.Types.Color);
     expect(createColor.status.code).to.equal(0);
     joi.assert(
@@ -101,7 +101,7 @@ describe('Template API -> Template Properties', () => {
       schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Color)
     );
   });
-  it('Rename a color property', async () => {
+  it('C1640111 Rename a color property', async () => {
     let renameProperty = await properties.renameProperty(templateData);
     expect(renameProperty.status.code).to.equal(0);
     joi.assert(
@@ -117,22 +117,22 @@ describe('Template API -> Template Properties', () => {
       schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Color)
     );
   });
-  it('Delete a color property', async () => {
+  it('C1640112 Delete a color property', async () => {
     let deleteProperty = await properties.deleteProperty(templateData);
     expect(deleteProperty.status.code).to.equal(0);
     joi.assert(deleteProperty.response, schemas.deletedTemplatePropertySchema(templateData));
   });
-  it('Create a list property', async () => {
+  it('C1640113 Create a list property', async () => {
     let createList = await properties.createProperty(templateData, constants.TemplateProperties.Types.List);
     expect(createList.status.code).to.equal(0);
     //joi.assert(createList.response, schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.List));
   });
-  it('Rename a list property', async () => {
+  it('C1640114 Rename a list property', async () => {
     let renameProperty = await properties.renameProperty(templateData);
     expect(renameProperty.status.code).to.equal(0);
     //joi.assert(renameProperty.response, schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.List));
   });
-  it('Delete a list property', async () => {
+  it('C1640115 Delete a list property', async () => {
     let deleteProperty = await properties.deleteProperty(templateData);
     expect(deleteProperty.status.code).to.equal(0);
     joi.assert(deleteProperty.response, schemas.deletedTemplatePropertySchema(templateData));
