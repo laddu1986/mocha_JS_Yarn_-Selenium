@@ -116,7 +116,7 @@ export function getExperienceTemplate(responseData) {
 export function getExperiencesTemplate(responseData) {
   const data = {
     query:
-      'query experienceTemplates($organizationId: ID!, $spaceId: ID!) { experienceTemplates(organizationId: $organizationId , spaceId: $spaceId) {templates{ id rowVersion key name}}}',
+      'query experienceTemplates($organizationId: ID!, $spaceId: ID!) { experienceTemplates(organizationId: $organizationId , spaceId: $spaceId) { id rowVersion key name}}',
     operationName: 'experienceTemplates',
     variables: {
       organizationId: responseData.orgID,
