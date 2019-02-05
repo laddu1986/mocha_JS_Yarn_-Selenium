@@ -29,10 +29,11 @@ export async function post(any, responseData) {
   }
   var response = await server.post(any.api, any.data, any);
   if (response.response.statusCode == 200) return response;
-  else 
+  else {
     throw `${any.data.operationName} POST request failed with Errorcode- ${response.response.statusCode} and Message- ${
-    response.response.body.message
+      response.response.body.message
     }`;
+  }
 }
 
 export function get(any) {
