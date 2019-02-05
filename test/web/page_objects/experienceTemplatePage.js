@@ -47,7 +47,7 @@ class ExperienceTemplatePage {
     return browser.element("//button[@data-qa='btn:property-type:boolean']");
   }
   get propertyTitle() {
-    return browser.element("//h2[@data-qa='property-name']");
+    return browser.element('//h3');
   }
   get propertyName() {
     return browser.element("//div[@data-qa='input:name']//input[@data-qa='input:text']");
