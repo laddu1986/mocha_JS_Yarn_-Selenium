@@ -1,12 +1,12 @@
 import { joi } from '../common';
 import constants from 'constants.json';
-
+const propertiesSchema = new Object();
 const types = Object.values(constants.TemplateProperties.Types);
 const typeKeys = Object.keys(constants.TemplateProperties.Types);
 const protoLong = joi.object().keys({
-  low: joi.number(),
-  high: joi.number(),
-  unsigned: joi.boolean()
+  low: joi.number().required(),
+  high: joi.number().required(),
+  unsigned: joi.boolean().required()
 });
 
 const protoTimeStamp = joi.object().keys({
@@ -14,57 +14,200 @@ const protoTimeStamp = joi.object().keys({
   nanos: joi.number()
 });
 
-const textProp = joi.object().keys({
-  defaultValue: 'default_value_text',
+propertiesSchema.text = joi.object().keys({
+  defaultValue: joi.valid('default_value_text').required(),
+  localizable: joi.valid(true).required(),
   rules: joi.array().items(
     joi.object().keys({
-      required: joi.object().keys({
-        isRequired: true
+      characterCount: joi.object().keys({
+        min: joi.valid(1).required(),
+        max: joi.valid(10).required(),
+        mode: joi.valid(10).required()
       }),
-      errorMessage: 'error_message_text'
+      errorMessage: joi.valid('text_range_error_message').required()
+    }),
+    joi.object().keys({
+      regex: joi.object().keys({
+        pattern: joi.valid('pattern_text').required()
+      }),
+      errorMessage: joi.valid('text_regex_error_message').required()
+    }),
+    joi.object().keys({
+      required: joi.object().keys({
+        isRequired: joi.valid(true).required()
+      }),
+      errorMessage: joi.valid('text_required_error_message').required()
     })
   )
 });
 
-function propertiesSchema(templateData) {
-  if (templateData.template.properties !== undefined) {
-    let names = templateData.template.properties.map(property => property.name);
-    let keys = templateData.template.properties.map(property => property.key);
-    return joi.array().items(
+propertiesSchema.boolean = joi.object().keys({
+  defaultValue: joi.valid(true).required(),
+  rules: joi.array().items(
+    joi.object().keys({
+      required: joi.object().keys({
+        isRequired: joi.valid(true).required()
+      }),
+      errorMessage: joi.valid('bool_required_error_message').required()
+    })
+  )
+});
+
+propertiesSchema.integer = joi.object().keys({
+  defaultValue: joi.valid(10).required(),
+  rules: joi.array().items(
+    joi.object().keys({
+      numberRange: joi.object().keys({
+        min: joi.valid(1).required(),
+        max: joi.valid(10).required(),
+        mode: joi.valid(10).required()
+      }),
+      errorMessage: joi.valid('int_rangeint_error_message_text').required()
+    }),
+    joi.object().keys({
+      numberRangeSlider: joi.object().keys({
+        min: joi.valid(1).required(),
+        max: joi.valid(10).required(),
+        mode: joi.valid(10).required(),
+        increment: joi.valid(5).required()
+      }),
+      errorMessage: joi.valid('int_rangeIntSlider_error_message_text').required()
+    }),
+    joi.object().keys({
+      required: joi.object().keys({
+        isRequired: joi.valid(true).required()
+      }),
+      errorMessage: joi.valid('int_required_error_message_text').required()
+    })
+  ),
+  localizable: joi.valid(true).required()
+});
+
+propertiesSchema.date = joi.object().keys({
+  defaultValue: protoTimeStamp,
+  rules: joi.array().items(
+    joi.object().keys({
+      dateRange: joi.object().keys({
+        min: protoTimeStamp,
+        max: protoTimeStamp,
+        mode: joi.valid(10).required()
+      }),
+      errorMessage: joi.valid('date_range_error_message_text').required()
+    }),
+    joi.object().keys({
+      required: joi.object().keys({
+        isRequired: joi.valid(true).required()
+      }),
+      errorMessage: joi.valid('date_req_error_message').required()
+    })
+  ),
+  localizable: joi.valid(true).required()
+});
+
+propertiesSchema.color = joi.object().keys({
+  defaultValue: joi.object().keys({
+    key: joi.valid('key_of_color').required(),
+    value: joi.valid('value_of_color').required(),
+    opacity: joi.valid(100).required()
+  }),
+  rules: joi.array().items(
+    joi.object().keys({
+      required: joi.object().keys({
+        isRequired: joi.valid(true).required()
+      }),
+      errorMessage: joi.valid('color_error_message').required()
+    })
+  )
+});
+
+propertiesSchema.list = joi.object().keys({
+  defaultValue: joi.object().keys({
+    value: joi.array().items('1st_val')
+  }),
+  localizable: joi.valid(true).required(),
+  rules: joi.array().items(
+    joi.object().keys({
+      valueCount: joi.object().keys({
+        min: joi.valid(10).required(),
+        max: joi.valid(10).required(),
+        mode: joi.valid(10).required()
+      }),
+      errorMessage: joi.valid('list_range_err_msg').required()
+    }),
+    joi.object().keys({
+      regex: joi.object().keys({
+        pattern: joi.valid('regex_pattern').required()
+      }),
+      errorMessage: joi.valid('list_regex_error_msg').required()
+    }),
+    joi.object().keys({
+      required: joi.object().keys({
+        isRequired: joi.valid(true).required()
+      }),
+      errorMessage: joi.valid('list_req_err_msg').required()
+    })
+  )
+});
+
+export function templatePropertySchema(templateData, type) {
+  let property = propertiesSchema[type];
+  return joi.object().keys({
+    id: protoLong,
+    key: joi.only(templateData.template.key).required(),
+    name: joi.only(templateData.template.name).required(),
+    thumbnailUrl: joi.valid('thumbnail_url').required(),
+    rowVersion: protoTimeStamp,
+    properties: joi.array().items(
       joi.object().keys({
-        name: joi.valid(names),
-        key: joi.valid(keys),
-        typeKey: joi.valid(types),
-        text: textProp,
-        appearanceKey: joi.valid('appearance_key_text'),
-        promptText: joi.valid('prompt_text'),
-        localizable: joi.valid(true)
+        name: joi.only(templateData.template.properties[0].name).required(),
+        key: joi.only(templateData.template.properties[0].key).required(),
+        appearanceKey: joi.valid('appearance_key_text').required(),
+        promptText: joi.valid('prompt_text').required(),
+        helpText: joi.valid('help_text').required(),
+        [type]: property
       })
-    );
-  } else {
-    return joi.array();
-  }
+    )
+  });
 }
 
+export function deletedTemplatePropertySchema(templateData) {
+  return joi.object().keys({
+    id: protoLong,
+    key: joi.only(templateData.template.key).required(),
+    name: joi.only(templateData.template.name).required(),
+    thumbnailUrl: joi.valid('thumbnail_url').required(),
+    rowVersion: protoTimeStamp
+  });
+}
+//----------------template tests-------------------------
 export function templateSchema(templateData) {
   return joi
     .object()
     .keys({
       id: protoLong,
-      key: joi.only(templateData.template.key),
-      name: joi.only(templateData.template.name),
-      thumbnailUrl: joi.valid('thumbnail_url_text'),
-      rowVersion: protoTimeStamp,
-      properties: propertiesSchema(templateData)
+      key: joi.only(templateData.template.key).required(),
+      name: joi.only(templateData.template.name).required(),
+      rowVersion: protoTimeStamp
     })
     .required();
 }
 
 export function templatesSchema(templateData) {
-  return joi.object().keys({
-    experienceTemplates: joi.array().items(templateSchema(templateData))
-  });
+  return joi
+    .object()
+    .keys({
+      experienceTemplates: joi.array().items(
+        joi.object().keys({
+          id: protoLong,
+          key: joi.only(templateData.template.key).required(),
+          name: joi.only(templateData.template.name).required(),
+          rowVersion: protoTimeStamp
+        })
+      )
+    })
+    .required();
 }
+
 const textRuleTypesObject = joi.object().keys({
   key: joi.valid('required', 'rangeInt', 'regex').required(),
   name: joi.valid('Required', 'Min/Max', 'Regex').required()
@@ -108,6 +251,24 @@ export function getPropertySchema() {
         joi.object().keys({
           key: joi.valid(types),
           name: joi.valid(typeKeys),
+          showLocalizable: joi
+            .alternatives()
+            .when('key', {
+              is: constants.TemplateProperties.Types.Text,
+              then: joi.valid(true).required()
+            })
+            .when('key', {
+              is: constants.TemplateProperties.Types.Integer,
+              then: joi.valid(true).required()
+            })
+            .when('key', {
+              is: constants.TemplateProperties.Types.Date,
+              then: joi.valid(true).required()
+            })
+            .when('key', {
+              is: constants.TemplateProperties.Types.List,
+              then: joi.valid(true).required()
+            }),
           iconUrl: joi
             .valid('TextIcon', 'IntegerIcon', 'ToggleIcon', 'ColorIcon', 'CalendarIcon', 'ListIcon')
             .required(),
