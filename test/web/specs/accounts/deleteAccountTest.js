@@ -39,7 +39,7 @@ describe('Delete Account Test (Remove my Account)', () => {
     expect(confirmButtonIsEnabled()).to.equal(false, 'Confirm button should be disabled');
   });
 
-  it('Remove account --> Sign In page appears', () => {
+  it('C1640116 Remove account --> Sign In page appears', () => {
     typeDeleteToConfirm();
     expect(confirmButtonIsEnabled()).to.equal(true, 'Confirm button should be enabled');
     confirmDelete();

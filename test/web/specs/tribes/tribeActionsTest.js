@@ -38,7 +38,7 @@ describe('Tribe Actions Tests', () => {
     verifyTribe(Constants.TribeAttributes.Title, newName);
   });
 
-  it('Verify new name on tribe detail page', () => {
+  it('C1640170 Verify new name on tribe detail page', () => {
     clickOnAudienceLink();
     browser.refresh();
     verifyTribe(Constants.TribeAttributes.Title, newName);
@@ -50,7 +50,7 @@ describe('Tribe Actions Tests', () => {
     expect(getNotificationMessageText()).to.include(`${PassiveNotification.deleteMessage.text}'${newName}'.`);
   });
 
-  it('Verify redirection to all tribes page', () => {
+  it('C1640171 Verify redirection to all tribes page', () => {
     expect(verifyAllTribesPage()).to.equal(true, 'After deleting tribe redirection to all tribes page did not work');
   });
 });

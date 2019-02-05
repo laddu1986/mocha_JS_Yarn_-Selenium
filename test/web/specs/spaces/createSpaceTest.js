@@ -34,7 +34,7 @@ describe('Space Tests', () => {
     expect(verifySpacePage(spaceName2.toLowerCase())).to.equal(true);
   });
 
-  it('Verify creating third space', () => {
+  it('C1640157 Verify creating third space', () => {
     goBackToOrgDashboard();
     clickCreateNewSpaceButton();
     spaceName3 = createSpace();
@@ -52,11 +52,11 @@ describe('Space Tests', () => {
     expect(verifySpaceOrder('2')).to.include(spaceName1);
   });
 
-  it('Sorting of Space cards stack -2', () => {
+  it('C1640158 Sorting of Space cards stack -2', () => {
     expect(verifySpaceOrder('1')).to.include(spaceName2);
   });
 
-  it('Sorting of Space cards stack -3', () => {
+  it('C1640159 Sorting of Space cards stack -3', () => {
     expect(verifySpaceOrder('0')).to.include(spaceName3);
   });
 

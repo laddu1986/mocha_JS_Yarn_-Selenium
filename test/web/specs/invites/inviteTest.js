@@ -48,7 +48,7 @@ describe('Invite Tests', () => {
     expect(verifyInactiveInvite()).to.include(invite_email1);
   });
 
-  it('Validate inactive tab for second invite', () => {
+  it('C1640144 Validate inactive tab for second invite', () => {
     expect(verifyInactiveInvite()).to.include(invite_email2);
   });
 

@@ -57,7 +57,7 @@ describe('New User accesses an Expired Invitation', () => {
     expect(expiredInvitationText()).to.include(message.invite.expiredInvitation);
   });
 
-  it('Admin logs in and goes to inactive invite tab', () => {
+  it('C1640142 Admin logs in and goes to inactive invite tab', () => {
     SignInPage.open();
     signIn(accountData.email, accountData.password);
     browser.pause(1500); // workaround for Bug: ACT-299. will be removed after bugfix
@@ -82,7 +82,7 @@ describe('New User accesses an Expired Invitation', () => {
     verifyJoinOrgText(accountData.organization);
   });
 
-  it('Submit button is visible for creating account to join org', () => {
+  it('C1640143 Submit button is visible for creating account to join org', () => {
     expect(submitButtonVisible()).to.equal(true);
   });
 });

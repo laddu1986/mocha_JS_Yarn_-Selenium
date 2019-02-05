@@ -32,15 +32,15 @@ describe(`Experience Template card image Tests`, () => {
     clickCreateTemplate();
     createExperienceTemplate(experienceTemplateName);
   });
-  it('Click edit thumbnail button --> Modal with images opens', () => {
+  it('C1640134 Click edit thumbnail button --> Modal with images opens', () => {
     clickEditThumbnail();
     expect(verifySetImageModal()).to.equal(true, 'Set Image Modal is not shown correctly');
   });
-  it('Verify all the thumbnail images in modal', () => {
+  it('C1640135 Verify all the thumbnail images in modal', () => {
     let missingItems = verifyThumbnailImages();
     expect(missingItems.length).to.equal(0, ` ${missingItems} Thumbnail Images do not appear correctly`);
   });
-  it('Uploading an image --> Success passive notification', () => {
+  it('C1640136 Uploading an image --> Success passive notification', () => {
     clickUploadTab();
     uploadImage();
     clickConfirmButton();
@@ -52,14 +52,14 @@ describe(`Experience Template card image Tests`, () => {
     browser.pause(1500); // chrome headless does not pass without pause here
   });
 
-  it('Verify the image is uploaded on template detail page', () => {
+  it('C1640137 Verify the image is uploaded on template detail page', () => {
     expect(verifyTemplateImage()).to.equal(true, 'The image is not uploaded on template detail page');
   });
-  it('Verify the image is uploaded on all template page', () => {
+  it('C1640138 Verify the image is uploaded on all template page', () => {
     clickBackToLibrary();
     expect(verifyTemplateImage('listPage')).to.equal(true, 'The image is not uploaded on all templates page');
   });
-  it('Select hero image --> Verify the passive notification', () => {
+  it('C1640139 Select hero image --> Verify the passive notification', () => {
     goToTemplateDetailPage();
     clickEditThumbnail();
     clickHeroImage();

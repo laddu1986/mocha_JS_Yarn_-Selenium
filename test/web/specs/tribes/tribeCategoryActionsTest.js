@@ -36,7 +36,7 @@ describe('Tribe Categories Actions', () => {
     deleteCategory();
     expect(verifyCategoryIsDeleted()).to.equal('', 'Last category was not deleted correctly');
   });
-  it('Inserting new category', () => {
+  it('C1640177 Inserting new category', () => {
     let title = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}`;
     createCategory();
     browser.pause(1000);

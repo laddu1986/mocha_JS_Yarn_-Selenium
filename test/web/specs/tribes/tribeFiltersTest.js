@@ -80,7 +80,7 @@ describe('Tribe Rule Filter Tests', () => {
     expect(verifyFilterExists()).to.equal('>', 'The filter is not added');
   });
 
-  it('Verify date in added date filter text', () => {
+  it('C1640178 Verify date in added date filter text', () => {
     let today = new Date();
     expect(verifyFilterValue('0')).to.include(lib.dateFormat(today, 'mmm dd yyyy'), 'The date filter is not added');
   });

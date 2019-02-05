@@ -40,12 +40,12 @@ describe('Delete organization Tests', () => {
     expect(cancelDeleteOrg()).to.equal(true);
   });
 
-  it('Verify Confirm button for deleting org', () => {
+  it('C1640151 Verify Confirm button for deleting org', () => {
     clickDeleteOrgButton();
     expect(confirmButtonIsEnabled()).to.equal(false, 'Confirm button is not disabled');
   });
 
-  it('Verify confirm button enables after typing delete', () => {
+  it('C1640152 Verify confirm button enables after typing delete', () => {
     typeDeleteToConfirm();
     expect(confirmButtonIsEnabled()).to.equal(true, 'Confirm button is not enabled');
   });
@@ -55,7 +55,7 @@ describe('Delete organization Tests', () => {
     expect(getNotificationMessageText()).to.include(orgNotificationData.deleteMessage.text);
   });
 
-  it('Re-directs to choose orgs page', () => {
+  it('C1640153 Re-directs to choose orgs page', () => {
     closePassiveNotification();
     expect(verifyChooseOrgspage()).to.equal(true);
   });
@@ -67,7 +67,7 @@ describe('Delete organization Tests', () => {
     expect(getNotificationMessageText()).to.include(orgNotificationData.deleteMessage.text);
   });
 
-  it('Re-directs to no orgs page', () => {
+  it('C1640154 Re-directs to no orgs page', () => {
     closePassiveNotification();
     expect(verifyNoOrgPage()).to.equal(true);
   });

@@ -27,7 +27,7 @@ describe('Update Organization name', () => {
     expect(browser.getUrl()).to.include(`/${org2}/edit`.toLowerCase(), 'Url contains old orgname'); //This will fail due to https://app.clickup.com/301733/t/84t88
   });
 
-  it('Verify Save button is disabled on Settings Page', () => {
+  it('C1640155 Verify Save button is disabled on Settings Page', () => {
     expect(isSaveButtonEnabled()).to.equal(false, 'Save button should be disabled');
   });
 
@@ -36,7 +36,7 @@ describe('Update Organization name', () => {
     expect(browser.getUrl()).to.include(`/${updatedOrgName}/edit`.toLowerCase(), 'New org name does not appear in url'); //This will fail due to https://app.clickup.com/301733/t/84t88
   });
 
-  it('Validate left menu bar has the updated org name', () => {
+  it('C1640156 Validate left menu bar has the updated org name', () => {
     expect(verifySelectedOrgMenu()).to.include(updatedOrgName, 'The updated org name is not shown on left menu bar');
   });
 

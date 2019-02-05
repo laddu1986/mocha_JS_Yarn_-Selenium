@@ -38,7 +38,7 @@ describe('Space Settings', () => {
     closePassiveNotification();
   });
 
-  it('Edit Space name --> verify new space name on dashboard', () => {
+  it('C1640165 Edit Space name --> verify new space name on dashboard', () => {
     expect(verifyNewSpaceName()).to.contain(newSpacename);
   });
 
@@ -50,7 +50,7 @@ describe('Space Settings', () => {
     closePassiveNotification();
   });
 
-  it('Verify new space url', () => {
+  it('C1640166 Verify new space url', () => {
     verifyNewSpaceUrl(newSlugName);
   });
 
@@ -59,17 +59,17 @@ describe('Space Settings', () => {
     expect(cancelDeleteSpace(false)).to.equal(true);
   });
 
-  it('Verify confirm button when clicking delete space', () => {
+  it('C1640167 Verify confirm button when clicking delete space', () => {
     clickDeleteSpaceButton();
     expect(confirmButtonIsEnabled()).to.equal(false);
   });
 
-  it('Verify confirm button after typing delete text', () => {
+  it('C1640168 Verify confirm button after typing delete text', () => {
     typeDeleteToConfirm();
     expect(confirmButtonIsEnabled()).to.equal(true);
   });
 
-  it('Delete Space --> verify space is deleted on dashboard', () => {
+  it('C1640169 Delete Space --> verify space is deleted on dashboard', () => {
     confirmDelete();
     expect(spaceIsDeleted()).to.equal(true);
   });
