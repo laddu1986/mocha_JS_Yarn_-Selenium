@@ -7,7 +7,7 @@ pipelines:
           name: Package HelmChart and Push to S3
           script:
             - export VERSION="v$(date "+%y%m%d-%H%M%S")"
-            - echo "VERSION - ${VERSION}" > version.txt
+            - echo ${VERSION} > version.txt
           artifacts:
             - version.txt
       - step:
