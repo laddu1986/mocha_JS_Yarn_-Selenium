@@ -2,7 +2,7 @@ options:
   docker: true
 pipelines:
   branches:
-    master:
+    ci:
       - step:
           name: Package HelmChart and Push to S3
           image:
@@ -12,8 +12,13 @@ pipelines:
           caches:
             - docker
           script:
+            - export VERSION="v$(date "+%y%m%d-%H%M%S")"
+            - echo ${VERSION} > version.txt
+            - sed -i -e "s/latest/$VERSION/g" deployment/web-regression-test/values.yaml
             - sh deployment/scripts/aws-config.sh
             - sh deployment/scripts/helm-s3-push.sh
+          artifacts:
+            - version.txt
       - step:
           name: Build and Push Web Test Image to DockerHub
           services:
@@ -22,7 +27,7 @@ pipelines:
             - docker
           script:
             #define custom date-time version
-            - export VERSION="v$(date "+%y%m%d-%H%M%S")"
+            - export VERSION="$(cat version.txt)"
             - echo "VERSION - ${VERSION}"
             - export IMAGE_NAME="massiveinteractive/qa-web:$VERSION"
             - docker login -u $docker_user -p $docker_user_pwd

@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: massiveinteractive/qa-web
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 nameOverride: ""
 fullnameOverride: ""
