@@ -17,7 +17,11 @@ exports.config = {
     'specs/metrics/deleteUserTest.js',
     'specs/metrics/labelUserTest.js',
     'specs/metrics/searchUserTest.js',
-    'specs/metrics/verifyUsersTest.js'
+    'specs/metrics/verifyUsersTest.js',
+    'test/web/specs/invites/inviteActiveTest.js',
+    'test/web/specs/invites/inviteExpiredTest.js',
+    'test/web/specs/invites/inviteRevokedTest.js',
+    'test/web/specs/invites/inviteTest.js'
   ],
   suites: {
     smoke: [
