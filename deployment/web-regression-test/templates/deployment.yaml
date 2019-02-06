@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: web-test-cron
 spec:
-  schedule: "0 6 * * *"
+  schedule: "0 19 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
@@ -20,8 +20,8 @@ spec:
             - name: hs-index-docker-io-v2-autobuilder-hs
           containers:
             - name: web-test-cron
-              image: massiveinteractive/qa-web
-              imagePullPolicy: IfNotPresent
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
               envFrom:
                 - configMapRef:
                     name: qa-config

@@ -1,0 +1,18 @@
+options:
+  docker: true
+pipelines:
+  branches:
+    ci:
+      - step:
+          name: Package HelmChart and Push to S3
+          script:
+            - export VERSION="v$(date "+%y%m%d-%H%M%S")"
+            - echo ${VERSION} > version.txt
+          artifacts:
+            - version.txt
+      - step:
+          name: Build and Push Web Test Image to DockerHub
+          script:
+            #define custom date-time version
+            - cat version.txt
+            # - echo "VERSION - ${VERSION}"
