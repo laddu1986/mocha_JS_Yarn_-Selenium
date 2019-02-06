@@ -20,8 +20,8 @@ spec:
             - name: hs-index-docker-io-v2-autobuilder-hs
           containers:
             - name: web-test-cron
-              image: massiveinteractive/qa-web
-              imagePullPolicy: IfNotPresent
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
               envFrom:
                 - configMapRef:
                     name: qa-config
