@@ -137,3 +137,61 @@ export function clickBackToLibrary() {
 export function goToTemplateDetailPage() {
   experienceTemplatePage.templateCardImage.click();
 }
+export function toggleProperty() {
+  experienceTemplatePage.toggleIcon.click();
+}
+export function inputValue(type, value) {
+  let element;
+  switch (type) {
+    case 'default_value':
+      element = experienceTemplatePage.defaultValue.value[0];
+      break;
+    case 'minimum_value':
+      element = experienceTemplatePage.minValue;
+      break;
+    case 'maximum_value':
+      element = experienceTemplatePage.maxValue;
+      break;
+    case 'prompt_text':
+      element = experienceTemplatePage.promptText;
+      break;
+    case 'help_text':
+      element = experienceTemplatePage.helpText;
+      break;
+    case 'regular_expression':
+      element = experienceTemplatePage.pattern;
+      break;
+    case 'error_message':
+      element = experienceTemplatePage.errorMessage;
+      break;
+  }
+  element.setValue(value);
+}
+
+export function checkOption(type) {
+  let element;
+  switch (type) {
+    case 'localization':
+      element = experienceTemplatePage.enableLocalization;
+      break;
+    case 'required':
+      element = experienceTemplatePage.requiredField;
+      break;
+    case 'limit_count':
+      element = experienceTemplatePage.limitNumberRange;
+      break;
+    case 'custom_pattern':
+      element = experienceTemplatePage.customPattern;
+      break;
+    case 'between':
+      element = experienceTemplatePage.betweenRange;
+      break;
+    case 'min':
+      element = experienceTemplatePage.betweenRange;
+      break;
+    case 'between':
+      element = experienceTemplatePage.betweenRange;
+      break;
+  }
+  element.click();
+}
