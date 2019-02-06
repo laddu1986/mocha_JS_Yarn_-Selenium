@@ -49,3 +49,18 @@ pipelines:
             #build and push image with above version
             - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/api
             - docker push $IMAGE_NAME
+    - step:
+        name: Build and Push Orca Test Image to Dockerhub
+          services: 
+            - docker
+          caches: 
+            - docker
+          script:
+            #define custom date-time version
+            - export VERSION="v$(date "+%y%m%d-%H%M%S")"
+            - echo "VERSION - ${VERSION}"
+            - export IMAGE_NAME="massiveinteractive/qa-orca:$VERSION"
+            - docker login -u $docker_user -p $docker_user_pwd
+            #build and push image with above version
+            - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/orca
+            - docker push $IMAGE_NAME
