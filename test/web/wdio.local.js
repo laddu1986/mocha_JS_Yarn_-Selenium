@@ -1,7 +1,7 @@
 var defaults = require('./wdio.appcurator.js').config;
 var _ = require('lodash');
 var overrides = {
-  reporters: ['spec'],
+  reporters: ['html-format'],
   protocol: 'http',
   host: process.env.SELENIUM_HOST,
   port: '4444',

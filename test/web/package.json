@@ -41,7 +41,8 @@
     "eslint-plugin-mocha": "^5.2.0",
     "lint-staged": "^7.3.0",
     "lodash": "^4.17.11",
-    "prettier": "^1.14.3"
+    "prettier": "^1.14.3",
+    "wdio-html-format-reporter": "^0.2.9"
   },
   "lint-staged": {
     "*.{js,json,md}": [
