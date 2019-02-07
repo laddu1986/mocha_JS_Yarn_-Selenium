@@ -10,7 +10,20 @@ exports.config = {
   specs: [
     'specs/**/*Test.js' //master
   ],
-  exclude: ['specs/support/helpPageTest.js'],
+  exclude: [
+    'specs/support/helpPageTest.js',
+    'specs/experiences/experiencePropertyTest.js',
+    'specs/experiences/experienceTemplateTest.js',
+    'specs/experiences/templateCardTest.js',
+    'specs/metrics/deleteUserTest.js',
+    'specs/metrics/labelUserTest.js',
+    'specs/metrics/searchUserTest.js',
+    'specs/metrics/verifyUsersTest.js',
+    'specs/invites/inviteActiveTest.js',
+    'specs/invites/inviteExpiredTest.js',
+    'specs/invites/inviteRevokedTest.js',
+    'specs/invites/inviteTest.js'
+  ],
   suites: {
     smoke: [
       'specs/accounts/createAccountTest.js',
