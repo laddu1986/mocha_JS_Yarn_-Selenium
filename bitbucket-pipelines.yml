@@ -49,8 +49,8 @@ pipelines:
             #build and push image with above version
             - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/api
             - docker push $IMAGE_NAME
-    - step:
-        name: Build and Push Orca Test Image to Dockerhub
+      - step:
+          name: Build and Push Orca Test Image to Dockerhub
           services: 
             - docker
           caches: 
