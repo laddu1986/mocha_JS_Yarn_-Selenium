@@ -8,7 +8,7 @@ import * as properties from 'actions/templateProperties';
 import * as schemas from 'schemas/templatesSchema';
 const templateData = new Object();
 
-describe('Template API -> Template Properties', () => {
+xdescribe('Template API -> Template Properties', () => {
   before('Setup the testing environment', async () => {
     await postIdentity(templateData);
     await postOrganization(templateData);

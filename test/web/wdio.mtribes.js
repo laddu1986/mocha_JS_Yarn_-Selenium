@@ -9,7 +9,7 @@ exports.config = {
   specs: [
     'specs/**/*Test.js' //master
   ],
-  exclude: ['specs/support/helpPageTest.js'],
+  exclude: ['specs/support/helpPageTest.js', 'specs/experiences/*Test.js'],
   suites: {
     smoke: [
       'specs/accounts/createAccountTest.js',
@@ -54,7 +54,7 @@ exports.config = {
   },
   debug: false,
   execArgv: [],
-  onPrepare() {},
+  onPrepare() { },
   before() {
     helper.getEndPoints();
   },
@@ -62,5 +62,5 @@ exports.config = {
     var connection = require('./actions/invite');
     connection.mysql.close();
   },
-  onComplete() {}
+  onComplete() { }
 };

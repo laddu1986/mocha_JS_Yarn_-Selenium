@@ -8,9 +8,9 @@ var overrides = {
   //Modify these instead of modifying the mtribes file
   specs: [
     'specs/**/*Test.js' //master
-  ]
+  ],
   // // Patterns to exclude.
-  // exclude: ['specs/support/helpPageTest.js']
+   exclude: ['specs/support/helpPageTest.js','specs/experiences/*Test.js']
 };
 
 exports.config = _.defaultsDeep(overrides, defaults);
