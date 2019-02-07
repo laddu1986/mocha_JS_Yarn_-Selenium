@@ -1,0 +1,6 @@
+replicaCount: 1
+image:
+  repository: massiveinteractive/qa-api
+  tag: latest
+  pullPolicy: IfNotPresent
+
