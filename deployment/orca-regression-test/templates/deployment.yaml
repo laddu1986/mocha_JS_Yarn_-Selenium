@@ -1,0 +1,34 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: orca-test-cron
+spec:
+  schedule: "30 19 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      activeDeadlineSeconds: 2400
+      template:
+        spec:
+          imagePullSecrets:
+            - name: hs-index-docker-io-v2-autobuilder-hs
+          containers:
+            - name: orca-test-cron
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              envFrom:
+                - configMapRef:
+                    name: qa-config
+                - secretRef: 
+                    name: testrail
+              command: ["/bin/sh", "-c"]
+              args:
+                - echo TEST-STARTED;
+                  yarn run orca;
+                  echo TEST-ENDED;
+          terminationGracePeriodSeconds: 30
+          restartPolicy: Never
+          nodeSelector:
+            kubernetes.io/hostname: ip-172-20-53-252.ap-southeast-2.compute.internal
