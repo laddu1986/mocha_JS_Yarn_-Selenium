@@ -28,6 +28,9 @@ describe('Tests for Create Organization', () => {
   it(`Create new organization ${lib.Tags.smokeTest}`, () => {
     createNewOrg(orgName);
     expect(verifyWecomeOrgPage()).to.equal(true);
+  });
+
+  it('Verify the url contains org slug', () => {
     expect(browser.getUrl()).to.include(orgName.toLowerCase());
   });
 

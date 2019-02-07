@@ -16,29 +16,23 @@ describe('Negative Tests -> Template API', () => {
     await templates.createExperienceTemplate(templateData);
   });
   describe('Create Errors', () => {
-    it('Cannot have a key less than 1 char', () => {
-      let keyMinChar = templates.createExperienceTemplateValidations(templateData, data.emptyString, data.validString);
-      return keyMinChar.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.empty, messages.Templates.alphas, messages.Templates.lengthKey]);
-        expect(errMsg).to.satisfy(contains);
-        expect(error.code).to.equal(3);
-      });
+    it('Cannot have a key less than 1 char', async () => {
+      let keyMinChar = await templates.createExperienceTemplate(templateData, data.emptyString, data.validString);
+      let contains = CheckForAll([messages.Templates.empty, messages.Templates.alphas, messages.Templates.lengthKey]);
+      expect(keyMinChar.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
+      expect(keyMinChar.code).to.equal(3);
     });
-    it('Cannot have a key more than 40 chars', () => {
-      let keyMaxChar = templates.createExperienceTemplateValidations(templateData, data.longKey, data.validString);
-      return keyMaxChar.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.lengthKey]);
-        expect(errMsg).to.satisfy(contains);
-        expect(error.code).to.equal(3);
-      });
+    it('Cannot have a key more than 40 chars', async () => {
+      let keyMaxChar = await templates.createExperienceTemplate(templateData, data.longKey, data.validString);
+      let contains = CheckForAll([messages.Templates.lengthKey]);
+      expect(keyMaxChar.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
+      expect(keyMaxChar.code).to.equal(3);
     });
     it('Cannot have invalid characters in the key', async () => {
       let errorCodeArray = [],
         errorResponseArray = [];
       for (var i = 0; i < data.invalidChars.length; i++) {
-        var errorResponse = await templates.createExperienceTemplateValidations(
+        var errorResponse = await templates.createExperienceTemplate(
           templateData,
           data.invalidChars[0],
           data.validString
@@ -58,7 +52,7 @@ describe('Negative Tests -> Template API', () => {
       let errorCodeArray = [],
         errorResponseArray = [];
       for (var i = 0; i < data.reservedWords.length; i++) {
-        var errorResponse = await templates.createExperienceTemplateValidations(
+        var errorResponse = await templates.createExperienceTemplate(
           templateData,
           data.reservedWords[0],
           data.validString
@@ -75,118 +69,80 @@ describe('Negative Tests -> Template API', () => {
         .empty;
     });
     it('Cannot have a key that starts with a number', async () => {
-      let wordCaseName = templates.createExperienceTemplateValidations(
-        templateData,
-        data.numberString,
-        data.validString
-      );
-      return wordCaseName.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        expect(errMsg).to.contain(messages.Templates.alphas);
-        expect(error.code).to.equal(3);
-      });
+      let wordCaseName = await templates.createExperienceTemplate(templateData, data.numberString, data.validString);
+      expect(wordCaseName.metadata._internal_repr.custom_error[0]).to.contain(messages.Templates.alphas);
+      expect(wordCaseName.code).to.equal(3);
     });
     it('Cannot have a key that starts with an underscore', async () => {
-      let wordCaseName = templates.createExperienceTemplateValidations(
+      let wordCaseName = await templates.createExperienceTemplate(
         templateData,
         data.underscoreString,
         data.validString
       );
-      return wordCaseName.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.alphas]);
-        expect(errMsg).to.satisfy(contains);
-        expect(error.code).to.equal(3);
-      });
+      let contains = CheckForAll([messages.Templates.alphas]);
+      expect(wordCaseName.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
+      expect(wordCaseName.code).to.equal(3);
     });
-    it('Cannot have a key with spaces', () => {
-      let keyMaxChar = templates.createExperienceTemplateValidations(templateData, data.keyWithSpace, data.validString);
-      return keyMaxChar.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        expect(errMsg).to.contain(messages.Templates.alphas);
-        expect(error.code).to.equal(3);
-      });
+    it('Cannot have a key with spaces', async () => {
+      let keyMaxChar = await templates.createExperienceTemplate(templateData, data.keyWithSpace, data.validString);
+      expect(keyMaxChar.metadata._internal_repr.custom_error[0]).to.contain(messages.Templates.alphas);
+      expect(keyMaxChar.code).to.equal(3);
     });
-    it('Cannot have a name with less than 1 char', () => {
-      let nameMinChar = templates.createExperienceTemplateValidations(templateData, data.validString, data.emptyString);
-      return nameMinChar.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.empty, messages.Templates.lengthName]);
-        expect(errMsg).to.satisfy(contains);
-        expect(error.code).to.equal(3);
-      });
+    it('Cannot have a name with less than 1 char', async () => {
+      let nameMinChar = await templates.createExperienceTemplate(templateData, data.validString, data.emptyString);
+      let contains = CheckForAll([messages.Templates.empty, messages.Templates.lengthName]);
+      expect(nameMinChar.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
+      expect(nameMinChar.code).to.equal(3);
     });
-    it('Cannot have a name with more than 200 chars', () => {
-      let nameMaxChar = templates.createExperienceTemplateValidations(templateData, data.validString, data.longName);
-      return nameMaxChar.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        expect(errMsg).to.contain(messages.Templates.lengthName);
-        expect(error.code).to.equal(3);
-      });
+    it('Cannot have a name with more than 200 chars', async () => {
+      let nameMaxChar = await templates.createExperienceTemplate(templateData, data.validString, data.longName);
+      expect(nameMaxChar.metadata._internal_repr.custom_error[0]).to.contain(messages.Templates.lengthName);
+      expect(nameMaxChar.code).to.equal(3);
     });
-    it('Must have a name provided', () => {
-      let noKey = templates.createExperienceTemplateValidations(templateData, data.validString);
-      return noKey.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.empty, messages.Templates.lengthName]);
-        expect(errMsg).to.satisfy(contains);
-        expect(error.code).to.equal(3);
-      });
+    it('Must have a name provided', async () => {
+      let noKey = await templates.createExperienceTemplate(templateData, data.validString, '');
+      let contains = CheckForAll([messages.Templates.empty, messages.Templates.lengthName]);
+      expect(noKey.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
+      expect(noKey.code).to.equal(3);
     });
-    it('Must have a key provided', () => {
-      let noKey = templates.createExperienceTemplateValidations(templateData, null, data.validString);
-      return noKey.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.empty, messages.Templates.alphas, messages.Templates.lengthKey]);
-        expect(errMsg).to.satisfy(contains);
-        expect(error.code).to.equal(3);
-      });
+    it('Must have a key provided', async () => {
+      let noKey = await templates.createExperienceTemplate(templateData, '', data.validString);
+      let contains = CheckForAll([messages.Templates.empty, messages.Templates.alphas, messages.Templates.lengthKey]);
+      expect(noKey.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
+      expect(noKey.code).to.equal(3);
     });
-    it('Must have a unique key', () => {
-      let dupeKey = templates.createExperienceTemplateValidations(
+    it('Must have a unique key', async () => {
+      let dupeKey = await templates.createExperienceTemplate(
         templateData,
         templateData.template.key,
         templateData.template.name
       );
-      return dupeKey.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        expect(errMsg).to.include(messages.Templates.existsTemplate);
-        expect(error.code).to.equal(3);
-      });
+      expect(dupeKey.metadata._internal_repr.custom_error[0]).to.include(messages.Templates.existsTemplate);
+      expect(dupeKey.code).to.equal(3);
     });
   });
+
   describe('Rename Errors', () => {
-    it('Cannot have a name with less than 1 char', () => {
-      let nameMinChar = templates.renameExperienceTemplateValidations(templateData, data.emptyString);
-      return nameMinChar.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.empty, messages.Templates.lengthName]);
-        expect(errMsg).to.satisfy(contains);
-        expect(error.code).to.equal(3);
-      });
+    it('Cannot have a name with less than 1 char', async () => {
+      let nameMinChar = await templates.renameExperienceTemplate(templateData, data.emptyString);
+      let contains = CheckForAll([messages.Templates.empty, messages.Templates.lengthName]);
+      expect(nameMinChar.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
+      expect(nameMinChar.code).to.equal(3);
     });
-    it('Cannot have a name with more than 200 chars', () => {
-      let nameMaxChar = templates.renameExperienceTemplateValidations(templateData, data.longName);
-      return nameMaxChar.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        expect(errMsg).to.contain(messages.Templates.lengthName);
-        expect(error.code).to.equal(3);
-      });
+    it('Cannot have a name with more than 200 chars', async () => {
+      let nameMaxChar = await templates.renameExperienceTemplate(templateData, data.longName);
+      expect(nameMaxChar.metadata._internal_repr.custom_error[0]).to.contain(messages.Templates.lengthName);
+      expect(nameMaxChar.code).to.equal(3);
     });
-    it('Must have a name provided', () => {
-      let noKey = templates.renameExperienceTemplateValidations(templateData, null);
-      return noKey.catch(error => {
-        let errMsg = error.metadata._internal_repr.custom_error[0];
-        let contains = CheckForAll([messages.Templates.empty, messages.Templates.lengthName]);
-        expect(errMsg).to.satisfy(contains);
-        expect(error.code).to.equal(3);
-      });
+    it('Must have a name provided', async () => {
+      let noKey = await templates.renameExperienceTemplate(templateData, '');
+      let contains = CheckForAll([messages.Templates.empty, messages.Templates.lengthName]);
+      expect(noKey.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
+      expect(noKey.code).to.equal(3);
     });
-    it('Must have a row version provided', () => {
-      let noKey = templates.renameExperienceTemplateValidations(templateData, data.validString, true);
-      return noKey.catch(error => {
-        expect(error.code).to.equal(2);
-      });
+    it('Must have a row version provided', async () => {
+      let noKey = await templates.renameExperienceTemplate(templateData, data.validString, true);
+      expect(noKey.code).to.equal(2);
     });
   });
 });

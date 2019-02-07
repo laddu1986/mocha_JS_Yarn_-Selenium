@@ -2,26 +2,28 @@ import { get } from '../common';
 import { metrics } from 'config/getEnv';
 
 var today = new Date();
-var mm = today.getMonth();
-var mmFrom = today.getMonth() - 1;
 var dd = today.getDate();
+var mm = today.getMonth() + 1;
+var ddFrom = today.getDate() - 1;
 var yyyy = today.getFullYear();
-var fromDate = yyyy + '-' + mmFrom + '-' + dd;
+var fromDate = yyyy + '-' + mm + '-' + ddFrom;
 var toDate = yyyy + '-' + mm + '-' + dd;
 
 export function getUniqueAppUsers(responseObject) {
   const any = {
     api: `${metrics + responseObject.orgID}/spaces/${
       responseObject.spaceID
-    }/metrics/unique-users/count?from=${fromDate}&to=${toDate}`,
+      }/metrics/unique-users/count?from=${fromDate}&to=${toDate}`,
     data: ''
   };
   return get(any).then(response => {
     if (response.response.statusCode == 200) return response;
-    else
+    else {
       throw `getUniqueAppUsers failed with code ${response.response.statusCode} and the error ${JSON.stringify(
         response.response.body
       )}`;
+    }
+
   });
 }
 
@@ -29,7 +31,7 @@ export function getAPIRequests(responseObject) {
   const any = {
     api: `${metrics + responseObject.orgID}/spaces/${
       responseObject.spaceID
-    }/metrics/requests/count?from=${fromDate}&to=${toDate}`,
+      }/metrics/requests/count?from=${fromDate}&to=${toDate}`,
     data: ''
   };
   return get(any).then(response => {
@@ -59,7 +61,7 @@ export function getActiveUsersByDay(responseObject) {
   const any = {
     api: `${metrics + responseObject.orgID}/spaces/${
       responseObject.spaceID
-    }/metrics/daily/active-users?from=${fromDate}&to=${toDate}`,
+      }/metrics/daily/active-users?from=${fromDate}&to=${toDate}`,
     data: ''
   };
   return get(any).then(response => {
@@ -75,7 +77,7 @@ export function getNewUsersByDay(responseObject) {
   const any = {
     api: `${metrics + responseObject.orgID}/spaces/${
       responseObject.spaceID
-    }/metrics/daily/new-users?from=${fromDate}&to=${toDate}`,
+      }/metrics/daily/new-users?from=${fromDate}&to=${toDate}`,
     data: ''
   };
   return get(any).then(response => {

@@ -15,12 +15,12 @@ describe(`Tests for Create Account ${lib.Tags.smokeTest}`, () => {
 
   it('Click create account link', () => {
     clickCreateAccountLink();
-    expect(verifyAccountPageAppears()).to.equal(true);
+    expect(verifyAccountPageAppears()).to.equal(true, 'Create account page does not appear correctly');
   });
 
   it('Enter the details for creating account  --> verify org dashboard appears', () => {
     inputDetails();
     submit();
-    expect(verifyOrgDashboardPageAppears()).to.equal(true);
+    expect(verifyOrgDashboardPageAppears()).to.equal(true, 'After creating account Org Dashboard page did not appear');
   });
 });

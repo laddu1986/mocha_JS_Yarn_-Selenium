@@ -7,34 +7,40 @@ import {
   createCategory,
   renameCategory,
   deleteCategory,
-  waitForCategoryOptions,
+  verifyCategoryOptions,
   verifyRenamedTitle,
-  verifyLastCategoryDeleted
+  verifyCategoryIsDeleted,
+  setCategoryName
 } from 'actions/tribeCategories';
-import { clickCreateTribeButton } from 'actions/tribe';
-
+import { createTribe } from 'actions/tribe';
+var name = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}`;
 describe('Tribe Categories Actions', () => {
   before(() => {
     accountPage.open();
     createAccount();
     createSpace();
     clickOnAudienceLink();
+    createTribe(name);
+    clickOnAudienceLink();
   });
-  it('Create a new category', () => {
-    createCategory();
-    waitForCategoryOptions();
+  it('Verify catagory is created with tribe', () => {
+    verifyCategoryOptions();
   });
-
   it('Rename a category', () => {
     let categoryTitle = lib.randomString.generate(5);
     renameCategory(categoryTitle);
-    expect(verifyRenamedTitle(categoryTitle)).to.equal(true, 'Category was not renamed correctly');
+    expect(verifyRenamedTitle(categoryTitle, 0)).to.equal(true, 'Category was not renamed correctly');
   });
   it('Delete an existing category with a tribe', () => {
-    clickCreateTribeButton();
-    clickOnAudienceLink(); // Moving away from keyboard focus
-    clickOnAudienceLink(); // Actually click the audience link
+    browser.refresh();
     deleteCategory();
-    expect(verifyLastCategoryDeleted()).to.equal(true, 'Last category was not deleted correctly');
+    expect(verifyCategoryIsDeleted()).to.equal('', 'Last category was not deleted correctly');
   });
+  it('Inserting new category', () => {
+    let title = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}`;
+    createCategory();
+    browser.pause(1000);
+    setCategoryName(title);
+    expect(verifyRenamedTitle(title, 1)).to.equal(true, 'Category was not renamed correctly');
+  })
 });

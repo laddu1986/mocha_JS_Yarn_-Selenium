@@ -1,6 +1,6 @@
 class ExperienceTemplatePage {
   get templateTab() {
-    return browser.element("//a[contains(text(),'Templates')]");
+    return browser.element("//a[@data-qa='tab:library']");
   }
   get createTemplateCTA() {
     return browser.element("//button[@data-qa='button:create-template']");
@@ -23,6 +23,9 @@ class ExperienceTemplatePage {
   get createButton() {
     return browser.element("//button[@data-qa='create-template:create']");
   }
+  get templateCardImage() {
+    return browser.element("//a[@data-qa='link:card']//img");
+  }
   get templateCard() {
     return browser.element("//a[@data-qa='link:card']//div//h2");
   }
@@ -44,7 +47,7 @@ class ExperienceTemplatePage {
     return browser.element("//button[@data-qa='btn:property-type:boolean']");
   }
   get propertyTitle() {
-    return browser.element("//h2[@data-qa='property-name']");
+    return browser.element("//h3");
   }
   get propertyName() {
     return browser.element("//div[@data-qa='input:name']//input[@data-qa='input:text']");
@@ -54,6 +57,33 @@ class ExperienceTemplatePage {
   }
   get toggleIcon() {
     return browser.element("//button[@data-qa='btn:toggle-expansion']");
+  }
+  get editThumbnail() {
+    return browser.element("//button[@data-qa='btn:edit-thumbnail']");
+  }
+  get setImageModal() {
+    return browser.element("//div[@data-qa='modal:template-image']");
+  }
+  get setImageModalTitle() {
+    return browser.element("//div[@data-qa='modal:template-image']//h1");
+  }
+  get thumbnailImage() {
+    return browser.elements("//button[contains(@data-qa,'btn:select-thumbnail:Schem')]");
+  }
+  get confirmButton() {
+    return browser.element("//button[@data-qa='btn:confirm-thumbnail']");
+  }
+  get uploadTab() {
+    return browser.element("//button[@data-qa='tab:upload']");
+  }
+  get templateDetailPageImage() {
+    return browser.element("//button[@data-qa='btn:edit-thumbnail']//img");
+  }
+  get removeImage() {
+    return browser.element("//button[@data-qa='btn:remove']");
+  }
+  get backToLibrary() {
+    return browser.element("//section[@data-qa='page:experience-template']//a");
   }
 }
 export default new ExperienceTemplatePage();
