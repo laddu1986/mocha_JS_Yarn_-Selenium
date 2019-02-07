@@ -71,12 +71,17 @@ describe('Tribe Rule Filter Tests', () => {
 
   it('Verify date filter can be added', () => {
     clickFilter(Constants.TribeFilterTypes.Property);
-    var today = new Date();
+    browser.pause(1000);
     selectProperty('0');
+    browser.pause(1000);
     selectOperator('3');
     selectDate();
     browser.keys('Escape');
     expect(verifyFilterExists()).to.equal('>', 'The filter is not added');
+  });
+
+  it('Verify date in added date filter text', () => {
+    let today = new Date();
     expect(verifyFilterValue('0')).to.include(lib.dateFormat(today, 'mmm dd yyyy'), 'The date filter is not added');
   });
 
@@ -91,7 +96,9 @@ describe('Tribe Rule Filter Tests', () => {
     clickFilter(Constants.TribeFilterTypes.LogicalType);
     selectLogicalType('0');
     clickFilter(Constants.TribeFilterTypes.Property);
+    browser.pause(1000);
     selectProperty(0);
+    browser.pause(1000);
     selectOperator(1);
     input('5');
     expect(verifyFilterValue('0')).to.include('5', 'The filter does not have a number');

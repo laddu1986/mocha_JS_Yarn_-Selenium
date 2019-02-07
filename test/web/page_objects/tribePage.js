@@ -105,7 +105,7 @@ class TribePage extends Page {
     return $("//button[contains(.,'Insert category')]");
   }
   get categoryTitle() {
-    return $("//input[@data-qa='input:category-title']");
+    return browser.elements("//input[@data-qa='input:category-title']");
   }
   get categoryMoreRename() {
     return $("//button[@data-qa='menu-item:rename']");

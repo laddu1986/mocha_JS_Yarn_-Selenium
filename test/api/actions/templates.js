@@ -17,52 +17,37 @@ export function updateExperienceTemplate(templateData, templatePayload) {
   }).withResponseStatus(true);
 }
 
-export function createExperienceTemplate(templateData) {
+export function createExperienceTemplate(templateData, keyVal, nameVal) {
   let nameKey = randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' });
   const req = new client.Request('createExperienceTemplate', {
     context: spaceContext(templateData),
-    key: nameKey.toLowerCase(),
-    name: nameKey
+    key: keyVal == undefined ? nameKey.toLowerCase() : keyVal.toLowerCase(),
+    name: nameVal == undefined ? nameKey : nameVal
   }).withResponseStatus(true);
-  return req.exec().then(response => {
-    templateData.template = response.response;
-    return response;
-  });
+  return req
+    .exec()
+    .then(response => {
+      templateData.template = response.response;
+      return response;
+    })
+    .catch(err => {
+      return err;
+    });
 }
 
-export function createExperienceTemplateValidations(templateData, key, name) {
-  const req = new client.Request('createExperienceTemplate', {
-    context: spaceContext(templateData),
-    key: key,
-    name: name
-  }).withResponseStatus(true);
-  return req.exec().catch(error => {
-    return error;
-  });
-}
-
-export function renameExperienceTemplate(templateData) {
+export function renameExperienceTemplate(templateData, nameVal, toggleVersionOff) {
   let newName = randomString.generate(12);
   let templatePayload = {
     id: templateData.template.id,
     key: templateData.template.key,
-    name: newName,
-    rowVersion: templateData.template.rowVersion
+    name: nameVal == undefined ? newName : nameVal,
+    rowVersion: toggleVersionOff ? null : templateData.template.rowVersion
   };
   templateData.template.name = newName;
   let req = updateExperienceTemplate(templateData, templatePayload);
-  return req.exec();
-}
-
-export function renameExperienceTemplateValidations(templateData, name, toggleVersionOff) {
-  let templatePayload = {
-    id: templateData.template.id,
-    key: templateData.template.key,
-    name: name,
-    rowVersion: toggleVersionOff ? null : templateData.template.rowVersion
-  };
-  let req = updateExperienceTemplate(templateData, templatePayload);
-  return req.exec();
+  return req.exec().catch(err => {
+    return err;
+  });
 }
 
 export function getExperienceTemplates(templateData) {
@@ -87,5 +72,10 @@ export function getExperienceTemplateById(templateData) {
     context: spaceContext(templateData),
     id: templateData.template.id
   }).withResponseStatus(true);
+  return req.exec();
+}
+
+export function getProperty() {
+  const req = new client.Request('getPropertyTypes', {}).withResponseStatus(true);
   return req.exec();
 }

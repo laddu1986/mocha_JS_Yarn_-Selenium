@@ -1,6 +1,6 @@
 import { randomString } from '../common';
 import { updateExperienceTemplate } from 'actions/templates';
-import constants from 'constants.json';
+import * as data from 'data/templateTestData';
 
 export function createProperty(templateData, propertyType, name, key) {
   let reqName =
@@ -10,64 +10,46 @@ export function createProperty(templateData, propertyType, name, key) {
   let reqKey =
     key === undefined ? randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : key;
   let propertiesArray = templateData.template.properties === undefined ? [] : templateData.template.properties;
+  let propertyVal = data.properties[propertyType];
   propertiesArray.push({
     name: reqName,
     key: reqKey,
-    typeKey: propertyType
+    typeKey: propertyType,
+    appearanceKey: 'appearance_key_text',
+    promptText: 'prompt_text',
+    helpText: 'help_text',
+    [propertyType]: propertyVal
   });
 
   let templatePayload = {
     id: templateData.template.id,
     name: templateData.template.name,
     key: templateData.template.key,
+    thumbnailUrl: 'thumbnail_url',
     properties: propertiesArray,
     rowVersion: templateData.template.rowVersion
   };
-
   return updateExperienceTemplate(templateData, templatePayload)
     .exec()
     .then(response => {
       templateData.template.rowVersion = response.response.rowVersion;
       templateData.template.properties = propertiesArray;
       return response;
+    })
+    .catch(err => {
+      return err;
     });
 }
 
-export function createPropertyValidations(templateData, char) {
-  let templatePayload = {
-    id: templateData.template.id,
-    name: templateData.template.name,
-    key: templateData.template.key,
-    properties: [
-      {
-        name: randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }),
-        key: char,
-        typeKey: constants.TemplateProperties.Types.int
-      }
-    ],
-    rowVersion: templateData.template.rowVersion
-  };
-  return updateExperienceTemplate(templateData, templatePayload)
-    .exec()
-    .catch(response => {
-      return response;
-    });
-}
-
-export function renameProperty(templateData, type) {
+export function renameProperty(templateData) {
   let newName = randomString.generate({ length: 40, charset: 'alphabetic', capitalization: 'lowercase' });
-  templateData.template.properties[type].name = newName;
+  templateData.template.properties[0].name = newName;
   let templatePayload = {
     id: templateData.template.id,
     name: templateData.template.name,
     key: templateData.template.key,
-    properties: [
-      {
-        name: newName,
-        key: templateData.template.properties[type].key,
-        typeKey: templateData.template.properties[type].typeKey
-      }
-    ],
+    thumbnailUrl: 'thumbnail_url',
+    properties: templateData.template.properties,
     rowVersion: templateData.template.rowVersion
   };
   return updateExperienceTemplate(templateData, templatePayload)
@@ -78,24 +60,13 @@ export function renameProperty(templateData, type) {
     });
 }
 
-export function deleteProperty(templateData, type) {
-  let property = [];
-  for (let i = 0; i < templateData.template.properties.length; i++) {
-    if (type == templateData.template.properties[i].typeKey) continue;
-    else {
-      property.push({
-        name: templateData.template.properties[i].name,
-        key: templateData.template.properties[i].key,
-        typeKey: templateData.template.properties[i].typeKey
-      });
-    }
-  }
-
+export function deleteProperty(templateData) {
   let templatePayload = {
     id: templateData.template.id,
     name: templateData.template.name,
     key: templateData.template.key,
-    properties: property,
+    thumbnailUrl: 'thumbnail_url',
+    properties: [],
     rowVersion: templateData.template.rowVersion
   };
   return updateExperienceTemplate(templateData, templatePayload)

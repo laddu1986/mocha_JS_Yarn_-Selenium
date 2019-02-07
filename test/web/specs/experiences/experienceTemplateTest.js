@@ -22,7 +22,7 @@ import {
   createExperienceTemplate,
   verifyCreateButton,
   verifyTemplateIsCreated
-} from 'actions/experiences';
+} from 'actions/experienceTemplates.js';
 import { goToExperiencePage } from 'actions/navBar';
 import * as PassiveNotification from 'data/passiveNotification.json';
 var name = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}`,
@@ -45,10 +45,10 @@ describe(`Experience Template Tests`, () => {
     clickCreateTemplate('button');
     expect(verifyCreateTemplateModal()).to.equal(true, 'Create Template Modal is not displayed');
     expect(verifyCreateButton()).to.equal(false, 'Create button is not disabled');
-    closeModal();
   });
 
   it(`Click Create Template Link --> create template modal opens ${lib.Tags.smokeTest}`, () => {
+    closeModal();
     clickCreateTemplate('link');
     expect(verifyCreateTemplateModal()).to.equal(true, 'Create Template Modal is not displayed');
     expect(verifyCreateButton()).to.equal(false, 'Create button is not disabled');

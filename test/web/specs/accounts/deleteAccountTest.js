@@ -34,13 +34,16 @@ describe('Delete Account Test (Remove my Account)', () => {
     expect(cancelDeleteAccount()).to.equal(true);
   });
 
-  it('Remove account --> Sign In page appears', () => {
+  it('Click delete account --> confirm button is disabled', () => {
     clickDeleteAccButton();
-    expect(confirmButtonIsEnabled()).to.equal(false);
+    expect(confirmButtonIsEnabled()).to.equal(false, 'Confirm button should be disabled');
+  });
+
+  it('Remove account --> Sign In page appears', () => {
     typeDeleteToConfirm();
-    expect(confirmButtonIsEnabled()).to.equal(true);
+    expect(confirmButtonIsEnabled()).to.equal(true, 'Confirm button should be enabled');
     confirmDelete();
-    expect(signInPageIsVisible()).to.equal(true);
+    expect(signInPageIsVisible()).to.equal(true, 'Sign in page did not appear correctly');
     expect(browser.getUrl()).to.equal(`${browser.options.baseUrl}/sign-in`);
   });
 
@@ -51,7 +54,7 @@ describe('Delete Account Test (Remove my Account)', () => {
 
   it('Re-registeration with same email is allowed', () => {
     clickCreateAccountLink();
-    createAccount(accountDetails.email);
-    expect(verifyOrgDashboardPageAppears()).to.equal(true);
+    createAccount();
+    expect(verifyOrgDashboardPageAppears()).to.equal(true, 'Re-registration is not successful');
   });
 });

@@ -15,10 +15,11 @@ export function clickCreateTribeLink() {
 
 export function inputTribeDetails(name) {
   TribePage.titleField.setValue(name);
+  browser.keys('Tab');
 }
 
 export function verifyAllTribesPage() {
-  return TribePage.createTribeButton.isVisible();
+  return TribePage.createTribeButton.isVisible() && TribePage.createTribeLink.isVisible();
 }
 
 export function verifyTribeDetailpage() {
@@ -65,7 +66,7 @@ export function verifyTribeCardColour(count) {
     .split('rgb')[3]
     .replace(/\)/g, '')
     .trim();
-  return colorOnCard.includes(expectedColour);
+  browser.waitUntil(() => colorOnCard.includes(expectedColour), 5000, 'Tribe card colour is not correct', 200);
 }
 
 export function verifyTitleOnCard(name, count) {
@@ -88,7 +89,7 @@ export function verifyTribe(type, value) {
 }
 
 export function createTribe(name) {
-  clickCreateTribeButton();
+  TribePage.createTribeLink.click();
   inputTribeDetails(name);
 }
 
@@ -97,11 +98,13 @@ export function goToTribeDetailPage() {
 }
 
 export function updateTribe(type, value) {
+  TribePage.titleField.clearElement();
   if (type === Constants.TribeAttributes.Title) {
     TribePage.titleField.setValue(value);
   } else {
     TribePage.taglineField.setValue(value);
   }
+  browser.keys('Tab');
 }
 
 export function deleteTribe() {
@@ -252,12 +255,12 @@ export function waitForLogoPreview() {
 
 export function verifyTribeCardWallpaper() {
   if (browser.isExisting("//*[@data-qa='segment:background']"))
-    return TribePage.tribeCardWallpaper.getAttribute('style').includes('background: url');
+    return TribePage.tribeCardWallpaper.getAttribute('style').includes('background: url("https://upe.astcdn.com/img');
   else return false;
 }
 
 export function verifyTribeCardLogo() {
-  return TribePage.tribeCardLogo.getAttribute('style').includes('background: url("https://');
+  return TribePage.tribeCardLogo.getAttribute('style').includes('background: url("https://upe.astcdn.com/img');
 }
 
 export function removeImage() {

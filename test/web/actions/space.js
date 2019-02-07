@@ -3,7 +3,7 @@ import OrgDashboardPage from 'page_objects/orgDashboardPage';
 import SpaceDevelopersPage from 'page_objects/spaceDevelopersPage';
 import SpaceSettingsPage from 'page_objects/spaceSettingsPage';
 import SpaceDashboardPage from 'page_objects/spaceDashboardPage';
-import HomePage from 'page_objects/homePage';
+import NavBarPage from 'page_objects/navBar';
 import CommonPage from 'page_objects/common';
 import NavBar from 'page_objects/navBar';
 import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'actions/common';
@@ -23,7 +23,7 @@ export function changeSpace(type) {
 }
 
 export function verifyNewSpaceName() {
-  HomePage.logo.click();
+  NavBarPage.backToOrgDashboardLink.click();
   return OrgDashboardPage.spaceCards.getText();
 }
 
@@ -56,7 +56,7 @@ export function clickCreateNewSpaceButton() {
 }
 
 export function goBackToOrgDashboard() {
-  HomePage.logo.click();
+  NavBarPage.backToOrgDashboardLink.click();
   OrgDashboardPage.spaceCards.waitForVisible();
 }
 
