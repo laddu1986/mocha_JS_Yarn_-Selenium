@@ -147,6 +147,7 @@ message GetTemplatesRequest{
     WorkspaceContext context = 1;
     google.protobuf.Timestamp created_after = 2;
     string keyword = 3; //name or key
+    ExperienceTemplateType template_type = 4; 
 }
 
 message GetTemplatesResponse{
