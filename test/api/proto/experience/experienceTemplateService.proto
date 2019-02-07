@@ -2,59 +2,356 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
-import "google/protobuf/empty.proto";
-import "google/protobuf/field_mask.proto";
-
-import "contexts.proto";
-import "experienceTemplate.proto";
 import "propertyType.proto";
+import "property.proto";
+import "constraint.proto";
+import "experienceTemplate.proto";
+import "contexts.proto";
+import "templateType.proto";
 
 package experience;
 
 option go_package = "generated";
 
-service ExperienceService{
-    rpc CreateExperienceTemplate (CreateExperienceTemplateRequest) returns (ExperienceTemplate);
-	rpc GetExperienceTemplates (GetExperienceTemplatesRequest) returns (GetExperienceTemplatesResponse);
-	rpc GetExperienceTemplateById (GetExperienceTemplateByIdRequest) returns (ExperienceTemplate);
-	rpc UpdateExperienceTemplate (UpdateExperienceTemplateRequest) returns (ExperienceTemplate);
-	rpc DeleteExperienceTemplate (DeleteExperienceTemplateRequest) returns (google.protobuf.Empty);
-    rpc GetPropertyTypes (google.protobuf.Empty) returns (GetPropertyTypesResponse); 
+service ExperienceTemplateReadService{
+    rpc GetTemplateById (GetTemplateByIdRequest) returns (GetTemplateByIdResponse);
+    rpc GetPropertyTypes(GetPropertyTypesRequest) returns (GetPropertyTypesResponse); 
+    rpc GetTemplates (GetTemplatesRequest) returns (GetTemplatesResponse);
+    rpc GetPropertyById (GetPropertyByIdRequest) returns (GetPropertyByIdResponse);
+    rpc GetConfiguration (GetConfigurationRequest) returns (GetConfigurationResponse);
 }
 
-message CreateExperienceTemplateRequest{
-    SpaceContext context = 1;
-    string key  = 2;
-    string name = 3;
+service ExperienceTemplateWriteService{
+    rpc CreateTemplate (CreateTemplateRequest) returns (CreateTemplateResponse);
+    rpc RenameTemplate (RenameTemplateRequest) returns (RenameTemplateResponse);
+    rpc ChangeTemplateKey (ChangeTemplateKeyRequest) returns (ChangeTemplateKeyResponse);
+    rpc ChangeThumbnail (ChangeThumbnailRequest) returns (ChangeThumbnailResponse);
+    rpc DeleteTemplate (DeleteTemplateRequest) returns (DeleteTemplateResponse); // will not be implemented atm
+    rpc CommitTemplate (CommitTemplateRequest) returns (CommitTemplateResponse); //changes state from 'draft' to 'committed'
+
+    rpc AddProperty (AddPropertyRequest) returns (AddPropertyResponse);
+    rpc RemoveProperty (RemovePropertyRequest) returns (RemovePropertyResponse);
+    rpc ChangePropertyName (ChangePropertyNameRequest) returns (ChangePropertyNameResponse);
+    rpc ChangePropertyKey (ChangePropertyKeyRequest) returns (ChangePropertyKeyResponse);
+    rpc ChangePropertyDefaultValue (ChangePropertyDefaultValueRequest) returns (ChangePropertyDefaultValueResponse);
+    rpc EnablePropertyRule (EnablePropertyRuleRequest) returns (EnablePropertyRuleResponse);
+    rpc ChangePropertyRule (ChangePropertyRuleRequest) returns (ChangePropertyRuleResponse);
+    rpc DisablePropertyRule (DisablePropertyRuleRequest) returns (DisablePropertyRuleResponse);
+    rpc ChangePropertyPromptText (ChangePropertyPromptTextRequest) returns (ChangePropertyPromptTextResponse);
+    rpc ChangePropertyHelpText (ChangePropertyHelpTextRequest) returns (ChangePropertyHelpTextResponse);
+    rpc ChangePropertyAppearanceType (ChangePropertyAppearanceTypeRequest) returns (ChangePropertyAppearanceTypeResponse);
 }
 
-message GetExperienceTemplatesRequest{
-	SpaceContext context = 1;
-	google.protobuf.Timestamp created_after = 2;
-	string keyword = 3; //name or key
+
+//CreateTemplate
+//-------------------------------------
+message CreateTemplateRequest{
+    WorkspaceContext context = 1;
+    ExperienceTemplateType template_type = 2;
 }
 
-message GetExperienceTemplatesResponse{
-	repeated ExperienceTemplate experience_templates = 1;
+message CreateTemplateResponse{
+    string template_id = 1;
+    google.protobuf.Timestamp row_version = 2;
 }
 
-message GetExperienceTemplateByIdRequest{
-	SpaceContext context = 1;
-	int64 id = 2;
+//RenameTemplate
+//-------------------------------------
+message RenameTemplateRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+
+    string name = 4;
 }
 
-message UpdateExperienceTemplateRequest{
-	SpaceContext context = 1;
-	ExperienceTemplate experience_template = 2;
-	google.protobuf.FieldMask update_mask = 3;
+message RenameTemplateResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//ChangeTemplateKey
+//-------------------------------------
+message ChangeTemplateKeyRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+
+    string key = 4;
+}
+
+message ChangeTemplateKeyResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//ChangeThumbnail
+//-------------------------------------
+message ChangeThumbnailRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+
+    string thumbnail_url = 4;
+}
+
+message ChangeThumbnailResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//GetTemplateById
+//-------------------------------------
+message GetTemplateByIdRequest{
+    WorkspaceContext context = 1;
+    string template_id = 2;
+}
+
+message GetTemplateByIdResponse{
+    ExperienceTemplateDetail template = 1;
+}
+
+//DeleteTemplate
+//-------------------------------------
+message DeleteTemplateRequest{
+    WorkspaceContext context = 1;
+    string template_id = 2;
+    google.protobuf.Timestamp row_version = 3;
+}
+
+message DeleteTemplateResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//CommitTemplate
+//-------------------------------------
+message CommitTemplateRequest{
+    WorkspaceContext context = 1;
+    string template_id = 2;
+    google.protobuf.Timestamp row_version = 3;
+}
+
+message CommitTemplateResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//GetPropertyTypes
+//-------------------------------------
+message GetPropertyTypesRequest{
 }
 
 message GetPropertyTypesResponse{
     repeated PropertyType property_types = 1;
 }
 
-message DeleteExperienceTemplateRequest{
-	SpaceContext context = 1;
-	int64 id = 2;
-	google.protobuf.Timestamp row_version = 3;
+//GetTemplates
+//-------------------------------------
+message GetTemplatesRequest{
+    WorkspaceContext context = 1;
+    google.protobuf.Timestamp created_after = 2;
+    string keyword = 3; //name or key
+}
+
+message GetTemplatesResponse{
+    repeated ExperienceTemplate templates = 1;
+}
+
+//AddProperty
+//-------------------------------------
+message AddPropertyRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+
+    // todo: add position for sorting
+    string property_type = 4;
+}
+
+message AddPropertyResponse{
+    string property_id = 1;
+    google.protobuf.Timestamp row_version = 2;
+}
+
+//RemoveProperty
+//--------------------------------------
+message RemovePropertyRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+    string property_id = 4;
+}
+
+message RemovePropertyResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//ChangePropertyName
+//-----------------------------------------
+message ChangePropertyNameRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+    string property_id = 4;
+
+    string property_name = 5;
+}
+
+message ChangePropertyNameResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//ChangePropertyKey
+//---------------------------------------
+message ChangePropertyKeyRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+    string property_id = 4;
+
+    string property_key = 5;
+}
+
+message ChangePropertyKeyResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//ChangePropertyDefaultValue
+//------------------------------------------
+message ChangePropertyDefaultValueRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+    string property_id = 4;
+
+   oneof default_value {
+        string string_value = 5;
+        int32 int_value = 6;
+        bool bool_value = 7;
+        google.protobuf.Timestamp date_value = 8;
+        Color color_value = 9;
+        List list_value = 10;
+        }
+}
+
+message ChangePropertyDefaultValueResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//EnablePropertyRule
+//-------------------------------------
+message EnablePropertyRuleRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+    string property_id = 4;
+
+    string rule_key = 5;
+}
+
+message EnablePropertyRuleResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//ChangePropertyRule
+//-------------------------------------
+message ChangePropertyRuleRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+    string property_id = 4;
+
+    string rule_key = 5;
+
+    oneof rule{
+        TextConstraint text_rule = 6;
+        IntegerConstraint integer_rule = 7;
+        BooleanConstraint bool_rule = 8;
+        DateConstraint date_rule = 9;
+        ColorConstraint color_rule = 10;
+        ListConstraint list_rule = 11;
+    }
+}
+
+message ChangePropertyRuleResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+//DisablePropertyRule
+//-------------------------------------
+message DisablePropertyRuleRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+    string property_id = 4;
+
+    string rule_key = 5;
+}
+
+message DisablePropertyRuleResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//ChangePropertyPromptText
+//-----------------------------------------
+message ChangePropertyPromptTextRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+    string property_id = 4;
+
+    string prompt_text = 5;
+}
+
+message ChangePropertyPromptTextResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//ChangePropertyHelpText
+//-----------------------------------------
+message ChangePropertyHelpTextRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+    string property_id = 4;
+
+    string help_text = 5;
+}
+
+message ChangePropertyHelpTextResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//ChangePropertyAppearanceType
+//------------------------------------------
+message ChangePropertyAppearanceTypeRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+    string property_id = 4;
+
+    string appeariance_type = 5;
+}
+
+message ChangePropertyAppearanceTypeResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//GetPropertyById
+//---------------------------------------------
+message GetPropertyByIdRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    string property_id = 3;
+}
+
+message GetPropertyByIdResponse{
+    google.protobuf.Timestamp row_version = 1;
+    string template_id  = 2;
+    Property property = 3;
+}
+
+//GetConfiguration
+//---------------------------------------------
+message GetConfigurationRequest{
+}
+
+message GetConfigurationResponse{
+    repeated PropertyType property_types = 1;
+	repeated TemplateType template_types = 2;
 }
