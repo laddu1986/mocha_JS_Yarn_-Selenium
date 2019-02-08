@@ -11,7 +11,8 @@
     "orca": "mocha test/orca/specs/loginTest.js --require babel-register",
     "clean": "eslint '**/*.js' --fix",
     "lint": "eslint '**/*.js'",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "sync-tests": "node node_modules/wdio-testrail-reporter/scripts/generate-cases.js $(pwd)/wdio.testrail.js $(pwd)/specs/"
   },
   "dependencies": {
     "app-module-path": "^2.2.0",

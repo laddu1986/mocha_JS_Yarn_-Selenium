@@ -64,9 +64,8 @@ message ListProperty{
 // Default values
 
 message Color{
-    string key = 1;
-    string value = 2;
-    uint32 opacity = 3;
+    string value = 1;
+    uint32 opacity = 2;
 }
 
 message List{

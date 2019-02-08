@@ -25,17 +25,6 @@ Chakram is an API testing framework designed to perform end to end tests on JSON
 
 The library offers a BDD testing style and fully exploits javascript promises - the resulting tests are simple, clear and expressive. Chakram is built on [node.js](https://nodejs.org/), [mocha](http://mochajs.org/), [chai](http://chaijs.com/) and [request](https://github.com/request/request).
 
-### Reporting
-This is a branch intended to work alongside the main branch with reporting to Testrail. 
-To synchronise our cases, we use [wdio-testrail-reporter](https://github.com/oxynade/wdio-testrail-reporter) which comes with a synchroniser script that can be used across Web, API and Orca tests.
-
-To synchronise, you can use the following command
-
-`node node_nodules/wdio-testrail-reporter/scripts/generate-cases <path to configuration file> <path to specs folder>`
-
-Once synchronised, test results will automatically reported to testrail on run
-
-
 ### Getting Started
 
 #### Pre-Req
@@ -61,11 +50,6 @@ and to install dependencies for Orca, Web and Api tests you can use
 Locally we use dotenv for define our environment variables.
 Create a `.env` file in the root of this repo and add the values for the keys mentioned in `.env-sample`
 
-Orca, web and api test all use these env files. We can easily manage these together through symlinks.
-Then create a symlink to `.env` in each `/test/orca`, `/test/web` and `/test/api` by changing directories to each and the linking with the following
-
-`ln-s ../../.env .env`
-
 ##### Run Front End Tests
 
 `yarn run web-local`
@@ -82,11 +66,11 @@ The following arguments can be appended to the above to run tests in different c
 
 ##### Run API Tests
 
-`yarn run api`
+`yarn run api-local`
 
 ##### Run Orca Tests
 
-`yarn run orca`
+`yarn run orca-local`
 
 ##### Debugging
 
