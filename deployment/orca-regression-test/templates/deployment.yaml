@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: orca-test-cron
 spec:
-  schedule: "30 19 * * *"
+  schedule: "0 18 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:

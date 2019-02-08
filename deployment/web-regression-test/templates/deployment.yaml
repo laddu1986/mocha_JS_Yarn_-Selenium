@@ -29,7 +29,6 @@ spec:
               args:
                 - echo TEST-STARTED;
                   yarn run web --browser:chrome;
-                  cp -R allure-results/* /app;
                   echo TEST-ENDED;
               volumeMounts:
                 - mountPath: /app
