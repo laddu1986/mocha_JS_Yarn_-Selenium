@@ -6,24 +6,17 @@ import "google/protobuf/struct.proto";
 package experience;
 option go_package = "generated";
 
-// containing fields that defines
-// a scenario property
-message ScenarioProperty {
-  string name = 1;
-  google.protobuf.Struct value = 2;
-}
-
 // containing fields that hold
 // localized scenario properties
 message LocalizedProperties {
   string locale_code = 1;
-  repeated ScenarioProperty properties = 2;
+  google.protobuf.Struct properties = 2;
   google.protobuf.Timestamp row_version = 3;
 }
 
 // Read-only model of scenario
 message ScenarioDetails {
-  string id = 1;
+  int64 id = 1;
   string name = 2;
   int32 sequence_number = 3;
   bool is_default = 4;
@@ -39,7 +32,7 @@ message ScenarioDetails {
 // Read-only model of summarised Experience Instance
 message ExperienceInstanceNodeDetails {
   string id = 1;
-  string version_id = 2;
+  int64 version_id = 2;
   ExperienceInstanceNodeDetails parent = 3;
   string created_by_account_id = 4;
   string modified_by_account_id = 5;
@@ -52,7 +45,7 @@ message ExperienceInstanceNodeDetails {
 // Writable model of summarised Experience Instance
 message ExperienceInstanceNode {
   string id = 1;
-  string version_id = 2;
+  int64 version_id = 2;
   ExperienceInstanceNode parent = 3;
   google.protobuf.Timestamp row_version = 4;
   google.protobuf.Timestamp version_row_version = 5;
@@ -80,7 +73,7 @@ message Scenario {
   // need to be here for the repeated
   // children scenario field in the writable
   // experience instance model
-  string id = 1;
+  int64 id = 1;
   google.protobuf.Timestamp row_version = 2;
 
   // writable fields
@@ -96,7 +89,7 @@ message ExperienceInstance {
   // need to be here for the
   // repeated experience instance children
   string id = 1;
-  string version_id = 2;
+  int64 version_id = 2;
   google.protobuf.Timestamp row_version = 3;
   google.protobuf.Timestamp version_row_version = 4;
 
@@ -113,7 +106,7 @@ message ExperienceInstanceDetails {
   string id = 1;
   string template_id = 2;
   InstanceType type = 3;
-  string version_id = 4;
+  int64 version_id = 4;
   string name = 5;
   string key = 6;
   bool is_enabled = 7;

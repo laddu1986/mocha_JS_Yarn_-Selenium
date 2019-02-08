@@ -34,6 +34,7 @@ service ExperienceTemplateWriteService{
     rpc ChangePropertyName (ChangePropertyNameRequest) returns (ChangePropertyNameResponse);
     rpc ChangePropertyKey (ChangePropertyKeyRequest) returns (ChangePropertyKeyResponse);
     rpc ChangePropertyDefaultValue (ChangePropertyDefaultValueRequest) returns (ChangePropertyDefaultValueResponse);
+    rpc ChangePropertyLocalizable (ChangePropertyLocalizableRequest) returns (ChangePropertyLocalizableResponse);
     rpc EnablePropertyRule (EnablePropertyRuleRequest) returns (EnablePropertyRuleResponse);
     rpc ChangePropertyRule (ChangePropertyRuleRequest) returns (ChangePropertyRuleResponse);
     rpc DisablePropertyRule (DisablePropertyRuleRequest) returns (DisablePropertyRuleResponse);
@@ -232,6 +233,21 @@ message ChangePropertyDefaultValueRequest{
 }
 
 message ChangePropertyDefaultValueResponse{
+    google.protobuf.Timestamp row_version = 1;
+}
+
+//ChangePropertyLocalizable
+//------------------------------------------
+message ChangePropertyLocalizableRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+    string property_id = 4;
+
+    bool localizable = 5;
+}
+
+message ChangePropertyLocalizableResponse{
     google.protobuf.Timestamp row_version = 1;
 }
 
