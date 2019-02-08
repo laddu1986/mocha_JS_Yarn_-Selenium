@@ -23,6 +23,8 @@
     "eslint-plugin-babel": "^5.2.1",
     "eslint-plugin-mocha": "^5.2.0",
     "lint-staged": "^7.3.0",
+    "mocha-multi-reporters": "^1.1.7",
+    "mocha-simple-html-reporter": "^1.1.0",
     "prettier": "^1.14.3",
     "wdio-testrail-reporter": "^1.1.5"
   },

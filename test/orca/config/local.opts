@@ -1,4 +1,5 @@
 --require babel-register
 --timeout 20000
---reporter spec
+--reporter mocha-multi-reporters
+--reporter-options configFile=config/local-config.json
 --require dotenv/config
