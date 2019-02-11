@@ -1,7 +1,7 @@
 import { path, caller, randomString } from '../common';
 
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
-const client = caller(process.env.EXPERIENCE_HOST, PROTO_PATH, 'ExperienceTemplateWriteService');
+const client = caller(process.env.EXPERIENCE_HOST, PROTO_PATH, 'ExperienceTemplateReadService');
 
 function spaceContext(templateData) {
   return {

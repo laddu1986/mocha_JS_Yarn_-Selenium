@@ -9,7 +9,7 @@ import * as messages from 'data/validationErrorsData.json';
 import * as data from 'data/templateTestData';
 const templateData = new Object();
 
-describe('Negative Test -> Template API -> Template Properties', () => {
+xdescribe('Negative Test -> Template API -> Template Properties', () => {
   before('Setup the testing environment', async () => {
     await postIdentity(templateData);
     await postOrganization(templateData);

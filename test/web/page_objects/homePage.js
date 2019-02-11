@@ -22,7 +22,7 @@ class HomePage {
     return browser.elements("//*[@data-qa='nav:menu']//li");
   }
   get orgCards() {
-    return browser.elements("//a[@data-qa='link:card']");
+    return browser.elements("//a[@data-qa='org:card']");
   }
   get createOrgButton() {
     return browser.element("//*[@data-qa='link:create-org']");
