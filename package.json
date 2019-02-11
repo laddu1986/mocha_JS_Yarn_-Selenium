@@ -29,7 +29,7 @@
     "sync-api": "cd test/api && yarn sync-tests",
     "sync-web": "cd test/web && yarn sync-tests",
     "sync-orca": "cd test/orca && yarn sync-tests",
-    "sync-tests": "yarn sync-api && yarn sync-api && yarn sync-orca"
+    "sync-tests": "yarn sync-web && yarn sync-api && yarn sync-orca"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
