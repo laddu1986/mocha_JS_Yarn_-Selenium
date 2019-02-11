@@ -14,7 +14,6 @@
     "mocha": "^5.0.5",
     "mocha-multi-reporters": "^1.1.7",
     "mocha-simple-html-reporter": "^1.1.0",
-    "node-es-module-loader": "^0.3.8",
     "randomstring": "^1.1.5"
   },
   "devDependencies": {

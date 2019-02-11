@@ -108,8 +108,8 @@ export function postIdentity(responseObject) {
     api: identities,
     /*eslint-enable */
     data: {
-      fullname: randomString.generate(12),
-      email: `${randomString.generate(12)}@test.co`,
+      fullname: randomString(12),
+      email: `${randomString(12)}@test.co`,
       password: process.env.ACCOUNT_PASS
     }
   };
@@ -125,7 +125,7 @@ export function postOrganization(responseObject) {
     api: organizations,
     /*eslint-enable */
     data: {
-      name: randomString.generate(10),
+      name: randomString(10),
       createdByAccountId: responseObject.identityID
     }
   };
@@ -154,9 +154,9 @@ export function postSpaceByOrganizationId(responseObject) {
     api: `${spaces + responseObject.orgID}/spaces`,
     /*eslint-enable */
     data: {
-      name: randomString.generate(10),
+      name: randomString(10),
       createdByAccountId: responseObject.identityID,
-      shortUrl: randomString.generate(6)
+      shortUrl: randomString(6)
     }
   };
   return post(any).then(response => {

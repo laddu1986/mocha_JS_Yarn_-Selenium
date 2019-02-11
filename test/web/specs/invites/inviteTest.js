@@ -12,9 +12,9 @@ import {
 import accountPage from 'page_objects/accountPage';
 import { signOut } from 'actions/common';
 
-const invite_email1 = `invite_1_${lib.randomString.generate(5)}@test.co`;
-const invite_email2 = `invite_2${lib.randomString.generate(5)}@test.co`;
-const invite_email3 = `invite_3${lib.randomString.generate(5)}@test.co`;
+const invite_email1 = `invite_1_${lib.randomString(5)}@test.co`;
+const invite_email2 = `invite_2${lib.randomString(5)}@test.co`;
+const invite_email3 = `invite_3${lib.randomString(5)}@test.co`;
 
 describe('Invite Tests', () => {
   before('Open App URL', () => {

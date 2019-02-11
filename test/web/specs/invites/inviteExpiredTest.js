@@ -34,7 +34,7 @@ describe('New User accesses an Expired Invitation', () => {
   });
 
   it('Admin invites a New User', () => {
-    newUser = `newUser_${lib.randomString.generate(4)}@test.co`;
+    newUser = `newUser_${lib.randomString(4)}@test.co`;
     inviteTeammate(newUser, '1');
   });
 
