@@ -6,9 +6,9 @@ export function postSpaceByOrganizationId(responseObject) {
   const any = {
     api: `${spaces + responseObject.orgID}/spaces`,
     data: {
-      name: randomString.generate(10),
+      name: randomString(10),
       createdByAccountId: responseObject.identityID,
-      shortUrl: randomString.generate(6)
+      shortUrl: randomString(6)
     }
   };
   return post(any).then(response => {
@@ -44,9 +44,9 @@ export function updateSpace(responseObject) {
     api: `${spaces + responseObject.orgID}/spaces`,
     data: {
       id: responseObject.spaceID,
-      name: randomString.generate(5),
+      name: randomString(5),
       rowVersion: responseObject.spaceRowVersion,
-      shortUrl: randomString.generate(6)
+      shortUrl: randomString(6)
     }
   };
   return put(any).then(response => {
@@ -70,7 +70,7 @@ export function patchSpaceByOrgIdRowVersionAndSpaceId(responseObject, type) {
       {
         op: 'replace',
         path: `/${type}`,
-        value: randomString.generate(6)
+        value: randomString(6)
       }
     ]
   };

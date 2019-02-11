@@ -1,6 +1,6 @@
 import { randomString, post, get, del } from '../common';
 import { organizations, invites, token } from 'config/getEnv';
-var emailInvited = `${randomString.generate(5)}@test.co`;
+var emailInvited = `${randomString(5)}@test.co`;
 
 export function getAccessToken(responseObject) {
   const any = {

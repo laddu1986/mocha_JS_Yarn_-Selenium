@@ -4,7 +4,7 @@ const PROTO_PATH = path.resolve(process.env.TRIBE_PROTO_DIR + 'segmentService.pr
 const client = caller(process.env.TRIBE_HOST, PROTO_PATH, 'SegmentService');
 
 function createCategory(responseObject, updateFlag) {
-  let label = randomString.generate(8);
+  let label = randomString(8);
 
   const req = new client.Request('createCategory', {
     spaceContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID },
@@ -31,7 +31,7 @@ function listCategories(responseObject) {
 }
 
 function renameCategory(responseObject) {
-  let newLabel = randomString.generate(7);
+  let newLabel = randomString(7);
   const req = new client.Request('renameCategory', {
     categoryContext: {
       orgId: responseObject.orgID,
