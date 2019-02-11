@@ -6,10 +6,6 @@ export const dateFormat = require('dateformat');
 export const path = require('path');
 export const caller = require('grpc-caller');
 
-export const invitesNegData = new Object();
-export const spaceNegData = new Object();
-export const spaceKeyNegData = new Object();
-
 export const Tags = {
   smokeTest: '@smoke'
 };
