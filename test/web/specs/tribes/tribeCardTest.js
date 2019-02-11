@@ -23,7 +23,7 @@ import {
   verifyTribeCardColour,
   goToTribeDetailPage
 } from 'actions/tribe';
-var name = lib.randomString.generate(5);
+var name = lib.randomString(5);
 
 describe('Tribe Actions Tests', () => {
   before(() => {
@@ -45,7 +45,8 @@ describe('Tribe Actions Tests', () => {
     verifyTribeCardColour('0');
   });
 
-  it('Verify card color on audience page', () => {   //will fail due to https://app.clickup.com/t/ab7gu
+  it('Verify card color on audience page', () => {
+    //will fail due to https://app.clickup.com/t/ab7gu
     clickOnAudienceLink();
     verifyTribeCardColour('0');
   });
@@ -85,7 +86,8 @@ describe('Tribe Actions Tests', () => {
     expect(verifyTribeCardLogo()).to.equal(true, 'Uploaded logo does not show up on tribe card');
   });
 
-  it('Verify Logo on all tribes page', () => {   //will fail due to https://app.clickup.com/t/ab7gu
+  it('Verify Logo on all tribes page', () => {
+    //will fail due to https://app.clickup.com/t/ab7gu
     clickOnAudienceLink();
     browser.pause(1000);
     expect(verifyTribeCardLogo()).to.equal(true, 'Tribe logo does not show on all tribes page');
@@ -114,7 +116,8 @@ describe('Tribe Actions Tests', () => {
     expect(getTribeCardStyle()).to.include('background', 'Tribe wallpaper still shows on all tribes page');
   });
 
-  it('Remove Logo --> Verify preview area', () => {    //will fail due to https://app.clickup.com/t/ab7gu
+  it('Remove Logo --> Verify preview area', () => {
+    //will fail due to https://app.clickup.com/t/ab7gu
     goToTribeDetailPage();
     clickCustomizeButton();
     clickLogoTab();

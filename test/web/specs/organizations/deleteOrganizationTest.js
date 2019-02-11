@@ -24,8 +24,8 @@ import {
 import orgNotificationData from 'data/passiveNotification.json';
 import { signIn, signOut } from 'actions/common';
 var accountDetails,
-  orgName = `${lib.randomString.generate(10)}_Org1`,
-  newOrgName = `${lib.randomString.generate(10)}_Org2`;
+  orgName = `${lib.randomString(10)}_Org1`,
+  newOrgName = `${lib.randomString(10)}_Org2`;
 
 describe('Delete organization Tests', () => {
   before(() => {

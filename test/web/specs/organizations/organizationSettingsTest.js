@@ -10,9 +10,9 @@ import {
   createOrg
 } from 'actions/organization';
 import { verifySelectedOrgMenu, goToOrgPageFromNavMenu } from 'actions/navBar';
-var org1 = `${lib.randomString.generate(10)}_Org1`,
-  org2 = `${lib.randomString.generate(10)}_Org2`,
-  updatedOrgName = `${lib.randomString.generate(10)}_OrgUpdated`;
+var org1 = `${lib.randomString(10)}_Org1`,
+  org2 = `${lib.randomString(10)}_Org2`,
+  updatedOrgName = `${lib.randomString(10)}_OrgUpdated`;
 
 describe('Update Organization name', () => {
   before(() => {

@@ -42,7 +42,7 @@ describe(`Create Tribe Tests ${lib.Tags.smokeTest}`, () => {
   });
 
   it('Create named tribe using hover over + link', () => {
-    title = lib.randomString.generate(5);
+    title = lib.randomString(5);
     clickCreateTribeLink();
     inputTribeDetails(title);
     verifyTitleOnCard(title, '0');

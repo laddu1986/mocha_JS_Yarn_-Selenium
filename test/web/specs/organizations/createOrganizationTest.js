@@ -11,7 +11,7 @@ import {
 } from 'actions/organization';
 import { getnavOrgCount } from 'actions/navBar';
 import accountPage from 'page_objects/accountPage';
-var orgName = lib.randomString.generate(10),
+var orgName = lib.randomString(10),
   accountDetails;
 
 describe('Tests for Create Organization', () => {

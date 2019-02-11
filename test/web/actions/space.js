@@ -11,10 +11,10 @@ const clipboardy = require('clipboardy');
 
 export function changeSpace(type) {
   var webElement = SpaceSettingsPage.spaceName;
-  var name = `${lib.randomString.generate(8)}_Space`;
+  var name = `${lib.randomString(8)}_Space`;
   if (type == 'slug') {
     webElement = SpaceSettingsPage.spaceSlug;
-    name = `${lib.randomString.generate(8)}_Slug`;
+    name = `${lib.randomString(8)}_Slug`;
   }
   webElement.clearElement();
   webElement.setValue(name);
@@ -32,7 +32,7 @@ export function spaceIsDeleted() {
 }
 
 export function createSpace() {
-  var spacename = `${lib.randomString.generate(8)}_Space`;
+  var spacename = `${lib.randomString(8)}_Space`;
   OrgDashboardPage.createSpaceInput.setValue(spacename);
   OrgDashboardPage.createSpaceButton.click();
   NavBar.developerLink.waitForVisible();

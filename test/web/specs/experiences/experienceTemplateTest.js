@@ -25,8 +25,8 @@ import {
 } from 'actions/experienceTemplates.js';
 import { goToExperiencePage } from 'actions/navBar';
 import * as PassiveNotification from 'data/passiveNotification.json';
-var name = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}`,
-  newName = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}_new`;
+var name = `${lib.randomString({ length: 7, charset: 'alphabetic' })}`,
+  newName = `${lib.randomString({ length: 7, charset: 'alphabetic' })}_new`;
 
 describe(`Experience Template Tests`, () => {
   before(() => {

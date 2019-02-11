@@ -43,10 +43,11 @@ export const CheckForAll = bits => string => bits.every(bit => string.includes(b
 
 // String generator with prefix
 // ---------------------------------------------------
-export function randomString(opts, prefix) {
+export function randomString(opts, prefix, suffix) {
   opts = opts == undefined ? 10 : opts;
   prefix = prefix == undefined ? '' : prefix;
-  return 'qaperf' + prefix + generateString.generate(opts);
+  suffix = suffix == undefined ? '' : suffix;
+  return process.env.QA_TAG + prefix + generateString.generate(opts) + suffix;
 }
 
 global.expect = server.expect;
