@@ -8,7 +8,7 @@ Test Automation Framework built in Javascript for testing all three layers of Ap
 
 #
 
-### More Details
+## More Details
 
 ### Front End
 
@@ -64,13 +64,17 @@ The following arguments can be appended to the above to run tests in different c
 
 `--suite <foldername>` for executing tests from a particular folder instead of the whole suite
 
-##### Run API Tests
+##### Run API and Orca Tests
 
 `yarn run api-local`
 
-##### Run Orca Tests
-
 `yarn run orca-local`
+
+##### Reporting
+When running locally, html reports are being generated for API/Orca(mocha) tests using `mocha-simple-html-reporter` and for UI(wdio) tests using `wdio-html-format-reporter`.
+The reports will by default be saved in`.test/[api/orca/web]/Reports`
+
+When reporting to TestRail, we use `yarn run [api/web/orca]`. Doing this requires tests to synchronised. To ensure all tests are synchronised, run `yarn run sync-tests`
 
 ##### Debugging
 
