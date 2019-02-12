@@ -5,7 +5,7 @@ export function postOrganization(responseObject) {
   const any = {
     api: organizations,
     data: {
-      name: randomString(10),
+      name: randomString(6),
       createdByAccountId: responseObject.identityID
     }
   };
