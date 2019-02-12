@@ -50,11 +50,12 @@ export function del(any) {
   return server.delete(any.api + any.data);
 }
 
-export function randomString(opts, prefix, suffix) {
+export function randomString(opts) {
   opts = opts == undefined ? 10 : opts;
-  prefix = prefix == undefined ? '' : prefix;
-  suffix = suffix == undefined ? '' : suffix;
-  return process.env.QA_TAG + prefix + generateString.generate(opts) + suffix;
+  let tag = process.env.QA_TAG == undefined ? '' : process.env.QA_TAG
+  let timeNow = Date.now();
+  let returnValue = tag + timeNow + generateString.generate(opts);
+  return returnValue
 }
 
 // Private functions

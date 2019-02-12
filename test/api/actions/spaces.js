@@ -8,7 +8,7 @@ export function postSpaceByOrganizationId(responseObject) {
     data: {
       name: randomString(10),
       createdByAccountId: responseObject.identityID,
-      shortUrl: randomString(6)
+      shortUrl: randomString(3)
     }
   };
   return post(any).then(response => {
