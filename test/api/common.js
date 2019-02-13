@@ -46,8 +46,7 @@ export const CheckForAll = bits => string => bits.every(bit => string.includes(b
 export function randomString(opts) {
   opts = opts == undefined ? 10 : opts;
   let tag = process.env.QA_TAG == undefined ? '' : process.env.QA_TAG
-  let timeNow = Date.now();
-  let returnValue = tag + timeNow + generateString.generate(opts);
+  let returnValue = tag + generateString.generate(opts);
   return returnValue
 }
 global.expect = server.expect;
