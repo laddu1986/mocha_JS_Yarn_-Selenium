@@ -35,26 +35,28 @@ describe(`Experience Template Tests`, () => {
     createSpace();
   });
 
-  it(`Go to experience template page --> Create experience button and link appears ${lib.Tags.smokeTest}`, () => {
+  it(`C1640128 Go to experience template page --> Create experience button and link appears ${
+    lib.Tags.smokeTest
+  }`, () => {
     goToExperiencePage();
     goToTemplateTab();
     expect(verifyCreateTemplatePage()).to.equal(true, 'Create Template page is not displayed');
   });
 
-  it('Click Create Template button --> create template modal opens', () => {
+  it('C1640129 Click Create Template button --> create template modal opens', () => {
     clickCreateTemplate('button');
     expect(verifyCreateTemplateModal()).to.equal(true, 'Create Template Modal is not displayed');
     expect(verifyCreateButton()).to.equal(false, 'Create button is not disabled');
   });
 
-  it(`Click Create Template Link --> create template modal opens ${lib.Tags.smokeTest}`, () => {
+  it(`C1640130 Click Create Template Link --> create template modal opens ${lib.Tags.smokeTest}`, () => {
     closeModal();
     clickCreateTemplate('link');
     expect(verifyCreateTemplateModal()).to.equal(true, 'Create Template Modal is not displayed');
     expect(verifyCreateButton()).to.equal(false, 'Create button is not disabled');
   });
 
-  it(`Create Template --> verify the template is created on template(s) pages ${lib.Tags.smokeTest}`, () => {
+  it(`C1640131 Create Template --> verify the template is created on template(s) pages ${lib.Tags.smokeTest}`, () => {
     createExperienceTemplate(name);
     expect(verifyTemplateIsCreated(name)).to.equal(true, 'The Template name is not correct on detail page');
     goToExperiencePage();
@@ -62,7 +64,7 @@ describe(`Experience Template Tests`, () => {
     verifyTemplateCard(name);
   });
 
-  it('Edit Template --> verify template(s) pages', () => {
+  it('C1640132 Edit Template --> verify template(s) pages', () => {
     clickMoreButton();
     clickSettingsFromCard();
     editTemplate(newName);
@@ -72,7 +74,7 @@ describe(`Experience Template Tests`, () => {
     verifyTemplateCard(newName);
   });
 
-  it('Delete Template --> verify notification message and template(s) page', () => {
+  it('C1640133 Delete Template --> verify notification message and template(s) page', () => {
     clickMoreButton();
     clickDeleteFromCard();
     typeDeleteToConfirm();

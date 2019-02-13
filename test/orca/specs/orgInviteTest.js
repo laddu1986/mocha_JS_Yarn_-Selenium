@@ -19,12 +19,12 @@ describe('Create Org Invite Tests', () => {
     createOrgInviteResponse = await createOrgInvite(createOrgInviteObject);
   });
 
-  it('Mutation- Create Org Invite', async () => {
+  it('C1295772 Mutation- Create Org Invite', async () => {
     expect(createOrgInviteResponse.response.statusCode).to.equal(200);
     joi.assert(createOrgInviteResponse.response.body.data.createOrgInvite, orgInviteSchema(createOrgInviteObject));
   });
 
-  it('Query- Get Org Invite', async () => {
+  it('C1295773 Query- Get Org Invite', async () => {
     await logout();
     getTokenDetailResponse = await getInviteTokenDetail(createOrgInviteObject);
     expect(getTokenDetailResponse.response.statusCode).to.equal(200);
@@ -34,17 +34,14 @@ describe('Create Org Invite Tests', () => {
     );
   });
 
-  it('Mutation- Create Account', async () => {
+  it('C1295774 Mutation- Create Account', async () => {
     createAccountResponse = await createAccount(createOrgInviteObject);
     await login(createOrgInviteObject);
     expect(createAccountResponse.response.statusCode).to.equal(200);
-    joi.assert(
-      createAccountResponse.response.body.data.createAccount.account,
-      createOrgSchema(createOrgInviteObject)
-    );
+    joi.assert(createAccountResponse.response.body.data.createAccount.account, createOrgSchema(createOrgInviteObject));
   });
 
-  it('Mutation- Accept Org Invite', async () => {
+  it('C1295775 Mutation- Accept Org Invite', async () => {
     acceptOrgInviteResponse = await acceptOrgInvite(createOrgInviteObject);
     expect(acceptOrgInviteResponse.response.statusCode).to.equal(200);
     joi.assert(
@@ -53,7 +50,7 @@ describe('Create Org Invite Tests', () => {
     );
   });
 
-  it('Mutation- Delete Org Invite', async () => {
+  it('C1295776 Mutation- Delete Org Invite', async () => {
     await logout();
     await login(createOrgInviteObject, createOrgInviteObject.AccountEmail);
     await createOrgInvite(createOrgInviteObject);

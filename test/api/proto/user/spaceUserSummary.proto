@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "deviceType.proto";
+import "location.proto";
+import "audienceType.proto";
+
+package user;
+
+option go_package = "generated";
+
+message SpaceUserSummary {
+    string id = 1;
+    string external_id = 2;
+    google.protobuf.Timestamp last_active_at = 3;
+    common.DeviceType last_device_type = 4;
+    string email = 5;
+    string display_name = 6;
+    common.LocationSummary last_location = 7;
+    common.AudienceType audience_type = 8;
+    repeated string labels = 9; 
+}

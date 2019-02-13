@@ -13,13 +13,12 @@ describe('Space API Key Tests', () => {
     goToDeveloperPortal();
   });
 
-  it('Verify passive notification', () => {
+  it('C1640164 Verify passive notification', () => {
     copyAPIKeyToClipBoard();
     expect(getNotificationMessageText()).to.include(spaceData.copyNotificationMessage.text);
-   
   });
 
-  it('Copy --> verify key is copied', () => {
+  it('C1295716 Copy --> verify key is copied', () => {
     expect(copiedAPIKeyValue()).to.deep.equal(getAPIKey());
   });
 });

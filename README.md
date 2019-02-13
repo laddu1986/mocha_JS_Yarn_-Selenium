@@ -8,7 +8,7 @@ Test Automation Framework built in Javascript for testing all three layers of Ap
 
 #
 
-### More Details
+## More Details
 
 ### Front End
 
@@ -24,11 +24,6 @@ Orca and BackEnd API endpoints Integration tests are written using [Chakram](htt
 Chakram is an API testing framework designed to perform end to end tests on JSON REST endpoints.
 
 The library offers a BDD testing style and fully exploits javascript promises - the resulting tests are simple, clear and expressive. Chakram is built on [node.js](https://nodejs.org/), [mocha](http://mochajs.org/), [chai](http://chaijs.com/) and [request](https://github.com/request/request).
-
-###Reporting
-Currently the html reports are being generated for API(mocha) tests using "mocha-simple-html-reporter" and for UI(wdio) tests using "wdio-html-format-reporter".
-"pngjs" module is also needed.
-The reports will by default be saved in : .test/api/Reports and .test/web/Reports with names : wdio-report.html and api-report.html
 
 ### Getting Started
 
@@ -55,11 +50,6 @@ and to install dependencies for Orca, Web and Api tests you can use
 Locally we use dotenv for define our environment variables.
 Create a `.env` file in the root of this repo and add the values for the keys mentioned in `.env-sample`
 
-Orca, web and api test all use these env files. We can easily manage these together through symlinks.
-Then create a symlink to `.env` in each `/test/orca`, `/test/web` and `/test/api` by changing directories to each and the linking with the following
-
-`ln-s ../../.env .env`
-
 ##### Run Front End Tests
 
 `yarn run web-local`
@@ -74,13 +64,18 @@ The following arguments can be appended to the above to run tests in different c
 
 `--suite <foldername>` for executing tests from a particular folder instead of the whole suite
 
-##### Run API Tests
+##### Run API and Orca Tests
 
-`yarn run api`
+`yarn run api-local`
 
-##### Run Orca Tests
+`yarn run orca-local`
 
-`yarn run orca`
+##### Reporting
+
+When running locally, html reports are being generated for API/Orca(mocha) tests using `mocha-simple-html-reporter` and for UI(wdio) tests using `wdio-html-format-reporter`.
+The reports will by default be saved in`.test/[api/orca/web]/Reports`
+
+When reporting to TestRail, we use `yarn run [api/web/orca]`. Doing this requires tests to synchronised. To ensure all tests are synchronised, run `yarn run sync-tests`
 
 ##### Debugging
 

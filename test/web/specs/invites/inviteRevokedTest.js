@@ -24,18 +24,18 @@ describe('Access a Revoked Invitation (New Account)', () => {
     inviteTeammate(newMember, '1');
   });
 
-  it('New User gets Invitation URL', async () => {
+  it('C1295652 New User gets Invitation URL', async () => {
     invitationURL = await invitationLink(newMember);
   });
 
-  it('Admin revokes invite and validates Passive Notification and Sign Out', () => {
+  it('C1295653 Admin revokes invite and validates Passive Notification and Sign Out', () => {
     goToTeammatesPage();
     goToInactiveTab();
     revokeInvite();
     expect(getNotificationMessageText()).to.include(passiveNotification.revokeInviteMessage.text);
   });
 
-  it('New User clicks on the Invite link --> Lands on Invalid invitation page', () => {
+  it('C1295654 New User clicks on the Invite link --> Lands on Invalid invitation page', () => {
     signOut();
     browser.url(invitationURL); //user clicks on Accept Invitation button from invite email
     expect(invalidInvitationText()).to.include(messagesData.invite.invalidInvitation);

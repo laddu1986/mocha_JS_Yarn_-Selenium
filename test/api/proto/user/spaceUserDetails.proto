@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "deviceType.proto";
+import "location.proto";
+import "audienceType.proto";
+
+package user;
+
+option go_package = "generated";
+
+message SpaceUserDetails {
+    string id = 1;
+    string space_id = 2;
+    string display_name = 3;
+    google.protobuf.Timestamp last_active_at = 4;
+    string external_id = 5;
+    string email = 6;
+    google.protobuf.Timestamp joined_at = 7;
+    google.protobuf.Timestamp known_at = 8;
+    google.protobuf.Timestamp created_at = 9;
+    int32 lifetime_session_count  = 10;
+    int32 lifetime_duration = 11;
+    int32 total_sessions = 12;
+    float total_session_difference = 13;
+    int32 active_days = 14;
+    float active_days_difference = 15;
+    float average_sessions = 16;
+    float average_sessions_difference = 17;
+    int32 total_duration = 18;
+    float total_duration_difference =19;
+    float average_duration = 20;
+    float averageDurationDifference = 21;
+    string last_user_agent = 22;
+    string last_ip_address = 23;
+    common.DeviceType last_device_type = 24;
+    common.LocationSummary last_location = 25;
+    common.AudienceType audience_type = 26;
+    repeated string labels = 27;
+}

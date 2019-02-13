@@ -26,36 +26,30 @@ describe('Space Users Tests', () => {
     getMetricsResponse = await getUserMetrics(userMetricsObject);
   });
 
-  it('Query- Space Metrics', async () => {
+  it('C1295782 Query- Space Metrics', async () => {
     expect(getMetricsResponse.response.statusCode).to.equal(200);
     joi.assert(getMetricsResponse.response.body.data.spaceMetrics, getUserMetricsSchema());
   });
 
-  it('Query- Space Users', async () => {
+  it('C1295784 Query- Space Users', async () => {
     getSpaceUsersResponse = await getSpaceUsers(userMetricsObject);
     expect(getSpaceUsersResponse.response.statusCode).to.equal(200);
     expect(getSpaceUsersResponse.response.body.data.spaceUsers.users).to.be.an('array');
   });
 
-  it('Query- Space Users Overview', async () => {
+  it('C1295785 Query- Space Users Overview', async () => {
     getSpaceUsersOverviewResponse = await getSpaceUsersOverview(userMetricsObject);
     expect(getSpaceUsersOverviewResponse.response.statusCode).to.equal(200);
     joi.assert(getSpaceUsersOverviewResponse.response.body.data.spaceUsersOverview, getSpaceUsersOverviewSchema());
   });
 
-  it('Query- Space Users Overview', async () => {
-    getSpaceUsersOverviewResponse = await getSpaceUsersOverview(userMetricsObject);
-    expect(getSpaceUsersOverviewResponse.response.statusCode).to.equal(200);
-    joi.assert(getSpaceUsersOverviewResponse.response.body.data.spaceUsersOverview, getSpaceUsersOverviewSchema());
-  });
-
-  it('Query- Space labels', async () => {
+  it('C1295786 Query- Space labels', async () => {
     getSpaceLabelsResponse = await getSpaceLabels(userMetricsObject);
     expect(getSpaceLabelsResponse.response.statusCode).to.equal(200);
     expect(getSpaceLabelsResponse.response.body.data.getSpaceLabels).to.equal(null);
   });
 
-  it('Query- Space access tokens', async () => {
+  it('C1295787 Query- Space access tokens', async () => {
     getAccessTokensResponse = await getAccessTokens(userMetricsObject);
     expect(getAccessTokensResponse.response.statusCode).to.equal(200);
     joi.assert(getSpaceUsersOverviewResponse.response.body.data.spaceUserAccessTokens, getAccessTokensSchema());
