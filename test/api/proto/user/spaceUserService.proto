@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+import "listSpaceUsers.proto";
+import "identifySpaceUser.proto";
+import "getSpaceUserStatistics.proto";
+import "getSpaceUserDetails.proto";
+import "activity.proto";
+import "deleteSpaceUsers.proto";
+import "addSpaceUserLabels.proto";
+import "removeSpaceUserLabels.proto";
+import "searchLabels.proto";
+
+package user;
+
+option go_package = "generated";
+
+service spaceUserService {
+    rpc ListSpaceUsers (ListSpaceUsersRequest) returns (ListSpaceUsersResponse);
+    rpc IdentifySpaceUser (IdentifySpaceUserRequest) returns (IdentifySpaceUserResponse);
+    rpc GetSpaceUserStatistics (GetSpaceUserStatisticsRequest) returns (GetSpaceUserStatisticsResponse);
+    rpc GetSpaceUserDetails (GetSpaceUserDetailsRequest) returns (GetSpaceUserDetailsResponse);
+    rpc DeleteSpaceUsers (DeleteSpaceUsersRequest) returns (DeleteSpaceUsersResponse);
+    rpc GetAllActivity (GetAllActivityRequest) returns (stream SpaceUserChangeRecord);
+    rpc AddSpaceUserLabels (AddSpaceUserLabelsRequest) returns (AddSpaceUserLabelsResponse);
+    rpc RemoveSpaceUserLabels (RemoveSpaceUserLabelsRequest) returns (RemoveSpaceUserLabelsResponse);
+    rpc SearchSpaceUserLabels (SearchLabelsRequest) returns (SearchLabelsResponse);
+}

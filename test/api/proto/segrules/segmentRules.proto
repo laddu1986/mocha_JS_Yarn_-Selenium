@@ -1,0 +1,123 @@
+syntax = "proto3";
+
+import public "segmentContext.proto";
+ 
+package segment;
+
+option go_package = "generated";
+
+
+message SaveRuleRequest{
+    SegmentContext segment_context = 1;
+    Rule rule                      = 2; 
+}
+
+message GetRuleRequest{
+    SegmentContext segment_context = 1;
+}
+
+message EvaluateRuleRequest{
+    SegmentContext segment_context = 1;
+    //If the rule is supplied it will be evaluated on the fly.
+    //Otherwise it will be loaded from database based on the context
+    Rule rule = 2;
+}
+
+message EvaluateRulesRequest{
+    SpaceContext space_context = 1;
+    repeated string segment_ids   = 2;
+
+}
+
+message SaveRuleResponse{    
+    bool success  = 1;
+    Rule rule = 2; 
+}
+
+message GetRuleResponse{
+    Rule rule = 1;
+}
+
+message EvaluateRuleResponse{
+    // Estimate reach for this rule (current 30d period)
+    int64 user_count = 1;
+
+    // Estimate reach for this rule (previous 30d period)
+    int64 prev_user_count = 2;
+
+    // Estimated reach out of users who have been active in the period (current 30d period)
+    int64 active_user_count = 3;
+
+    // Estimated reach out of users who have been active in the period (previous 30d period)
+    int64 prev_active_user_count = 4;
+
+    // The current total number of users in the system in the period (current 30d period). 
+    // This includes users who have been deleted within the period (so the number might actually be greater than the current number of users in the system) 
+    int64 total_users = 5;
+}
+
+message NullableEvaluateRuleResponse{
+    oneof value{
+        EvaluateRuleResponse estimation_value = 1;
+        bool is_null = 2;
+    }
+}
+
+message EvaluateRulesResponse{
+    repeated NullableEvaluateRuleResponse rule_estimates =1;
+}
+
+message EvaluateRuleFiltersResponse{
+    repeated FilterEvaluateResponse filter_estimates = 1;
+}
+
+message GetSampleUsersResponse{
+    repeated string user_ids = 1;
+}
+
+
+
+message Rule{
+    AudienceType audience_type              = 1;
+    LogicalType logical_type                = 2;
+    repeated Filter filters                 = 3;   
+}
+
+
+message FilterEvaluateResponse{
+    // This is nullable in case the filter/rule has not been saved yet:
+    oneof filter_id {
+        string filter_id_val          = 1;
+        bool filter_id_is_null        = 2;
+    }
+
+    int64 user_count                  = 3;
+
+}
+
+
+message Filter{ 
+    
+    // This is nullable in case the filter/rule has not been saved yet:
+    oneof filter_id {
+        string filter_id_val          = 1;
+        bool filter_id_is_null        = 2;
+    }
+
+    string property_id  = 3;
+    string operator_id  = 4;
+    oneof value{
+        int64 int_value = 5;
+        string st_value = 6;
+    }
+}
+
+enum AudienceType{
+    VISITOR = 0;
+    USER    = 1;     
+}
+
+enum LogicalType{
+    AND = 0;
+    OR  = 1;
+}

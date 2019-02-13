@@ -14,7 +14,7 @@ describe('Identity State Api', () => {
       getResponse = await identity.getIdentityStateById(identityStateData);
     });
 
-    it('Return identity state by identity id.', () => {
+    it('C1295520 Return identity state by identity id.', () => {
       expect(getResponse).to.have.status(200);
       joi.assert(getResponse.body, schemas.identityStateSchema);
     });
@@ -24,7 +24,7 @@ describe('Identity State Api', () => {
     before(async () => {
       putResponse = await identity.putIdentityById(identityStateData);
     });
-    it('Set identity state for an identity.', () => {
+    it('C1295521 Set identity state for an identity.', () => {
       expect(putResponse).to.have.status(204);
     });
   });
@@ -33,7 +33,7 @@ describe('Identity State Api', () => {
     before(async () => {
       patchResponse = await identity.patchIdentityStateById(identityStateData);
     });
-    it('Partial update identity state for an identity.', () => {
+    it('C1295522 Partial update identity state for an identity.', () => {
       expect(patchResponse).to.have.status(200);
       joi.assert(patchResponse.body, schemas.patchStateSchema);
     });

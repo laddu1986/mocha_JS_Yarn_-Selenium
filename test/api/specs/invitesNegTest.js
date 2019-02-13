@@ -21,7 +21,7 @@ describe('Negative Cases --> Invites Api', () => {
     before(async () => {
       postResponse = await post(inviteWithoutAuth(invitesNegData));
     });
-    it('Create invite without authorization -> 401: Access token is missing or invalid', () => {
+    it('C1295526 Create invite without authorization -> 401: Access token is missing or invalid', () => {
       expect(postResponse).to.have.status(401);
     });
   });
@@ -29,7 +29,7 @@ describe('Negative Cases --> Invites Api', () => {
     before(async () => {
       getInviteResponse = await invites.getInviteDetailsByToken(invitesNegData, 'negative');
     });
-    it('Search for deleted invite --> 404: Not Found', () => {
+    it('C1295527 Search for deleted invite --> 404: Not Found', () => {
       expect(getInviteResponse).to.have.status(404);
     });
   });

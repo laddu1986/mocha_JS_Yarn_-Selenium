@@ -18,7 +18,7 @@ describe('Tribe Service', () => {
       createTribeResponse = await tribe.createTribe(tribeData);
     });
 
-    it('CreateSegment', () => {
+    it('C1295624 CreateSegment', () => {
       var id = createTribeResponse.response.id;
       expect(createTribeResponse.status.code).to.equal(0);
       expect(id.length).to.equal(7);
@@ -30,7 +30,7 @@ describe('Tribe Service', () => {
       updateTribeResponse = await tribe.updateTribe(tribeData);
     });
 
-    it('UpdateSegment', () => {
+    it('C1295625 UpdateSegment', () => {
       expect(updateTribeResponse).to.be.an('object');
       expect(updateTribeResponse.status.code).to.equal(0);
       expect(updateTribeResponse.response.title).to.include('_newName');
@@ -42,7 +42,7 @@ describe('Tribe Service', () => {
       getResponse = await tribe.getTribe(tribeData);
     });
 
-    it('GetSegmentById', () => {
+    it('C1295626 GetSegmentById', () => {
       expect(getResponse).to.be.an('object');
       expect(getResponse.status.code).to.equal(0);
       expect(getResponse.response.title).to.include('_newName');
@@ -54,7 +54,7 @@ describe('Tribe Service', () => {
       deleteResponse = await tribe.deleteTribe(tribeData);
     });
 
-    it('DeleteSegment', () => {
+    it('C1295627 DeleteSegment', () => {
       expect(deleteResponse.status.code).to.equal(0);
     });
   });
@@ -70,7 +70,7 @@ describe('Tribe Service', () => {
       moveConfirm = await categories.listCategories(tribeData);
     });
 
-    it('MoveTribe', () => {
+    it('C1295628 MoveTribe', () => {
       expect(moveResponse.status.code).to.equal(0);
       expect(moveConfirm.response.categories[0].segments[0].title).to.equal(tribename2);
       expect(moveConfirm.response.categories[0].segments[1].title).to.equal(tribename1);

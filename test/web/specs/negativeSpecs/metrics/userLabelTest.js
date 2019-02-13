@@ -27,7 +27,7 @@ describe('User Labels Negative Test for Err Msgs', () => {
     await addUsers(2, apiKey);
   });
 
-  it('Display error message when Invalid character in entered', () => {
+  it('C1295683 Display error message when Invalid character in entered', () => {
     gotoUsersTab();
     clickUserRow(1);
     clickAddLabelButton();
@@ -39,7 +39,7 @@ describe('User Labels Negative Test for Err Msgs', () => {
     );
   });
 
-  it('Display error message when less than 2 characters is entered', () => {
+  it('C1295684 Display error message when less than 2 characters is entered', () => {
     gotoUsersTab();
     clickUserRow(1);
     clickAddLabelButton();
@@ -50,7 +50,7 @@ describe('User Labels Negative Test for Err Msgs', () => {
     );
   });
 
-  it('Display error message when duplicate label is entered', () => {
+  it('C1295685 Display error message when duplicate label is entered', () => {
     gotoUsersTab();
     clickUserRow(1);
     clickAddLabelButton();
@@ -63,7 +63,7 @@ describe('User Labels Negative Test for Err Msgs', () => {
     );
   });
 
-  it('Verify trimming of Leading and Trailing spaces in label names while Saving ', () => {
+  it('C1295686 Verify trimming of Leading and Trailing spaces in label names while Saving ', () => {
     gotoUsersTab();
     clickUserRow(2);
     clickAddLabelButton();
