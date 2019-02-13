@@ -36,7 +36,7 @@ class OrgDashboardPage extends Page {
     return browser.element("//a[@data-qa='btn:create-space']");
   }
   get spaceCards() {
-    return browser.elements("//a[@qakey='card:space']");
+    return browser.elements("//a[@data-qa='card:space']");
   }
 
   // Invite

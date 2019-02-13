@@ -19,7 +19,7 @@ describe('Space Keys Api', () => {
       postResponse = await spaces.postKeysBySpaceId(spaceKeyData);
     });
 
-    it('Creates a new key for the resource that is passed as input', () => {
+    it('C1295572 Creates a new key for the resource that is passed as input', () => {
       expect(postResponse).to.have.status(201);
       joi.assert(postResponse.body, schemas.createKeySchema(spaceKeyData));
     });
@@ -30,7 +30,7 @@ describe('Space Keys Api', () => {
       getResponse = await spaces.getKeysBySpaceId(spaceKeyData);
     });
 
-    it('Returns the list of keys associated with a particular space', () => {
+    it('C1295573 Returns the list of keys associated with a particular space', () => {
       expect(getResponse).to.have.status(200);
       joi.assert(getResponse.body, schemas.getKeysBySpaceIdSchema(spaceKeyData));
     });
@@ -42,7 +42,7 @@ describe('Space Keys Api', () => {
         revokeResponse = await spaces.patchKeyBySpaceIdAndRowVersion(spaceKeyData, Constants.APIKeyStatus.Revoked);
       });
 
-      it('Revokes the provided key', () => {
+      it('C1295574 Revokes the provided key', () => {
         expect(revokeResponse).to.have.status(200);
         joi.assert(revokeResponse.body, schemas.revokeKeyBySpaceIdAndRowVersionSchema(spaceKeyData));
       });
@@ -52,7 +52,7 @@ describe('Space Keys Api', () => {
         reactivateResponse = await spaces.patchKeyBySpaceIdAndRowVersion(spaceKeyData, Constants.APIKeyStatus.Active);
       });
 
-      it('Re-activates the provided key', () => {
+      it('C1295575 Re-activates the provided key', () => {
         expect(reactivateResponse).to.have.status(200);
         joi.assert(reactivateResponse.body, schemas.reactivateKeyBySpaceIdAndRowVersionSchema(spaceKeyData));
       });
@@ -64,7 +64,7 @@ describe('Space Keys Api', () => {
       deleteResponse = await spaces.deleteKeyBySpaceIdAndRowVersion(spaceKeyData);
     });
 
-    it('Deletes the provided key', () => {
+    it('C1295576 Deletes the provided key', () => {
       expect(deleteResponse).to.have.status(200);
       joi.assert(deleteResponse.body, schemas.deleteKeyBySpaceIdAndRowVersionSchema(spaceKeyData));
     });

@@ -2,16 +2,17 @@
   "name": "qa-automation",
   "version": "1.0.0",
   "description": "qa-automation framework for e2e testing using node and webdriverio",
-  "main": "wdio.appcurator.js",
+  "main": "wdio.mtribes.js",
   "scripts": {
-    "web": "node_modules/.bin/wdio wdio.appcurator.js",
+    "web": "node_modules/.bin/wdio wdio.mtribes.js",
     "web-local": "node_modules/.bin/wdio wdio.local.js",
     "web-debug": "node_modules/.bin/wdio wdio.debug.js",
-    "web-smoke-tests": "node_modules/.bin/wdio wdio.appcurator.js --suite smoke --mochaOpts.grep=@smoke",
+    "web-smoke-tests": "node_modules/.bin/wdio wdio.mtribes.js --suite smoke --mochaOpts.grep=@smoke",
     "orca": "mocha test/orca/specs/loginTest.js --require babel-register",
     "clean": "eslint '**/*.js' --fix",
     "lint": "eslint '**/*.js'",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "sync-tests": "node node_modules/wdio-testrail-reporter/scripts/generate-cases.js $(pwd)/wdio.testrail.js $(pwd)/specs/"
   },
   "dependencies": {
     "app-module-path": "^2.2.0",
@@ -27,10 +28,9 @@
     "pngjs": "^3.3.3",
     "randomstring": "^1.1.5",
     "sequelize": "^4.37.10",
-    "wdio-allure-reporter": "^0.8.3",
-    "wdio-html-format-reporter": "0.2.7",
     "wdio-mocha-framework": "^0.5.13",
-    "wdio-spec-reporter": "^0.1.4",
+    "wdio-spec-reporter": "^0.1.5",
+    "wdio-testrail-reporter": "^1.1.5",
     "webdriverio": "^4.12.0"
   },
   "devDependencies": {
@@ -42,7 +42,8 @@
     "eslint-plugin-mocha": "^5.2.0",
     "lint-staged": "^7.3.0",
     "lodash": "^4.17.11",
-    "prettier": "^1.14.3"
+    "prettier": "^1.14.3",
+    "wdio-html-format-reporter": "^0.2.9"
   },
   "lint-staged": {
     "*.{js,json,md}": [

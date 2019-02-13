@@ -1,3 +1,4 @@
+let WdioTestRailReporter = require('./node_modules/wdio-testrail-reporter/lib/wdio-testrail-reporter');
 var helper = require('./wdio.helper');
 exports.config = {
   protocol: 'http',
@@ -9,7 +10,7 @@ exports.config = {
   specs: [
     'specs/**/*Test.js' //master
   ],
-  exclude: ['specs/support/helpPageTest.js'],
+  exclude: ['specs/support/helpPageTest.js', 'specs/experiences/*Test.js'],
   suites: {
     smoke: [
       'specs/accounts/createAccountTest.js',
@@ -39,11 +40,14 @@ exports.config = {
   maxInstances: process.env.MAX_INSTANCES,
   plugins: {},
   framework: 'mocha',
-  reporters: ['spec', 'html-format', 'allure'],
-  reporterOptions: {
-    htmlFormat: {
-      outputDir: 'reports'
-    }
+  reporters: [WdioTestRailReporter, 'spec'],
+  testRailsOptions: {
+    domain: process.env.TESTRAIL_URL,
+    username: process.env.TESTRAIL_USERNAME,
+    password: process.env.TESTRAIL_PASSWORD,
+    projectId: process.env.TESTRAIL_PROJECT,
+    suiteId: process.env.TESTRAIL_WEB,
+    runName: 'Web Test Run'
   },
   mochaOpts: {
     ui: 'bdd',

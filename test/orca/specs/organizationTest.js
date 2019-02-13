@@ -17,7 +17,7 @@ describe('Organization Tests', () => {
     createOrgResponse = await createOrganization(createOrgObject);
   });
 
-  it('Mutation - Create Organization', async () => {
+  it('C1295777 Mutation - Create Organization', async () => {
     expect(createOrgResponse.response.statusCode).to.equal(200);
     joi.assert(
       createOrgResponse.response.body.data.createOrganization.organization,
@@ -25,7 +25,7 @@ describe('Organization Tests', () => {
     );
   });
 
-  it('Mutation - Update Organization', async () => {
+  it('C1295778 Mutation - Update Organization', async () => {
     updateOrgResponse = await updateOrganization(createOrgObject);
     expect(updateOrgResponse.response.statusCode).to.equal(200);
     joi.assert(
@@ -34,7 +34,7 @@ describe('Organization Tests', () => {
     );
   });
 
-  it('Query - Get Organization', async () => {
+  it('C1295779 Query - Get Organization', async () => {
     getOrgResponse = await getOrganization(createOrgObject);
     expect(getOrgResponse.response.statusCode).to.equal(200);
     joi.assert(
@@ -43,7 +43,7 @@ describe('Organization Tests', () => {
     );
   });
 
-  it('Query - Get Organization by Slug', async () => {
+  it('C1295780 Query - Get Organization by Slug', async () => {
     getOrgByIDResponse = await getOrganizationBySlug(createOrgObject);
     expect(getOrgByIDResponse.response.statusCode).to.equal(200);
     joi.assert(
@@ -52,7 +52,7 @@ describe('Organization Tests', () => {
     );
   });
 
-  it('Query - Get Organizations', async () => {
+  it('C1295781 Query - Get Organizations', async () => {
     getOrgsResponse = await getOrganizations(createOrgObject);
     expect(getOrgsResponse.response.statusCode).to.equal(200);
     expect(getOrgsResponse.response.body.data.organizations).to.be.an('array');

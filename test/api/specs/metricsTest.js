@@ -23,7 +23,7 @@ describe('Metrics Api', () => {
     before(async () => {
       getUniqueUsersResponse = await metrics.getUniqueAppUsers(metricsData);
     });
-    it('Returns the number of unique users that visited the space in a given time period', () => {
+    it('C1295541 Returns the number of unique users that visited the space in a given time period', () => {
       expect(getUniqueUsersResponse).to.have.status(200);
       joi.assert(getUniqueUsersResponse.body, uniqueUsersSchema());
     });
@@ -34,7 +34,7 @@ describe('Metrics Api', () => {
       getAPIRequestsResponse = await metrics.getAPIRequests(metricsData);
     });
 
-    it('Returns the number of api requests from a space in a given time period', () => {
+    it('C1295542 Returns the number of api requests from a space in a given time period', () => {
       expect(getAPIRequestsResponse).to.have.status(200);
       joi.assert(getAPIRequestsResponse.body, uniqueAPIRequestsSchema());
     });
@@ -45,7 +45,7 @@ describe('Metrics Api', () => {
       getActiveResponse = await metrics.getMetricsActive(metricsData);
     });
 
-    it('Returns whether the space is active or not', () => {
+    it('C1295543 Returns whether the space is active or not', () => {
       expect(getActiveResponse).to.have.status(200);
       joi.assert(getActiveResponse.body, activeDaySchema());
     });
@@ -56,7 +56,7 @@ describe('Metrics Api', () => {
       getActiveUsersByDayResponse = await metrics.getActiveUsersByDay(metricsData);
     });
 
-    it('Returns the number of active users by days for a space in a given time period', () => {
+    it('C1295544 Returns the number of active users by days for a space in a given time period', () => {
       expect(getActiveUsersByDayResponse).to.have.status(200);
       joi.assert(getActiveUsersByDayResponse.body, metricsByDaySchema());
     });
@@ -67,7 +67,7 @@ describe('Metrics Api', () => {
       getNewUsersByDayResponse = await metrics.getNewUsersByDay(metricsData);
     });
 
-    it('Returns the number of new users by days for a space in a given time period', () => {
+    it('C1295545 Returns the number of new users by days for a space in a given time period', () => {
       expect(getNewUsersByDayResponse).to.have.status(200);
       joi.assert(getNewUsersByDayResponse.body, metricsByDaySchema());
     });

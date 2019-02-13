@@ -14,17 +14,17 @@ describe('Test Forgot Password Link', () => {
     SignInPage.open();
   });
 
-  it('Click Forgot Password link', () => {
+  it('C1295635 Click Forgot Password link', () => {
     clickForgotPassword();
     expect(submitButtonVisible()).to.equal(true);
   });
 
-  it('Submit your Email', () => {
+  it('C1295636 Submit your Email', () => {
     submitEmail();
     expect(backToSignInButtonVisible()).to.equal(true);
   });
 
-  it('Click Back to Sign In button', () => {
+  it('C1295637 Click Back to Sign In button', () => {
     clickBackToSignIn();
     expect(emailInputValue()).to.include('forgot@password.com');
   });

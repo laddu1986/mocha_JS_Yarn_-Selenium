@@ -29,7 +29,7 @@ describe('Delete User Test', () => {
     verifyUsersAreAdded();
   });
 
-  it('Delete User --> Verify users tab and passive notification shows', () => {
+  it('C1295662 Delete User --> Verify users tab and passive notification shows', () => {
     deletedName = getFirstRowDetails(Constants.UserAttributes.Name);
     clickUserRow(undefined, Constants.UserType.User);
     browser.pause(1000);
@@ -37,15 +37,15 @@ describe('Delete User Test', () => {
     expect(getNotificationMessageText()).to.include(`${NotificationData.deleteMessage.text}'${deletedName}'`);
   });
 
-  it('Verify deleted user row is no longer showing', () => {
+  it('C1640145 Verify deleted user row is no longer showing', () => {
     expect(getFirstRowDetails(Constants.UserAttributes.Name)).to.not.include(deletedName);
   });
 
-  it('Adding the visitors ', async () => {
+  it('C1295663 Adding the visitors ', async () => {
     await addVisitor(3, apiKey);
   });
 
-  it('Delete Visitor --> Verify passive notification shows', () => {
+  it('C1295664 Delete Visitor --> Verify passive notification shows', () => {
     browser.refresh();
     clickUserRow(undefined, Constants.UserType.Visitor);
     browser.pause(1000);
@@ -53,13 +53,13 @@ describe('Delete User Test', () => {
     expect(getNotificationMessageText()).to.include(`${NotificationData.deleteMessage.text}'Visitor'`);
   });
 
-  it('Verify the user count on Space Dashboard', () => {
+  it('C1295665 Verify the user count on Space Dashboard', () => {
     clickOnSpaceDashboardLink();
     browser.pause(1500);
     expect(getCount(Constants.UserType.User)).to.include(1);
   });
 
-  it('Verify the visitor count on Space Dashboard', () => {
+  it('C1640146 Verify the visitor count on Space Dashboard', () => {
     expect(getCount(Constants.UserType.Visitor)).to.include(2);
   });
 });

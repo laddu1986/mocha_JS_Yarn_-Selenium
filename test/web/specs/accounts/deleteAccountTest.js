@@ -29,17 +29,17 @@ describe('Delete Account Test (Remove my Account)', () => {
     deleteOrganization();
   });
 
-  it('Remove account --> verify Cancel action on Delete modal', () => {
+  it('C1295631 Remove account --> verify Cancel action on Delete modal', () => {
     clickDeleteAccButton();
     expect(cancelDeleteAccount()).to.equal(true);
   });
 
-  it('Click delete account --> confirm button is disabled', () => {
+  it('C1295632 Click delete account --> confirm button is disabled', () => {
     clickDeleteAccButton();
     expect(confirmButtonIsEnabled()).to.equal(false, 'Confirm button should be disabled');
   });
 
-  it('Remove account --> Sign In page appears', () => {
+  it('C1640116 Remove account --> Sign In page appears', () => {
     typeDeleteToConfirm();
     expect(confirmButtonIsEnabled()).to.equal(true, 'Confirm button should be enabled');
     confirmDelete();
@@ -47,12 +47,12 @@ describe('Delete Account Test (Remove my Account)', () => {
     expect(browser.getUrl()).to.equal(`${browser.options.baseUrl}/sign-in`);
   });
 
-  it('Login with same credentials --> Incorrect Details Error', () => {
+  it('C1295633 Login with same credentials --> Incorrect Details Error', () => {
     signIn(accountDetails.email, process.env.ACCOUNT_PASS);
     expect(verifyIncorrectSignIn()).to.include('incorrect');
   });
 
-  it('Re-registeration with same email is allowed', () => {
+  it('C1295634 Re-registeration with same email is allowed', () => {
     clickCreateAccountLink();
     createAccount();
     expect(verifyOrgDashboardPageAppears()).to.equal(true, 'Re-registration is not successful');
