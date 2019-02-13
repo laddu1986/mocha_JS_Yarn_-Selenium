@@ -44,10 +44,10 @@ export function updateExperienceTemplateSchema(name, object) {
 
 export function getExperiencesTemplateSchema(object) {
   var schema = joi.array().items({
-      id: joi.valid(object.expTemplateID).required(),
-      key: joi.valid(object.experienceKey).required(),
-      rowVersion: schemaDate.required(),
-      name: joi.valid(object.experienceNewName).required()
+    id: joi.valid(object.expTemplateID).required(),
+    key: joi.valid(object.experienceKey).required(),
+    rowVersion: schemaDate.required(),
+    name: joi.valid(object.experienceNewName).required()
   });
   return schema;
 }

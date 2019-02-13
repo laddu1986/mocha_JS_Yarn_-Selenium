@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "generated";
+//option go_package = "bitbucket.org/appcurator/common";
+
+enum DeviceType {
+    UNDEFINED = 0;
+    DESKTOP = 1;
+    TABLET = 2;
+    MOBILE = 3;
+    TV = 4;
+}

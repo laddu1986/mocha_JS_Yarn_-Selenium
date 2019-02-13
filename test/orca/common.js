@@ -31,7 +31,7 @@ export async function post(any, responseData) {
   if (response.response.statusCode == 200) return response;
   else {
     throw `${any.data.operationName} POST request failed with Errorcode- ${response.response.statusCode} and Message- ${
-    response.response.body.message
+      response.response.body.message
     }`;
   }
 }

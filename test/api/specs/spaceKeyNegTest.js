@@ -31,10 +31,10 @@ describe('Negative Tests -> Space Keys Api', () => {
         noSpaceIDPostResponse = await lib.post(data.noSpaceIDPost(spaceKeyNegData));
         blankSpaceIDPostResponse = await lib.post(data.blankSpaceIDPost(spaceKeyNegData));
       });
-      it('Space ID field is required', () => {
+      it('C1295561 Space ID field is required', () => {
         expect(noSpaceIDPostResponse).to.have.status(400);
       });
-      it('Space ID cannot be blank', () => {
+      it('C1295562 Space ID cannot be blank', () => {
         expect(blankSpaceIDPostResponse).to.have.status(400);
       });
     });
@@ -45,10 +45,10 @@ describe('Negative Tests -> Space Keys Api', () => {
         incorrectOrgIDPostResponse = await lib.post(data.incorrectOrgIDPost(spaceKeyNegData));
         incorrectSpaceIDPostResponse = await lib.post(data.incorrectSpaceIDPost(spaceKeyNegData));
       });
-      it('Org ID is not existing', () => {
+      it('C1295563 Org ID is not existing', () => {
         expect(incorrectOrgIDPostResponse).to.have.status(404);
       });
-      it('Space ID is not existing', () => {
+      it('C1295564 Space ID is not existing', () => {
         expect(incorrectSpaceIDPostResponse).to.have.status(404);
       });
     });
@@ -60,10 +60,10 @@ describe('Negative Tests -> Space Keys Api', () => {
         incorrectOrgIDGetResponse = await lib.get(data.incorrectSpaceIDPost(spaceKeyNegData));
         incorrectSpaceIDGetResponse = await lib.get(data.incorrectSpaceIDPost(spaceKeyNegData));
       });
-      it('Space ID is not existing', () => {
+      it('C1295565 Space ID is not existing', () => {
         expect(incorrectSpaceIDGetResponse).to.have.status(404);
       });
-      it('Org ID is not existing', () => {
+      it('C1295566 Org ID is not existing', () => {
         expect(incorrectOrgIDGetResponse).to.have.status(404);
       });
     });
@@ -75,15 +75,15 @@ describe('Negative Tests -> Space Keys Api', () => {
       blankStatusPatchResponse = await lib.patch(data.blankStatusPatch(spaceKeyNegData));
       incorrectOrgIdPatchResponse = await lib.patch(data.incorrectOrgIdPatch(spaceKeyNegData));
     });
-    it('404 Error Response : Key not found', () => {
+    it('C1295567 404 Error Response : Key not found', () => {
       expect(incorrectKeyPatchResponse).to.have.status(404);
       expect(incorrectKeyPatchResponse.body).to.equal(data.incorrectKeyPatch(spaceKeyNegData).expected);
     });
-    it('400 Error Response : Not Valid status', () => {
+    it('C1295568 400 Error Response : Not Valid status', () => {
       expect(blankStatusPatchResponse).to.have.status(400);
       expect(blankStatusPatchResponse.body).to.include(data.blankStatusPatch(spaceKeyNegData).expected);
     });
-    xit('409 Error Response : Conflict', () => {
+    xit('C1295569 409 Error Response : Conflict', () => {
       //should be enabled once af-167 is resolved
       expect(incorrectOrgIdPatchResponse).to.have.status(409);
     });
@@ -93,11 +93,11 @@ describe('Negative Tests -> Space Keys Api', () => {
       incorrectKeyDeleteResponse = await lib.del(data.incorrectKeyDelete(spaceKeyNegData));
       incorrectOrgIdDeleteResponse = await lib.del(data.incorrectOrgIdDelete(spaceKeyNegData));
     });
-    it('404 Error Response : Key not found', () => {
+    it('C1295570 404 Error Response : Key not found', () => {
       expect(incorrectKeyDeleteResponse).to.have.status(404);
       expect(incorrectKeyDeleteResponse.body).to.equal(data.incorrectKeyDelete(spaceKeyNegData).expected);
     });
-    xit('409 Error Response : Conflict', () => {
+    xit('C1295571 409 Error Response : Conflict', () => {
       //should be enabled once af-167 is resolved
       expect(incorrectOrgIdDeleteResponse).to.have.status(409);
     });

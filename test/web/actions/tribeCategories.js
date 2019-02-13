@@ -41,6 +41,5 @@ export function deleteCategory() {
 }
 
 export function verifyCategoryIsDeleted() {
-  if (tribePage.tribeCards.value.length === 1)
-    return tribePage.categoryTitle.getAttribute('value');
+  if (tribePage.tribeCards.value.length === 1) return tribePage.categoryTitle.getAttribute('value');
 }

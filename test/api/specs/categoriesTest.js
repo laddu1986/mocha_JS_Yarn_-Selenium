@@ -19,7 +19,7 @@ describe('Categories Service', () => {
       createResponse = await categories.createCategory(categoryData, true);
     });
 
-    it('Creates a category', () => {
+    it('C1295508 Creates a category', () => {
       expect(createResponse.status.code).to.equal(0);
       joi.assert(createResponse.response, schemas.schemaCategory);
     });
@@ -30,7 +30,7 @@ describe('Categories Service', () => {
       listResponse = await categories.listCategories(categoryData);
     });
 
-    it('Lists all Categories', () => {
+    it('C1295509 Lists all Categories', () => {
       expect(listResponse.status.code).to.equal(0);
       joi.assert(listResponse.response, schemas.schemaCategories);
     });
@@ -41,7 +41,7 @@ describe('Categories Service', () => {
       renameResponse = await categories.renameCategory(categoryData);
     });
 
-    it('Renames the category', () => {
+    it('C1295510 Renames the category', () => {
       expect(renameResponse.status.code).to.equal(0);
       expect(renameResponse.response.label).to.not.equal(categoryData.tribeCategoryOldLabel);
       joi.assert(renameResponse.response, schemas.schemaCategory);
@@ -55,7 +55,7 @@ describe('Categories Service', () => {
       moveConfirm = await categories.listCategories(categoryData);
     });
 
-    it('Moves the category', () => {
+    it('C1295511 Moves the category', () => {
       expect(moveResponse.status.code).to.equal(0);
       expect(moveConfirm.response.categories[0].id > moveConfirm.response.categories[1].id).to.be.true;
     });
@@ -67,7 +67,7 @@ describe('Categories Service', () => {
       deleteConfirm = await categories.listCategories(categoryData);
     });
 
-    it('Deletes the category', () => {
+    it('C1295512 Deletes the category', () => {
       let categories = deleteConfirm.response.categories;
       expect(deleteResponse.status.code).to.equal(0);
       expect(categories).to.be.an('array');
