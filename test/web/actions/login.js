@@ -2,7 +2,6 @@ import '../common';
 import CommonPage from 'page_objects/common';
 import NavBar from 'page_objects/navBar';
 import SignInPage from 'page_objects/signInPage';
-import { hideIntercom } from 'actions/common';
 import * as validationMessage from 'data/messages';
 
 export function verifyIncorrectSignIn() {
@@ -11,13 +10,6 @@ export function verifyIncorrectSignIn() {
 
 export function verifySignIn() {
   return NavBar.profileMenu.isVisible();
-}
-
-export function signIn(email, password) {
-  SignInPage.emailInput.setValue(email);
-  SignInPage.passwordInput.setValue(password);
-  CommonPage.submitButton.click();
-  hideIntercom();
 }
 
 export function verifySignInError() {

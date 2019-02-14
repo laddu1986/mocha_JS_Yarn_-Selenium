@@ -1,8 +1,7 @@
 import '../../common';
 import NavBar from 'page_objects/navBar';
 import SignInPage from 'page_objects/signInPage';
-import { signIn } from 'actions/login';
-import { signOut } from 'actions/common';
+import { signIn, signOut } from 'actions/common';
 
 describe('Test Help Center', () => {
   it('C1295722 Open App Page', () => {
