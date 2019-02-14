@@ -103,18 +103,20 @@ export function submit() {
 }
 
 export function postIdentity(responseObject) {
+  let email = `${randomString.generate(12)}@test.co`;
   const any = {
     /*eslint-disable */
     api: identities,
     /*eslint-enable */
     data: {
       fullname: randomString.generate(12),
-      email: `${randomString.generate(12)}@test.co`,
+      email: email,
       password: process.env.ACCOUNT_PASS
     }
   };
   return post(any).then(response => {
     responseObject.identityID = response.body.id;
+    responseObject.identityEmail = email;
     return response;
   });
 }

@@ -8,23 +8,37 @@ Attempt to sign in should fail for deleted account
 */
 
 import '../../common';
-import accountPage from 'page_objects/accountPage';
+import SignInPage from 'page_objects/signInPage';
 import { createAccount } from 'actions/account';
-import { deleteOrganization, gotoOrgSettings } from 'actions/organization';
-import { verifyIncorrectSignIn, signIn, signInPageIsVisible } from 'actions/login';
+import { deleteOrganization, gotoOrgSettings, selectOrg } from 'actions/organization';
+import { verifyIncorrectSignIn, signIn, clearPlaceholder, signInPageIsVisible } from 'actions/login';
 import {
   verifyOrgDashboardPageAppears,
   clickCreateAccountLink,
   clickDeleteAccButton,
   cancelDeleteAccount
 } from 'actions/account';
-import { confirmButtonIsEnabled, confirmDelete, typeDeleteToConfirm } from 'actions/common';
-var accountDetails;
+import {
+  confirmButtonIsEnabled,
+  confirmDelete,
+  typeDeleteToConfirm,
+  postIdentity,
+  postOrganization,
+  postMembership
+} from 'actions/common';
+const accountData = new Object();
 
 describe('Delete Account Test (Remove my Account)', () => {
+  before(async () => {
+    await postIdentity(accountData);
+    await postOrganization(accountData);
+    await postMembership(accountData);
+  });
   before('Create account and delete organisation', () => {
-    accountPage.open();
-    accountDetails = createAccount();
+    SignInPage.open();
+    clearPlaceholder();
+    signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
+    selectOrg();
     gotoOrgSettings();
     deleteOrganization();
   });
@@ -48,7 +62,7 @@ describe('Delete Account Test (Remove my Account)', () => {
   });
 
   it('C1295633 Login with same credentials --> Incorrect Details Error', () => {
-    signIn(accountDetails.email, process.env.ACCOUNT_PASS);
+    signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
     expect(verifyIncorrectSignIn()).to.include('incorrect');
   });
 

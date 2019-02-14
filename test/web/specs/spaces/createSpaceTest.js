@@ -1,5 +1,4 @@
 import * as lib from '../../common';
-import { createAccount } from 'actions/account';
 import {
   verifySpaceOrder,
   verifyCreateFirstSpacePage,
@@ -8,14 +7,21 @@ import {
   goBackToOrgDashboard,
   clickCreateNewSpaceButton
 } from 'actions/space';
-import accountPage from 'page_objects/accountPage';
-import { signIn, signOut } from 'actions/common';
-var accountDetail, spaceName1, spaceName2, spaceName3;
-
+import SignInPage from 'page_objects/signInPage';
+import { selectOrg } from 'actions/organization';
+import { signIn, signOut, postIdentity, postOrganization, postMembership } from 'actions/common';
+var spaceName1, spaceName2, spaceName3;
+const accountData = new Object();
 describe('Space Tests', () => {
+  before(async () => {
+    await postIdentity(accountData);
+    await postOrganization(accountData);
+    await postMembership(accountData);
+  });
   before('Open App URL', () => {
-    accountPage.open();
-    accountDetail = createAccount();
+    SignInPage.open();
+    signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
+    selectOrg();
   });
 
   it('C1295711 Verify create your first Space page', () => {
@@ -43,7 +49,7 @@ describe('Space Tests', () => {
 
   it('C1295714 Sign out and back in --> Should show last accessed Space', () => {
     signOut();
-    signIn(accountDetail.email, accountDetail.password);
+    signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
     expect(verifySpacePage(spaceName3.toLowerCase())).to.equal(true);
   });
 
