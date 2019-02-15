@@ -4,7 +4,7 @@ import * as schemas from 'schemas/identitySchema';
 
 const identityData = new Object();
 
-describe('Identity Api', () => {
+describe('Identity API', () => {
   it(`C1295523 POST /identities adds a new user identity ${Tags.smokeTest}`, async () => {
     let addResponse = await identity.postIdentity(identityData);
     expect(addResponse).to.have.status(201);
