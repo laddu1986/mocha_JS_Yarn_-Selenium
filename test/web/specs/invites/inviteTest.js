@@ -10,7 +10,7 @@ import {
   goToOrganisationDashboard
 } from 'actions/invite';
 import accountPage from 'page_objects/accountPage';
-import { signOut } from 'actions/common';
+import { signOut } from 'actions/navBar';
 
 const invite_email1 = `invite_1_${lib.randomString.generate(5)}@test.co`;
 const invite_email2 = `invite_2${lib.randomString.generate(5)}@test.co`;

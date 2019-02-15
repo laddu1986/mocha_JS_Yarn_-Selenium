@@ -1,6 +1,8 @@
 import * as lib from '../../common';
 import SignInPage from 'page_objects/signInPage';
-import { signIn, clearPlaceholder, verifySignIn, verifySignInError } from 'actions/login';
+import { signIn } from 'actions/common';
+import { errorSignIn } from 'actions/login';
+import { clearPlaceholder, verifySignIn, verifySignInError } from 'actions/login';
 import { signOut, verifySignOut } from 'actions/navBar';
 
 describe(`Sign In/Out Test ${lib.Tags.smokeTest}`, () => {
@@ -10,7 +12,7 @@ describe(`Sign In/Out Test ${lib.Tags.smokeTest}`, () => {
 
   it('C1295638 Sign In with Blank data --> Throws an error', () => {
     clearPlaceholder();
-    signIn('', '');
+    errorSignIn('', '');
     verifySignInError();
   });
 
