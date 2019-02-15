@@ -41,12 +41,6 @@ export function closePassiveNotification() {
   return CommonPage.dismissNotification.click();
 }
 
-export function signOut() {
-  NavBar.profileMenu.click();
-  NavBar.signOut.click();
-  CommonPage.submitButton.waitForVisible();
-}
-
 export function signIn(email, password) {
   SignInPage.emailInput.setValue(email);
   SignInPage.passwordInput.setValue(password);

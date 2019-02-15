@@ -2,13 +2,13 @@ import * as lib from '../../../common';
 import SignInPage from 'page_objects/signInPage.js';
 import {
   signIn,
-  signOut,
   get404PageText,
   clickLinkOn404Page,
   postIdentity,
   postOrganization,
   postMembership
 } from 'actions/common.js';
+import { signOut } from 'actions/navBar';
 import { selectOrg, verifyChooseOrgspage, verifyWecomeOrgPage, verifyNoOrgPage } from 'actions/organization.js';
 import * as Messages from 'data/messages.json';
 var UserName, OrgName, deleteOrgRequest, deleteMembershipRequest;

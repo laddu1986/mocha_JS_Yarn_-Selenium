@@ -9,7 +9,8 @@ import {
 } from 'actions/space';
 import SignInPage from 'page_objects/signInPage';
 import { selectOrg } from 'actions/organization';
-import { signIn, signOut, postIdentity, postOrganization, postMembership } from 'actions/common';
+import { signOut } from 'actions/navBar';
+import { signIn, postIdentity, postOrganization, postMembership } from 'actions/common';
 var spaceName1, spaceName2, spaceName3;
 const accountData = new Object();
 describe('Space Tests', () => {

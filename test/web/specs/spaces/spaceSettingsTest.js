@@ -22,7 +22,8 @@ import {
 } from 'actions/common';
 import spaceData from 'data/passiveNotification.json';
 import constants from 'constants.json';
-import { signIn, signOut } from 'actions/common';
+import { signIn } from 'actions/common';
+import { signOut } from 'actions/navBar';
 var newSpacename, accountData, newSlugName;
 
 describe('Space Settings', () => {
