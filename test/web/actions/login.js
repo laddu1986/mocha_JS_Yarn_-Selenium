@@ -27,6 +27,12 @@ export function verifySignInError() {
   );
 }
 
+export function errorSignIn(email, password) {
+  SignInPage.emailInput.setValue(email);
+  SignInPage.passwordInput.setValue(password);
+  CommonPage.submitButton.click();
+}
+
 export function submitEmail() {
   SignInPage.emailInput.setValue('forgot@password.com');
   CommonPage.submitButton.click();

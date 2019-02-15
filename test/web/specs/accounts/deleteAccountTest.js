@@ -8,10 +8,12 @@ Attempt to sign in should fail for deleted account
 */
 
 import '../../common';
+import { errorSignIn } from 'actions/login';
 import SignInPage from 'page_objects/signInPage';
 import { createAccount } from 'actions/account';
+import { signIn } from 'actions/common';
 import { deleteOrganization, gotoOrgSettings, selectOrg } from 'actions/organization';
-import { verifyIncorrectSignIn, signIn, clearPlaceholder, signInPageIsVisible } from 'actions/login';
+import { verifyIncorrectSignIn, clearPlaceholder, signInPageIsVisible } from 'actions/login';
 import {
   verifyOrgDashboardPageAppears,
   clickCreateAccountLink,
@@ -62,7 +64,7 @@ describe('Delete Account Test (Remove my Account)', () => {
   });
 
   it('C1295633 Login with same credentials --> Incorrect Details Error', () => {
-    signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
+    errorSignIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
     expect(verifyIncorrectSignIn()).to.include('incorrect');
   });
 
