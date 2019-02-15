@@ -30,7 +30,7 @@ export function verifyAccountPageAppears() {
 
 export function inputDetails(email) {
   accountData.name = lib.randomString(8);
-  accountData.organization = `${lib.randomString(10)}_Org`;
+  accountData.organization = `${lib.randomString(11)}_Org`;
   accountData.password = process.env.ACCOUNT_PASS;
   accountData.invcode = process.env.INV_CODE;
   AccountPage.nameInput.setValue(accountData.name);
