@@ -8,7 +8,8 @@ import {
   revokeInvite,
   goToInactiveTab
 } from 'actions/invite';
-import { getNotificationMessageText, signOut } from 'actions/common';
+import { getNotificationMessageText } from 'actions/common';
+import { signOut } from 'actions/navBar';
 import passiveNotification from 'data/passiveNotification.json';
 import messagesData from 'data/messages.json';
 import accountPage from 'page_objects/accountPage';

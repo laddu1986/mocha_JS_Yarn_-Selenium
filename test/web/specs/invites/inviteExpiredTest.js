@@ -8,6 +8,7 @@ TestCase: New User
 import * as lib from '../../common';
 import { createAccount, verifyJoinOrgText } from 'actions/account';
 import { submitButtonVisible } from 'actions/login';
+import { signOut } from 'actions/navBar';
 import { inviteStatus } from 'actions/invite';
 import {
   expiredInvitationText,
@@ -18,7 +19,7 @@ import {
   goToInactiveTab,
   resendInvite
 } from 'actions/invite';
-import { getNotificationMessageText, signOut, signIn } from 'actions/common';
+import { getNotificationMessageText, signIn } from 'actions/common';
 import accountPage from 'page_objects/accountPage';
 import SignInPage from 'page_objects/signInPage';
 import message from 'data/messages.json';
