@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: web-test-cron
+  name: api-test-cron
 spec:
   schedule: "30 18 * * *"
   successfulJobsHistoryLimit: 1
@@ -30,5 +30,3 @@ spec:
                   echo TEST-ENDED;
           terminationGracePeriodSeconds: 30
           restartPolicy: Never
-          nodeSelector:
-            kubernetes.io/hostname: ip-172-20-53-252.ap-southeast-2.compute.internal
