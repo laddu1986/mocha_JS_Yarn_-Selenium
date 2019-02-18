@@ -16,7 +16,7 @@ describe('Organizations API', () => {
     joi.assert(createOrgResponse.body, schemas.createOrgSchema(orgData));
   });
 
-  // TODO: Borked test? Invalid end point? Hasn't run for months
+  // TODO: https://app.clickup.com/t/d01q8
   xit('C1295556 GET /organizations lists all organizations', async () => {
     let listOrgResponse = await organization.getOrganizations();
     expect(listOrgResponse.body).to.be.an('array');
