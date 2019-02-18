@@ -1,7 +1,8 @@
 // Create Organization, sign out, sign back in to validate user lands in the created Org
 import * as lib from '../../common';
 import { createAccount } from 'actions/account';
-import { signOut, signIn } from 'actions/common';
+import { signIn } from 'actions/common';
+import { signOut } from 'actions/navBar';
 import {
   verifyOrgNameOnDashBoard,
   goToCreateOrgPageFromNavbar,

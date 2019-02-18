@@ -41,12 +41,6 @@ export function closePassiveNotification() {
   return CommonPage.dismissNotification.click();
 }
 
-export function signOut() {
-  NavBar.profileMenu.click();
-  NavBar.signOut.click();
-  CommonPage.submitButton.waitForVisible();
-}
-
 export function signIn(email, password) {
   SignInPage.emailInput.setValue(email);
   SignInPage.passwordInput.setValue(password);
@@ -103,18 +97,20 @@ export function submit() {
 }
 
 export function postIdentity(responseObject) {
+  let email = `${randomString.generate(12)}@test.co`;
   const any = {
     /*eslint-disable */
     api: identities,
     /*eslint-enable */
     data: {
-      fullname: randomString(12),
-      email: `${randomString(12)}@test.co`,
+      fullname: randomString.generate(12),
+      email: email,
       password: process.env.ACCOUNT_PASS
     }
   };
   return post(any).then(response => {
     responseObject.identityID = response.body.id;
+    responseObject.identityEmail = email;
     return response;
   });
 }

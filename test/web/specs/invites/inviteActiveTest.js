@@ -9,7 +9,7 @@ User lands in invited Org after account creation
 import * as lib from '../../common';
 import { createAccountToJoinInvitedOrg, createAccount } from 'actions/account';
 import { inviteTeammate, invitationLink } from 'actions/invite';
-import { signOut } from 'actions/common';
+import { signOut } from 'actions/navBar';
 import OrgDashboardPage from 'page_objects/orgDashboardPage';
 import { submitButtonText } from 'actions/login';
 import AccountPage from 'page_objects/accountPage';

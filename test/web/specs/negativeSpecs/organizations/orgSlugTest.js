@@ -8,9 +8,9 @@ import {
   postOrganization,
   postMembership
 } from 'actions/common.js';
+import { signOut } from 'actions/navBar';
 import { selectOrg, verifyChooseOrgspage, verifyWecomeOrgPage, verifyNoOrgPage } from 'actions/organization.js';
 import * as Messages from 'data/messages.json';
-import { signOut } from '../../../actions/common';
 var UserName, OrgName, deleteOrgRequest, deleteMembershipRequest;
 
 const orgSlugData = new Object();

@@ -22,7 +22,8 @@ import {
   cancelDeleteOrg
 } from 'actions/organization';
 import orgNotificationData from 'data/passiveNotification.json';
-import { signIn, signOut } from 'actions/common';
+import { signIn } from 'actions/common';
+import { signOut } from 'actions/navBar';
 var accountDetails,
   orgName = `${lib.randomString(10)}_Org1`,
   newOrgName = `${lib.randomString(10)}_Org2`;
