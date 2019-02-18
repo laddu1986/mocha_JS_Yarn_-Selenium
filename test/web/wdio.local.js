@@ -1,6 +1,7 @@
 var defaults = require('./wdio.mtribes.js').config;
 var _ = require('lodash');
 var overrides = {
+  reporters: ['html-format'],
   protocol: 'http',
   host: process.env.SELENIUM_HOST,
   port: '4444',
@@ -10,7 +11,7 @@ var overrides = {
     'specs/**/*Test.js' //master
   ],
   // // Patterns to exclude.
-   exclude: ['specs/support/helpPageTest.js','specs/experiences/*Test.js']
+  exclude: ['specs/support/helpPageTest.js', 'specs/experiences/*Test.js']
 };
 
 exports.config = _.defaultsDeep(overrides, defaults);

@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+import public "segmentContext.proto";
+
+package segment;
+
+option go_package = "generated";
+
+message GetConfigurationRequest{
+    string org_id       = 1;
+    string space_id     = 2;
+}
+
+message GetConfigurationResponse{
+    Configuration configuration    = 1;
+}
+
+message Configuration{
+    repeated Property properties = 1;
+    repeated Operator operators  = 2;
+}
+
+message Property{
+    string id                            = 1;
+    string label                         = 2;
+    OpType type                          = 3;    
+    repeated string allowed_operator_ids = 4;
+    string group_label                   = 5;
+    string key                           = 6;
+}
+
+message Operator{
+    string id           = 1;
+    string label        = 2;    
+    OpType operand_type = 3;
+    string group_label  = 4;
+    string key          = 5;
+}
+
+// Operand Type:
+enum OpType{
+    NONE    = 0;
+    
+    INTEGER = 1;
+    DECIMAL = 2;
+    DATE    = 3;
+    STRING  = 4;
+    BOOLEAN  = 5;
+}

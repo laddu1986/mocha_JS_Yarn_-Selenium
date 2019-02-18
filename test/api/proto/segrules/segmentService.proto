@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+import "segment.proto";
+import "google/protobuf/empty.proto";
+
+package segment;
+
+option go_package = "generated";
+
+service SegmentService{ 
+    //segment
+    rpc CreateSegment(CreateSegmentRequest) returns (Segment); 
+    rpc UpdateSegment(UpdateSegmentRequest) returns (Segment);
+    rpc DeleteSegment(DeleteSegmentRequest) returns (google.protobuf.Empty);
+    rpc GetSegmentById (GetSegmentByIdRequest) returns (Segment);
+
+    //category
+    rpc CreateCategory(CreateCategoryRequest) returns (Category);
+    rpc RenameCategory(RenameCategoryRequest) returns (Category);
+    rpc DeleteCategory(DeleteCategoryRequest) returns (google.protobuf.Empty);
+
+    rpc ListCategories(ListCategoriesRequest) returns (ListCategoriesResponse);
+    rpc MoveCategory(MoveCategoryRequest) returns (google.protobuf.Empty);
+    rpc MoveSegment(MoveSegmentRequest) returns (google.protobuf.Empty);
+}

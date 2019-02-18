@@ -1,4 +1,4 @@
-import * as common from '../common';
+import '../common';
 import { postIdentity } from 'actions/identity';
 import { postOrganization } from 'actions/organization';
 import { postSpaceByOrganizationId } from 'actions/spaces';
@@ -23,7 +23,7 @@ xdescribe('Negative Test -> Template API -> Template Properties', () => {
     );
   });
 
-  it('Cannot create a property with a key that has a reserved word', async () => {
+  it('C1458965 Cannot create a property with a key that has a reserved word', async () => {
     let errorCodeArray = [],
       errorResponseArray = [];
     for (var i = 0; i < data.reservedWords.length; i++) {

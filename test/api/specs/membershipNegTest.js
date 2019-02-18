@@ -24,7 +24,7 @@ describe('Negative tests --> Membership', () => {
       getResponse = await membership.getMembershipByAccount(membershipNegData, 'negative');
     });
 
-    it('Non existing membership -> Should return 0 rows', () => {
+    it('C1295532 Non existing membership -> Should return 0 rows', () => {
       expect(getResponse.body.totalRows).to.deep.equal(0);
     });
   });
@@ -36,11 +36,11 @@ describe('Negative tests --> Membership', () => {
       expectedMessageForBlankOrgId = data.blankOrgId(membershipNegData).expected;
       expectedMessageForinvalidToken = data.invalidToken(membershipNegData).expected;
     });
-    it('Invalid OrgID --> Should return 400 response', () => {
+    it('C1295533 Invalid OrgID --> Should return 400 response', () => {
       expect(blankOrgIdResponse).to.have.status(400);
       expect(blankOrgIdResponse.body.validationErrors.organizationId).to.equal(expectedMessageForBlankOrgId);
     });
-    it('Invalid token --> Should return 404 response', () => {
+    it('C1295534 Invalid token --> Should return 404 response', () => {
       expect(invalidTokenResponse).to.have.status(404);
       expect(invalidTokenResponse.body.validationErrors.InviteToken).to.equal(expectedMessageForinvalidToken);
     });
@@ -50,7 +50,7 @@ describe('Negative tests --> Membership', () => {
       await identity.deleteIdentityById(membershipNegData);
       deleteResponse = await membership.deleteMembershipByAccountAndOrganization(membershipNegData, 'negative');
     });
-    it('Should return 404 response', () => {
+    it('C1295535 Should return 404 response', () => {
       expect(deleteResponse).to.have.status(404);
     });
   });

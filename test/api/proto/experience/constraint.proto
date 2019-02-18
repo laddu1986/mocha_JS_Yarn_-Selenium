@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package experience;
+option go_package = "generated";
+
+
+message TextConstraint{
+    oneof constraint {
+        RangeInt character_count = 1;
+        Regex regex = 2;
+        Required required = 3;
+    }
+    string error_message = 4;
+}
+
+message IntegerConstraint{
+    oneof constraint {
+        RangeInt number_range = 1;
+        RangeIntSlider number_range_slider = 2;
+        Required required = 3;
+    }
+    string error_message = 5;
+}
+
+message BooleanConstraint{
+    oneof constraint {
+        Required required = 1;
+    }
+    string error_message = 2;
+}
+
+message DateConstraint{
+    oneof constraint {
+        RangeDate date_range = 1;
+        Required required = 2;
+    }
+    string error_message = 3;
+}
+
+message ColorConstraint{
+    oneof constraint {
+        Required required = 1;
+    }
+    string error_message = 2;
+}
+
+message ListConstraint{
+    oneof constraint {
+        RangeInt value_count = 1;
+        Regex regex = 2;
+        Required required = 3;
+    }
+    string error_message = 4;
+}
+
+// Constraints
+
+message RangeInt{
+    int32 min = 1;
+    int32 max = 2;
+    int32 mode = 3;
+}
+
+message RangeIntSlider{
+    int32 min = 1;
+    int32 max = 2;
+    int32 mode = 3;
+    int32 increment = 4;
+}
+
+message RangeDate{
+    google.protobuf.Timestamp min = 1;
+    google.protobuf.Timestamp max = 2;
+    int32 mode = 3;
+}
+
+message Regex{
+    string pattern = 1;
+}
+
+message Required{
+    bool is_required = 1;
+}
