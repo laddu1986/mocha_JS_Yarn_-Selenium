@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+import "property.proto";
+import "google/protobuf/timestamp.proto";
+
+package experience;
+option go_package = "generated";
+
+
+message ExperienceTemplateDetail{
+    string id = 1;
+    string key = 2;
+    string name = 3;
+    string thumbnail_url = 4;
+    google.protobuf.Timestamp row_version = 5;
+    ExperienceTemplateType template_type = 6;
+    repeated Property properties = 7;
+    repeated ExperienceTemplate templates = 8;
+}
+
+message ExperienceTemplate{
+    string id = 1;
+    string key = 2;
+    string name = 3;
+    string thumbnail_url = 4;
+    google.protobuf.Timestamp row_version = 5;
+    ExperienceTemplateType template_type = 6;
+}
+
+enum ExperienceTemplateType {
+    FIXED = 0;
+    FLEXI = 1;
+    COLLECTION = 2;
+}

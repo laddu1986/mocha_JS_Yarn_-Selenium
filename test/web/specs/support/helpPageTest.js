@@ -1,27 +1,27 @@
 import '../../common';
 import NavBar from 'page_objects/navBar';
 import SignInPage from 'page_objects/signInPage';
-import { signIn } from 'actions/login';
-import { signOut } from 'actions/common';
+import { signIn } from 'actions/common';
+import { signOut } from 'actions/navBar';
 
 describe('Test Help Center', () => {
-  it('Open App Page', () => {
+  it('C1295722 Open App Page', () => {
     SignInPage.open();
   });
 
-  it('Sign In', () => {
+  it('C1295723 Sign In', () => {
     signIn('testaccount@donotdeleteplease.com', process.env.ACCOUNT_PASS);
   });
 
-  it('Click Help Menu from Side Nav Bar', () => {
+  it('C1295724 Click Help Menu from Side Nav Bar', () => {
     NavBar.helpMenuNav.click();
   });
 
-  it('Click Help Center link', () => {
+  it('C1295725 Click Help Center link', () => {
     NavBar.helpCenterAnchor.click();
   });
 
-  it('Check Help Center opened in a new Tab', () => {
+  it('C1295726 Check Help Center opened in a new Tab', () => {
     const tabIds = browser.getTabIds();
     browser.switchTab(tabIds[1]);
     const helpTab = browser.windowHandle();
@@ -34,19 +34,19 @@ describe('Test Help Center', () => {
 });
 
 describe('Test API Portal', () => {
-  it('Sign In', () => {
+  it('C1295727 Sign In', () => {
     signIn('testaccount@donotdeleteplease.com', process.env.ACCOUNT_PASS);
   });
 
-  it('Click Help Menu from Side Nav Bar', () => {
+  it('C1295728 Click Help Menu from Side Nav Bar', () => {
     NavBar.helpMenuNav.click();
   });
 
-  it('Click API Portal link', () => {
+  it('C1295729 Click API Portal link', () => {
     NavBar.apiPortalAnchor.click();
   });
 
-  it('Check API Portal opened in a new Tab', () => {
+  it('C1295730 Check API Portal opened in a new Tab', () => {
     const tabIds = browser.getTabIds();
     browser.switchTab(tabIds[1]);
     const apiPortalTab = browser.windowHandle();
@@ -58,19 +58,19 @@ describe('Test API Portal', () => {
 });
 
 describe('Test System Status', () => {
-  it('Sign In', () => {
+  it('C1295731 Sign In', () => {
     signIn('testaccount@donotdeleteplease.com', process.env.ACCOUNT_PASS);
   });
 
-  it('Click Help Menu from Side Nav Bar', () => {
+  it('C1295732 Click Help Menu from Side Nav Bar', () => {
     NavBar.helpMenuNav.click();
   });
 
-  it('Click System Status link', () => {
+  it('C1295733 Click System Status link', () => {
     NavBar.sysStatusAnchor.click();
   });
 
-  it('Check System Status opened in a new Tab', () => {
+  it('C1295734 Check System Status opened in a new Tab', () => {
     const tabIds = browser.getTabIds();
     browser.switchTab(tabIds[1]);
     const sysStatusTab = browser.windowHandle();

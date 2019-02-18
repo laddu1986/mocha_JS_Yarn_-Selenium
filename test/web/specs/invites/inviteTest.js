@@ -10,7 +10,7 @@ import {
   goToOrganisationDashboard
 } from 'actions/invite';
 import accountPage from 'page_objects/accountPage';
-import { signOut } from 'actions/common';
+import { signOut } from 'actions/navBar';
 
 const invite_email1 = `invite_1_${lib.randomString.generate(5)}@test.co`;
 const invite_email2 = `invite_2${lib.randomString.generate(5)}@test.co`;
@@ -23,41 +23,41 @@ describe('Invite Tests', () => {
     browser.pause(1000);
   });
 
-  it(`Organisation Dashboard page --> Verify Send Invite button is disabled ${lib.Tags.smokeTest}`, () => {
+  it(`C1295655 Organisation Dashboard page --> Verify Send Invite button is disabled ${lib.Tags.smokeTest}`, () => {
     clickInviteTeammateButton();
     expect(sendInviteButtonEnabled()).to.equal(false);
   });
 
-  it(`Send invite --> verify count increases ${lib.Tags.smokeTest}`, () => {
+  it(`C1295656 Send invite --> verify count increases ${lib.Tags.smokeTest}`, () => {
     sendInvite(invite_email1);
     verifyInviteCount('1');
   });
 
-  it(`Send another Invite --> verify count increases ${lib.Tags.smokeTest}`, () => {
+  it(`C1295657 Send another Invite --> verify count increases ${lib.Tags.smokeTest}`, () => {
     clickInviteTeammateButton();
     sendInvite(invite_email2);
     verifyInviteCount('2');
   });
 
-  it('Teammates page --> Verify Send Invite button is disabled', () => {
+  it('C1295658 Teammates page --> Verify Send Invite button is disabled', () => {
     goToTeammatesPage();
     expect(sendInviteButtonEnabled()).to.equal(false);
   });
 
-  it('Validate inactive tab for first invite', () => {
+  it('C1295659 Validate inactive tab for first invite', () => {
     expect(verifyInactiveInvite()).to.include(invite_email1);
   });
 
-  it('Validate inactive tab for second invite', () => {
+  it('C1640144 Validate inactive tab for second invite', () => {
     expect(verifyInactiveInvite()).to.include(invite_email2);
   });
 
-  it('Send Invite --> verify inactive tab', () => {
+  it('C1295660 Send Invite --> verify inactive tab', () => {
     sendInvite(invite_email3);
     expect(verifyInactiveInvite()).to.include(invite_email3);
   });
 
-  it('Validate pending invite count', () => {
+  it('C1295661 Validate pending invite count', () => {
     goToOrganisationDashboard();
     verifyInviteCount('3');
   });

@@ -79,7 +79,7 @@ export function updateOrgName(updatedOrgName) {
   SettingsPage.orgInput.setValue(updatedOrgName);
   SettingsPage.saveOrgNameButton.click();
   browser.waitUntil(
-    function () {
+    function() {
       return SettingsPage.saveOrgNameButton.isEnabled() === false;
     },
     5000,
@@ -96,7 +96,7 @@ export function verifyOrgCardStack(updatedOrgName) {
   HomePage.orgCards.waitForVisible();
   browser.refresh();
   browser.waitUntil(
-    function () {
+    function() {
       return HomePage.orgCards.value[0].getText().includes(updatedOrgName);
     },
     5000,

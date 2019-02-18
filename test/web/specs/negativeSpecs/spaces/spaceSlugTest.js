@@ -46,28 +46,28 @@ describe('Negative cases --> Space Slug', () => {
     selectSpace();
   });
 
-  it('Invalid Space slug path --> redirects to 404 page', () => {
+  it('C1295693 Invalid Space slug path --> redirects to 404 page', () => {
     browser.url(`${OrgName}/space/abc`);
     expect(get404PageText()).to.include(Messages.space.spaceNotFound);
   });
 
-  it('"Select Space" link takes user to Space dashboard', () => {
+  it('C1295694 "Select Space" link takes user to Space dashboard', () => {
     clickLinkOn404Page();
     expect(verifySpaceCard()).to.equal(true);
   });
 
-  it('Valid Space slug path with invalid child path --> redirects to 404 page', () => {
+  it('C1295695 Valid Space slug path with invalid child path --> redirects to 404 page', () => {
     selectSpace();
     browser.url(`${OrgName}/space/${SpaceSlug}/abc`);
     expect(get404PageText()).to.include(Messages.space.pageNotFound);
   });
 
-  it('"Select Space" link redirects to Space dashboard', () => {
+  it('C1295696 "Select Space" link redirects to Space dashboard', () => {
     clickLinkOn404Page();
     expect(browser.getUrl()).to.equal(`${browser.options.baseUrl}/${OrgName}/space/${SpaceSlug}`);
   });
 
-  it('No Space Association --> "Select Space" on 404 page redirects to "create space" page', () => {
+  it('C1295697 No Space Association --> "Select Space" on 404 page redirects to "create space" page', () => {
     lib.del(deleteRequest);
     browser.refresh();
     clickLinkOn404Page();

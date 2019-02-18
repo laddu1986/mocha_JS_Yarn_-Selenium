@@ -19,7 +19,7 @@ describe('Invites Api', () => {
       postResponse = await invites.postInvitesByOrganizationId(inviteData);
     });
 
-    it('Create a new invite.', () => {
+    it('C1295528 Create a new invite.', () => {
       expect(postResponse).to.have.status(201);
     });
   });
@@ -28,7 +28,7 @@ describe('Invites Api', () => {
     before(async () => {
       getResponse = await invites.getInvitesByOrganizationId(inviteData);
     });
-    it('Search invites in the org', () => {
+    it('C1295529 Search invites in the org', () => {
       expect(getResponse).to.have.status(200);
       joi.assert(getResponse.body, schemas.getInviteSchema(inviteData));
     });
@@ -38,7 +38,7 @@ describe('Invites Api', () => {
     before(async () => {
       getInviteResponse = await invites.getInviteDetailsByToken(inviteData);
     });
-    it('Get invite details', () => {
+    it('C1295530 Get invite details', () => {
       expect(getInviteResponse).to.have.status(200);
       joi.assert(getInviteResponse.body, schemas.getInviteByTokenSchema(inviteData));
     });
@@ -48,7 +48,7 @@ describe('Invites Api', () => {
     before(async () => {
       deleteResponse = await invites.deleteInviteByOrganizationIdAndEmail(inviteData);
     });
-    it('Delete an invite.', () => {
+    it('C1295531 Delete an invite.', () => {
       expect(deleteResponse).to.have.status(204);
     });
   });

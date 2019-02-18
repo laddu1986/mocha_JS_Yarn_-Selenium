@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+import "google/protobuf/field_mask.proto";
+import "experienceInstance.proto";
+import "contexts.proto";
+
+package experience;
+option go_package = "generated";
+
+service ExperienceInstanceService {
+  rpc GetExperience(GetExperienceRequest) returns (GetExperienceResponse);
+  rpc UpdateExperience(UpdateExperienceRequest) returns (UpdateExperienceResponse);
+  rpc AddChildExperience(AddChildExperienceRequest) returns (AddChildExperienceResponse);
+  rpc SaveScenario(SaveScenarioRequest) returns (SaveScenarioResponse);
+  rpc DuplicateScenario(DuplicateScenarioRequest) returns (DuplicateScenarioResponse);
+  rpc DeleteScenario(DeleteScenarioRequest) returns (DeleteScenarioResponse);
+}
+
+message GetExperienceRequest {
+  WorkspaceContext context = 1;
+  string id = 2;
+}
+
+message GetExperienceResponse {
+  ExperienceInstanceDetails experience = 1;
+}
+
+message UpdateExperienceRequest {
+  WorkspaceContext context = 1;
+  ExperienceInstanceNode parent_experience = 2;
+  ExperienceInstance experience = 3;
+  google.protobuf.FieldMask update_mask = 4;
+  string modified_by_account_id = 5;
+}
+
+message UpdateExperienceResponse {
+  ExperienceInstanceNodeDetails experience = 1;
+}
+
+message AddChildExperienceRequest {
+  WorkspaceContext context = 1;
+  ExperienceInstanceNode parent_experience = 2;
+  NewChildExperienceInstance experience = 3;
+  string created_by_account_id = 4;
+}
+
+message AddChildExperienceResponse {
+  ExperienceInstanceNodeDetails experience = 1;
+}
+
+message SaveScenarioRequest {
+  WorkspaceContext context = 1;
+  Scenario scenario = 2;
+  google.protobuf.FieldMask update_mask = 3;
+  ExperienceInstanceNode parent_experience = 4;
+  string account_id = 5;
+}
+
+message SaveScenarioResponse {
+  ScenarioDetails scenario = 1;
+  ExperienceInstanceNodeDetails parent_experience = 2;
+}
+
+message DuplicateScenarioRequest {
+  WorkspaceContext context = 1;
+  string id = 2;
+  string created_by_account_id = 3;
+}
+
+message DuplicateScenarioResponse {
+  ScenarioDetails scenario = 1;
+  ExperienceInstanceNodeDetails parent_experience = 2;
+}
+
+message DeleteScenarioRequest {
+  WorkspaceContext context = 1;
+  string id = 2;
+  string modified_by_account_id = 3;
+}
+
+message DeleteScenarioResponse {
+  ExperienceInstanceNodeDetails parent_experience = 1;
+}

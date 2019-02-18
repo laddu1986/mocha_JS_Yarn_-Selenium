@@ -16,7 +16,7 @@ describe('Memberships Api', () => {
     before(async () => {
       createResponse = await membership.postMembership(membershipData);
     });
-    it('Create a new membership', () => {
+    it('C1295536 Create a new membership', () => {
       expect(createResponse).to.have.status(201);
       joi.assert(createResponse.body, schemas.createMembershipSchema(membershipData));
     });
@@ -27,7 +27,7 @@ describe('Memberships Api', () => {
       getResponse = await membership.getMemberships(membershipData);
     });
 
-    it('List all Memberships', () => {
+    it('C1295537 List all Memberships', () => {
       expect(getResponse).to.have.status(200);
       joi.assert(getResponse.body, schemas.listMembershipSchema(membershipData)); //https://app.clickup.com/301733/t/84vwg is raised for isAdmin being false intermittently
     });
@@ -38,7 +38,7 @@ describe('Memberships Api', () => {
       getByOrgIDResponse = await membership.getMembershipByOrganization(membershipData);
     });
 
-    it('Getting membership by organization id', () => {
+    it('C1295538 Getting membership by organization id', () => {
       expect(getByOrgIDResponse).to.have.status(200);
       joi.assert(getByOrgIDResponse.body, schemas.getMembershipByOrdIDSchema(membershipData));
     });
@@ -49,7 +49,7 @@ describe('Memberships Api', () => {
       getByAccountIDResponse = await membership.getMembershipByAccount(membershipData);
     });
 
-    it('Getting membership by account id', () => {
+    it('C1295539 Getting membership by account id', () => {
       expect(getByAccountIDResponse).to.have.status(200);
       joi.assert(getByAccountIDResponse.body, schemas.getMembershipByAccountIDSchema(membershipData));
     });
@@ -59,7 +59,7 @@ describe('Memberships Api', () => {
       deleteResponse = await membership.deleteMembershipByAccountAndOrganization(membershipData);
     });
 
-    it('Delete a membership', () => {
+    it('C1295540 Delete a membership', () => {
       expect(deleteResponse).to.have.status(204);
     });
   });

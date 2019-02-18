@@ -16,43 +16,43 @@ describe('Tribe Rules Service', () => {
     await tribe.createTribe(rulesData);
   });
 
-  it('getConfiguration()', async () => {
+  it('C1295615 getConfiguration()', async () => {
     let configResponse = await rules.getConfiguration(rulesData);
     expect(configResponse.status.code).to.equal(0);
     joi.assert(configResponse.response, schemas.getConfiguration);
   });
 
-  it('saveRule()', async () => {
+  it('C1295618 saveRule()', async () => {
     let saveResponse = await rules.saveRule(rulesData);
     expect(saveResponse.status.code).to.equal(0);
     joi.assert(saveResponse.response, schemas.saveRule(rulesData));
   });
 
-  it('getRule()', async () => {
+  it('C1295619 getRule()', async () => {
     let getResponse = await rules.getRule(rulesData);
     expect(getResponse.status.code).to.equal(0);
     joi.assert(getResponse.response, schemas.getRule(rulesData));
   });
 
-  it('evalutateRuleFilters()', async () => {
+  it('C1295620 evalutateRuleFilters()', async () => {
     let evalFiltersResponse = await rules.evaluateRuleFilters(rulesData);
     expect(evalFiltersResponse.status.code).to.equal(0);
     joi.assert(evalFiltersResponse.response, schemas.evaluateRuleFilters);
   });
 
-  it('evaluateRule()', async () => {
+  it('C1295621 evaluateRule()', async () => {
     let evaluateRuleResponse = await rules.evaluateRule(rulesData);
     expect(evaluateRuleResponse.status.code).to.equal(0);
     joi.assert(evaluateRuleResponse.response, schemas.evaluateRule);
   });
 
-  it('evaluateRules()', async () => {
+  it('C1295622 evaluateRules()', async () => {
     let evaluateRulesResponse = await rules.evaluateRules(rulesData);
     expect(evaluateRulesResponse.status.code).to.equal(0);
     joi.assert(evaluateRulesResponse.response, schemas.evaluateRules);
   });
 
-  it('getSampleUsers()', async () => {
+  it('C1295623 getSampleUsers()', async () => {
     let getSampleUsersResponse = await rules.getSampleUsers(rulesData);
     expect(getSampleUsersResponse.status.code).to.equal(0);
     joi.assert(getSampleUsersResponse.response, schemas.sampleUsers);
