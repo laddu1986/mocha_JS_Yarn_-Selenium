@@ -11,7 +11,6 @@ import '../../common';
 import { errorSignIn } from 'actions/login';
 import SignInPage from 'page_objects/signInPage';
 import { createAccount } from 'actions/account';
-import { signIn } from 'actions/common';
 import { deleteOrganization, gotoOrgSettings, selectOrg } from 'actions/organization';
 import { verifyIncorrectSignIn, clearPlaceholder, signInPageIsVisible } from 'actions/login';
 import {
@@ -21,6 +20,7 @@ import {
   cancelDeleteAccount
 } from 'actions/account';
 import {
+  signIn,
   confirmButtonIsEnabled,
   confirmDelete,
   typeDeleteToConfirm,

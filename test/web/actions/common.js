@@ -82,7 +82,7 @@ export function clickLinkOn404Page() {
 //hide intercom icon as it gets in the way of other elements and prevents clicking them
 export function hideIntercom() {
   CommonPage.intercomIcon.waitForVisible();
-  browser.execute(function() {
+  browser.execute(function () {
     const intercom = document.getElementById('intercom-container');
     if (intercom.style.display === 'none') {
       intercom.style.display = 'block';
@@ -97,58 +97,64 @@ export function submit() {
 }
 
 export function postIdentity(responseObject) {
-  let email = `${randomString.generate(12)}@test.co`;
   const any = {
-    /*eslint-disable */
     api: identities,
-    /*eslint-enable */
     data: {
       fullname: randomString.generate(12),
-      email: email,
+      email: `${randomString.generate(12)}@test.co`,
       password: process.env.ACCOUNT_PASS
     }
   };
   return post(any).then(response => {
-    responseObject.identityID = response.body.id;
-    responseObject.identityEmail = email;
-    return response;
+    if (response.response.statusCode == 201) {
+      responseObject.identityID = response.body.id;
+      responseObject.identityEmail = any.data.email;
+      responseObject.identityFullname = any.data.fullname;
+    } else
+      throw `Post request for Identity API failed with code ${
+      response.response.statusCode
+      } and the error ${JSON.stringify(response.response.body)}`;
   });
 }
 
 export function postOrganization(responseObject) {
   const any = {
-    /*eslint-disable */
     api: organizations,
-    /*eslint-enable */
     data: {
       name: randomString.generate(10),
       createdByAccountId: responseObject.identityID
     }
   };
   return post(any).then(response => {
-    responseObject.orgID = response.body.id;
-    return response;
+    if (response.response.statusCode == 201) {
+      responseObject.orgID = response.body.id;
+      responseObject.organization = any.data.name;
+    } else
+      throw `postOrganization failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
   });
 }
 
 export function postMembership(responseObject) {
   const any = {
-    /*eslint-disable */
     api: memberships,
-    /*eslint-enable */
     data: {
       accountId: responseObject.identityID,
       organizationId: responseObject.orgID
     }
   };
-  return post(any);
+  return post(any).then(response => {
+    if (response.response.statusCode != 201)
+      throw `postMembership failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
 }
 
 export function postSpaceByOrganizationId(responseObject) {
   const any = {
-    /*eslint-disable */
     api: `${spaces + responseObject.orgID}/spaces`,
-    /*eslint-enable */
     data: {
       name: randomString.generate(10),
       createdByAccountId: responseObject.identityID,
@@ -156,8 +162,54 @@ export function postSpaceByOrganizationId(responseObject) {
     }
   };
   return post(any).then(response => {
-    responseObject.spaceID = response.body.id;
-    responseObject.spaceRowVersion = response.body.rowVersion;
-    return response;
+    if (response.response.statusCode == 201) {
+      responseObject.spaceID = response.body.id;
+      responseObject.spaceName = any.data.name;
+    } else
+      throw `postSpaceByOrganizationId failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
+}
+
+export function getAccessToken(responseObject) {
+  const any = {
+    api: token,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: `Basic ${process.env.AUTH_CODE}`
+    },
+    data: '',
+    body: `grant_type=password&username=${responseObject.identityEmail}&password=${
+      process.env.ACCOUNT_PASS
+      }&scope=backend_service&client_id=frontend_service`
+  };
+  return post(any).then(response => {
+    if (response.response.statusCode == 200) {
+      responseObject.accessToken = response.body.access_token;
+    } else
+      throw `getAccessToken failed with code ${response.response.statusCode} and the error ${JSON.stringify(
+        response.response.body
+      )}`;
+  });
+}
+
+export function postInvitesByOrganizationId(responseObject) {
+  getAccessToken(responseObject);
+  let emailInvited = `${randomString.generate(5)}@test.co`;
+  const any = {
+    api: `${organizations + responseObject.orgID}/invites`,
+    data: [emailInvited],
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${responseObject.accessToken}`
+    }
+  };
+  responseObject.inviteEmail = emailInvited;
+  return post(any).then(response => {
+    if (response.response.statusCode != 201)
+      throw `postInvitesByOrganizationId failed with code ${
+      response.response.statusCode
+      } and the error ${JSON.stringify(response.response.body)}`;
   });
 }
