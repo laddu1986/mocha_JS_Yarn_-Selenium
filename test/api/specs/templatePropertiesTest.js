@@ -1,8 +1,13 @@
 import { joi } from '../common';
-import { postIdentity } from 'actions/identity';
-import { postOrganization } from 'actions/organization';
-import { postSpaceByOrganizationId } from 'actions/spaces';
-import { createExperienceTemplate, getExperienceTemplateById, getProperty } from 'actions/templates';
+import { postIdentity, deleteIdentityById } from 'actions/identity';
+import { postOrganization, deleteOrganizationById } from 'actions/organization';
+import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions/spaces';
+import {
+  createExperienceTemplate,
+  getExperienceTemplateById,
+  getProperty,
+  deleteExperienceTemplate
+} from 'actions/templates';
 import constants from 'constants.json';
 import * as properties from 'actions/templateProperties';
 import * as schemas from 'schemas/templatesSchema';
@@ -141,5 +146,11 @@ xdescribe('Template API -> Template Properties', () => {
     let getResponse = await getProperty();
     expect(getResponse.status.code).to.equal(0);
     joi.assert(getResponse.response, schemas.getPropertySchema());
+  });
+  after(async () => {
+    await deleteIdentityById(templateData);
+    await deleteOrganizationById(templateData);
+    await deleteSpaceByOrgIdAndSpaceId(templateData);
+    await deleteExperienceTemplate(templateData);
   });
 });
