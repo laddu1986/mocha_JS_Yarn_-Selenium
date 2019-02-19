@@ -1,6 +1,4 @@
 helm init --client-only
-AWS_REGION=ap-southeast-2
-S3_BUCKET_NAME=mtribes-helm-charts
 
 echo -e '\nPackaging Helm charts ...'
 helm package --version 0.1.0 deployment/web-regression-test
