@@ -9,43 +9,33 @@ export function createTribe(responseObject) {
     segment: { title: randomString.generate(6) }
   }).withResponseStatus(true);
   return req.exec().then(response => {
-    responseObject.tribeID = response.response.id;
-    responseObject.tribeRowVersionSeconds = response.response.rowVersion.seconds.low;
-    responseObject.tribeRowVersionNanos = response.response.rowVersion.nanos;
-    return response;
-  });
-}
-
-export function createTribeWithCategoryID(responseObject, tribename) {
-  const req = new client.Request('createSegment', {
-    spaceContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID },
-    segment: { title: tribename, category_id: { value: responseObject.tribeCategoryID } }
-  }).withResponseStatus(true);
-  return req.exec().then(response => {
-    responseObject.tribeID = response.response.id;
+    responseObject.tribe = response.response;
     return response;
   });
 }
 
 export function updateTribe(responseObject) {
   const req = new client.Request('updateSegment', {
-    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID },
+    segmentContext: {
+      orgId: responseObject.orgID,
+      spaceId: responseObject.spaceID,
+      segmentId: responseObject.tribe.id
+    },
     segment: {
       title: `${randomString.generate(6)}_newName`,
-      rowVersion: { seconds: responseObject.tribeRowVersionSeconds, nanos: responseObject.tribeRowVersionNanos }
+      rowVersion: responseObject.tribe.rowVersion
     },
     updateMask: { paths: ['title'] }
   }).withResponseStatus(true);
   return req.exec().then(response => {
-    responseObject.tribeRowVersionSeconds = response.response.rowVersion.seconds.low;
-    responseObject.tribeRowVersionNanos = response.response.rowVersion.nanos;
+    responseObject.tribe.rowVersion = response.response.rowVersion;
     return response;
   });
 }
 
 export function getTribe(responseObject) {
   const req = new client.Request('getSegmentById', {
-    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID }
+    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribe.id }
   }).withResponseStatus(true);
   return req.exec().then(response => {
     return response;
@@ -54,8 +44,12 @@ export function getTribe(responseObject) {
 
 export function deleteTribe(responseObject) {
   const req = new client.Request('deleteSegment', {
-    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID },
-    rowVersion: { seconds: responseObject.tribeRowVersionSeconds, nanos: responseObject.tribeRowVersionNanos }
+    segmentContext: {
+      orgId: responseObject.orgID,
+      spaceId: responseObject.spaceID,
+      segmentId: responseObject.tribe.id
+    },
+    rowVersion: responseObject.tribe.rowVersion
   }).withResponseStatus(true);
   return req.exec().then(response => {
     return response;
@@ -64,8 +58,12 @@ export function deleteTribe(responseObject) {
 
 export function moveTribe(responseObject) {
   const req = new client.Request('moveSegment', {
-    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID },
-    dest_category_id: { value: responseObject.categoryID },
+    segmentContext: {
+      orgId: responseObject.orgID,
+      spaceId: responseObject.spaceID,
+      segmentId: responseObject.tribe.id
+    },
+    destCategoryId: { value: responseObject.tribeCategory.id },
     index: { value: 0 }
   }).withResponseStatus(true);
 
