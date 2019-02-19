@@ -26,7 +26,11 @@ export function getConfiguration(responseObject) {
 
 export function saveRule(responseObject) {
   const req = new client.Request('saveRule', {
-    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID },
+    segmentContext: {
+      orgId: responseObject.orgID,
+      spaceId: responseObject.spaceID,
+      segmentId: responseObject.tribe.id
+    },
     rule: {
       audienceType: constants.TribeRulesFilters.AudienceType.USER,
       logicalType: constants.TribeRulesFilters.LogicalType.AND,
@@ -46,7 +50,7 @@ export function saveRule(responseObject) {
 
 export function getRule(responseObject) {
   const req = new client.Request('getRule', {
-    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID }
+    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribe.id }
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
@@ -56,7 +60,7 @@ export function getRule(responseObject) {
 
 export function evaluateRule(responseObject) {
   const req = new client.Request('evaluateRule', {
-    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID }
+    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribe.id }
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
@@ -67,7 +71,7 @@ export function evaluateRule(responseObject) {
 export function evaluateRules(responseObject) {
   const req = new client.Request('evaluateRules', {
     spaceContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID },
-    segmentIds: [responseObject.tribeID]
+    segmentIds: [responseObject.tribe.id]
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
@@ -77,7 +81,7 @@ export function evaluateRules(responseObject) {
 
 export function evaluateRuleFilters(responseObject) {
   const req = new client.Request('evaluateRuleFilters', {
-    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID }
+    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribe.id }
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
@@ -87,7 +91,7 @@ export function evaluateRuleFilters(responseObject) {
 
 export function getSampleUsers(responseObject) {
   const req = new client.Request('getSampleUsers', {
-    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribeID }
+    segmentContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID, segmentId: responseObject.tribe.id }
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
