@@ -44,7 +44,7 @@ describe('Metrics API', () => {
   });
 
   it(`C1295545 GET /organizations/{orgId}/spaces/{spaceId}/metrics/daily/new-users 
-  returns the number of new users by days for a space in a given time period`, async () => {
+    returns the number of new users by days for a space in a given time period`, async () => {
     let getNewUsersByDayResponse = await metrics.getNewUsersByDay(metricsData);
     expect(getNewUsersByDayResponse).to.have.status(200);
     joi.assert(getNewUsersByDayResponse.body, metricsByDaySchema());
