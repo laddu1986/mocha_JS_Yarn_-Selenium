@@ -2,7 +2,7 @@ import { randomString } from '../common';
 import * as identity from 'actions/identity';
 import * as spaces from 'actions/spaces';
 import * as organization from 'actions/organization';
-import * as categories from 'actions/categories';
+import * as categories from 'actions/tribeCategories';
 import * as tribe from 'actions/tribe';
 var moveResponse, createTribeResponse, updateTribeResponse, getResponse, deleteResponse, moveConfirm;
 const tribeData = new Object();
@@ -63,7 +63,7 @@ describe('Tribe Service', () => {
     tribename2 = `${randomString.generate(7)}_2`;
   describe('Move Tribe', () => {
     before(async () => {
-      await categories.createCategory(tribeData, true);
+      await categories.createCategory(tribeData);
       await tribe.createTribeWithCategoryID(tribeData, tribename1);
       await tribe.createTribeWithCategoryID(tribeData, tribename2);
       moveResponse = await tribe.moveTribe(tribeData);
