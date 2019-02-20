@@ -1,8 +1,8 @@
 import { CheckForAll } from '../common';
-import { postIdentity } from 'actions/identity';
-import { postOrganization } from 'actions/organization';
-import { postSpaceByOrganizationId } from 'actions/spaces';
-import { createExperienceTemplate } from 'actions/templates';
+import { postIdentity, deleteIdentityById } from 'actions/identity';
+import { postOrganization, deleteOrganizationById } from 'actions/organization';
+import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions/spaces';
+import { createExperienceTemplate, deleteExperienceTemplate } from 'actions/templates';
 import constants from 'constants.json';
 import * as properties from 'actions/templateProperties';
 import * as messages from 'data/validationErrorsData.json';
@@ -22,7 +22,7 @@ xdescribe('Negative Tests -> Template API -> Template Properties', () => {
       templateData.template.key
     );
   });
-  it('C1458958 Cannot create a property with an existing key', async () => {
+  it('C1458958 updateExperienceTemplate() cannot create a property with an existing key', async () => {
     let duplicateKey = await properties.createProperty(
       templateData,
       constants.TemplateProperties.Types.Text,
@@ -32,7 +32,7 @@ xdescribe('Negative Tests -> Template API -> Template Properties', () => {
     expect(duplicateKey.metadata._internal_repr.custom_error[0]).to.include(messages.Templates.existsProperty);
     expect(duplicateKey.code).to.equal(3);
   });
-  it('C1458959 Cannot create a property with an empty key', async () => {
+  it('C1458959 updateExperienceTemplate() cannot create a property with an empty key', async () => {
     let createText = await properties.createProperty(
       templateData,
       constants.TemplateProperties.Types.Text,
@@ -43,7 +43,7 @@ xdescribe('Negative Tests -> Template API -> Template Properties', () => {
     expect(createText.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
     expect(createText.code).to.equal(3);
   });
-  it('C1458960 Cannot create a property with a key that starts with a number', async () => {
+  it('C1458960 updateExperienceTemplate() cannot create a property with a key that starts with a number', async () => {
     let createText = await properties.createProperty(
       templateData,
       constants.TemplateProperties.Types.Switch,
@@ -54,7 +54,7 @@ xdescribe('Negative Tests -> Template API -> Template Properties', () => {
     expect(createText.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
     expect(createText.code).to.equal(3);
   });
-  it('C1458961 Cannot create a property with a key that starts with an underscore', async () => {
+  it('C1458961 updateExperienceTemplate() cannot create a property with a key that starts with an underscore', async () => {
     let createText = await properties.createProperty(
       templateData,
       constants.TemplateProperties.Types.Integer,
@@ -65,7 +65,7 @@ xdescribe('Negative Tests -> Template API -> Template Properties', () => {
     expect(createText.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
     expect(createText.code).to.equal(3);
   });
-  it('C1458962 Cannot create a property with a key that is greater than 40 characters', async () => {
+  it('C1458962 updateExperienceTemplate() cannot create a property with a key that is greater than 40 characters', async () => {
     let createText = await properties.createProperty(
       templateData,
       constants.TemplateProperties.Types.Text,
@@ -76,7 +76,7 @@ xdescribe('Negative Tests -> Template API -> Template Properties', () => {
     expect(createText.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
     expect(createText.code).to.equal(3);
   });
-  it('C1458963 Cannot create a property with a key that has a space', async () => {
+  it('C1458963 updateExperienceTemplate() cannot create a property with a key that has a space', async () => {
     let createText = await properties.createProperty(
       templateData,
       constants.TemplateProperties.Types.Switch,
@@ -88,7 +88,7 @@ xdescribe('Negative Tests -> Template API -> Template Properties', () => {
     expect(createText.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
     expect(createText.code).to.equal(3);
   });
-  it('C1458964 Cannot create a property with a key that has an invalid character', async () => {
+  it('C1458964 updateExperienceTemplate() cannot create a property with a key that has an invalid character', async () => {
     let errorCodeArray = [],
       errorResponseArray = [];
     for (var i = 0; i < data.invalidChars.length; i++) {
@@ -108,5 +108,11 @@ xdescribe('Negative Tests -> Template API -> Template Properties', () => {
     expect(errorCodeArray, `The characters [${errorCodeArray}] did not produce the right error code`).to.be.empty;
     expect(errorResponseArray, `The characters [${errorResponseArray}] did not produce to right error message`).to.be
       .empty;
+  });
+  after(async () => {
+    await deleteIdentityById(templateData);
+    await deleteOrganizationById(templateData);
+    await deleteSpaceByOrgIdAndSpaceId(templateData);
+    await deleteExperienceTemplate(templateData);
   });
 });
