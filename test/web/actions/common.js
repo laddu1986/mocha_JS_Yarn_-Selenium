@@ -97,13 +97,13 @@ export function submit() {
 }
 
 export function postIdentity(responseObject) {
-  let email = `${randomString.generate(12)}@test.co`;
+  let email = `${randomString(12)}@test.co`;
   const any = {
     /*eslint-disable */
     api: identities,
     /*eslint-enable */
     data: {
-      fullname: randomString.generate(12),
+      fullname: randomString(12),
       email: email,
       password: process.env.ACCOUNT_PASS
     }
