@@ -33,7 +33,7 @@ xdescribe('Negative Tests -> Template API', () => {
     for (var i = 0; i < data.invalidChars.length; i++) {
       var errorResponse = await templates.createExperienceTemplate(
         templateData,
-        data.invalidChars[0],
+        data.invalidChars[i],
         data.validString
       );
       if (errorResponse.code !== 3) {
@@ -53,7 +53,7 @@ xdescribe('Negative Tests -> Template API', () => {
     for (var i = 0; i < data.reservedWords.length; i++) {
       var errorResponse = await templates.createExperienceTemplate(
         templateData,
-        data.reservedWords[0],
+        data.reservedWords[i],
         data.validString
       );
       if (errorResponse.code !== 3) {
