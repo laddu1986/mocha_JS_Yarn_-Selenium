@@ -115,24 +115,24 @@ xdescribe('Negative Tests -> Template API', () => {
     expect(dupeKey.metadata._internal_repr.custom_error[0]).to.include(messages.Templates.existsTemplate);
     expect(dupeKey.code).to.equal(3);
   });
-  it('C1458988 renameExperienceTemplate () cannot have a name with less than 1 char', async () => {
+  it('C1458988 renameExperienceTemplate() cannot have a name with less than 1 char', async () => {
     let nameMinChar = await templates.renameExperienceTemplate(templateData, data.emptyString);
     let contains = CheckForAll([messages.Templates.empty, messages.Templates.lengthName]);
     expect(nameMinChar.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
     expect(nameMinChar.code).to.equal(3);
   });
-  it('C1458989 renameExperienceTemplate () cannot have a name with more than 200 chars', async () => {
+  it('C1458989 renameExperienceTemplate() cannot have a name with more than 200 chars', async () => {
     let nameMaxChar = await templates.renameExperienceTemplate(templateData, data.longName);
     expect(nameMaxChar.metadata._internal_repr.custom_error[0]).to.contain(messages.Templates.lengthName);
     expect(nameMaxChar.code).to.equal(3);
   });
-  it('C1458990 renameExperienceTemplate () must have a name provided', async () => {
+  it('C1458990 renameExperienceTemplate() must have a name provided', async () => {
     let noKey = await templates.renameExperienceTemplate(templateData, '');
     let contains = CheckForAll([messages.Templates.empty, messages.Templates.lengthName]);
     expect(noKey.metadata._internal_repr.custom_error[0]).to.satisfy(contains);
     expect(noKey.code).to.equal(3);
   });
-  it('C1458991 renameExperienceTemplate () must have a row version provided', async () => {
+  it('C1458991 renameExperienceTemplate() must have a row version provided', async () => {
     let noKey = await templates.renameExperienceTemplate(templateData, data.validString, true);
     expect(noKey.code).to.equal(2);
   });
