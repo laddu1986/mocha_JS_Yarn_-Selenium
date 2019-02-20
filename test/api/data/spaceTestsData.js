@@ -6,7 +6,7 @@ export function noName(spaceNegData) {
     api: `${spaces + spaceNegData.orgID}/spaces`,
     data: {
       createdByAccountId: spaceNegData.identityID,
-      shortUrl: randomString.generate(6)
+      shortUrl: randomString(6)
     },
     expected: 'The Name field is required.'
   };
@@ -16,7 +16,7 @@ export function noShortUrl(spaceNegData) {
   return {
     api: `${spaces + spaceNegData.orgID}/spaces`,
     data: {
-      name: randomString.generate(10),
+      name: randomString(10),
       createdByAccountId: spaceNegData.identityID
     },
     expected: 'The ShortUrl field is required.'
@@ -29,7 +29,7 @@ export function blankName(spaceNegData) {
     data: {
       name: '',
       createdByAccountId: spaceNegData.identityID,
-      shortUrl: randomString.generate(6)
+      shortUrl: randomString(6)
     },
     expected:
       'The Name field is required.,The field Name must be a string with a minimum length of 1 and a maximum length of 75.'
@@ -40,7 +40,7 @@ export function blankShortUrl(spaceNegData) {
   return {
     api: `${spaces + spaceNegData.orgID}/spaces`,
     data: {
-      name: randomString.generate(10),
+      name: randomString(10),
       createdByAccountId: spaceNegData.identityID,
       shortUrl: ''
     },
@@ -53,9 +53,9 @@ export function bigName(spaceNegData) {
   return {
     api: `${spaces + spaceNegData.orgID}/spaces`,
     data: {
-      name: randomString.generate(76),
+      name: randomString(76),
       createdByAccountId: spaceNegData.identityID,
-      shortUrl: randomString.generate(6)
+      shortUrl: randomString(6)
     },
     expected: 'The field Name must be a string with a minimum length of 1 and a maximum length of 75.'
   };
@@ -65,9 +65,9 @@ export function bigShortUrl(spaceNegData) {
   return {
     api: `${spaces + spaceNegData.orgID}/spaces`,
     data: {
-      name: randomString.generate(10),
+      name: randomString(10),
       createdByAccountId: spaceNegData.identityID,
-      shortUrl: randomString.generate(21)
+      shortUrl: randomString(21)
     },
     expected: 'The field ShortUrl must be a string with a minimum length of 1 and a maximum length of 20.'
   };
@@ -77,8 +77,8 @@ export function noAccountId(spaceNegData) {
   return {
     api: `${spaces + spaceNegData.orgID}/spaces`,
     data: {
-      name: randomString.generate(10),
-      shortUrl: randomString.generate(6)
+      name: randomString(10),
+      shortUrl: randomString(6)
     },
     expected: 'The CreatedByAccountId field is required.'
   };
@@ -91,7 +91,7 @@ export function noNamePut(spaceNegData) {
     data: {
       id: spaceNegData.spaceID,
       rowVersion: spaceNegData.spaceRowVersion,
-      shortUrl: randomString.generate(6)
+      shortUrl: randomString(6)
     },
     expected: 'The Name field is required.'
   };
@@ -104,7 +104,7 @@ export function blankNamePut(spaceNegData) {
       name: '',
       id: spaceNegData.spaceID,
       rowVersion: spaceNegData.spaceRowVersion,
-      shortUrl: randomString.generate(6)
+      shortUrl: randomString(6)
     },
     expected:
       'The Name field is required.,The field Name must be a string with a minimum length of 1 and a maximum length of 75.'
@@ -115,10 +115,10 @@ export function bigNamePut(spaceNegData) {
   return {
     api: `${spaces + spaceNegData.orgID}/spaces`,
     data: {
-      name: randomString.generate(76),
+      name: randomString(76),
       id: spaceNegData.spaceID,
       rowVersion: spaceNegData.spaceRowVersion,
-      shortUrl: randomString.generate(6)
+      shortUrl: randomString(6)
     },
     expected: 'The field Name must be a string with a minimum length of 1 and a maximum length of 75.'
   };
@@ -128,9 +128,9 @@ export function noIdPut(spaceNegData) {
   return {
     api: `${spaces + spaceNegData.orgID}/spaces`,
     data: {
-      name: randomString.generate(5),
+      name: randomString(5),
       rowVersion: spaceNegData.spaceRowVersion,
-      shortUrl: randomString.generate(6)
+      shortUrl: randomString(6)
     },
     expected: 'The Id field is required.'
   };
@@ -141,7 +141,7 @@ export function noShortUrlPut(spaceNegData) {
     api: `${spaces + spaceNegData.orgID}/spaces`,
     data: {
       id: spaceNegData.spaceID,
-      name: randomString.generate(5),
+      name: randomString(5),
       rowVersion: spaceNegData.spaceRowVersion
     },
     expected: 'The ShortUrl field is required.'
@@ -152,7 +152,7 @@ export function blankShortUrlPut(spaceNegData) {
   return {
     api: `${spaces + spaceNegData.orgID}/spaces`,
     data: {
-      name: randomString.generate(5),
+      name: randomString(5),
       id: spaceNegData.spaceID,
       rowVersion: spaceNegData.spaceRowVersion,
       shortUrl: ''
@@ -166,10 +166,10 @@ export function bigShortUrlPut(spaceNegData) {
   return {
     api: `${spaces + spaceNegData.orgID}/spaces`,
     data: {
-      name: randomString.generate(7),
+      name: randomString(7),
       id: spaceNegData.spaceID,
       rowVersion: spaceNegData.spaceRowVersion,
-      shortUrl: randomString.generate(21)
+      shortUrl: randomString(21)
     },
     expected: 'The field ShortUrl must be a string with a minimum length of 1 and a maximum length of 20.'
   };
@@ -180,8 +180,8 @@ export function noRowVersionPut(spaceNegData) {
     api: `${spaces + spaceNegData.orgID}/spaces`,
     data: {
       id: spaceNegData.spaceID,
-      name: randomString.generate(5),
-      shortUrl: randomString.generate(6)
+      name: randomString(5),
+      shortUrl: randomString(6)
     }
   };
 }
@@ -191,9 +191,9 @@ export function incorrectOrgIDPut(spaceNegData) {
     api: `${spaces + spaceNegData.identityID}/spaces`,
     data: {
       id: spaceNegData.spaceID,
-      name: randomString.generate(5),
+      name: randomString(5),
       rowVersion: spaceNegData.spaceRowVersion,
-      shortUrl: randomString.generate(6)
+      shortUrl: randomString(6)
     }
   };
 }
@@ -203,9 +203,9 @@ export function incorrectSpaceIDPut(spaceNegData) {
     api: `${spaces + spaceNegData.orgID}/spaces`,
     data: {
       id: spaceNegData.orgID,
-      name: randomString.generate(5),
+      name: randomString(5),
       rowVersion: spaceNegData.spaceRowVersion,
-      shortUrl: randomString.generate(6)
+      shortUrl: randomString(6)
     }
   };
 }
@@ -234,7 +234,7 @@ export function incorrectRowVersionPatch(spaceNegData) {
       {
         op: 'replace',
         path: '/shortUrl',
-        value: randomString.generate(6)
+        value: randomString(6)
       }
     ]
   };
@@ -249,7 +249,7 @@ export function incorrectOrgIDPatch(spaceNegData) {
       {
         op: 'replace',
         path: '/shortUrl',
-        value: randomString.generate(6)
+        value: randomString(6)
       }
     ]
   };
@@ -262,7 +262,7 @@ export function incorrectSpaceIDPatch(spaceNegData) {
       {
         op: 'replace',
         path: '/shortUrl',
-        value: randomString.generate(6)
+        value: randomString(6)
       }
     ]
   };
@@ -303,7 +303,7 @@ export function bigNamePatch(spaceNegData) {
       {
         op: 'replace',
         path: '/name',
-        value: randomString.generate(76)
+        value: randomString(76)
       }
     ],
     expected: 'The field Name must be a string with a minimum length of 1 and a maximum length of 75.'
@@ -345,7 +345,7 @@ export function bigShortUrlPatch(spaceNegData) {
       {
         op: 'replace',
         path: '/shortUrl',
-        value: randomString.generate(21)
+        value: randomString(21)
       }
     ],
     expected: 'The field ShortUrl must be a string with a minimum length of 1 and a maximum length of 20.'

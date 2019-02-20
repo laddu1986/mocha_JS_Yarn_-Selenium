@@ -5,8 +5,8 @@ export function postIdentity(responseObject) {
   const any = {
     api: identities,
     data: {
-      fullname: randomString.generate(12),
-      email: `${randomString.generate(12)}@test.co`,
+      fullname: randomString(12),
+      email: `${randomString(12)}@test.co`,
       password: process.env.ACCOUNT_PASS
     }
   };

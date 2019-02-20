@@ -3,12 +3,10 @@ const server = require('chakram');
 global.expect = server.expect;
 
 // Modules
-export var joi = require('joi');
-export var randomString = require('randomstring');
-export var NodeESModuleLoader = require('node-es-module-loader');
-export var loader = new NodeESModuleLoader();
-export var dateFormat = require('dateformat');
-export var path = require('path');
+export const joi = require('joi');
+export const dateFormat = require('dateformat');
+export const path = require('path');
+const generateString = require('randomstring');
 
 // Passed variables
 export var orca = getEnv();
@@ -50,6 +48,13 @@ export function patch(any) {
 
 export function del(any) {
   return server.delete(any.api + any.data);
+}
+
+export function randomString(opts) {
+  opts = opts == undefined ? 10 : opts;
+  let tag = process.env.QA_TAG == undefined ? '' : process.env.QA_TAG
+  let returnValue = tag + generateString.generate(opts);
+  return returnValue
 }
 
 // Private functions
