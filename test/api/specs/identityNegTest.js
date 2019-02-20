@@ -45,4 +45,7 @@ describe('Negative Cases --> Identity API', () => {
     expect(patchResponse).to.have.status(400);
     expect(patchResponse.body.message).to.equal(validationErrors.SetIdentity.InvalidIdentity);
   });
+  after(async () => {
+    await identity.deleteIdentityById(identityNegData);
+  });
 });
