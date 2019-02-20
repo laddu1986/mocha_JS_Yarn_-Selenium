@@ -28,13 +28,14 @@ export const noPwd = {
   expected: 'Password cannot be empty'
 };
 
-var emailDefined = `${lib.randomString.generate(12)}@test.co`;
-export const existingEmailData = {
-  api: identities,
-  data: {
-    fullname: lib.randomString.generate(12),
-    email: emailDefined,
-    password: process.env.ACCOUNT_PASS
-  },
-  expected: `Email id ${emailDefined} already registered`
+export const existingEmailData = identityData => {
+  return {
+    api: identities,
+    data: {
+      fullname: lib.randomString.generate(12),
+      email: identityData.identityEmail,
+      password: process.env.ACCOUNT_PASS
+    },
+    expected: `Email id ${identityData.identityEmail} already registered`
+  };
 };
