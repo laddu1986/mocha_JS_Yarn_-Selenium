@@ -53,4 +53,8 @@ describe('Negative Tests --> Organizations API', () => {
     let blankOrgIdDeleteResponse = await del(data.blankOrgIdDelete);
     expect(blankOrgIdDeleteResponse).to.have.status(404);
   });
+  after(async () => {
+    await identity.deleteIdentityById(orgNegData);
+    await organization.deleteOrganizationById(orgNegData);
+  });
 });
