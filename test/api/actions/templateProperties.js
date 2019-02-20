@@ -4,11 +4,9 @@ import * as data from 'data/templateTestData';
 
 export function createProperty(templateData, propertyType, name, key) {
   let reqName =
-    name === undefined
-      ? randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
-      : name;
+    name === undefined ? randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : name;
   let reqKey =
-    key === undefined ? randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : key;
+    key === undefined ? randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : key;
   let propertiesArray = templateData.template.properties === undefined ? [] : templateData.template.properties;
   let propertyVal = data.properties[propertyType];
   propertiesArray.push({
@@ -42,7 +40,7 @@ export function createProperty(templateData, propertyType, name, key) {
 }
 
 export function renameProperty(templateData) {
-  let newName = randomString.generate({ length: 40, charset: 'alphabetic', capitalization: 'lowercase' });
+  let newName = randomString({ length: 40, charset: 'alphabetic', capitalization: 'lowercase' });
   templateData.template.properties[0].name = newName;
   let templatePayload = {
     id: templateData.template.id,
