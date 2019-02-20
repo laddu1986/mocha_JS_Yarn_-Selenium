@@ -6,7 +6,7 @@ import * as data from 'data/membershipTestsData';
 
 const membershipNegData = new Object();
 
-describe('Negative tests --> Membership', () => {
+describe('Negative tests --> Membership API', () => {
   before(async () => {
     await identity.postIdentity(membershipNegData);
     await organization.postOrganization(membershipNegData);

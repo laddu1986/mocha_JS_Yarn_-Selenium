@@ -21,7 +21,7 @@ describe('Access a Revoked Invitation (New Account)', () => {
     accountPage.open();
     createAccount();
     browser.pause(1000);
-    newMember = `newmember_${lib.randomString.generate(5)}@test.co`;
+    newMember = `newmember_${lib.randomString(5)}@test.co`;
     inviteTeammate(newMember, '1');
   });
 

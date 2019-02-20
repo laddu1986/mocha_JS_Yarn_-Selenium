@@ -21,7 +21,7 @@ describe(`New User Joins an Organization via ACTIVE invitation`, () => {
     AccountPage.open();
     accountData = createAccount();
     browser.pause(1000);
-    newUser = `newUser_${lib.randomString.generate(4)}@test.co`;
+    newUser = `newUser_${lib.randomString(4)}@test.co`;
     inviteTeammate(newUser, '1');
     signOut();
   });

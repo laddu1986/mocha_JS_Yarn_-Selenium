@@ -6,7 +6,7 @@ const client = caller(process.env.TRIBE_HOST, PROTO_PATH, 'SegmentService');
 export function createTribe(responseObject) {
   const req = new client.Request('createSegment', {
     spaceContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID },
-    segment: { title: randomString.generate(6) }
+    segment: { title: randomString(6) }
   }).withResponseStatus(true);
   return req.exec().then(response => {
     responseObject.tribe = response.response;
@@ -22,7 +22,7 @@ export function updateTribe(responseObject) {
       segmentId: responseObject.tribe.id
     },
     segment: {
-      title: `${randomString.generate(6)}_newName`,
+      title: `${randomString(6)}_newName`,
       rowVersion: responseObject.tribe.rowVersion
     },
     updateMask: { paths: ['title'] }
