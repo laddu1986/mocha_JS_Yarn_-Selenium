@@ -15,8 +15,8 @@ import {
 } from 'actions/tribe';
 import * as Constants from 'constants.json';
 import * as PassiveNotification from 'data/passiveNotification.json';
-var name = lib.randomString.generate(5),
-  newName = `${lib.randomString.generate(5)}_newName`;
+var name = lib.randomString(5),
+  newName = `${lib.randomString(5)}_newName`;
 
 describe('Tribe Actions Tests', () => {
   before(() => {
