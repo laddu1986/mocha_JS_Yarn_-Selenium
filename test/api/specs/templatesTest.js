@@ -8,7 +8,7 @@ import * as schemas from 'schemas/templatesSchema.js';
 const templateData = new Object();
 var createTemplate;
 
-xdescribe('Template API', () => {
+xdescribe('Experience Template Service', () => {
   before('Setup the testing environment', async () => {
     await postIdentity(templateData);
     await postOrganization(templateData);
