@@ -24,7 +24,7 @@ xdescribe('Negative Test -> Template API -> Template Properties', () => {
     );
   });
 
-  it('C1458965 updateExperienceTemplate cannot create a property with a key that has a reserved word', async () => {
+  it('C1458965 updateExperienceTemplate() cannot create a property with a key that has a reserved word', async () => {
     let errorCodeArray = [],
       errorResponseArray = [];
     for (var i = 0; i < data.reservedWords.length; i++) {
