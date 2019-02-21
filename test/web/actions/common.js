@@ -97,11 +97,12 @@ export function submit() {
 }
 
 export function postIdentity(responseObject) {
+  let email = `${randomString(12)}@test.co`;
   const any = {
     api: identities,
     data: {
-      fullname: randomString.generate(12),
-      email: `${randomString.generate(12)}@test.co`,
+      fullname: randomString(12),
+      email: email,
       password: process.env.ACCOUNT_PASS
     }
   };
@@ -196,7 +197,7 @@ export function getAccessToken(responseObject) {
 
 export function postInvitesByOrganizationId(responseObject) {
   getAccessToken(responseObject);
-  let emailInvited = `${randomString.generate(5)}@test.co`;
+  let emailInvited = `${randomString(5)}@test.co`;
   const any = {
     api: `${organizations + responseObject.orgID}/invites`,
     data: [emailInvited],
