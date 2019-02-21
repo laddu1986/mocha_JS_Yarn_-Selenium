@@ -3,7 +3,6 @@ import { randomString, post, orca } from '../common';
 export function createOrganization(responseData) {
   var orgName = `${randomString(8)}`;
   const data = {
-    
     query:
       'mutation CreateOrg($input: CreateOrgInput!) { createOrganization(input: $input) { organization { id name slug createdByAccountId rowVersion createdTime modifiedTime spaces {id} members {total members{name email accountId organizationId organizationName role{name permissionLevel} currentUser}} invites {total invites{email}} rowStatus} }}',
     operationName: 'CreateOrg',
@@ -17,12 +16,7 @@ export function createOrganization(responseData) {
   };
   const any = {
     api: orca,
-    data: data,
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
-    },
+    data: data
   };
   return post(any, responseData).then(response => {
     responseData.orgName = orgName;
