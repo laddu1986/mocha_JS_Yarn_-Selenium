@@ -24,7 +24,6 @@
     "config-yml": "^0.8.0",
     "dateformat": "^3.0.3",
     "mysql2": "^1.5.3",
-    "node-es-module-loader": "^0.3.8",
     "pngjs": "^3.3.3",
     "randomstring": "^1.1.5",
     "sequelize": "^4.37.10",
