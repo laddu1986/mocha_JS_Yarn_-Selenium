@@ -15,7 +15,7 @@ import {
 } from 'actions/organization';
 import { verifySelectedOrgMenu, goToOrgPageFromNavMenu } from 'actions/navBar';
 const accountData = new Object();
-var org, updatedOrgName = `${lib.randomString.generate(10)}_OrgUpdated`;
+var org, updatedOrgName = `${lib.randomString(10)}_OrgUpdated`;
 
 describe('Update Organization name', () => {
   before(async () => {

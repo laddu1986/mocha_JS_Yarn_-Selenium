@@ -65,7 +65,7 @@ export function verifyJoinOrgText(text) {
 }
 
 export function createAccountToJoinInvitedOrg() {
-  AccountPage.nameInput.setValue(`newUser_${lib.randomString.generate(8)}`);
+  AccountPage.nameInput.setValue(`newUser_${lib.randomString(8)}`);
   AccountPage.passwordInput.setValue(process.env.ACCOUNT_PASS);
   AccountPage.codeInput.setValue(process.env.INV_CODE);
   CommonPage.submitButton.click();

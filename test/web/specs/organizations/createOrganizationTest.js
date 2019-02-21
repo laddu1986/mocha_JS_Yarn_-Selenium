@@ -12,7 +12,7 @@ import {
 } from 'actions/organization';
 import { getnavOrgCount } from 'actions/navBar';
 import SignInPage from 'page_objects/signInPage';
-var orgName = lib.randomString.generate(10);
+var orgName = lib.randomString(10);
 const accountData = new Object();
 describe('Tests for Create Organization', () => {
   before(async () => {

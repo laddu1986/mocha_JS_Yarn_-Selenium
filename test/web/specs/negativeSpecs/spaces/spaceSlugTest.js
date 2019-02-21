@@ -1,6 +1,7 @@
 import * as lib from '../../../common';
 import SignInPage from 'page_objects/signInPage.js';
 import { selectOrg } from 'actions/organization.js';
+import { signOut } from 'actions/navBar.js';
 import {
   signIn,
   get404PageText,
@@ -12,42 +13,32 @@ import {
 } from 'actions/common.js';
 import { verifyCreateFirstSpacePage, verifySpaceCard, selectSpace } from 'actions/space.js';
 import * as Messages from 'data/messages.json';
-var UserName, OrgName, SpaceSlug, deleteRequest;
-
+var deleteRequest;
 const spaceSlugData = new Object();
 
 describe('Negative cases --> Space Slug', () => {
   before(async () => {
-    var indentityRes = await postIdentity(spaceSlugData);
-    var orgRes = await postOrganization(spaceSlugData);
+    await postIdentity(spaceSlugData);
+    await postOrganization(spaceSlugData);
     await postMembership(spaceSlugData);
-    var spaceRes1 = await postSpaceByOrganizationId(spaceSlugData);
-    UserName = JSON.stringify(indentityRes.body.email).replace(/"/g, '');
-    SpaceSlug = JSON.stringify(spaceRes1.body.shortUrl)
-      .replace(/"/g, '')
-      .toLowerCase();
-    OrgName = JSON.stringify(orgRes.body.name)
-      .replace(/"/g, '')
-      .toLowerCase();
+    await postSpaceByOrganizationId(spaceSlugData);
     deleteRequest = {
-      /*eslint-disable */
       api: `${spaces + spaceSlugData.orgID}/spaces/${spaceSlugData.spaceID}?rowVersion=${
-        /*eslint-enable */
         spaceSlugData.spaceRowVersion
-      }`,
+        }`,
       data: ''
     };
   });
 
   before(() => {
     SignInPage.open();
-    signIn(UserName, process.env.ACCOUNT_PASS);
+    signIn(spaceSlugData.identityEmail, process.env.ACCOUNT_PASS);
     selectOrg();
     selectSpace();
   });
 
   it('C1295693 Invalid Space slug path --> redirects to 404 page', () => {
-    browser.url(`${OrgName}/space/abc`);
+    browser.url(`${spaceSlugData.organization}/space/abc`);
     expect(get404PageText()).to.include(Messages.space.spaceNotFound);
   });
 
@@ -58,18 +49,19 @@ describe('Negative cases --> Space Slug', () => {
 
   it('C1295695 Valid Space slug path with invalid child path --> redirects to 404 page', () => {
     selectSpace();
-    browser.url(`${OrgName}/space/${SpaceSlug}/abc`);
+    browser.url(`${spaceSlugData.organization}/space/${spaceSlugData.shortUrl}/abc`);
     expect(get404PageText()).to.include(Messages.space.pageNotFound);
   });
 
   it('C1295696 "Select Space" link redirects to Space dashboard', () => {
     clickLinkOn404Page();
-    expect(browser.getUrl()).to.equal(`${browser.options.baseUrl}/${OrgName}/space/${SpaceSlug}`);
+    expect(browser.getUrl()).to.equal(`${browser.options.baseUrl}/${spaceSlugData.organization.toLowerCase()}/space/${spaceSlugData.shortUrl.toLowerCase()}`);
   });
 
   it('C1295697 No Space Association --> "Select Space" on 404 page redirects to "create space" page', () => {
     lib.del(deleteRequest);
-    browser.refresh();
+    signOut();
+    signIn(spaceSlugData.identityEmail, process.env.ACCOUNT_PASS);
     clickLinkOn404Page();
     expect(verifyCreateFirstSpacePage()).to.equal(true);
   });
