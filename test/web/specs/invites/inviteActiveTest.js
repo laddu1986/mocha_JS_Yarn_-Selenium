@@ -1,7 +1,7 @@
-import * as lib from '../../common';
-import SignInPage from 'page_objects/signInPage'
+import '../../common';
+import SignInPage from 'page_objects/signInPage';
 import { createAccountToJoinInvitedOrg } from 'actions/account';
-import {  invitationLink } from 'actions/invite';
+import { invitationLink } from 'actions/invite';
 import OrgDashboardPage from 'page_objects/orgDashboardPage';
 import { submitButtonText } from 'actions/login';
 import AccountPage from 'page_objects/accountPage';
@@ -15,7 +15,6 @@ import {
 const accountData = new Object();
 var newUser;
 var acceptInvitation;
-
 describe(`New User Joins an Organization via ACTIVE invitation`, () => {
   before(async () => {
     await postIdentity(accountData);

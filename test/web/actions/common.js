@@ -78,11 +78,10 @@ export function get404PageText() {
 export function clickLinkOn404Page() {
   CommonPage.linkOnInvalidpage.click();
 }
-
 //hide intercom icon as it gets in the way of other elements and prevents clicking them
 export function hideIntercom() {
   CommonPage.intercomIcon.waitForVisible();
-  browser.execute(function () {
+  browser.execute(function() {
     const intercom = document.getElementById('intercom-container');
     if (intercom.style.display === 'none') {
       intercom.style.display = 'block';
@@ -99,7 +98,7 @@ export function submit() {
 export function postIdentity(responseObject) {
   let email = `${randomString(12)}@test.co`;
   const any = {
-    api: identities,
+    api: identities, //eslint-disable-line
     data: {
       fullname: randomString(12),
       email: email,
@@ -113,14 +112,14 @@ export function postIdentity(responseObject) {
       responseObject.identityFullname = any.data.fullname;
     } else
       throw `Post request for Identity API failed with code ${
-      response.response.statusCode
+        response.response.statusCode
       } and the error ${JSON.stringify(response.response.body)}`;
   });
 }
 
 export function postOrganization(responseObject) {
   const any = {
-    api: organizations,
+    api: organizations, //eslint-disable-line
     data: {
       name: randomString(10),
       createdByAccountId: responseObject.identityID
@@ -139,7 +138,7 @@ export function postOrganization(responseObject) {
 
 export function postMembership(responseObject) {
   const any = {
-    api: memberships,
+    api: memberships, //eslint-disable-line
     data: {
       accountId: responseObject.identityID,
       organizationId: responseObject.orgID
@@ -155,7 +154,7 @@ export function postMembership(responseObject) {
 
 export function postSpaceByOrganizationId(responseObject) {
   const any = {
-    api: `${spaces + responseObject.orgID}/spaces`,
+    api: `${spaces + responseObject.orgID}/spaces`, //eslint-disable-line
     data: {
       name: randomString(10),
       createdByAccountId: responseObject.identityID,
@@ -177,7 +176,7 @@ export function postSpaceByOrganizationId(responseObject) {
 
 export function getAccessToken(responseObject) {
   const any = {
-    api: token,
+    api: token, //eslint-disable-line
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: `Basic ${process.env.AUTH_CODE}`
@@ -185,7 +184,7 @@ export function getAccessToken(responseObject) {
     data: '',
     body: `grant_type=password&username=${responseObject.identityEmail}&password=${
       process.env.ACCOUNT_PASS
-      }&scope=backend_service&client_id=frontend_service`
+    }&scope=backend_service&client_id=frontend_service`
   };
   return post(any).then(response => {
     if (response.response.statusCode == 200) {
@@ -201,7 +200,7 @@ export function postInvitesByOrganizationId(responseObject) {
   getAccessToken(responseObject);
   let emailInvited = `${randomString(5)}@test.co`;
   const any = {
-    api: `${organizations + responseObject.orgID}/invites`,
+    api: `${organizations + responseObject.orgID}/invites`, //eslint-disable-line
     data: [emailInvited],
     headers: {
       'Content-Type': 'application/json',
@@ -212,7 +211,7 @@ export function postInvitesByOrganizationId(responseObject) {
   return post(any).then(response => {
     if (response.response.statusCode != 201)
       throw `postInvitesByOrganizationId failed with code ${
-      response.response.statusCode
+        response.response.statusCode
       } and the error ${JSON.stringify(response.response.body)}`;
   });
 }

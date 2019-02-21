@@ -1,10 +1,13 @@
-import * as lib from '../../common';
+import '../../common';
 import SignInPage from 'page_objects/signInPage';
 import {
   getNotificationMessageText,
   closePassiveNotification,
   confirmButtonIsEnabled,
-  typeDeleteToConfirm, postIdentity, postOrganization, postMembership,
+  typeDeleteToConfirm,
+  postIdentity,
+  postOrganization,
+  postMembership,
   confirmDelete
 } from 'actions/common';
 import {
@@ -32,7 +35,6 @@ describe('Delete organization Tests', () => {
     await postOrganization(accountData);
     await postMembership(accountData);
   });
-
   before(() => {
     SignInPage.open();
     signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);

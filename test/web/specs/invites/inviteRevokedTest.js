@@ -1,4 +1,4 @@
-import * as lib from '../../common';
+import '../../common';
 import { selectOrg } from 'actions/organization';
 import {
   invalidInvitationText,
@@ -7,14 +7,21 @@ import {
   revokeInvite,
   goToInactiveTab
 } from 'actions/invite';
-import { getNotificationMessageText, signIn, postIdentity, getAccessToken, postOrganization, postMembership, postInvitesByOrganizationId } from 'actions/common';
+import {
+  getNotificationMessageText,
+  signIn,
+  postIdentity,
+  getAccessToken,
+  postOrganization,
+  postMembership,
+  postInvitesByOrganizationId
+} from 'actions/common';
 import { signOut } from 'actions/navBar';
 import passiveNotification from 'data/passiveNotification.json';
 import messagesData from 'data/messages.json';
 import SignInPage from 'page_objects/signInPage';
 const accountData = new Object();
 var invitationURL;
-
 describe('Access a Revoked Invitation (New Account)', () => {
   before(async () => {
     await postIdentity(accountData);
@@ -28,7 +35,7 @@ describe('Access a Revoked Invitation (New Account)', () => {
   before(() => {
     SignInPage.open();
     signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
-    
+
     selectOrg();
   });
 

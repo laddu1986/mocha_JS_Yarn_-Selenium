@@ -1,4 +1,4 @@
-import * as lib from '../../common';
+import '../../common';
 import { verifyJoinOrgText } from 'actions/account';
 import { submitButtonVisible } from 'actions/login';
 import { signOut } from 'actions/navBar';
@@ -11,7 +11,15 @@ import {
   goToInactiveTab,
   resendInvite
 } from 'actions/invite';
-import { getNotificationMessageText, signIn, postIdentity, getAccessToken, postOrganization, postMembership, postInvitesByOrganizationId } from 'actions/common';
+import {
+  getNotificationMessageText,
+  signIn,
+  postIdentity,
+  getAccessToken,
+  postOrganization,
+  postMembership,
+  postInvitesByOrganizationId
+} from 'actions/common';
 import { selectOrg } from 'actions/organization';
 import SignInPage from 'page_objects/signInPage';
 import message from 'data/messages.json';
@@ -35,7 +43,6 @@ describe('New User accesses an Expired Invitation', () => {
     signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
     selectOrg();
   });
-
   it('C1295647 Inactive tab status --> shows as Expired', () => {
     goToTeammatesPage();
     goToInactiveTab();
