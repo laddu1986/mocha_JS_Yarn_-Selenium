@@ -15,17 +15,15 @@ import { verifyCreateFirstSpacePage, verifySpaceCard, selectSpace } from 'action
 import * as Messages from 'data/messages.json';
 var deleteRequest;
 const spaceSlugData = new Object();
-
 describe('Negative cases --> Space Slug', () => {
   before(async () => {
     await postIdentity(spaceSlugData);
     await postOrganization(spaceSlugData);
     await postMembership(spaceSlugData);
     await postSpaceByOrganizationId(spaceSlugData);
+    let spaceApi = `${spaces + spaceSlugData.orgID}`; //eslint-disable-line
     deleteRequest = {
-      api: `${spaces + spaceSlugData.orgID}/spaces/${spaceSlugData.spaceID}?rowVersion=${
-        spaceSlugData.spaceRowVersion
-        }`,
+      api: `${spaceApi}/spaces/${spaceSlugData.spaceID}?rowVersion=${spaceSlugData.spaceRowVersion}`,
       data: ''
     };
   });
@@ -55,7 +53,11 @@ describe('Negative cases --> Space Slug', () => {
 
   it('C1295696 "Select Space" link redirects to Space dashboard', () => {
     clickLinkOn404Page();
-    expect(browser.getUrl()).to.equal(`${browser.options.baseUrl}/${spaceSlugData.organization.toLowerCase()}/space/${spaceSlugData.shortUrl.toLowerCase()}`);
+    expect(browser.getUrl()).to.equal(
+      `${
+        browser.options.baseUrl
+      }/${spaceSlugData.organization.toLowerCase()}/space/${spaceSlugData.shortUrl.toLowerCase()}`
+    );
   });
 
   it('C1295697 No Space Association --> "Select Space" on 404 page redirects to "create space" page', () => {

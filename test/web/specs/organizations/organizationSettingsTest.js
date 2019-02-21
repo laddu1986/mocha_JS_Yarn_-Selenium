@@ -1,9 +1,5 @@
 import * as lib from '../../common';
-import {
-  signIn, postIdentity,
-  postOrganization,
-  postMembership,
-} from 'actions/common';
+import { signIn, postIdentity, postOrganization, postMembership } from 'actions/common';
 import SignInPage from 'page_objects/signInPage';
 import {
   verifyOrgCardStack,
@@ -15,7 +11,8 @@ import {
 } from 'actions/organization';
 import { verifySelectedOrgMenu, goToOrgPageFromNavMenu } from 'actions/navBar';
 const accountData = new Object();
-var org, updatedOrgName = `${lib.randomString(10)}_OrgUpdated`;
+var org,
+  updatedOrgName = `${lib.randomString(10)}_OrgUpdated`;
 
 describe('Update Organization name', () => {
   before(async () => {
@@ -26,7 +23,6 @@ describe('Update Organization name', () => {
     org = accountData.organization;
     await postMembership(accountData);
   });
-
   before(() => {
     SignInPage.open();
     signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
