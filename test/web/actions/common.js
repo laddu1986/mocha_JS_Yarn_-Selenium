@@ -166,6 +166,8 @@ export function postSpaceByOrganizationId(responseObject) {
     if (response.response.statusCode == 201) {
       responseObject.spaceID = response.body.id;
       responseObject.spaceName = any.data.name;
+      responseObject.shortUrl = any.data.shortUrl;
+      responseObject.spaceRowVersion = response.body.rowVersion;
     } else
       throw `postSpaceByOrganizationId failed with code ${response.response.statusCode} and the error ${JSON.stringify(
         response.response.body
