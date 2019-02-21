@@ -42,6 +42,7 @@ describe('Delete organization Tests', () => {
   });
 
   it('C1295702 Delete Org --> verify Cancel action on Delete modal', () => {
+    // Blocked by https://app.clickup.com/t/czw98
     gotoOrgSettings();
     clickDeleteOrgButton();
     expect(cancelDeleteOrg()).to.equal(true);
