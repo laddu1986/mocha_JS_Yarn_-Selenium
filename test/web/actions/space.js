@@ -11,7 +11,7 @@ const clipboardy = require('clipboardy');
 
 export function changeSpace(type) {
   var webElement = SpaceSettingsPage.spaceName;
-  var name = `${lib.randomString(20)}_Space`;
+  var name = `${lib.randomString(10)}_Space`;
   if (type == 'slug') {
     webElement = SpaceSettingsPage.spaceSlug;
     name = `${lib.randomString(10)}_Slug`;
@@ -32,7 +32,7 @@ export function spaceIsDeleted() {
 }
 
 export function createSpace() {
-  var spacename = `${lib.randomString(20)}_Space`;
+  var spacename = `${lib.randomString(10)}_Space`;
   OrgDashboardPage.createSpaceInput.setValue(spacename);
   OrgDashboardPage.createSpaceButton.click();
   NavBar.developerLink.waitForVisible();
