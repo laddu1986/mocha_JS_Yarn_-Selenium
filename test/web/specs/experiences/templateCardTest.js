@@ -20,7 +20,7 @@ import {
 import { closePassiveNotification, getNotificationMessageText } from 'actions/common';
 import * as PassiveNotification from 'data/passiveNotification.json';
 import { goToExperiencePage } from 'actions/navBar';
-var experienceTemplateName = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}`;
+var experienceTemplateName = `${lib.randomString({ length: 7, charset: 'alphabetic' })}`;
 
 describe(`Experience Template card image Tests`, () => {
   before(() => {

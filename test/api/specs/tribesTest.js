@@ -59,8 +59,8 @@ describe('Tribe Service', () => {
     });
   });
 
-  var tribename1 = `${randomString.generate(7)}_1`,
-    tribename2 = `${randomString.generate(7)}_2`;
+  var tribename1 = `${randomString(7)}_1`,
+    tribename2 = `${randomString(7)}_2`;
   describe('Move Tribe', () => {
     before(async () => {
       await categories.createCategory(tribeData, true);
