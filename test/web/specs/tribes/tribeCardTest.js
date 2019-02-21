@@ -25,7 +25,7 @@ import {
 } from 'actions/tribe';
 var name = lib.randomString(5);
 
-describe('Tribe Actions Tests', () => {
+describe('Tribe Card Tests', () => {
   before(() => {
     accountPage.open();
     createAccount();
