@@ -29,7 +29,7 @@ export function createSpace(responseData) {
 }
 
 export function updateSpace(responseData) {
-  var newSpaceName = `${randomString(8)}_newSpace`;
+  var newSpaceName = `${randomString(5)}_newSpace`;
   const data = {
     query:
       'mutation UpdateSpace($input: UpdateSpaceInput!) { updateSpace(input: $input) { space { id name slug apiKeys{value rowStatus rowVersion} createdByAccountId organizationId rowStatus rowVersion activated }}}',
