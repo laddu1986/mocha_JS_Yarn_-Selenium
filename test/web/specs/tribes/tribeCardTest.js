@@ -23,7 +23,7 @@ import {
   verifyTribeCardColour,
   goToTribeDetailPage
 } from 'actions/tribe';
-var name = lib.randomString.generate(5);
+var name = lib.randomString(5);
 
 describe('Tribe Actions Tests', () => {
   before(() => {

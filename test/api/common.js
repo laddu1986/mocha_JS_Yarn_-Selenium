@@ -1,23 +1,20 @@
 import 'app-module-path/register';
-const server = require('chakram');
-var joi = require('joi');
-global.expect = server.expect;
-var randomString = require('randomstring');
-var NodeESModuleLoader = require('node-es-module-loader');
-var loader = new NodeESModuleLoader();
-var dateFormat = require('dateformat');
-var path = require('path');
-var caller = require('grpc-caller');
+export const server = require('chakram');
+export const joi = require('joi');
+export const dateFormat = require('dateformat');
+export const path = require('path');
+export const caller = require('grpc-caller');
+const generateString = require('randomstring');
 
-export const invitesNegData = new Object();
-export const spaceNegData = new Object();
-export const spaceKeyNegData = new Object();
-
-const Tags = {
+// Test Tags
+// ---------------------------------------------------
+export const Tags = {
   smokeTest: '@smoke'
 };
 
-function post(any) {
+// API
+// ---------------------------------------------------
+export function post(any) {
   if (any.headers == undefined) {
     any.headers = {
       headers: {
@@ -27,34 +24,29 @@ function post(any) {
   }
   return server.post(any.api, any.data, any);
 }
-function get(any) {
+export function get(any) {
   return server.get(any.api + any.data);
 }
-function put(any) {
+export function put(any) {
   return server.put(any.api, any.data);
 }
-function patch(any) {
+export function patch(any) {
   return server.patch(any.api, any.data);
 }
-function del(any) {
+export function del(any) {
   return server.delete(any.api + any.data);
 }
-const CheckForAll = bits => string => bits.every(bit => string.includes(bit));
 
-export {
-  dateFormat,
-  Tags,
-  loader,
-  joi,
-  // api calls
-  post,
-  get,
-  put,
-  patch,
-  del,
-  server,
-  randomString,
-  path,
-  caller,
-  CheckForAll
-};
+// JOI Check many strings for inclusion in many strings
+// ---------------------------------------------------
+export const CheckForAll = bits => string => bits.every(bit => string.includes(bit));
+
+// String generator with prefix
+// ---------------------------------------------------
+export function randomString(opts) {
+  opts = opts == undefined ? 10 : opts;
+  let tag = process.env.QA_TAG == undefined ? '' : process.env.QA_TAG
+  let returnValue = tag + generateString.generate(opts);
+  return returnValue
+}
+global.expect = server.expect;

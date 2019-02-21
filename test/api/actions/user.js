@@ -5,7 +5,7 @@ const PROTO_PATH = path.resolve(process.env.USER_PROTO_DIR + 'spaceUserService.p
 const client = caller(process.env.USER_HOST, PROTO_PATH, 'spaceUserService');
 
 export function identifySpaceUser(userData) {
-  userData.userInternalID = randomString.generate(16);
+  userData.userInternalID = randomString(16);
 
   const req = new client.Request('identifySpaceUser', {
     externalId: constants.UserDetails.ExternalID,

@@ -38,10 +38,7 @@ describe('Create Org Invite Tests', () => {
     createAccountResponse = await createAccount(createOrgInviteObject);
     await login(createOrgInviteObject);
     expect(createAccountResponse.response.statusCode).to.equal(200);
-    joi.assert(
-      createAccountResponse.response.body.data.createAccount.account,
-      createOrgSchema(createOrgInviteObject)
-    );
+    joi.assert(createAccountResponse.response.body.data.createAccount.account, createOrgSchema(createOrgInviteObject));
   });
 
   it('C1295775 Mutation- Accept Org Invite', async () => {

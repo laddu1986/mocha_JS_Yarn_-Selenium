@@ -121,7 +121,7 @@ export function postOrganization(responseObject) {
   const any = {
     api: organizations,
     data: {
-      name: randomString.generate(10),
+      name: randomString(10),
       createdByAccountId: responseObject.identityID
     }
   };
@@ -156,9 +156,9 @@ export function postSpaceByOrganizationId(responseObject) {
   const any = {
     api: `${spaces + responseObject.orgID}/spaces`,
     data: {
-      name: randomString.generate(10),
+      name: randomString(10),
       createdByAccountId: responseObject.identityID,
-      shortUrl: randomString.generate(6)
+      shortUrl: randomString(6)
     }
   };
   return post(any).then(response => {
