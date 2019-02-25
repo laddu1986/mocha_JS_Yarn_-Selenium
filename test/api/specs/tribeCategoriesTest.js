@@ -40,7 +40,7 @@ describe('Tribes Service', () => {
     expect(moveResponse.status.code).to.equal(0);
   });
 
-  it('moveCategory() moves the category to the desired location', async () => {
+  it('C1720491 moveCategory() moves the category to the desired location', async () => {
     let moveConfirm = await categories.listCategories(categoryData);
     expect(moveConfirm.response.categories[0].id > moveConfirm.response.categories[1].id).to.be.true;
   });
@@ -50,7 +50,7 @@ describe('Tribes Service', () => {
     expect(deleteResponse.status.code).to.equal(0);
   });
 
-  it('deleteCategory() deleted the provided category and creates the default category', async () => {
+  it('C1720492 deleteCategory() deleted the provided category and creates the default category', async () => {
     let deleteConfirm = await categories.listCategories(categoryData);
     expect(deleteConfirm.response.categories).to.have.lengthOf(2);
   });

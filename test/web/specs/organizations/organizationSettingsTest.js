@@ -30,6 +30,7 @@ describe('Update Organization name', () => {
   });
 
   it('C1295707 Verify Settings Page url', () => {
+    // Blocked by https://app.clickup.com/t/czw98
     gotoOrgSettings();
     expect(browser.getUrl()).to.include(`/${org}/edit`.toLowerCase(), 'Url contains old orgname'); //This will fail due to https://app.clickup.com/301733/t/84t88
   });
