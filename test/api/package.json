@@ -15,7 +15,6 @@
     "grpc-caller": "^0.9.0",
     "mocha": "^5.0.5",
     "mocha-testrail-reporter-custom": "^1.0.15",
-    "node-es-module-loader": "^0.3.8",
     "randomstring": "^1.1.5",
     "wdio-testrail-reporter": "^1.1.5"
   },

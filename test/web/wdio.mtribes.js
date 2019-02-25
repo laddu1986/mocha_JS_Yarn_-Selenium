@@ -40,7 +40,12 @@ exports.config = {
   maxInstances: process.env.MAX_INSTANCES,
   plugins: {},
   framework: 'mocha',
-  reporters: [WdioTestRailReporter, 'spec'],
+  reporters: ['html-format', WdioTestRailReporter, 'spec'],
+  reporterOptions: {
+    htmlFormat: {
+      outputDir: 'reports'
+    }
+  },
   testRailsOptions: {
     domain: process.env.TESTRAIL_URL,
     username: process.env.TESTRAIL_USERNAME,

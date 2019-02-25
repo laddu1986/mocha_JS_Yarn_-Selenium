@@ -29,8 +29,8 @@ export function verifyAccountPageAppears() {
 }
 
 export function inputDetails(email) {
-  accountData.name = lib.randomString.generate(8);
-  accountData.organization = `${lib.randomString.generate(10)}_Org`;
+  accountData.name = lib.randomString(8);
+  accountData.organization = `${lib.randomString(11)}_Org`;
   accountData.password = process.env.ACCOUNT_PASS;
   accountData.invcode = process.env.INV_CODE;
   AccountPage.nameInput.setValue(accountData.name);
@@ -39,7 +39,7 @@ export function inputDetails(email) {
     accountData.email = email;
   } else {
     if (!AccountPage.emailInput.getAttribute('value').includes('@')) {
-      accountData.email = `${lib.randomString.generate(15)}@test.co`;
+      accountData.email = `${lib.randomString(15)}@test.co`;
       AccountPage.emailInput.setValue(accountData.email);
     }
   }
@@ -65,9 +65,9 @@ export function verifyJoinOrgText(text) {
 }
 
 export function createAccountToJoinInvitedOrg() {
-  AccountPage.nameInput.setValue(`newUser_${accountData.name}`);
-  AccountPage.passwordInput.setValue(accountData.password);
-  AccountPage.codeInput.setValue(accountData.invcode);
+  AccountPage.nameInput.setValue(`newUser_${lib.randomString(8)}`);
+  AccountPage.passwordInput.setValue(process.env.ACCOUNT_PASS);
+  AccountPage.codeInput.setValue(process.env.INV_CODE);
   CommonPage.submitButton.click();
   OrgDashboardPage.currentOrgName.waitForVisible();
 }

@@ -1,37 +1,37 @@
-/*
-TEST CASE - 
-Admin invites new User
-User gets invite mail 
-Clicks on Accept Invite button
-Redirected to Create Account page
-User lands in invited Org after account creation
-*/
-import * as lib from '../../common';
-import { createAccountToJoinInvitedOrg, createAccount } from 'actions/account';
-import { inviteTeammate, invitationLink } from 'actions/invite';
-import { signOut } from 'actions/navBar';
+import '../../common';
+import SignInPage from 'page_objects/signInPage';
+import { createAccountToJoinInvitedOrg } from 'actions/account';
+import { invitationLink } from 'actions/invite';
 import OrgDashboardPage from 'page_objects/orgDashboardPage';
 import { submitButtonText } from 'actions/login';
 import AccountPage from 'page_objects/accountPage';
-
-let newUser, accountData;
-
+import {
+  postIdentity,
+  postOrganization,
+  postMembership,
+  postInvitesByOrganizationId,
+  getAccessToken
+} from 'actions/common';
+const accountData = new Object();
+var newUser;
+var acceptInvitation;
 describe(`New User Joins an Organization via ACTIVE invitation`, () => {
-  before('Admin Invites Teammate', () => {
-    AccountPage.open();
-    accountData = createAccount();
-    browser.pause(1000);
-    newUser = `newUser_${lib.randomString.generate(4)}@test.co`;
-    inviteTeammate(newUser, '1');
-    signOut();
+  before(async () => {
+    await postIdentity(accountData);
+    await postOrganization(accountData);
+    await postMembership(accountData);
+    await getAccessToken(accountData);
+    await postInvitesByOrganizationId(accountData);
+    newUser = accountData.inviteEmail;
+    acceptInvitation = await invitationLink(newUser);
   });
 
-  it('C1295641 Click on the Invitation Link', async () => {
-    const acceptInvitation = await invitationLink(newUser);
-    browser.url(acceptInvitation); //replication for user clicking on Accept Invitation button in email
+  before(() => {
+    SignInPage.open();
   });
 
   it('C1295642 New User Accepts Invite and is taken to Join Org page', async () => {
+    browser.url(acceptInvitation);
     const expectedMsg = `Join ${accountData.organization}`;
     expect(AccountPage.joinOrgMsg.getText()).to.equal(expectedMsg);
   });

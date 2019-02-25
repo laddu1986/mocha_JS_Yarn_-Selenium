@@ -1,30 +1,37 @@
 import * as lib from '../../common';
-import { createAccount } from 'actions/account';
-import accountPage from 'page_objects/accountPage';
+import { signIn, postIdentity, postOrganization, postMembership } from 'actions/common';
+import SignInPage from 'page_objects/signInPage';
 import {
   verifyOrgCardStack,
   verifyOrgNameOnDashBoard,
   updateOrgName,
   isSaveButtonEnabled,
   gotoOrgSettings,
-  createOrg
+  selectOrg
 } from 'actions/organization';
 import { verifySelectedOrgMenu, goToOrgPageFromNavMenu } from 'actions/navBar';
-var org1 = `${lib.randomString.generate(10)}_Org1`,
-  org2 = `${lib.randomString.generate(10)}_Org2`,
-  updatedOrgName = `${lib.randomString.generate(10)}_OrgUpdated`;
+const accountData = new Object();
+var org,
+  updatedOrgName = `${lib.randomString(10)}_OrgUpdated`;
 
 describe('Update Organization name', () => {
+  before(async () => {
+    await postIdentity(accountData);
+    await postOrganization(accountData);
+    await postMembership(accountData);
+    await postOrganization(accountData);
+    org = accountData.organization;
+    await postMembership(accountData);
+  });
   before(() => {
-    accountPage.open();
-    createAccount();
-    createOrg(org1);
-    createOrg(org2);
+    SignInPage.open();
+    signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
+    selectOrg();
   });
 
   it('C1295707 Verify Settings Page url', () => {
     gotoOrgSettings();
-    expect(browser.getUrl()).to.include(`/${org2}/edit`.toLowerCase(), 'Url contains old orgname'); //This will fail due to https://app.clickup.com/301733/t/84t88
+    expect(browser.getUrl()).to.include(`/${org}/edit`.toLowerCase(), 'Url contains old orgname'); //This will fail due to https://app.clickup.com/301733/t/84t88
   });
 
   it('C1640155 Verify Save button is disabled on Settings Page', () => {
