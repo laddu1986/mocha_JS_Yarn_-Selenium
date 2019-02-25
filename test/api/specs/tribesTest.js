@@ -37,7 +37,7 @@ describe('Tribe Service', () => {
     expect(moveResponse.status.code).to.equal(0);
   });
 
-  it('moveTribe() moves the tribe to a new category', async () => {
+  it('C1720493 moveTribe() moves the tribe to a new category', async () => {
     let moveConfirm = await categories.listCategories(tribeData);
     expect(moveConfirm.response.categories[0].segments).to.equal(undefined);
   });

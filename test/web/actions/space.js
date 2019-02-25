@@ -34,6 +34,7 @@ export function spaceIsDeleted() {
 export function createSpace() {
   var spacename = `${lib.randomString(10)}_Space`;
   OrgDashboardPage.createSpaceInput.setValue(spacename);
+  browser.pause(1000);
   OrgDashboardPage.createSpaceButton.click();
   NavBar.developerLink.waitForVisible();
   return spacename;
