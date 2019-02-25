@@ -23,7 +23,7 @@ var createExperienceResponse,
   deleteExperienceResponse;
 var experienceTemplateObject = new Object();
 
-describe('Tests for experience templates for a space', () => {
+xdescribe('Tests for experience templates for a space', () => {
   before(async () => {
     await registerAndCreateOrg(experienceTemplateObject);
     await login(experienceTemplateObject);

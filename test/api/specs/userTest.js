@@ -38,7 +38,7 @@ describe('User Service', () => {
     let addUserLabels = await user.addSpaceUserLabels(userData, labels);
     expect(addUserLabels.status.code).to.equal(0);
   });
-  it('addSpaceUserLabels() adds labels to a user', async () => {
+  it('C1720494 addSpaceUserLabels() adds labels to a user', async () => {
     let verifyLabel = await user.getSpaceUserDetails(userData);
     expect(verifyLabel.response.user.labels).to.eql(labels);
   });
@@ -51,7 +51,7 @@ describe('User Service', () => {
     let removeLabels = await user.removeSpaceUserLabels(userData);
     expect(removeLabels.status.code).to.equal(0);
   });
-  it('removeSpaceUserLabels() removes a user label', async () => {
+  it('C1720495 removeSpaceUserLabels() removes a user label', async () => {
     let verifyLabel = await user.getSpaceUserDetails(userData);
     expect(verifyLabel.response.user.labels).to.equal(undefined);
   });
