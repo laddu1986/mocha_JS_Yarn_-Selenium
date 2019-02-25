@@ -1,16 +1,17 @@
-import * as lib from '../../common';
-import { createAccount } from 'actions/account';
-import accountPage from 'page_objects/accountPage';
+import '../../common';
+import SignInPage from 'page_objects/signInPage';
 import {
   getNotificationMessageText,
   closePassiveNotification,
   confirmButtonIsEnabled,
   typeDeleteToConfirm,
+  postIdentity,
+  postOrganization,
+  postMembership,
   confirmDelete
 } from 'actions/common';
 import {
   createNewOrg,
-  createOrg,
   selectOrg,
   verifyChooseOrgspage,
   verifyWecomeOrgPage,
@@ -24,15 +25,20 @@ import {
 import orgNotificationData from 'data/passiveNotification.json';
 import { signIn } from 'actions/common';
 import { signOut } from 'actions/navBar';
-var accountDetails,
-  orgName = `${lib.randomString.generate(10)}_Org1`,
-  newOrgName = `${lib.randomString.generate(10)}_Org2`;
-
+var newOrgName;
+const accountData = new Object();
 describe('Delete organization Tests', () => {
+  before(async () => {
+    await postIdentity(accountData);
+    await postOrganization(accountData);
+    await postMembership(accountData);
+    await postOrganization(accountData);
+    await postMembership(accountData);
+  });
   before(() => {
-    accountPage.open();
-    accountDetails = createAccount();
-    createOrg(orgName);
+    SignInPage.open();
+    signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
+    selectOrg();
   });
 
   it('C1295702 Delete Org --> verify Cancel action on Delete modal', () => {
@@ -75,7 +81,7 @@ describe('Delete organization Tests', () => {
 
   it('C1295705 Logout and Login --> No orgs page is displayed', () => {
     signOut();
-    signIn(accountDetails.email, accountDetails.password);
+    signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
     expect(verifyNoOrgPage()).to.equal(true);
   });
 

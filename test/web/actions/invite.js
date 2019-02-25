@@ -73,12 +73,6 @@ export function goToOrganisationDashboard() {
   NavBar.backToOrgDashboardLink.click();
 }
 
-export function inviteTeammate(mail, counta) {
-  clickInviteTeammateButton();
-  sendInvite(mail);
-  verifyInviteCount(counta);
-}
-
 export function revokeInvite() {
   TeamPage.revokeButton.click();
   clickSureButton();

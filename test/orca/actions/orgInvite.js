@@ -1,11 +1,11 @@
 import { randomString, post, orca } from '../common';
 
 export function createOrgInvite(responseData) {
-  var invitedEmail = `${randomString.generate(8)}@email.com`;
+  var invitedEmail = `${randomString(8)}@email.com`;
   const data = {
     query:
       'mutation CreateOrgInvite($input: CreateOrgInviteInput!) { createOrgInvite(input: $input) {total invites {token expiryDate createdTime email status}}}',
-    operationName: "CreateOrgInvite", 
+    operationName: 'CreateOrgInvite',
     variables: {
       input: {
         emails: [invitedEmail],
@@ -29,7 +29,7 @@ export function getInviteTokenDetail(responseData) {
   const data = {
     query:
       'query getInviteTokenDetail($token: ID!) { orgInviteTokenInfo(token: $token) {email organizationName hasAccount status organizationId}}',
-    operationName: "getInviteTokenDetail", 
+    operationName: 'getInviteTokenDetail',
     variables: {
       token: responseData.orgInviteToken
     }
@@ -49,7 +49,7 @@ export function acceptOrgInvite(responseData) {
   const data = {
     query:
       'mutation acceptOrgInvite($input: AcceptOrgInviteInput!) { acceptOrgInvite(input: $input) {organization{id name slug createdByAccountId rowVersion createdTime modifiedTime spaces{id name slug} members{total members{name email accountId organizationId organizationName role{name permissionLevel} currentUser }} invites{total invites{token email expiryDate}}rowStatus }}}',
-    operationName: "acceptOrgInvite", 
+    operationName: 'acceptOrgInvite',
     variables: {
       input: {
         token: responseData.orgInviteToken
@@ -68,7 +68,7 @@ export function acceptOrgInvite(responseData) {
 export function deleteOrgInvite(responseData) {
   const data = {
     query: 'mutation DeleteOrgInvite($input: DeleteOrgInviteInput!) { deleteOrgInvite(input: $input)} ',
-    operationName: "DeleteOrgInvite", 
+    operationName: 'DeleteOrgInvite',
     variables: {
       input: {
         email: responseData.inviteEmail,

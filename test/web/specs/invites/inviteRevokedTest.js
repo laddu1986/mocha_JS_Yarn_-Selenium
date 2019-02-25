@@ -1,32 +1,42 @@
-import * as lib from '../../common';
-import { createAccount } from 'actions/account';
+import '../../common';
+import { selectOrg } from 'actions/organization';
 import {
   invalidInvitationText,
   goToTeammatesPage,
-  inviteTeammate,
   invitationLink,
   revokeInvite,
   goToInactiveTab
 } from 'actions/invite';
-import { getNotificationMessageText } from 'actions/common';
+import {
+  getNotificationMessageText,
+  signIn,
+  postIdentity,
+  getAccessToken,
+  postOrganization,
+  postMembership,
+  postInvitesByOrganizationId
+} from 'actions/common';
 import { signOut } from 'actions/navBar';
 import passiveNotification from 'data/passiveNotification.json';
 import messagesData from 'data/messages.json';
-import accountPage from 'page_objects/accountPage';
-let newMember;
-let invitationURL;
-
+import SignInPage from 'page_objects/signInPage';
+const accountData = new Object();
+var invitationURL;
 describe('Access a Revoked Invitation (New Account)', () => {
-  before(() => {
-    accountPage.open();
-    createAccount();
-    browser.pause(1000);
-    newMember = `newmember_${lib.randomString.generate(5)}@test.co`;
-    inviteTeammate(newMember, '1');
-  });
-
-  it('C1295652 New User gets Invitation URL', async () => {
+  before(async () => {
+    await postIdentity(accountData);
+    await postOrganization(accountData);
+    await postMembership(accountData);
+    await getAccessToken(accountData);
+    await postInvitesByOrganizationId(accountData);
+    let newMember = accountData.inviteEmail;
     invitationURL = await invitationLink(newMember);
+  });
+  before(() => {
+    SignInPage.open();
+    signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
+
+    selectOrg();
   });
 
   it('C1295653 Admin revokes invite and validates Passive Notification and Sign Out', () => {
