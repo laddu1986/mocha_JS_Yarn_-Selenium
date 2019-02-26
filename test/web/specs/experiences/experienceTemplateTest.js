@@ -25,8 +25,8 @@ import {
 } from 'actions/experienceTemplates.js';
 import { goToExperiencePage } from 'actions/navBar';
 import * as PassiveNotification from 'data/passiveNotification.json';
-var name = `${lib.randomString({ length: 7, charset: 'alphabetic' })}`,
-  newName = `${lib.randomString({ length: 7, charset: 'alphabetic' })}_new`;
+var name = `${lib.generateString.generate({ length: 7, charset: 'alphabetic' })}`,
+  newName = `${lib.generateString.generate({ length: 7, charset: 'alphabetic' })}_new`;
 
 describe(`Experience Template Tests`, () => {
   before(() => {
@@ -74,7 +74,7 @@ describe(`Experience Template Tests`, () => {
     verifyTemplateCard(newName);
   });
 
-  it('C1640133 Delete Template --> verify notification message and template(s) page', () => {
+  xit('C1640133 Delete Template --> verify notification message and template(s) page', () => {
     clickMoreButton();
     clickDeleteFromCard();
     typeDeleteToConfirm();
