@@ -31,12 +31,11 @@ export function verifyTemplateIsCreated(name) {
   );
 }
 export function verifyTemplateCard(name) {
-  browser.waitUntil(() => experienceTemplatePage.templateCard.getText() === name, 5000, 'Results not displayed', 200);
+  browser.waitUntil(() => experienceTemplatePage.templateCard.getText() === name, 5000, 'Template card name is incorrect', 200);
 }
 export function editTemplate(name) {
   experienceTemplatePage.editTemplateName.clearElement();
   experienceTemplatePage.editTemplateName.setValue(name);
-  browser.pause(1000);
 }
 export function saveTemplate() {
   browser.keys('Tab');
@@ -60,7 +59,7 @@ export function clickProperty(type) {
   element.click();
 }
 export function addNameForProperty(name) {
-  browser.pause(1000);
+  browser.pause(500);
   experienceTemplatePage.propertyName.setValue(name);
   saveTemplate();
 }
@@ -68,7 +67,7 @@ export function clearPropertyName() {
   experienceTemplatePage.propertyName.clearElement();
 }
 export function verifyPropertyIsAdded(name) {
-  browser.waitUntil(() => experienceTemplatePage.propertyTitle.getText() === name, 5000, 'Results not displayed', 200);
+  browser.waitUntil(() => experienceTemplatePage.propertyTitle.getText() === name, 5000, `Added property ${name} is not correctly displayed`, 200);
 }
 export function verifyAddPropertyPage() {
   return experienceTemplatePage.addProperty.isVisible();
@@ -125,7 +124,7 @@ export function verifyThumbnail(index) {
   browser.waitUntil(
     () => experienceTemplatePage.thumbnailImage.value[index].getAttribute('class').includes('isSelected'),
     5000,
-    'Results not displayed',
+    'Correct thumbnail is not selected',
     200
   );
 }

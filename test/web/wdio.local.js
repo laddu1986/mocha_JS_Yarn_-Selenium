@@ -8,7 +8,7 @@ var overrides = {
   path: '',
   //Modify these instead of modifying the mtribes file
   specs: [
-    'specs/**/templateCardTest.js' //master
+    'specs/**/*Test.js' //master
   ],
   // // Patterns to exclude.
   exclude: ['specs/support/helpPageTest.js']

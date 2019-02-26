@@ -44,7 +44,7 @@ describe(`Experience Template card image Tests`, () => {
   it('C1640139 Select hero thumbnail --> Verify selection', () => {
     clickHeroImage();
     clickConfirmButton();
-    browser.pause(1000);
+    browser.pause(2000);
     clickEditThumbnail();
     verifyThumbnail(1);
   });
