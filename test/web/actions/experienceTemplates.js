@@ -36,10 +36,11 @@ export function verifyTemplateCard(name) {
 export function editTemplate(name) {
   experienceTemplatePage.editTemplateName.clearElement();
   experienceTemplatePage.editTemplateName.setValue(name);
+  browser.pause(1000);
 }
 export function saveTemplate() {
   browser.keys('Tab');
-  browser.pause(2000);
+  browser.pause(1000);
 }
 export function clickAddProperty() {
   experienceTemplatePage.addProperty.click();
@@ -67,7 +68,7 @@ export function clearPropertyName() {
   experienceTemplatePage.propertyName.clearElement();
 }
 export function verifyPropertyIsAdded(name) {
-  return experienceTemplatePage.propertyTitle.getText().includes(name);
+  browser.waitUntil(() => experienceTemplatePage.propertyTitle.getText() === name, 5000, 'Results not displayed', 200);
 }
 export function verifyAddPropertyPage() {
   return experienceTemplatePage.addProperty.isVisible();
@@ -76,6 +77,7 @@ export function addProperty(type, name) {
   clickAddProperty();
   clickProperty(type);
   addNameForProperty(name);
+  saveTemplate();
   browser.refresh();
 }
 export function renameProperty(name) {
@@ -83,6 +85,7 @@ export function renameProperty(name) {
   if (experienceTemplatePage.propertyName.isVisible()) {
     clearPropertyName();
     addNameForProperty(name);
+    saveTemplate();
     browser.refresh();
   }
 }
@@ -117,6 +120,14 @@ export function verifyThumbnailImages() {
       missingThumbnailItemsArray.push(constants.TemplateThumbnailImages[i]);
   }
   return missingThumbnailItemsArray;
+}
+export function verifyThumbnail(index) {
+  browser.waitUntil(
+    () => experienceTemplatePage.thumbnailImage.value[index].getAttribute('class').includes('isSelected'),
+    5000,
+    'Results not displayed',
+    200
+  );
 }
 export function clickUploadTab() {
   experienceTemplatePage.uploadTab.click();

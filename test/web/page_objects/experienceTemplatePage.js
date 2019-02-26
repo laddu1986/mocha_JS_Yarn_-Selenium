@@ -18,7 +18,7 @@ class ExperienceTemplatePage {
     return browser.element("//input[@data-qa='edit-template:name']");
   }
   get templatekey() {
-    return browser.element("//p[contains(text(),'Key:')]");
+    return browser.element("//p[contains(text(),'#')]");
   }
   get createButton() {
     return browser.element("//button[@data-qa='create-template:create']");
