@@ -35,7 +35,6 @@ describe('Access a Revoked Invitation (New Account)', () => {
   before(() => {
     SignInPage.open();
     signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
-
     selectOrg();
   });
 
