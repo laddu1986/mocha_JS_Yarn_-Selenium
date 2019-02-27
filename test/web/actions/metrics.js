@@ -96,6 +96,13 @@ export function refreshUsersPage() {
   }
 }
 
+export function refreshSpaceToViewMetrics() {
+  while (getCount(Constants.UserType.User).includes('-')) {
+    browser.pause(2000);
+    browser.refresh();
+  }
+}
+
 export function getCount(type) {
   if (type == Constants.UserType.User) return spaceDashboardPage.totalUsersCount.getText();
   else if (type == Constants.UserType.Visitor) return spaceDashboardPage.totalVisitorsCount.getText();
