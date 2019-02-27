@@ -19,7 +19,6 @@ import {
   clickFilter,
   selectProperty
 } from 'actions/tribe';
-
 describe('Tribe Rule Filter Tests', () => {
   before(() => {
     accountPage.open();
@@ -29,7 +28,7 @@ describe('Tribe Rule Filter Tests', () => {
     clickCreateTribeButton();
   });
 
-  it('Verify the Audience Type filter', () => {
+  it('C1295760 Verify the Audience Type filter', () => {
     clickFilter(Constants.TribeFilterTypes.AudienceType);
     expect(verifyFilterOptions(Constants.TribeFilterTypes.AudienceType)).to.equal(
       true,
@@ -37,7 +36,7 @@ describe('Tribe Rule Filter Tests', () => {
     );
   });
 
-  it('Verify the Logical Type filter', () => {
+  it('C1295761 Verify the Logical Type filter', () => {
     clickFilter(Constants.TribeFilterTypes.LogicalType);
     expect(verifyFilterOptions(Constants.TribeFilterTypes.LogicalType)).to.equal(
       true,
@@ -45,7 +44,7 @@ describe('Tribe Rule Filter Tests', () => {
     );
   });
 
-  it('Verify the Property filter', () => {
+  xit('C1295762 Verify the Property filter', () => {
     clickFilter(Constants.TribeFilterTypes.Property);
     expect(verifyFilterOptions(Constants.TribeFilterTypes.Property)).to.equal(
       true,
@@ -53,7 +52,7 @@ describe('Tribe Rule Filter Tests', () => {
     );
   });
 
-  it('Verify the Operator filter', () => {
+  xit('C1295763 Verify the Operator filter', () => {
     var type, name;
     for (var i = 0; i < 8; i++) {
       name = selectProperty(i);
@@ -70,28 +69,36 @@ describe('Tribe Rule Filter Tests', () => {
     }
   });
 
-  it('Verify date filter can be added', () => {
-    var today = new Date();
+  it('C1295764 Verify date filter can be added', () => {
+    clickFilter(Constants.TribeFilterTypes.Property);
+    browser.pause(1000);
     selectProperty('0');
+    browser.pause(1000);
     selectOperator('3');
     selectDate();
     browser.keys('Escape');
-    expect(verifyFilterExists()).to.equal(true, 'The filter does not exist');
-    expect(verifyFilterValue('0')).to.include(lib.dateFormat(today, 'mmm dd yyyy'));
+    expect(verifyFilterExists()).to.equal('>', 'The filter is not added');
   });
 
-  it('Verify filter can be deleted', () => {
+  it('C1640178 Verify date in added date filter text', () => {
+    let today = new Date();
+    expect(verifyFilterValue('0')).to.include(lib.dateFormat(today, 'mmm dd yyyy'), 'The date filter is not added');
+  });
+
+  it('C1295765 Verify filter can be deleted', () => {
     removeRuleFilter();
-    expect(verifyFilterExists()).to.equal(false, 'The filter is not deleted');
+    expect(verifyFilterExists()).to.include('Add Filter', 'The filter is not deleted');
   });
 
-  it('Adding filter with number property for Visitor', () => {
+  it('C1295766 Adding filter with number property for Visitor', () => {
     clickFilter(Constants.TribeFilterTypes.AudienceType);
     selectAudienceType('1');
     clickFilter(Constants.TribeFilterTypes.LogicalType);
     selectLogicalType('0');
     clickFilter(Constants.TribeFilterTypes.Property);
+    browser.pause(1000);
     selectProperty(0);
+    browser.pause(1000);
     selectOperator(1);
     input('5');
     expect(verifyFilterValue('0')).to.include('5', 'The filter does not have a number');

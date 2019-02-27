@@ -4,139 +4,57 @@ import * as spaces from 'actions/spaces';
 import * as organization from 'actions/organization';
 import * as tribe from 'actions/tribe';
 import * as rules from 'actions/tribeRules';
-import * as schemas from 'data/tribeRulesSchema';
-
-var configResponse,
-  saveResponse,
-  getResponse,
-  evalResponse,
-  evalRulesResponse,
-  evalFiltersResponse,
-  sampleUsersResponse;
+import * as schemas from 'schemas/tribeRulesSchema';
 
 const rulesData = new Object();
 
 describe('Tribe Rules Service', () => {
-  describe('getConfiguration()', () => {
-    before('Set up the testing environment', done => {
-      identity
-        .postIdentity(rulesData)
-        .then(() => {
-          return organization.postOrganization(rulesData);
-        })
-        .then(() => {
-          return spaces.postSpaceByOrganizationId(rulesData);
-        })
-        .then(() => {
-          configResponse = rules.getConfiguration(rulesData);
-          done();
-        });
-    });
-
-    it('Gets the possible configurations for the space', () => {
-      return configResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        joi.assert(response.response, schemas.Configuration);
-      });
-    });
-
-    it('Verifies the configuration properties', () => {
-      return configResponse.then(response => {
-        rules.expectConfig(response.response.configuration.properties, true);
-        expect(rules.ActualFilters).to.deep.equal(rules.ExpectedFilters);
-      });
-    });
-
-    it('Verifies the configuration operators', () => {
-      return configResponse.then(response => {
-        rules.expectConfig(response.response.configuration.operators, false);
-        expect(rules.ActualFilters).to.include.members(rules.ExpectedFilters);
-      });
-    });
+  before('Set up the testing environment', async () => {
+    await identity.postIdentity(rulesData);
+    await organization.postOrganization(rulesData);
+    await spaces.postSpaceByOrganizationId(rulesData);
+    await tribe.createTribe(rulesData);
   });
 
-  describe('saveRule()', () => {
-    before('Save the rule', done => {
-      tribe.createTribe(rulesData).then(() => {
-        saveResponse = rules.saveRule(rulesData);
-        done();
-      });
-    });
-
-    it('The rule is saved', () => {
-      return saveResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        expect(response.response.success).to.be.true;
-      });
-    });
+  it('C1295615 getConfiguration()', async () => {
+    let configResponse = await rules.getConfiguration(rulesData);
+    expect(configResponse.status.code).to.equal(0);
+    joi.assert(configResponse.response, schemas.getConfiguration);
   });
 
-  describe('getRule()', () => {
-    before('Get the rule', done => {
-      getResponse = rules.getRule(rulesData);
-      done();
-    });
-
-    it('The rule is returned', () => {
-      return getResponse.then(response => {
-        joi.assert(response.response, schemas.Rule);
-      });
-    });
+  it('C1295618 saveRule()', async () => {
+    let saveResponse = await rules.saveRule(rulesData);
+    expect(saveResponse.status.code).to.equal(0);
+    joi.assert(saveResponse.response, schemas.saveRule(rulesData));
   });
 
-  describe('evaluateRuleFilters()', () => {
-    before('Get the filters evaluation', done => {
-      evalFiltersResponse = rules.evaluateRuleFilters(rulesData);
-      done();
-    });
-
-    it('Check returned status', () => {
-      return evalFiltersResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        joi.assert(response.response, schemas.EvaluateFilters);
-      });
-    });
+  it('C1295619 getRule()', async () => {
+    let getResponse = await rules.getRule(rulesData);
+    expect(getResponse.status.code).to.equal(0);
+    joi.assert(getResponse.response, schemas.getRule(rulesData));
   });
 
-  describe('evaluateRule()', () => {
-    before('Get the rule evalution', done => {
-      evalResponse = rules.evaluateRule(rulesData);
-      done();
-    });
-
-    it('Check returned status', () => {
-      return evalResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        joi.assert(response.response, schemas.EvaluateRule);
-      });
-    });
+  it('C1295620 evalutateRuleFilters()', async () => {
+    let evalFiltersResponse = await rules.evaluateRuleFilters(rulesData);
+    expect(evalFiltersResponse.status.code).to.equal(0);
+    joi.assert(evalFiltersResponse.response, schemas.evaluateRuleFilters);
   });
 
-  describe('evaluateRules()', () => {
-    before('Get the rules evaluation', done => {
-      evalRulesResponse = rules.evaluateRules(rulesData);
-      done();
-    });
-
-    it('Check returned status', () => {
-      return evalRulesResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        joi.assert(response.response, schemas.EvaluateRules);
-      });
-    });
+  it('C1295621 evaluateRule()', async () => {
+    let evaluateRuleResponse = await rules.evaluateRule(rulesData);
+    expect(evaluateRuleResponse.status.code).to.equal(0);
+    joi.assert(evaluateRuleResponse.response, schemas.evaluateRule);
   });
 
-  describe('getSampleUsers()', () => {
-    before('Get the same users', done => {
-      sampleUsersResponse = rules.getSampleUsers(rulesData);
-      done();
-    });
+  it('C1295622 evaluateRules()', async () => {
+    let evaluateRulesResponse = await rules.evaluateRules(rulesData);
+    expect(evaluateRulesResponse.status.code).to.equal(0);
+    joi.assert(evaluateRulesResponse.response, schemas.evaluateRules);
+  });
 
-    it('Check returned status', () => {
-      return sampleUsersResponse.then(response => {
-        expect(response.status.code).to.equal(0);
-        joi.assert(response.response, schemas.SampleUsers);
-      });
-    });
+  it('C1295623 getSampleUsers()', async () => {
+    let getSampleUsersResponse = await rules.getSampleUsers(rulesData);
+    expect(getSampleUsersResponse.status.code).to.equal(0);
+    joi.assert(getSampleUsersResponse.response, schemas.sampleUsers);
   });
 });

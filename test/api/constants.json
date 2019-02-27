@@ -18,10 +18,8 @@
     "Tagline": "Tagline"
   },
   "UserType": {
-    "User": "User",
-    "Visitor": "Visitor",
-    "Active": "Active",
-    "New": "New"
+    "User": "USER",
+    "Visitor": "VISITOR"
   },
   "UserAttributes": {
     "Name": "Name",
@@ -36,48 +34,84 @@
   },
   "TribeRulesFilters": {
     "AudienceType": {
-      "User": "Users",
-      "Visitor": "Visitors"
-    },
-    "APIAudienceType": {
-      "User": "USER",
-      "Visitor": "VISITOR"
+      "VISITOR": "0",
+      "USER": "1"
     },
     "LogicalType": {
-      "Any": "any",
-      "All": "all"
-    },
-    "APILogicalType": {
-      "And": "AND",
-      "Or": "OR"
+      "AND": "0",
+      "OR": "1"
     },
     "Properties": {
-      "ActiveDays": "Active Days (last 30 days)",
-      "AvgSessions": "Avg Sessions (last 30 days)",
-      "AvgSessionTime": "Avg Session Time",
-      "LastSeen": "Last Seen",
-      "Created": "Created",
-      "Known": "Known",
-      "FirstSeen": "First Seen",
-      "Joined": "Joined"
+      "created": "Created",
+      "first_seen": "First Seen",
+      "joined": "Joined",
+      "known": "Known",
+      "location": "Location",
+      "user_agent": "User agent",
+      "email": "Email",
+      "device_type": "Device type",
+      "label": "Label",
+      "active_days": "Active Days (last 30 days)",
+      "avg_sessions": "Avg Sessions (last 30 days)",
+      "avg_session_time": "Avg Session Time",
+      "last_seen": "Last Seen"
     },
-    "OtherOperators": {
-      "MoreThan": "more than",
-      "Exactly": "exactly",
-      "LessThan": "less than",
-      "After": "after",
-      "On": "on",
-      "Before": "before",
-      "IsUnknown": "is unknown",
-      "HasAnyValue": "has any value"
+    "PropertyGroupLabels": ["Attributes", "Behavior"],
+    "Operators": {
+      "string_is": "is",
+      "string_is_not": "is not",
+      "string_starts_with": "starts with",
+      "string_ends_with": "ends with",
+      "string_contains": "contains",
+      "string_does_not_contain": "does not contain",
+      "string_does_not_start_with": "does not start with",
+      "string_does_not_end_with": "does not end with",
+      "string_is_unknown": "is unknown",
+      "string_has_any_value": "has any value",
+      "integer_greater_than": "greater than",
+      "integer_less_than": "less than",
+      "integer_is": "is",
+      "integer_is_not": "is not",
+      "integer_is_unknown": "is unknown",
+      "integer_has_any_value": "has any value",
+      "date_more_than": "more than",
+      "date_exactly": "exactly",
+      "date_less_than": "less than",
+      "date_after": "after",
+      "date_on": "on",
+      "date_before": "before",
+      "date_is_unknown": "is unknown",
+      "date_has_any_value": "has any value"
     },
-    "ActiveAverageOperators": {
-      "GreaterThan": "greater than",
-      "LessThan": "less than",
-      "Is": "is",
-      "IsNot": "is not",
-      "IsUnknown": "is unknown",
-      "HasAnyValue": "has any value"
+    "OperandTypes": {
+      "NONE": 0,
+      "INTEGER": 1,
+      "DECIMAL": 2,
+      "DATE": 3,
+      "STRING": 4,
+      "BOOLEAN": 5
+    },
+    "OperandGroupLabels": ["", "Relative", "Absolute"]
+  },
+  "TemplateProperties": {
+    "Types": {
+      "Text": "text",
+      "Switch": "boolean",
+      "Integer": "integer",
+      "Color": "color",
+      "Date": "date",
+      "List": "list"
     }
+  },
+  "UserDetails": {
+    "ExternalID": "AutomatedTest",
+    "DeviceType": "AutomatedDevice",
+    "DisplayName": "AutomatedUser",
+    "Location": {
+      "country": "AU",
+      "countryCode": "AU",
+      "city": "Autocity"
+    },
+    "IPAddress": "1.1.1.1"
   }
 }

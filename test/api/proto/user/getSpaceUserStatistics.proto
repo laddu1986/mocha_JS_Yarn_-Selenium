@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "generated";
+
+message GetSpaceUserStatisticsRequest {
+    string space_id = 1;
+}
+
+message GetSpaceUserStatisticsResponse {
+    int32 total = 1;
+    int32 active = 2;
+    int32 new = 3;
+    int32 at_risk = 4;
+    int32 lost = 5;
+    int32 total_visitors = 6;
+    float diff_total = 7;
+    float diff_active = 8;
+    float diff_new = 9;
+    float diff_at_risk = 10;
+    float diff_lost = 11;
+    float diff_total_visitors = 12;
+    float percent_active = 13;
+    float percent_new = 14;
+    float percent_at_risk = 15;
+    float percent_lost = 16;
+}

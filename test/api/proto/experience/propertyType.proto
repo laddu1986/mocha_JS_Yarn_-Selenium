@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package experience;
+
+option go_package = "generated";
+
+message PropertyType{
+    string key = 1;
+    string name = 2;
+	string icon_url = 3;	
+    repeated Appearance appearances = 4;
+    repeated RuleType rule_types = 5;
+	bool show_localizable = 6;
+	bool show_prompt_text = 7;
+	bool show_help_text = 8;
+}
+
+message Appearance{
+    string key = 1;
+    string name = 2;
+    bool is_default = 3;
+	
+}
+
+message RuleType{
+    string key = 1;
+    string type  = 2;
+}

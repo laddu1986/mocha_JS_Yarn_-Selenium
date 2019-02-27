@@ -6,8 +6,9 @@ TestCase: New User
   User accepts and lands on Join Org page
 */
 import * as lib from '../../common';
-import { createAccount, joinOrgText } from 'actions/account';
+import { createAccount, verifyJoinOrgText } from 'actions/account';
 import { submitButtonVisible } from 'actions/login';
+import { signOut } from 'actions/navBar';
 import { inviteStatus } from 'actions/invite';
 import {
   expiredInvitationText,
@@ -18,13 +19,12 @@ import {
   goToInactiveTab,
   resendInvite
 } from 'actions/invite';
-import { getNotificationMessageText, signOut, signIn } from 'actions/common';
+import { getNotificationMessageText, signIn } from 'actions/common';
 import accountPage from 'page_objects/accountPage';
 import SignInPage from 'page_objects/signInPage';
 import message from 'data/messages.json';
 import passiveNotification from 'data/passiveNotification.json';
 import constants from 'constants.json';
-
 let newUser, invitationURL, accountData;
 
 describe('New User accesses an Expired Invitation', () => {
@@ -34,54 +34,56 @@ describe('New User accesses an Expired Invitation', () => {
     browser.pause(1000);
   });
 
-  it('Admin invites a New User', () => {
+  it('C1748464 Admin invites a New User', () => {
     newUser = `newUser_${lib.randomString.generate(4)}@test.co`;
     inviteTeammate(newUser, '1');
   });
 
-  it('Invitation Expires', async () => {
+  it('C1748465 Invitation Expires', async () => {
     invitationURL = await invitationLink(newUser);
     await updateTokenExpiryDateInDB(newUser); //update ExpiryDate of token to a history date in db
   });
 
-  it('Inactive tab status --> shows as Expired', () => {
+  it('C1295647 Inactive tab status --> shows as Expired', () => {
     browser.refresh(); //refresh to reflect the latest expired/pending status from DB
     goToTeammatesPage();
     goToInactiveTab();
     expect(inviteStatus()).to.deep.equal(constants.InviteStatus.Expired);
-    signOut();
   });
 
-  it('Clicking Invite link  -->  Redirects to Expired invitation page', () => {
+  it('C1295648 Clicking Invite link  -->  Redirects to Expired invitation page', () => {
+    signOut();
+    browser.pause(1000);
     browser.url(invitationURL); //this is a replication of user clicking on Accept Invitation button from invite email
     expect(expiredInvitationText()).to.include(message.invite.expiredInvitation);
   });
-});
 
-describe('Re-sending an Expired Invite', () => {
-  before('Admin logs in and go to inactive inte tab', () => {
+  it('C1640142 Admin logs in and goes to inactive invite tab', () => {
     SignInPage.open();
     signIn(accountData.email, accountData.password);
     browser.pause(1500); // workaround for Bug: ACT-299. will be removed after bugfix
     goToTeammatesPage();
     goToInactiveTab();
+    expect(inviteStatus()).to.deep.equal(constants.InviteStatus.Expired);
   });
 
-  it('Resends Expired Invitation --> validate Passive Notification', () => {
+  it('C1295649 Resends Expired Invitation --> validate Passive Notification', () => {
     resendInvite();
-    const expectedPassiveNotificationMessage = `${passiveNotification.resendInviteMessage.text}${newUser}`;
+    let expectedPassiveNotificationMessage = `${passiveNotification.resendInviteMessage.text}${newUser}`;
     expect(getNotificationMessageText()).to.include(expectedPassiveNotificationMessage);
-    signOut();
   });
-});
 
-describe('User Accepts resent Invite', () => {
-  it('User gets new Invitation eMail and Accepts Invite', async () => {
+  it('C1295650 User gets new Invitation eMail and Accepts Invite', async () => {
+    signOut();
     invitationURL = await invitationLink(newUser);
     browser.url(invitationURL);
   });
-  it('User lands on Create Account and Join org page', () => {
-    expect(joinOrgText()).to.include(accountData.organization);
+
+  it('C1295651 lands on Create Account and Join Org page', () => {
+    verifyJoinOrgText(accountData.organization);
+  });
+
+  it('C1640143 Submit button is visible for creating account to join org', () => {
     expect(submitButtonVisible()).to.equal(true);
   });
 });

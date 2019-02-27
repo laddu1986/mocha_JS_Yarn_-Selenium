@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "segmentContext.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/field_mask.proto";
+
+package segment;
+
+option go_package = "generated";
+
+//segment
+//-------------
+
+message CreateSegmentRequest {
+    SpaceContext space_context = 1;
+    Segment segment = 2;
+    google.protobuf.Int32Value category_id = 3;
+    string created_by_account_id = 4;
+}
+
+message UpdateSegmentRequest {
+    SegmentContext segment_context = 1;
+    Segment segment = 2;
+    google.protobuf.FieldMask update_mask = 6;
+}
+
+message DeleteSegmentRequest {
+    SegmentContext segment_context = 1;
+    google.protobuf.Timestamp row_version = 2;
+}
+
+message GetSegmentByIdRequest {
+    SegmentContext segment_context = 1;
+}
+
+//category
+//-----------
+
+message CreateCategoryRequest {
+    SpaceContext space_context = 1;
+    string label = 2;
+    google.protobuf.Int32Value index = 3;
+    string created_by_account_id = 4;
+}
+
+message RenameCategoryRequest {
+    CategoryContext category_context = 1; 
+    string label = 2;
+}
+
+message DeleteCategoryRequest {
+    CategoryContext category_context = 1;
+}
+
+message ListCategoriesRequest {
+    SpaceContext space_context = 1;
+}
+message ListCategoriesResponse {
+    repeated CategoryDetail categories = 1;
+}
+
+message MoveCategoryRequest {
+    CategoryContext category_context = 1;
+    google.protobuf.Int32Value index = 2;
+}
+
+message MoveSegmentRequest {
+    SegmentContext segment_context = 1;
+    google.protobuf.Int32Value dest_category_id = 2;
+    google.protobuf.Int32Value index = 3;
+}
+
+//objects
+//--------------
+
+message Segment{
+    string id = 1;
+    string title = 2;
+    string tagline = 3;
+    repeated Color colors = 4;
+    string background_image_url = 5;
+    string logo_image_url = 6;
+    string layout = 7;
+    google.protobuf.Timestamp row_version = 8;
+}
+
+message Color{
+    string key = 1;
+    string value = 2;
+    uint32 opacity = 3;
+}
+
+message Category {
+    int32 id = 1;
+    string label = 2;
+    bool is_default = 3;
+}
+
+message CategoryDetail {
+    int32 id = 1;
+    string label = 2;
+    bool is_default = 3;
+    repeated Segment segments = 4;
+}

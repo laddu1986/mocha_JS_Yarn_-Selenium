@@ -12,10 +12,8 @@
     "dateformat": "^3.0.3",
     "dotenv": "^6.0.0",
     "mocha": "^5.0.5",
-    "mocha-multi-reporters": "^1.1.7",
-    "mocha-simple-html-reporter": "^1.1.0",
+    "mocha-testrail-reporter-custom": "^1.0.15",
     "node-es-module-loader": "^0.3.8",
-    "npm": "^6.0.0",
     "randomstring": "^1.1.5"
   },
   "devDependencies": {
@@ -25,12 +23,17 @@
     "eslint-plugin-babel": "^5.2.1",
     "eslint-plugin-mocha": "^5.2.0",
     "lint-staged": "^7.3.0",
-    "prettier": "^1.14.3"
+    "mocha-multi-reporters": "^1.1.7",
+    "mocha-simple-html-reporter": "^1.1.0",
+    "prettier": "^1.14.3",
+    "wdio-testrail-reporter": "^1.1.5"
   },
   "scripts": {
-    "orca": "mocha specs/*Test.js --opts config/mocha.opts",
-    "orca-debug": "mocha --inspect-brk=127.0.0.1:5858 specs/*Test.js --opts config/mocha.opts",
-    "orca-smoke-tests": "mocha specs/*Test.js --opts config/mocha.opts --grep @smoke",
+    "orca": "node_modules/.bin/mocha specs/*Test.js --opts config/mocha.opts --reporter-options reportName=ORCA,domain=$TESTRAIL_URL,username=$TESTRAIL_USERNAME,password=$TESTRAIL_PASSWORD,projectId=$TESTRAIL_PROJECT,suiteId=$TESTRAIL_ORCA",
+    "orca-local": "node_modules/.bin/mocha specs/*Test.js --opts config/local.opts",
+    "orca-debug": "node_modules/.bin/mocha --inspect-brk=127.0.0.1:5858 specs/*Test.js --opts config/mocha.opts",
+    "orca-smoke-tests": "node_modules/.bin/mocha specs/*Test.js --opts config/mocha.opts --grep @smoke",
+    "sync-tests": "node node_modules/wdio-testrail-reporter/scripts/generate-cases.js $(pwd)/wdio.testrail.js $(pwd)/specs/",
     "clean": "eslint '**/*.js' --fix",
     "lint": "eslint '**/*.js'",
     "precommit": "lint-staged"

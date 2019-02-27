@@ -6,6 +6,7 @@ export function signOut() {
   browser.pause(200); // can be removed after AD-383 is resolved
   NavBar.profileMenu.click();
   NavBar.signOut.click();
+  CommonPage.submitButton.waitForVisible();
 }
 
 export function verifySignOut() {
@@ -26,4 +27,20 @@ export function clickOnAudienceLink() {
 
 export function clickOnSpaceDashboardLink() {
   NavBar.spaceDashboard.click();
+}
+
+export function verifySelectedOrgMenu() {
+  browser.pause(1000);
+  NavBar.profileMenu.click();
+  NavBar.selectedOrg.waitForVisible();
+  return NavBar.selectedOrg.getText();
+}
+
+export function goToOrgPageFromNavMenu() {
+  NavBar.selectedOrg.click();
+  NavBar.firstOrg.click();
+}
+
+export function goToExperiencePage() {
+  NavBar.experienceMenu.click();
 }

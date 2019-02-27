@@ -4,13 +4,13 @@ import UsersPage from 'page_objects/usersPage';
 import Constants from 'constants.json';
 
 const header = {
-  Host: 'client.appcurator.io',
+  Host: userHost, // eslint-disable-line
   Accept: '*/*',
   'Accept-Language': 'en-US,en;q=0.5',
   'Accept-Encoding': 'gzip, deflate, br',
-  Referer: 'https://dev.demospace.org/',
+  Referer: `https://${demospace}demospace.org/`, // eslint-disable-line
   'Content-Type': 'text/plain',
-  Origin: 'https://dev.demospace.org',
+  Origin: `https://${demospace}demospace.org/`, // eslint-disable-line
   'User-Agent':
     'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'
 };
@@ -19,7 +19,7 @@ var request, apiUrl, api;
 
 export async function addVisitor(count, key) {
   api = key;
-  apiUrl = `https://client.appcurator.io/e?k=${api}`;
+  apiUrl = `${users}${api}`; // eslint-disable-line
   for (var i = 0; i < count; i++) {
     request = {
       api: apiUrl,
@@ -42,7 +42,7 @@ export async function addVisitor(count, key) {
 }
 export async function addUsers(count, key) {
   api = key;
-  apiUrl = `https://client.appcurator.io/e?k=${api}`;
+  apiUrl = `${users}${api}`; // eslint-disable-line
   for (var i = 0; i < count; i++) {
     request = {
       api: apiUrl,
@@ -81,7 +81,6 @@ export function verifyUsersAreAdded() {
 
 export function refreshUsersPage() {
   try {
-    browser.refresh();
     browser.waitUntil(
       function() {
         return UsersPage.noUsersRow.getText() == 'You have no users.';
@@ -90,6 +89,7 @@ export function refreshUsersPage() {
       'Users are not added',
       1000
     );
+    browser.refresh();
   } catch (err) {
     value = false;
     return;

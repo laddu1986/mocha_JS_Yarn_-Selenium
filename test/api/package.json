@@ -14,20 +14,21 @@
     "grpc": "^1.15.1",
     "grpc-caller": "^0.9.0",
     "mocha": "^5.0.5",
-    "mocha-multi-reporters": "^1.1.7",
-    "mocha-simple-html-reporter": "^1.1.0",
+    "mocha-testrail-reporter-custom": "^1.0.15",
     "node-es-module-loader": "^0.3.8",
-    "npm": "^6.0.0",
-    "randomstring": "^1.1.5"
+    "randomstring": "^1.1.5",
+    "wdio-testrail-reporter": "^1.1.5"
   },
   "scripts": {
-    "api": "mocha specs/*Test.js --opts config/mocha.opts",
-    "api-debug": "mocha --inspect-brk=127.0.0.1:5858 specs/*Test.js --opts config/mocha.opts",
-    "api-pipelines": "mocha specs/*Test.js --require babel-register --timeout 10000",
-    "api-smoke-tests": "mocha specs/*Test.js --opts config/mocha.opts --grep @smoke",
+    "api": "node_modules/.bin/mocha specs/*Test.js --opts config/mocha.opts --reporter-options reportName=API,domain=$TESTRAIL_URL,username=$TESTRAIL_USERNAME,password=$TESTRAIL_PASSWORD,projectId=$TESTRAIL_PROJECT,suiteId=$TESTRAIL_API",
+    "api-local": "node_modules/.bin/mocha specs/*Test.js --opts config/local.opts",
+    "api-debug": "node_modules/.bin/mocha --inspect-brk=127.0.0.1:5858 specs/*Test.js --opts config/local.opts",
+    "api-smoke-tests": "node_modules/.bin/mocha specs/*Test.js --opts config/mocha.opts --grep @smoke",
+    "sync-tests": "node node_modules/wdio-testrail-reporter/scripts/generate-cases.js $(pwd)/wdio.testrail.js $(pwd)/specs/",
     "clean": "eslint '**/*.js' --fix",
     "lint": "eslint '**/*.js'",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "gen-protos": "node config/gen-protos.js"
   },
   "lint-staged": {
     "*.{js,json,md}": [
@@ -47,7 +48,10 @@
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-babel": "^5.2.1",
     "eslint-plugin-mocha": "^5.2.0",
+    "fs-extra": "^7.0.1",
     "lint-staged": "^7.3.0",
+    "mocha-multi-reporters": "^1.1.7",
+    "mocha-simple-html-reporter": "^1.1.0",
     "prettier": "^1.14.3"
   },
   "pre-commit": [

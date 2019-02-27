@@ -10,20 +10,8 @@ var path = require('path');
 var caller = require('grpc-caller');
 
 export const invitesNegData = new Object();
-export const membershipNegData = new Object();
-export const orgNegData = new Object();
 export const spaceNegData = new Object();
 export const spaceKeyNegData = new Object();
-export const identitySchemaData = new Object();
-export const invitesSchemaData = new Object();
-export const identityData = new Object();
-export const inviteData = new Object();
-export const membershipData = new Object();
-export const organizationsSchemaData = new Object();
-export const orgData = new Object();
-export const spaceKeyData = new Object();
-export const spaceSchemaData = new Object();
-export const spaceData = new Object();
 
 const Tags = {
   smokeTest: '@smoke'
@@ -51,6 +39,7 @@ function patch(any) {
 function del(any) {
   return server.delete(any.api + any.data);
 }
+const CheckForAll = bits => string => bits.every(bit => string.includes(bit));
 
 export {
   dateFormat,
@@ -66,5 +55,6 @@ export {
   server,
   randomString,
   path,
-  caller
+  caller,
+  CheckForAll
 };

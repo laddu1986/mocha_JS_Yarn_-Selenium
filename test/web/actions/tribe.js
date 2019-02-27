@@ -2,7 +2,8 @@ import * as lib from '../common';
 import Common from 'page_objects/common';
 import TribePage from 'page_objects/tribePage';
 import * as Constants from 'constants.json';
-var colorIndex, selectedColourValue, actualValue;
+import tribePage from '../page_objects/tribePage';
+var colorIndex, selectedColourValue;
 
 export function clickCreateTribeButton() {
   TribePage.createTribeButton.click();
@@ -14,10 +15,11 @@ export function clickCreateTribeLink() {
 
 export function inputTribeDetails(name) {
   TribePage.titleField.setValue(name);
+  browser.keys('Tab');
 }
 
 export function verifyAllTribesPage() {
-  return TribePage.createTribeButton.isVisible();
+  return TribePage.createTribeButton.isVisible() && TribePage.createTribeLink.isVisible();
 }
 
 export function verifyTribeDetailpage() {
@@ -32,6 +34,10 @@ export function selectColour() {
   });
   TribePage.colourSwatch.value[colorIndex].click();
   selectedColourValue = TribePage.colourSwatch.value[colorIndex].getAttribute('style');
+}
+
+export function getTribeCardStyle() {
+  return tribePage.tribeCards.value[0].getAttribute('style');
 }
 
 export function clickCustomizeButton() {
@@ -60,26 +66,30 @@ export function verifyTribeCardColour(count) {
     .split('rgb')[3]
     .replace(/\)/g, '')
     .trim();
-  return colorOnCard.includes(expectedColour);
+  browser.waitUntil(() => colorOnCard.includes(expectedColour), 5000, 'Tribe card colour is not correct', 200);
 }
 
 export function verifyTitleOnCard(name, count) {
-  if (TribePage.tribeCardTitle.value[count].getText() === name) {
-    return true;
-  }
+  browser.waitUntil(
+    () => TribePage.tribeCardTitle.value[count].getText() === name,
+    5000,
+    'Title on card is not correct',
+    200
+  );
 }
 
 export function verifyTribe(type, value) {
+  var actualWebelement;
   if (type === Constants.TribeAttributes.Title) {
-    actualValue = TribePage.tribeCardTitle.getText();
+    actualWebelement = TribePage.tribeCardTitle;
   } else {
-    actualValue = TribePage.tribeCardTagline.getText();
+    actualWebelement = TribePage.tribeCardTagline;
   }
-  return actualValue == value;
+  browser.waitUntil(() => actualWebelement.getText() == value, 5000, 'The new tribe name is not shown', 200);
 }
 
 export function createTribe(name) {
-  clickCreateTribeButton();
+  TribePage.createTribeLink.click();
   inputTribeDetails(name);
 }
 
@@ -88,11 +98,13 @@ export function goToTribeDetailPage() {
 }
 
 export function updateTribe(type, value) {
+  TribePage.titleField.clearElement();
   if (type === Constants.TribeAttributes.Title) {
     TribePage.titleField.setValue(value);
   } else {
     TribePage.taglineField.setValue(value);
   }
+  browser.keys('Tab');
 }
 
 export function deleteTribe() {
@@ -186,12 +198,16 @@ export function selectProperty(count) {
     .getText()
     .replace(/>/g, '')
     .trim();
-  TribePage.properties.value[count].click();
-  return propertyName;
+  if (TribePage.properties.value[count].isVisible()) {
+    TribePage.properties.value[count].click();
+    return propertyName;
+  }
 }
 
 export function selectOperator(count) {
-  TribePage.operators.value[count].click();
+  if (TribePage.operators.value[count].isVisible()) {
+    TribePage.operators.value[count].click();
+  }
 }
 
 export function input(data) {
@@ -204,8 +220,7 @@ export function verifyFilterValue(count) {
 }
 
 export function verifyFilterExists() {
-  if (TribePage.filters.value.length > 0) return true;
-  else return false;
+  return TribePage.addFilter.getText();
 }
 
 export function removeRuleFilter() {
@@ -217,7 +232,7 @@ export function selectDate() {
   browser.keys('Escape');
 }
 
-export function verifyWallpaperTab() {
+export function verifyBrowseLink() {
   return TribePage.browseLink.isVisible();
 }
 
@@ -240,20 +255,14 @@ export function waitForLogoPreview() {
 
 export function verifyTribeCardWallpaper() {
   if (browser.isExisting("//*[@data-qa='segment:background']"))
-    return TribePage.tribeCardWallpaper.getAttribute('style').includes('background: url');
+    return TribePage.tribeCardWallpaper.getAttribute('style').includes('background: url("https://upe.astcdn.com/img');
   else return false;
 }
 
 export function verifyTribeCardLogo() {
-  if (browser.isExisting("//*[@data-qa='segment:logo']"))
-    return TribePage.tribeCardLogo.getAttribute('style').includes('background: url("https://');
-  else return false;
+  return TribePage.tribeCardLogo.getAttribute('style').includes('background: url("https://upe.astcdn.com/img');
 }
 
 export function removeImage() {
   return TribePage.removeImage.click();
-}
-
-export function closeModal() {
-  return TribePage.closeModal.click();
 }

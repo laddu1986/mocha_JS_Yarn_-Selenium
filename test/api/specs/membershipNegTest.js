@@ -1,8 +1,8 @@
-import * as lib from '../common';
+import { post } from '../common';
 import * as identity from 'actions/identity';
 import * as organization from 'actions/organization';
 import * as membership from 'actions/membership';
-const moduleSpecifier = 'data/membershipTestsData';
+import * as data from 'data/membershipTestsData';
 var expectedMessageForBlankOrgId,
   expectedMessageForinvalidToken,
   getResponse,
@@ -10,60 +10,48 @@ var expectedMessageForBlankOrgId,
   blankOrgIdResponse,
   invalidTokenResponse;
 
+const membershipNegData = new Object();
+
 describe('Negative tests --> Membership', () => {
+  before(async () => {
+    await identity.postIdentity(membershipNegData);
+    await organization.postOrganization(membershipNegData);
+    await membership.postMembership(membershipNegData);
+    await membership.deleteMembershipByAccountAndOrganization(membershipNegData);
+  });
   describe('GET /memberships', () => {
-    before(done => {
-      identity.postIdentity(lib.membershipNegData).then(() => {
-        organization.postOrganization(lib.membershipNegData).then(() => {
-          membership.postMembership(lib.membershipNegData).then(() => {
-            membership.deleteMembershipByAccountAndOrganization(lib.membershipNegData).then(() => {
-              getResponse = membership.getMembershipByAccount(lib.membershipNegData);
-              done();
-            });
-          });
-        });
-      });
+    before(async () => {
+      getResponse = await membership.getMembershipByAccount(membershipNegData, 'negative');
     });
-    it('Non existing membership -> Should return 0 rows', () => {
-      return getResponse.then(response => {
-        expect(response.body.totalRows).to.deep.equal(0);
-      });
+
+    it('C1295532 Non existing membership -> Should return 0 rows', () => {
+      expect(getResponse.body.totalRows).to.deep.equal(0);
     });
   });
+
   describe('POST /memberships ', () => {
-    before(done => {
-      lib.loader.import(moduleSpecifier).then(dataImported => {
-        blankOrgIdResponse = lib.post(dataImported.default.blankOrgId);
-        invalidTokenResponse = lib.post(dataImported.default.invalidToken);
-        expectedMessageForBlankOrgId = dataImported.default.blankOrgId.expected;
-        expectedMessageForinvalidToken = dataImported.default.invalidToken.expected;
-        done();
-      });
+    before(async () => {
+      blankOrgIdResponse = await post(data.blankOrgId(membershipNegData));
+      invalidTokenResponse = await post(data.invalidToken(membershipNegData));
+      expectedMessageForBlankOrgId = data.blankOrgId(membershipNegData).expected;
+      expectedMessageForinvalidToken = data.invalidToken(membershipNegData).expected;
     });
-    it('Invalid OrgID --> Should return 400 response', () => {
-      return blankOrgIdResponse.then(response => {
-        expect(response).to.have.status(400);
-        expect(response.body.validationErrors.organizationId).to.equal(expectedMessageForBlankOrgId);
-      });
+    it('C1295533 Invalid OrgID --> Should return 400 response', () => {
+      expect(blankOrgIdResponse).to.have.status(400);
+      expect(blankOrgIdResponse.body.validationErrors.organizationId).to.equal(expectedMessageForBlankOrgId);
     });
-    it('Invalid token --> Should return 404 response', () => {
-      return invalidTokenResponse.then(response => {
-        expect(response).to.have.status(404);
-        expect(response.body.validationErrors.InviteToken).to.equal(expectedMessageForinvalidToken);
-      });
+    it('C1295534 Invalid token --> Should return 404 response', () => {
+      expect(invalidTokenResponse).to.have.status(404);
+      expect(invalidTokenResponse.body.validationErrors.InviteToken).to.equal(expectedMessageForinvalidToken);
     });
   });
   describe('Delete Membership when Account is Non Existing ', () => {
-    before(done => {
-      identity.deleteIdentityById(lib.membershipNegData).then(() => {
-        deleteResponse = membership.deleteMembershipByAccountAndOrganization(lib.membershipNegData);
-        done();
-      });
+    before(async () => {
+      await identity.deleteIdentityById(membershipNegData);
+      deleteResponse = await membership.deleteMembershipByAccountAndOrganization(membershipNegData, 'negative');
     });
-    it('Should return 404 response', () => {
-      return deleteResponse.then(response => {
-        expect(response).to.have.status(404);
-      });
+    it('C1295535 Should return 404 response', () => {
+      expect(deleteResponse).to.have.status(404);
     });
   });
 });

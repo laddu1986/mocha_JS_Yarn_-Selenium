@@ -22,38 +22,35 @@ describe(`Create Tribe Tests ${lib.Tags.smokeTest}`, () => {
     createSpace();
   });
 
-  it('Go to create a tribe page --> verify create tribe button and hover over + link', () => {
+  it('C1295735 Go to create a tribe page --> verify create tribe button and hover over + link', () => {
     clickOnAudienceLink();
     expect(verifyAllTribesPage()).to.equal(true, 'Create Tribe page is not displayed');
   });
 
-  it('Go to tribe detail page using create tribe button', () => {
+  it('C1295736 Go to tribe detail page using create tribe button', () => {
     clickCreateTribeButton();
     expect(verifyTribeDetailpage()).to.equal(true, 'Tribe Details page is not displayed');
   });
 
-  it('Verify untitled tribe is created', () => {
-    expect(verifyTribe(Constants.TribeAttributes.Title, 'Untitled')).to.equal(true, 'Tribe title is not "Untitled"');
+  it('C1295737 Verify untitled tribe is created', () => {
+    verifyTribe(Constants.TribeAttributes.Title, 'Untitled');
   });
 
-  it('Verify untitled tribe on all tribes page', () => {
+  it('C1295738 Verify untitled tribe on all tribes page', () => {
     clickOnAudienceLink();
-    expect(verifyTribe(Constants.TribeAttributes.Title, 'Untitled')).to.equal(
-      true,
-      'Tribe title is not "Untitled" on all tribes page'
-    );
+    verifyTribe(Constants.TribeAttributes.Title, 'Untitled');
   });
 
-  it('Create named tribe using hover over + link', () => {
+  it('C1295739 Create named tribe using hover over + link', () => {
     title = lib.randomString.generate(5);
     clickCreateTribeLink();
     inputTribeDetails(title);
-    expect(verifyTitleOnCard(title, '0')).to.equal(true, 'The title on tribe details page does not show');
+    verifyTitleOnCard(title, '0');
   });
 
-  it('Verify tribe title on all tribes page', () => {
+  it('C1295740 Verify tribe title on all tribes page', () => {
     clickOnAudienceLink();
     browser.refresh();
-    expect(verifyTitleOnCard(title, '1')).to.equal(true, 'The title on all tribes page does not show');
+    verifyTitleOnCard(title, '1');
   });
 });

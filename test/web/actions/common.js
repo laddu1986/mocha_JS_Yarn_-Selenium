@@ -9,14 +9,36 @@ export function getNotificationMessageText() {
   return CommonPage.successMsg.getText();
 }
 
-export function closePassiveNotification() {
-  CommonPage.dismissNotification.click();
+export function clickMoreButton() {
+  CommonPage.moreButton.click();
 }
 
-export function signOut() {
-  NavBar.profileMenu.click();
-  NavBar.signOut.click();
-  CommonPage.submitButton.waitForVisible();
+export function verifyMoreButton() {
+  return CommonPage.editOnCard.isVisible() && CommonPage.deleteOnCard.isVisible();
+}
+
+export function clickSettingsFromCard() {
+  CommonPage.editOnCard.click();
+}
+
+export function clickDeleteFromCard() {
+  CommonPage.deleteOnCard.click();
+}
+export function clickSureButton() {
+  CommonPage.iAmSureButton.click();
+}
+
+export function verifyDeleteModal() {
+  return CommonPage.confirmInput.isVisible();
+}
+
+export function closeModal() {
+  return CommonPage.closeModal.click();
+}
+
+export function closePassiveNotification() {
+  CommonPage.dismissNotification.waitForVisible();
+  return CommonPage.dismissNotification.click();
 }
 
 export function signIn(email, password) {
@@ -75,18 +97,20 @@ export function submit() {
 }
 
 export function postIdentity(responseObject) {
+  let email = `${randomString.generate(12)}@test.co`;
   const any = {
     /*eslint-disable */
     api: identities,
     /*eslint-enable */
     data: {
       fullname: randomString.generate(12),
-      email: `${randomString.generate(12)}@test.co`,
+      email: email,
       password: process.env.ACCOUNT_PASS
     }
   };
   return post(any).then(response => {
     responseObject.identityID = response.body.id;
+    responseObject.identityEmail = email;
     return response;
   });
 }

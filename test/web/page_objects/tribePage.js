@@ -61,9 +61,6 @@ class TribePage extends Page {
   get removeImage() {
     return browser.element("//button[@data-qa='btn:remove']");
   }
-  get closeModal() {
-    return browser.element("//button[@data-qa='btn:close-modal']");
-  }
   get audienceType() {
     return browser.element("//button[@data-qa='segment:rule:audienceType']");
   }
@@ -108,19 +105,14 @@ class TribePage extends Page {
     return $("//button[contains(.,'Insert category')]");
   }
   get categoryTitle() {
-    return $("//input[@data-qa='input:category-title']");
-  }
-  get categoryMoreButton() {
-    return $("//button[@data-qa='btn:more']");
+    return browser.elements("//input[@data-qa='input:category-title']");
   }
   get categoryMoreRename() {
     return $("//button[@data-qa='menu-item:rename']");
   }
-
   get categoryMoreDelete() {
     return $("//button[@data-qa='menu-item:Delete']");
   }
-
   open(e) {
     super.open(e);
   }

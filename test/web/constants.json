@@ -70,5 +70,30 @@
       "IsUnknown": "is unknown",
       "HasAnyValue": "has any value"
     }
-  }
+  },
+  "TemplateProperties": {
+    "Types": {
+      "text": "text",
+      "bool": "boolean",
+      "int": "integer"
+    }
+  },
+  "TemplateThumbnailImages": [
+    "Default",
+    "Hero",
+    "Carousel",
+    "ContentRow",
+    "Image",
+    "Grid",
+    "Video",
+    "Advert",
+    "Article",
+    "Card",
+    "Form",
+    "Heading",
+    "Map",
+    "NavMenu",
+    "Prompt",
+    "Other"
+  ]
 }

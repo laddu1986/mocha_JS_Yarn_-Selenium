@@ -1,68 +1,55 @@
-import { inviteData, loader, Tags, joi } from '../common';
+import { Tags, joi } from '../common';
 import * as identity from 'actions/identity';
 import * as invites from 'actions/invites';
 import * as organization from 'actions/organization';
-const schemas = 'data/invitesSchema';
-var importedSchema, postResponse, getResponse, getInviteResponse, deleteResponse;
+import * as schemas from 'schemas/invitesSchema';
+var postResponse, getResponse, getInviteResponse, deleteResponse;
+
+const inviteData = new Object();
 
 describe('Invites Api', () => {
+  before(async () => {
+    await identity.postIdentity(inviteData);
+    await organization.postOrganization(inviteData);
+    await invites.getAccessToken(inviteData);
+  });
+
   describe(`POST /organizations/{id}/invites ${Tags.smokeTest}`, () => {
-    before(done => {
-      identity.postIdentity(inviteData).then(() => {
-        organization.postOrganization(inviteData).then(() => {
-          invites.getAccessToken(inviteData).then(() => {
-            postResponse = invites.postInvitesByOrganizationId(inviteData, true);
-            done();
-          });
-        });
-      });
+    before(async () => {
+      postResponse = await invites.postInvitesByOrganizationId(inviteData);
     });
 
-    it('Create a new invite.', () => {
-      return postResponse.then(response => {
-        expect(response).to.have.status(201);
-      });
+    it('C1295528 Create a new invite.', () => {
+      expect(postResponse).to.have.status(201);
     });
   });
 
   describe('GET /organizations/{orgId}/invites', () => {
-    before(done => {
-      loader.import(schemas).then(dataImported => {
-        importedSchema = dataImported.default;
-        getResponse = invites.getInvitesByOrganizationId(inviteData);
-        done();
-      });
+    before(async () => {
+      getResponse = await invites.getInvitesByOrganizationId(inviteData);
     });
-    it('Search invites in the org', () => {
-      return getResponse.then(response => {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, importedSchema.getInviteSchema);
-      });
+    it('C1295529 Search invites in the org', () => {
+      expect(getResponse).to.have.status(200);
+      joi.assert(getResponse.body, schemas.getInviteSchema(inviteData));
     });
   });
 
   describe('GET /organizations/{orgId}/invites/{token}', () => {
-    before(done => {
-      getInviteResponse = invites.getInviteDetailsByToken(inviteData);
-      done();
+    before(async () => {
+      getInviteResponse = await invites.getInviteDetailsByToken(inviteData);
     });
-    it('Get invite details', () => {
-      return getInviteResponse.then(response => {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, importedSchema.getInviteByTokenSchema);
-      });
+    it('C1295530 Get invite details', () => {
+      expect(getInviteResponse).to.have.status(200);
+      joi.assert(getInviteResponse.body, schemas.getInviteByTokenSchema(inviteData));
     });
   });
 
   describe('DELETE /organizations/{orgId}/invites/?email={email}', () => {
-    before(done => {
-      deleteResponse = invites.deleteInviteByOrganizationIdAndEmail(inviteData);
-      done();
+    before(async () => {
+      deleteResponse = await invites.deleteInviteByOrganizationIdAndEmail(inviteData);
     });
-    it('Delete an invite.', () => {
-      return deleteResponse.then(response => {
-        expect(response).to.have.status(204);
-      });
+    it('C1295531 Delete an invite.', () => {
+      expect(deleteResponse).to.have.status(204);
     });
   });
 });

@@ -3,23 +3,33 @@
   "name": "qa-automation",
   "version": "1.0.0",
   "scripts": {
-    "dev": "yarn install && yarn run dev-web && yarn run dev-api",
-    "dev-api": "cd test/api && yarn install --frozen-lockfile",
+    "dev": "yarn install --frozen-lockfile && yarn run dev-web && yarn run dev-api && yarn run dev-orca",
+    "dev-api": "cd test/api && yarn install --frozen-lockfile && yarn gen-protos",
     "dev-web": "cd test/web && yarn install --frozen-lockfile",
-    "prod": "yarn run prod-web && yarn run prod-api",
+    "dev-orca": "cd test/orca && yarn install --frozen-lockfile",
+    "prod": "yarn run prod-web && yarn run prod-api && yarn run prod-orca",
     "prod-api": "cd test/api && yarn install --frozen-lockfile --production",
     "prod-web": "cd test/web && yarn install --frozen-lockfile --production",
+    "prod-orca": "cd test/orca && yarn install --frozen-lockfile --production",
     "api": "cd test/api && yarn run api",
     "api-debug": "cd test/api && yarn run api-debug",
-    "api-pipelines": "cd test/api && yarn run api-pipelines",
+    "api-local": "cd test/api && yarn run api-local",
     "api-smoke-tests": "cd test/api && yarn run api-smoke-tests",
     "web": "cd test/web && yarn run web",
+    "web-local": "cd test/web && yarn run web-local",
     "web-debug": "cd test/web && yarn run web-debug",
-    "web-pipelines": "cd test/web && yarn run web-pipelines",
     "web-smoke-tests": "cd test/web && yarn run web-smoke-tests",
+    "orca": "cd test/orca && yarn run orca",
+    "orca-local": "cd test/orca && yarn run orca-local",
+    "orca-debug": "cd test/orca && yarn run orca-debug",
+    "orca-smoke-tests": "cd test/orca && yarn run orca-smoke-tests",
     "clean": "eslint 'test/**/*.js' --fix",
     "lint": "eslint 'test/**/*.js'",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "sync-api": "cd test/api && yarn sync-tests",
+    "sync-web": "cd test/web && yarn sync-tests",
+    "sync-orca": "cd test/orca && yarn sync-tests",
+    "sync-tests": "yarn sync-web && yarn sync-api && yarn sync-orca"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
@@ -28,7 +38,8 @@
     "eslint-plugin-babel": "^5.1.0",
     "eslint-plugin-mocha": "^5.2.0",
     "lint-staged": "^7.3.0",
-    "prettier": "1.14.3"
+    "prettier": "1.14.3",
+    "wdio-testrail-reporter": "^1.1.5"
   },
   "lint-staged": {
     "*.{js,json,md}": [

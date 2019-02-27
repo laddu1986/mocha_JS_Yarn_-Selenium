@@ -1,86 +1,72 @@
-import { spaceKeyData, joi, loader } from '../common';
+import { joi } from '../common';
 import * as spaces from 'actions/spaces';
 import * as organization from 'actions/organization';
 import * as identity from 'actions/identity';
 import * as Constants from 'constants.json';
-const schemas = 'data/spaceKeySchema';
-var postResponse, getResponse, revokeResponse, reactivateResponse, deleteResponse, importedSchema;
+import * as schemas from 'schemas/spaceKeySchema';
+var postResponse, getResponse, revokeResponse, reactivateResponse, deleteResponse;
+
+const spaceKeyData = new Object();
 
 describe('Space Keys Api', () => {
+  before(async () => {
+    await identity.postIdentity(spaceKeyData);
+    await organization.postOrganization(spaceKeyData);
+    await spaces.postSpaceByOrganizationId(spaceKeyData);
+  });
   describe('POST /keys', () => {
-    before(done => {
-      identity.postIdentity(spaceKeyData).then(() => {
-        organization.postOrganization(spaceKeyData).then(() => {
-          spaces.postSpaceByOrganizationId(spaceKeyData).then(() => {
-            spaces.postKeysBySpaceId(spaceKeyData).then(response => {
-              postResponse = response;
-              done();
-            });
-          });
-        });
-      });
+    before(async () => {
+      postResponse = await spaces.postKeysBySpaceId(spaceKeyData);
     });
 
-    it('Creates a new key for the resource that is passed as input', () => {
-      return loader.import(schemas).then(dataImported => {
-        importedSchema = dataImported.default;
-        expect(postResponse).to.have.status(201);
-        joi.assert(postResponse.body, importedSchema.createKeySchema);
-      });
+    it('C1295572 Creates a new key for the resource that is passed as input', () => {
+      expect(postResponse).to.have.status(201);
+      joi.assert(postResponse.body, schemas.createKeySchema(spaceKeyData));
     });
   });
+
   describe('GET /keys', () => {
-    before(done => {
-      getResponse = spaces.getKeysBySpaceId(spaceKeyData);
-      done();
+    before(async () => {
+      getResponse = await spaces.getKeysBySpaceId(spaceKeyData);
     });
 
-    it('Returns the list of keys associated with a particular space', () => {
-      return getResponse.then(response => {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, importedSchema.getKeysBySpaceIdSchema);
-      });
+    it('C1295573 Returns the list of keys associated with a particular space', () => {
+      expect(getResponse).to.have.status(200);
+      joi.assert(getResponse.body, schemas.getKeysBySpaceIdSchema(spaceKeyData));
     });
   });
+
   describe('PATCH /keys/{key}', () => {
     describe('Revoke', () => {
-      before(done => {
-        revokeResponse = spaces.patchKeyBySpaceIdAndRowVersion(spaceKeyData, Constants.APIKeyStatus.Revoked);
-        done();
+      before(async () => {
+        revokeResponse = await spaces.patchKeyBySpaceIdAndRowVersion(spaceKeyData, Constants.APIKeyStatus.Revoked);
       });
 
-      it('Revokes the provided key', () => {
-        return revokeResponse.then(response => {
-          expect(response).to.have.status(200);
-          joi.assert(response.body, importedSchema.revokeKeyBySpaceIdAndRowVersionSchema);
-        });
+      it('C1295574 Revokes the provided key', () => {
+        expect(revokeResponse).to.have.status(200);
+        joi.assert(revokeResponse.body, schemas.revokeKeyBySpaceIdAndRowVersionSchema(spaceKeyData));
       });
     });
     describe('Re-activate', () => {
-      before(done => {
-        reactivateResponse = spaces.patchKeyBySpaceIdAndRowVersion(spaceKeyData, Constants.APIKeyStatus.Active);
-        done();
+      before(async () => {
+        reactivateResponse = await spaces.patchKeyBySpaceIdAndRowVersion(spaceKeyData, Constants.APIKeyStatus.Active);
       });
 
-      it('Re-activates the provided key', () => {
-        return reactivateResponse.then(response => {
-          expect(response).to.have.status(200);
-          joi.assert(response.body, importedSchema.reactivateKeyBySpaceIdAndRowVersionSchema);
-        });
+      it('C1295575 Re-activates the provided key', () => {
+        expect(reactivateResponse).to.have.status(200);
+        joi.assert(reactivateResponse.body, schemas.reactivateKeyBySpaceIdAndRowVersionSchema(spaceKeyData));
       });
     });
   });
+
   describe('DELETE /keys/{key}', () => {
-    before(done => {
-      deleteResponse = spaces.deleteKeyBySpaceIdAndRowVersion(spaceKeyData);
-      done();
+    before(async () => {
+      deleteResponse = await spaces.deleteKeyBySpaceIdAndRowVersion(spaceKeyData);
     });
 
-    it('Deletes the provided key', () => {
-      return deleteResponse.then(response => {
-        expect(response).to.have.status(200);
-        joi.assert(response.body, importedSchema.deleteKeyBySpaceIdAndRowVersionSchema);
-      });
+    it('C1295576 Deletes the provided key', () => {
+      expect(deleteResponse).to.have.status(200);
+      joi.assert(deleteResponse.body, schemas.deleteKeyBySpaceIdAndRowVersionSchema(spaceKeyData));
     });
   });
 });

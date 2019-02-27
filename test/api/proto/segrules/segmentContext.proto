@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package segment;
+
+option go_package = "generated";
+
+message SegmentContext{
+    string org_id       = 1;
+    string space_id     = 2;
+    string segment_id   = 3;
+}
+
+message SpaceContext{
+    string org_id       = 1;
+    string space_id     = 2;
+}
+
+message CategoryContext{
+    string org_id       = 1;
+    string space_id     = 2;
+    int32 category_id   = 3;
+}
