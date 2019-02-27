@@ -34,12 +34,12 @@ describe('New User accesses an Expired Invitation', () => {
     browser.pause(1000);
   });
 
-  it('C1295645 Admin invites a New User', () => {
+  it('C1748464 Admin invites a New User', () => {
     newUser = `newUser_${lib.randomString.generate(4)}@test.co`;
     inviteTeammate(newUser, '1');
   });
 
-  it('C1295646 Invitation Expires', async () => {
+  it('C1748465 Invitation Expires', async () => {
     invitationURL = await invitationLink(newUser);
     await updateTokenExpiryDateInDB(newUser); //update ExpiryDate of token to a history date in db
   });

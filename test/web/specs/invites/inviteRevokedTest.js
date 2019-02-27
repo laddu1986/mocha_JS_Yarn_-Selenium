@@ -25,7 +25,7 @@ describe('Access a Revoked Invitation (New Account)', () => {
     inviteTeammate(newMember, '1');
   });
 
-  it('C1295652 New User gets Invitation URL', async () => {
+  it('C1748466 New User gets Invitation URL', async () => {
     invitationURL = await invitationLink(newMember);
   });
 
