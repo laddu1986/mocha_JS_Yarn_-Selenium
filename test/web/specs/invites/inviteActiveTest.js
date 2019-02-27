@@ -26,7 +26,7 @@ describe(`New User Joins an Organization via ACTIVE invitation`, () => {
     signOut();
   });
 
-  it('C1295641 Click on the Invitation Link', async () => {
+  it('C1748463 Click on the Invitation Link', async () => {
     const acceptInvitation = await invitationLink(newUser);
     browser.url(acceptInvitation); //replication for user clicking on Accept Invitation button in email
   });
