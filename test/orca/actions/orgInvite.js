@@ -1,7 +1,7 @@
 import { randomString, post, orca } from '../common';
 
 export function createOrgInvite(responseData) {
-  var invitedEmail = `${randomString.generate(8)}@email.com`;
+  var invitedEmail = `${randomString(8)}@email.com`;
   const data = {
     query:
       'mutation CreateOrgInvite($input: CreateOrgInviteInput!) { createOrgInvite(input: $input) {total invites {token expiryDate createdTime email status}}}',

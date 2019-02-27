@@ -1,9 +1,9 @@
 import { randomString, post, orca } from '../common';
 
 export function registerAndCreateOrg(responseData) {
-  var email_account = `${randomString.generate(10)}@test.co`;
-  var name_account = `${randomString.generate(10)}`;
-  var orgNameWhileRegistering = `${randomString.generate(10)}`;
+  var email_account = `${randomString(10)}@test.co`;
+  var name_account = `${randomString(10)}`;
+  var orgNameWhileRegistering = `${randomString(10)}`;
   const query = {
     query:
       'mutation CreateAccount($input: RegisterAndCreateOrgInput!) { registerAndCreateOrg(input: $input) { account { id email name state {lastOrganizationSlug lastSpaceSlug} }  } }',
@@ -102,7 +102,7 @@ export function deleteAccount(responseData) {
 }
 
 export function createAccount(responseData) {
-  var name_account = `${randomString.generate(10)}`;
+  var name_account = `${randomString(10)}`;
   const query = {
     query:
       'mutation CreateAccount($input: CreateAccountInput!) { createAccount(input: $input) { account { id email name state {lastOrganizationSlug lastSpaceSlug} }  } }',

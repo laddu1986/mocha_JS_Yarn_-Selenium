@@ -13,7 +13,7 @@ export function noName(orgNegData) {
 export const blankAccountId = {
   api: organizations,
   data: {
-    name: randomString.generate(10)
+    name: randomString(10)
   },
   expected: 'The Account Id field is required.'
 };
@@ -23,7 +23,7 @@ export function blankRowVersion(orgNegData) {
     api: organizations,
     data: {
       id: orgNegData.orgID,
-      name: randomString.generate(10)
+      name: randomString(10)
     },
     expected: 'A concurrency error has occurred.'
   };
@@ -46,7 +46,7 @@ export function blankID(orgNegData) {
     api: organizations,
     data: {
       id: '',
-      name: randomString.generate(10),
+      name: randomString(10),
       rowVersion: orgNegData.orgRowVersion
     },
     expected: 'The Id field is required.'
@@ -58,7 +58,7 @@ export function incorrectOrgIDPut(orgNegData) {
     api: organizations,
     data: {
       id: orgNegData.identityID,
-      name: randomString.generate(10),
+      name: randomString(10),
       rowVersion: orgNegData.orgRowVersion
     }
   };

@@ -24,7 +24,7 @@ export function createTribe(responseData) {
 }
 
 export function updateTribe(responseData) {
-  var tribeNewName = `${randomString.generate(8)}_NewName`;
+  var tribeNewName = `${randomString(8)}_NewName`;
   const data = {
     query:
       'mutation UpdateSegment($input: UpdateSegmentInput!) { updateSegment(input: $input) {segment{id title tagline rowVersion backgroundImageUrl logoImageUrl layout colors{ key value opacity}}}}',

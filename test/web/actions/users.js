@@ -130,7 +130,7 @@ export function inputLabelDetails(label, labelCount) {
   var lname;
   userInputLabels = [];
   for (let i = 0; i < labelCount; i++) {
-    label === undefined ? (lname = lib.randomString.generate(Math.floor(Math.random() * 10 + 3))) : (lname = label[i]);
+    label === undefined ? (lname = lib.randomString(Math.floor(Math.random() * 10 + 3))) : (lname = label[i]);
     UsersPage.labelInput.setValue(lname);
     // browser.pause(500);
     UsersPage.addLabelButton.click();

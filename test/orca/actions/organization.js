@@ -1,7 +1,7 @@
 import { randomString, post, orca } from '../common';
 
 export function createOrganization(responseData) {
-  var orgName = `${randomString.generate(8)}`;
+  var orgName = `${randomString(8)}`;
   const data = {
     query:
       'mutation CreateOrg($input: CreateOrgInput!) { createOrganization(input: $input) { organization { id name slug createdByAccountId rowVersion createdTime modifiedTime spaces {id} members {total members{name email accountId organizationId organizationName role{name permissionLevel} currentUser}} invites {total invites{email}} rowStatus} }}',
@@ -27,7 +27,7 @@ export function createOrganization(responseData) {
 }
 
 export function updateOrganization(responseData) {
-  var updatedName = `${randomString.generate(8)}_updated`;
+  var updatedName = `${randomString(8)}_updated`;
   const data = {
     query:
       'mutation EditOrg($input: UpdateOrgInput!) { updateOrganization(input: $input) { organization { id name slug createdByAccountId rowVersion createdTime modifiedTime spaces {id} members {total members{name email accountId organizationId organizationName role{name permissionLevel} currentUser}} invites {total invites{email}} rowStatus} }}',

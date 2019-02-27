@@ -1,51 +1,49 @@
-/*
-TestCase: New User
-  Invitation Expires
-  User Lands on Expired Invitation page
-  Admin Resends Expired invite
-  User accepts and lands on Join Org page
-*/
-import * as lib from '../../common';
-import { createAccount, verifyJoinOrgText } from 'actions/account';
+import '../../common';
+import { verifyJoinOrgText } from 'actions/account';
 import { submitButtonVisible } from 'actions/login';
 import { signOut } from 'actions/navBar';
 import { inviteStatus } from 'actions/invite';
 import {
   expiredInvitationText,
   goToTeammatesPage,
-  inviteTeammate,
   invitationLink,
   updateTokenExpiryDateInDB,
   goToInactiveTab,
   resendInvite
 } from 'actions/invite';
-import { getNotificationMessageText, signIn } from 'actions/common';
-import accountPage from 'page_objects/accountPage';
+import {
+  getNotificationMessageText,
+  signIn,
+  postIdentity,
+  getAccessToken,
+  postOrganization,
+  postMembership,
+  postInvitesByOrganizationId
+} from 'actions/common';
+import { selectOrg } from 'actions/organization';
 import SignInPage from 'page_objects/signInPage';
 import message from 'data/messages.json';
 import passiveNotification from 'data/passiveNotification.json';
 import constants from 'constants.json';
-let newUser, invitationURL, accountData;
-
+var invitationURL, newMember;
+const accountData = new Object();
 describe('New User accesses an Expired Invitation', () => {
+  before(async () => {
+    await postIdentity(accountData);
+    await postOrganization(accountData);
+    await postMembership(accountData);
+    await getAccessToken(accountData);
+    await postInvitesByOrganizationId(accountData);
+    newMember = accountData.inviteEmail;
+    invitationURL = await invitationLink(newMember);
+    await updateTokenExpiryDateInDB(newMember);
+  });
   before(() => {
-    accountPage.open();
-    accountData = createAccount();
-    browser.pause(1000);
+    SignInPage.open();
+    signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
+    selectOrg();
   });
-
-  it('C1748464 Admin invites a New User', () => {
-    newUser = `newUser_${lib.randomString.generate(4)}@test.co`;
-    inviteTeammate(newUser, '1');
-  });
-
-  it('C1748465 Invitation Expires', async () => {
-    invitationURL = await invitationLink(newUser);
-    await updateTokenExpiryDateInDB(newUser); //update ExpiryDate of token to a history date in db
-  });
-
   it('C1295647 Inactive tab status --> shows as Expired', () => {
-    browser.refresh(); //refresh to reflect the latest expired/pending status from DB
     goToTeammatesPage();
     goToInactiveTab();
     expect(inviteStatus()).to.deep.equal(constants.InviteStatus.Expired);
@@ -60,7 +58,7 @@ describe('New User accesses an Expired Invitation', () => {
 
   it('C1640142 Admin logs in and goes to inactive invite tab', () => {
     SignInPage.open();
-    signIn(accountData.email, accountData.password);
+    signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
     browser.pause(1500); // workaround for Bug: ACT-299. will be removed after bugfix
     goToTeammatesPage();
     goToInactiveTab();
@@ -69,13 +67,13 @@ describe('New User accesses an Expired Invitation', () => {
 
   it('C1295649 Resends Expired Invitation --> validate Passive Notification', () => {
     resendInvite();
-    let expectedPassiveNotificationMessage = `${passiveNotification.resendInviteMessage.text}${newUser}`;
+    let expectedPassiveNotificationMessage = `${passiveNotification.resendInviteMessage.text}${newMember}`;
     expect(getNotificationMessageText()).to.include(expectedPassiveNotificationMessage);
   });
 
   it('C1295650 User gets new Invitation eMail and Accepts Invite', async () => {
     signOut();
-    invitationURL = await invitationLink(newUser);
+    invitationURL = await invitationLink(newMember);
     browser.url(invitationURL);
   });
 

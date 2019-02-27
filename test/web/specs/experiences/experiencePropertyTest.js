@@ -17,13 +17,13 @@ import {
   verifyAddPropertyPage,
   verifyPropertyIsAdded
 } from 'actions/experienceTemplates.js';
-var experienceTemplateName = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}`,
-  textProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}`,
-  newTextProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}_new`,
-  integerProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}`,
-  newIntProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}_new`,
-  boolProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}`,
-  newBoolProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}_new`;
+var experienceTemplateName = `${lib.randomString({ length: 7, charset: 'alphabetic' })}`,
+  textProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}`,
+  newTextProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}_new`,
+  integerProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}`,
+  newIntProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}_new`,
+  boolProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}`,
+  newBoolProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}_new`;
 
 describe(`Experience Template Property Tests`, () => {
   before(() => {

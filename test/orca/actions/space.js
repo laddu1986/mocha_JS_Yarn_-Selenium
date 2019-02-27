@@ -1,7 +1,7 @@
 import { randomString, post, orca } from '../common';
 
 export function createSpace(responseData) {
-  var spaceName = `${randomString.generate(8)}_space`;
+  var spaceName = `${randomString(8)}_space`;
   const data = {
     query:
       'mutation CreateSpace($input: CreateSpaceInput!) { createSpace(input: $input) { space { id name rowVersion slug apiKeys {value rowVersion rowStatus} createdByAccountId organizationId rowStatus rowVersion activated }}}',
@@ -29,7 +29,7 @@ export function createSpace(responseData) {
 }
 
 export function updateSpace(responseData) {
-  var newSpaceName = `${randomString.generate(8)}_newSpace`;
+  var newSpaceName = `${randomString(5)}_newSpace`;
   const data = {
     query:
       'mutation UpdateSpace($input: UpdateSpaceInput!) { updateSpace(input: $input) { space { id name slug apiKeys{value rowStatus rowVersion} createdByAccountId organizationId rowStatus rowVersion activated }}}',
