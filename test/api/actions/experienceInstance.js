@@ -17,6 +17,8 @@ export const types = {
   experience: false
 };
 
+export const defaultExperience = 0;
+
 /*
  *  Experiences
  */

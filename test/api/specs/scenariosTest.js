@@ -15,7 +15,7 @@ instanceData.experience = { id: '74wdQge' };
 
 describe('Experience Instance Service', () => {
   before('Setup the testing environment', async () => {
-    await instances.getExperience(instanceData, false, true);
+    await instances.getExperience(instanceData, instances.types.experience, true);
   });
   it('addScenario() sends a request to adds a new scenario', async () => {
     let addScenario = await instances.addScenario(instanceData);
@@ -51,7 +51,10 @@ describe('Experience Instance Service', () => {
     expect(enableConfirm.response.scenario.isEnabled).to.equal(undefined);
   });
   it('duplicateScenario() duplicates a scenario', async () => {
-    let duplicateScenario = await instances.duplicateScenario(instanceData, instanceData.scenarios[0].id);
+    let duplicateScenario = await instances.duplicateScenario(
+      instanceData,
+      instanceData.scenarios[instances.defaultScenario].id
+    );
     expect(duplicateScenario.status.code).to.equal(0);
   });
   it('removeScenario() removes a scenario', async () => {
