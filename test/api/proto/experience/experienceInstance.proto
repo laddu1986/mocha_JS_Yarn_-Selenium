@@ -27,6 +27,10 @@ message ScenarioDetails {
   google.protobuf.Timestamp created_at = 9;
   google.protobuf.Timestamp modified_at = 10;
   google.protobuf.Timestamp row_version = 11;
+
+  // The following fields are for targeting
+  LogicalType segment_logical_operator = 12;
+  repeated string segment_ids = 13;
 }
 
 message ExperienceInstanceSummary {
@@ -94,4 +98,9 @@ enum InstanceType {
 enum InstanceState {
   DRAFT = 0;
   COMMITTED = 1;
+}
+
+enum LogicalType{
+  AND = 0;
+  OR  = 1;
 }

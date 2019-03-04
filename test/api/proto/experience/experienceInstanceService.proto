@@ -50,6 +50,9 @@ service ExperienceInstanceWriteService {
   // NOTE: this will update the scenario the properties belong to
   rpc UpdateLocalizedProperties(UpdateLocalizedPropertiesRequest) returns (UpdateLocalizedPropertiesResponse);
 
+  rpc AddSegment(AddSegmentRequest) returns (AddSegmentResponse);
+  rpc RemoveSegment(RemoveSegmentRequest) returns (RemoveSegmentResponse);
+  rpc ChangeSegmentLogicalOperator(ChangeSegmentLogicalOperatorRequest) returns (ChangeSegmentLogicalOperatorResponse);
 }
 
 message GetExperienceRequest {
@@ -333,6 +336,60 @@ message UpdateLocalizedPropertiesResponse{
   repeated ExperienceVersionUpdate updates = 2;
 }
 
+message AddSegmentRequest{
+  WorkspaceContext context = 1;
+  int64 scenario_id = 2;
+  string segment_id = 3;
+  string account_id = 4;
+
+  // This is the scenario row_version
+  google.protobuf.Timestamp row_version = 5;
+}
+
+message AddSegmentResponse{
+  // this is the new scenario row version
+  google.protobuf.Timestamp row_version = 1;
+
+  // Changes to parent experience(s)
+  repeated ExperienceVersionUpdate updates = 2;
+}
+
+message RemoveSegmentRequest{
+  WorkspaceContext context = 1;
+  int64 scenario_id = 2;
+  string segment_id = 3;
+  string account_id = 4;
+
+  // This is the scenario row_version
+  google.protobuf.Timestamp row_version = 5;
+}
+
+message RemoveSegmentResponse{
+  // This is the new scenario row_version. 
+  google.protobuf.Timestamp row_version = 1;
+
+  // Changes to parent experience(s)
+  repeated ExperienceVersionUpdate updates = 2;
+}
+
+message ChangeSegmentLogicalOperatorRequest{
+  WorkspaceContext context = 1;
+  int64 scenario_id = 2;
+  string account_id = 3;
+
+  // This is the scenario row_version
+  google.protobuf.Timestamp row_version = 4;
+
+  LogicalType segment_logical_operator = 5;
+}
+
+message ChangeSegmentLogicalOperatorResponse{
+  // This is the new scenario row_version. 
+  google.protobuf.Timestamp row_version = 1;
+
+  // Changes to parent experience(s)
+  repeated ExperienceVersionUpdate updates = 2;
+}
 
 enum ChildExpandType {
   NONE = 0;
