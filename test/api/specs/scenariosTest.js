@@ -53,7 +53,7 @@ describe('Experience Instance Service', () => {
   it('duplicateScenario() duplicates a scenario', async () => {
     let duplicateScenario = await instances.duplicateScenario(
       instanceData,
-      instanceData.scenarios[instances.defaultScenario].id
+      instanceData.scenarios[instances.defaultExperience].id
     );
     expect(duplicateScenario.status.code).to.equal(0);
   });
