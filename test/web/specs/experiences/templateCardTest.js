@@ -18,7 +18,7 @@ import {
   verifyThumbnail
 } from 'actions/experienceTemplates';
 import { goToExperiencePage } from 'actions/navBar';
-var experienceTemplateName = `${lib.generateString.generate({ length: 7, charset: 'alphabetic' })}`;
+var experienceTemplateName = `${lib.randomString({ length: 7, charset: 'alphabetic' })}`;
 
 describe(`Experience Template card image Tests`, () => {
   before(() => {
