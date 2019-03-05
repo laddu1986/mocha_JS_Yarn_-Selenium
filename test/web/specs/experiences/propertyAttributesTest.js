@@ -11,8 +11,8 @@ import {
   deleteProperty,
   addProperty
 } from 'actions/experienceTemplates.js';
-var experienceTemplateName = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}`,
-  textProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}`;
+var experienceTemplateName = `${lib.randomString({ length: 7, charset: 'alphabetic' })}`,
+  textProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}`;
 
 describe(`Experience Template--Text property attribute Tests`, () => {
   before(() => {

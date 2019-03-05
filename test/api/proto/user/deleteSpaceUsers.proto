@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package user;
+
+option go_package = "generated";
+
+message DeleteSpaceUsersRequest {
+    string space_id = 1;
+    repeated string user_ids = 2;
+}
+
+message DeleteSpaceUsersResponse {
+}
+
+message DeletedUser {
+    string user_id = 1;
+    string space_id = 2;
+    google.protobuf.Timestamp deleted_at = 3;
+}

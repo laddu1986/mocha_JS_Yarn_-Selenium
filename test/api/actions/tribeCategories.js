@@ -3,8 +3,8 @@ import { path, randomString, caller } from '../common';
 const PROTO_PATH = path.resolve(process.env.TRIBE_PROTO_DIR + 'segmentService.proto');
 const client = caller(process.env.TRIBE_HOST, PROTO_PATH, 'SegmentService');
 
-function createCategory(responseObject, updateFlag) {
-  let label = randomString.generate(8);
+export function createCategory(responseObject) {
+  let label = randomString(8);
 
   const req = new client.Request('createCategory', {
     spaceContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID },
@@ -12,15 +12,12 @@ function createCategory(responseObject, updateFlag) {
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    if (updateFlag) {
-      responseObject.tribeCategoryLabel = label;
-      responseObject.tribeCategoryID = response.response.id;
-    }
+    responseObject.tribeCategory = response.response;
     return response;
   });
 }
 
-function listCategories(responseObject) {
+export function listCategories(responseObject) {
   const req = new client.Request('listCategories', {
     spaceContext: { orgId: responseObject.orgID, spaceId: responseObject.spaceID }
   }).withResponseStatus(true);
@@ -30,34 +27,33 @@ function listCategories(responseObject) {
   });
 }
 
-function renameCategory(responseObject) {
-  let newLabel = randomString.generate(7);
+export function renameCategory(responseObject) {
+  let newLabel = randomString(7);
   const req = new client.Request('renameCategory', {
     categoryContext: {
       orgId: responseObject.orgID,
       spaceId: responseObject.spaceID,
-      categoryId: responseObject.tribeCategoryID
+      categoryId: responseObject.tribeCategory.id
     },
     label: newLabel
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
     if (response.status.code === 0) {
-      responseObject.tribeCategoryOldLabel = responseObject.tribeCategoryLabel;
-      responseObject.tribeCategoryLabel = newLabel;
+      responseObject.tribeCategory.label = newLabel;
     }
     return response;
   });
 }
 
-function moveCategory(responseObject) {
+export function moveCategory(responseObject, moveToPosition) {
   const req = new client.Request('moveCategory', {
     categoryContext: {
       orgId: responseObject.orgID,
       spaceId: responseObject.spaceID,
-      categoryId: responseObject.tribeCategoryID
+      categoryId: responseObject.tribeCategory.id
     },
-    index: { value: 10 }
+    index: { value: moveToPosition }
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
@@ -65,12 +61,12 @@ function moveCategory(responseObject) {
   });
 }
 
-function deleteCategory(responseObject) {
+export function deleteCategory(responseObject) {
   const req = new client.Request('deleteCategory', {
     categoryContext: {
       orgId: responseObject.orgID,
       spaceId: responseObject.spaceID,
-      categoryId: responseObject.tribeCategoryID
+      categoryId: responseObject.tribeCategory.id
     }
   }).withResponseStatus(true);
 
@@ -78,5 +74,3 @@ function deleteCategory(responseObject) {
     return response;
   });
 }
-
-export { createCategory, listCategories, renameCategory, moveCategory, deleteCategory };

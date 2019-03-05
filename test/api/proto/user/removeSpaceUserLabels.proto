@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "generated";
+
+message RemoveSpaceUserLabelsRequest {
+    repeated string user_ids = 1;
+    string space_id = 2;
+    repeated string labels = 3;
+}
+
+message RemoveSpaceUserLabelsResponse {
+}

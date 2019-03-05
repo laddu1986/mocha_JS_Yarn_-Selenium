@@ -3,7 +3,7 @@ import AccountPage from 'page_objects/accountPage';
 import { createAccount } from 'actions/account';
 import { createSpace, goToDeveloperPortal, getAPIKey } from 'actions/space';
 import { clickOnAudienceLink, clickOnSpaceDashboardLink } from 'actions/navBar';
-import { addUsers, getCount, addVisitor, verifyUsersAreAdded } from 'actions/metrics';
+import { addUsers, getCount, addVisitor, verifyUsersAreAdded, refreshSpaceToViewMetrics } from 'actions/metrics';
 import Constants from 'constants.json';
 import { clickOnUsersTab, getRecentUsersRows, verifyUsersDetails, clickUserRow, verifySideBar } from 'actions/users';
 var apiKey;
@@ -26,46 +26,47 @@ describe(`User Metrics Tests`, () => {
     verifyUsersAreAdded();
   });
 
-  it('Audience->Users tab --> Verify User rows', () => {
+  it('C1295677 Audience->Users tab --> Verify User rows', () => {
     expect(getRecentUsersRows()).to.equal(5);
   });
 
-  it('Verify the details of users', () => {
+  it('C1295678 Verify the details of users', () => {
     expect(verifyUsersDetails(lib.responseData.users)).to.equal(true);
   });
 
-  it('For First User --> Verify email, UID and name in side bar', () => {
+  it('C1295679 For First User --> Verify email, UID and name in side bar', () => {
     clickUserRow();
     browser.pause(1000);
     expect(verifySideBar(Constants.UserType.User)).to.equal(true);
   });
 
-  it('Adding the visitor ', async () => {
+  it('C1295680 Adding the visitor ', async () => {
     await addVisitor(1, apiKey);
   });
 
-  it('Verify Visitor on side bar', () => {
+  it('C1295681 Verify Visitor on side bar', () => {
     browser.refresh();
     clickUserRow(undefined, Constants.UserType.Visitor);
     browser.pause(1000);
     expect(verifySideBar(Constants.UserType.Visitor)).to.equal(true);
   });
 
-  it('Space Dashboard Page  --> Verify Total Users Count ', () => {
+  it('C1295682 Space Dashboard Page  --> Verify Total Users Count ', () => {
     clickOnSpaceDashboardLink();
-    browser.pause(1500);
+    refreshSpaceToViewMetrics();
+
     expect(getCount(Constants.UserType.User)).to.include(5);
   });
 
-  it('Space Dashboard Page  --> Verify Visitors Count', () => {
+  it('C1640147 Space Dashboard Page  --> Verify Visitors Count', () => {
     expect(getCount(Constants.UserType.Visitor)).to.include(1);
   });
 
-  it('Space Dashboard Page  --> Verify Active Users Count ', () => {
+  it('C1640148 Space Dashboard Page  --> Verify Active Users Count ', () => {
     expect(getCount(Constants.UserType.Active)).to.include(5);
   });
 
-  it('Space Dashboard Page  --> Verify New Users Count ', () => {
+  it('C1640149 Space Dashboard Page  --> Verify New Users Count ', () => {
     expect(getCount(Constants.UserType.New)).to.include(5);
   });
 });

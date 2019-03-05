@@ -6,9 +6,7 @@ import { inviteWithoutAuth } from 'data/inviteTestsData.js';
 
 const invitesNegData = new Object();
 
-var postResponse, getInviteResponse;
-
-describe('Negative Cases --> Invites Api', () => {
+describe('Negative Cases --> Invites API', () => {
   before(async () => {
     await identity.postIdentity(invitesNegData);
     await organization.postOrganization(invitesNegData);
@@ -17,20 +15,16 @@ describe('Negative Cases --> Invites Api', () => {
     await invites.getInvitesByOrganizationId(invitesNegData);
     await invites.deleteInviteByOrganizationIdAndEmail(invitesNegData);
   });
-  describe('POST /organizations/{id}/invites', () => {
-    before(async () => {
-      postResponse = await post(inviteWithoutAuth(invitesNegData));
-    });
-    it('Create invite without authorization -> 401: Access token is missing or invalid', () => {
-      expect(postResponse).to.have.status(401);
-    });
+  it('C1295526 POST /organizations/{id}/invites without authorization returns 401', async () => {
+    let postResponse = await post(inviteWithoutAuth(invitesNegData));
+    expect(postResponse).to.have.status(401);
   });
-  describe('GET /invites/{token}', () => {
-    before(async () => {
-      getInviteResponse = await invites.getInviteDetailsByToken(invitesNegData, 'negative');
-    });
-    it('Search for deleted invite --> 404: Not Found', () => {
-      expect(getInviteResponse).to.have.status(404);
-    });
+  it('C1295527 GET /invites/{token} with invite that does not exist returns 404', async () => {
+    let getInviteResponse = await invites.getInviteDetailsByToken(invitesNegData, 'negative');
+    expect(getInviteResponse).to.have.status(404);
+  });
+  after(async () => {
+    await identity.deleteIdentityById(invitesNegData);
+    await organization.deleteOrganizationById(invitesNegData);
   });
 });

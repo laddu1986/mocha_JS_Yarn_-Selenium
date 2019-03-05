@@ -73,12 +73,6 @@ export function goToOrganisationDashboard() {
   NavBar.backToOrgDashboardLink.click();
 }
 
-export function inviteTeammate(mail, counta) {
-  clickInviteTeammateButton();
-  sendInvite(mail);
-  verifyInviteCount(counta);
-}
-
 export function revokeInvite() {
   TeamPage.revokeButton.click();
   clickSureButton();
@@ -96,12 +90,12 @@ export function getInviteTokenFromDB(email) {
   return new Promise((resolve, reject) => {
     mysql
       .authenticate()
-      .then(function () {
+      .then(function() {
         Invites.findAll({
           attributes: ['Id', 'Email', 'CreatedTime'],
           where: { Email: `${email}` },
           order: mysql.literal('CreatedTime DESC')
-        }).then(function (result) {
+        }).then(function(result) {
           id = result[0].dataValues.Id;
           resolve(id);
         });
@@ -122,15 +116,15 @@ export async function updateTokenExpiryDateInDB(email) {
   return new Promise((resolve, reject) => {
     mysql
       .authenticate()
-      .then(function () {
+      .then(function() {
         Invites.findAll({
           attributes: ['Id', 'Email', 'CreatedTime'],
           where: { Email: `${email}` },
           order: mysql.literal('CreatedTime DESC')
-        }).then(function (result) {
+        }).then(function(result) {
           id = result[0].dataValues.Id;
           createdTime = result[0].dataValues.CreatedTime;
-          Invites.update({ ExpiryDate: createdTime }, { where: { Id: id } }).then(function () {
+          Invites.update({ ExpiryDate: createdTime }, { where: { Id: id } }).then(function() {
             resolve(id);
           });
         });

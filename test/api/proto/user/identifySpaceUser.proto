@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+import "location.proto";
+import "deviceType.proto";
+import "google/protobuf/timestamp.proto";
+import "audienceType.proto";
+
+package user;
+
+option go_package = "generated";
+
+message IdentifySpaceUserRequest {
+    string external_id = 1;
+    string space_id = 2;
+    string email = 3;
+    string last_user_agent = 4;
+    string display_name = 5;
+    string last_ip_address = 6;
+    common.Location last_location = 7;
+    common.DeviceType last_device_type = 8;
+    google.protobuf.Timestamp joined_at = 9;
+    string organization_id = 10;
+    string internal_id = 11;
+    common.AudienceType audience_type = 12;
+    string visitor_id = 13;
+}
+
+message IdentifySpaceUserResponse {
+}

@@ -1,11 +1,11 @@
 import { randomString, post, orca } from '../common';
 
 export function createOrganization(responseData) {
-  var orgName = `${randomString.generate(8)}`;
+  var orgName = `${randomString(8)}`;
   const data = {
     query:
       'mutation CreateOrg($input: CreateOrgInput!) { createOrganization(input: $input) { organization { id name slug createdByAccountId rowVersion createdTime modifiedTime spaces {id} members {total members{name email accountId organizationId organizationName role{name permissionLevel} currentUser}} invites {total invites{email}} rowStatus} }}',
-    operationName: "CreateOrg", 
+    operationName: 'CreateOrg',
     variables: {
       input: {
         fields: {
@@ -27,11 +27,11 @@ export function createOrganization(responseData) {
 }
 
 export function updateOrganization(responseData) {
-  var updatedName = `${randomString.generate(8)}_updated`;
+  var updatedName = `${randomString(8)}_updated`;
   const data = {
     query:
       'mutation EditOrg($input: UpdateOrgInput!) { updateOrganization(input: $input) { organization { id name slug createdByAccountId rowVersion createdTime modifiedTime spaces {id} members {total members{name email accountId organizationId organizationName role{name permissionLevel} currentUser}} invites {total invites{email}} rowStatus} }}',
-    operationName: "EditOrg", 
+    operationName: 'EditOrg',
     variables: {
       input: {
         id: responseData.orgID,
@@ -57,7 +57,7 @@ export function getOrganization(responseData) {
   const data = {
     query:
       'query getOrganization($id: ID!) { organization(id: $id)  { id name slug createdByAccountId rowVersion createdTime modifiedTime spaces {id} members {total members{name email accountId organizationId organizationName role{name permissionLevel} currentUser}} invites {total invites{email}} rowStatus}}',
-    operationName: "getOrganization", 
+    operationName: 'getOrganization',
     variables: {
       id: responseData.orgID
     }
@@ -75,7 +75,7 @@ export function getOrganizationBySlug(responseData) {
   const data = {
     query:
       'query getOrgSummary($slug: String!) { organizationBySlug(slug: $slug)  { id name slug createdByAccountId rowVersion createdTime modifiedTime spaces {id} members {total members{name email accountId organizationId organizationName role{name permissionLevel} currentUser}} invites {total invites{email}} rowStatus}}',
-    operationName: "getOrgSummary", 
+    operationName: 'getOrgSummary',
     variables: {
       slug: responseData.newName.toLowerCase()
     }
@@ -93,7 +93,7 @@ export function getOrganizations(responseData) {
   const data = {
     query:
       'query orgList { organizations  { id name slug createdByAccountId rowVersion createdTime modifiedTime spaces {id} members {total members{name email accountId organizationId organizationName role{name permissionLevel} currentUser}} invites {total invites{email}} rowStatus}}',
-    operationName: "orgList", 
+    operationName: 'orgList',
     variables: {}
   };
   const any = {
@@ -111,7 +111,7 @@ export function getOrganizations(responseData) {
 export function leaveOrganization(responseData) {
   const data = {
     query: 'mutation LeaveOrg ($input: LeaveOrgInput!) { leaveOrg(input: $input) }',
-    operationName: "LeaveOrg", 
+    operationName: 'LeaveOrg',
     variables: {
       input: {
         organizationId: responseData.orgID,

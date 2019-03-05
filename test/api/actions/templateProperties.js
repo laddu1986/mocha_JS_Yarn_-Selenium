@@ -1,29 +1,21 @@
 import { randomString } from '../common';
 import { updateExperienceTemplate } from 'actions/templates';
-import constants from 'constants.json';
 import * as data from 'data/templateTestData';
 
 export function createProperty(templateData, propertyType, name, key) {
   let reqName =
-    name === undefined
-      ? randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
-      : name;
+    name === undefined ? randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : name;
   let reqKey =
-    key === undefined ? randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : key;
+    key === undefined ? randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : key;
   let propertiesArray = templateData.template.properties === undefined ? [] : templateData.template.properties;
-  let propertyVal;
-  if (propertyType == constants.TemplateProperties.Types.Text) propertyVal = data.textVal;
-  else if (propertyType == constants.TemplateProperties.Types.Integer) propertyVal = data.intVal;
-  else if (propertyType == constants.TemplateProperties.Types.Switch) propertyVal = data.boolVal;
-
+  let propertyVal = data.properties[propertyType];
   propertiesArray.push({
     name: reqName,
     key: reqKey,
     typeKey: propertyType,
     appearanceKey: 'appearance_key_text',
-    prompt_text: 'prompt_text',
-    help_text: 'help_text',
-    localizable: true,
+    promptText: 'prompt_text',
+    helpText: 'help_text',
     [propertyType]: propertyVal
   });
 
@@ -31,11 +23,10 @@ export function createProperty(templateData, propertyType, name, key) {
     id: templateData.template.id,
     name: templateData.template.name,
     key: templateData.template.key,
-    thumbnailUrl: 'thumbnail_url_text',
+    thumbnailUrl: 'thumbnail_url',
     properties: propertiesArray,
     rowVersion: templateData.template.rowVersion
   };
-
   return updateExperienceTemplate(templateData, templatePayload)
     .exec()
     .then(response => {
@@ -48,14 +39,14 @@ export function createProperty(templateData, propertyType, name, key) {
     });
 }
 
-export function renameProperty(templateData, type) {
-  let newName = randomString.generate({ length: 40, charset: 'alphabetic', capitalization: 'lowercase' });
-  templateData.template.properties[type].name = newName;
+export function renameProperty(templateData) {
+  let newName = randomString({ length: 40, charset: 'alphabetic', capitalization: 'lowercase' });
+  templateData.template.properties[0].name = newName;
   let templatePayload = {
     id: templateData.template.id,
     name: templateData.template.name,
     key: templateData.template.key,
-    thumbnailUrl: 'thumbnail_url_text',
+    thumbnailUrl: 'thumbnail_url',
     properties: templateData.template.properties,
     rowVersion: templateData.template.rowVersion
   };
@@ -67,43 +58,13 @@ export function renameProperty(templateData, type) {
     });
 }
 
-export function deleteProperty(templateData, type) {
-  // this will be re-evaluated after related bug is fixed.
-  let propertyType,
-    typeVal,
-    property = [];
-  for (let i = 0; i < templateData.template.properties.length; i++) {
-    if (type == templateData.template.properties[i].typeKey) continue;
-    else {
-      if (templateData.template.properties[i].typeKey == constants.TemplateProperties.Types.Text) {
-        propertyType = constants.TemplateProperties.Types.Text;
-        typeVal = data.textVal;
-      } else if (templateData.template.properties[i].typeKey == constants.TemplateProperties.Types.Switch) {
-        propertyType = constants.TemplateProperties.Types.Switch;
-        typeVal = data.boolVal;
-      } else if (templateData.template.properties[i].typeKey == constants.TemplateProperties.Types.Integer) {
-        propertyType = constants.TemplateProperties.Types.Integer;
-        typeVal = data.intVal;
-      }
-      property.push({
-        name: templateData.template.properties[i].name,
-        key: templateData.template.properties[i].key,
-        typeKey: templateData.template.properties[i].typeKey,
-        appearanceKey: templateData.template.properties[i].appearanceKey,
-        prompt_text: templateData.template.properties[i].promptText,
-        help_text: templateData.template.properties[i].helpText,
-        localizable: templateData.template.properties[i].localizable,
-        [propertyType]: typeVal
-      });
-    }
-  }
-
+export function deleteProperty(templateData) {
   let templatePayload = {
     id: templateData.template.id,
     name: templateData.template.name,
     key: templateData.template.key,
-    thumbnailUrl: 'thumbnail_url_text',
-    properties: property,
+    thumbnailUrl: 'thumbnail_url',
+    properties: [],
     rowVersion: templateData.template.rowVersion
   };
   return updateExperienceTemplate(templateData, templatePayload)

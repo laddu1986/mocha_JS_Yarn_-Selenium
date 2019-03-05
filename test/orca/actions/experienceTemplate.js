@@ -8,16 +8,16 @@ var key,
   p3,
   k3,
   properties = { p1, k1, p2, k2, p3, k3 };
-properties.p1 = randomString.generate(8);
-properties.p2 = randomString.generate(8);
-properties.p3 = randomString.generate(8);
-properties.k1 = randomString.generate({ length: 6, charset: 'alphabetic' });
-properties.k2 = randomString.generate({ length: 6, charset: 'alphabetic' });
-properties.k3 = randomString.generate({ length: 6, charset: 'alphabetic' });
+properties.p1 = randomString(8);
+properties.p2 = randomString(8);
+properties.p3 = randomString(8);
+properties.k1 = randomString({ length: 6, charset: 'alphabetic' });
+properties.k2 = randomString({ length: 6, charset: 'alphabetic' });
+properties.k3 = randomString({ length: 6, charset: 'alphabetic' });
 
 export function createExperienceTemplate(responseData) {
-  var name = `${randomString.generate(8)}`;
-  key = `${randomString.generate({
+  var name = `${randomString(8)}`;
+  key = `${randomString({
     length: 7,
     charset: 'alphabetic'
   })}`;
@@ -50,7 +50,7 @@ export function createExperienceTemplate(responseData) {
 }
 
 export function updateExperienceTemplate(responseData, propertyType) {
-  var newName = `${randomString.generate(8)}_new`;
+  var newName = `${randomString(8)}_new`;
   const data = {
     query:
       'mutation updateExperienceTemplate($input: UpdateExperienceTemplateInput!) { updateExperienceTemplate(input: $input) { template { id name key thumbnailUrl rowVersion properties{key typeKey name defaultValue appearanceKey promptText helpText localizable rules{constraint}}}}}',
@@ -116,7 +116,7 @@ export function getExperienceTemplate(responseData) {
 export function getExperiencesTemplate(responseData) {
   const data = {
     query:
-      'query experienceTemplates($organizationId: ID!, $spaceId: ID!) { experienceTemplates(organizationId: $organizationId , spaceId: $spaceId) {templates{ id rowVersion key name}}}',
+      'query experienceTemplates($organizationId: ID!, $spaceId: ID!) { experienceTemplates(organizationId: $organizationId , spaceId: $spaceId) { id rowVersion key name}}',
     operationName: 'experienceTemplates',
     variables: {
       organizationId: responseData.orgID,
