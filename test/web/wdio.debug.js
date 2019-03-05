@@ -1,4 +1,4 @@
-var defaults = require('./wdio.appcurator.js').config;
+var defaults = require('./wdio.mtribes.js').config;
 var _ = require('lodash');
 var overrides = {
   protocol: 'http',

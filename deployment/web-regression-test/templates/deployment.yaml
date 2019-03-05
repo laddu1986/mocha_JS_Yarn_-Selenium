@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: web-test-cron
 spec:
-  schedule: "0 6 * * *"
+  schedule: "0 19 * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
@@ -12,29 +12,21 @@ spec:
       activeDeadlineSeconds: 2400
       template:
         spec:
-          volumes:
-            - name: test-report-web
-              persistentVolumeClaim:
-                claimName: test-report
           imagePullSecrets:
             - name: hs-index-docker-io-v2-autobuilder-hs
           containers:
             - name: web-test-cron
-              image: massiveinteractive/qa-web
-              imagePullPolicy: IfNotPresent
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
               envFrom:
                 - configMapRef:
                     name: qa-config
+                - secretRef: 
+                    name: testrail
               command: ["/bin/sh", "-c"]
               args:
                 - echo TEST-STARTED;
-                  yarn run web --browser:chrome;
-                  cp -R allure-results/* /app;
+                  yarn run web --browser:chrome_headless;
                   echo TEST-ENDED;
-              volumeMounts:
-                - mountPath: /app
-                  name: test-report-web
           terminationGracePeriodSeconds: 30
           restartPolicy: Never
-          nodeSelector:
-            kubernetes.io/hostname: ip-172-20-53-252.ap-southeast-2.compute.internal

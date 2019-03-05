@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "generated";
+
+message SearchLabelsRequest {
+    string space_id = 1;
+    string keyword = 2;
+    int32 limit = 3;
+    int32 offset = 4;
+}
+
+message SearchLabelsResponse {
+    repeated string labels = 1;
+    int32 total = 2;
+}

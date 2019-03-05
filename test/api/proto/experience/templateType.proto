@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package experience;
+option go_package = "generated";
+
+message TemplateType{
+    string key = 1;
+    string name = 2;
+	string icon_url = 3;	    
+    repeated TemplateRuleType rule_types = 4;	
+}
+
+message TemplateRuleType{
+    string key = 1;
+    string type  = 2;
+}

@@ -33,7 +33,7 @@ describe('Search User Test', () => {
     verifyUsersAreAdded();
   });
 
-  it('Search user by email', () => {
+  it('C1295673 Search user by email', () => {
     var Email = getFirstRowDetails(Constants.UserAttributes.Email);
     search(Email);
     getResultText(1);
@@ -42,7 +42,7 @@ describe('Search User Test', () => {
     clearText();
   });
 
-  it('Search user by name', () => {
+  it('C1295674 Search user by name', () => {
     var Name = getFirstRowDetails(Constants.UserAttributes.Name);
     search(Name);
     getResultText(1);
@@ -51,7 +51,7 @@ describe('Search User Test', () => {
     clearText();
   });
 
-  it('Search user by uid', () => {
+  it('C1295675 Search user by uid', () => {
     var UID = getFirstRowDetails(Constants.UserAttributes.UID);
     search(UID);
     getResultText(1);
@@ -60,7 +60,7 @@ describe('Search User Test', () => {
     clearText();
   });
 
-  it('Invalid Search --> Returns no users', () => {
+  it('C1295676 Invalid Search --> Returns no users', () => {
     search('abc');
     getResultText(0);
     expect(getRecentUsersRows()).to.equal(0);

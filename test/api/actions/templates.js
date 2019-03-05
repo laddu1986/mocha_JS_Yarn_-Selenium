@@ -1,7 +1,7 @@
 import { path, caller, randomString } from '../common';
 
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
-const client = caller(process.env.EXPERIENCE_HOST, PROTO_PATH, 'ExperienceService');
+const client = caller(process.env.EXPERIENCE_HOST, PROTO_PATH, 'ExperienceTemplateReadService');
 
 function spaceContext(templateData) {
   return {
@@ -18,7 +18,7 @@ export function updateExperienceTemplate(templateData, templatePayload) {
 }
 
 export function createExperienceTemplate(templateData, keyVal, nameVal) {
-  let nameKey = randomString.generate({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' });
+  let nameKey = randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' });
   const req = new client.Request('createExperienceTemplate', {
     context: spaceContext(templateData),
     key: keyVal == undefined ? nameKey.toLowerCase() : keyVal.toLowerCase(),
@@ -36,7 +36,7 @@ export function createExperienceTemplate(templateData, keyVal, nameVal) {
 }
 
 export function renameExperienceTemplate(templateData, nameVal, toggleVersionOff) {
-  let newName = randomString.generate(12);
+  let newName = randomString(12);
   let templatePayload = {
     id: templateData.template.id,
     key: templateData.template.key,

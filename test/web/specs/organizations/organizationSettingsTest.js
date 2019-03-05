@@ -1,51 +1,59 @@
 import * as lib from '../../common';
-import { createAccount } from 'actions/account';
-import accountPage from 'page_objects/accountPage';
+import { signIn, postIdentity, postOrganization, postMembership } from 'actions/common';
+import SignInPage from 'page_objects/signInPage';
 import {
   verifyOrgCardStack,
   verifyOrgNameOnDashBoard,
   updateOrgName,
   isSaveButtonEnabled,
   gotoOrgSettings,
-  createOrg
+  selectOrg
 } from 'actions/organization';
 import { verifySelectedOrgMenu, goToOrgPageFromNavMenu } from 'actions/navBar';
-var org1 = `${lib.randomString.generate(10)}_Org1`,
-  org2 = `${lib.randomString.generate(10)}_Org2`,
-  updatedOrgName = `${lib.randomString.generate(10)}_OrgUpdated`;
+const accountData = new Object();
+var org,
+  updatedOrgName = `${lib.randomString(10)}_OrgUpdated`;
 
 describe('Update Organization name', () => {
+  before(async () => {
+    await postIdentity(accountData);
+    await postOrganization(accountData);
+    await postMembership(accountData);
+    await postOrganization(accountData);
+    org = accountData.organization;
+    await postMembership(accountData);
+  });
   before(() => {
-    accountPage.open();
-    createAccount();
-    createOrg(org1);
-    createOrg(org2);
+    SignInPage.open();
+    signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
+    selectOrg();
   });
 
-  it('Verify Settings Page url', () => {
+  it('C1295707 Verify Settings Page url', () => {
+    // Blocked by https://app.clickup.com/t/czw98
     gotoOrgSettings();
-    expect(browser.getUrl()).to.include(`/${org2}/edit`.toLowerCase(), 'Url contains old orgname'); //This will fail due to https://app.clickup.com/301733/t/84t88
+    expect(browser.getUrl()).to.include(`/${org}/edit`.toLowerCase(), 'Url contains old orgname'); //This will fail due to https://app.clickup.com/301733/t/84t88
   });
 
-  it('Verify Save button is disabled on Settings Page', () => {
+  it('C1640155 Verify Save button is disabled on Settings Page', () => {
     expect(isSaveButtonEnabled()).to.equal(false, 'Save button should be disabled');
   });
 
-  it('Update org name --> verify new name appears in url', () => {
+  it('C1295708 Update org name --> verify new name appears in url', () => {
     updateOrgName(updatedOrgName);
     expect(browser.getUrl()).to.include(`/${updatedOrgName}/edit`.toLowerCase(), 'New org name does not appear in url'); //This will fail due to https://app.clickup.com/301733/t/84t88
   });
 
-  it('Validate left menu bar has the updated org name', () => {
+  it('C1640156 Validate left menu bar has the updated org name', () => {
     expect(verifySelectedOrgMenu()).to.include(updatedOrgName, 'The updated org name is not shown on left menu bar');
   });
 
-  it('Validate Org dashboard has the updated org name', () => {
+  it('C1295709 Validate Org dashboard has the updated org name', () => {
     goToOrgPageFromNavMenu();
     expect(verifyOrgNameOnDashBoard()).to.equal(updatedOrgName, 'The updated org name is not shown on dashboard'); //This will fail due to https://app.clickup.com/301733/t/84t88
   });
 
-  it('Choose org page has updated Org at top of org cards', () => {
+  it('C1295710 Choose org page has updated Org at top of org cards', () => {
     browser.url(`${browser.options.baseUrl}/organizations`);
     verifyOrgCardStack(updatedOrgName);
   });

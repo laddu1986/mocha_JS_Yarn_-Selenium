@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package experience;
+option go_package = "generated";
+
+message SpaceContext {
+  string org_id = 1;
+  string space_id = 2;
+}
+
+message WorkspaceContext {
+  string org_id = 1;
+  string space_id = 2;
+  string workspace_id = 3;
+}

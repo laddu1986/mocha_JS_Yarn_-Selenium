@@ -5,14 +5,6 @@ import SettingsPage from 'page_objects/settingsPage';
 import OrgDashboardPage from 'page_objects/orgDashboardPage';
 import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'actions/common';
 
-export function createOrg(orgname) {
-  NavBar.profileMenu.click();
-  HomePage.switchOrCreateOrganizations.click();
-  HomePage.createOrg.click();
-  createNewOrg(orgname);
-  OrgDashboardPage.currentOrgName.waitForVisible();
-}
-
 export function verifyNoOrgPage() {
   if ((HomePage.createOrgButton.isVisible() == HomePage.removeAccountButton.isVisible()) == true) return true;
 }
@@ -79,7 +71,7 @@ export function updateOrgName(updatedOrgName) {
   SettingsPage.orgInput.setValue(updatedOrgName);
   SettingsPage.saveOrgNameButton.click();
   browser.waitUntil(
-    function () {
+    function() {
       return SettingsPage.saveOrgNameButton.isEnabled() === false;
     },
     5000,
@@ -96,7 +88,7 @@ export function verifyOrgCardStack(updatedOrgName) {
   HomePage.orgCards.waitForVisible();
   browser.refresh();
   browser.waitUntil(
-    function () {
+    function() {
       return HomePage.orgCards.value[0].getText().includes(updatedOrgName);
     },
     5000,

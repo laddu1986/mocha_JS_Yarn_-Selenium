@@ -15,8 +15,8 @@ import {
 } from 'actions/tribe';
 import * as Constants from 'constants.json';
 import * as PassiveNotification from 'data/passiveNotification.json';
-var name = lib.randomString.generate(5),
-  newName = `${lib.randomString.generate(5)}_newName`;
+var name = lib.randomString(5),
+  newName = `${lib.randomString(5)}_newName`;
 
 describe('Tribe Actions Tests', () => {
   before(() => {
@@ -28,29 +28,29 @@ describe('Tribe Actions Tests', () => {
     clickOnAudienceLink();
   });
 
-  it('Click on Tribe card --> lands on card details page', () => {
+  it('C1295741 Click on Tribe card --> lands on card details page', () => {
     goToTribeDetailPage();
     expect(verifyTribeDetailpage()).to.equal(true, 'Tribe Details page is not displayed');
   });
 
-  it('Update the Tribe Title --> verify new name on all tribes', () => {
+  it('C1295742 Update the Tribe Title --> verify new name on all tribes', () => {
     updateTribe(Constants.TribeAttributes.Title, newName);
     verifyTribe(Constants.TribeAttributes.Title, newName);
   });
 
-  it('Verify new name on tribe detail page', () => {
+  it('C1640170 Verify new name on tribe detail page', () => {
     clickOnAudienceLink();
     browser.refresh();
     verifyTribe(Constants.TribeAttributes.Title, newName);
   });
 
-  it('Delete Tribe --> verify the passive notification', () => {
+  it('C1295743 Delete Tribe --> verify the passive notification', () => {
     goToTribeDetailPage();
     deleteTribe();
     expect(getNotificationMessageText()).to.include(`${PassiveNotification.deleteMessage.text}'${newName}'.`);
   });
 
-  it('Verify redirection to all tribes page', () => {
+  it('C1640171 Verify redirection to all tribes page', () => {
     expect(verifyAllTribesPage()).to.equal(true, 'After deleting tribe redirection to all tribes page did not work');
   });
 });

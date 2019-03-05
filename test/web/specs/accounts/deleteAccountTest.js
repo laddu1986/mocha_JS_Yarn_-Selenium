@@ -8,38 +8,54 @@ Attempt to sign in should fail for deleted account
 */
 
 import '../../common';
-import accountPage from 'page_objects/accountPage';
+import { errorSignIn } from 'actions/login';
+import SignInPage from 'page_objects/signInPage';
 import { createAccount } from 'actions/account';
-import { deleteOrganization, gotoOrgSettings } from 'actions/organization';
-import { verifyIncorrectSignIn, signIn, signInPageIsVisible } from 'actions/login';
+import { deleteOrganization, gotoOrgSettings, selectOrg } from 'actions/organization';
+import { verifyIncorrectSignIn, clearPlaceholder, signInPageIsVisible } from 'actions/login';
 import {
   verifyOrgDashboardPageAppears,
   clickCreateAccountLink,
   clickDeleteAccButton,
   cancelDeleteAccount
 } from 'actions/account';
-import { confirmButtonIsEnabled, confirmDelete, typeDeleteToConfirm } from 'actions/common';
-var accountDetails;
+import {
+  signIn,
+  confirmButtonIsEnabled,
+  confirmDelete,
+  typeDeleteToConfirm,
+  postIdentity,
+  postOrganization,
+  postMembership
+} from 'actions/common';
+const accountData = new Object();
 
 describe('Delete Account Test (Remove my Account)', () => {
+  before(async () => {
+    await postIdentity(accountData);
+    await postOrganization(accountData);
+    await postMembership(accountData);
+  });
   before('Create account and delete organisation', () => {
-    accountPage.open();
-    accountDetails = createAccount();
+    SignInPage.open();
+    clearPlaceholder();
+    signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
+    selectOrg();
     gotoOrgSettings();
     deleteOrganization();
   });
 
-  it('Remove account --> verify Cancel action on Delete modal', () => {
+  it('C1295631 Remove account --> verify Cancel action on Delete modal', () => {
     clickDeleteAccButton();
     expect(cancelDeleteAccount()).to.equal(true);
   });
 
-  it('Click delete account --> confirm button is disabled', () => {
+  it('C1295632 Click delete account --> confirm button is disabled', () => {
     clickDeleteAccButton();
     expect(confirmButtonIsEnabled()).to.equal(false, 'Confirm button should be disabled');
   });
 
-  it('Remove account --> Sign In page appears', () => {
+  it('C1640116 Remove account --> Sign In page appears', () => {
     typeDeleteToConfirm();
     expect(confirmButtonIsEnabled()).to.equal(true, 'Confirm button should be enabled');
     confirmDelete();
@@ -47,12 +63,12 @@ describe('Delete Account Test (Remove my Account)', () => {
     expect(browser.getUrl()).to.equal(`${browser.options.baseUrl}/sign-in`);
   });
 
-  it('Login with same credentials --> Incorrect Details Error', () => {
-    signIn(accountDetails.email, process.env.ACCOUNT_PASS);
+  it('C1295633 Login with same credentials --> Incorrect Details Error', () => {
+    errorSignIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
     expect(verifyIncorrectSignIn()).to.include('incorrect');
   });
 
-  it('Re-registeration with same email is allowed', () => {
+  it('C1295634 Re-registeration with same email is allowed', () => {
     clickCreateAccountLink();
     createAccount();
     expect(verifyOrgDashboardPageAppears()).to.equal(true, 'Re-registration is not successful');
