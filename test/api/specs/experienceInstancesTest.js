@@ -17,29 +17,29 @@ instanceData.experience = { id: '74wdQge' };
 describe('Experience Instance Service', () => {
   before('Setup the testing environment', () => {});
   it('getExperience() gets the collection instance', async () => {
-    let getCollection = await instances.getExperience(instanceData, instances.types.collection);
+    let getCollection = await instances.getExperience(instanceData, 'collection');
     expect(getCollection.status.code).to.equal(0);
   });
   it('getExperience() gets the experience instance', async () => {
-    let getExperience = await instances.getExperience(instanceData, instances.types.experience, true);
+    let getExperience = await instances.getExperience(instanceData, 'experience', true);
     expect(getExperience.status.code).to.equal(0);
   });
   it('renameExperience() sends a rename request for a collection', async () => {
     instanceData.collection.oldName = instanceData.collection.name;
-    let renameCollection = await instances.renameExperience(instanceData, instances.types.collection, randomString());
+    let renameCollection = await instances.renameExperience(instanceData, 'collection', randomString());
     expect(renameCollection.status.code).to.equal(0);
   });
   it('renameExperience() renames the collection', async () => {
-    let renameConfirm = await instances.getExperience(instanceData, true);
+    let renameConfirm = await instances.getExperience(instanceData, 'collection');
     expect(renameConfirm.response.experience.name).to.not.equal(instanceData.collection.oldName);
   });
   it('renameExperience() sents a rename request for an experience', async () => {
     instanceData.experience.oldName = instanceData.experience.name;
-    let renameExperience = await instances.renameExperience(instanceData, instances.types.experience, randomString());
+    let renameExperience = await instances.renameExperience(instanceData, 'experience', randomString());
     expect(renameExperience.status.code).to.equal(0);
   });
   it('renameExperience() renames the experience', async () => {
-    let renameConfirm = await instances.getExperience(instanceData, instances.types.experience);
+    let renameConfirm = await instances.getExperience(instanceData, 'experience');
     expect(renameConfirm.response.experience.name).to.not.equal(instanceData.experience.oldName);
   });
   it('changeExperienceEnabled() sends a request to enable an experience', async () => {
@@ -47,7 +47,7 @@ describe('Experience Instance Service', () => {
     expect(toggleEnabled.status.code).to.equal(0);
   });
   it('changeExperienceEnabled() enables an experience', async () => {
-    let toggleConfirm = await instances.getExperience(instanceData, false);
+    let toggleConfirm = await instances.getExperience(instanceData, 'experience');
     expect(toggleConfirm.response.experience.isEnabled).to.equal(true);
   });
   it('changeExperienceEnabled() sends a request to disable an experience', async () => {
@@ -55,7 +55,7 @@ describe('Experience Instance Service', () => {
     expect(toggleDisabled.status.code).to.equal(0);
   });
   it('changeExperienceEnabled() disables an experience', async () => {
-    let toggleConfirm = await instances.getExperience(instanceData, false);
+    let toggleConfirm = await instances.getExperience(instanceData, 'experience');
     expect(toggleConfirm.response.experience.isEnabled).to.equal(undefined);
   });
 });

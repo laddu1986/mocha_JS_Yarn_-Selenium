@@ -20,6 +20,7 @@ message ExperienceTemplateDetail{
     ExperienceTemplateStatus status = 10;
     google.protobuf.Timestamp modified_at = 11;
     string modified_by = 12;
+    bool has_committed_version = 13;
 }
 
 message ExperienceTemplate{
