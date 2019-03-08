@@ -8,129 +8,146 @@ import "constraint.proto";
 import "experienceTemplate.proto";
 import "contexts.proto";
 import "templateType.proto";
+import "google/protobuf/wrappers.proto";
 
 package experience;
 
 option go_package = "generated";
 
 service ExperienceTemplateReadService{
-    rpc GetTemplateById (GetTemplateByIdRequest) returns (GetTemplateByIdResponse);
-    rpc GetPropertyTypes(GetPropertyTypesRequest) returns (GetPropertyTypesResponse); 
-    rpc GetTemplates (GetTemplatesRequest) returns (GetTemplatesResponse);
-    rpc GetPropertyById (GetPropertyByIdRequest) returns (GetPropertyByIdResponse);
-    rpc GetConfiguration (GetConfigurationRequest) returns (GetConfigurationResponse);
+	rpc GetTemplateById (GetTemplateByIdRequest) returns (GetTemplateByIdResponse);
+	rpc GetPropertyTypes(GetPropertyTypesRequest) returns (GetPropertyTypesResponse);
+	rpc GetTemplates (GetTemplatesRequest) returns (GetTemplatesResponse);
+	rpc GetPropertyById (GetPropertyByIdRequest) returns (GetPropertyByIdResponse);
+	rpc GetConfiguration (GetConfigurationRequest) returns (GetConfigurationResponse);
 }
 
 service ExperienceTemplateWriteService{
-    rpc CreateTemplate (CreateTemplateRequest) returns (CreateTemplateResponse);
-    rpc RenameTemplate (RenameTemplateRequest) returns (RenameTemplateResponse);
-    rpc ChangeTemplateKey (ChangeTemplateKeyRequest) returns (ChangeTemplateKeyResponse);
-    rpc ChangeThumbnail (ChangeThumbnailRequest) returns (ChangeThumbnailResponse);
-    rpc DeleteTemplate (DeleteTemplateRequest) returns (DeleteTemplateResponse); // will not be implemented atm
-    rpc CommitTemplate (CommitTemplateRequest) returns (CommitTemplateResponse); //changes state from 'draft' to 'committed'
+	rpc CreateTemplate (CreateTemplateRequest) returns (CreateTemplateResponse);
+	rpc RenameTemplate (RenameTemplateRequest) returns (RenameTemplateResponse);
+	rpc ChangeTemplateKey (ChangeTemplateKeyRequest) returns (ChangeTemplateKeyResponse);
+	rpc ChangeThumbnail (ChangeThumbnailRequest) returns (ChangeThumbnailResponse);
+	rpc DeleteTemplate (DeleteTemplateRequest) returns (DeleteTemplateResponse);
+	rpc CommitTemplate (CommitTemplateRequest) returns (CommitTemplateResponse); //changes state from 'draft' to 'committed'
 
-    rpc AddProperty (AddPropertyRequest) returns (AddPropertyResponse);
-    rpc RemoveProperty (RemovePropertyRequest) returns (RemovePropertyResponse);
-    rpc ChangePropertyName (ChangePropertyNameRequest) returns (ChangePropertyNameResponse);
-    rpc ChangePropertyKey (ChangePropertyKeyRequest) returns (ChangePropertyKeyResponse);
-    rpc ChangePropertyDefaultValue (ChangePropertyDefaultValueRequest) returns (ChangePropertyDefaultValueResponse);
-    rpc ChangePropertyLocalizable (ChangePropertyLocalizableRequest) returns (ChangePropertyLocalizableResponse);
-    rpc EnablePropertyRule (EnablePropertyRuleRequest) returns (EnablePropertyRuleResponse);
-    rpc ChangePropertyRule (ChangePropertyRuleRequest) returns (ChangePropertyRuleResponse);
-    rpc DisablePropertyRule (DisablePropertyRuleRequest) returns (DisablePropertyRuleResponse);
-    rpc ChangePropertyPromptText (ChangePropertyPromptTextRequest) returns (ChangePropertyPromptTextResponse);
-    rpc ChangePropertyHelpText (ChangePropertyHelpTextRequest) returns (ChangePropertyHelpTextResponse);
-    rpc ChangePropertyAppearanceType (ChangePropertyAppearanceTypeRequest) returns (ChangePropertyAppearanceTypeResponse);
+	rpc AddProperty (AddPropertyRequest) returns (AddPropertyResponse);
+	rpc RemoveProperty (RemovePropertyRequest) returns (RemovePropertyResponse);
+	rpc RenameProperty (RenamePropertyRequest) returns (RenamePropertyResponse);
+	rpc MoveProperty (MovePropertyRequest) returns (MovePropertyResponse);
+	rpc ChangePropertyKey (ChangePropertyKeyRequest) returns (ChangePropertyKeyResponse);
+	rpc ChangePropertyDefaultValue (ChangePropertyDefaultValueRequest) returns (ChangePropertyDefaultValueResponse);
+    rpc RemovePropertyDefaultValue (RemovePropertyDefaultValueRequest) returns (RemovePropertyDefaultValueResponse);
+	rpc ChangePropertyLocalizable (ChangePropertyLocalizableRequest) returns (ChangePropertyLocalizableResponse);
+	rpc EnablePropertyRule (EnablePropertyRuleRequest) returns (EnablePropertyRuleResponse);
+	rpc ChangePropertyRule (ChangePropertyRuleRequest) returns (ChangePropertyRuleResponse);
+	rpc DisablePropertyRule (DisablePropertyRuleRequest) returns (DisablePropertyRuleResponse);
+	rpc ChangePropertyPromptText (ChangePropertyPromptTextRequest) returns (ChangePropertyPromptTextResponse);
+	rpc ChangePropertyHelpText (ChangePropertyHelpTextRequest) returns (ChangePropertyHelpTextResponse);
+	rpc ChangePropertyAppearanceType (ChangePropertyAppearanceTypeRequest) returns (ChangePropertyAppearanceTypeResponse);
 }
 
 
 //CreateTemplate
 //-------------------------------------
 message CreateTemplateRequest{
-    WorkspaceContext context = 1;
-    ExperienceTemplateType template_type = 2;
+	WorkspaceContext context = 1;
+	ExperienceTemplateType template_type = 2;
+	string user_account_id = 3;
 }
 
 message CreateTemplateResponse{
-    string template_id = 1;
-    google.protobuf.Timestamp row_version = 2;
+	string template_id = 1;
+	google.protobuf.Timestamp row_version = 2;
+	int64 template_version_id = 4;
 }
 
 //RenameTemplate
 //-------------------------------------
 message RenameTemplateRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;
 
-    string name = 4;
+	string name = 5;
+	int64 template_version_id = 6;
 }
 
 message RenameTemplateResponse{
-    google.protobuf.Timestamp row_version = 1;
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
 
 //ChangeTemplateKey
 //-------------------------------------
 message ChangeTemplateKeyRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;
 
-    string key = 4;
+	string key = 5;
+	int64 template_version_id = 6;
 }
 
 message ChangeTemplateKeyResponse{
-    google.protobuf.Timestamp row_version = 1;
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
 
 //ChangeThumbnail
 //-------------------------------------
 message ChangeThumbnailRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;
 
-    string thumbnail_url = 4;
+	string thumbnail_url = 5;
+	int64 template_version_id = 6;
 }
 
 message ChangeThumbnailResponse{
-    google.protobuf.Timestamp row_version = 1;
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
 
 //GetTemplateById
 //-------------------------------------
 message GetTemplateByIdRequest{
-    WorkspaceContext context = 1;
-    string template_id = 2;
+	WorkspaceContext context = 1;
+	string template_id = 2;
 }
 
 message GetTemplateByIdResponse{
-    ExperienceTemplateDetail template = 1;
+	ExperienceTemplateDetail template = 1;
 }
 
 //DeleteTemplate
 //-------------------------------------
 message DeleteTemplateRequest{
-    WorkspaceContext context = 1;
-    string template_id = 2;
-    google.protobuf.Timestamp row_version = 3;
+	WorkspaceContext context = 1;
+	string template_id = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;	
 }
 
-message DeleteTemplateResponse{
-    google.protobuf.Timestamp row_version = 1;
+message DeleteTemplateResponse{	
 }
 
 //CommitTemplate
 //-------------------------------------
 message CommitTemplateRequest{
-    WorkspaceContext context = 1;
-    string template_id = 2;
-    google.protobuf.Timestamp row_version = 3;
+	WorkspaceContext context = 1;
+	string template_id = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;
+	int64 template_version_id = 5;
 }
 
 message CommitTemplateResponse{
-    google.protobuf.Timestamp row_version = 1;
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
 
 //GetPropertyTypes
@@ -139,228 +156,303 @@ message GetPropertyTypesRequest{
 }
 
 message GetPropertyTypesResponse{
-    repeated PropertyType property_types = 1;
+	repeated PropertyType property_types = 1;
 }
 
 //GetTemplates
 //-------------------------------------
 message GetTemplatesRequest{
-    WorkspaceContext context = 1;
-    google.protobuf.Timestamp created_after = 2;
-    string keyword = 3; //name or key
-    ExperienceTemplateType template_type = 4; 
+	WorkspaceContext context = 1;
+	google.protobuf.Timestamp created_after = 2;
+	string keyword = 3; //name or key
+	ExperienceTemplateType template_type = 4;
 }
 
 message GetTemplatesResponse{
-    repeated ExperienceTemplate templates = 1;
+	repeated ExperienceTemplate templates = 1;
 }
 
 //AddProperty
 //-------------------------------------
 message AddPropertyRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
-
-    // todo: add position for sorting
-    string property_type = 4;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;
+	string property_type = 5;
+	int64 template_version_id = 6;
+	int32 sort_index = 7;
 }
 
 message AddPropertyResponse{
-    string property_id = 1;
-    google.protobuf.Timestamp row_version = 2;
+	string property_id = 1;
+	google.protobuf.Timestamp row_version = 2;
+	int64 template_version_id = 3;
 }
 
 //RemoveProperty
 //--------------------------------------
 message RemovePropertyRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
-    string property_id = 4;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;
+	string property_id = 5;
+	int64 template_version_id = 6;
 }
 
 message RemovePropertyResponse{
-    google.protobuf.Timestamp row_version = 1;
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
 
 //ChangePropertyName
 //-----------------------------------------
-message ChangePropertyNameRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
-    string property_id = 4;
+message RenamePropertyRequest{
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string property_id = 4;
+	string user_account_id = 5;
 
-    string property_name = 5;
+	string property_name = 6;
+	int64 template_version_id = 7;
 }
 
-message ChangePropertyNameResponse{
-    google.protobuf.Timestamp row_version = 1;
+message RenamePropertyResponse{
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
+}
+
+//MovePropertyRequest
+//-----------------------------------------
+message MovePropertyRequest{
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	int64 template_version_id = 3;
+	google.protobuf.Timestamp row_version = 4;
+	string property_id = 5;
+	int32 new_index = 6;
+	string user_account_id = 7;
+}
+
+//MovePropertyResponse
+//-----------------------------------------
+message MovePropertyResponse{
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
 
 //ChangePropertyKey
 //---------------------------------------
 message ChangePropertyKeyRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
-    string property_id = 4;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string property_id = 4;
+	string user_account_id = 6;
 
-    string property_key = 5;
+	string property_key = 7;
+	int64 template_version_id = 8;
 }
 
 message ChangePropertyKeyResponse{
-    google.protobuf.Timestamp row_version = 1;
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
 
 //ChangePropertyDefaultValue
 //------------------------------------------
 message ChangePropertyDefaultValueRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
-    string property_id = 4;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;
+	string property_id = 5;
 
    oneof default_value {
-        string string_value = 5;
-        int32 int_value = 6;
-        bool bool_value = 7;
-        google.protobuf.Timestamp date_value = 8;
-        Color color_value = 9;
-        List list_value = 10;
-        }
+		string string_value = 6;
+		google.protobuf.Int32Value int_value = 7;
+		bool bool_value = 8;
+		google.protobuf.Timestamp date_value = 9;
+		Color color_value = 10;
+		List list_value = 11;
+    }
+
+    int64 template_version_id = 12;
 }
 
 message ChangePropertyDefaultValueResponse{
-    google.protobuf.Timestamp row_version = 1;
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
+
+//RemovePropertyDefaultValue
+//------------------------------------------
+message RemovePropertyDefaultValueRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    google.protobuf.Timestamp row_version = 3;
+    string user_account_id = 4;
+    string property_id = 5;
+    int64 template_version_id = 6;
+}
+
+message RemovePropertyDefaultValueResponse{
+    google.protobuf.Timestamp row_version = 1;
+    int64 template_version_id = 2;
+}
+
 
 //ChangePropertyLocalizable
 //------------------------------------------
 message ChangePropertyLocalizableRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
-    string property_id = 4;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;
+	string property_id = 5;
 
-    bool localizable = 5;
+	bool localizable = 6;
+	int64 template_version_id = 7;
 }
 
 message ChangePropertyLocalizableResponse{
-    google.protobuf.Timestamp row_version = 1;
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
 
 //EnablePropertyRule
 //-------------------------------------
 message EnablePropertyRuleRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
-    string property_id = 4;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;
+	string property_id = 5;
 
-    string rule_key = 5;
+	string rule_key = 6;
+	int64 template_version_id = 7;
 }
 
 message EnablePropertyRuleResponse{
-    google.protobuf.Timestamp row_version = 1;
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
 
 //ChangePropertyRule
 //-------------------------------------
 message ChangePropertyRuleRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
-    string property_id = 4;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;
+	string property_id = 5;
 
-    string rule_key = 5;
+	string rule_key = 6;
 
-    oneof rule{
-        TextConstraint text_rule = 6;
-        IntegerConstraint integer_rule = 7;
-        BooleanConstraint bool_rule = 8;
-        DateConstraint date_rule = 9;
-        ColorConstraint color_rule = 10;
-        ListConstraint list_rule = 11;
-    }
+	oneof rule{
+		TextConstraint text_rule = 7;
+		IntegerConstraint integer_rule = 8;
+		BooleanConstraint bool_rule = 9;
+		DateConstraint date_rule = 10;
+		ColorConstraint color_rule = 11;
+		ListConstraint list_rule = 12;
+	}
+
+	int64 template_version_id = 13;
 }
 
 message ChangePropertyRuleResponse{
-    google.protobuf.Timestamp row_version = 1;
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
 //DisablePropertyRule
 //-------------------------------------
 message DisablePropertyRuleRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
-    string property_id = 4;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;
+	string property_id = 5;
 
-    string rule_key = 5;
+	string rule_key = 6;
+	int64 template_version_id = 7;
 }
 
 message DisablePropertyRuleResponse{
-    google.protobuf.Timestamp row_version = 1;
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
 
 //ChangePropertyPromptText
 //-----------------------------------------
 message ChangePropertyPromptTextRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
-    string property_id = 4;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;
+	string property_id = 5;
 
-    string prompt_text = 5;
+	string prompt_text = 6;
+	int64 template_version_id = 7;
 }
 
 message ChangePropertyPromptTextResponse{
-    google.protobuf.Timestamp row_version = 1;
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
 
 //ChangePropertyHelpText
 //-----------------------------------------
 message ChangePropertyHelpTextRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
-    string property_id = 4;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;
+	string property_id = 5;
 
-    string help_text = 5;
+	string help_text = 6;
+	int64 template_version_id = 7;
 }
 
 message ChangePropertyHelpTextResponse{
-    google.protobuf.Timestamp row_version = 1;
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
 
 //ChangePropertyAppearanceType
 //------------------------------------------
 message ChangePropertyAppearanceTypeRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    google.protobuf.Timestamp row_version = 3;
-    string property_id = 4;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	google.protobuf.Timestamp row_version = 3;
+	string user_account_id = 4;
+	string property_id = 5;
 
-    string appeariance_type = 5;
+	string appearance_type = 6;
+	int64 template_version_id = 7;
 }
 
 message ChangePropertyAppearanceTypeResponse{
-    google.protobuf.Timestamp row_version = 1;
+	google.protobuf.Timestamp row_version = 1;
+	int64 template_version_id = 2;
 }
 
 //GetPropertyById
 //---------------------------------------------
 message GetPropertyByIdRequest{
-    WorkspaceContext context = 1;
-    string template_id  = 2;
-    string property_id = 3;
+	WorkspaceContext context = 1;
+	string template_id  = 2;
+	string property_id = 3;
+	int64 template_version_id = 4;
 }
 
 message GetPropertyByIdResponse{
-    google.protobuf.Timestamp row_version = 1;
-    string template_id  = 2;
-    Property property = 3;
+	google.protobuf.Timestamp row_version = 1;
+	string template_id  = 2;
+	Property property = 3;
+	int64 template_version_id = 4;
 }
 
 //GetConfiguration
@@ -369,6 +461,6 @@ message GetConfigurationRequest{
 }
 
 message GetConfigurationResponse{
-    repeated PropertyType property_types = 1;
+	repeated PropertyType property_types = 1;
 	repeated TemplateType template_types = 2;
 }
