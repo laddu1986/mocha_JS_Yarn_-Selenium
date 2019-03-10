@@ -53,7 +53,7 @@ exports.config = {
     ui: 'bdd',
     reporter: 'spec',
     compilers: ['js:babel-register'],
-    timeout: 40000,
+    timeout: 90000,
     grep: process.env.npm_config_grep
   },
   debug: false,
