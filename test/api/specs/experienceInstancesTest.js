@@ -26,6 +26,7 @@ describe('Experience Instance Service', () => {
   });
   it('renameExperience() sends a rename request for a collection', async () => {
     instanceData.collection.oldName = instanceData.collection.name;
+    await instances.getExperience(instanceData, 'collection');
     let renameCollection = await instances.renameExperience(instanceData, 'collection', randomString());
     expect(renameCollection.status.code).to.equal(0);
   });
@@ -35,6 +36,7 @@ describe('Experience Instance Service', () => {
   });
   it('renameExperience() sents a rename request for an experience', async () => {
     instanceData.experience.oldName = instanceData.experience.name;
+    await instances.getExperience(instanceData, 'experience', true);
     let renameExperience = await instances.renameExperience(instanceData, 'experience', randomString());
     expect(renameExperience.status.code).to.equal(0);
   });
