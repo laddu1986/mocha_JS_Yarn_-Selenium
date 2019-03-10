@@ -14,6 +14,11 @@ function workspaceContext(instanceData) {
 
 export const defaultExperience = 0;
 
+export const state = {
+  DRAFT: 0,
+  COMITTED: 1
+};
+
 /*
  *  Experiences
  */
@@ -72,6 +77,10 @@ export function publishExperience(instanceData, experienceType) {
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
+    if (Object.keys(response.response).length > 0) {
+      // Do not update row version when already published
+      instanceData[experienceType].versionRowVersion = response.response.updates.rowVersion;
+    }
     return response;
   });
 }
