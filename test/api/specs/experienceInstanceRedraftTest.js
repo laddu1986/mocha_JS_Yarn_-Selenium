@@ -1,5 +1,6 @@
 import { randomString } from '../common';
 import * as instances from 'actions/experienceInstance';
+import * as Constants from 'constants.json';
 
 //TODO: Fix this to have generated accounts once instantiation is done
 
@@ -24,7 +25,7 @@ describe('Experience Instance Service', () => {
   });
   it('publishExperience() publishes the collection', async () => {
     let publishConfirm = await instances.getExperience(instanceData, 'collection');
-    expect(publishConfirm.response.experience.state).to.equal(instances.state.COMITTED);
+    expect(publishConfirm.response.experience.state).to.equal(Constants.Instances.State.COMMITTED);
   });
   it('publishExperience() sends a request to publish an experience', async () => {
     let publishExperience = await instances.publishExperience(instanceData, 'experience');
@@ -32,7 +33,7 @@ describe('Experience Instance Service', () => {
   });
   it('publishExperience() publishes the experience', async () => {
     let publishConfirm = await instances.getExperience(instanceData, 'experience');
-    expect(publishConfirm.response.experience.state).to.equal(instances.state.COMITTED);
+    expect(publishConfirm.response.experience.state).to.equal(Constants.Instances.State.COMMITTED);
   });
   it('Updating an experience redrafts the experience', async () => {
     await instances.publishExperience(instanceData, 'experience');

@@ -113,5 +113,17 @@
       "city": "Autocity"
     },
     "IPAddress": "1.1.1.1"
+  },
+  "Instances": {
+    "State": {
+      "DRAFT": 0,
+      "COMMITTED": 1
+    },
+    "Type": {
+      "FIXED": 0,
+      "FLEXI": 1,
+      "COLLECTION": 2
+    },
+    "Default": 0
   }
 }
