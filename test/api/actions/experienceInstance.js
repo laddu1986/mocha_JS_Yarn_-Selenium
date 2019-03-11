@@ -46,17 +46,17 @@ export function renameExperience(instanceData, experienceType, name) {
   });
 }
 
-export function changeExperienceEnabled(instanceData, enabled) {
+export function changeExperienceEnabled(instanceData, experienceType, enabled) {
   const req = new writeClient.Request('changeExperienceEnabled', {
     context: workspaceContext(instanceData),
-    experienceId: instanceData.experience.id,
+    experienceId: instanceData[experienceType].id,
     accountId: instanceData.identityID,
-    rowVersion: instanceData.experience.versionRowVersion,
+    rowVersion: instanceData[experienceType].versionRowVersion,
     enabled: enabled
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.experience.versionRowVersion = response.response.updates.rowVersion;
+    instanceData[experienceType].versionRowVersion = response.response.updates.rowVersion;
     return response;
   });
 }
@@ -96,13 +96,13 @@ export function getScenario(instanceData, scenarioid) {
 export function addScenario(instanceData) {
   const req = new writeClient.Request('addScenario', {
     context: workspaceContext(instanceData),
-    experienceId: instanceData.experience.id,
+    experienceId: instanceData.FIXED.id,
     accountId: instanceData.identityID,
-    rowVersion: instanceData.experience.versionRowVersion
+    rowVersion: instanceData.FIXED.versionRowVersion
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.experience.versionRowVersion = response.response.rowVersion;
+    instanceData.FIXED.versionRowVersion = response.response.rowVersion;
     return response;
   });
 }
@@ -117,7 +117,7 @@ export function renameScenario(instanceData, scenarioindex, name) {
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.experience.versionRowVersion = response.response.rowVersion;
+    instanceData.FIXED.versionRowVersion = response.response.rowVersion;
     return response;
   });
 }
@@ -127,11 +127,11 @@ export function removeScenario(instanceData, scenarioid) {
     context: workspaceContext(instanceData),
     scenarioId: scenarioid === undefined ? instanceData.scenario.id : scenarioid,
     accountId: instanceData.identityID,
-    rowVersion: instanceData.experience.versionRowVersion
+    rowVersion: instanceData.FIXED.versionRowVersion
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.experience.versionRowVersion = response.response.rowVersion;
+    instanceData.FIXED.versionRowVersion = response.response.rowVersion;
     return response;
   });
 }
@@ -141,12 +141,12 @@ export function changeScenarioEnabled(instanceData, scenarioindex, enabled) {
     context: workspaceContext(instanceData),
     scenarioId: instanceData.scenarios[scenarioindex].id,
     accountId: instanceData.identityID,
-    rowVersion: instanceData.experience.versionRowVersion,
+    rowVersion: instanceData.FIXED.versionRowVersion,
     enabled
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.experience.versionRowVersion = response.response.rowVersion;
+    instanceData.FIXED.versionRowVersion = response.response.rowVersion;
     return response;
   });
 }
@@ -156,11 +156,11 @@ export function duplicateScenario(instanceData, scenarioindex) {
     context: workspaceContext(instanceData),
     scenarioId: instanceData.scenarios[scenarioindex].id,
     accountId: instanceData.identityID,
-    rowVersion: instanceData.experience.versionRowVersion
+    rowVersion: instanceData.FIXED.versionRowVersion
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.experience.versionRowVersion = response.response.rowVersion;
+    instanceData.FIXED.versionRowVersion = response.response.rowVersion;
     return response;
   });
 }

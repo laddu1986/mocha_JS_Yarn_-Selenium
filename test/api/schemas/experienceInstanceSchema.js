@@ -1,4 +1,5 @@
 import { joi } from '../common';
+import * as Constants from '../constants.json';
 
 const instanceProperties = new Object();
 
@@ -95,10 +96,10 @@ export const experienceSchema = joi.object().keys({
   children: joi.array(),
   id: joi.string(),
   templateId: joi.string(),
-  type: joi.valid(1, 2, 3),
+  type: joi.valid(Object.values(Constants.Experience.Types)),
   versionId: protoLong,
   isEnabled: joi.valid(true, false),
-  state: joi.valid(0, 1),
+  state: joi.valid(Object.values(Constants.Experience.State)),
   childCount: joi.number(),
   createdByAccountId: joi.string(),
   modifiedByAccountId: joi.string().uuid(),

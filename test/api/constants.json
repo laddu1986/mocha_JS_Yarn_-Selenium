@@ -114,15 +114,15 @@
     },
     "IPAddress": "1.1.1.1"
   },
-  "Instances": {
-    "State": {
-      "DRAFT": 0,
-      "COMMITTED": 1
-    },
-    "Type": {
+  "Experience": {
+    "Types": {
       "FIXED": 0,
       "FLEXI": 1,
       "COLLECTION": 2
+    },
+    "State": {
+      "DRAFT": 0,
+      "COMMITTED": 1
     },
     "Default": 0
   }
