@@ -12,13 +12,6 @@ function workspaceContext(instanceData) {
   };
 }
 
-export const defaultExperience = 0;
-
-export const state = {
-  DRAFT: 0,
-  COMITTED: 1
-};
-
 /*
  *  Experiences
  */
