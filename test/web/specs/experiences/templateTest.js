@@ -74,7 +74,7 @@ describe(`Experience Template Tests`, () => {
     verifyTemplateCard(newName);
   });
 
-  it('C1640133 Delete Template --> verify notification message and template(s) page', () => {
+  xit('C1640133 Delete Template --> verify notification message and template(s) page', () => {
     clickMoreButton();
     clickDeleteFromCard();
     typeDeleteToConfirm();
