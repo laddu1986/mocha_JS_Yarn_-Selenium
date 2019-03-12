@@ -19,7 +19,6 @@ export function verifyCreateTemplateModal() {
 export function createExperienceTemplate(name) {
   experienceTemplatePage.templateName.setValue(name);
   experienceTemplatePage.templateKey.setValue(name.toLowerCase());
-  experienceTemplatePage.createButton.click();
 }
 export function verifyCreateButton() {
   return experienceTemplatePage.createButton.isEnabled();
@@ -87,7 +86,7 @@ export function renameProperty(name) {
   }
 }
 export function deleteProperty() {
-  clickMoreButton();
+  clickMoreButton('1');
   clickDeleteFromCard();
   clickSureButton();
 }
@@ -140,17 +139,17 @@ export function goToTemplateDetailPage() {
 export function toggleProperty() {
   experienceTemplatePage.toggleIcon.click();
 }
-export function inputValue(type, value) {
+export function inputValue(type, value, index) {
   let element;
   switch (type) {
     case 'default_value':
-      element = experienceTemplatePage.defaultValue.value[0];
+      element = experienceTemplatePage.defaultValueField;
       break;
     case 'minimum_value':
-      element = experienceTemplatePage.minValue;
+      element = experienceTemplatePage.minRange;
       break;
     case 'maximum_value':
-      element = experienceTemplatePage.maxValue;
+      element = experienceTemplatePage.maxRange;
       break;
     case 'prompt_text':
       element = experienceTemplatePage.promptText;
@@ -162,17 +161,20 @@ export function inputValue(type, value) {
       element = experienceTemplatePage.pattern;
       break;
     case 'error_message':
-      element = experienceTemplatePage.errorMessage;
+      element = experienceTemplatePage.errorMessage.value[index];
+      element.clearElement();
       break;
   }
   element.setValue(value);
+  browser.pause(1000);
 }
-
+var element, tab;
 export function checkOption(type) {
-  let element;
+  tab = '';
   switch (type) {
     case 'localization':
-      element = experienceTemplatePage.enableLocalization;
+      element = experienceTemplatePage.localization;
+      tab = 'default';
       break;
     case 'required':
       element = experienceTemplatePage.requiredField;
@@ -186,12 +188,55 @@ export function checkOption(type) {
     case 'between':
       element = experienceTemplatePage.betweenRange;
       break;
-    case 'min':
-      element = experienceTemplatePage.betweenRange;
-      break;
-    case 'between':
-      element = experienceTemplatePage.betweenRange;
+    case 'default_value':
+      element = experienceTemplatePage.defaultValue;
       break;
   }
   element.click();
+  browser.pause(1000);
+}
+
+export function verifyRule() {
+  browser.refresh();
+  toggleProperty();
+  if (tab != 'default') goToRulesTab();
+  return element.getAttribute('data-qa');
+}
+
+export function goToRulesTab() {
+  experienceTemplatePage.rulesTab.click();
+}
+
+export function goToAppearanceTab() {
+  experienceTemplatePage.appearanceTab.click();
+}
+
+export function verifyFieldvalue(type, index) {
+  switch (type) {
+    case 'minimum':
+      element = experienceTemplatePage.minRange;
+      break;
+    case 'maximum':
+      element = experienceTemplatePage.maxRange;
+      break;
+    case 'regex':
+      element = experienceTemplatePage.pattern;
+      break;
+    case 'error_message':
+      element = experienceTemplatePage.errorMessage.value[index];
+      break;
+    case 'default_value':
+      element = experienceTemplatePage.defaultValueField;
+      break;
+    case 'prompt_text':
+      element = experienceTemplatePage.promptText;
+      break;
+    case 'help_text':
+      element = experienceTemplatePage.helpText;
+      break;
+    case 'help_summary':
+      element = experienceTemplatePage.helpValueSummary;
+      return element.isVisible();
+  }
+  return element.getAttribute('value');
 }
