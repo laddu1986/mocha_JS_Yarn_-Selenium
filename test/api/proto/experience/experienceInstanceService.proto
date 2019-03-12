@@ -1,83 +1,397 @@
 syntax = "proto3";
 
-import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
 import "experienceInstance.proto";
 import "contexts.proto";
 
 package experience;
 option go_package = "generated";
 
-service ExperienceInstanceService {
+service ExperienceInstanceReadService {
+  // Experience actions:
   rpc GetExperience(GetExperienceRequest) returns (GetExperienceResponse);
-  rpc UpdateExperience(UpdateExperienceRequest) returns (UpdateExperienceResponse);
+  rpc GetScenario(GetScenarioRequest) returns (GetScenarioResponse);
+}
+
+
+service ExperienceInstanceWriteService {
+  // Experience actions:
+  rpc RenameExperience(RenameExperienceRequest) returns (RenameExperienceResponse);
+  rpc ChangeExperienceEnabled(ChangeExperienceEnabledRequest) returns (ChangeExperienceEnabledResponse);
+  
+  // TBD: This will both save the existing draft (as a published version) and create a new draft version version and send out a "Publish" Event (which will then be picked up and publish both the instance and the template)
+  rpc PublishExperience(PublishExperienceRequest) returns (PublishExperienceResponse);
+  
+
+  // Child actions:
+  // Mainly for flexi:
+  rpc MoveChildExperience(MoveChildExperienceRequest) returns (MoveChildExperienceResponse);
+  rpc RemoveChildExperience(RemoveChildExperienceRequest) returns (RemoveChildExperienceResponse);
   rpc AddChildExperience(AddChildExperienceRequest) returns (AddChildExperienceResponse);
-  rpc SaveScenario(SaveScenarioRequest) returns (SaveScenarioResponse);
+  
+  
+  // Scenarios actions:
+  // Adds an EMPTY scenario:
+  rpc AddScenario(AddScenarioRequest) returns (AddScenarioResponse);
+  rpc MoveScenario(MoveScenarioRequest) returns (MoveScenarioResponse);
+  rpc RenameScenario(RenameScenarioRequest) returns (RenameScenarioResponse);
+  rpc ChangeScenarioEnabled(ChangeScenarioEnabledRequest) returns (ChangeScenarioEnabledResponse);
   rpc DuplicateScenario(DuplicateScenarioRequest) returns (DuplicateScenarioResponse);
-  rpc DeleteScenario(DeleteScenarioRequest) returns (DeleteScenarioResponse);
+  rpc RemoveScenario(RemoveScenarioRequest) returns (RemoveScenarioResponse);
+
+
+  // Property actions:
+  // This will add a localized set of properties with the provided locale code. 
+  // The values will initially be empty/null (this means they will fall back to the default)
+  rpc AddLocalizedProperties(AddLocalizedPropertiesRequest) returns (AddLocalizedPropertiesResponse);
+
+  // At this point, this is the most fine grained operation we allow on the properties. You have to send an updated set of properties.
+  // NOTE: this will update the scenario the properties belong to
+  rpc UpdateLocalizedProperties(UpdateLocalizedPropertiesRequest) returns (UpdateLocalizedPropertiesResponse);
+
+  rpc AddSegment(AddSegmentRequest) returns (AddSegmentResponse);
+  rpc RemoveSegment(RemoveSegmentRequest) returns (RemoveSegmentResponse);
+  rpc ChangeSegmentLogicalOperator(ChangeSegmentLogicalOperatorRequest) returns (ChangeSegmentLogicalOperatorResponse);
 }
 
 message GetExperienceRequest {
   WorkspaceContext context = 1;
   string id = 2;
+  
+  // Option which can have one of three values either:
+  //  1. NONE - When expand_children is set to none then we wouldn't populate any children but possibly just include childCount.
+  //  2. SUMMARY - Populate only summary information for the children.
+  //  3. DETAILS - Populate the full details for the children.
+  ChildExpandType expand_children = 3;
 }
 
 message GetExperienceResponse {
   ExperienceInstanceDetails experience = 1;
 }
 
-message UpdateExperienceRequest {
+message GetScenarioRequest{
   WorkspaceContext context = 1;
-  ExperienceInstanceNode parent_experience = 2;
-  ExperienceInstance experience = 3;
-  google.protobuf.FieldMask update_mask = 4;
-  string modified_by_account_id = 5;
+
+  // Scenario id:
+  int64 id = 2;
 }
 
-message UpdateExperienceResponse {
-  ExperienceInstanceNodeDetails experience = 1;
+message GetScenarioResponse{
+  ScenarioDetails scenario = 1;
+}
+
+
+message RenameExperienceRequest{
+  WorkspaceContext context = 1;
+  string experience_id = 2;
+  string account_id = 3;
+  google.protobuf.Timestamp row_version = 4;
+
+  // Data to be written:
+  string name = 5;
+}
+
+message RenameExperienceResponse{
+  // Changes to parent experience(s) + the experience we're directly changing:
+  repeated ExperienceVersionUpdate updates = 1;
+}
+
+message ChangeExperienceEnabledRequest{
+  WorkspaceContext context = 1;
+  string experience_id = 2;
+  string account_id = 3;
+  google.protobuf.Timestamp row_version = 4;
+
+  // Data to be written:
+  bool enabled = 5;
+}
+
+message ChangeExperienceEnabledResponse {
+  // Changes to parent experience(s) + the experience we're directly changing:
+  repeated ExperienceVersionUpdate updates = 1;
+}
+
+message PublishExperienceRequest{
+  WorkspaceContext context = 1;
+  string experience_id = 2;
+  string account_id = 3;
+
+  // You have to know what version you're trying to publish so you don't accidentally publish someone else's draft:
+  google.protobuf.Timestamp row_version = 4;
+}
+
+message PublishExperienceResponse{
+  // Changes to parent experience(s) + the experience we're directly changing:
+  repeated ExperienceVersionUpdate updates = 1;
+}
+
+
+message MoveChildExperienceRequest{
+  WorkspaceContext context = 1;
+  string experience_id = 2; // parent experience id
+  string account_id = 3;
+
+  int64 child_experience_id = 4;
+  int32 new_index = 5;
+
+  // This is the parent experience (version) row_version. Similarly to re-ordering the scenario, it has a side-effect on the parent experience
+  google.protobuf.Timestamp row_version = 6;
+}
+
+message MoveChildExperienceResponse {
+  // Changes to parent experience(s)
+  repeated ExperienceVersionUpdate updates = 1;
+}
+
+message RemoveChildExperienceRequest{
+  WorkspaceContext context = 1;
+  
+  // parent id:
+  string experience_id = 2;
+  string account_id = 3;
+
+  // parent row_version:
+  google.protobuf.Timestamp row_version = 4;
+
+
+  // The child to remove:
+  string child_experience_id = 5;
+  
+}
+
+message RemoveChildExperienceResponse{
+  // updated parent row_version:
+  google.protobuf.Timestamp row_version = 1;
 }
 
 message AddChildExperienceRequest {
   WorkspaceContext context = 1;
-  ExperienceInstanceNode parent_experience = 2;
-  NewChildExperienceInstance experience = 3;
-  string created_by_account_id = 4;
+  
+  // parent id:
+  string experience_id = 2;
+  string account_id = 3;
+
+  // parent row_version:
+  google.protobuf.Timestamp row_version = 4;
+
+  string template_id = 5;
+  
 }
 
 message AddChildExperienceResponse {
-  ExperienceInstanceNodeDetails experience = 1;
+  // updated parent row_version:
+  google.protobuf.Timestamp row_version = 1;
+
+  //TODO: A default scenario will be created. Need to return the details:
+  string new_child_id = 2;
 }
 
-message SaveScenarioRequest {
+
+message AddScenarioRequest{
   WorkspaceContext context = 1;
-  Scenario scenario = 2;
-  google.protobuf.FieldMask update_mask = 3;
-  ExperienceInstanceNode parent_experience = 4;
-  string account_id = 5;
+  string experience_id = 2;
+  string account_id = 3;
+
+    // This is the experience row_version. Similarly to re-ordering the scenario, it has a side-effect on the parent experience
+    google.protobuf.Timestamp row_version = 4;
+}
+message AddScenarioResponse{
+  int64 new_scenario_id = 1;
+  google.protobuf.Timestamp row_version = 2; // this is the new scenario row version
+
+  // Changes to parent experience(s)
+  repeated ExperienceVersionUpdate updates = 3;
 }
 
-message SaveScenarioResponse {
-  ScenarioDetails scenario = 1;
-  ExperienceInstanceNodeDetails parent_experience = 2;
+
+message MoveScenarioRequest{
+  WorkspaceContext context = 1;
+  string experience_id = 2;
+  string account_id = 3;
+
+  int64 scenario_id = 4;
+  int32 new_index = 5;
+
+  // This is the experience (version) row_version. Similarly to re-ordering the scenario, it has a side-effect on the parent experience
+  google.protobuf.Timestamp row_version = 6;
 }
 
+// Note: The parent's experience row_version will be updated as a result
+message MoveScenarioResponse{
+  // We're not actually changing anything on the scenario itself.
+
+  // Changes to parent experience(s)
+  repeated ExperienceVersionUpdate updates = 1;
+}
+  
+message RenameScenarioRequest{
+  WorkspaceContext context = 1;
+  int64 scenario_id = 2;
+  string account_id = 3;
+
+  google.protobuf.Timestamp row_version = 4;
+
+  // Data to be written:
+  string name = 5;
+}
+
+message RenameScenarioResponse{
+  google.protobuf.Timestamp row_version = 1;
+  repeated ExperienceVersionUpdate updates = 2;
+}
+
+message ChangeScenarioEnabledRequest{
+  WorkspaceContext context = 1;
+  int64 scenario_id = 2;
+  string account_id = 3;
+
+
+  // Scenario row_version:
+  google.protobuf.Timestamp row_version = 4;
+
+  // Data to be written:
+  bool enabled = 5;
+ }
+
+message ChangeScenarioEnabledResponse{
+  google.protobuf.Timestamp row_version = 1;
+  repeated ExperienceVersionUpdate updates = 2;
+}
+
+// NOTE: DuplicateScenario will update the row_version of the parent exprience (similar to move scenario)
 message DuplicateScenarioRequest {
   WorkspaceContext context = 1;
-  string id = 2;
-  string created_by_account_id = 3;
+  int64 scenario_id = 2;
+  string account_id = 3;
+
+  // This is the experience row_version. Similarly to re-ordering the scenario, it has a side-effect on the parent experience
+  google.protobuf.Timestamp row_version = 4;
 }
 
 message DuplicateScenarioResponse {
-  ScenarioDetails scenario = 1;
-  ExperienceInstanceNodeDetails parent_experience = 2;
+  int64 new_scenario_id = 1;
+  // This is the new scenario row_version. 
+  google.protobuf.Timestamp row_version = 2;
+
+  // Changes to parent experience(s)
+  repeated ExperienceVersionUpdate updates = 3;
 }
 
-message DeleteScenarioRequest {
+
+// NOTE: RemoveScenario will update the row_version of the parent exprience (similar to move scenario)
+message RemoveScenarioRequest {
   WorkspaceContext context = 1;
-  string id = 2;
-  string modified_by_account_id = 3;
+  int64 scenario_id = 2;
+  string account_id = 3;
+
+  // parent (=experience version) row_version:
+  google.protobuf.Timestamp row_version = 4;
 }
 
-message DeleteScenarioResponse {
-  ExperienceInstanceNodeDetails parent_experience = 1;
+message RemoveScenarioResponse {
+  // Changes to parent experience(s)
+  repeated ExperienceVersionUpdate updates = 1;
+}
+
+
+message AddLocalizedPropertiesRequest{
+  WorkspaceContext context = 1;
+  int64 scenario_id = 2;
+  string account_id = 3;
+
+  //Scenario row_version:
+  google.protobuf.Timestamp row_version = 4;
+
+  string locale_code = 5;
+
+  // We're adding an empty set of properties. No need to provide values.
+}
+
+message AddLocalizedPropertiesResponse{
+   //Scenario row_version:
+   google.protobuf.Timestamp row_version = 1;
+
+   // Changes to parent experience(s)
+  repeated ExperienceVersionUpdate updates = 2;
+}
+
+message UpdateLocalizedPropertiesRequest{
+  WorkspaceContext context = 1;
+  int64 scenario_id = 2;
+  string account_id = 3;
+
+  //Scenario row_version:
+  google.protobuf.Timestamp row_version = 4;
+
+  string locale_code = 5;
+  google.protobuf.Struct properties = 6;
+}
+
+message UpdateLocalizedPropertiesResponse{
+  //Scenario row_version:
+  google.protobuf.Timestamp row_version = 1;
+
+  // Changes to parent experience(s)
+  repeated ExperienceVersionUpdate updates = 2;
+}
+
+message AddSegmentRequest{
+  WorkspaceContext context = 1;
+  int64 scenario_id = 2;
+  string segment_id = 3;
+  string account_id = 4;
+
+  // This is the scenario row_version
+  google.protobuf.Timestamp row_version = 5;
+}
+
+message AddSegmentResponse{
+  // this is the new scenario row version
+  google.protobuf.Timestamp row_version = 1;
+
+  // Changes to parent experience(s)
+  repeated ExperienceVersionUpdate updates = 2;
+}
+
+message RemoveSegmentRequest{
+  WorkspaceContext context = 1;
+  int64 scenario_id = 2;
+  string segment_id = 3;
+  string account_id = 4;
+
+  // This is the scenario row_version
+  google.protobuf.Timestamp row_version = 5;
+}
+
+message RemoveSegmentResponse{
+  // This is the new scenario row_version. 
+  google.protobuf.Timestamp row_version = 1;
+
+  // Changes to parent experience(s)
+  repeated ExperienceVersionUpdate updates = 2;
+}
+
+message ChangeSegmentLogicalOperatorRequest{
+  WorkspaceContext context = 1;
+  int64 scenario_id = 2;
+  string account_id = 3;
+
+  // This is the scenario row_version
+  google.protobuf.Timestamp row_version = 4;
+
+  LogicalType segment_logical_operator = 5;
+}
+
+message ChangeSegmentLogicalOperatorResponse{
+  // This is the new scenario row_version. 
+  google.protobuf.Timestamp row_version = 1;
+
+  // Changes to parent experience(s)
+  repeated ExperienceVersionUpdate updates = 2;
+}
+
+enum ChildExpandType {
+  NONE = 0;
+  SUMMARY = 1;
 }

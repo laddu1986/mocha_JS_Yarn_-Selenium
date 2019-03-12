@@ -27,79 +27,29 @@ message ScenarioDetails {
   google.protobuf.Timestamp created_at = 9;
   google.protobuf.Timestamp modified_at = 10;
   google.protobuf.Timestamp row_version = 11;
+
+  // The following fields are for targeting
+  LogicalType segment_logical_operator = 12;
+  repeated string segment_ids = 13;
 }
 
-// Read-only model of summarised Experience Instance
-message ExperienceInstanceNodeDetails {
+message ExperienceInstanceSummary {
   string id = 1;
-  int64 version_id = 2;
-  ExperienceInstanceNodeDetails parent = 3;
-  string created_by_account_id = 4;
-  string modified_by_account_id = 5;
-  google.protobuf.Timestamp created_at = 6;
-  google.protobuf.Timestamp modified_at = 7;
-  google.protobuf.Timestamp row_version = 8;
-  google.protobuf.Timestamp version_row_version = 9;
-}
-
-// Writable model of summarised Experience Instance
-message ExperienceInstanceNode {
-  string id = 1;
-  int64 version_id = 2;
-  ExperienceInstanceNode parent = 3;
-  google.protobuf.Timestamp row_version = 4;
-  google.protobuf.Timestamp version_row_version = 5;
-}
-
-// Writable model for adding child experience instance
-message NewChildExperienceInstance {
-  string template_id = 1;
-  string name = 2;
-  string key = 3;
-  bool is_enabled = 4;
-
-  // A default scenario will be created
-  // when a new child experience is added
-  // (no need to have a repeated scenario field)
-
-  // Experience instance children will also
-  // be instantiated if needed
-  // (no need to have a repeated children field)
-}
-
-// Writable model of Scenario
-message Scenario {
-  // id and row_version are read-only
-  // need to be here for the repeated
-  // children scenario field in the writable
-  // experience instance model
-  int64 id = 1;
-  google.protobuf.Timestamp row_version = 2;
-
-  // writable fields
-  string name = 3;
-  bool is_enabled = 4;
-  repeated LocalizedProperties localized_properties = 5;
-}
-
-// Writable model of Experience Instance
-message ExperienceInstance {
-  // id, version_id, row_version, and version_row_version
-  // are readonly
-  // need to be here for the
-  // repeated experience instance children
-  string id = 1;
-  int64 version_id = 2;
-  google.protobuf.Timestamp row_version = 3;
-  google.protobuf.Timestamp version_row_version = 4;
-
-  // writable fields
+  string template_id = 2;
+  InstanceType type = 3;
+  int64 version_id = 4;
   string name = 5;
   string key = 6;
   bool is_enabled = 7;
-  repeated Scenario scenarios = 8;
-  repeated ExperienceInstance children = 9;
+  InstanceState state = 8;
+
+  int32 scenario_count = 9;
+  int32 child_count = 10;
+
+  google.protobuf.Timestamp row_version = 11;
+  google.protobuf.Timestamp version_row_version = 12;
 }
+
 
 // Read-only model of Experience Instance
 message ExperienceInstanceDetails {
@@ -112,14 +62,30 @@ message ExperienceInstanceDetails {
   bool is_enabled = 7;
   InstanceState state = 8;
   repeated ScenarioDetails scenarios = 9;
-  repeated ExperienceInstance children = 10;
-  string created_by_account_id = 11;
-  string modified_by_account_id = 12;
-  google.protobuf.Timestamp created_at = 13;
-  google.protobuf.Timestamp modified_at = 14;
-  google.protobuf.Timestamp row_version = 15;
-  google.protobuf.Timestamp version_row_version = 16;
+  
+  int32 child_count = 10;
+  repeated ExperienceInstanceChild children = 11;
+
+  string created_by_account_id = 12;
+  string modified_by_account_id = 13;
+  google.protobuf.Timestamp created_at = 14;
+  google.protobuf.Timestamp modified_at = 15;
+  google.protobuf.Timestamp row_version = 16;
+  google.protobuf.Timestamp version_row_version = 17;
 }
+
+message ExperienceInstanceChild {
+  oneof child {
+    ExperienceInstanceSummary summary = 1;
+    ExperienceInstanceDetails details = 2;
+
+  }
+}
+
+message ExperienceVersionUpdate {
+  string experience_id = 1; // experience_instance_id
+  google.protobuf.Timestamp row_version = 2; // version_row_version
+ }
 
 // Instance Type enumeration
 enum InstanceType {
@@ -132,4 +98,9 @@ enum InstanceType {
 enum InstanceState {
   DRAFT = 0;
   COMMITTED = 1;
+}
+
+enum LogicalType{
+  AND = 0;
+  OR  = 1;
 }

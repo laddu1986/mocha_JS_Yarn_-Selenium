@@ -17,15 +17,15 @@ import {
   verifyAddPropertyPage,
   verifyPropertyIsAdded
 } from 'actions/experienceTemplates.js';
-var experienceTemplateName = `${lib.randomString.generate({ length: 7, charset: 'alphabetic' })}`,
-  textProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}`,
-  newTextProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}_new`,
-  integerProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}`,
-  newIntProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}_new`,
-  boolProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}`,
-  newBoolProperty = `${lib.randomString.generate({ length: 5, charset: 'alphabetic' })}_new`;
+var experienceTemplateName = `${lib.randomString({ length: 7, charset: 'alphabetic' })}`,
+  textProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}`,
+  newTextProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}_new`,
+  integerProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}`,
+  newIntProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}_new`,
+  boolProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}`,
+  newBoolProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}_new`;
 
-describe(`Experience Template Tests`, () => {
+describe(`Experience Template Property Tests`, () => {
   before(() => {
     accountPage.open();
     createAccount();
@@ -35,47 +35,47 @@ describe(`Experience Template Tests`, () => {
     clickCreateTemplate();
     createExperienceTemplate(experienceTemplateName);
   });
-  it('Click Add Property button --> All property types are displayed', () => {
+  it('C1640117 Click Add Property button --> All property types are displayed', () => {
     clickAddProperty();
     expect(verifyPropertyTypes()).to.equal(true, 'Not all property types are shown correctly');
   });
-  it('Verify close button takes user back to add property screen', () => {
+  it('C1640118 Verify close button takes user back to add property screen', () => {
     closeModal();
     expect(verifyAddPropertyPage()).to.equal(true, 'Close button is not working');
   });
-  it(`Create Text property ${lib.Tags.smokeTest}`, () => {
+  it(`C1640119 Create Text property ${lib.Tags.smokeTest}`, () => {
     addProperty(constants.TemplateProperties.Types.text, textProperty);
-    expect(verifyPropertyIsAdded(textProperty)).to.equal(true, 'Text property is not added');
+    verifyPropertyIsAdded(textProperty);
   });
-  it(`Rename Text property ${lib.Tags.smokeTest}`, () => {
+  it(`C1640120 Rename Text property ${lib.Tags.smokeTest}`, () => {
     renameProperty(newTextProperty);
-    expect(verifyPropertyIsAdded(newTextProperty)).to.equal(true, 'Text property is not renamed successfully');
+    verifyPropertyIsAdded(newTextProperty);
   });
-  it(`Delete Text property ${lib.Tags.smokeTest}`, () => {
+  it(`C1640121 Delete Text property ${lib.Tags.smokeTest}`, () => {
     deleteProperty();
     expect(verifyAddPropertyPage()).to.equal(true, 'Text property is not deleted');
   });
-  it('Create Integer property', () => {
+  it('C1640122 Create Integer property', () => {
     addProperty(constants.TemplateProperties.Types.int, integerProperty);
-    expect(verifyPropertyIsAdded(integerProperty)).to.equal(true, 'Integer property is not added');
+    verifyPropertyIsAdded(integerProperty);
   });
-  it('Rename Integer property', () => {
+  it('C1640123 Rename Integer property', () => {
     renameProperty(newIntProperty);
-    expect(verifyPropertyIsAdded(newIntProperty)).to.equal(true, 'Integer property is not renamed successfully');
+    verifyPropertyIsAdded(newIntProperty);
   });
-  it('Delete Integer property', () => {
+  it('C1640124 Delete Integer property', () => {
     deleteProperty();
     expect(verifyAddPropertyPage()).to.equal(true, 'Integer property is not deleted');
   });
-  it('Create Boolean property', () => {
+  it('C1640125 Create Boolean property', () => {
     addProperty(constants.TemplateProperties.Types.bool, boolProperty);
-    expect(verifyPropertyIsAdded(boolProperty)).to.equal(true, 'Boolean property is not added');
+    verifyPropertyIsAdded(boolProperty);
   });
-  it('Rename Boolean property', () => {
+  it('C1640126 Rename Boolean property', () => {
     renameProperty(newBoolProperty);
-    expect(verifyPropertyIsAdded(newBoolProperty)).to.equal(true, 'Boolean property is not renamed successfully');
+    verifyPropertyIsAdded(newBoolProperty);
   });
-  it('Delete Boolean property', () => {
+  it('C1640127 Delete Boolean property', () => {
     deleteProperty();
     expect(verifyAddPropertyPage()).to.equal(true, 'Boolean property is not deleted');
   });
