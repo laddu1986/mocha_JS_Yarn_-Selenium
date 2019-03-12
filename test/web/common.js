@@ -1,6 +1,6 @@
 import 'app-module-path/register';
 const server = require('chakram');
-const generateString = require('randomstring');
+export const generateString = require('randomstring');
 
 global.expect = server.expect;
 
