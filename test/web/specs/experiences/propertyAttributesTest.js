@@ -8,8 +8,16 @@ import {
   clickCreateTemplate,
   createExperienceTemplate,
   goToTemplateTab,
+  goToAppearanceTab,
   deleteProperty,
-  addProperty
+  addProperty,
+  toggleProperty,
+  checkOption,
+  verifyRule,
+  inputValue,
+  verifyFieldvalue,
+  goToRulesTab,
+  saveTemplate
 } from 'actions/experienceTemplates.js';
 var experienceTemplateName = `${lib.randomString({ length: 7, charset: 'alphabetic' })}`,
   textProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}`;
@@ -28,59 +36,94 @@ describe(`Experience Template--Text property attribute Tests`, () => {
   it('Details tab --> Verify enable localization attribute', () => {
     toggleProperty();
     checkOption('localization');
-    expect(verifyLocalizationIsChecked()).to.equal(true, 'Localization Field is not checked');
+    saveTemplate();
+    expect(verifyRule()).to.include('true', 'Localization Field is not checked');
   });
   it('Rules tab --> Verify required field attribute', () => {
     goToRulesTab();
     checkOption('required');
-    expect(verifyRequiredFieldIsChecked()).to.equal(true, 'Required Field is not checked');
+    inputValue('error_message', 'Required error message', 0);
+    saveTemplate();
+    expect(verifyRule()).to.include('true', 'Required Field is not checked');
   });
-  it('Rules tab --> Verify limit character count attribute', () => {
-    checkOption('limit_count');
-    expect(verifyLimitCharacterOptions()).to.equal(true, 'Limit Character options do not show');
-  });
-  it('Rules tab --> limit character count --> Min and max values', () => {
-    checkOption('between');
-    inputValue('minimum_value', '1');
-    inputValue('maximum_value', '500');
-    expect(verifyMinAndMaxCharacterOptions()).to.equal(
-      true,
-      'Minimum and Maximum allowed character values are not saved'
+  it('Rules tab --> Verify required field Error Message text', () => {
+    expect(verifyFieldvalue('error_message', 0)).to.equal(
+      'Required error message',
+      'Error Message value is not saved for required field'
     );
   });
-  it('Rules tab --> limit character count --> Min value', () => {
+  it('Rules tab --> limit character count --> Verify Min value', () => {
+    checkOption('limit_count');
     checkOption('between');
     inputValue('minimum_value', '1');
-    expect(verifyMinCharacterOptions()).to.equal(true, 'Minimum Character limit value is not saved');
+    inputValue('maximum_value', '50');
+    inputValue('error_message', 'Limit character error message', 1);
+    saveTemplate();
+    browser.refresh();
+    toggleProperty();
+    goToRulesTab();
+    expect(verifyFieldvalue('minimum')).to.equal('1', 'Minimum allowed character value is not saved');
   });
-  it('Rules tab --> limit character count --> Max value', () => {
-    setMaxCharacterCount();
-    expect(verifyMaxCharacterOptions()).to.equal(true, 'Maximum Character limit value is not saved');
+
+  it('Rules tab --> limit character count --> Verify Max value', () => {
+    expect(verifyFieldvalue('maximum')).to.equal('50', 'Maximum allowed character limit value is not saved');
   });
+
+  it('Rules tab --> limit character count --> Verify Error message value', () => {
+    expect(verifyFieldvalue('error_message', 1)).to.equal(
+      'Limit character error message',
+      'Maximum allowed character limit value is not saved'
+    );
+  });
+
   it('Rules tab --> Verify custom pattern attribute', () => {
     checkOption('custom_pattern');
-    expect(verifyCustomPatternIsChecked()).to.equal(true, 'Custom pattern options do not show');
+    inputValue('regular_expression', '[a-z]');
+    inputValue('error_message', 'Custom_Pattern_error_message', 2);
+    saveTemplate();
+    expect(verifyRule()).to.include('true', 'Custom Pattern options do not show');
   });
+
   it('Rules tab --> Custom pattern --> Regular Expression field', () => {
-    inputValue('regular_expression', 'test_regular_exp');
-    expect(verifyRegularExpression()).to.equal(true, 'Regular expression value is not saved');
+    expect(verifyFieldvalue('regex')).to.equal('[a-z]', 'Regular expression value is not saved');
   });
+
   it('Rules tab --> Custom pattern --> Error Message field', () => {
-    inputValue('error_message', 'test_error_message');
-    expect(verifyErrorMessage()).to.equal(true, 'Error Message value is not saved');
+    expect(verifyFieldvalue('error_message', 2)).to.equal(
+      'Custom_Pattern_error_message',
+      'Error Message value is not saved'
+    );
   });
+
   it('Rules tab --> Verify default value', () => {
+    checkOption('default_value');
     inputValue('default_value', 'test_default_value');
-    expect(verifyDefaultValue()).to.equal(true, 'Default value is not saved');
+    saveTemplate();
+    browser.refresh();
+    toggleProperty();
+    goToRulesTab();
+    expect(verifyFieldvalue('default_value')).to.equal('test_default_value', 'Default value is not saved');
   });
-  it('Appearance tab --> Verify prompt text', () => {
+
+  it('Appearance tab --> Verify prompt text value', () => {
+    goToAppearanceTab();
     inputValue('prompt_text', 'test_prompt_text');
-    expect(verifyPromptText()).to.equal(true, 'Prompt text is not saved');
-  });
-  it('Appearance tab --> Verify help text', () => {
     inputValue('help_text', 'test_help_text');
-    expect(verifyHelpText()).to.equal(true, 'Help Text is not saved');
+    saveTemplate();
+    browser.refresh();
+    toggleProperty();
+    goToAppearanceTab();
+    expect(verifyFieldvalue('prompt_text')).to.equal('test_prompt_text', 'Prompt text is not saved');
   });
+
+  it('Appearance tab --> Verify help text value', () => {
+    expect(verifyFieldvalue('help_text')).to.equal('test_help_text', 'Help Text is not saved');
+  });
+
+  it('Appearance tab --> Verify help text value in summary section', () => {
+    expect(verifyFieldvalue('help_summary')).to.equal(true, 'Help text is not showing in summary area');
+  });
+
   after(() => {
     deleteProperty();
   });

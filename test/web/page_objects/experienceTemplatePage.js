@@ -9,10 +9,10 @@ class ExperienceTemplatePage {
     return browser.element("//button[@data-qa='create-template:large-button']");
   }
   get templateName() {
-    return browser.element("//div[@data-qa='create-template:name']//input[@data-qa='input:text']");
+    return browser.element("//input[@data-qa='input:experience:name']");
   }
   get templateKey() {
-    return browser.element("//div[@data-qa='create-template:key']//input[@data-qa='input:text']");
+    return browser.element("//input[@data-qa='input:experience:key']");
   }
   get editTemplateName() {
     return browser.element("//input[@data-qa='edit-template:name']");
@@ -47,7 +47,7 @@ class ExperienceTemplatePage {
     return browser.element("//button[@data-qa='btn:property-type:boolean']");
   }
   get propertyTitle() {
-    return browser.elements("//h3");
+    return browser.elements('//h3');
   }
   get propertyName() {
     return browser.element("//div[@data-qa='input:name']//input[@data-qa='input:text']");
@@ -95,29 +95,23 @@ class ExperienceTemplatePage {
     return browser.element("//button[@data-qa='tab:appearance']");
   }
   // property attributes
-  get enableLocalization() {
-    return browser.element("//input[@name='localizable']");
+  get localization() {
+    return browser.element("//label[contains(@data-qa,'checkbox:localizable')]");
   }
   get requiredField() {
-    return browser.element("//p[contains(text(),'Required field')]");
+    return browser.element("//label[contains(@data-qa,'checkbox:Required')]");
   }
   get limitNumberRange() {
-    return browser.element("//p[contains(text(),'Limit number range')]");
+    return browser.element("//label[contains(@data-qa,'checkbox:character-count')]");
   }
   get betweenRange() {
     return browser.element("//select[@name='mode']//option");
   }
   get minRange() {
-    return browser.element("//select[@name='mode']//option[2]");
+    return browser.element("//div[@data-qa='min']//input");
   }
   get maxRange() {
-    return browser.element("//select[@name='mode']//option[3]");
-  }
-  get minValue() {
-    return browser.element("//input[@name='min']");
-  }
-  get maxValue() {
-    return browser.element("//input[@name='max']");
+    return browser.element("//div[@data-qa='max']//input");
   }
   get promptText() {
     return browser.element("//input[@name='promptText']");
@@ -126,16 +120,22 @@ class ExperienceTemplatePage {
     return browser.element("//input[@name='helpText']");
   }
   get defaultValue() {
-    return browser.elements("//input[@name='defaultValue']");
+    return browser.element("//label[contains(@data-qa,'checkbox:default-value')]");
   }
   get customPattern() {
-    return browser.element("//p[contains(text(),'Custom Pattern')]");
+    return browser.element("//label[contains(@data-qa,'checkbox:regex')]");
   }
   get pattern() {
     return browser.element("//input[@name='pattern']");
   }
   get errorMessage() {
-    return browser.element("//input[@name='errorMessage']");
+    return browser.elements("//input[@name='errorMessage']");
+  }
+  get defaultValueField() {
+    return browser.element("//input[contains(@id,'default-value')]");
+  }
+  get helpValueSummary() {
+    return browser.element("//p[contains(text(),'help')]");
   }
 }
 export default new ExperienceTemplatePage();
