@@ -85,7 +85,8 @@ export function publishExperience(instanceData, experienceType) {
 export function getScenario(instanceData, scenarioid) {
   const req = new readClient.Request('getScenario', {
     context: workspaceContext(instanceData),
-    id: scenarioid === undefined ? instanceData.scenario.id : scenarioid
+    experienceId: instanceData.FIXED.id,
+    id: scenarioid
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
@@ -110,6 +111,7 @@ export function addScenario(instanceData) {
 export function renameScenario(instanceData, scenarioindex, name) {
   const req = new writeClient.Request('renameScenario', {
     context: workspaceContext(instanceData),
+    experienceId: instanceData.FIXED.id,
     scenarioId: instanceData.scenarios[scenarioindex].id,
     accountId: instanceData.identityID,
     rowVersion: instanceData.scenarios[scenarioindex].rowVersion,
@@ -125,7 +127,8 @@ export function renameScenario(instanceData, scenarioindex, name) {
 export function removeScenario(instanceData, scenarioid) {
   const req = new writeClient.Request('removeScenario', {
     context: workspaceContext(instanceData),
-    scenarioId: scenarioid === undefined ? instanceData.scenario.id : scenarioid,
+    experienceId: instanceData.FIXED.id,
+    scenarioId: scenarioid,
     accountId: instanceData.identityID,
     rowVersion: instanceData.FIXED.versionRowVersion
   }).withResponseStatus(true);
@@ -140,6 +143,7 @@ export function changeScenarioEnabled(instanceData, scenarioindex, enabled) {
   const req = new writeClient.Request('changeScenarioEnabled', {
     context: workspaceContext(instanceData),
     scenarioId: instanceData.scenarios[scenarioindex].id,
+    experienceId: instanceData.FIXED.id,
     accountId: instanceData.identityID,
     rowVersion: instanceData.FIXED.versionRowVersion,
     enabled
@@ -155,6 +159,7 @@ export function duplicateScenario(instanceData, scenarioindex) {
   const req = new writeClient.Request('duplicateScenario', {
     context: workspaceContext(instanceData),
     scenarioId: instanceData.scenarios[scenarioindex].id,
+    experienceId: instanceData.FIXED.id,
     accountId: instanceData.identityID,
     rowVersion: instanceData.FIXED.versionRowVersion
   }).withResponseStatus(true);

@@ -72,9 +72,10 @@ message GetExperienceResponse {
 
 message GetScenarioRequest{
   WorkspaceContext context = 1;
-
+  string experience_id = 2;
+  
   // Scenario id:
-  int64 id = 2;
+  string id = 3;
 }
 
 message GetScenarioResponse{
@@ -197,7 +198,7 @@ message AddScenarioRequest{
     google.protobuf.Timestamp row_version = 4;
 }
 message AddScenarioResponse{
-  int64 new_scenario_id = 1;
+  string new_scenario_id = 1;
   google.protobuf.Timestamp row_version = 2; // this is the new scenario row version
 
   // Changes to parent experience(s)
@@ -210,7 +211,7 @@ message MoveScenarioRequest{
   string experience_id = 2;
   string account_id = 3;
 
-  int64 scenario_id = 4;
+  string scenario_id = 4;
   int32 new_index = 5;
 
   // This is the experience (version) row_version. Similarly to re-ordering the scenario, it has a side-effect on the parent experience
@@ -227,50 +228,52 @@ message MoveScenarioResponse{
   
 message RenameScenarioRequest{
   WorkspaceContext context = 1;
-  int64 scenario_id = 2;
+  string experience_id = 2;
   string account_id = 3;
 
-  google.protobuf.Timestamp row_version = 4;
+  string scenario_id = 4;
+  google.protobuf.Timestamp row_version = 5; //Scenario row version
 
   // Data to be written:
-  string name = 5;
+  string name = 6;
 }
 
 message RenameScenarioResponse{
-  google.protobuf.Timestamp row_version = 1;
+  google.protobuf.Timestamp row_version = 1; // Updated scenario row version
   repeated ExperienceVersionUpdate updates = 2;
 }
 
 message ChangeScenarioEnabledRequest{
   WorkspaceContext context = 1;
-  int64 scenario_id = 2;
+  string experience_id = 2;
   string account_id = 3;
 
-
-  // Scenario row_version:
-  google.protobuf.Timestamp row_version = 4;
+  string scenario_id = 4;
+  google.protobuf.Timestamp row_version = 5; // Scenario row_version:
 
   // Data to be written:
-  bool enabled = 5;
+  bool enabled = 6;
  }
 
 message ChangeScenarioEnabledResponse{
-  google.protobuf.Timestamp row_version = 1;
+  google.protobuf.Timestamp row_version = 1; // Updated scenario row version
   repeated ExperienceVersionUpdate updates = 2;
 }
 
 // NOTE: DuplicateScenario will update the row_version of the parent exprience (similar to move scenario)
 message DuplicateScenarioRequest {
   WorkspaceContext context = 1;
-  int64 scenario_id = 2;
+  string experience_id = 2;
   string account_id = 3;
+  
+  string scenario_id = 4;
 
-  // This is the experience row_version. Similarly to re-ordering the scenario, it has a side-effect on the parent experience
-  google.protobuf.Timestamp row_version = 4;
+  // This is the experience (version) row_version. Similarly to re-ordering the scenario, it has a side-effect on the parent experience
+  google.protobuf.Timestamp row_version = 5;
 }
 
 message DuplicateScenarioResponse {
-  int64 new_scenario_id = 1;
+  string new_scenario_id = 1;
   // This is the new scenario row_version. 
   google.protobuf.Timestamp row_version = 2;
 
@@ -282,11 +285,13 @@ message DuplicateScenarioResponse {
 // NOTE: RemoveScenario will update the row_version of the parent exprience (similar to move scenario)
 message RemoveScenarioRequest {
   WorkspaceContext context = 1;
-  int64 scenario_id = 2;
+  string experience_id = 2;
   string account_id = 3;
 
-  // parent (=experience version) row_version:
-  google.protobuf.Timestamp row_version = 4;
+  string scenario_id = 4;
+
+  // parent experience (version) row_version:
+  google.protobuf.Timestamp row_version = 5;
 }
 
 message RemoveScenarioResponse {
@@ -297,13 +302,15 @@ message RemoveScenarioResponse {
 
 message AddLocalizedPropertiesRequest{
   WorkspaceContext context = 1;
-  int64 scenario_id = 2;
+  string experience_id = 2;
   string account_id = 3;
 
-  //Scenario row_version:
-  google.protobuf.Timestamp row_version = 4;
+  string scenario_id = 4;
 
-  string locale_code = 5;
+  //Scenario row_version:
+  google.protobuf.Timestamp row_version = 5;
+
+  string locale_code = 6;
 
   // We're adding an empty set of properties. No need to provide values.
 }
@@ -318,14 +325,16 @@ message AddLocalizedPropertiesResponse{
 
 message UpdateLocalizedPropertiesRequest{
   WorkspaceContext context = 1;
-  int64 scenario_id = 2;
+  string experience_id = 2;
   string account_id = 3;
 
-  //Scenario row_version:
-  google.protobuf.Timestamp row_version = 4;
+  string scenario_id = 4;
 
-  string locale_code = 5;
-  google.protobuf.Struct properties = 6;
+  //Scenario row_version:
+  google.protobuf.Timestamp row_version = 5;
+
+  string locale_code = 6;
+  google.protobuf.Struct properties = 7;
 }
 
 message UpdateLocalizedPropertiesResponse{
@@ -338,16 +347,18 @@ message UpdateLocalizedPropertiesResponse{
 
 message AddSegmentRequest{
   WorkspaceContext context = 1;
-  int64 scenario_id = 2;
-  string segment_id = 3;
-  string account_id = 4;
+  string experience_id = 2;
+  string account_id = 3;
 
+  string scenario_id = 4;
   // This is the scenario row_version
   google.protobuf.Timestamp row_version = 5;
+
+  string segment_id = 6;
 }
 
 message AddSegmentResponse{
-  // this is the new scenario row version
+  // This is the new scenario row version
   google.protobuf.Timestamp row_version = 1;
 
   // Changes to parent experience(s)
@@ -356,12 +367,14 @@ message AddSegmentResponse{
 
 message RemoveSegmentRequest{
   WorkspaceContext context = 1;
-  int64 scenario_id = 2;
-  string segment_id = 3;
-  string account_id = 4;
+  string experience_id = 2;
+  string account_id = 3;
 
+  string scenario_id = 4;
   // This is the scenario row_version
   google.protobuf.Timestamp row_version = 5;
+
+  string segment_id = 6;
 }
 
 message RemoveSegmentResponse{
@@ -374,13 +387,14 @@ message RemoveSegmentResponse{
 
 message ChangeSegmentLogicalOperatorRequest{
   WorkspaceContext context = 1;
-  int64 scenario_id = 2;
+  string experience_id = 2;
   string account_id = 3;
 
+  string scenario_id = 4;
   // This is the scenario row_version
-  google.protobuf.Timestamp row_version = 4;
+  google.protobuf.Timestamp row_version = 5;
 
-  LogicalType segment_logical_operator = 5;
+  LogicalType segment_logical_operator = 6;
 }
 
 message ChangeSegmentLogicalOperatorResponse{

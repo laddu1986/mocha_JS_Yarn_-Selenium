@@ -5,11 +5,11 @@ import * as instances from 'actions/experienceInstance';
 
 const instanceData = new Object();
 instanceData.orgID = '7847de77-c96c-4db7-b884-598f02e73906';
-instanceData.spaceID = 'b37680e3-ef6a-4bd9-8106-88b1273306b3';
-instanceData.workspaceID = 'b37680e3-ef6a-4bd9-8106-88b1273306b3';
+instanceData.spaceID = 'a6b85f5d-a964-45f9-b7e4-344dbc25653a';
+instanceData.workspaceID = 'a6b85f5d-a964-45f9-b7e4-344dbc25653a';
 instanceData.identityID = '4f174935-93d5-4f0a-8389-902724fb1fcd';
-instanceData.COLLECTION = { id: 'ekn03KL' };
-instanceData.FIXED = { id: '74wdQge' };
+instanceData.COLLECTION = { id: 'b7r34Jl' };
+instanceData.FIXED = { id: 'aPJGDMq' };
 
 //TODO: Fix this to have generated accounts once instantiation is done
 
@@ -22,6 +22,7 @@ describe('Experience Instance Service', () => {
     expect(addScenario.status.code).to.equal(0);
   });
   it('getScenario() gets a scenario instance', async () => {
+    await instances.getExperience(instanceData, 'FIXED', true);
     await instances.getExperience(instanceData, 'FIXED', true);
     let getScenario = await instances.getScenario(instanceData, instanceData.scenarios[0].id);
     expect(getScenario.status.code).to.equal(0);
