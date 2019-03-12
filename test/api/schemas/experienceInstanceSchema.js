@@ -78,7 +78,7 @@ export const propertiesSchema = joi.object().keys({
 export const scenarioSchema = joi.object().keys({
   localizedProperties: joi.array().items(propertiesSchema),
   segmentIds: joi.array().items(joi.string()),
-  id: protoLong,
+  id: joi.string(),
   name: joi.string(),
   sequenceNumber: joi.number(),
   isDefault: joi.valid(true, false),

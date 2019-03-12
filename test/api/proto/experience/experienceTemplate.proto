@@ -21,6 +21,8 @@ message ExperienceTemplateDetail{
     google.protobuf.Timestamp modified_at = 11;
     string modified_by = 12;
     bool has_committed_version = 13;
+    google.protobuf.Timestamp committed_at = 14;
+    string committed_by = 15;
 }
 
 message ExperienceTemplate{
