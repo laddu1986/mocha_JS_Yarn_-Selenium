@@ -29,6 +29,7 @@ service ExperienceTemplateWriteService{
 	rpc ChangeThumbnail (ChangeThumbnailRequest) returns (ChangeThumbnailResponse);
 	rpc DeleteTemplate (DeleteTemplateRequest) returns (DeleteTemplateResponse);
 	rpc CommitTemplate (CommitTemplateRequest) returns (CommitTemplateResponse); //changes state from 'draft' to 'committed'
+	rpc AddTemplateToCollection (AddTemplateToCollectionRequest) returns (AddTemplateToCollectionResponse);
 
 	rpc AddProperty (AddPropertyRequest) returns (AddPropertyResponse);
 	rpc RemoveProperty (RemovePropertyRequest) returns (RemovePropertyResponse);
@@ -463,4 +464,21 @@ message GetConfigurationRequest{
 message GetConfigurationResponse{
 	repeated PropertyType property_types = 1;
 	repeated TemplateType template_types = 2;
+}
+
+//AddTemplateToCollection
+//----------------------------------------------
+message AddTemplateToCollectionRequest{
+	WorkspaceContext context = 1;
+	string collection_template_id  = 2;
+	int64 collection_template_version_id = 3;
+	google.protobuf.Timestamp row_version = 4;
+	string child_template_id = 5;
+	string user_account_id = 6;
+	string sort_index = 7;
+}
+
+message AddTemplateToCollectionResponse{
+	google.protobuf.Timestamp row_version = 1;
+	string child_reference_id  = 2;
 }

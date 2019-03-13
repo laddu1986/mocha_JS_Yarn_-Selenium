@@ -5,68 +5,67 @@ import * as instances from 'actions/experienceInstance';
 
 const instanceData = new Object();
 instanceData.orgID = '7847de77-c96c-4db7-b884-598f02e73906';
-instanceData.spaceID = 'b37680e3-ef6a-4bd9-8106-88b1273306b3';
-instanceData.workspaceID = 'b37680e3-ef6a-4bd9-8106-88b1273306b3';
+instanceData.spaceID = 'a6b85f5d-a964-45f9-b7e4-344dbc25653a';
+instanceData.workspaceID = 'a6b85f5d-a964-45f9-b7e4-344dbc25653a';
 instanceData.identityID = '4f174935-93d5-4f0a-8389-902724fb1fcd';
-instanceData.collection = { id: 'ekn03KL' };
-instanceData.experience = { id: '74wdQge' };
+instanceData.COLLECTION = { id: 'b7r34Jl' };
+instanceData.FIXED = { id: 'aPJGDMq' };
 
 //TODO: Fix this to have generated accounts once instantiation is done
 
 describe('Experience Instance Service', () => {
   before('Setup the testing environment', async () => {
-    await instances.getExperience(instanceData, instances.types.experience, true);
+    await instances.getExperience(instanceData, 'FIXED', true);
   });
   it('addScenario() sends a request to adds a new scenario', async () => {
     let addScenario = await instances.addScenario(instanceData);
     expect(addScenario.status.code).to.equal(0);
   });
   it('getScenario() gets a scenario instance', async () => {
-    let getScenario = await instances.getScenario(instanceData, instanceData.scenarioId);
+    await instances.getExperience(instanceData, 'FIXED', true);
+    await instances.getExperience(instanceData, 'FIXED', true);
+    let getScenario = await instances.getScenario(instanceData, instanceData.scenarios[0].id);
     expect(getScenario.status.code).to.equal(0);
   });
   it('renameScenario() sends a request to rename a scenario', async () => {
-    instanceData.scenario.oldName = instanceData.scenario.name;
-    let renameScenario = await instances.renameScenario(instanceData, randomString());
+    await instances.getExperience(instanceData, 'FIXED', true);
+    let renameScenario = await instances.renameScenario(instanceData, 1, randomString());
     expect(renameScenario.status.code).to.equal(0);
   });
   it('renameScenario() renames the scenario', async () => {
-    let renameConfirm = await instances.getScenario(instanceData);
-    expect(renameConfirm.response.scenario.name).to.not.equal(instanceData.scenario.oldName);
+    let renameConfirm = await instances.getScenario(instanceData, instanceData.scenarios[1].id);
+    expect(renameConfirm.response.scenario.name).to.not.equal(undefined);
   });
   it('changeScenarioEnabled() sends a request to enable a scenario', async () => {
-    let enableScenario = await instances.changeScenarioEnabled(instanceData, true);
+    let enableScenario = await instances.changeScenarioEnabled(instanceData, 1, true);
     expect(enableScenario.status.code).to.equal(0);
   });
   it('changeScenarioEnabled() enables the scenario', async () => {
-    let enableConfirm = await instances.getScenario(instanceData);
+    let enableConfirm = await instances.getScenario(instanceData, instanceData.scenarios[1].id);
     expect(enableConfirm.response.scenario.isEnabled).to.equal(true);
   });
   it('changeScenarioEnabled() sends a request to disable a scenario', async () => {
-    let enableScenario = await instances.changeScenarioEnabled(instanceData, false);
+    let enableScenario = await instances.changeScenarioEnabled(instanceData, 1, false);
     expect(enableScenario.status.code).to.equal(0);
   });
   it('changeScenarioEnabled() disables the scenario', async () => {
-    let enableConfirm = await instances.getScenario(instanceData);
+    let enableConfirm = await instances.getScenario(instanceData, instanceData.scenarios[1].id);
     expect(enableConfirm.response.scenario.isEnabled).to.equal(undefined);
   });
   it('duplicateScenario() duplicates a scenario', async () => {
-    let duplicateScenario = await instances.duplicateScenario(
-      instanceData,
-      instanceData.scenarios[instances.defaultExperience].id
-    );
+    await instances.getExperience(instanceData, 'FIXED', true);
+    let duplicateScenario = await instances.duplicateScenario(instanceData, 0);
     expect(duplicateScenario.status.code).to.equal(0);
   });
   it('removeScenario() removes a scenario', async () => {
-    let removeScenario = await instances.removeScenario(instanceData, instanceData.scenario.id);
+    await instances.getExperience(instanceData, 'FIXED', true);
+    let removeScenario = await instances.removeScenario(instanceData, instanceData.scenarios[1].id);
     expect(removeScenario.status.code).to.equal(0);
   });
   after('Cleanup testing environment', async () => {
-    await instances.getExperience(instanceData, false, true);
-    instanceData.scenarios.forEach(async scenario => {
-      if (scenario.isDefault !== true) {
-        await instances.removeScenario(instanceData, scenario.id);
-      }
-    });
+    await instances.getExperience(instanceData, 'FIXED', true);
+    for (let i = instanceData.scenarios.length; i > 1; i--) {
+      await instances.removeScenario(instanceData, instanceData.scenarios[i - 1].id);
+    }
   });
 });
