@@ -16,9 +16,12 @@ message LocalizedProperties {
 
 // Read-only model of scenario
 message ScenarioDetails {
-  int64 id = 1;
+  string id = 1;
   string name = 2;
+
   int32 sequence_number = 3;
+
+
   bool is_default = 4;
   bool is_enabled = 5;
   repeated LocalizedProperties localized_properties = 6;
