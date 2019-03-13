@@ -9,7 +9,6 @@ import {
   createExperienceTemplate,
   goToTemplateTab,
   goToAppearanceTab,
-  deleteProperty,
   addProperty,
   toggleProperty,
   checkOption,
@@ -122,9 +121,5 @@ describe(`Experience Template--Text property attribute Tests`, () => {
 
   it('Appearance tab --> Verify help text value in summary section', () => {
     expect(verifyFieldvalue('help_summary')).to.equal(true, 'Help text is not showing in summary area');
-  });
-
-  after(() => {
-    deleteProperty();
   });
 });

@@ -14,19 +14,16 @@ class ExperienceTemplatePage {
   get templateKey() {
     return browser.element("//input[@data-qa='input:experience:key']");
   }
-  get editTemplateName() {
-    return browser.element("//input[@data-qa='edit-template:name']");
-  }
-  get templatekey() {
-    return browser.element("//p[contains(text(),'#')]");
-  }
   get createButton() {
     return browser.element("//button[@data-qa='create-template:create']");
+  }
+  get templateCard() {
+    return browser.element("//a[@data-qa='link:card']");
   }
   get templateCardImage() {
     return browser.element("//a[@data-qa='link:card']//img");
   }
-  get templateCard() {
+  get templateCardName() {
     return browser.element("//a[@data-qa='link:card']//div//h2");
   }
   get properties() {

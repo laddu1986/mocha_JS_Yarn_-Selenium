@@ -13,35 +13,36 @@ export function clickCreateTemplate(type) {
   if (type == 'link') element = experienceTemplatePage.createTemplateLink;
   element.click();
 }
-export function verifyCreateTemplateModal() {
-  return experienceTemplatePage.templateName.isVisible() && experienceTemplatePage.templateKey.isVisible();
-}
 export function createExperienceTemplate(name) {
   experienceTemplatePage.templateName.setValue(name);
-  experienceTemplatePage.templateKey.setValue(name.toLowerCase());
-}
-export function verifyCreateButton() {
-  return experienceTemplatePage.createButton.isEnabled();
 }
 export function verifyTemplateIsCreated(name) {
   return (
-    experienceTemplatePage.editTemplateName.getAttribute('value') === name &&
-    experienceTemplatePage.templatekey.getText().includes(name.toLowerCase())
+    experienceTemplatePage.templateName.getAttribute('value') === name &&
+    experienceTemplatePage.templateKey.getAttribute('value') === name.toLowerCase()
   );
 }
 export function verifyTemplateCard(name) {
-  browser.waitUntil(() => experienceTemplatePage.templateCard.getText() === name, 5000, 'Template card name is incorrect', 200);
+  browser.waitUntil(
+    () => experienceTemplatePage.templateCardName.getText().includes(name),
+    5000,
+    'Template card name is incorrect',
+    200
+  );
 }
 export function editTemplate(name) {
-  experienceTemplatePage.editTemplateName.clearElement();
-  experienceTemplatePage.editTemplateName.setValue(name);
+  experienceTemplatePage.templateName.clearElement();
+  experienceTemplatePage.templateName.setValue(name);
 }
 export function saveTemplate() {
   browser.keys('Tab');
-  browser.pause(1000);
+  browser.pause(3000);
 }
 export function clickAddProperty() {
   experienceTemplatePage.addProperty.click();
+}
+export function clickDeleteButton() {
+  clickMoreButton;
 }
 export function verifyPropertyTypes() {
   return (
@@ -66,7 +67,12 @@ export function clearPropertyName() {
   experienceTemplatePage.propertyName.clearElement();
 }
 export function verifyPropertyIsAdded(name) {
-  browser.waitUntil(() => experienceTemplatePage.propertyTitle.getText() === name, 5000, `Added property ${name} is not correctly displayed`, 200);
+  browser.waitUntil(
+    () => experienceTemplatePage.propertyTitle.getText() === name,
+    5000,
+    `Added property ${name} is not correctly displayed`,
+    200
+  );
 }
 export function verifyAddPropertyPage() {
   return experienceTemplatePage.addProperty.isVisible();
@@ -74,18 +80,18 @@ export function verifyAddPropertyPage() {
 export function addProperty(type, name) {
   clickAddProperty();
   clickProperty(type);
+  if (!experienceTemplatePage.propertyName.isVisible()) toggleProperty();
   addNameForProperty(name);
   saveTemplate();
   browser.refresh();
 }
 export function renameProperty(name) {
   experienceTemplatePage.toggleIcon.click();
-  if (experienceTemplatePage.propertyName.isVisible()) {
-    clearPropertyName();
-    addNameForProperty(name);
-    saveTemplate();
-    browser.refresh();
-  }
+  experienceTemplatePage.propertyName.waitForVisible();
+  clearPropertyName();
+  addNameForProperty(name);
+  saveTemplate();
+  browser.refresh();
 }
 export function deleteProperty() {
   clickMoreButton('1');
@@ -144,7 +150,7 @@ export function clickBackToLibrary() {
   experienceTemplatePage.backToLibrary.click();
 }
 export function goToTemplateDetailPage() {
-  experienceTemplatePage.templateCardImage.click();
+  experienceTemplatePage.templateCard.click();
 }
 export function toggleProperty() {
   experienceTemplatePage.toggleIcon.click();
