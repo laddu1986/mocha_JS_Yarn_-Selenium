@@ -17,6 +17,7 @@ import {
   verifyAddPropertyPage,
   verifyPropertyIsAdded
 } from 'actions/experienceTemplates.js';
+
 var experienceTemplateName = `${lib.randomString({ length: 7, charset: 'alphabetic' })}`,
   textProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}`,
   newTextProperty = `${lib.randomString({ length: 5, charset: 'alphabetic' })}_new`,
