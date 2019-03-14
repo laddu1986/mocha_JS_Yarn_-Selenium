@@ -17,47 +17,47 @@ describe('Experience Instance Service', () => {
   before('Setup the testing environment', async () => {
     await instances.getExperience(instanceData, 'FIXED', true);
   });
-  it('addScenario() sends a request to adds a new scenario', async () => {
+  it('C1857190 addScenario() sends a request to adds a new scenario', async () => {
     let addScenario = await instances.addScenario(instanceData);
     expect(addScenario.status.code).to.equal(0);
   });
-  it('getScenario() gets a scenario instance', async () => {
+  it('C1857191 getScenario() gets a scenario instance', async () => {
     await instances.getExperience(instanceData, 'FIXED', true);
     await instances.getExperience(instanceData, 'FIXED', true);
     let getScenario = await instances.getScenario(instanceData, instanceData.scenarios[0].id);
     expect(getScenario.status.code).to.equal(0);
   });
-  it('renameScenario() sends a request to rename a scenario', async () => {
+  it('C1857192 renameScenario() sends a request to rename a scenario', async () => {
     await instances.getExperience(instanceData, 'FIXED', true);
     let renameScenario = await instances.renameScenario(instanceData, 1, randomString());
     expect(renameScenario.status.code).to.equal(0);
   });
-  it('renameScenario() renames the scenario', async () => {
+  it('C1857193 renameScenario() renames the scenario', async () => {
     let renameConfirm = await instances.getScenario(instanceData, instanceData.scenarios[1].id);
     expect(renameConfirm.response.scenario.name).to.not.equal(undefined);
   });
-  it('changeScenarioEnabled() sends a request to enable a scenario', async () => {
+  it('C1857194 changeScenarioEnabled() sends a request to enable a scenario', async () => {
     let enableScenario = await instances.changeScenarioEnabled(instanceData, 1, true);
     expect(enableScenario.status.code).to.equal(0);
   });
-  it('changeScenarioEnabled() enables the scenario', async () => {
+  it('C1857195 changeScenarioEnabled() enables the scenario', async () => {
     let enableConfirm = await instances.getScenario(instanceData, instanceData.scenarios[1].id);
     expect(enableConfirm.response.scenario.isEnabled).to.equal(true);
   });
-  it('changeScenarioEnabled() sends a request to disable a scenario', async () => {
+  it('C1857196 changeScenarioEnabled() sends a request to disable a scenario', async () => {
     let enableScenario = await instances.changeScenarioEnabled(instanceData, 1, false);
     expect(enableScenario.status.code).to.equal(0);
   });
-  it('changeScenarioEnabled() disables the scenario', async () => {
+  it('C1857197 changeScenarioEnabled() disables the scenario', async () => {
     let enableConfirm = await instances.getScenario(instanceData, instanceData.scenarios[1].id);
     expect(enableConfirm.response.scenario.isEnabled).to.equal(undefined);
   });
-  it('duplicateScenario() duplicates a scenario', async () => {
+  it('C1857198 duplicateScenario() duplicates a scenario', async () => {
     await instances.getExperience(instanceData, 'FIXED', true);
     let duplicateScenario = await instances.duplicateScenario(instanceData, 0);
     expect(duplicateScenario.status.code).to.equal(0);
   });
-  it('removeScenario() removes a scenario', async () => {
+  it('C1857199 removeScenario() removes a scenario', async () => {
     await instances.getExperience(instanceData, 'FIXED', true);
     let removeScenario = await instances.removeScenario(instanceData, instanceData.scenarios[1].id);
     expect(removeScenario.status.code).to.equal(0);
