@@ -5,6 +5,6 @@ exports.config = {
     password: process.env.TESTRAIL_PASSWORD,
     projectId: process.env.TESTRAIL_PROJECT,
     suiteId: process.env.TESTRAIL_API,
-    runName: "API Test Run"
+    runName: 'API Test Run'
   }
-}
+};

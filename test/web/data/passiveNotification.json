@@ -21,6 +21,6 @@
     "text": "successfully updated"
   },
   "deleteTemplateMessage": {
-    "text": "Successfully deleted template"
+    "text": "Delete successful."
   }
 }

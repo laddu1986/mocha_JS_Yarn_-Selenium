@@ -10,7 +10,7 @@ exports.config = {
   specs: [
     'specs/**/*Test.js' //master
   ],
-  exclude: ['specs/support/helpPageTest.js', 'specs/experiences/*Test.js'],
+  exclude: ['specs/support/helpPageTest.js'],
   suites: {
     smoke: [
       'specs/accounts/createAccountTest.js',
@@ -19,8 +19,8 @@ exports.config = {
       'specs/organizations/createOrganizationTest.js',
       'specs/spaces/createSpaceTest.js',
       'specs/tribes/createTribeTest.js',
-      'specs/experiences/experiencePropertyTest.js',
-      'specs/experiences/experienceTemplateTest.js'
+      'specs/experiences/propertyTest.js',
+      'specs/experiences/templateTest.js'
     ],
     accounts: ['specs/accounts/*Test.js'],
     organizations: ['specs/organizations/*Test.js'],
@@ -53,7 +53,7 @@ exports.config = {
     ui: 'bdd',
     reporter: 'spec',
     compilers: ['js:babel-register'],
-    timeout: 40000,
+    timeout: 90000,
     grep: process.env.npm_config_grep
   },
   debug: false,

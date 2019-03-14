@@ -10,13 +10,13 @@ option go_package = "generated";
 service SegmentRulesService{ 
     rpc SaveRule (SaveRuleRequest) returns (SaveRuleResponse);
     rpc GetRule (GetRuleRequest) returns (GetRuleResponse);
+
     rpc GetConfiguration (GetConfigurationRequest) returns (GetConfigurationResponse);
     rpc EvaluateRule (EvaluateRuleRequest) returns (EvaluateRuleResponse);
     rpc EvaluateRules (EvaluateRulesRequest) returns (EvaluateRulesResponse);
 
     // Returns an estimate for each filter:
     rpc EvaluateRuleFilters (EvaluateRuleRequest) returns (EvaluateRuleFiltersResponse);
-
 
     rpc GetSampleUsers (EvaluateRuleRequest) returns (GetSampleUsersResponse);
 }

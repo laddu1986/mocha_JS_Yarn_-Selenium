@@ -71,6 +71,7 @@ The following arguments can be appended to the above to run tests in different c
 `yarn run orca-local`
 
 ##### Reporting
+
 When running locally, html reports are being generated for API/Orca(mocha) tests using `mocha-simple-html-reporter` and for UI(wdio) tests using `wdio-html-format-reporter`.
 The reports will by default be saved in`.test/[api/orca/web]/Reports`
 

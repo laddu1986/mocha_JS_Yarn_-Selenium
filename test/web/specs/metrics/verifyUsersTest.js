@@ -3,7 +3,7 @@ import AccountPage from 'page_objects/accountPage';
 import { createAccount } from 'actions/account';
 import { createSpace, goToDeveloperPortal, getAPIKey } from 'actions/space';
 import { clickOnAudienceLink, clickOnSpaceDashboardLink } from 'actions/navBar';
-import { addUsers, getCount, addVisitor, verifyUsersAreAdded } from 'actions/metrics';
+import { addUsers, getCount, addVisitor, verifyUsersAreAdded, refreshSpaceToViewMetrics } from 'actions/metrics';
 import Constants from 'constants.json';
 import { clickOnUsersTab, getRecentUsersRows, verifyUsersDetails, clickUserRow, verifySideBar } from 'actions/users';
 var apiKey;
@@ -53,7 +53,8 @@ describe(`User Metrics Tests`, () => {
 
   it('C1295682 Space Dashboard Page  --> Verify Total Users Count ', () => {
     clickOnSpaceDashboardLink();
-    browser.pause(1500);
+    refreshSpaceToViewMetrics();
+
     expect(getCount(Constants.UserType.User)).to.include(5);
   });
 

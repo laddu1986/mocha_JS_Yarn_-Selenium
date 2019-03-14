@@ -5,14 +5,6 @@ import SettingsPage from 'page_objects/settingsPage';
 import OrgDashboardPage from 'page_objects/orgDashboardPage';
 import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'actions/common';
 
-export function createOrg(orgname) {
-  NavBar.profileMenu.click();
-  HomePage.switchOrCreateOrganizations.click();
-  HomePage.createOrg.click();
-  createNewOrg(orgname);
-  OrgDashboardPage.currentOrgName.waitForVisible();
-}
-
 export function verifyNoOrgPage() {
   if ((HomePage.createOrgButton.isVisible() == HomePage.removeAccountButton.isVisible()) == true) return true;
 }

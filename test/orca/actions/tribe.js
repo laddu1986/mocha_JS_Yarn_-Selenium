@@ -4,7 +4,7 @@ export function createTribe(responseData) {
   const data = {
     query:
       'mutation CreateSegment($input: CreateSegmentInput!) { createSegment(input: $input) {categoryId segment{id title tagline rowVersion backgroundImageUrl logoImageUrl layout colors{ key value opacity}}}}',
-    operationName: "CreateSegment", 
+    operationName: 'CreateSegment',
     variables: {
       input: {
         organizationId: responseData.orgID,
@@ -24,11 +24,11 @@ export function createTribe(responseData) {
 }
 
 export function updateTribe(responseData) {
-  var tribeNewName = `${randomString.generate(8)}_NewName`;
+  var tribeNewName = `${randomString(8)}_NewName`;
   const data = {
     query:
       'mutation UpdateSegment($input: UpdateSegmentInput!) { updateSegment(input: $input) {segment{id title tagline rowVersion backgroundImageUrl logoImageUrl layout colors{ key value opacity}}}}',
-    operationName: "UpdateSegment", 
+    operationName: 'UpdateSegment',
     variables: {
       input: {
         fields: {
@@ -57,7 +57,7 @@ export function getTribe(responseData) {
   const data = {
     query:
       'query Segment($spaceId: ID!, $segmentId: ID!, $organizationId: ID!) {segment(spaceId: $spaceId, organizationId: $organizationId, segmentId: $segmentId){id title tagline rowVersion layout colors{opacity value key} logoImageUrl backgroundImageUrl}}',
-    operationName: "Segment", 
+    operationName: 'Segment',
     variables: {
       segmentId: responseData.tribeID,
       organizationId: responseData.orgID,
@@ -76,7 +76,7 @@ export function getTribe(responseData) {
 export function deleteTribe(responseData) {
   const data = {
     query: 'mutation DeleteSegment($input: DeleteSegmentInput!) { deleteSegment(input: $input) {segmentId}}',
-    operationName: "DeleteSegment", 
+    operationName: 'DeleteSegment',
     variables: {
       input: {
         rowVersion: responseData.tribeRowVersion,
