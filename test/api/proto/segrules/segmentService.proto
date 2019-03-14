@@ -14,6 +14,13 @@ service SegmentService{
     rpc DeleteSegment(DeleteSegmentRequest) returns (google.protobuf.Empty);
     rpc GetSegmentById (GetSegmentByIdRequest) returns (Segment);
 
+    // Get multiple segments by id:
+    rpc GetSegmentsById (GetSegmentsByIdRequest) returns (GetSegmentsByIdResponse);
+
+    // Results are returned in order of last modified:
+    rpc SearchSegments(SearchSegmentsRequest) returns (SearchSegmentsResponse);
+
+
     //category
     rpc CreateCategory(CreateCategoryRequest) returns (Category);
     rpc RenameCategory(RenameCategoryRequest) returns (Category);

@@ -2,74 +2,50 @@ import * as lib from '../common';
 import * as data from 'data/identityTestsData.js';
 import * as identity from 'actions/identity.js';
 import * as validationErrors from 'data/validationErrorsData.json';
-var noEmailResponse, noFullNameResponse, noPwdResponse, emailExistsResponse, getResponse, putResponse, patchResponse;
+
 const identityNegData = new Object();
 
-describe('Negative Cases --> Identity Api', () => {
-  describe('POST /identities ', () => {
-    describe('400 Response - Mandatory fields validation ', () => {
-      before(async () => {
-        noEmailResponse = await lib.post(data.noEmail);
-        noFullNameResponse = await lib.post(data.noFullName);
-        noPwdResponse = await lib.post(data.noPwd);
-      });
-
-      it('C1295513 Email cannot be empty', () => {
-        expect(noEmailResponse).to.have.status(400);
-        expect(noEmailResponse.body.validationErrors.email).to.include(data.noEmail.expected);
-      });
-
-      it('C1295514 FullName cannot be emtpy', () => {
-        expect(noFullNameResponse).to.have.status(400);
-        expect(noFullNameResponse.body.validationErrors.fullName).to.include(data.noFullName.expected);
-      });
-
-      it('C1295515 Password cannot be empty', () => {
-        expect(noPwdResponse).to.have.status(400);
-        expect(noPwdResponse.body.validationErrors.password).to.include(data.noPwd.expected);
-      });
-    });
-
-    describe('409 Response - Conflict error for existing email', () => {
-      before(async () => {
-        await lib.post(data.existingEmailData);
-        emailExistsResponse = await lib.post(data.existingEmailData);
-      });
-      it('C1295516 Email id already registered', () => {
-        expect(emailExistsResponse).to.have.status(409);
-        expect(emailExistsResponse.body.message).to.equal(data.existingEmailData.expected);
-      });
-    });
+describe('Negative Cases --> Identity API', () => {
+  before(async () => {
+    await identity.postIdentity(identityNegData);
   });
-  describe('GET /identities/{id} ', () => {
-    describe('404 - Not found validation ', () => {
-      before(async () => {
-        await identity.postIdentity(identityNegData);
-        await identity.deleteIdentityById(identityNegData);
-        getResponse = await identity.getIdentityById(identityNegData, 'negative');
-      });
-      it('C1295517 Search the non-existing user', () => {
-        expect(getResponse).to.have.status(404);
-        expect(getResponse.body.message).to.include(validationErrors.GetIdentity.UserNotFound);
-      });
-    });
+  it('C1295516 POST /identities with an existing email returns 409', async () => {
+    let emailExistsResponse = await lib.post(data.existingEmailData(identityNegData));
+    expect(emailExistsResponse).to.have.status(409);
+    expect(emailExistsResponse.body.message).to.equal(data.existingEmailData(identityNegData).expected);
   });
-  describe('PUT /identities/{id}/state ', () => {
-    before(async () => {
-      putResponse = await identity.putIdentityById(identityNegData, 'negative');
-    });
-    it('C1295518 400 - Invalid userState entered ', () => {
-      expect(putResponse).to.have.status(400);
-      expect(putResponse.body.message).to.equal(validationErrors.SetIdentity.InvalidIdentity);
-    });
+  it('C1295517 GET /identities/{id} with a non-existant user returns 404', async () => {
+    await identity.deleteIdentityById(identityNegData);
+    let getResponse = await identity.getIdentityById(identityNegData, 'negative');
+    expect(getResponse).to.have.status(404);
+    expect(getResponse.body.message).to.include(validationErrors.GetIdentity.UserNotFound);
   });
-  describe('PATCH /identities/{id}/state ', () => {
-    before(async () => {
-      patchResponse = await identity.patchIdentityStateById(identityNegData, 'negative');
-    });
-    it('C1295519 400 - Invalid userState entered ', () => {
-      expect(patchResponse).to.have.status(400);
-      expect(patchResponse.body.message).to.equal(validationErrors.SetIdentity.InvalidIdentity);
-    });
+  it('C1295513 POST /identities with an empty email returns 400', async () => {
+    let noEmailResponse = await lib.post(data.noEmail);
+    expect(noEmailResponse).to.have.status(400);
+    expect(noEmailResponse.body.validationErrors.email).to.include(data.noEmail.expected);
+  });
+  it('C1295514 POST /identities with an empty fullname returns 400', async () => {
+    let noFullNameResponse = await lib.post(data.noFullName);
+    expect(noFullNameResponse).to.have.status(400);
+    expect(noFullNameResponse.body.validationErrors.fullName).to.include(data.noFullName.expected);
+  });
+  it('C1295515 POST /identities with an empty password returns 400', async () => {
+    let noPwdResponse = await lib.post(data.noPwd);
+    expect(noPwdResponse).to.have.status(400);
+    expect(noPwdResponse.body.validationErrors.password).to.include(data.noPwd.expected);
+  });
+  it('C1295518 PUT /identities/{id}/state with an invalid user state returns 400', async () => {
+    let putResponse = await identity.putIdentityById(identityNegData, 'negative');
+    expect(putResponse).to.have.status(400);
+    expect(putResponse.body.message).to.equal(validationErrors.SetIdentity.InvalidIdentity);
+  });
+  it('C1295519 PATCH /identities/{id}/state with an invalid user state returns 400', async () => {
+    let patchResponse = await identity.patchIdentityStateById(identityNegData, 'negative');
+    expect(patchResponse).to.have.status(400);
+    expect(patchResponse.body.message).to.equal(validationErrors.SetIdentity.InvalidIdentity);
+  });
+  after(async () => {
+    await identity.deleteIdentityById(identityNegData);
   });
 });

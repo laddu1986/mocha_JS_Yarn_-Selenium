@@ -21,13 +21,13 @@ class common extends Page {
     return browser.element("//button[@data-qa='btn:close-modal']");
   }
   get moreButton() {
-    return $("//button[@data-qa='btn:more']");
+    return browser.elements("//button[@data-qa='btn:more']");
   }
   get editOnCard() {
     return browser.element("//a[@data-qa='menu-item:settings']");
   }
   get deleteOnCard() {
-    return browser.element("//button[@data-qa='menu-item:delete']");
+    return browser.element("//button[contains(@data-qa,'menu-item:delete')]");
   }
 
   //Passive Notifications

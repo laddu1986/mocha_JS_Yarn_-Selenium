@@ -1,13 +1,17 @@
 import 'app-module-path/register';
 const server = require('chakram');
+export const generateString = require('randomstring');
+
 global.expect = server.expect;
-var randomString = require('randomstring');
-var dateFormat = require('dateformat');
+
+export const dateFormat = require('dateformat');
 
 export const responseData = {
   users: [],
   visitors: []
 };
+
+export const sortAlphabetically = (a, b) => a.toLowerCase().localeCompare(b.toLowerCase());
 
 export const Tags = {
   smokeTest: '@smoke'
@@ -27,6 +31,10 @@ export function post(any) {
 export function del(any) {
   return server.delete(any.api + any.data);
 }
-const sortAlphabetically = (a, b) => a.toLowerCase().localeCompare(b.toLowerCase());
 
-export { dateFormat, randomString, sortAlphabetically };
+export function randomString(opts) {
+  opts = opts == undefined ? 10 : opts;
+  let tag = process.env.QA_TAG == undefined ? '' : process.env.QA_TAG;
+  let returnValue = tag + generateString.generate(opts);
+  return returnValue;
+}

@@ -103,6 +103,7 @@ function getEndPoints() {
   identities = process.env[`API_IDENTITIES_${environment}`];
   organizations = process.env[`API_ORGANIZATIONS_${environment}`];
   memberships = process.env[`API_MEMBERSHIPS_${environment}`];
+  token = process.env[`API_TOKEN_${environment}`];
   spaces = process.env[`API_SPACES_${environment}`];
   users = process.env[`API_USER_${environment}`];
   demospace = process.env[`SPARK_${environment}`];

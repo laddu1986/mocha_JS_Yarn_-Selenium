@@ -2,71 +2,52 @@ import { joi, Tags } from '../common';
 import * as identity from 'actions/identity';
 import * as organization from 'actions/organization';
 import * as schemas from 'schemas/organizationSchema';
-var createOrgResponse, getOrgResponse, listOrgResponse, updateResponse, listOrgsByIDResponse, deleteResponse;
+
 const orgData = new Object();
 
-describe('Organizations Api', () => {
+describe('Organizations API', () => {
   before(async () => {
     await identity.postIdentity(orgData);
   });
-  describe(`POST /organizations ${Tags.smokeTest}`, () => {
-    before(async () => {
-      createOrgResponse = await organization.postOrganization(orgData, true);
-    });
-    it('C1295555 Create a new organization.', () => {
-      expect(createOrgResponse).to.have.status(201);
-      joi.assert(createOrgResponse.body, schemas.createOrgSchema(orgData));
-    });
-  });
-  describe('GET /organizations', () => {
-    before(async () => {
-      listOrgResponse = await organization.getOrganizations();
-    });
-    it('C1295556 List all organizations.', () => {
-      expect(listOrgResponse.body).to.be.an('array');
-      expect(listOrgResponse).to.have.status(200);
-    });
+
+  it(`C1295555 POST /organizations ${Tags.smokeTest} creates a new organization`, async () => {
+    let createOrgResponse = await organization.postOrganization(orgData, true);
+    expect(createOrgResponse).to.have.status(201);
+    joi.assert(createOrgResponse.body, schemas.createOrgSchema(orgData));
   });
 
-  describe('GET /organizations/{id}', () => {
-    before(async () => {
-      getOrgResponse = await organization.getOrganizationById(orgData);
-    });
-    it('C1295557 Get an organization by its id.', () => {
-      expect(getOrgResponse).to.have.status(200);
-      joi.assert(getOrgResponse.body, schemas.getOrganizationByIdSchema(orgData));
-    });
+  it('C1295556 GET /organizations lists all organizations', async () => {
+    let listOrgResponse = await organization.getOrganizations();
+    expect(listOrgResponse.body).to.be.an('array');
+    expect(listOrgResponse).to.have.status(200);
   });
 
-  describe('POST /organizations/list', () => {
-    before(async () => {
-      listOrgsByIDResponse = await organization.postOrganizations(orgData);
-    });
-
-    it('C1295558 List of organizations by their id.', () => {
-      expect(listOrgsByIDResponse.body).to.be.an('array');
-      expect(listOrgsByIDResponse).to.have.status(200);
-      joi.assert(listOrgsByIDResponse.body, schemas.postOrganizationsSchema(orgData));
-    });
+  it('C1295557 GET /organizations/{id} returns an organization by its id', async () => {
+    let getOrgResponse = await organization.getOrganizationById(orgData);
+    expect(getOrgResponse).to.have.status(200);
+    joi.assert(getOrgResponse.body, schemas.getOrganizationByIdSchema(orgData));
   });
 
-  describe('PUT /organization', () => {
-    before(async () => {
-      updateResponse = await organization.putOrganization(orgData, true);
-    });
-    it('C1295559 Update an existing organization.', () => {
-      expect(updateResponse).to.have.status(200);
-      expect(updateResponse.body.name).to.equal('check update name string');
-      joi.assert(updateResponse.body, schemas.putOrgSchema(orgData));
-    });
+  it('C1295558 POST /organizations/list lists organizations by their id', async () => {
+    let listOrgsByIDResponse = await organization.postOrganizations(orgData);
+    expect(listOrgsByIDResponse.body).to.be.an('array');
+    expect(listOrgsByIDResponse).to.have.status(200);
+    joi.assert(listOrgsByIDResponse.body, schemas.postOrganizationsSchema(orgData));
   });
 
-  describe('DELETE /organizations/{id}', () => {
-    before(async () => {
-      deleteResponse = await organization.deleteOrganizationById(orgData);
-    });
-    it('C1295560 Delete a organization.', () => {
-      expect(deleteResponse).to.have.status(204);
-    });
+  it('C1295559 PUT /organization updates an existing organization', async () => {
+    let updateResponse = await organization.putOrganization(orgData, true);
+    expect(updateResponse).to.have.status(200);
+    expect(updateResponse.body.name).to.equal('check update name string');
+    joi.assert(updateResponse.body, schemas.putOrgSchema(orgData));
+  });
+
+  it('C1295560 DELETE /organizations/{id} deletes an organization by its id', async () => {
+    let deleteResponse = await organization.deleteOrganizationById(orgData);
+    expect(deleteResponse).to.have.status(204);
+  });
+
+  after(async () => {
+    await identity.deleteIdentityById(orgData);
   });
 });

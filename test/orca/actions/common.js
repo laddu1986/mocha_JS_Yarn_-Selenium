@@ -1,13 +1,13 @@
 import { randomString, post, orca } from '../common';
 
 export function registerAndCreateOrg(responseData) {
-  var email_account = `${randomString.generate(10)}@test.co`;
-  var name_account = `${randomString.generate(10)}`;
-  var orgNameWhileRegistering = `${randomString.generate(10)}`;
+  var email_account = `${randomString(10)}@test.co`;
+  var name_account = `${randomString(10)}`;
+  var orgNameWhileRegistering = `${randomString(10)}`;
   const query = {
     query:
       'mutation CreateAccount($input: RegisterAndCreateOrgInput!) { registerAndCreateOrg(input: $input) { account { id email name state {lastOrganizationSlug lastSpaceSlug} }  } }',
-    operationName: "CreateAccount",
+    operationName: 'CreateAccount',
     variables: {
       input: {
         fields: {
@@ -40,7 +40,7 @@ export function login(responseData, emailValue) {
   else loginEmail = responseData.LoginEmail;
   const query = {
     query: 'mutation Login($input: LoginInput!) { login(input: $input) }',
-    operationName: "Login",
+    operationName: 'Login',
     variables: {
       input: {
         fields: {
@@ -73,7 +73,7 @@ export function login(responseData, emailValue) {
 export function logout() {
   const query = {
     query: 'mutation Logout { logout }',
-    operationName: "Logout", 
+    operationName: 'Logout',
     variables: {}
   };
   const any = {
@@ -89,7 +89,7 @@ export function logout() {
 export function deleteAccount(responseData) {
   const query = {
     query: 'mutation DeleteAccount { deleteAccount }',
-    operationName: "DeleteAccount",
+    operationName: 'DeleteAccount',
     variables: {}
   };
   const any = {
@@ -102,11 +102,11 @@ export function deleteAccount(responseData) {
 }
 
 export function createAccount(responseData) {
-  var name_account = `${randomString.generate(10)}`;
+  var name_account = `${randomString(10)}`;
   const query = {
     query:
       'mutation CreateAccount($input: CreateAccountInput!) { createAccount(input: $input) { account { id email name state {lastOrganizationSlug lastSpaceSlug} }  } }',
-    operationName: "CreateAccount", 
+    operationName: 'CreateAccount',
     variables: {
       input: {
         fields: {

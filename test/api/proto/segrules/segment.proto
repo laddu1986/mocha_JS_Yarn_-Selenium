@@ -34,6 +34,27 @@ message GetSegmentByIdRequest {
     SegmentContext segment_context = 1;
 }
 
+message GetSegmentsByIdRequest{
+    SpaceContext space_context     = 1;
+    repeated string segment_ids    = 2;
+}
+
+message SearchSegmentsRequest{
+    SpaceContext space_context    = 1;
+    string keyword                = 2;
+    int32 limit                   = 3;
+    int32 offset                  = 4;
+}
+
+message GetSegmentsByIdResponse{
+    repeated Segment segments = 1;
+}
+
+message SearchSegmentsResponse{
+    repeated Segment segments     = 1;
+}
+
+
 //category
 //-----------
 

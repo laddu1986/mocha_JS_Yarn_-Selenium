@@ -24,10 +24,10 @@ export async function addVisitor(count, key) {
     request = {
       api: apiUrl,
       data: {
-        vid: `${lib.randomString.generate(10)}_vid`,
+        vid: `${lib.randomString(10)}_vid`,
         e: [
           {
-            idk: lib.randomString.generate(10),
+            idk: lib.randomString(10),
             tp: 'it',
             ca: Date.now(),
             sa: Date.now() + 50
@@ -47,15 +47,15 @@ export async function addUsers(count, key) {
     request = {
       api: apiUrl,
       data: {
-        uid: `${lib.randomString.generate(10)}_uid`,
+        uid: `${lib.randomString(10)}_uid`,
         e: [
           {
-            idk: lib.randomString.generate(10),
+            idk: lib.randomString(10),
             tp: 'id',
             ca: Date.now(),
             fields: {
-              email: `${lib.randomString.generate(5)}@demospace.org`,
-              displayName: `${lib.randomString.generate(5)}_name`
+              email: `${lib.randomString(5)}@demospace.org`,
+              displayName: `${lib.randomString(5)}_name`
             },
             sa: Date.now() + 50
           }
@@ -93,6 +93,13 @@ export function refreshUsersPage() {
   } catch (err) {
     value = false;
     return;
+  }
+}
+
+export function refreshSpaceToViewMetrics() {
+  while (getCount(Constants.UserType.User).includes('-')) {
+    browser.pause(2000);
+    browser.refresh();
   }
 }
 

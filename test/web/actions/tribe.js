@@ -28,7 +28,7 @@ export function verifyTribeDetailpage() {
 
 export function selectColour() {
   // randomly selects the Tribe colour swatch everytime
-  colorIndex = lib.randomString.generate({
+  colorIndex = lib.generateString.generate({
     length: 1,
     charset: '01234567'
   });

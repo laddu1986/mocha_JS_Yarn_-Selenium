@@ -16,6 +16,13 @@ message ExperienceTemplateDetail{
     ExperienceTemplateType template_type = 6;
     repeated Property properties = 7;
     repeated ExperienceTemplate templates = 8;
+    int64 template_version_id = 9;
+    ExperienceTemplateStatus status = 10;
+    google.protobuf.Timestamp modified_at = 11;
+    string modified_by = 12;
+    bool has_committed_version = 13;
+    google.protobuf.Timestamp committed_at = 14;
+    string committed_by = 15;
 }
 
 message ExperienceTemplate{
@@ -25,10 +32,16 @@ message ExperienceTemplate{
     string thumbnail_url = 4;
     google.protobuf.Timestamp row_version = 5;
     ExperienceTemplateType template_type = 6;
+    int64 template_version_id = 7;
 }
 
 enum ExperienceTemplateType {
     FIXED = 0;
     FLEXI = 1;
     COLLECTION = 2;
+}
+
+enum ExperienceTemplateStatus {
+    DRAFT = 0;
+    COMMITTED = 1;
 }
