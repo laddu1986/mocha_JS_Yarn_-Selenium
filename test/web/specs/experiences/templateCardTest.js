@@ -38,7 +38,7 @@ describe(`Experience Template card image Tests`, () => {
     let missingItems = verifyThumbnailImages();
     expect(missingItems.length).to.equal(0, ` ${missingItems} Thumbnail Images do not appear correctly`);
   });
-  it('Verify default image is selected', () => {
+  it('C1857173 Verify default image is selected', () => {
     verifyThumbnail(0);
   });
   it('C1640139 Select hero thumbnail --> Verify selection', () => {
