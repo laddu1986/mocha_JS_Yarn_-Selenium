@@ -7,7 +7,7 @@ import constants from 'constants.json';
 import * as properties from 'actions/templateProperties';
 import * as messages from 'data/validationErrorsData.json';
 import * as data from 'data/templateTestData';
-import { deleteExperienceTemplate } from '../../orca/actions/experienceTemplate';
+import { deleteExperienceTemplate } from 'actions/templates';
 const templateData = new Object();
 
 xdescribe('Negative Test -> Template API -> Template Properties', () => {
