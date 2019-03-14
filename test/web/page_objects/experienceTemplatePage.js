@@ -9,24 +9,21 @@ class ExperienceTemplatePage {
     return browser.element("//button[@data-qa='create-template:large-button']");
   }
   get templateName() {
-    return browser.element("//div[@data-qa='create-template:name']//input[@data-qa='input:text']");
+    return browser.element("//input[@data-qa='input:experience:name']");
   }
   get templateKey() {
-    return browser.element("//div[@data-qa='create-template:key']//input[@data-qa='input:text']");
-  }
-  get editTemplateName() {
-    return browser.element("//input[@data-qa='edit-template:name']");
-  }
-  get templatekey() {
-    return browser.element("//p[contains(text(),'#')]");
+    return browser.element("//input[@data-qa='input:experience:key']");
   }
   get createButton() {
     return browser.element("//button[@data-qa='create-template:create']");
   }
+  get templateCard() {
+    return browser.element("//a[@data-qa='link:card']");
+  }
   get templateCardImage() {
     return browser.element("//a[@data-qa='link:card']//img");
   }
-  get templateCard() {
+  get templateCardName() {
     return browser.element("//a[@data-qa='link:card']//div//h2");
   }
   get properties() {
@@ -47,7 +44,7 @@ class ExperienceTemplatePage {
     return browser.element("//button[@data-qa='btn:property-type:boolean']");
   }
   get propertyTitle() {
-    return browser.element('//h3');
+    return browser.elements('//h3');
   }
   get propertyName() {
     return browser.element("//div[@data-qa='input:name']//input[@data-qa='input:text']");
@@ -84,6 +81,58 @@ class ExperienceTemplatePage {
   }
   get backToLibrary() {
     return browser.element("//section[@data-qa='page:experience-template']//a");
+  }
+  get insertProperty() {
+    return browser.element("//span[contains(text(),'Insert Property')]");
+  }
+  get rulesTab() {
+    return browser.element("//button[@data-qa='tab:rules']");
+  }
+  get appearanceTab() {
+    return browser.element("//button[@data-qa='tab:appearance']");
+  }
+  // property attributes
+  get localization() {
+    return browser.element("//label[contains(@data-qa,'checkbox:localizable')]");
+  }
+  get requiredField() {
+    return browser.element("//label[contains(@data-qa,'checkbox:Required')]");
+  }
+  get limitNumberRange() {
+    return browser.element("//label[contains(@data-qa,'checkbox:character-count')]");
+  }
+  get betweenRange() {
+    return browser.element("//select[@name='mode']//option");
+  }
+  get minRange() {
+    return browser.element("//div[@data-qa='min']//input");
+  }
+  get maxRange() {
+    return browser.element("//div[@data-qa='max']//input");
+  }
+  get promptText() {
+    return browser.element("//input[@name='promptText']");
+  }
+  get helpText() {
+    return browser.element("//input[@name='helpText']");
+  }
+  get defaultValue() {
+    return browser.element("//label[contains(@data-qa,'checkbox:default-value')]");
+  }
+  get customPattern() {
+    return browser.element("//label[contains(@data-qa,'checkbox:regex')]");
+  }
+  get pattern() {
+    return browser.element("//input[@name='pattern']");
+  }
+  get errorMessage() {
+    return browser.elements("//input[@name='errorMessage']");
+  }
+  get defaultValueField() {
+    return browser.element("//input[contains(@id,'default-value')]");
+  }
+  get helpValueSummary() {
+    return browser.element("//p[contains(text(),'help')]");
   }
 }
 export default new ExperienceTemplatePage();
