@@ -1,7 +1,8 @@
 import { path, caller, randomString } from '../common';
+import { tribe } from 'config/getEnv';
 
 const PROTO_PATH = path.resolve(process.env.TRIBE_PROTO_DIR + 'segmentService.proto');
-const client = caller(process.env.TRIBE_HOST, PROTO_PATH, 'SegmentService');
+const client = caller(tribe, PROTO_PATH, 'SegmentService');
 
 export function createTribe(responseObject) {
   const req = new client.Request('createSegment', {

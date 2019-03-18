@@ -1,8 +1,9 @@
 import { path, caller, randomString } from '../common';
 import * as constants from 'constants.json';
+import { user } from 'config/getEnv';
 
 const PROTO_PATH = path.resolve(process.env.USER_PROTO_DIR + 'spaceUserService.proto');
-const client = caller(process.env.USER_HOST, PROTO_PATH, 'spaceUserService');
+const client = caller(user, PROTO_PATH, 'spaceUserService');
 
 export function identifySpaceUser(userData) {
   userData.userInternalID = randomString(16);
