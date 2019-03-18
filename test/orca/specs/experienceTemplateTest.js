@@ -1,4 +1,4 @@
-import { joi } from '../common';
+import '../common';
 import { registerAndCreateOrg, login } from 'actions/common';
 import { getOrganizations } from 'actions/organization';
 import { createSpace } from 'actions/space';
@@ -7,75 +7,76 @@ import {
   updateExperienceTemplate,
   getExperienceTemplate,
   getExperiencesTemplate,
-  deleteExperienceTemplate
+  deleteExperienceTemplate,
+  addExperienceProperty,
+  getExperienceProperty,
+  updateExperienceProperty,
+  commitExperienceTemplate
 } from 'actions/experienceTemplate';
-import {
-  experienceTemplateSchema,
-  updateExperienceTemplateSchema,
-  deleteExperiencesTemplateSchema,
-  getExperiencesTemplateSchema
-} from 'data/experienceTemplateSchema';
-var createExperienceResponse,
-  updateExperienceResponse,
-  experienceTemplateResponse,
-  experienceTemplatesResponse,
-  deletePropertyResponse,
-  deleteExperienceResponse;
+// import {
+//   experienceTemplateSchema,
+//   updateExperienceTemplateSchema,
+//   deleteExperiencesTemplateSchema,
+//   getExperiencesTemplateSchema
+// } from 'data/experienceTemplateSchema';
 var experienceTemplateObject = new Object();
 
-xdescribe('Tests for experience templates for a space', () => {
+describe('Tests for experience templates for a space', () => {
   before(async () => {
     await registerAndCreateOrg(experienceTemplateObject);
     await login(experienceTemplateObject);
     await getOrganizations(experienceTemplateObject);
     await createSpace(experienceTemplateObject);
-    createExperienceResponse = await createExperienceTemplate(experienceTemplateObject);
   });
-  it('C1302057 Mutation - createExperienceTemplate', () => {
-    expect(createExperienceResponse.response.statusCode).to.equal(200);
-    joi.assert(
-      createExperienceResponse.response.body.data.createExperienceTemplate.template,
-      experienceTemplateSchema(experienceTemplateObject.experienceName, experienceTemplateObject)
-    );
+
+  it('C1302057 Mutation - createExperienceTemplate', async () => {
+    let response = await createExperienceTemplate(experienceTemplateObject);
+    expect(response.response.statusCode).to.equal(200);
+    // joi.assert(createExperienceResponse.response.body.data.createExperienceTemplate.template, experienceTemplateSchema(experienceTemplateObject.experienceName, experienceTemplateObject) );
   });
+
   it('C1302058 Mutation - updateExperienceTemplate', async () => {
-    updateExperienceResponse = await updateExperienceTemplate(experienceTemplateObject);
-    expect(updateExperienceResponse.response.statusCode).to.equal(200);
-    joi.assert(
-      updateExperienceResponse.response.body.data.updateExperienceTemplate.template,
-      updateExperienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
-    );
+    let response = await updateExperienceTemplate(experienceTemplateObject);
+    expect(response.response.statusCode).to.equal(200);
+    // joi.assert( updateExperienceResponse.response.body.data.updateExperienceTemplate.template,  updateExperienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject) );
   });
+
   it('C1302059 Query - experienceTemplate', async () => {
-    experienceTemplateResponse = await getExperienceTemplate(experienceTemplateObject);
-    expect(experienceTemplateResponse.response.statusCode).to.equal(200);
-    joi.assert(
-      experienceTemplateResponse.response.body.data.experienceTemplate,
-      updateExperienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
-    );
+    let response = await getExperienceTemplate(experienceTemplateObject);
+    expect(response.response.statusCode).to.equal(200);
+    //   joi.assert(experienceTemplateResponse.response.body.data.experienceTemplate,updateExperienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject));
   });
-  it('C1490708 Mutation - updateExperienceTemplate --> Deleting properties', async () => {
-    deletePropertyResponse = await updateExperienceTemplate(experienceTemplateObject, 'noProperty');
-    expect(deletePropertyResponse.response.statusCode).to.equal(200);
-    joi.assert(
-      deletePropertyResponse.response.body.data.updateExperienceTemplate.template,
-      experienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject)
-    );
+
+  it('Mutation - addExperienceProperty', async () => {
+    let response = await addExperienceProperty(experienceTemplateObject);
+    expect(response.response.statusCode).to.equal(200);
   });
+
+  it('Query - experienceProperty', async () => {
+    let response = await getExperienceProperty(experienceTemplateObject);
+    expect(response.response.statusCode).to.equal(200);
+  });
+
+  it('Query - updateExperienceProperty', async () => {
+    let response = await updateExperienceProperty(experienceTemplateObject);
+    expect(response.response.statusCode).to.equal(200);
+  });
+
   it('C1302060 Query - experienceTemplates', async () => {
-    experienceTemplatesResponse = await getExperiencesTemplate(experienceTemplateObject);
-    expect(experienceTemplatesResponse.response.statusCode).to.equal(200);
-    joi.assert(
-      experienceTemplatesResponse.response.body.data.experienceTemplates,
-      getExperiencesTemplateSchema(experienceTemplateObject)
-    );
+    let response = await getExperiencesTemplate(experienceTemplateObject);
+    expect(response.response.statusCode).to.equal(200);
+    // joi.assert( experienceTemplatesResponse.response.body.data.experienceTemplates,getExperiencesTemplateSchema(experienceTemplateObject) );
   });
+
+  it(' Mutation - commitExperienceTemplate', async () => {
+    let response = await commitExperienceTemplate(experienceTemplateObject);
+    expect(response.response.statusCode).to.equal(200);
+    // joi.assert( updateExperienceResponse.response.body.data.updateExperienceTemplate.template,  updateExperienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject) );
+  });
+
   it('C1302061 Mutation - deleteExperienceTemplate', async () => {
-    deleteExperienceResponse = await deleteExperienceTemplate(experienceTemplateObject);
-    expect(deleteExperienceResponse.response.statusCode).to.equal(200);
-    joi.assert(
-      experienceTemplatesResponse.response.body.data.deleteExperienceTemplate,
-      deleteExperiencesTemplateSchema(experienceTemplateObject)
-    );
+    let response = await deleteExperienceTemplate(experienceTemplateObject);
+    expect(response.response.statusCode).to.equal(200);
+    //   joi.assert( experienceTemplatesResponse.response.body.data.deleteExperienceTemplate,  deleteExperiencesTemplateSchema(experienceTemplateObject) );
   });
 });
