@@ -2,7 +2,8 @@ import { randomString, post, orca } from '../common';
 import * as Constants from '../constants.json';
 
 export function createExperienceTemplate(responseData) {
-  let name = `${randomString(8)}`, key = `${randomString({ length: 7, charset: 'alphabetic' })}`;
+  let name = `${randomString(8)}`,
+    key = `${randomString({ length: 7, charset: 'alphabetic' })}`;
   const data = {
     query:
       'mutation createExperienceTemplate($input: CreateExperienceTemplateInput!) { createExperienceTemplate(input: $input) { template { id key type name rowVersion templateVersionId}}}',
@@ -12,7 +13,7 @@ export function createExperienceTemplate(responseData) {
         fields: {
           key: key,
           name: name,
-          thumbnailUrl: "SchemDefault"
+          thumbnailUrl: 'SchemDefault'
         },
         organizationId: responseData.orgID,
         spaceId: responseData.spaceID,
@@ -34,7 +35,7 @@ export function createExperienceTemplate(responseData) {
   });
 }
 
-export function updateExperienceTemplate(responseData, propertyType) {
+export function updateExperienceTemplate(responseData) {
   var newName = `${randomString(8)}_new`;
   const data = {
     query:
@@ -112,7 +113,6 @@ export function addExperienceProperty(responseData) {
   });
 }
 
-
 export function getExperienceProperty(responseData) {
   const data = {
     query:
@@ -135,7 +135,8 @@ export function getExperienceProperty(responseData) {
 }
 
 export function updateExperienceProperty(responseData) {
-  let name = `${randomString(8)}`, key = `${randomString({ length: 7, charset: 'alphabetic' })}`;
+  let name = `${randomString(8)}`,
+    key = `${randomString({ length: 7, charset: 'alphabetic' })}`;
   const data = {
     query:
       'mutation updateExperienceProperty($input: UpdateExperiencePropertyInput!) { updateExperienceProperty(input: $input) {templateRowVersion templateVersionId}}',
@@ -234,7 +235,6 @@ export function commitExperienceTemplate(responseData) {
     return response;
   });
 }
-
 
 export function deleteExperienceTemplate(responseData) {
   const data = {
