@@ -11,6 +11,7 @@ import {
   addExperienceProperty,
   getExperienceProperty,
   updateExperienceProperty,
+  removeExperienceProperty,
   commitExperienceTemplate
 } from 'actions/experienceTemplate';
 // import {
@@ -66,6 +67,12 @@ describe('Tests for experience templates for a space', () => {
     let response = await getExperiencesTemplate(experienceTemplateObject);
     expect(response.response.statusCode).to.equal(200);
     // joi.assert( experienceTemplatesResponse.response.body.data.experienceTemplates,getExperiencesTemplateSchema(experienceTemplateObject) );
+  });
+
+  it(' Mutation - removeExperienceProperty', async () => {
+    let response = await removeExperienceProperty(experienceTemplateObject);
+    expect(response.response.statusCode).to.equal(200);
+    // joi.assert( updateExperienceResponse.response.body.data.updateExperienceTemplate.template,  updateExperienceTemplateSchema(experienceTemplateObject.experienceNewName, experienceTemplateObject) );
   });
 
   it(' Mutation - commitExperienceTemplate', async () => {
