@@ -59,12 +59,12 @@ describe('Tests for experience templates for a space', () => {
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it(' Mutation - removeExperienceProperty', async () => {
+  it('C1490708 Mutation - removeExperienceProperty', async () => {
     let response = await removeExperienceProperty(experienceTemplateObject);
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it(' Mutation - commitExperienceTemplate', async () => {
+  it('Mutation - commitExperienceTemplate', async () => {
     let response = await commitExperienceTemplate(experienceTemplateObject);
     expect(response.response.statusCode).to.equal(200);
   });
