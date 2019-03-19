@@ -13,7 +13,7 @@ instanceData.FIXED = { id: 'aPJGDMq' };
 
 //TODO: Fix this to have generated accounts once instantiation is done
 
-describe('Experience Instance Service', () => {
+describe('@experience Experience Instance Service', () => {
   before('Setup the testing environment', async () => {
     await instances.getExperience(instanceData, 'FIXED', true);
   });
@@ -50,12 +50,16 @@ describe('Experience Instance Service', () => {
   });
   it('C1857197 changeScenarioEnabled() disables the scenario', async () => {
     let enableConfirm = await instances.getScenario(instanceData, instanceData.scenarios[1].id);
-    expect(enableConfirm.response.scenario.isEnabled).to.equal(undefined);
+    expect(enableConfirm.response.scenario).to.not.have.keys('isEnabled');
   });
   it('C1857198 duplicateScenario() duplicates a scenario', async () => {
     await instances.getExperience(instanceData, 'FIXED', true);
-    let duplicateScenario = await instances.duplicateScenario(instanceData, 0);
+    let duplicateScenario = await instances.duplicateScenario(instanceData, 1);
     expect(duplicateScenario.status.code).to.equal(0);
+  });
+  it('duplicateScenario() does not copy the previous scenario name', async () => {
+    await instances.getExperience(instanceData, 'FIXED', true);
+    expect(instanceData.scenarios[instanceData.scenarios.length - 1]).to.not.have.keys('name');
   });
   it('C1857199 removeScenario() removes a scenario', async () => {
     await instances.getExperience(instanceData, 'FIXED', true);
