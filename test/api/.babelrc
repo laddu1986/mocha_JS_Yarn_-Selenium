@@ -9,5 +9,6 @@
         "polyfill": false
       }
     ]
-  ]
+  ],
+  "retainLines": true
 }
