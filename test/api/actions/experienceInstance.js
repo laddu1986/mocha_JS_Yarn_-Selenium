@@ -168,3 +168,23 @@ export function duplicateScenario(instanceData, scenarioindex) {
     return response;
   });
 }
+
+export function setScenarioSchedule(instanceData, scenarioIndex, startTime, endTime) {
+  const req = new writeClient.Request('SetScenarioSchedule', {
+    context: workspaceContext(instanceData),
+    experienceId: instanceData.FIXED.id,
+    accountId: instanceData.identityID,
+    rowVersion: instanceData.scenarios[scenarioIndex].rowVersion,
+    schedule: {
+      start: startTime,
+      end: endTime,
+      timezone: ''
+    },
+    scenarioId: instanceData.scenarios[scenarioIndex].id
+  }).withResponseStatus(true);
+
+  return req.exec().then(response => {
+    instanceData.FIXED.versionRowVersion = response.response.updates[0].rowVersion;
+    return response;
+  });
+}

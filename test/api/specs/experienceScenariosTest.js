@@ -23,7 +23,6 @@ describe('@experience Experience Instance Service', () => {
   });
   it('C1857191 getScenario() gets a scenario instance', async () => {
     await instances.getExperience(instanceData, 'FIXED', true);
-    await instances.getExperience(instanceData, 'FIXED', true);
     let getScenario = await instances.getScenario(instanceData, instanceData.scenarios[0].id);
     expect(getScenario.status.code).to.equal(0);
   });
@@ -51,6 +50,17 @@ describe('@experience Experience Instance Service', () => {
   it('C1857197 changeScenarioEnabled() disables the scenario', async () => {
     let enableConfirm = await instances.getScenario(instanceData, instanceData.scenarios[1].id);
     expect(enableConfirm.response.scenario).to.not.have.keys('isEnabled');
+  });
+  it('setScenarioSchedule() sends a request to set the schedule of a scenario', async () => {
+    await instances.getExperience(instanceData, 'FIXED', true);
+    let start = instanceData.FIXED.createdAt;
+    let end = instanceData.FIXED.versionRowVersion;
+    let setSchedule = await instances.setScenarioSchedule(instanceData, 1, start, end);
+    expect(setSchedule.status.code).to.equal(0);
+  });
+  it('setScenarioSchedule sets the scenario schedule', async () => {
+    let scenarioSchedule = await instances.getScenario(instanceData, instanceData.scenarios[1].id);
+    expect(scenarioSchedule.response.scenario.schedule).to.not.equal(null);
   });
   it('C1857198 duplicateScenario() duplicates a scenario', async () => {
     await instances.getExperience(instanceData, 'FIXED', true);
