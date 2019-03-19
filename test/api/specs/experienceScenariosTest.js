@@ -13,7 +13,7 @@ instanceData.FIXED = { id: 'aPJGDMq' };
 
 //TODO: Fix this to have generated accounts once instantiation is done
 
-describe('@experience Experience Instance Service', () => {
+describe('@experience Experience Scenarios Tests', () => {
   before('Setup the testing environment', async () => {
     await instances.getExperience(instanceData, 'FIXED', true);
   });
@@ -58,9 +58,18 @@ describe('@experience Experience Instance Service', () => {
     let setSchedule = await instances.setScenarioSchedule(instanceData, 1, start, end);
     expect(setSchedule.status.code).to.equal(0);
   });
-  it('setScenarioSchedule sets the scenario schedule', async () => {
+  it('setScenarioSchedule() sets the scenario schedule', async () => {
     let scenarioSchedule = await instances.getScenario(instanceData, instanceData.scenarios[1].id);
     expect(scenarioSchedule.response.scenario.schedule).to.not.equal(null);
+  });
+  it('setScenarioSchedule() sends a request to remove the schedule of a scenario', async () => {
+    await instances.getExperience(instanceData, 'FIXED', true);
+    let removeSchedule = await instances.setScenarioSchedule(instanceData, 1, null, null);
+    expect(removeSchedule.status.code).to.equal(0);
+  });
+  it('setScenarioSchedule() removes the scenario schedule', async () => {
+    let removeSchedule = await instances.getScenario(instanceData, instanceData.scenarios[1].id);
+    expect(removeSchedule.response.scenario).to.not.have.keys('schedule');
   });
   it('C1857198 duplicateScenario() duplicates a scenario', async () => {
     await instances.getExperience(instanceData, 'FIXED', true);

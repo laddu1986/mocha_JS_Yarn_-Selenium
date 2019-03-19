@@ -14,7 +14,7 @@ instanceData.FIXED = { id: 'aPJGDMq' };
 
 //TODO: Fix this to have generated accounts once instantiation is done
 
-describe('@experience Experience Instance Service', () => {
+describe('@experience Experience Redrafting Tests', () => {
   before('Setup the testing environment', async () => {
     await instances.getExperience(instanceData, 'COLLECTION');
     await instances.getExperience(instanceData, 'FIXED', true);
