@@ -45,4 +45,15 @@ describe('Experience Instance Service', () => {
     let redraftCollection = await instances.getExperience(instanceData, 'COLLECTION');
     expect(redraftCollection.response.experience).to.not.have.keys('state');
   });
+  it('Updating a collection redrafts the collection', async () => {
+    await instances.publishExperience(instanceData, 'FIXED');
+    await instances.publishExperience(instanceData, 'COLLECTION');
+    await instances.renameExperience(instanceData, 'COLLECTION', randomString());
+    let redraftCollection = await instances.getExperience(instanceData, 'COLLECTION');
+    expect(redraftCollection.response.experience).to.not.have.keys('state');
+  });
+  it('Updating a collection does not redraft the experience', async () => {
+    let noExperienceRedraft = await instances.getExperience(instanceData, 'FIXED');
+    expect(noExperienceRedraft.response.experience.state).to.equal(Constants.Experience.State.COMMITTED);
+  });
 });

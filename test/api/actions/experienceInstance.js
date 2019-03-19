@@ -39,7 +39,6 @@ export function renameExperience(instanceData, experienceType, name) {
     rowVersion: instanceData[experienceType].versionRowVersion,
     name: name
   }).withResponseStatus(true);
-
   return req.exec().then(response => {
     instanceData[experienceType].versionRowVersion = response.response.updates.rowVersion;
     return response;
@@ -72,7 +71,7 @@ export function publishExperience(instanceData, experienceType) {
   return req.exec().then(response => {
     if (Object.keys(response.response).length > 0) {
       // Do not update row version when already published
-      instanceData[experienceType].versionRowVersion = response.response.updates.rowVersion;
+      instanceData[experienceType].versionRowVersion = response.response.updates[0].rowVersion;
     }
     return response;
   });
