@@ -1,28 +1,22 @@
 import { path, caller, randomString } from '../common';
-
+import * as Constants from 'constants.json';
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
-const client = caller(process.env.EXPERIENCE_HOST, PROTO_PATH, 'ExperienceTemplateReadService');
+const writeClient = caller(process.env.EXPERIENCE_HOST, PROTO_PATH, 'ExperienceTemplateWriteService');
+const readClient = caller(process.env.EXPERIENCE_HOST, PROTO_PATH, 'ExperienceTemplateReadService');
 
 function spaceContext(templateData) {
   return {
     orgId: templateData.orgID,
-    spaceId: templateData.spaceID
+    spaceId: templateData.spaceID,
+    workspaceId: templateData.spaceID
   };
 }
 
-export function updateExperienceTemplate(templateData, templatePayload) {
-  return new client.Request('updateExperienceTemplate', {
+export function createExperienceTemplate(templateData) {
+  const req = new writeClient.Request('createTemplate', {
     context: spaceContext(templateData),
-    experienceTemplate: templatePayload
-  }).withResponseStatus(true);
-}
-
-export function createExperienceTemplate(templateData, keyVal, nameVal) {
-  let nameKey = randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' });
-  const req = new client.Request('createExperienceTemplate', {
-    context: spaceContext(templateData),
-    key: keyVal == undefined ? nameKey.toLowerCase() : keyVal.toLowerCase(),
-    name: nameVal == undefined ? nameKey : nameVal
+    templateType: Constants.Experience.Types.FIXED,
+    userAccountId: 'abcd'
   }).withResponseStatus(true);
   return req
     .exec()
@@ -35,47 +29,71 @@ export function createExperienceTemplate(templateData, keyVal, nameVal) {
     });
 }
 
-export function renameExperienceTemplate(templateData, nameVal, toggleVersionOff) {
-  let newName = randomString(12);
-  let templatePayload = {
-    id: templateData.template.id,
-    key: templateData.template.key,
-    name: nameVal == undefined ? newName : nameVal,
-    rowVersion: toggleVersionOff ? null : templateData.template.rowVersion
-  };
-  templateData.template.name = newName;
-  let req = updateExperienceTemplate(templateData, templatePayload);
-  return req.exec().catch(err => {
-    return err;
-  });
+export function changeTemplate(templateData, type) {
+  let value, reqName;
+  switch (type) {
+    case 'name':
+      value = randomString(12);
+      reqName = 'renameTemplate';
+      templateData.template.name = value;
+      break;
+    case 'key':
+      value = randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' });
+      reqName = 'changeTemplateKey';
+      templateData.template.key = value;
+      break;
+    case 'thumbnailUrl':
+      value = 'thumbnail_url';
+      reqName = 'changeThumbnail';
+      templateData.template.thumbnailUrl = value;
+      break;
+  }
+  const req = new writeClient.Request(reqName, {
+    context: spaceContext(templateData),
+    templateId: templateData.template.templateId,
+    [type]: value,
+    userAccountId: 'abcd',
+    rowVersion: templateData.template.rowVersion,
+    templateVersionId: templateData.template.templateVersionId
+  }).withResponseStatus(true);
+  return req
+    .exec()
+    .then(response => {
+      templateData.template.rowVersion = response.response.rowVersion;
+      return response;
+    })
+    .catch(err => {
+      return err;
+    });
 }
 
-export function getExperienceTemplates(templateData) {
-  const req = new client.Request('getExperienceTemplates', {
+export function getTemplates(templateData) {
+  const req = new readClient.Request('getTemplates', {
     context: spaceContext(templateData),
-    keyword: templateData.template.nameKey
+    keyword: templateData.template.name
   }).withResponseStatus(true);
   return req.exec();
 }
 
 export function deleteExperienceTemplate(templateData) {
-  const req = new client.Request('deleteExperienceTemplate', {
+  const req = new writeClient.Request('deleteTemplate', {
     context: spaceContext(templateData),
-    id: templateData.template.id,
-    rowVersion: templateData.template.rowVersion
+    templateId: templateData.template.templateId,
+    rowVersion: templateData.template.rowVersion,
+    userAccountId: 'abcd'
   }).withResponseStatus(true);
   return req.exec();
 }
 
-export function getExperienceTemplateById(templateData) {
-  const req = new client.Request('getExperienceTemplateById', {
+export function getTemplateById(templateData) {
+  const req = new readClient.Request('getTemplateById', {
     context: spaceContext(templateData),
-    id: templateData.template.id
+    templateId: templateData.template.templateId
   }).withResponseStatus(true);
   return req.exec();
 }
 
 export function getProperty() {
-  const req = new client.Request('getPropertyTypes', {}).withResponseStatus(true);
+  const req = new readClient.Request('getPropertyTypes', {}).withResponseStatus(true);
   return req.exec();
 }
