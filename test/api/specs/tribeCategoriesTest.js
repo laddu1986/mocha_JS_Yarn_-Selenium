@@ -7,7 +7,7 @@ import * as schemas from 'schemas/categorySchema';
 
 const categoryData = new Object();
 
-describe('Tribes Service', () => {
+describe('@segment Tribes Service', () => {
   before('Initialise working Space', async () => {
     await identity.postIdentity(categoryData);
     await organization.postOrganization(categoryData);
