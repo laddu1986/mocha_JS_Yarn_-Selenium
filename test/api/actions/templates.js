@@ -1,8 +1,9 @@
 import { path, caller, randomString } from '../common';
+import { experience } from 'config/getEnv';
 import * as Constants from 'constants.json';
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
-const writeClient = caller(process.env.EXPERIENCE_HOST, PROTO_PATH, 'ExperienceTemplateWriteService');
-const readClient = caller(process.env.EXPERIENCE_HOST, PROTO_PATH, 'ExperienceTemplateReadService');
+const writeClient = caller(experience, PROTO_PATH, 'ExperienceTemplateWriteService');
+const readClient = caller(experience, PROTO_PATH, 'ExperienceTemplateReadService');
 
 function spaceContext(templateData) {
   return {

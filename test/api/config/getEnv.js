@@ -1,6 +1,18 @@
 require('dotenv').config();
 
-var vars, envArg, identities, organizations, memberships, spaces, token, invites, keys, metrics;
+var vars,
+  envArg,
+  identities,
+  organizations,
+  memberships,
+  spaces,
+  token,
+  invites,
+  keys,
+  metrics,
+  experience,
+  tribe,
+  user;
 
 function namespace() {
   process.argv.forEach(function(value) {
@@ -38,8 +50,24 @@ function getEndPointsFor(ENV) {
   invites = process.env[`API_INVITES_${ENV}`];
   keys = process.env[`API_KEYS_${ENV}`];
   metrics = process.env[`API_METRICS_${ENV}`];
+  experience = process.env[`GRPC_EXPERIENCE_${ENV}`];
+  user = process.env[`GRPC_USER_${ENV}`];
+  tribe = process.env[`GRPC_TRIBE_${ENV}`];
 }
 
 namespace();
 
-export { identities, organizations, memberships, spaces, token, invites, keys, metrics, expect };
+export {
+  identities,
+  organizations,
+  memberships,
+  spaces,
+  token,
+  invites,
+  keys,
+  metrics,
+  expect,
+  experience,
+  tribe,
+  user
+};
