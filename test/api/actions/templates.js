@@ -1,4 +1,4 @@
-import { path, caller, randomString } from '../common';
+import { path, caller } from '../common';
 import { experience } from 'config/getEnv';
 import * as Constants from 'constants.json';
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
@@ -30,21 +30,18 @@ export function createExperienceTemplate(templateData) {
     });
 }
 
-export function changeTemplate(templateData, type) {
-  let value, reqName;
+export function changeTemplate(templateData, type, value) {
+  let reqName;
   switch (type) {
     case 'name':
-      value = randomString(12);
       reqName = 'renameTemplate';
       templateData.template.name = value;
       break;
     case 'key':
-      value = randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' });
       reqName = 'changeTemplateKey';
       templateData.template.key = value;
       break;
     case 'thumbnailUrl':
-      value = 'thumbnail_url';
       reqName = 'changeThumbnail';
       templateData.template.thumbnailUrl = value;
       break;

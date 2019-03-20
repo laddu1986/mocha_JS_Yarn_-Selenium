@@ -1,4 +1,4 @@
-import '../common';
+import { randomString } from '../common';
 import { postIdentity, deleteIdentityById } from 'actions/identity';
 import { postOrganization, deleteOrganizationById } from 'actions/organization';
 import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions/spaces';
@@ -21,17 +21,17 @@ describe('Experience Template Service', () => {
   });
 
   it('C1458993 renameExperienceTemplate() renames a template', async () => {
-    let renameTemplate = await templates.changeTemplate(templateData, 'name');
+    let renameTemplate = await templates.changeTemplate(templateData, 'name', randomString(12));
     expect(renameTemplate.status.code).to.equal(0);
   });
 
   it('changeTemplateKey() change template key', async () => {
-    let changeTemplateKey = await templates.changeTemplate(templateData, 'key');
+    let changeTemplateKey = await templates.changeTemplate(templateData, 'key', randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }));
     expect(changeTemplateKey.status.code).to.equal(0);
   });
 
   it('changeTemplateThumbnail() change template thumbnail', async () => {
-    let changeTemplateThumbnail = await templates.changeTemplate(templateData, 'thumbnailUrl');
+    let changeTemplateThumbnail = await templates.changeTemplate(templateData, 'thumbnailUrl', 'thumbnail_url');
     expect(changeTemplateThumbnail.status.code).to.equal(0);
   });
 
