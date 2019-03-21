@@ -1,6 +1,5 @@
 import { randomString, joi } from '../common';
 import * as instances from 'actions/experienceInstance';
-import * as schemas from 'schemas/experienceInstanceSchema';
 
 //TODO: Fix this to have generated accounts once instantiation is done
 
@@ -19,19 +18,16 @@ describe('@experience Experience Instances Tests', () => {
   it('C1857180 getExperience() gets the collection instance', async () => {
     let getCollection = await instances.getExperience(instanceData, 'COLLECTION');
     expect(getCollection.status.code).to.equal(0);
-    joi.assert(getCollection.response.experience, schemas.experienceSchema);
   });
   it('C1857181 getExperience() gets the experience instance', async () => {
     let getExperience = await instances.getExperience(instanceData, 'FIXED', true);
     expect(getExperience.status.code).to.equal(0);
-    joi.assert(getExperience.response.experience, schemas.experienceSchema);
   });
   it('C1857182 renameExperience() sends a rename request for a collection', async () => {
     instanceData.COLLECTION.oldName = instanceData.COLLECTION.name;
     await instances.getExperience(instanceData, 'COLLECTION');
     let renameCollection = await instances.renameExperience(instanceData, 'COLLECTION', randomString());
     expect(renameCollection.status.code).to.equal(0);
-    joi.assert(renameCollection.response, schemas.updatedExperienceSchema);
   });
   it('C1857183 renameExperience() renames the collection', async () => {
     let renameConfirm = await instances.getExperience(instanceData, 'FIXED');
@@ -42,7 +38,6 @@ describe('@experience Experience Instances Tests', () => {
     await instances.getExperience(instanceData, 'FIXED', true);
     let renameExperience = await instances.renameExperience(instanceData, 'FIXED', randomString());
     expect(renameExperience.status.code).to.equal(0);
-    joi.assert(renameExperience.response, schemas.updatedExperienceSchema);
   });
   it('C1857185 renameExperience() renames the experience', async () => {
     let renameConfirm = await instances.getExperience(instanceData, 'FIXED');
@@ -51,7 +46,6 @@ describe('@experience Experience Instances Tests', () => {
   it('C1857186 changeExperienceEnabled() sends a request to enable an experience', async () => {
     let toggleEnabled = await instances.changeExperienceEnabled(instanceData, 'FIXED', true);
     expect(toggleEnabled.status.code).to.equal(0);
-    joi.assert(toggleEnabled.response, schemas.updatedExperienceSchema);
   });
   it('C1857187 changeExperienceEnabled() enables an experience', async () => {
     let toggleConfirm = await instances.getExperience(instanceData, 'FIXED');
@@ -60,7 +54,6 @@ describe('@experience Experience Instances Tests', () => {
   it('C1857188 changeExperienceEnabled() sends a request to disable an experience', async () => {
     let toggleDisabled = await instances.changeExperienceEnabled(instanceData, 'FIXED', false);
     expect(toggleDisabled.status.code).to.equal(0);
-    joi.assert(toggleDisabled.response, schemas.updatedExperienceSchema);
   });
   it('C1857189 changeExperienceEnabled() disables an experience', async () => {
     let toggleConfirm = await instances.getExperience(instanceData, 'FIXED');
