@@ -34,6 +34,8 @@ message ScenarioDetails {
   // The following fields are for targeting
   LogicalType segment_logical_operator = 12;
   repeated string segment_ids = 13;
+
+  Schedule schedule = 14;
 }
 
 message ExperienceInstanceSummary {
@@ -88,7 +90,16 @@ message ExperienceInstanceChild {
 message ExperienceVersionUpdate {
   string experience_id = 1; // experience_instance_id
   google.protobuf.Timestamp row_version = 2; // version_row_version
- }
+}
+
+message Schedule {
+  reserved 1;
+  reserved "id";
+
+  google.protobuf.Timestamp start = 2;
+  google.protobuf.Timestamp end = 3;
+  string timezone = 4;
+}
 
 // Instance Type enumeration
 enum InstanceType {
@@ -106,4 +117,9 @@ enum InstanceState {
 enum LogicalType{
   AND = 0;
   OR  = 1;
+}
+
+enum ChildExpandType {
+  NONE = 0;
+  SUMMARY = 1;
 }
