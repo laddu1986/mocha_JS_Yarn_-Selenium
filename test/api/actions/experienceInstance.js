@@ -1,8 +1,9 @@
 import { path, caller } from '../common';
+import { experience } from 'config/getEnv';
 
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR) + '/experienceInstanceService.proto';
-const readClient = caller(process.env.EXPERIENCE_HOST, PROTO_PATH, 'ExperienceInstanceReadService');
-const writeClient = caller(process.env.EXPERIENCE_HOST, PROTO_PATH, 'ExperienceInstanceWriteService');
+const readClient = caller(experience, PROTO_PATH, 'ExperienceInstanceReadService');
+const writeClient = caller(experience, PROTO_PATH, 'ExperienceInstanceWriteService');
 
 function workspaceContext(instanceData) {
   return {
