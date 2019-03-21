@@ -92,6 +92,17 @@ message ExperienceVersionUpdate {
   google.protobuf.Timestamp row_version = 2; // version_row_version
 }
 
+message ScenarioVersionUpdate {
+  string experience_id = 1;
+  string scenario_id = 2; // scenario short ID
+  google.protobuf.Timestamp row_version = 3; // scenario_row_version
+}
+
+message VersionUpdates {
+  repeated ExperienceVersionUpdate experiences = 1;
+  repeated ScenarioVersionUpdate scenarios = 2;
+}
+
 message Schedule {
   reserved 1;
   reserved "id";
