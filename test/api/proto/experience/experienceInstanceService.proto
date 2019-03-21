@@ -53,6 +53,8 @@ service ExperienceInstanceWriteService {
   rpc AddSegment(AddSegmentRequest) returns (AddSegmentResponse);
   rpc RemoveSegment(RemoveSegmentRequest) returns (RemoveSegmentResponse);
   rpc ChangeSegmentLogicalOperator(ChangeSegmentLogicalOperatorRequest) returns (ChangeSegmentLogicalOperatorResponse);
+
+  rpc SetScenarioSchedule(SetScenarioScheduleRequest) returns (SetScenarioScheduleResponse);
 }
 
 message GetExperienceRequest {
@@ -405,7 +407,22 @@ message ChangeSegmentLogicalOperatorResponse{
   repeated ExperienceVersionUpdate updates = 2;
 }
 
-enum ChildExpandType {
-  NONE = 0;
-  SUMMARY = 1;
+message SetScenarioScheduleRequest {
+  WorkspaceContext context = 1;
+  string experience_id = 2;
+  string account_id = 3;
+
+  string scenario_id = 4;
+  // This is the scenario row_version
+  google.protobuf.Timestamp row_version = 5;
+
+  Schedule schedule = 6;
+}
+
+message SetScenarioScheduleResponse {
+  // This is the new scenario row version
+  google.protobuf.Timestamp row_version = 1;
+
+  // Changes to parent experience(s)
+  repeated ExperienceVersionUpdate updates = 2;
 }
