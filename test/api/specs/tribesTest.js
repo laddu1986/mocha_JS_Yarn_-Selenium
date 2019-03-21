@@ -7,7 +7,7 @@ import * as tribe from 'actions/tribe';
 
 const tribeData = new Object();
 
-describe('Tribe Service', () => {
+describe('@segment Tribe Service', () => {
   before(async () => {
     await identity.postIdentity(tribeData);
     await organization.postOrganization(tribeData);
@@ -42,12 +42,28 @@ describe('Tribe Service', () => {
     expect(moveConfirm.response.categories[0].segments).to.equal(undefined);
   });
 
+  it('searchSegments() returns an array of tribes', async () => {
+    await tribe.createTribe(tribeData);
+    let searchSegments = await tribe.searchSegments(tribeData, '', 10, 0);
+    expect(searchSegments.response.segments.length).to.equal(2);
+  });
+
+  it('getSegmentsById() returns an array of tribes', async () => {
+    let ids = tribeData.tribes.map(({ id }) => id);
+    let getSegments = await tribe.getSegmentsById(tribeData, ids);
+    expect(getSegments.response.segments.length).to.equal(2);
+  });
+
   it('C1295627 deleteSegment() deletes the provided tribe', async () => {
-    let deleteResponse = await tribe.deleteTribe(tribeData);
+    let deleteResponse = await tribe.deleteTribe(tribeData, tribeData.tribe);
     expect(deleteResponse.status.code).to.equal(0);
   });
 
   after(async () => {
+    await tribe.searchSegments(tribeData, '', 10, 0);
+    tribeData.tribes.forEach(segment => {
+      tribe.deleteTribe(tribeData, segment);
+    });
     await identity.deleteIdentityById(tribeData);
     await organization.deleteOrganizationById(tribeData);
     await spaces.deleteSpaceByOrgIdAndSpaceId(tribeData);
