@@ -8,7 +8,7 @@ import * as schemas from 'schemas/tribeRulesSchema';
 
 const rulesData = new Object();
 
-describe('Tribe Rules Service', () => {
+describe('@segment Tribe Rules Service', () => {
   before('Set up the testing environment', async () => {
     await identity.postIdentity(rulesData);
     await organization.postOrganization(rulesData);
@@ -62,6 +62,6 @@ describe('Tribe Rules Service', () => {
     await identity.deleteIdentityById(rulesData);
     await organization.deleteOrganizationById(rulesData);
     await spaces.deleteSpaceByOrgIdAndSpaceId(rulesData);
-    await tribe.deleteTribe(rulesData);
+    await tribe.deleteTribe(rulesData, rulesData.tribe);
   });
 });
