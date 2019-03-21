@@ -69,9 +69,9 @@ export function publishExperience(instanceData, experienceType) {
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    if (Object.keys(response.response).length > 0) {
+    if (Object.keys(response.response.updates).length > 0) {
       // Do not update row version when already published
-      instanceData[experienceType].versionRowVersion = response.response.updates[0].rowVersion;
+      instanceData[experienceType].versionRowVersion = response.response.updates.experiences[0].rowVersion;
     }
     return response;
   });
@@ -118,7 +118,8 @@ export function renameScenario(instanceData, scenarioindex, name) {
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.FIXED.versionRowVersion = response.response.rowVersion;
+    instanceData.scenarios[scenarioindex].rowVersion = response.response.updates.scenarios[0].rowVersion;
+    instanceData.FIXED.versionRowVersion = response.response.updates.experiences[0].rowVersion;
     return response;
   });
 }
@@ -144,12 +145,13 @@ export function changeScenarioEnabled(instanceData, scenarioindex, enabled) {
     scenarioId: instanceData.scenarios[scenarioindex].id,
     experienceId: instanceData.FIXED.id,
     accountId: instanceData.identityID,
-    rowVersion: instanceData.FIXED.versionRowVersion,
+    rowVersion: instanceData.scenarios[scenarioindex].rowVersion,
     enabled
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.FIXED.versionRowVersion = response.response.rowVersion;
+    instanceData.scenarios[scenarioindex].rowVersion = response.response.updates.scenarios[0].rowVersion;
+    instanceData.FIXED.versionRowVersion = response.response.updates.experiences[0].rowVersion;
     return response;
   });
 }
@@ -184,7 +186,7 @@ export function setScenarioSchedule(instanceData, scenarioIndex, startTime, endT
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.FIXED.versionRowVersion = response.response.updates[0].rowVersion;
+    instanceData.FIXED.versionRowVersion = response.response.updates.experiences[0].rowVersion;
     return response;
   });
 }
