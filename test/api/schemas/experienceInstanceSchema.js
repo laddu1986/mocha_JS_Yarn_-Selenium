@@ -1,8 +1,6 @@
 import { joi } from '../common';
 import * as Constants from '../constants.json';
 
-const instanceProperties = new Object();
-
 const protoLong = joi.object().keys({
   low: joi.number().required(),
   high: joi.number().required(),
@@ -13,6 +11,8 @@ const protoTimeStamp = joi.object().keys({
   seconds: protoLong,
   nanos: joi.number()
 });
+
+const instanceProperties = new Object();
 
 instanceProperties.int = joi.object().keys({
   numberValue: joi.number(),

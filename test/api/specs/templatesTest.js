@@ -26,7 +26,11 @@ describe('Experience Template Service', () => {
   });
 
   it('changeTemplateKey() change template key', async () => {
-    let changeTemplateKey = await templates.changeTemplate(templateData, 'key', randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }));
+    let changeTemplateKey = await templates.changeTemplate(
+      templateData,
+      'key',
+      randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
+    );
     expect(changeTemplateKey.status.code).to.equal(0);
   });
 
