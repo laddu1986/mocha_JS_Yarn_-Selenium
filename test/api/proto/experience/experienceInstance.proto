@@ -112,6 +112,11 @@ message Schedule {
   string timezone = 4;
 }
 
+message TemplateInstanceIds {
+  string id = 1;
+  repeated string instance_ids = 2;
+}
+
 // Instance Type enumeration
 enum InstanceType {
   FIXED = 0;
