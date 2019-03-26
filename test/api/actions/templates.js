@@ -1,4 +1,4 @@
-import { path, caller } from '../common';
+import { path, caller, randomString } from '../common';
 import { experience } from 'config/getEnv';
 import * as Constants from 'constants.json';
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
@@ -16,6 +16,8 @@ function spaceContext(templateData) {
 export function createExperienceTemplate(templateData) {
   const req = new writeClient.Request('createTemplate', {
     context: spaceContext(templateData),
+    name: randomString(12),
+    key: randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }),
     templateType: Constants.Experience.Types.FIXED,
     userAccountId: 'abcd'
   }).withResponseStatus(true);
@@ -83,15 +85,15 @@ export function deleteExperienceTemplate(templateData) {
   return req.exec();
 }
 
-export function getTemplateById(templateData) {
-  const req = new readClient.Request('getTemplateById', {
+export function getPropertyById(templateData) {
+  const req = new readClient.Request('getPropertyById', {
     context: spaceContext(templateData),
     templateId: templateData.template.templateId
   }).withResponseStatus(true);
   return req.exec();
 }
 
-export function getProperty() {
-  const req = new readClient.Request('getPropertyTypes', {}).withResponseStatus(true);
+export function getConfiguration() {
+  const req = new readClient.Request('getConfiguration', {}).withResponseStatus(true);
   return req.exec();
 }
