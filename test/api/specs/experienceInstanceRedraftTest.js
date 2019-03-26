@@ -7,7 +7,6 @@ import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions
 
 const instanceData = new Object();
 
-//TODO: Currently broken with https://app.clickup.com/t/jewu4
 describe('@experience Experience Redrafting Tests', () => {
   before('Setup the testing environment', async () => {
     await postIdentity(instanceData);

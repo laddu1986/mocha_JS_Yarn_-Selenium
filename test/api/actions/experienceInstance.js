@@ -123,7 +123,7 @@ export function publishExperience(instanceData, experienceType) {
     context: workspaceContext(instanceData),
     experienceId: instanceData.instances[experienceType].id,
     accountId: instanceData.identityID,
-    rowVersion: instanceData.insances[experienceType].versionRowVersion
+    rowVersion: instanceData.instances[experienceType].versionRowVersion
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
@@ -154,13 +154,13 @@ export function getScenario(instanceData, scenarioid) {
 export function addScenario(instanceData) {
   const req = new writeClient.Request('addScenario', {
     context: workspaceContext(instanceData),
-    experienceId: instanceData.FIXED.id,
+    experienceId: instanceData.instances[0].id,
     accountId: instanceData.identityID,
-    rowVersion: instanceData.FIXED.versionRowVersion
+    rowVersion: instanceData.instances[0].versionRowVersion
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.FIXED.versionRowVersion = response.response.rowVersion;
+    instanceData.instances[0].versionRowVersion = response.response.rowVersion;
     return response;
   });
 }
@@ -168,7 +168,7 @@ export function addScenario(instanceData) {
 export function renameScenario(instanceData, scenarioindex, name) {
   const req = new writeClient.Request('renameScenario', {
     context: workspaceContext(instanceData),
-    experienceId: instanceData.FIXED.id,
+    experienceId: instanceData.instances[0].id,
     scenarioId: instanceData.scenarios[scenarioindex].id,
     accountId: instanceData.identityID,
     rowVersion: instanceData.scenarios[scenarioindex].rowVersion,
@@ -177,7 +177,7 @@ export function renameScenario(instanceData, scenarioindex, name) {
 
   return req.exec().then(response => {
     instanceData.scenarios[scenarioindex].rowVersion = response.response.updates.scenarios[0].rowVersion;
-    instanceData.FIXED.versionRowVersion = response.response.updates.experiences[0].rowVersion;
+    instanceData.instances[0].versionRowVersion = response.response.updates.experiences[0].rowVersion;
     return response;
   });
 }
@@ -185,14 +185,14 @@ export function renameScenario(instanceData, scenarioindex, name) {
 export function removeScenario(instanceData, scenarioid) {
   const req = new writeClient.Request('removeScenario', {
     context: workspaceContext(instanceData),
-    experienceId: instanceData.FIXED.id,
+    experienceId: instanceData.instances[0].id,
     scenarioId: scenarioid,
     accountId: instanceData.identityID,
-    rowVersion: instanceData.FIXED.versionRowVersion
+    rowVersion: instanceData.instances[0].versionRowVersion
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.FIXED.versionRowVersion = response.response.rowVersion;
+    instanceData.instances[0].versionRowVersion = response.response.rowVersion;
     return response;
   });
 }
@@ -201,7 +201,7 @@ export function changeScenarioEnabled(instanceData, scenarioindex, enabled) {
   const req = new writeClient.Request('changeScenarioEnabled', {
     context: workspaceContext(instanceData),
     scenarioId: instanceData.scenarios[scenarioindex].id,
-    experienceId: instanceData.FIXED.id,
+    experienceId: instanceData.instances[0].id,
     accountId: instanceData.identityID,
     rowVersion: instanceData.scenarios[scenarioindex].rowVersion,
     enabled
@@ -209,7 +209,7 @@ export function changeScenarioEnabled(instanceData, scenarioindex, enabled) {
 
   return req.exec().then(response => {
     instanceData.scenarios[scenarioindex].rowVersion = response.response.updates.scenarios[0].rowVersion;
-    instanceData.FIXED.versionRowVersion = response.response.updates.experiences[0].rowVersion;
+    instanceData.instances[0].versionRowVersion = response.response.updates.experiences[0].rowVersion;
     return response;
   });
 }
@@ -218,13 +218,13 @@ export function duplicateScenario(instanceData, scenarioindex) {
   const req = new writeClient.Request('duplicateScenario', {
     context: workspaceContext(instanceData),
     scenarioId: instanceData.scenarios[scenarioindex].id,
-    experienceId: instanceData.FIXED.id,
+    experienceId: instanceData.instances[0].id,
     accountId: instanceData.identityID,
-    rowVersion: instanceData.FIXED.versionRowVersion
+    rowVersion: instanceData.instances[0].versionRowVersion
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.FIXED.versionRowVersion = response.response.rowVersion;
+    instanceData.instances[0].versionRowVersion = response.response.rowVersion;
     return response;
   });
 }
@@ -232,7 +232,7 @@ export function duplicateScenario(instanceData, scenarioindex) {
 export function setScenarioSchedule(instanceData, scenarioIndex, startTime, endTime) {
   const req = new writeClient.Request('SetScenarioSchedule', {
     context: workspaceContext(instanceData),
-    experienceId: instanceData.FIXED.id,
+    experienceId: instanceData.instances[0].id,
     accountId: instanceData.identityID,
     rowVersion: instanceData.scenarios[scenarioIndex].rowVersion,
     schedule: {
@@ -244,7 +244,7 @@ export function setScenarioSchedule(instanceData, scenarioIndex, startTime, endT
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.FIXED.versionRowVersion = response.response.updates.experiences[0].rowVersion;
+    instanceData.instances[0].versionRowVersion = response.response.updates.experiences[0].rowVersion;
     return response;
   });
 }
