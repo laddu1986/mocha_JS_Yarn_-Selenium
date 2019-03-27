@@ -12,16 +12,18 @@ function spaceContext(templateData) {
   };
 }
 
-export function createExperienceTemplate(templateData, templateType) {
+export function createExperienceTemplate(contextData, templateType, returnTemplates, name, key) {
   const req = new writeClient.Request('createTemplate', {
-    context: spaceContext(templateData),
+    context: spaceContext(contextData),
+    name,
+    key,
     templateType,
-    userAccountId: templateData.identityID
+    userAccountId: contextData.identityID
   }).withResponseStatus(true);
   return req
     .exec()
     .then(response => {
-      templateData[templateType] = response.response;
+      returnTemplates.push(response.response);
       return response;
     })
     .catch(err => {
@@ -29,35 +31,35 @@ export function createExperienceTemplate(templateData, templateType) {
     });
 }
 
-export function changeTemplate(templateData, templateType, type, value) {
+export function changeTemplate(contextData, templateObject, type, value) {
   let reqName;
   switch (type) {
     case 'name':
       reqName = 'renameTemplate';
-      templateData[templateType].name = value;
+      templateObject.name = value;
       break;
     case 'key':
       reqName = 'changeTemplateKey';
-      templateData[templateType].key = value;
+      templateObject.key = value;
       break;
     case 'thumbnailUrl':
       reqName = 'changeThumbnail';
-      templateData[templateType].thumbnailUrl = value;
+      templateObject.thumbnailUrl = value;
       break;
   }
   const req = new writeClient.Request(reqName, {
-    context: spaceContext(templateData),
-    templateId: templateData[templateType].templateId,
+    context: spaceContext(contextData),
+    templateId: templateObject.templateId,
     [type]: value,
-    userAccountId: templateData.identityID,
-    rowVersion: templateData[templateType].rowVersion,
-    templateVersionId: templateData[templateType].templateVersionId
+    userAccountId: contextData.identityID,
+    rowVersion: templateObject.rowVersion,
+    templateVersionId: templateObject.templateVersionId
   }).withResponseStatus(true);
   return req
     .exec()
     .then(response => {
-      templateData[templateType].rowVersion = response.response.rowVersion;
-      templateData[templateType].templateVersionId = response.response.templateVersionId;
+      templateObject.rowVersion = response.response.rowVersion;
+      templateObject.templateVersionId = response.response.templateVersionId;
       return response;
     })
     .catch(err => {
@@ -65,28 +67,28 @@ export function changeTemplate(templateData, templateType, type, value) {
     });
 }
 
-export function getTemplates(templateData, templateType) {
+export function getTemplates(templateData, keyword) {
   const req = new readClient.Request('getTemplates', {
     context: spaceContext(templateData),
-    keyword: templateData[templateType].name
+    keyword
   }).withResponseStatus(true);
   return req.exec();
 }
 
-export function deleteExperienceTemplate(templateData, templateType) {
+export function deleteExperienceTemplate(contextData, templateObject) {
   const req = new writeClient.Request('deleteTemplate', {
-    context: spaceContext(templateData),
-    templateId: templateData[templateType].templateId,
-    rowVersion: templateData[templateType].rowVersion,
-    userAccountId: templateData.identityID
+    context: spaceContext(contextData),
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    userAccountId: contextData.identityID
   }).withResponseStatus(true);
   return req.exec();
 }
 
-export function getTemplateById(templateData) {
+export function getTemplateById(contextData, templateObject) {
   const req = new readClient.Request('getTemplateById', {
-    context: spaceContext(templateData),
-    templateId: templateData.template.templateId
+    context: spaceContext(contextData),
+    templateId: templateObject.templateId
   }).withResponseStatus(true);
   return req.exec();
 }
@@ -96,31 +98,31 @@ export function getProperty() {
   return req.exec();
 }
 
-export function commitTemplate(templateData, templateType) {
+export function commitTemplate(contextData, templateObject) {
   const req = new writeClient.Request('commitTemplate', {
-    context: spaceContext(templateData),
-    templateId: templateData[templateType].templateId,
-    rowVersion: templateData[templateType].rowVersion,
-    accountId: templateData.identityID,
-    templateVersionId: templateData[templateType].templateVersionId
+    context: spaceContext(contextData),
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    accountId: contextData.identityID,
+    templateVersionId: templateObject.templateVersionId
   }).withResponseStatus(true);
   return req.exec().then(response => {
-    templateData[templateType].rowVersion = response.response.rowVersion;
+    templateObject.rowVersion = response.response.rowVersion;
     return response;
   });
 }
 
-export function addTemplateToCollection(templateData, parentType, childType, sortIndex) {
+export function addTemplateToCollection(contextData, parentObject, childObject, sortIndex) {
   const req = new writeClient.Request('addTemplateToCollection', {
-    context: spaceContext(templateData),
-    templateVersionId: templateData[parentType].templateVersionId,
-    rowVersion: templateData[parentType].rowVersion,
-    childTemplateId: templateData[childType].templateId,
+    context: spaceContext(contextData),
+    templateVersionId: parentObject.templateVersionId,
+    rowVersion: parentObject.rowVersion,
+    childTemplateId: childObject.templateId,
     sortIndex
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    templateData[parentType].rowVersion = response.response.rowVersion;
+    parentObject.rowVersion = response.response.rowVersion;
     return response;
   });
 }

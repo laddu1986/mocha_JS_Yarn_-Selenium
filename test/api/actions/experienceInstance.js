@@ -16,104 +16,71 @@ function workspaceContext(instanceData) {
 }
 
 /*
- *  Experiences
- */
+  Experiences
+*/
 
+/* Long process of creating instances */
 export async function createInstances(instanceData) {
-  return Promise.all([
-    templates.createExperienceTemplate(instanceData, Constants.Experience.Types.FIXED),
-    templates.createExperienceTemplate(instanceData, Constants.Experience.Types.COLLECTION)
-  ])
-    .then(() => {
-      return Promise.all([
-        templates.changeTemplate(
-          instanceData,
-          Constants.Experience.Types.FIXED,
-          'key',
-          randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
-        ),
-        templates.changeTemplate(
-          instanceData,
-          Constants.Experience.Types.COLLECTION,
-          'key',
-          randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
-        )
-      ]);
-    })
-    .then(() => {
-      return Promise.all([
-        templates.changeTemplate(instanceData, Constants.Experience.Types.FIXED, 'name', randomString()),
-        templates.changeTemplate(instanceData, Constants.Experience.Types.COLLECTION, 'name', randomString())
-      ]);
-    })
-    .then(() => {
-      return templates.commitTemplate(instanceData, Constants.Experience.Types.FIXED);
-    })
-    .then(() => {
-      return templates.addTemplateToCollection(
-        instanceData,
-        Constants.Experience.Types.COLLECTION,
-        Constants.Experience.Types.FIXED,
-        0
-      );
-    })
-    .then(() => {
-      instanceData.instances = { 0: {}, 1: {}, 2: {} };
-      return templates.commitTemplate(instanceData, Constants.Experience.Types.COLLECTION);
-    });
+  let opts = { length: 12, charset: 'alphabetic', capitalization: 'lowercase' };
+  await templates.createExperienceTemplate(instanceData, Constants.Experience.Types.FIXED, instanceData.templates);
+  await templates.createExperienceTemplate(instanceData, Constants.Experience.Types.COLLECTION, instanceData.templates);
+  await templates.changeTemplate(instanceData, instanceData.templates[0], 'name', randomString());
+  await templates.changeTemplate(instanceData, instanceData.templates[0], 'key', randomString(opts));
+  await templates.changeTemplate(instanceData, instanceData.templates[1], 'name', randomString());
+  await templates.changeTemplate(instanceData, instanceData.templates[1], 'key', randomString(opts));
+  await templates.commitTemplate(instanceData, instanceData.templates[0]);
+  await templates.addTemplateToCollection(instanceData, instanceData.templates[1], instanceData.templates[0], 0);
+  await templates.commitTemplate(instanceData, instanceData.templates[1]);
 }
 
-export function getTemplateInstanceIds(instanceData, templateType) {
+export function getTemplateInstanceIds(instanceData, templateObject, returnInstances) {
   const req = new readClient.Request('getTemplateInstanceIds', {
     context: workspaceContext(instanceData),
-    templateIds: [instanceData[templateType].templateId]
+    templateIds: [templateObject.templateId]
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.instances[templateType].id = response.response.templateInstanceIds[0].instanceIds[0];
+    returnInstances.id = response.response.templateInstanceIds[0].instanceIds[0];
     return response;
   });
 }
 
-export function getExperience(instanceData, experienceType, saveScenarios) {
+export async function getExperience(contextData, instanceObject) {
   const req = new readClient.Request('getExperience', {
-    context: workspaceContext(instanceData),
-    id: instanceData.instances[experienceType].id
+    context: workspaceContext(contextData),
+    id: instanceObject.id
   }).withResponseStatus(true);
   return req.exec().then(response => {
-    instanceData.instances[experienceType] = response.response.experience;
-    if (saveScenarios) {
-      instanceData.scenarios = response.response.experience.scenarios;
-    }
+    Object.assign(instanceObject, response.response.experience);
     return response;
   });
 }
 
-export function renameExperience(instanceData, experienceType, name) {
+export function renameExperience(contextData, instanceObject, name) {
   const req = new writeClient.Request('renameExperience', {
-    context: workspaceContext(instanceData),
-    experienceId: instanceData.instances[experienceType].id,
-    accountId: instanceData.identityID,
-    rowVersion: instanceData.instances[experienceType].versionRowVersion,
-    name: name
+    context: workspaceContext(contextData),
+    experienceId: instanceObject.id,
+    accountId: contextData.identityID,
+    rowVersion: instanceObject.versionRowVersion,
+    name
   }).withResponseStatus(true);
   return req.exec().then(response => {
-    instanceData.instances[experienceType].versionRowVersion = response.response.updates.rowVersion;
+    instanceObject.versionRowVersion = response.response.updates.rowVersion;
     return response;
   });
 }
 
-export function changeExperienceEnabled(instanceData, experienceType, enabled) {
+export function changeExperienceEnabled(contextData, instanceObject, enabled) {
   const req = new writeClient.Request('changeExperienceEnabled', {
-    context: workspaceContext(instanceData),
-    experienceId: instanceData.instances[experienceType].id,
-    accountId: instanceData.identityID,
-    rowVersion: instanceData.instances[experienceType].versionRowVersion,
+    context: workspaceContext(contextData),
+    experienceId: instanceObject.id,
+    accountId: contextData.identityID,
+    rowVersion: instanceObject.versionRowVersion,
     enabled: enabled
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData[experienceType].versionRowVersion = response.response.updates.rowVersion;
+    instanceObject.versionRowVersion = response.response.updates.rowVersion;
     return response;
   });
 }
