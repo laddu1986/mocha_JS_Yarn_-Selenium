@@ -20,12 +20,12 @@ describe('Template Service -> Template Properties', () => {
     await postSpaceByOrganizationId(templateData);
     await createExperienceTemplate(templateData);
   });
-  it('addProperty() can create a property', async () => {
+  it('C1458966 addProperty() can create a property', async () => {
     let response = await properties.addProperty(templateData, constants.TemplateProperties.Types.Text);
     expect(response.status.code).to.equal(0);
     //joi.assert(createText.response,schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Text));
   });
-  it('renameProperty() can rename a text property', async () => {
+  it('C1458970 renameProperty() can rename a text property', async () => {
     let response = await properties.renameProperty(templateData, 'propertyName');
     expect(response.status.code).to.equal(0);
     //joi.assert(renameProperty.response,schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Text));
@@ -50,12 +50,12 @@ describe('Template Service -> Template Properties', () => {
     expect(getResponse.status.code).to.equal(0);
     //joi.assert(getResponse.response, schemas.getPropertySchema());
   });
-  it('getPropertyById() returns a template with all its properties', async () => {
+  it('C1458969 getPropertyById() returns a template with all its properties', async () => {
     let getTemplate = await getPropertyById(templateData);
     expect(getTemplate.status.code).to.equal(0);
     //joi.assert( getTemplate.response, schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Color));
   });
-  it('removeProperty() can delete a property', async () => {
+  it('C1458973 removeProperty() can delete a property', async () => {
     let deleteProperty = await properties.removeFunction(templateData, 'removeProperty');
     expect(deleteProperty.status.code).to.equal(0);
     //joi.assert(deleteProperty.response, schemas.deletedTemplatePropertySchema(templateData));
