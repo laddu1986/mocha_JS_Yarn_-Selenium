@@ -16,10 +16,10 @@ option go_package = "generated";
 
 service ExperienceTemplateReadService{
     rpc GetTemplateById (GetTemplateByIdRequest) returns (GetTemplateByIdResponse);
-    rpc GetPropertyTypes(GetPropertyTypesRequest) returns (GetPropertyTypesResponse);
     rpc GetTemplates (GetTemplatesRequest) returns (GetTemplatesResponse);
     rpc GetPropertyById (GetPropertyByIdRequest) returns (GetPropertyByIdResponse);
     rpc GetConfiguration (GetConfigurationRequest) returns (GetConfigurationResponse);
+    rpc SearchTemplates (SearchTemplatesRequest) returns (SearchTemplatesResponse);
 }
 
 service ExperienceTemplateWriteService{
@@ -155,15 +155,6 @@ message CommitTemplateResponse{
     int64 template_version_id = 2;
 }
 
-//GetPropertyTypes
-//-------------------------------------
-message GetPropertyTypesRequest{
-}
-
-message GetPropertyTypesResponse{
-    repeated PropertyType property_types = 1;
-}
-
 //GetTemplates
 //-------------------------------------
 message GetTemplatesRequest{
@@ -171,8 +162,6 @@ message GetTemplatesRequest{
     google.protobuf.Timestamp created_after = 2;
     string keyword = 3; //name or key
     ExperienceTemplateType template_type = 4;
-    bool exclude_draft = 5;
-    google.protobuf.Int32Value limit = 6;
 }
 
 message GetTemplatesResponse{
@@ -537,4 +526,21 @@ message ChangeTemplateReferenceKeyRequest{
 message ChangeTemplateReferenceKeyResponse{
     google.protobuf.Timestamp row_version = 1;
     int64 template_version_id  = 2;
+}
+
+// SearchTemplates
+//-------------------------------------
+message SearchTemplatesRequest{
+    WorkspaceContext context = 1;
+    ExperienceTemplateType template_type = 2;
+    TemplateSearchMode search_mode = 3; 
+    google.protobuf.Int32Value limit = 4;
+    string order_by = 5; //name or ModifiedAt
+    OrderDirection order_direction = 6;
+    string keyword = 7; // name
+    google.protobuf.Timestamp created_after = 8;
+}
+
+message SearchTemplatesResponse{
+    repeated ExperienceTemplate templates = 1;
 }

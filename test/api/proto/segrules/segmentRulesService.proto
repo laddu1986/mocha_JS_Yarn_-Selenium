@@ -15,6 +15,9 @@ service SegmentRulesService{
     rpc EvaluateRule (EvaluateRuleRequest) returns (EvaluateRuleResponse);
     rpc EvaluateRules (EvaluateRulesRequest) returns (EvaluateRulesResponse);
 
+    rpc EvaluateCombinedRules (EvaluateCombinedRulesRequest) returns (EvaluateRuleResponse);
+
+
     // Returns an estimate for each filter:
     rpc EvaluateRuleFilters (EvaluateRuleRequest) returns (EvaluateRuleFiltersResponse);
 
