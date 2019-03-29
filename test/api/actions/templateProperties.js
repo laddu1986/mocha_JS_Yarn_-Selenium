@@ -1,37 +1,34 @@
-import { randomString } from '../common';
-import { updateExperienceTemplate } from 'actions/templates';
-import * as data from 'data/templateTestData';
+import { path, caller, randomString } from '../common';
+//import * as data from 'data/templateTestData';
+import { experience } from 'config/getEnv';
+//import * as Constants from 'constants.json';
+const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
+const writeClient = caller(experience, PROTO_PATH, 'ExperienceTemplateWriteService');
 
-export function createProperty(templateData, propertyType, name, key) {
-  let reqName =
-    name === undefined ? randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : name;
-  let reqKey =
-    key === undefined ? randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : key;
-  let propertiesArray = templateData.template.properties === undefined ? [] : templateData.template.properties;
-  let propertyVal = data.properties[propertyType];
-  propertiesArray.push({
-    name: reqName,
-    key: reqKey,
-    typeKey: propertyType,
-    appearanceKey: 'appearance_key_text',
-    promptText: 'prompt_text',
-    helpText: 'help_text',
-    [propertyType]: propertyVal
-  });
-
-  let templatePayload = {
-    id: templateData.template.id,
-    name: templateData.template.name,
-    key: templateData.template.key,
-    thumbnailUrl: 'thumbnail_url',
-    properties: propertiesArray,
-    rowVersion: templateData.template.rowVersion
+function spaceContext(templateData) {
+  return {
+    orgId: templateData.orgID,
+    spaceId: templateData.spaceID,
+    workspaceId: templateData.spaceID
   };
-  return updateExperienceTemplate(templateData, templatePayload)
+}
+
+export function addProperty(templateData, type) {
+  const req = new writeClient.Request('addProperty', {
+    context: spaceContext(templateData),
+    name: randomString(12),
+    key: randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }),
+    propertyType: type,
+    templateId: templateData.template.templateId,
+    rowVersion: templateData.template.rowVersion,
+    templateVersionId: templateData.template.templateVersionId,
+    userAccountId: 'abcd'
+  }).withResponseStatus(true);
+  return req
     .exec()
     .then(response => {
+      templateData.template.propertyId = response.response.propertyId;
       templateData.template.rowVersion = response.response.rowVersion;
-      templateData.template.properties = propertiesArray;
       return response;
     })
     .catch(err => {
@@ -39,38 +36,78 @@ export function createProperty(templateData, propertyType, name, key) {
     });
 }
 
-export function renameProperty(templateData) {
-  let newName = randomString({ length: 40, charset: 'alphabetic', capitalization: 'lowercase' });
-  templateData.template.properties[0].name = newName;
-  let templatePayload = {
-    id: templateData.template.id,
-    name: templateData.template.name,
-    key: templateData.template.key,
-    thumbnailUrl: 'thumbnail_url',
-    properties: templateData.template.properties,
-    rowVersion: templateData.template.rowVersion
-  };
-  return updateExperienceTemplate(templateData, templatePayload)
+export function renameProperty(templateData, type) {
+  let reqName, value;
+  switch (type) {
+    case 'propertyName':
+      reqName = 'renameProperty';
+      value = randomString(12);
+      templateData.template.propertyName = value;
+      break;
+    case 'propertyKey':
+      reqName = 'changePropertyKey';
+      value = randomString({ length: 8, charset: 'alphabetic', capitalization: 'lowercase' });
+      templateData.template.propertyKey = value;
+      break;
+  }
+
+  const req = new writeClient.Request(reqName, {
+    context: spaceContext(templateData),
+    [type]: value,
+    propertyId: templateData.template.propertyId,
+    templateId: templateData.template.templateId,
+    rowVersion: templateData.template.rowVersion,
+    templateVersionId: templateData.template.templateVersionId,
+    userAccountId: 'abcd'
+  }).withResponseStatus(true);
+  return req
     .exec()
     .then(response => {
       templateData.template.rowVersion = response.response.rowVersion;
       return response;
+    })
+    .catch(err => {
+      return err;
     });
 }
 
-export function deleteProperty(templateData) {
-  let templatePayload = {
-    id: templateData.template.id,
-    name: templateData.template.name,
-    key: templateData.template.key,
-    thumbnailUrl: 'thumbnail_url',
-    properties: [],
-    rowVersion: templateData.template.rowVersion
-  };
-  return updateExperienceTemplate(templateData, templatePayload)
+export function changePropertyDefaultValue(templateData) {
+  const req = new writeClient.Request('changePropertyDefaultValue', {
+    context: spaceContext(templateData),
+    propertyId: templateData.template.propertyId,
+    templateId: templateData.template.templateId,
+    rowVersion: templateData.template.rowVersion,
+    templateVersionId: templateData.template.templateVersionId,
+    userAccountId: 'abcd',
+    stringValue: 'string_default_value'
+  }).withResponseStatus(true);
+  return req
     .exec()
     .then(response => {
-      templateData.template = response.response;
+      templateData.template.rowVersion = response.response.rowVersion;
       return response;
+    })
+    .catch(err => {
+      return err;
+    });
+}
+
+export function removeFunction(templateData, reqName) {
+  const req = new writeClient.Request(reqName, {
+    context: spaceContext(templateData),
+    propertyId: templateData.template.propertyId,
+    templateId: templateData.template.templateId,
+    rowVersion: templateData.template.rowVersion,
+    templateVersionId: templateData.template.templateVersionId,
+    userAccountId: 'abcd'
+  }).withResponseStatus(true);
+  return req
+    .exec()
+    .then(response => {
+      templateData.template.rowVersion = response.response.rowVersion;
+      return response;
+    })
+    .catch(err => {
+      return err;
     });
 }
