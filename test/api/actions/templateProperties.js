@@ -16,8 +16,6 @@ function spaceContext(templateData) {
 export function addProperty(templateData, type) {
   const req = new writeClient.Request('addProperty', {
     context: spaceContext(templateData),
-    name: randomString(12),
-    key: randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }),
     propertyType: type,
     templateId: templateData.template.templateId,
     rowVersion: templateData.template.rowVersion,
@@ -36,18 +34,42 @@ export function addProperty(templateData, type) {
     });
 }
 
-export function renameProperty(templateData, type) {
-  let reqName, value;
-  switch (type) {
-    case 'propertyName':
-      reqName = 'renameProperty';
+export function modifyProperty(templateData, reqName, ruleName) {
+  let type, value;
+  switch (reqName) {
+    case 'renameProperty':
+      type = 'propertyName';
       value = randomString(12);
       templateData.template.propertyName = value;
       break;
-    case 'propertyKey':
-      reqName = 'changePropertyKey';
+    case 'changePropertyKey':
+      type = 'propertyKey';
       value = randomString({ length: 8, charset: 'alphabetic', capitalization: 'lowercase' });
       templateData.template.propertyKey = value;
+      break;
+    case 'changePropertyDefaultValue':
+      type = 'stringValue';
+      value = 'string_default_value';
+      break;
+    case 'changePropertyLocalizable':
+      type = 'localizable';
+      value = true;
+      break;
+    case 'enablePropertyRule':
+      type = 'ruleKey';
+      value = ruleName;
+      break;
+    case 'disablePropertyRule':
+      type = 'ruleKey';
+      value = ruleName;
+      break;
+    case 'changePropertyPromptText':
+      type = 'promptText';
+      value = "prompt_text";
+      break;
+    case 'changePropertyHelpText':
+      type = 'helpText';
+      value = "help_text";
       break;
   }
 
@@ -71,15 +93,14 @@ export function renameProperty(templateData, type) {
     });
 }
 
-export function changePropertyDefaultValue(templateData) {
-  const req = new writeClient.Request('changePropertyDefaultValue', {
+export function removeFunction(templateData, reqName) {
+  const req = new writeClient.Request(reqName, {
     context: spaceContext(templateData),
     propertyId: templateData.template.propertyId,
     templateId: templateData.template.templateId,
     rowVersion: templateData.template.rowVersion,
     templateVersionId: templateData.template.templateVersionId,
-    userAccountId: 'abcd',
-    stringValue: 'string_default_value'
+    userAccountId: 'abcd'
   }).withResponseStatus(true);
   return req
     .exec()
@@ -92,10 +113,60 @@ export function changePropertyDefaultValue(templateData) {
     });
 }
 
-export function removeFunction(templateData, reqName) {
-  const req = new writeClient.Request(reqName, {
+export function changePropertyRule(templateData, ruleName) {
+  let val;
+  switch (ruleName) {
+    case 'characterCount':
+      val = {
+        min: {
+          value: 10
+        },
+        max: {
+          value: 10
+        },
+        mode: {
+          value: 10
+        }
+      }
+      break;
+    case 'regex':
+      val = {
+        "pattern": "Hello"
+      }
+      break;
+    case 'required':
+      val = {
+        "is_required": true
+      }
+      break;
+  }
+  const req = new writeClient.Request("changePropertyRule", {
     context: spaceContext(templateData),
     propertyId: templateData.template.propertyId,
+    templateId: templateData.template.templateId,
+    rowVersion: templateData.template.rowVersion,
+    templateVersionId: templateData.template.templateVersionId,
+    ruleKey: ruleName,
+    userAccountId: 'abcd',
+    textRule: {
+      [ruleName]: val,
+      errorMessage: "error"
+    }
+  }).withResponseStatus(true);
+  return req
+    .exec()
+    .then(response => {
+      templateData.template.rowVersion = response.response.rowVersion;
+      return response;
+    })
+    .catch(err => {
+      return err;
+    });
+}
+
+export function commitTemplate(templateData) {
+  const req = new writeClient.Request('commitTemplate', {
+    context: spaceContext(templateData),
     templateId: templateData.template.templateId,
     rowVersion: templateData.template.rowVersion,
     templateVersionId: templateData.template.templateVersionId,
