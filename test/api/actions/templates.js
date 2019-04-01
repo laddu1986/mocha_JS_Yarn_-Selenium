@@ -12,11 +12,9 @@ function spaceContext(templateData) {
   };
 }
 
-export function createExperienceTemplate(contextData, templateType, returnTemplates, name, key) {
+export function createExperienceTemplate(contextData, templateType, returnTemplates) {
   const req = new writeClient.Request('createTemplate', {
     context: spaceContext(contextData),
-    name,
-    key,
     templateType,
     userAccountId: contextData.identityID
   }).withResponseStatus(true);
@@ -90,7 +88,10 @@ export function getTemplateById(contextData, templateObject) {
     context: spaceContext(contextData),
     templateId: templateObject.templateId
   }).withResponseStatus(true);
-  return req.exec();
+  return req.exec().then(response => {
+    Object.assign(templateObject, response.response.template);
+    return response;
+  });
 }
 
 export function getProperty() {
