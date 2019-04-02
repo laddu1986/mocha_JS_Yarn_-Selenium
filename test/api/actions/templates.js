@@ -95,6 +95,14 @@ export function getPropertyById(templateData) {
   return req.exec();
 }
 
+export function getTemplateById(templateData) {
+  const req = new readClient.Request('getTemplateById', {
+    context: spaceContext(templateData),
+    templateId: templateData.template.templateId
+  }).withResponseStatus(true);
+  return req.exec();
+}
+
 export function getConfiguration() {
   const req = new readClient.Request('getConfiguration', {}).withResponseStatus(true);
   return req.exec();

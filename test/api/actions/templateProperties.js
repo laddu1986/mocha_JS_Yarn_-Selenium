@@ -56,20 +56,17 @@ export function modifyProperty(templateData, reqName, ruleName) {
       value = true;
       break;
     case 'enablePropertyRule':
-      type = 'ruleKey';
-      value = ruleName;
-      break;
     case 'disablePropertyRule':
       type = 'ruleKey';
       value = ruleName;
       break;
     case 'changePropertyPromptText':
       type = 'promptText';
-      value = "prompt_text";
+      value = 'prompt_text';
       break;
     case 'changePropertyHelpText':
       type = 'helpText';
-      value = "help_text";
+      value = 'help_text';
       break;
   }
 
@@ -127,20 +124,20 @@ export function changePropertyRule(templateData, ruleName) {
         mode: {
           value: 10
         }
-      }
+      };
       break;
     case 'regex':
       val = {
-        "pattern": "Hello"
-      }
+        pattern: 'Hello'
+      };
       break;
     case 'required':
       val = {
-        "is_required": true
-      }
+        is_required: true
+      };
       break;
   }
-  const req = new writeClient.Request("changePropertyRule", {
+  const req = new writeClient.Request('changePropertyRule', {
     context: spaceContext(templateData),
     propertyId: templateData.template.propertyId,
     templateId: templateData.template.templateId,
@@ -150,7 +147,7 @@ export function changePropertyRule(templateData, ruleName) {
     userAccountId: 'abcd',
     textRule: {
       [ruleName]: val,
-      errorMessage: "error"
+      errorMessage: 'error'
     }
   }).withResponseStatus(true);
   return req

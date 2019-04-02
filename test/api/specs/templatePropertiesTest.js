@@ -21,7 +21,11 @@ describe('Template Service -> Template Properties', () => {
     await postSpaceByOrganizationId(templateData);
     await createExperienceTemplate(templateData);
     await templates.changeTemplate(templateData, 'name', randomString(12));
-    await templates.changeTemplate(templateData, 'key', randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }));
+    await templates.changeTemplate(
+      templateData,
+      'key',
+      randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
+    );
   });
   it('C1458966 addProperty() can create a text property', async () => {
     let response = await properties.addProperty(templateData, constants.TemplateProperties.Types.Text);
@@ -91,7 +95,7 @@ describe('Template Service -> Template Properties', () => {
   it('C1458969 getPropertyById() returns a template with all its properties', async () => {
     let response = await getPropertyById(templateData);
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.getPropertyByIDSchema(templateData, "text"));
+    joi.assert(response.response, schemas.getPropertyByIDSchema(templateData, 'text'));
   });
   it('removePropertyDefaultValue() can remove property default value', async () => {
     let response = await properties.removeFunction(templateData, 'removePropertyDefaultValue');
@@ -128,6 +132,7 @@ describe('Template Service -> Template Properties', () => {
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.renamePropertySchema());
   });
+
   after(async () => {
     await deleteIdentityById(templateData);
     await deleteOrganizationById(templateData);

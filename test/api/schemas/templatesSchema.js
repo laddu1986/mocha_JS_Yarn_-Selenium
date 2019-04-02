@@ -68,14 +68,23 @@ export function getPropertyByIDSchema(templateData, type) {
 }
 
 //----------------template tests-------------------------
-export function templateSchema(templateData) {
+export function templateSchema() {
   return joi
     .object()
     .keys({
-      id: protoLong,
-      key: joi.only(templateData.template.key).required(),
-      name: joi.only(templateData.template.name).required(),
+      templateVersionId: protoLong,
       rowVersion: protoTimeStamp
+    })
+    .required();
+}
+
+export function createTemplateSchema() {
+  return joi
+    .object()
+    .keys({
+      templateVersionId: protoLong,
+      rowVersion: protoTimeStamp,
+      templateId: joi.string().required()
     })
     .required();
 }
@@ -84,14 +93,34 @@ export function templatesSchema(templateData) {
   return joi
     .object()
     .keys({
-      experienceTemplates: joi.array().items(
+      templates: joi.array().items(
         joi.object().keys({
-          id: protoLong,
+          id: joi.valid(templateData.template.templateId).required(),
           key: joi.only(templateData.template.key).required(),
           name: joi.only(templateData.template.name).required(),
-          rowVersion: protoTimeStamp
+          thumbnailUrl: joi.valid('thumbnail_url').required(),
+          rowVersion: protoTimeStamp,
+          templateVersionId: protoLong
         })
       )
+    })
+    .required();
+}
+
+export function templateByIDSchema(templateData) {
+  return joi
+    .object()
+    .keys({
+      template: joi.object().keys({
+        id: joi.valid(templateData.template.templateId).required(),
+        key: joi.only(templateData.template.key).required(),
+        name: joi.only(templateData.template.name).required(),
+        thumbnailUrl: joi.valid('thumbnail_url').required(),
+        rowVersion: protoTimeStamp,
+        templateVersionId: protoLong,
+        modifiedAt: protoTimeStamp,
+        modifiedBy: joi.valid('abcd').required()
+      })
     })
     .required();
 }
@@ -146,8 +175,8 @@ export function getPropertySchema() {
         joi.object().keys({
           ruleTypes: joi.array(),
           key: joi.valid(0, 1, 2),
-          name: joi.valid("Fixed", "Flexi", "Collection"),
-          iconUrl: joi.valid("FixedIcon", "FlexiIcon", "CollectionIcon")
+          name: joi.valid('Fixed', 'Flexi', 'Collection'),
+          iconUrl: joi.valid('FixedIcon', 'FlexiIcon', 'CollectionIcon')
         })
       ),
     propertyTypes: joi
@@ -327,12 +356,12 @@ export function addPropertySchema(templateData) {
     propertyId: joi.only(templateData.template.propertyId).required(),
     templateVersionId: protoLong,
     rowVersion: protoTimeStamp
-  })
+  });
 }
 
 export function renamePropertySchema() {
   return joi.object().keys({
     templateVersionId: protoLong,
     rowVersion: protoTimeStamp
-  })
+  });
 }
