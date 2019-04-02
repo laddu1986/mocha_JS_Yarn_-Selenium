@@ -88,6 +88,16 @@ export function deleteExperienceTemplate(templateData) {
 export function getPropertyById(templateData) {
   const req = new readClient.Request('getPropertyById', {
     context: spaceContext(templateData),
+    templateId: templateData.template.templateId,
+    propertyId: templateData.template.propertyId,
+    templateVersionId: templateData.template.templateVersionId
+  }).withResponseStatus(true);
+  return req.exec();
+}
+
+export function getTemplateById(templateData) {
+  const req = new readClient.Request('getTemplateById', {
+    context: spaceContext(templateData),
     templateId: templateData.template.templateId
   }).withResponseStatus(true);
   return req.exec();
