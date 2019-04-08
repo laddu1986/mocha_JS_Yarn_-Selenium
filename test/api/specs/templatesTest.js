@@ -1,10 +1,10 @@
-import { randomString } from '../common';
+import { randomString, joi } from '../common';
 import { postIdentity, deleteIdentityById } from 'actions/identity';
 import { postOrganization, deleteOrganizationById } from 'actions/organization';
 import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions/spaces';
 import * as templates from 'actions/templates';
 import * as Constants from 'constants.json';
-//import * as schemas from 'schemas/templatesSchema.js';
+import * as schemas from 'schemas/templatesSchema.js';
 const templateData = new Object();
 templateData.templates = [];
 var createTemplate;
@@ -38,13 +38,14 @@ describe('Experience Template Service', () => {
   });
 
   it('changeTemplateKey() change template key', async () => {
-    let changeTemplateKey = await templates.changeTemplate(
+    let response = await templates.changeTemplate(
       templateData,
       templateData.templates[0],
       'key',
       randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
     );
-    expect(changeTemplateKey.status.code).to.equal(0);
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.templateSchema());
   });
 
   it('changeTemplateThumbnail() change template thumbnail', async () => {

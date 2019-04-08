@@ -83,6 +83,16 @@ export function deleteExperienceTemplate(contextData, templateObject) {
   return req.exec();
 }
 
+export function getPropertyById(templateData) {
+  const req = new readClient.Request('getPropertyById', {
+    context: spaceContext(templateData),
+    templateId: templateData.template.templateId,
+    propertyId: templateData.template.propertyId,
+    templateVersionId: templateData.template.templateVersionId
+  }).withResponseStatus(true);
+  return req.exec();
+}
+
 export function getTemplateById(contextData, templateObject) {
   const req = new readClient.Request('getTemplateById', {
     context: spaceContext(contextData),
@@ -94,8 +104,8 @@ export function getTemplateById(contextData, templateObject) {
   });
 }
 
-export function getProperty() {
-  const req = new readClient.Request('getPropertyTypes', {}).withResponseStatus(true);
+export function getConfiguration() {
+  const req = new readClient.Request('getConfiguration', {}).withResponseStatus(true);
   return req.exec();
 }
 
