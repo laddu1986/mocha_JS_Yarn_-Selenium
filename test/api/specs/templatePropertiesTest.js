@@ -1,152 +1,138 @@
-import { joi } from '../common';
+import { randomString, joi } from '../common';
 import { postIdentity, deleteIdentityById } from 'actions/identity';
 import { postOrganization, deleteOrganizationById } from 'actions/organization';
 import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions/spaces';
 import {
   createExperienceTemplate,
-  getExperienceTemplateById,
-  getProperty,
+  getConfiguration,
+  getPropertyById,
   deleteExperienceTemplate
 } from 'actions/templates';
 import constants from 'constants.json';
+import * as templates from 'actions/templates';
 import * as properties from 'actions/templateProperties';
 import * as schemas from 'schemas/templatesSchema';
 const templateData = new Object();
 
-xdescribe('Template Service -> Template Properties', () => {
+describe('Template Service -> Template Properties', () => {
   before('Setup the testing environment', async () => {
     await postIdentity(templateData);
     await postOrganization(templateData);
     await postSpaceByOrganizationId(templateData);
     await createExperienceTemplate(templateData);
-  });
-  it('C1458966 updateExperienceTemplate() can create a text property', async () => {
-    let createText = await properties.createProperty(templateData, constants.TemplateProperties.Types.Text);
-    expect(createText.status.code).to.equal(0);
-    joi.assert(
-      createText.response,
-      schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Text)
+    await templates.changeTemplate(templateData, 'name', randomString(12));
+    await templates.changeTemplate(
+      templateData,
+      'key',
+      randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
     );
   });
-  it('C1458970 updateExperienceTemplate() can rename a text property', async () => {
-    let renameProperty = await properties.renameProperty(templateData);
-    expect(renameProperty.status.code).to.equal(0);
-    joi.assert(
-      renameProperty.response,
-      schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Text)
-    );
+  it('C1458966 addProperty() can create a text property', async () => {
+    let response = await properties.addProperty(templateData, constants.TemplateProperties.Types.Text);
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.addPropertySchema(templateData));
   });
-  it('C1458973 updateExperienceTemplate() can delete a text property', async () => {
-    let deleteProperty = await properties.deleteProperty(templateData);
-    expect(deleteProperty.status.code).to.equal(0);
-    joi.assert(deleteProperty.response, schemas.deletedTemplatePropertySchema(templateData));
+  it('C1458970 renameProperty() can rename a text property', async () => {
+    let response = await properties.modifyProperty(templateData, 'renameProperty');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1458967 updateExperienceTemplate() can create a boolean property', async () => {
-    let createBool = await properties.createProperty(templateData, constants.TemplateProperties.Types.Switch);
-    expect(createBool.status.code).to.equal(0);
-    joi.assert(
-      createBool.response,
-      schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Switch)
-    );
+  it('changePropertyKey() can change property key of a text property', async () => {
+    let response = await properties.modifyProperty(templateData, 'changePropertyKey');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1458971 updateExperienceTemplate() can rename a boolean property', async () => {
-    let renameProperty = await properties.renameProperty(templateData);
-    expect(renameProperty.status.code).to.equal(0);
-    joi.assert(
-      renameProperty.response,
-      schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Switch)
-    );
+  it('changePropertyLocalizable() can change property localizable value', async () => {
+    let response = await properties.modifyProperty(templateData, 'changePropertyLocalizable');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1458974 updateExperienceTemplate() can delete a boolean property', async () => {
-    let deleteProperty = await properties.deleteProperty(templateData);
-    expect(deleteProperty.status.code).to.equal(0);
-    joi.assert(deleteProperty.response, schemas.deletedTemplatePropertySchema(templateData));
+  it('changePropertyDefaultValue() can change property default value', async () => {
+    let response = await properties.modifyProperty(templateData, 'changePropertyDefaultValue');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1458968 updateExperienceTemplate() can create a integer property', async () => {
-    let createInt = await properties.createProperty(templateData, constants.TemplateProperties.Types.Integer);
-    expect(createInt.status.code).to.equal(0);
-    //joi.assert(createInt.response, schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Integer));
+  it('enablePropertyRule() can enable text characterCount property rule', async () => {
+    let response = await properties.modifyProperty(templateData, 'enablePropertyRule', 'characterCount');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1458972 updateExperienceTemplate() can rename a integer property', async () => {
-    let renameProperty = await properties.renameProperty(templateData);
-    expect(renameProperty.status.code).to.equal(0);
-    //joi.assert(renameProperty.response, schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Integer));
+  it('enablePropertyRule() can enable text regex property rule', async () => {
+    let response = await properties.modifyProperty(templateData, 'enablePropertyRule', 'regex');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1458975 updateExperienceTemplate() can delete a integer property', async () => {
-    let deleteProperty = await properties.deleteProperty(templateData);
-    expect(deleteProperty.status.code).to.equal(0);
-    joi.assert(deleteProperty.response, schemas.deletedTemplatePropertySchema(templateData));
+  it('enablePropertyRule() can enable text required property rule', async () => {
+    let response = await properties.modifyProperty(templateData, 'enablePropertyRule', 'required');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1640107 updateExperienceTemplate() can create a date property', async () => {
-    let createDate = await properties.createProperty(templateData, constants.TemplateProperties.Types.Date);
-    expect(createDate.status.code).to.equal(0);
-    joi.assert(
-      createDate.response,
-      schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Date)
-    );
+  it('changePropertyRule() can change text characterCount property rule', async () => {
+    let response = await properties.changePropertyRule(templateData, 'characterCount');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1640108 updateExperienceTemplate() can rename a date property', async () => {
-    let renameProperty = await properties.renameProperty(templateData);
-    expect(renameProperty.status.code).to.equal(0);
-    joi.assert(
-      renameProperty.response,
-      schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Date)
-    );
+  it('changePropertyRule() can change text regex property rule', async () => {
+    let response = await properties.changePropertyRule(templateData, 'regex');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1640109 updateExperienceTemplate() can delete a date property', async () => {
-    let deleteProperty = await properties.deleteProperty(templateData);
-    expect(deleteProperty.status.code).to.equal(0);
-    joi.assert(deleteProperty.response, schemas.deletedTemplatePropertySchema(templateData));
+  it('changePropertyRule() can change text required property rule', async () => {
+    let response = await properties.changePropertyRule(templateData, 'required');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1640110 updateExperienceTemplate() can create a color property', async () => {
-    let createColor = await properties.createProperty(templateData, constants.TemplateProperties.Types.Color);
-    expect(createColor.status.code).to.equal(0);
-    joi.assert(
-      createColor.response,
-      schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Color)
-    );
+  it('changePropertyPromptText() can change property prompt text', async () => {
+    let response = await properties.modifyProperty(templateData, 'changePropertyPromptText');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1640111 updateExperienceTemplate() can rename a color property', async () => {
-    let renameProperty = await properties.renameProperty(templateData);
-    expect(renameProperty.status.code).to.equal(0);
-    joi.assert(
-      renameProperty.response,
-      schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Color)
-    );
+  it('changePropertyHelpText() can change property help text', async () => {
+    let response = await properties.modifyProperty(templateData, 'changePropertyHelpText');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1458969 getExperienceTemplateById() returns a template with all its properties', async () => {
-    let getTemplate = await getExperienceTemplateById(templateData);
-    expect(getTemplate.status.code).to.equal(0);
-    joi.assert(
-      getTemplate.response,
-      schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.Color)
-    );
+  it('C1458969 getPropertyById() returns a template with all its properties', async () => {
+    let response = await getPropertyById(templateData);
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.getPropertyByIDSchema(templateData, 'text'));
   });
-  it('C1640112 updateExperienceTemplate() can delete a color property', async () => {
-    let deleteProperty = await properties.deleteProperty(templateData);
-    expect(deleteProperty.status.code).to.equal(0);
-    joi.assert(deleteProperty.response, schemas.deletedTemplatePropertySchema(templateData));
+  it('removePropertyDefaultValue() can remove property default value', async () => {
+    let response = await properties.removeFunction(templateData, 'removePropertyDefaultValue');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1640113 updateExperienceTemplate() can create a list property', async () => {
-    let createList = await properties.createProperty(templateData, constants.TemplateProperties.Types.List);
-    expect(createList.status.code).to.equal(0);
-    //joi.assert(createList.response, schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.List));
+  it('disablePropertyRule() can disable text characterCount property rule ', async () => {
+    let response = await properties.modifyProperty(templateData, 'disablePropertyRule', 'characterCount');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1640114 updateExperienceTemplate() can rename a list property', async () => {
-    let renameProperty = await properties.renameProperty(templateData);
-    expect(renameProperty.status.code).to.equal(0);
-    //joi.assert(renameProperty.response, schemas.templatePropertySchema(templateData, constants.TemplateProperties.Types.List));
+  it('disablePropertyRule() can disable text regex property rule ', async () => {
+    let response = await properties.modifyProperty(templateData, 'disablePropertyRule', 'regex');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1640115 updateExperienceTemplate() can delete a list property', async () => {
-    let deleteProperty = await properties.deleteProperty(templateData);
-    expect(deleteProperty.status.code).to.equal(0);
-    joi.assert(deleteProperty.response, schemas.deletedTemplatePropertySchema(templateData));
+  it('disablePropertyRule() can disable text required property rule ', async () => {
+    let response = await properties.modifyProperty(templateData, 'disablePropertyRule', 'required');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
   });
-  it('C1637414 getPropertyTypes() returns the available property types', async () => {
-    let getResponse = await getProperty();
-    expect(getResponse.status.code).to.equal(0);
-    joi.assert(getResponse.response, schemas.getPropertySchema());
+  it('getConfiguration() returns the available property types', async () => {
+    let response = await getConfiguration();
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.getPropertySchema());
   });
+  it('commitTemplate() commit a template', async () => {
+    let response = await properties.commitTemplate(templateData);
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
+  });
+  it('C1458973 removeProperty() can delete a property', async () => {
+    let response = await properties.removeFunction(templateData, 'removeProperty');
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.renamePropertySchema());
+  });
+
   after(async () => {
     await deleteIdentityById(templateData);
     await deleteOrganizationById(templateData);

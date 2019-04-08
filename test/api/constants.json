@@ -100,7 +100,8 @@
       "Integer": "integer",
       "Color": "color",
       "Date": "date",
-      "List": "list"
+      "List": "list",
+      "URL": "url"
     }
   },
   "UserDetails": {
