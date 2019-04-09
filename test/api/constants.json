@@ -119,7 +119,8 @@
       "Required": "required",
       "DateRange": "dateRange",
       "ValueCount": "valueCount",
-      "AllowedValues":"allowedValues"
+      "AllowedValues": "allowedValues",
+      "Localizable": "localizable"
     }
   },
   "UserDetails": {

@@ -14,14 +14,14 @@ const protoTimeStamp = joi.object().keys({
 });
 
 const regex = joi.object().keys({
-  regex: joi.object().keys({
+  [Constants.TemplateProperties.Rules.Regex]: joi.object().keys({
     pattern: joi.valid('Hello').required()
   }),
   errorMessage: joi.valid('error').required()
 });
 
 const req = joi.object().keys({
-  required: joi.object().keys({}),
+  [Constants.TemplateProperties.Rules.Required]: joi.object().keys({}),
   errorMessage: joi.valid('error').required()
 });
 
@@ -71,9 +71,9 @@ function propertiesSchema(type) {
       break;
   }
   const properties = joi.object().keys({
-    defaultValue: defaultVal,
+    [Constants.TemplateProperties.Rules.DefaultValue]: defaultVal,
     rules: ruleValues,
-    localizable: joi.valid(true).required()
+    [Constants.TemplateProperties.Rules.Localizable]: joi.valid(true).required()
   })
   return properties;
 }
@@ -211,7 +211,8 @@ const selectAppearanceObject = joi.object().keys({
     .alternatives()
     .when('key', { is: 'dropdown', then: joi.valid(true).required() })
 });
-const ExperienceTemplates = Object.keys(Constants.Experience.Types);
+const ExperienceTemplatesKeys = Object.keys(Constants.Experience.Types);
+const ExperienceTemplatesValues = Object.values(Constants.Experience.Types);
 export function getPropertySchema() {
   return joi.object().keys({
     templateTypes: joi
@@ -220,8 +221,8 @@ export function getPropertySchema() {
       .items(
         joi.object().keys({
           ruleTypes: joi.array(),
-          key: joi.valid(0, 1, 2),
-          name: joi.valid(ExperienceTemplates),
+          key: joi.valid(ExperienceTemplatesValues),
+          name: joi.valid(ExperienceTemplatesKeys),
           iconUrl: joi.valid('FixedIcon', 'FlexiIcon', 'CollectionIcon')
         })
       ),
