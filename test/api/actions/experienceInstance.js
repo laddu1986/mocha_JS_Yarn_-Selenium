@@ -15,11 +15,20 @@ function workspaceContext(instanceData) {
   };
 }
 
+const requestProto = (contextData, instanceObject) => {
+  return {
+    context: workspaceContext(contextData),
+    experienceId: instanceObject.id,
+    accountId: contextData.identityID,
+    rowVersion: instanceObject.versionRowVersion
+  };
+};
+
 /*
   Experiences
 */
 
-/* Long process of creating instances */
+// Long process of creating instances
 export async function createInstances(instanceData) {
   let opts = { length: 12, charset: 'alphabetic', capitalization: 'lowercase' };
   await templates.createExperienceTemplate(instanceData, Constants.Experience.Types.FIXED, instanceData.templates);
@@ -33,19 +42,32 @@ export async function createInstances(instanceData) {
   await templates.commitTemplate(instanceData, instanceData.templates[1]);
 }
 
-export function getTemplateInstanceIds(instanceData, templateObject, returnInstances) {
+// This will overrite the `returnInstances` object you pass in
+export function getTemplateInstanceIds(instanceData, templateIds, returnInstances) {
   const req = new readClient.Request('getTemplateInstanceIds', {
     context: workspaceContext(instanceData),
-    templateIds: [templateObject.templateId]
+    templateIds
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    returnInstances.id = response.response.templateInstanceIds[0].instanceIds[0];
+    let returnObject = [];
+    templateIds.forEach(templateId => {
+      response.response.templateInstanceIds.forEach(template => {
+        if (templateId == template.id) {
+          template.instanceIds.forEach(id => {
+            returnObject.push({ id });
+          });
+        }
+      });
+    });
+
+    Object.assign(returnInstances, returnObject);
     return response;
   });
 }
 
-export async function getExperience(contextData, instanceObject) {
+// Instance object will be updated with the latest experince info
+export function getExperience(contextData, instanceObject) {
   const req = new readClient.Request('getExperience', {
     context: workspaceContext(contextData),
     id: instanceObject.id
@@ -71,13 +93,9 @@ export function renameExperience(contextData, instanceObject, name) {
 }
 
 export function changeExperienceEnabled(contextData, instanceObject, enabled) {
-  const req = new writeClient.Request('changeExperienceEnabled', {
-    context: workspaceContext(contextData),
-    experienceId: instanceObject.id,
-    accountId: contextData.identityID,
-    rowVersion: instanceObject.versionRowVersion,
-    enabled: enabled
-  }).withResponseStatus(true);
+  const reqObject = requestProto(contextData, instanceObject);
+  reqObject.enabled = enabled;
+  const req = new writeClient.Request('changeExperienceEnabled', reqObject).withResponseStatus(true);
 
   return req.exec().then(response => {
     instanceObject.versionRowVersion = response.response.updates.rowVersion;
@@ -85,18 +103,18 @@ export function changeExperienceEnabled(contextData, instanceObject, enabled) {
   });
 }
 
-export function publishExperience(instanceData, experienceType) {
+export function publishExperience(contextData, instanceObject) {
   const req = new writeClient.Request('publishExperience', {
-    context: workspaceContext(instanceData),
-    experienceId: instanceData.instances[experienceType].id,
-    accountId: instanceData.identityID,
-    rowVersion: instanceData.instances[experienceType].versionRowVersion
+    context: workspaceContext(contextData),
+    experienceId: instanceObject.id,
+    accountId: contextData.identityID,
+    rowVersion: instanceObject.versionRowVersion
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
     if (Object.keys(response.response.updates).length > 0) {
       // Do not update row version when already published
-      instanceData.instances[experienceType].versionRowVersion = response.response.updates.experiences[0].rowVersion;
+      instanceObject.versionRowVersion = response.response.updates.experiences[0].rowVersion;
     }
     return response;
   });
@@ -113,105 +131,100 @@ export function getScenario(instanceData, scenarioid) {
     id: scenarioid
   }).withResponseStatus(true);
 
-  return req.exec().then(response => {
-    return response;
-  });
+  return req.exec();
 }
 
-export function addScenario(instanceData) {
+export function addScenario(contextData, instanceObject) {
   const req = new writeClient.Request('addScenario', {
-    context: workspaceContext(instanceData),
-    experienceId: instanceData.instances[0].id,
-    accountId: instanceData.identityID,
-    rowVersion: instanceData.instances[0].versionRowVersion
+    context: workspaceContext(contextData),
+    experienceId: instanceObject.id,
+    accountId: contextData.identityID,
+    rowVersion: instanceObject.versionRowVersion
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.instances[0].versionRowVersion = response.response.rowVersion;
+    instanceObject.versionRowVersion = response.response.rowVersion;
     return response;
   });
 }
 
-export function renameScenario(instanceData, scenarioindex, name) {
+export function renameScenario(contextData, instanceObject, scenarioindex, name) {
   const req = new writeClient.Request('renameScenario', {
-    context: workspaceContext(instanceData),
-    experienceId: instanceData.instances[0].id,
-    scenarioId: instanceData.scenarios[scenarioindex].id,
-    accountId: instanceData.identityID,
-    rowVersion: instanceData.scenarios[scenarioindex].rowVersion,
+    context: workspaceContext(contextData),
+    experienceId: instanceObject.id,
+    scenarioId: instanceObject.scenarios[scenarioindex].id,
+    accountId: contextData.identityID,
+    rowVersion: instanceObject.scenarios[scenarioindex].rowVersion,
     name
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.scenarios[scenarioindex].rowVersion = response.response.updates.scenarios[0].rowVersion;
-    instanceData.instances[0].versionRowVersion = response.response.updates.experiences[0].rowVersion;
+    instanceObject.scenarios[scenarioindex].rowVersion = response.response.updates.scenarios[0].rowVersion;
+    instanceObject.versionRowVersion = response.response.updates.experiences[0].rowVersion;
     return response;
   });
 }
 
-export function removeScenario(instanceData, scenarioid) {
+export function removeScenario(contextData, instanceObject, scenarioid) {
   const req = new writeClient.Request('removeScenario', {
-    context: workspaceContext(instanceData),
-    experienceId: instanceData.instances[0].id,
+    context: workspaceContext(contextData),
+    experienceId: instanceObject.id,
     scenarioId: scenarioid,
-    accountId: instanceData.identityID,
-    rowVersion: instanceData.instances[0].versionRowVersion
+    accountId: contextData.identityID,
+    rowVersion: instanceObject.versionRowVersion
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.instances[0].versionRowVersion = response.response.rowVersion;
+    instanceObject.versionRowVersion = response.response.updates.experiences[0].rowVersion;
     return response;
   });
 }
 
-export function changeScenarioEnabled(instanceData, scenarioindex, enabled) {
+export function changeScenarioEnabled(contextData, instanceObject, scenarioindex, enabled) {
   const req = new writeClient.Request('changeScenarioEnabled', {
-    context: workspaceContext(instanceData),
-    scenarioId: instanceData.scenarios[scenarioindex].id,
-    experienceId: instanceData.instances[0].id,
-    accountId: instanceData.identityID,
-    rowVersion: instanceData.scenarios[scenarioindex].rowVersion,
+    context: workspaceContext(contextData),
+    experienceId: instanceObject.id,
+    scenarioId: instanceObject.scenarios[scenarioindex].id,
+    accountId: contextData.identityID,
+    rowVersion: instanceObject.scenarios[scenarioindex].rowVersion,
     enabled
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.scenarios[scenarioindex].rowVersion = response.response.updates.scenarios[0].rowVersion;
-    instanceData.instances[0].versionRowVersion = response.response.updates.experiences[0].rowVersion;
+    instanceObject.scenarios[scenarioindex].rowVersion = response.response.updates.scenarios[0].rowVersion;
+    instanceObject.versionRowVersion = response.response.updates.experiences[0].rowVersion;
     return response;
   });
 }
 
-export function duplicateScenario(instanceData, scenarioindex) {
+export function duplicateScenario(contextData, instanceObject, scenarioindex) {
   const req = new writeClient.Request('duplicateScenario', {
-    context: workspaceContext(instanceData),
-    scenarioId: instanceData.scenarios[scenarioindex].id,
-    experienceId: instanceData.instances[0].id,
-    accountId: instanceData.identityID,
-    rowVersion: instanceData.instances[0].versionRowVersion
+    context: workspaceContext(contextData),
+    scenarioId: instanceObject.scenarios[scenarioindex].id,
+    experienceId: instanceObject.id,
+    accountId: contextData.identityID,
+    rowVersion: instanceObject.versionRowVersion
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.instances[0].versionRowVersion = response.response.rowVersion;
+    instanceObject.versionRowVersion = response.response.rowVersion;
     return response;
   });
 }
 
-export function setScenarioSchedule(instanceData, scenarioIndex, startTime, endTime) {
+export function setScenarioSchedule(contextData, instanceObject, scenarioIndex, schedule) {
   const req = new writeClient.Request('SetScenarioSchedule', {
-    context: workspaceContext(instanceData),
-    experienceId: instanceData.instances[0].id,
-    accountId: instanceData.identityID,
-    rowVersion: instanceData.scenarios[scenarioIndex].rowVersion,
-    schedule: {
-      start: startTime,
-      end: endTime,
-      timezone: ''
-    },
-    scenarioId: instanceData.scenarios[scenarioIndex].id
+    context: workspaceContext(contextData),
+    experienceId: instanceObject.id,
+    accountId: contextData.identityID,
+    rowVersion: instanceObject.scenarios[scenarioIndex].rowVersion,
+    schedule,
+    scenarioId: instanceObject.scenarios[scenarioIndex].id
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceData.instances[0].versionRowVersion = response.response.updates.experiences[0].rowVersion;
+    instanceObject.versionRowVersion = response.response.updates.experiences[0].rowVersion;
+    instanceObject.scenarios[scenarioIndex].rowVersion = response.response.updates.scenarios[0].rowVersion;
     return response;
   });
 }
