@@ -1,7 +1,6 @@
 import { path, caller, randomString } from '../common';
-//import * as data from 'data/templateTestData';
 import { experience } from 'config/getEnv';
-//import * as Constants from 'constants.json';
+import Constants from 'constants.json';
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
 const writeClient = caller(experience, PROTO_PATH, 'ExperienceTemplateWriteService');
 
@@ -34,7 +33,22 @@ export function addProperty(templateData, type) {
     });
 }
 
-export function modifyProperty(templateData, reqName, ruleName) {
+function defaultValue(valueType) {
+  let value;
+  switch (valueType) {
+    case 'stringValue':
+      value = 'string_default_value';
+      break;
+    case 'intValue':
+      value = {
+        "value": 10
+      }
+      break;
+  }
+  return value;
+}
+
+export function modifyProperty(templateData, reqName, ruleValue) {
   let type, value;
   switch (reqName) {
     case 'renameProperty':
@@ -48,8 +62,8 @@ export function modifyProperty(templateData, reqName, ruleName) {
       templateData.template.propertyKey = value;
       break;
     case 'changePropertyDefaultValue':
-      type = 'stringValue';
-      value = 'string_default_value';
+      type = ruleValue;
+      value = defaultValue(ruleValue);
       break;
     case 'changePropertyLocalizable':
       type = 'localizable';
@@ -58,7 +72,7 @@ export function modifyProperty(templateData, reqName, ruleName) {
     case 'enablePropertyRule':
     case 'disablePropertyRule':
       type = 'ruleKey';
-      value = ruleName;
+      value = ruleValue;
       break;
     case 'changePropertyPromptText':
       type = 'promptText';
@@ -110,10 +124,11 @@ export function removeFunction(templateData, reqName) {
     });
 }
 
-export function changePropertyRule(templateData, ruleName) {
+export function changePropertyRule(templateData, ruleType, ruleName) {
   let val;
   switch (ruleName) {
-    case 'characterCount':
+    case Constants.TemplateProperties.Rules.NumberRange:
+    case Constants.TemplateProperties.Rules.CharacterCount:
       val = {
         min: {
           value: 10
@@ -126,12 +141,12 @@ export function changePropertyRule(templateData, ruleName) {
         }
       };
       break;
-    case 'regex':
+    case Constants.TemplateProperties.Rules.Regex:
       val = {
         pattern: 'Hello'
       };
       break;
-    case 'required':
+    case Constants.TemplateProperties.Rules.Required:
       val = {
         is_required: true
       };
@@ -145,7 +160,7 @@ export function changePropertyRule(templateData, ruleName) {
     templateVersionId: templateData.template.templateVersionId,
     ruleKey: ruleName,
     userAccountId: 'abcd',
-    textRule: {
+    [ruleType]: {
       [ruleName]: val,
       errorMessage: 'error'
     }
