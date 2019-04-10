@@ -16,13 +16,14 @@ option go_package = "generated";
 
 service ExperienceTemplateReadService{
     rpc GetTemplateById (GetTemplateByIdRequest) returns (GetTemplateByIdResponse);
-    rpc GetPropertyTypes(GetPropertyTypesRequest) returns (GetPropertyTypesResponse);
     rpc GetTemplates (GetTemplatesRequest) returns (GetTemplatesResponse);
     rpc GetPropertyById (GetPropertyByIdRequest) returns (GetPropertyByIdResponse);
     rpc GetConfiguration (GetConfigurationRequest) returns (GetConfigurationResponse);
+    rpc SearchTemplates (SearchTemplatesRequest) returns (SearchTemplatesResponse);
 }
 
 service ExperienceTemplateWriteService{
+
     rpc CreateTemplate (CreateTemplateRequest) returns (CreateTemplateResponse);
     rpc RenameTemplate (RenameTemplateRequest) returns (RenameTemplateResponse);
     rpc ChangeTemplateKey (ChangeTemplateKeyRequest) returns (ChangeTemplateKeyResponse);
@@ -30,7 +31,9 @@ service ExperienceTemplateWriteService{
     rpc DeleteTemplate (DeleteTemplateRequest) returns (DeleteTemplateResponse);
     rpc CommitTemplate (CommitTemplateRequest) returns (CommitTemplateResponse); //changes state from 'draft' to 'committed'
     rpc AddTemplateToCollection (AddTemplateToCollectionRequest) returns (AddTemplateToCollectionResponse);
+    rpc RemoveTemplateFromCollection (RemoveTemplateFromCollectionRequest) returns (RemoveTemplateFromCollectionResponse);
     rpc RenameTemplateReference(RenameTemplateReferenceRequest) returns (RenameTemplateReferenceResponse);
+    rpc ChangeTemplateReferenceKey(ChangeTemplateReferenceKeyRequest) returns (ChangeTemplateReferenceKeyResponse);
 
     rpc AddProperty (AddPropertyRequest) returns (AddPropertyResponse);
     rpc RemoveProperty (RemovePropertyRequest) returns (RemovePropertyResponse);
@@ -152,24 +155,13 @@ message CommitTemplateResponse{
     int64 template_version_id = 2;
 }
 
-//GetPropertyTypes
-//-------------------------------------
-message GetPropertyTypesRequest{
-}
-
-message GetPropertyTypesResponse{
-    repeated PropertyType property_types = 1;
-}
-
 //GetTemplates
 //-------------------------------------
 message GetTemplatesRequest{
-	WorkspaceContext context = 1;
-	google.protobuf.Timestamp created_after = 2;
-	string keyword = 3; //name or key
-	ExperienceTemplateType template_type = 4;
-	bool exclude_draft = 5;
-	google.protobuf.Int32Value limit = 6;
+    WorkspaceContext context = 1;
+    google.protobuf.Timestamp created_after = 2;
+    string keyword = 3; //name or key
+    ExperienceTemplateType template_type = 4;
 }
 
 message GetTemplatesResponse{
@@ -473,8 +465,8 @@ message GetConfigurationResponse{
 //----------------------------------------------
 message AddTemplateToCollectionRequest{
     WorkspaceContext context = 1;
-    string collection_template_id  = 2;
-    int64 collection_template_version_id = 3;
+    string template_id  = 2;
+    int64 template_version_id = 3;
     google.protobuf.Timestamp row_version = 4;
     string child_template_id = 5;
     string user_account_id = 6;
@@ -487,12 +479,27 @@ message AddTemplateToCollectionResponse{
     int64 template_version_id = 3;
 }
 
+message RemoveTemplateFromCollectionRequest{
+    WorkspaceContext context = 1;
+    int64 template_id = 2;
+    int64 template_version_id = 3;
+    google.protobuf.Timestamp row_version = 4;
+    string child_reference_id  = 5;
+    string child_template_id  = 6;
+    string user_account_id = 7;
+}
+
+message RemoveTemplateFromCollectionResponse{    
+    google.protobuf.Timestamp row_version = 1;
+    int64 template_version_id = 2;
+}
+
 // RenameTemplateReference
 //-----------------------------------------------
 message RenameTemplateReferenceRequest{
     WorkspaceContext context = 1;
-    string collection_template_id  = 2;
-    int64 collection_template_version_id = 3;
+    string template_id  = 2;
+    int64 template_version_id = 3;
     google.protobuf.Timestamp row_version = 4;
     string child_reference_id = 5;
     string user_account_id = 6;
@@ -501,5 +508,39 @@ message RenameTemplateReferenceRequest{
 
 message RenameTemplateReferenceResponse{
     google.protobuf.Timestamp row_version = 1;
-    int64 collection_template_version_id  = 2;
+    int64 template_version_id  = 2;
+}
+
+// ChangeTemplateReferenceKey
+//---------------------------------------------
+message ChangeTemplateReferenceKeyRequest{
+    WorkspaceContext context = 1;
+    string template_id  = 2;
+    int64 template_version_id = 3;
+    google.protobuf.Timestamp row_version = 4;
+    string child_reference_id = 5;
+    string user_account_id = 6;
+    string key = 7;
+}
+
+message ChangeTemplateReferenceKeyResponse{
+    google.protobuf.Timestamp row_version = 1;
+    int64 template_version_id  = 2;
+}
+
+// SearchTemplates
+//-------------------------------------
+message SearchTemplatesRequest{
+    WorkspaceContext context = 1;
+    ExperienceTemplateType template_type = 2;
+    TemplateSearchMode search_mode = 3; 
+    google.protobuf.Int32Value limit = 4;
+    string order_by = 5; //name or ModifiedAt
+    OrderDirection order_direction = 6;
+    string keyword = 7; // name
+    google.protobuf.Timestamp created_after = 8;
+}
+
+message SearchTemplatesResponse{
+    repeated ExperienceTemplate templates = 1;
 }

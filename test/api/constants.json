@@ -56,10 +56,7 @@
       "avg_session_time": "Avg Session Time",
       "last_seen": "Last Seen"
     },
-    "PropertyGroupLabels": [
-      "Attributes",
-      "Behavior"
-    ],
+    "PropertyGroupLabels": ["Attributes", "Behavior"],
     "Operators": {
       "string_is": "is",
       "string_is_not": "is not",
@@ -94,11 +91,7 @@
       "STRING": 4,
       "BOOLEAN": 5
     },
-    "OperandGroupLabels": [
-      "",
-      "Relative",
-      "Absolute"
-    ]
+    "OperandGroupLabels": ["", "Relative", "Absolute"]
   },
   "TemplateProperties": {
     "Types": {

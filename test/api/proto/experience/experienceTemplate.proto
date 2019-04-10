@@ -52,3 +52,13 @@ enum ExperienceTemplateStatus {
     DRAFT = 0;
     COMMITTED = 1;
 }
+
+enum TemplateSearchMode {
+    ALL = 0; 
+    LASTCOMMITTED = 1; 
+}
+
+enum OrderDirection{
+    ASC = 0;
+    DESC = 1;
+}

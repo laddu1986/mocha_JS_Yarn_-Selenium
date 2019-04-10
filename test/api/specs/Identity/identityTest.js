@@ -1,4 +1,4 @@
-import { joi, Tags } from '../../../common';
+import { joi, Tags } from '../../common';
 import * as identity from 'actions/identity';
 import * as schemas from 'schemas/identitySchema';
 
