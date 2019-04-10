@@ -1,6 +1,5 @@
-import { path, caller, randomString } from '../common';
+import { path, caller } from '../common';
 import { experience } from 'config/getEnv';
-import * as Constants from 'constants.json';
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
 const writeClient = caller(experience, PROTO_PATH, 'ExperienceTemplateWriteService');
 const readClient = caller(experience, PROTO_PATH, 'ExperienceTemplateReadService');
@@ -13,18 +12,16 @@ function spaceContext(templateData) {
   };
 }
 
-export function createExperienceTemplate(templateData) {
+export function createExperienceTemplate(contextData, templateType, returnTemplates) {
   const req = new writeClient.Request('createTemplate', {
-    context: spaceContext(templateData),
-    name: randomString(12),
-    key: randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }),
-    templateType: Constants.Experience.Types.FIXED,
-    userAccountId: 'abcd'
+    context: spaceContext(contextData),
+    templateType,
+    userAccountId: contextData.identityID
   }).withResponseStatus(true);
   return req
     .exec()
     .then(response => {
-      templateData.template = response.response;
+      returnTemplates.push(response.response);
       return response;
     })
     .catch(err => {
@@ -32,34 +29,35 @@ export function createExperienceTemplate(templateData) {
     });
 }
 
-export function changeTemplate(templateData, type, value) {
+export function changeTemplate(contextData, templateObject, type, value) {
   let reqName;
   switch (type) {
     case 'name':
       reqName = 'renameTemplate';
-      templateData.template.name = value;
+      templateObject.name = value;
       break;
     case 'key':
       reqName = 'changeTemplateKey';
-      templateData.template.key = value;
+      templateObject.key = value;
       break;
     case 'thumbnailUrl':
       reqName = 'changeThumbnail';
-      templateData.template.thumbnailUrl = value;
+      templateObject.thumbnailUrl = value;
       break;
   }
   const req = new writeClient.Request(reqName, {
-    context: spaceContext(templateData),
-    templateId: templateData.template.templateId,
+    context: spaceContext(contextData),
+    templateId: templateObject.templateId,
     [type]: value,
-    userAccountId: 'abcd',
-    rowVersion: templateData.template.rowVersion,
-    templateVersionId: templateData.template.templateVersionId
+    userAccountId: contextData.identityID,
+    rowVersion: templateObject.rowVersion,
+    templateVersionId: templateObject.templateVersionId
   }).withResponseStatus(true);
   return req
     .exec()
     .then(response => {
-      templateData.template.rowVersion = response.response.rowVersion;
+      templateObject.rowVersion = response.response.rowVersion;
+      templateObject.templateVersionId = response.response.templateVersionId;
       return response;
     })
     .catch(err => {
@@ -67,43 +65,75 @@ export function changeTemplate(templateData, type, value) {
     });
 }
 
-export function getTemplates(templateData) {
+export function getTemplates(contextData, keyword) {
   const req = new readClient.Request('getTemplates', {
-    context: spaceContext(templateData),
-    keyword: templateData.template.name
+    context: spaceContext(contextData),
+    keyword
   }).withResponseStatus(true);
   return req.exec();
 }
 
-export function deleteExperienceTemplate(templateData) {
+export function deleteExperienceTemplate(contextData, templateObject) {
   const req = new writeClient.Request('deleteTemplate', {
-    context: spaceContext(templateData),
-    templateId: templateData.template.templateId,
-    rowVersion: templateData.template.rowVersion,
-    userAccountId: 'abcd'
+    context: spaceContext(contextData),
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    userAccountId: contextData.identityID
   }).withResponseStatus(true);
   return req.exec();
 }
 
-export function getPropertyById(templateData) {
+export function getPropertyById(contextData, templateObject) {
   const req = new readClient.Request('getPropertyById', {
-    context: spaceContext(templateData),
-    templateId: templateData.template.templateId,
-    propertyId: templateData.template.propertyId,
-    templateVersionId: templateData.template.templateVersionId
+    context: spaceContext(contextData),
+    templateId: templateObject.templateId,
+    propertyId: templateObject.propertyId,
+    templateVersionId: templateObject.templateVersionId
   }).withResponseStatus(true);
   return req.exec();
 }
 
-export function getTemplateById(templateData) {
+export function getTemplateById(contextData, templateObject) {
   const req = new readClient.Request('getTemplateById', {
-    context: spaceContext(templateData),
-    templateId: templateData.template.templateId
+    context: spaceContext(contextData),
+    templateId: templateObject.templateId
   }).withResponseStatus(true);
-  return req.exec();
+  return req.exec().then(response => {
+    Object.assign(templateObject, response.response.template);
+    return response;
+  });
 }
 
 export function getConfiguration() {
   const req = new readClient.Request('getConfiguration', {}).withResponseStatus(true);
   return req.exec();
+}
+
+export function commitTemplate(contextData, templateObject) {
+  const req = new writeClient.Request('commitTemplate', {
+    context: spaceContext(contextData),
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    accountId: contextData.identityID,
+    templateVersionId: templateObject.templateVersionId
+  }).withResponseStatus(true);
+  return req.exec().then(response => {
+    templateObject.rowVersion = response.response.rowVersion;
+    return response;
+  });
+}
+
+export function addTemplateToCollection(contextData, parentObject, childObject, sortIndex) {
+  const req = new writeClient.Request('addTemplateToCollection', {
+    context: spaceContext(contextData),
+    templateVersionId: parentObject.templateVersionId,
+    rowVersion: parentObject.rowVersion,
+    childTemplateId: childObject.templateId,
+    sortIndex
+  }).withResponseStatus(true);
+
+  return req.exec().then(response => {
+    parentObject.rowVersion = response.response.rowVersion;
+    return response;
+  });
 }

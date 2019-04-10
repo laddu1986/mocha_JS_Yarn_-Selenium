@@ -1,4 +1,5 @@
 --require babel-register 
 --timeout 20000 
+--recursive
 --reporter mocha-testrail-reporter-custom
 --require dotenv/config

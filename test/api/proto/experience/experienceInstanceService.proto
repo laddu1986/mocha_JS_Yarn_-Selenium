@@ -12,6 +12,7 @@ service ExperienceInstanceReadService {
   // Experience actions:
   rpc GetExperience(GetExperienceRequest) returns (GetExperienceResponse);
   rpc GetScenario(GetScenarioRequest) returns (GetScenarioResponse);
+  rpc GetTemplateInstanceIds(GetTemplateInstanceIdsRequest) returns (GetTemplateInstanceIdsResponse);
 }
 
 
@@ -84,6 +85,14 @@ message GetScenarioResponse{
   ScenarioDetails scenario = 1;
 }
 
+message GetTemplateInstanceIdsRequest {
+  WorkspaceContext context = 1;
+  repeated string template_ids = 2;
+}
+
+message GetTemplateInstanceIdsResponse {
+  repeated TemplateInstanceIds template_instance_ids = 1;
+}
 
 message RenameExperienceRequest{
   WorkspaceContext context = 1;

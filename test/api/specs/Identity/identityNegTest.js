@@ -1,4 +1,4 @@
-import * as lib from '../../../common';
+import * as lib from '../../common';
 import * as data from 'data/identityTestsData.js';
 import * as identity from 'actions/identity.js';
 import * as validationErrors from 'data/validationErrorsData.json';
