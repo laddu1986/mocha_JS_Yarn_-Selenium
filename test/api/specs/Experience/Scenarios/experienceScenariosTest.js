@@ -32,25 +32,25 @@ describe('@experience Experience Scenarios Tests', () => {
   });
   it('C1857191 getScenario() gets a scenario instance', async () => {
     await instances.getExperience(instanceData, instanceData.instances[0]);
-    let getScenario = await instances.getScenario(instanceData, instanceData.instances[0].scenarios[0].id);
+    let getScenario = await instances.getScenario(instanceData, instanceData.instances[0], 0);
     expect(getScenario.status.code).to.equal(0);
   });
   it('C1857192 renameScenario() sends a request to rename a scenario', async () => {
     await instances.getExperience(instanceData, instanceData.instances[0]);
     let renameScenario = await instances.renameScenario(instanceData, instanceData.instances[0], 1, randomString());
-    let renameConfirm = await instances.getScenario(instanceData, instanceData.instances[0].scenarios[1].id);
+    let renameConfirm = await instances.getScenario(instanceData, instanceData.instances[0], 1);
     expect(renameScenario.status.code).to.equal(0);
     expect(renameConfirm.response.scenario.name).to.not.equal(undefined);
   });
   it('C1857194 changeScenarioEnabled() sends a request to enable a scenario', async () => {
     let enableScenario = await instances.changeScenarioEnabled(instanceData, instanceData.instances[0], 1, true);
-    let enableConfirm = await instances.getScenario(instanceData, instanceData.instances[0].scenarios[1].id);
+    let enableConfirm = await instances.getScenario(instanceData, instanceData.instances[0], 1);
     expect(enableScenario.status.code).to.equal(0);
     expect(enableConfirm.response.scenario.isEnabled).to.equal(true);
   });
   it('C1857196 changeScenarioEnabled() sends a request to disable a scenario', async () => {
     let disableScenario = await instances.changeScenarioEnabled(instanceData, instanceData.instances[0], 1, false);
-    let disableConfirm = await instances.getScenario(instanceData, instanceData.instances[0].scenarios[1].id);
+    let disableConfirm = await instances.getScenario(instanceData, instanceData.instances[0], 1);
     expect(disableScenario.status.code).to.equal(0);
     expect(disableConfirm.response.scenario).to.not.have.keys('isEnabled');
   });
@@ -61,14 +61,14 @@ describe('@experience Experience Scenarios Tests', () => {
       timezone: ''
     };
     let setSchedule = await instances.setScenarioSchedule(instanceData, instanceData.instances[0], 1, schedule);
-    let scheduleConfirm = await instances.getScenario(instanceData, instanceData.instances[0].scenarios[1].id);
+    let scheduleConfirm = await instances.getScenario(instanceData, instanceData.instances[0], 1);
     expect(setSchedule.status.code).to.equal(0);
     expect(scheduleConfirm.response.scenario.schedule).to.not.equal(null);
   });
   it('setScenarioSchedule() sends a request to remove the schedule of a scenario', async () => {
     let schedule = null;
     let removeSchedule = await instances.setScenarioSchedule(instanceData, instanceData.instances[0], 1, schedule);
-    let scheduleConfirm = await instances.getScenario(instanceData, instanceData.instances[0].scenarios[1].id);
+    let scheduleConfirm = await instances.getScenario(instanceData, instanceData.instances[0], 1);
     expect(removeSchedule.status.code).to.equal(0);
     expect(scheduleConfirm.response.scenario).to.not.have.keys('schedule');
   });

@@ -124,11 +124,11 @@ export function publishExperience(contextData, instanceObject) {
  *  Scenarios
  */
 
-export function getScenario(instanceData, scenarioid) {
+export function getScenario(contextData, instanceObject, scenarioIndex) {
   const req = new readClient.Request('getScenario', {
-    context: workspaceContext(instanceData),
-    experienceId: instanceData.instances['0'].id,
-    id: scenarioid
+    context: workspaceContext(contextData),
+    experienceId: instanceObject.id,
+    id: instanceObject.scenarios[scenarioIndex].id
   }).withResponseStatus(true);
 
   return req.exec();
@@ -148,18 +148,18 @@ export function addScenario(contextData, instanceObject) {
   });
 }
 
-export function renameScenario(contextData, instanceObject, scenarioindex, name) {
+export function renameScenario(contextData, instanceObject, scenarioIndex, name) {
   const req = new writeClient.Request('renameScenario', {
     context: workspaceContext(contextData),
     experienceId: instanceObject.id,
-    scenarioId: instanceObject.scenarios[scenarioindex].id,
+    scenarioId: instanceObject.scenarios[scenarioIndex].id,
     accountId: contextData.identityID,
-    rowVersion: instanceObject.scenarios[scenarioindex].rowVersion,
+    rowVersion: instanceObject.scenarios[scenarioIndex].rowVersion,
     name
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceObject.scenarios[scenarioindex].rowVersion = response.response.updates.scenarios[0].rowVersion;
+    instanceObject.scenarios[scenarioIndex].rowVersion = response.response.updates.scenarios[0].rowVersion;
     instanceObject.versionRowVersion = response.response.updates.experiences[0].rowVersion;
     return response;
   });
@@ -180,27 +180,27 @@ export function removeScenario(contextData, instanceObject, scenarioid) {
   });
 }
 
-export function changeScenarioEnabled(contextData, instanceObject, scenarioindex, enabled) {
+export function changeScenarioEnabled(contextData, instanceObject, scenarioIndex, enabled) {
   const req = new writeClient.Request('changeScenarioEnabled', {
     context: workspaceContext(contextData),
     experienceId: instanceObject.id,
-    scenarioId: instanceObject.scenarios[scenarioindex].id,
+    scenarioId: instanceObject.scenarios[scenarioIndex].id,
     accountId: contextData.identityID,
-    rowVersion: instanceObject.scenarios[scenarioindex].rowVersion,
+    rowVersion: instanceObject.scenarios[scenarioIndex].rowVersion,
     enabled
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    instanceObject.scenarios[scenarioindex].rowVersion = response.response.updates.scenarios[0].rowVersion;
+    instanceObject.scenarios[scenarioIndex].rowVersion = response.response.updates.scenarios[0].rowVersion;
     instanceObject.versionRowVersion = response.response.updates.experiences[0].rowVersion;
     return response;
   });
 }
 
-export function duplicateScenario(contextData, instanceObject, scenarioindex) {
+export function duplicateScenario(contextData, instanceObject, scenarioIndex) {
   const req = new writeClient.Request('duplicateScenario', {
     context: workspaceContext(contextData),
-    scenarioId: instanceObject.scenarios[scenarioindex].id,
+    scenarioId: instanceObject.scenarios[scenarioIndex].id,
     experienceId: instanceObject.id,
     accountId: contextData.identityID,
     rowVersion: instanceObject.versionRowVersion

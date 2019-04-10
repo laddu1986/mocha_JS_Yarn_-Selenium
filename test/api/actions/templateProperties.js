@@ -175,22 +175,3 @@ export function changePropertyRule(contextData, templateObject, ruleType, ruleNa
       return err;
     });
 }
-
-export function commitTemplate(contextData, templateObject) {
-  const req = new writeClient.Request('commitTemplate', {
-    context: spaceContext(contextData),
-    templateId: templateObject.templateId,
-    rowVersion: templateObject.rowVersion,
-    templateVersionId: templateObject.templateVersionId,
-    userAccountId: contextData.identityID
-  }).withResponseStatus(true);
-  return req
-    .exec()
-    .then(response => {
-      templateObject.rowVersion = response.response.rowVersion;
-      return response;
-    })
-    .catch(err => {
-      return err;
-    });
-}
