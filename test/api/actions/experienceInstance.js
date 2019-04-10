@@ -31,8 +31,8 @@ const requestProto = (contextData, instanceObject) => {
 // Long process of creating instances
 export async function createInstances(instanceData) {
   let opts = { length: 12, charset: 'alphabetic', capitalization: 'lowercase' };
-  await templates.createExperienceTemplate(instanceData, Constants.Experience.Types.FIXED, instanceData.templates);
-  await templates.createExperienceTemplate(instanceData, Constants.Experience.Types.COLLECTION, instanceData.templates);
+  await templates.createExperienceTemplate(instanceData, Constants.Experience.Types.Fixed, instanceData.templates);
+  await templates.createExperienceTemplate(instanceData, Constants.Experience.Types.Collection, instanceData.templates);
   await templates.changeTemplate(instanceData, instanceData.templates[0], 'name', randomString());
   await templates.changeTemplate(instanceData, instanceData.templates[0], 'key', randomString(opts));
   await templates.changeTemplate(instanceData, instanceData.templates[1], 'name', randomString());

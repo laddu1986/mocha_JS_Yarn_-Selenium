@@ -1,32 +1,31 @@
 import { path, caller, randomString } from '../common';
-//import * as data from 'data/templateTestData';
 import { experience } from 'config/getEnv';
-//import * as Constants from 'constants.json';
+import Constants from 'constants.json';
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
 const writeClient = caller(experience, PROTO_PATH, 'ExperienceTemplateWriteService');
 
-function spaceContext(templateData) {
+function spaceContext(contextData) {
   return {
-    orgId: templateData.orgID,
-    spaceId: templateData.spaceID,
-    workspaceId: templateData.spaceID
+    orgId: contextData.orgID,
+    spaceId: contextData.spaceID,
+    workspaceId: contextData.spaceID
   };
 }
 
-export function addProperty(templateData, type) {
+export function addProperty(contextData, templateObject, type) {
   const req = new writeClient.Request('addProperty', {
-    context: spaceContext(templateData),
+    context: spaceContext(contextData),
     propertyType: type,
-    templateId: templateData.template.templateId,
-    rowVersion: templateData.template.rowVersion,
-    templateVersionId: templateData.template.templateVersionId,
-    userAccountId: 'abcd'
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    templateVersionId: templateObject.templateVersionId,
+    userAccountId: contextData.identityID
   }).withResponseStatus(true);
   return req
     .exec()
     .then(response => {
-      templateData.template.propertyId = response.response.propertyId;
-      templateData.template.rowVersion = response.response.rowVersion;
+      templateObject.propertyId = response.response.propertyId;
+      templateObject.rowVersion = response.response.rowVersion;
       return response;
     })
     .catch(err => {
@@ -34,22 +33,37 @@ export function addProperty(templateData, type) {
     });
 }
 
-export function modifyProperty(templateData, reqName, ruleName) {
+function defaultValue(valueType) {
+  let value;
+  switch (valueType) {
+    case 'stringValue':
+      value = 'string_default_value';
+      break;
+    case 'intValue':
+      value = {
+        value: 10
+      };
+      break;
+  }
+  return value;
+}
+
+export function modifyProperty(contextData, templateObject, reqName, ruleValue) {
   let type, value;
   switch (reqName) {
     case 'renameProperty':
       type = 'propertyName';
       value = randomString(12);
-      templateData.template.propertyName = value;
+      templateObject.propertyName = value;
       break;
     case 'changePropertyKey':
       type = 'propertyKey';
       value = randomString({ length: 8, charset: 'alphabetic', capitalization: 'lowercase' });
-      templateData.template.propertyKey = value;
+      templateObject.propertyKey = value;
       break;
     case 'changePropertyDefaultValue':
-      type = 'stringValue';
-      value = 'string_default_value';
+      type = ruleValue;
+      value = defaultValue(ruleValue);
       break;
     case 'changePropertyLocalizable':
       type = 'localizable';
@@ -58,7 +72,7 @@ export function modifyProperty(templateData, reqName, ruleName) {
     case 'enablePropertyRule':
     case 'disablePropertyRule':
       type = 'ruleKey';
-      value = ruleName;
+      value = ruleValue;
       break;
     case 'changePropertyPromptText':
       type = 'promptText';
@@ -71,18 +85,18 @@ export function modifyProperty(templateData, reqName, ruleName) {
   }
 
   const req = new writeClient.Request(reqName, {
-    context: spaceContext(templateData),
+    context: spaceContext(contextData),
     [type]: value,
-    propertyId: templateData.template.propertyId,
-    templateId: templateData.template.templateId,
-    rowVersion: templateData.template.rowVersion,
-    templateVersionId: templateData.template.templateVersionId,
-    userAccountId: 'abcd'
+    propertyId: templateObject.propertyId,
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    templateVersionId: templateObject.templateVersionId,
+    userAccountId: contextData.identityID
   }).withResponseStatus(true);
   return req
     .exec()
     .then(response => {
-      templateData.template.rowVersion = response.response.rowVersion;
+      templateObject.rowVersion = response.response.rowVersion;
       return response;
     })
     .catch(err => {
@@ -90,19 +104,19 @@ export function modifyProperty(templateData, reqName, ruleName) {
     });
 }
 
-export function removeFunction(templateData, reqName) {
+export function removeFunction(contextData, templateObject, reqName) {
   const req = new writeClient.Request(reqName, {
-    context: spaceContext(templateData),
-    propertyId: templateData.template.propertyId,
-    templateId: templateData.template.templateId,
-    rowVersion: templateData.template.rowVersion,
-    templateVersionId: templateData.template.templateVersionId,
-    userAccountId: 'abcd'
+    context: spaceContext(contextData),
+    propertyId: templateObject.propertyId,
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    templateVersionId: templateObject.templateVersionId,
+    userAccountId: contextData.identityID
   }).withResponseStatus(true);
   return req
     .exec()
     .then(response => {
-      templateData.template.rowVersion = response.response.rowVersion;
+      templateObject.rowVersion = response.response.rowVersion;
       return response;
     })
     .catch(err => {
@@ -110,10 +124,11 @@ export function removeFunction(templateData, reqName) {
     });
 }
 
-export function changePropertyRule(templateData, ruleName) {
+export function changePropertyRule(contextData, templateObject, ruleType, ruleName) {
   let val;
   switch (ruleName) {
-    case 'characterCount':
+    case Constants.TemplateProperties.Rules.NumberRange:
+    case Constants.TemplateProperties.Rules.CharacterCount:
       val = {
         min: {
           value: 10
@@ -126,26 +141,26 @@ export function changePropertyRule(templateData, ruleName) {
         }
       };
       break;
-    case 'regex':
+    case Constants.TemplateProperties.Rules.Regex:
       val = {
         pattern: 'Hello'
       };
       break;
-    case 'required':
+    case Constants.TemplateProperties.Rules.Required:
       val = {
         is_required: true
       };
       break;
   }
   const req = new writeClient.Request('changePropertyRule', {
-    context: spaceContext(templateData),
-    propertyId: templateData.template.propertyId,
-    templateId: templateData.template.templateId,
-    rowVersion: templateData.template.rowVersion,
-    templateVersionId: templateData.template.templateVersionId,
+    context: spaceContext(contextData),
+    propertyId: templateObject.propertyId,
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    templateVersionId: templateObject.templateVersionId,
     ruleKey: ruleName,
     userAccountId: 'abcd',
-    textRule: {
+    [ruleType]: {
       [ruleName]: val,
       errorMessage: 'error'
     }
@@ -153,7 +168,7 @@ export function changePropertyRule(templateData, ruleName) {
   return req
     .exec()
     .then(response => {
-      templateData.template.rowVersion = response.response.rowVersion;
+      templateObject.rowVersion = response.response.rowVersion;
       return response;
     })
     .catch(err => {
@@ -161,18 +176,18 @@ export function changePropertyRule(templateData, ruleName) {
     });
 }
 
-export function commitTemplate(templateData) {
+export function commitTemplate(contextData, templateObject) {
   const req = new writeClient.Request('commitTemplate', {
-    context: spaceContext(templateData),
-    templateId: templateData.template.templateId,
-    rowVersion: templateData.template.rowVersion,
-    templateVersionId: templateData.template.templateVersionId,
-    userAccountId: 'abcd'
+    context: spaceContext(contextData),
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    templateVersionId: templateObject.templateVersionId,
+    userAccountId: contextData.identityID
   }).withResponseStatus(true);
   return req
     .exec()
     .then(response => {
-      templateData.template.rowVersion = response.response.rowVersion;
+      templateObject.rowVersion = response.response.rowVersion;
       return response;
     })
     .catch(err => {
