@@ -117,15 +117,15 @@ export function createTemplateSchema() {
     .required();
 }
 
-export function templatesSchema(templateData) {
+export function templatesSchema(templateObject) {
   return joi
     .object()
     .keys({
       templates: joi.array().items(
         joi.object().keys({
-          id: joi.valid(templateData.template.templateId).required(),
-          key: joi.only(templateData.template.key).required(),
-          name: joi.only(templateData.template.name).required(),
+          id: joi.valid(templateObject.templateId).required(),
+          key: joi.only(templateObject.key).required(),
+          name: joi.only(templateObject.name).required(),
           thumbnailUrl: joi.valid('thumbnail_url').required(),
           rowVersion: protoTimeStamp,
           templateVersionId: protoLong
@@ -135,19 +135,19 @@ export function templatesSchema(templateData) {
     .required();
 }
 
-export function templateByIDSchema(templateData) {
+export function templateByIDSchema(contextObject, templateObject) {
   return joi
     .object()
     .keys({
       template: joi.object().keys({
-        id: joi.valid(templateData.template.templateId).required(),
-        key: joi.only(templateData.template.key).required(),
-        name: joi.only(templateData.template.name).required(),
+        id: joi.valid(templateObject.templateId).required(),
+        key: joi.only(templateObject.key).required(),
+        name: joi.only(templateObject.name).required(),
         thumbnailUrl: joi.valid('thumbnail_url').required(),
         rowVersion: protoTimeStamp,
         templateVersionId: protoLong,
         modifiedAt: protoTimeStamp,
-        modifiedBy: joi.valid('abcd').required()
+        modifiedBy: joi.valid(contextObject.identityID).required()
       })
     })
     .required();

@@ -3,6 +3,7 @@ import * as instances from 'actions/experienceInstance';
 import { postIdentity, deleteIdentityById } from 'actions/identity';
 import { postOrganization, deleteOrganizationById } from 'actions/organization';
 import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions/spaces';
+import { deleteExperienceTemplate } from '../../../actions/templates';
 
 const instanceData = {
   templates: [],
@@ -64,5 +65,7 @@ describe('@experience Experience Instances Tests', () => {
     await deleteIdentityById(instanceData);
     await deleteOrganizationById(instanceData);
     await deleteSpaceByOrgIdAndSpaceId(instanceData);
+    await deleteExperienceTemplate(instanceData, instanceData.templates[1]);
+    await deleteExperienceTemplate(instanceData, instanceData.templates[0]);
   });
 });

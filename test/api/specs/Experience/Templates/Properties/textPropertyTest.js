@@ -186,7 +186,7 @@ describe('@experience Template Service -> Template Properties', () => {
     joi.assert(response.response, schemas.getPropertySchema());
   });
   it('commitTemplate() commit a template', async () => {
-    let response = await properties.commitTemplate(templateData, templateData.templates[0]);
+    let response = await templates.commitTemplate(templateData, templateData.templates[0]);
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.renamePropertySchema());
   });
