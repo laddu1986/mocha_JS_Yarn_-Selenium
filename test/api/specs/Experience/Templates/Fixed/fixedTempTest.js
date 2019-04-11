@@ -6,7 +6,6 @@ import * as templates from 'actions/templates';
 import * as Constants from 'constants.json';
 import * as schemas from 'schemas/templatesSchema.js';
 const templateData = new Object();
-templateData.templates = [];
 var createTemplate;
 
 describe('@experience Experience Template Service', () => {
@@ -14,11 +13,7 @@ describe('@experience Experience Template Service', () => {
     await postIdentity(templateData);
     await postOrganization(templateData);
     await postSpaceByOrganizationId(templateData);
-    createTemplate = await templates.createExperienceTemplate(
-      templateData,
-      Constants.Experience.Types.FIXED,
-      templateData.templates
-    );
+    createTemplate = await templates.createExperienceTemplate(templateData, templateData, Constants.Experience.Types.FIXED, templateData);
   });
 
   it('C1458992 createTemplate() creates a template', async () => {
