@@ -18,9 +18,9 @@ function workspaceContext(instanceData) {
 const requestProto = (contextData, instanceObject) => {
   return {
     context: workspaceContext(contextData),
-    experienceId: instanceObject.id,
+    experienceId: instanceObject,
     accountId: contextData.identityID,
-    rowVersion: instanceObject.versionRowVersion
+    rowVersion: contextData.experience.versionRowVersion
   };
 };
 
@@ -29,76 +29,72 @@ const requestProto = (contextData, instanceObject) => {
 */
 
 // Long process of creating instances
-export async function createInstances(instanceData) {
+export async function createInstances(fixedTemplateData, collectionTemplateData) {
   let opts = { length: 12, charset: 'alphabetic', capitalization: 'lowercase' };
-  await templates.createExperienceTemplate(instanceData, Constants.Experience.Types.Fixed, instanceData.templates);
-  await templates.createExperienceTemplate(instanceData, Constants.Experience.Types.Collection, instanceData.templates);
-  await templates.changeTemplate(instanceData, instanceData.templates[0], 'name', randomString());
-  await templates.changeTemplate(instanceData, instanceData.templates[0], 'key', randomString(opts));
-  await templates.changeTemplate(instanceData, instanceData.templates[1], 'name', randomString());
-  await templates.changeTemplate(instanceData, instanceData.templates[1], 'key', randomString(opts));
-  await templates.commitTemplate(instanceData, instanceData.templates[0]);
-  await templates.addTemplateToCollection(instanceData, instanceData.templates[1], instanceData.templates[0], 0);
-  await templates.commitTemplate(instanceData, instanceData.templates[1]);
+  await templates.createExperienceTemplate(fixedTemplateData, Constants.Experience.Types.Fixed);
+  await templates.createExperienceTemplate(collectionTemplateData, Constants.Experience.Types.Collection);
+  await templates.changeTemplate(fixedTemplateData, 'name', randomString());
+  await templates.changeTemplate(fixedTemplateData, 'key', randomString(opts));
+  await templates.changeTemplate(collectionTemplateData, 'name', randomString());
+  await templates.changeTemplate(collectionTemplateData, 'key', randomString(opts));
+  await templates.commitTemplate(fixedTemplateData);
+  await templates.addTemplateToCollection(collectionTemplateData, fixedTemplateData, 0);
+  await templates.commitTemplate(collectionTemplateData);
 }
 
 // This will overrite the `returnInstances` object you pass in
-export function getTemplateInstanceIds(instanceData, templateIds, returnInstances) {
+export function getTemplateInstanceIds(instanceData, templateIds) {
+  var returnarray = [];
   const req = new readClient.Request('getTemplateInstanceIds', {
     context: workspaceContext(instanceData),
     templateIds
   }).withResponseStatus(true);
-
   return req.exec().then(response => {
-    let returnObject = [];
     templateIds.forEach(templateId => {
       response.response.templateInstanceIds.forEach(template => {
         if (templateId == template.id) {
           template.instanceIds.forEach(id => {
-            returnObject.push({ id });
+            returnarray.push(id);
           });
         }
       });
     });
-
-    Object.assign(returnInstances, returnObject);
+    instanceData.instances = returnarray;
     return response;
   });
 }
 
 // Instance object will be updated with the latest experince info
-export function getExperience(contextData, instanceObject) {
+export function getExperience(instanceData, instanceObject) {
   const req = new readClient.Request('getExperience', {
-    context: workspaceContext(contextData),
-    id: instanceObject.id
+    context: workspaceContext(instanceData),
+    id: instanceObject
   }).withResponseStatus(true);
   return req.exec().then(response => {
-    Object.assign(instanceObject, response.response.experience);
+    instanceData.experience = response.response.experience;
     return response;
   });
 }
 
-export function renameExperience(contextData, instanceObject, name) {
+export function renameExperience(instanceData, instanceObject, name) {
   const req = new writeClient.Request('renameExperience', {
-    context: workspaceContext(contextData),
-    experienceId: instanceObject.id,
-    accountId: contextData.identityID,
-    rowVersion: instanceObject.versionRowVersion,
+    context: workspaceContext(instanceData),
+    experienceId: instanceObject,
+    accountId: instanceData.identityID,
+    rowVersion: instanceData.experience.versionRowVersion,
     name
   }).withResponseStatus(true);
   return req.exec().then(response => {
-    instanceObject.versionRowVersion = response.response.updates.rowVersion;
     return response;
   });
 }
 
-export function changeExperienceEnabled(contextData, instanceObject, enabled) {
-  const reqObject = requestProto(contextData, instanceObject);
+export function changeExperienceEnabled(instanceData, instanceObject, enabled) {
+  const reqObject = requestProto(instanceData, instanceObject);
   reqObject.enabled = enabled;
   const req = new writeClient.Request('changeExperienceEnabled', reqObject).withResponseStatus(true);
-
   return req.exec().then(response => {
-    instanceObject.versionRowVersion = response.response.updates.rowVersion;
+    instanceData.experience.versionRowVersion = response.response.updates.rowVersion;
     return response;
   });
 }
