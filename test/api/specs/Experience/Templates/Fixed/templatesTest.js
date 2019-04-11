@@ -1,4 +1,4 @@
-import { randomString, joi } from '../../../common';
+import { randomString, joi } from '../../../../common';
 import { postIdentity, deleteIdentityById } from 'actions/identity';
 import { postOrganization, deleteOrganizationById } from 'actions/organization';
 import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions/spaces';
