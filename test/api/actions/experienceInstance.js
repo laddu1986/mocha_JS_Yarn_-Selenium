@@ -50,18 +50,21 @@ export function getTemplateInstanceIds(instanceData, templateIds, returnInstance
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
-    let returnObject = [];
-    templateIds.forEach(templateId => {
-      response.response.templateInstanceIds.forEach(template => {
-        if (templateId == template.id) {
-          template.instanceIds.forEach(id => {
-            returnObject.push({ id });
-          });
-        }
+    if (Array.isArray(returnInstances)) {
+      let returnObject = [];
+      templateIds.forEach(templateId => {
+        response.response.templateInstanceIds.forEach(template => {
+          if (templateId == template.id) {
+            template.instanceIds.forEach(id => {
+              returnObject.push({ id });
+            });
+          }
+        });
       });
-    });
-
-    Object.assign(returnInstances, returnObject);
+      Object.assign(returnInstances, returnObject);
+    } else {
+      returnInstances.id = response.response.templateInstanceIds[0].instanceIds;
+    }
     return response;
   });
 }

@@ -26,6 +26,7 @@ export function addProperty(contextData, templateObject, type) {
     .then(response => {
       templateObject.propertyId = response.response.propertyId;
       templateObject.rowVersion = response.response.rowVersion;
+      templateObject.templateVersionId = response.response.templateVersionId;
       return response;
     })
     .catch(err => {
@@ -83,7 +84,6 @@ export function modifyProperty(contextData, templateObject, reqName, ruleValue) 
       value = 'help_text';
       break;
   }
-
   const req = new writeClient.Request(reqName, {
     context: spaceContext(contextData),
     [type]: value,
@@ -93,15 +93,11 @@ export function modifyProperty(contextData, templateObject, reqName, ruleValue) 
     templateVersionId: templateObject.templateVersionId,
     userAccountId: contextData.identityID
   }).withResponseStatus(true);
-  return req
-    .exec()
-    .then(response => {
-      templateObject.rowVersion = response.response.rowVersion;
-      return response;
-    })
-    .catch(err => {
-      return err;
-    });
+  return req.exec().then(response => {
+    templateObject.rowVersion = response.response.rowVersion;
+    templateObject.templateVersionId = response.response.templateVersionId;
+    return response;
+  });
 }
 
 export function removeFunction(contextData, templateObject, reqName) {
@@ -117,6 +113,7 @@ export function removeFunction(contextData, templateObject, reqName) {
     .exec()
     .then(response => {
       templateObject.rowVersion = response.response.rowVersion;
+      templateObject.templateVersionId = response.response.templateVersionId;
       return response;
     })
     .catch(err => {
