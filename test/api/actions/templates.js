@@ -93,9 +93,9 @@ export function getPropertyById(contextData, templateObject) {
   return req.exec();
 }
 
-export function getTemplateById(contextData, templateObject) {
+export function getTemplateById(templateObject) {
   const req = new readClient.Request('getTemplateById', {
-    context: spaceContext(contextData),
+    context: spaceContext(templateObject),
     templateId: templateObject.templateId
   }).withResponseStatus(true);
   return req.exec().then(response => {
@@ -131,7 +131,6 @@ export function addTemplateToCollection(parentObject, childObject, sortIndex) {
     childTemplateId: childObject.templateId,
     sortIndex
   }).withResponseStatus(true);
-
   return req.exec().then(response => {
     parentObject.rowVersion = response.response.rowVersion;
     return response;
