@@ -102,15 +102,15 @@ export function changeExperienceEnabled(instanceData, instanceObject, enabled) {
 export function publishExperience(contextData, instanceObject) {
   const req = new writeClient.Request('publishExperience', {
     context: workspaceContext(contextData),
-    experienceId: instanceObject.id,
+    experienceId: instanceObject,
     accountId: contextData.identityID,
-    rowVersion: instanceObject.versionRowVersion
+    rowVersion: contextData.experience.versionRowVersion
   }).withResponseStatus(true);
 
   return req.exec().then(response => {
     if (Object.keys(response.response.updates).length > 0) {
       // Do not update row version when already published
-      instanceObject.versionRowVersion = response.response.updates.experiences[0].rowVersion;
+      contextData.experience.versionRowVersion = response.response.updates.experiences[0].rowVersion;
     }
     return response;
   });

@@ -3,7 +3,7 @@ import * as instances from 'actions/experienceInstance';
 import { postIdentity, deleteIdentityById } from 'actions/identity';
 import { postOrganization, deleteOrganizationById } from 'actions/organization';
 import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions/spaces';
-import { deleteExperienceTemplate } from '../../../actions/templates';
+import { deleteExperienceTemplate, getTemplateById } from 'actions/templates';
 const instanceData = new Object();
 var fixedTemplateData = new Object();
 const collectionTemplateData = new Object();
@@ -61,7 +61,9 @@ describe.only('@experience Experience Instances Tests', () => {
     await deleteIdentityById(instanceData);
     await deleteOrganizationById(instanceData);
     await deleteSpaceByOrgIdAndSpaceId(instanceData);
-    //await deleteExperienceTemplate(fixedTemplateData);
-    //await deleteExperienceTemplate(collectionTemplateData);
+    await deleteExperienceTemplate(fixedTemplateData);
+    await getTemplateById(collectionTemplateData);
+    await deleteExperienceTemplate(collectionTemplateData);
+
   });
 });

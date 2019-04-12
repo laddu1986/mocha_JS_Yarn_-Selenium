@@ -13,19 +13,16 @@ const instanceData = {
   spaceID: '31c44019-9a78-43a8-a40f-2d53826f40d7',
   spaceRowVersion: '2019-04-09T01:46:48.322443Z',
   spaceName: 'BEhWAvc1XC',
-  spaceShortUrl: 'me3',
-  templates: [{ templateId: 'LRKYKq3' }, { templateId: '4nwr3Qm' }],
-  instances: []
+  spaceShortUrl: 'me3'
 };
+const fixedTemplateData = new Object();
+fixedTemplateData.templateId = 'LRKYKq3';
+const collectionTemplateData = new Object();
+collectionTemplateData.templateId = '4nwr3Qm';
 
 describe('@experience Experience Basic Redrafting Tests', () => {
   before('Setup the testing environment', async () => {
-    await instances.getTemplateInstanceIds(
-      instanceData,
-      [instanceData.templates[0].templateId, instanceData.templates[1].templateId],
-      instanceData.instances
-    );
-    await instances.getExperience(instanceData, instanceData.instances[0]);
+    await instances.getTemplateInstanceIds(instanceData, [fixedTemplateData.templateId, collectionTemplateData.templateId]);
     await instances.getExperience(instanceData, instanceData.instances[1]);
   });
   it('C1857174 publishExperience() sends a request to publish a collection', async () => {
@@ -35,23 +32,25 @@ describe('@experience Experience Basic Redrafting Tests', () => {
     expect(publishConfirm.response.experience.state).to.equal(Constants.Experience.State.COMMITTED);
   });
   it('C1857176 publishExperience() sends a request to publish an experience', async () => {
+    await instances.getExperience(instanceData, instanceData.instances[0]);
     let publishExperience = await instances.publishExperience(instanceData, instanceData.instances[0]);
     let publishConfirm = await instances.getExperience(instanceData, instanceData.instances[1]);
     expect(publishExperience.status.code).to.equal(0);
     expect(publishConfirm.response.experience.state).to.equal(Constants.Experience.State.COMMITTED);
   });
   it('C1857178 Updating an experience redrafts the experience', async () => {
+    await instances.getExperience(instanceData, instanceData.instances[0]);
     await instances.publishExperience(instanceData, instanceData.instances[0]);
     await instances.renameExperience(instanceData, instanceData.instances[0], randomString());
     let redraftExperience = await instances.getExperience(instanceData, instanceData.instances[0]);
     expect(redraftExperience.response.experience).to.not.have.keys('state');
+    await instances.publishExperience(instanceData, instanceData.instances[0]);
   });
   it('C1857179 Updating an fixed experience redrafts the collection', async () => {
     let redraftCollection = await instances.getExperience(instanceData, instanceData.instances[1]);
     expect(redraftCollection.response.experience).to.not.have.keys('state');
   });
   it('Updating a collection redrafts the collection', async () => {
-    await instances.publishExperience(instanceData, instanceData.instances[0]);
     await instances.publishExperience(instanceData, instanceData.instances[1]);
     await instances.renameExperience(instanceData, instanceData.instances[1], randomString());
     let redraftCollection = await instances.getExperience(instanceData, instanceData.instances[1]);
