@@ -1,22 +1,14 @@
-import { path, caller } from '../common';
+import { path, caller, context } from '../common';
 import { experience } from 'config/getEnv';
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
 const writeClient = caller(experience, PROTO_PATH, 'ExperienceTemplateWriteService');
 const readClient = caller(experience, PROTO_PATH, 'ExperienceTemplateReadService');
 
-function spaceContext(templateData) {
-  return {
-    orgId: templateData.orgID,
-    spaceId: templateData.spaceID,
-    workspaceId: templateData.spaceID
-  };
-}
-
 export function createExperienceTemplate(responseObject, templateType) {
   const req = new writeClient.Request('createTemplate', {
-    context: spaceContext(responseObject),
+    context,
     templateType,
-    userAccountId: responseObject.identityID
+    userAccountId: "abc"
   }).withResponseStatus(true);
   return req
     .exec()
@@ -46,10 +38,10 @@ export function changeTemplate(templateObject, type, value) {
       break;
   }
   const req = new writeClient.Request(reqName, {
-    context: spaceContext(templateObject),
+    context,
     templateId: templateObject.templateId,
     [type]: value,
-    userAccountId: templateObject.identityID,
+    userAccountId: "abc",
     rowVersion: templateObject.rowVersion,
     templateVersionId: templateObject.templateVersionId
   }).withResponseStatus(true);
@@ -65,9 +57,9 @@ export function changeTemplate(templateObject, type, value) {
     });
 }
 
-export function getTemplates(contextData, keyword) {
+export function getTemplates(keyword) {
   const req = new readClient.Request('getTemplates', {
-    context: spaceContext(contextData),
+    context,
     keyword
   }).withResponseStatus(true);
   return req.exec();
@@ -75,17 +67,17 @@ export function getTemplates(contextData, keyword) {
 
 export function deleteExperienceTemplate(templateObject) {
   const req = new writeClient.Request('deleteTemplate', {
-    context: spaceContext(templateObject),
+    context,
     templateId: templateObject.templateId,
     rowVersion: templateObject.rowVersion,
-    userAccountId: templateObject.identityID
+    userAccountId: "abc"
   }).withResponseStatus(true);
   return req.exec();
 }
 
-export function getPropertyById(contextData, templateObject) {
+export function getPropertyById(templateObject) {
   const req = new readClient.Request('getPropertyById', {
-    context: spaceContext(contextData),
+    context,
     templateId: templateObject.templateId,
     propertyId: templateObject.propertyId,
     templateVersionId: templateObject.templateVersionId
@@ -95,7 +87,7 @@ export function getPropertyById(contextData, templateObject) {
 
 export function getTemplateById(templateObject) {
   const req = new readClient.Request('getTemplateById', {
-    context: spaceContext(templateObject),
+    context,
     templateId: templateObject.templateId
   }).withResponseStatus(true);
   return req.exec().then(response => {
@@ -111,10 +103,10 @@ export function getConfiguration() {
 
 export function commitTemplate(templateObject) {
   const req = new writeClient.Request('commitTemplate', {
-    context: spaceContext(templateObject),
+    context,
     templateId: templateObject.templateId,
     rowVersion: templateObject.rowVersion,
-    accountId: templateObject.identityID,
+    accountId: "abc",
     templateVersionId: templateObject.templateVersionId
   }).withResponseStatus(true);
   return req.exec().then(response => {
@@ -125,7 +117,7 @@ export function commitTemplate(templateObject) {
 
 export function addTemplateToCollection(parentObject, childObject, sortIndex) {
   const req = new writeClient.Request('addTemplateToCollection', {
-    context: spaceContext(parentObject),
+    context,
     templateVersionId: parentObject.templateVersionId,
     rowVersion: parentObject.rowVersion,
     childTemplateId: childObject.templateId,

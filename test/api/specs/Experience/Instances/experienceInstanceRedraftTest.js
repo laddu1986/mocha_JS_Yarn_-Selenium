@@ -1,4 +1,4 @@
-import { randomString } from '../../../common';
+import { randomString, assignSpaceContext } from '../../../common';
 import * as instances from 'actions/experienceInstance';
 import * as Constants from 'constants.json';
 
@@ -15,13 +15,12 @@ const instanceData = {
   spaceName: 'BEhWAvc1XC',
   spaceShortUrl: 'me3'
 };
-const fixedTemplateData = new Object();
-fixedTemplateData.templateId = 'LRKYKq3';
-const collectionTemplateData = new Object();
-collectionTemplateData.templateId = '4nwr3Qm';
+const fixedTemplateData = { templateId: 'LRKYKq3' };
+const collectionTemplateData = { templateId: '4nwr3Qm' };
 
 describe('@experience Experience Basic Redrafting Tests', () => {
   before('Setup the testing environment', async () => {
+    assignSpaceContext(instanceData);
     await instances.getTemplateInstanceIds(instanceData, [fixedTemplateData.templateId, collectionTemplateData.templateId]);
     await instances.getExperience(instanceData, instanceData.instances[1]);
   });

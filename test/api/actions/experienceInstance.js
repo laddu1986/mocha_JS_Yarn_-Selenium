@@ -1,4 +1,4 @@
-import { path, caller, randomString } from '../common';
+import { path, caller, randomString, context } from '../common';
 import { experience } from 'config/getEnv';
 import * as templates from 'actions/templates';
 import * as Constants from 'constants.json';
@@ -7,19 +7,11 @@ const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR) + '/experience
 const readClient = caller(experience, PROTO_PATH, 'ExperienceInstanceReadService');
 const writeClient = caller(experience, PROTO_PATH, 'ExperienceInstanceWriteService');
 
-function workspaceContext(instanceData) {
-  return {
-    orgId: instanceData.orgID,
-    spaceId: instanceData.spaceID,
-    workspaceId: instanceData.spaceID
-  };
-}
-
 const requestProto = (contextData, instanceObject) => {
   return {
-    context: workspaceContext(contextData),
+    context,
     experienceId: instanceObject,
-    accountId: contextData.identityID,
+    accountId: "abc",
     rowVersion: contextData.experience.versionRowVersion
   };
 };
@@ -46,7 +38,7 @@ export async function createInstances(fixedTemplateData, collectionTemplateData)
 export function getTemplateInstanceIds(instanceData, templateIds) {
   var returnarray = [];
   const req = new readClient.Request('getTemplateInstanceIds', {
-    context: workspaceContext(instanceData),
+    context,
     templateIds
   }).withResponseStatus(true);
   return req.exec().then(response => {
@@ -67,7 +59,7 @@ export function getTemplateInstanceIds(instanceData, templateIds) {
 // Instance object will be updated with the latest experince info
 export function getExperience(instanceData, instanceObject) {
   const req = new readClient.Request('getExperience', {
-    context: workspaceContext(instanceData),
+    context,
     id: instanceObject
   }).withResponseStatus(true);
   return req.exec().then(response => {
@@ -78,9 +70,9 @@ export function getExperience(instanceData, instanceObject) {
 
 export function renameExperience(instanceData, instanceObject, name) {
   const req = new writeClient.Request('renameExperience', {
-    context: workspaceContext(instanceData),
+    context,
     experienceId: instanceObject,
-    accountId: instanceData.identityID,
+    accountId: "abc",
     rowVersion: instanceData.experience.versionRowVersion,
     name
   }).withResponseStatus(true);
@@ -101,9 +93,9 @@ export function changeExperienceEnabled(instanceData, instanceObject, enabled) {
 
 export function publishExperience(contextData, instanceObject) {
   const req = new writeClient.Request('publishExperience', {
-    context: workspaceContext(contextData),
+    context,
     experienceId: instanceObject,
-    accountId: contextData.identityID,
+    accountId: "abc",
     rowVersion: contextData.experience.versionRowVersion
   }).withResponseStatus(true);
 
@@ -120,9 +112,9 @@ export function publishExperience(contextData, instanceObject) {
  *  Scenarios
  */
 
-export function getScenario(contextData, instanceObject, scenarioIndex) {
+export function getScenario(instanceObject, scenarioIndex) {
   const req = new readClient.Request('getScenario', {
-    context: workspaceContext(contextData),
+    context,
     experienceId: instanceObject.id,
     id: instanceObject.scenarios[scenarioIndex].id
   }).withResponseStatus(true);
@@ -130,11 +122,11 @@ export function getScenario(contextData, instanceObject, scenarioIndex) {
   return req.exec();
 }
 
-export function addScenario(contextData, instanceObject) {
+export function addScenario(instanceObject) {
   const req = new writeClient.Request('addScenario', {
-    context: workspaceContext(contextData),
+    context,
     experienceId: instanceObject.id,
-    accountId: contextData.identityID,
+    accountId: "abc",
     rowVersion: instanceObject.versionRowVersion
   }).withResponseStatus(true);
 
@@ -144,12 +136,12 @@ export function addScenario(contextData, instanceObject) {
   });
 }
 
-export function renameScenario(contextData, instanceObject, scenarioIndex, name) {
+export function renameScenario(instanceObject, scenarioIndex, name) {
   const req = new writeClient.Request('renameScenario', {
-    context: workspaceContext(contextData),
+    context,
     experienceId: instanceObject.id,
     scenarioId: instanceObject.scenarios[scenarioIndex].id,
-    accountId: contextData.identityID,
+    accountId: "abc",
     rowVersion: instanceObject.scenarios[scenarioIndex].rowVersion,
     name
   }).withResponseStatus(true);
@@ -161,12 +153,12 @@ export function renameScenario(contextData, instanceObject, scenarioIndex, name)
   });
 }
 
-export function removeScenario(contextData, instanceObject, scenarioid) {
+export function removeScenario(instanceObject, scenarioid) {
   const req = new writeClient.Request('removeScenario', {
-    context: workspaceContext(contextData),
+    context,
     experienceId: instanceObject.id,
     scenarioId: scenarioid,
-    accountId: contextData.identityID,
+    accountId: "abc",
     rowVersion: instanceObject.versionRowVersion
   }).withResponseStatus(true);
 
@@ -176,12 +168,12 @@ export function removeScenario(contextData, instanceObject, scenarioid) {
   });
 }
 
-export function changeScenarioEnabled(contextData, instanceObject, scenarioIndex, enabled) {
+export function changeScenarioEnabled(instanceObject, scenarioIndex, enabled) {
   const req = new writeClient.Request('changeScenarioEnabled', {
-    context: workspaceContext(contextData),
+    context,
     experienceId: instanceObject.id,
     scenarioId: instanceObject.scenarios[scenarioIndex].id,
-    accountId: contextData.identityID,
+    accountId: "abc",
     rowVersion: instanceObject.scenarios[scenarioIndex].rowVersion,
     enabled
   }).withResponseStatus(true);
@@ -193,12 +185,12 @@ export function changeScenarioEnabled(contextData, instanceObject, scenarioIndex
   });
 }
 
-export function duplicateScenario(contextData, instanceObject, scenarioIndex) {
+export function duplicateScenario(instanceObject, scenarioIndex) {
   const req = new writeClient.Request('duplicateScenario', {
-    context: workspaceContext(contextData),
+    context,
     scenarioId: instanceObject.scenarios[scenarioIndex].id,
     experienceId: instanceObject.id,
-    accountId: contextData.identityID,
+    accountId: "abc",
     rowVersion: instanceObject.versionRowVersion
   }).withResponseStatus(true);
 
@@ -208,11 +200,11 @@ export function duplicateScenario(contextData, instanceObject, scenarioIndex) {
   });
 }
 
-export function setScenarioSchedule(contextData, instanceObject, scenarioIndex, schedule) {
+export function setScenarioSchedule(instanceObject, scenarioIndex, schedule) {
   const req = new writeClient.Request('SetScenarioSchedule', {
-    context: workspaceContext(contextData),
+    context,
     experienceId: instanceObject.id,
-    accountId: contextData.identityID,
+    accountId: "abc",
     rowVersion: instanceObject.scenarios[scenarioIndex].rowVersion,
     schedule,
     scenarioId: instanceObject.scenarios[scenarioIndex].id
