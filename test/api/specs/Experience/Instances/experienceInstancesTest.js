@@ -1,4 +1,4 @@
-import { randomString } from '../../../common';
+import { randomString, assignSpaceContext } from '../../../common';
 import * as instances from 'actions/experienceInstance';
 import { postIdentity, deleteIdentityById } from 'actions/identity';
 import { postOrganization, deleteOrganizationById } from 'actions/organization';
@@ -14,8 +14,7 @@ describe.only('@experience Experience Instances Tests', () => {
     await postIdentity(instanceData);
     await postOrganization(instanceData);
     await postSpaceByOrganizationId(instanceData);
-    Object.assign(fixedTemplateData, instanceData);
-    Object.assign(collectionTemplateData, instanceData);
+    assignSpaceContext(instanceData);
     await instances.createInstances(fixedTemplateData, collectionTemplateData);
     getExperienceInstanceId = await instances.getTemplateInstanceIds(instanceData, [fixedTemplateData.templateId, collectionTemplateData.templateId]);
   });
