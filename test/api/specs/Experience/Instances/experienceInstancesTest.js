@@ -1,22 +1,25 @@
-import { randomString, assignSpaceContext } from '../../../common';
+import { randomString, assignWorkSpaceContext } from '../../../common';
 import * as instances from 'actions/experienceInstance';
 import { postIdentity, deleteIdentityById } from 'actions/identity';
 import { postOrganization, deleteOrganizationById } from 'actions/organization';
 import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions/spaces';
 import { deleteExperienceTemplate, getTemplateById } from 'actions/templates';
 const instanceData = new Object();
-var fixedTemplateData = new Object();
+const fixedTemplateData = new Object();
 const collectionTemplateData = new Object();
 var getExperienceInstanceId;
 
-describe.only('@experience Experience Instances Tests', () => {
+describe('@experience Experience Instances Tests', () => {
   before('Setup the testing environment', async () => {
     await postIdentity(instanceData);
     await postOrganization(instanceData);
     await postSpaceByOrganizationId(instanceData);
-    assignSpaceContext(instanceData);
+    assignWorkSpaceContext(instanceData);
     await instances.createInstances(fixedTemplateData, collectionTemplateData);
-    getExperienceInstanceId = await instances.getTemplateInstanceIds(instanceData, [fixedTemplateData.templateId, collectionTemplateData.templateId]);
+    getExperienceInstanceId = await instances.getTemplateInstanceIds(instanceData, [
+      fixedTemplateData.templateId,
+      collectionTemplateData.templateId
+    ]);
   });
   it('getExperienceInstanceId() returns the instance ids for the experience templates provided', async () => {
     expect(getExperienceInstanceId.status.code).to.equal(0);
@@ -63,6 +66,5 @@ describe.only('@experience Experience Instances Tests', () => {
     await deleteExperienceTemplate(fixedTemplateData);
     await getTemplateById(collectionTemplateData);
     await deleteExperienceTemplate(collectionTemplateData);
-
   });
 });

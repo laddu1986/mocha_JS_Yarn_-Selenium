@@ -1,4 +1,4 @@
-import { randomString, joi } from '../../../../common';
+import { randomString, joi, assignWorkSpaceContext } from '../../../../common';
 import { postIdentity, deleteIdentityById } from 'actions/identity';
 import { postOrganization, deleteOrganizationById } from 'actions/organization';
 import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions/spaces';
@@ -6,28 +6,23 @@ import * as templates from 'actions/templates';
 import * as Constants from 'constants.json';
 import * as schemas from 'schemas/templatesSchema.js';
 const templateData = new Object();
-var createTemplate;
 
 describe('@experience Experience Template Service', () => {
   before('Setup the testing environment', async () => {
     await postIdentity(templateData);
     await postOrganization(templateData);
     await postSpaceByOrganizationId(templateData);
-    createTemplate = await templates.createExperienceTemplate(templateData, templateData, Constants.Experience.Types.FIXED, templateData);
+    assignWorkSpaceContext(templateData);
   });
 
   it('C1458992 createTemplate() creates a template', async () => {
-    expect(createTemplate.status.code).to.equal(0);
-    joi.assert(createTemplate.response, schemas.createTemplateSchema());
+    var response = await templates.createExperienceTemplate(templateData, Constants.Experience.Types.FIXED);
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.createTemplateSchema());
   });
 
   it('C1458993 renameExperienceTemplate() renames a template', async () => {
-    let renameTemplate = await templates.changeTemplate(
-      templateData,
-      templateData.templates[0],
-      'name',
-      randomString(12)
-    );
+    let renameTemplate = await templates.changeTemplate(templateData, 'name', randomString(12));
     expect(renameTemplate.status.code).to.equal(0);
     joi.assert(renameTemplate.response, schemas.templateSchema());
   });
@@ -35,7 +30,6 @@ describe('@experience Experience Template Service', () => {
   it('changeTemplateKey() change template key', async () => {
     let changeTemplateKey = await templates.changeTemplate(
       templateData,
-      templateData.templates[0],
       'key',
       randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
     );
@@ -44,31 +38,26 @@ describe('@experience Experience Template Service', () => {
   });
 
   it('changeTemplateThumbnail() change template thumbnail', async () => {
-    let changeTemplateThumbnail = await templates.changeTemplate(
-      templateData,
-      templateData.templates[0],
-      'thumbnailUrl',
-      'thumbnail_url'
-    );
+    let changeTemplateThumbnail = await templates.changeTemplate(templateData, 'thumbnailUrl', 'thumbnail_url');
     expect(changeTemplateThumbnail.status.code).to.equal(0);
     joi.assert(changeTemplateThumbnail.response, schemas.templateSchema());
   });
 
   it('C1458994 getExperienceTemplates() returns all templates for a space', async () => {
-    let getAllTemplates = await templates.getTemplates(templateData, '');
+    let getAllTemplates = await templates.getTemplates('');
     expect(getAllTemplates.status.code).to.equal(0);
-    joi.assert(getAllTemplates.response, schemas.templatesSchema(templateData.templates[0]));
+    joi.assert(getAllTemplates.response, schemas.templatesSchema(templateData));
   });
 
   it('C1458995 getExperienceTemplatebyId returns a template by ID', async () => {
-    let getByID = await templates.getTemplateById(templateData, templateData.templates[0]);
+    let getByID = await templates.getTemplateById(templateData);
     expect(getByID.status.code).to.equal(0);
-    joi.assert(getByID.response, schemas.templateByIDSchema(templateData, templateData.templates[0]));
+    joi.assert(getByID.response, schemas.templateByIDSchema(templateData));
   });
 
   it('C1458997 deleteTemplate() delete a template', async () => {
-    let deleteTemplate = await templates.deleteExperienceTemplate(templateData, templateData.templates[0]);
-    let verifyDelete = await templates.getTemplates(templateData, '');
+    let deleteTemplate = await templates.deleteExperienceTemplate(templateData);
+    let verifyDelete = await templates.getTemplates('');
     expect(deleteTemplate.status.code).to.equal(0);
     expect(verifyDelete.response).to.be.empty;
   });

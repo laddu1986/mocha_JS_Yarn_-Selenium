@@ -51,7 +51,7 @@ export function randomString(opts) {
 }
 global.expect = server.expect;
 export var context;
-export function assignSpaceContext(templateData) {
+export function assignWorkSpaceContext(templateData) {
   context = {
     orgId: templateData.orgID,
     spaceId: templateData.spaceID,
