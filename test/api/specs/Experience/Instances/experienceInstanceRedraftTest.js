@@ -1,4 +1,4 @@
-import { randomString, assignSpaceContext } from '../../../common';
+import { randomString, assignWorkSpaceContext } from '../../../common';
 import * as instances from 'actions/experienceInstance';
 import * as Constants from 'constants.json';
 
@@ -20,8 +20,11 @@ const collectionTemplateData = { templateId: '4nwr3Qm' };
 
 describe('@experience Experience Basic Redrafting Tests', () => {
   before('Setup the testing environment', async () => {
-    assignSpaceContext(instanceData);
-    await instances.getTemplateInstanceIds(instanceData, [fixedTemplateData.templateId, collectionTemplateData.templateId]);
+    assignWorkSpaceContext(instanceData);
+    await instances.getTemplateInstanceIds(instanceData, [
+      fixedTemplateData.templateId,
+      collectionTemplateData.templateId
+    ]);
     await instances.getExperience(instanceData, instanceData.instances[1]);
   });
   it('C1857174 publishExperience() sends a request to publish a collection', async () => {
