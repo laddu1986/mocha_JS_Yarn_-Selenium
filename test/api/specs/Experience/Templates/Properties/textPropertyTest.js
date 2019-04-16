@@ -1,4 +1,4 @@
-import { randomString, joi } from '../../../../common';
+import { randomString, joi, assignWorkSpaceContext } from '../../../../common';
 import { postIdentity, deleteIdentityById } from 'actions/identity';
 import { postOrganization, deleteOrganizationById } from 'actions/organization';
 import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions/spaces';
@@ -12,64 +12,50 @@ import Constants from 'constants.json';
 import * as templates from 'actions/templates';
 import * as properties from 'actions/templateProperties';
 import * as schemas from 'schemas/templatesSchema';
-const templateData = { templates: [] };
+const templateData = new Object();
 
 describe('@experience Template Service -> Template Properties', () => {
   before('Setup the testing environment', async () => {
     await postIdentity(templateData);
     await postOrganization(templateData);
     await postSpaceByOrganizationId(templateData);
-    await createExperienceTemplate(templateData, Constants.Experience.Types.Fixed, templateData.templates);
-    await templates.changeTemplate(templateData, templateData.templates[0], 'name', randomString(12));
+    assignWorkSpaceContext(templateData);
+    await createExperienceTemplate(templateData, Constants.Experience.Types.Fixed);
+    await templates.changeTemplate(templateData, 'name', randomString(12));
     await templates.changeTemplate(
       templateData,
-      templateData.templates[0],
       'key',
       randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
     );
   });
   it('C1458966 addProperty() can create a text property', async () => {
-    let response = await properties.addProperty(
-      templateData,
-      templateData.templates[0],
-      Constants.TemplateProperties.Types.Text
-    );
+    let response = await properties.addProperty(templateData, Constants.TemplateProperties.Types.Text);
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.addPropertySchema(templateData.templates[0]));
+    joi.assert(response.response, schemas.addPropertySchema(templateData));
   });
   it('C1458970 renameProperty() can rename a text property', async () => {
-    let response = await properties.modifyProperty(templateData, templateData.templates[0], 'renameProperty');
+    let response = await properties.modifyProperty(templateData, 'renameProperty');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.renamePropertySchema());
   });
   it('changePropertyKey() can change property key of a text property', async () => {
-    let response = await properties.modifyProperty(templateData, templateData.templates[0], 'changePropertyKey');
+    let response = await properties.modifyProperty(templateData, 'changePropertyKey');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.renamePropertySchema());
   });
   it('changePropertyLocalizable() can change property localizable value', async () => {
-    let response = await properties.modifyProperty(
-      templateData,
-      templateData.templates[0],
-      'changePropertyLocalizable'
-    );
+    let response = await properties.modifyProperty(templateData, 'changePropertyLocalizable');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.renamePropertySchema());
   });
   it('changePropertyDefaultValue() can change property default value', async () => {
-    let response = await properties.modifyProperty(
-      templateData,
-      templateData.templates[0],
-      'changePropertyDefaultValue',
-      'stringValue'
-    );
+    let response = await properties.modifyProperty(templateData, 'changePropertyDefaultValue', 'stringValue');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.renamePropertySchema());
   });
   it('enablePropertyRule() can enable text characterCount property rule', async () => {
     let response = await properties.modifyProperty(
       templateData,
-      templateData.templates[0],
       'enablePropertyRule',
       Constants.TemplateProperties.Rules.CharacterCount
     );
@@ -79,7 +65,6 @@ describe('@experience Template Service -> Template Properties', () => {
   it('enablePropertyRule() can enable text regex property rule', async () => {
     let response = await properties.modifyProperty(
       templateData,
-      templateData.templates[0],
       'enablePropertyRule',
       Constants.TemplateProperties.Rules.Regex
     );
@@ -89,7 +74,6 @@ describe('@experience Template Service -> Template Properties', () => {
   it('enablePropertyRule() can enable text required property rule', async () => {
     let response = await properties.modifyProperty(
       templateData,
-      templateData.templates[0],
       'enablePropertyRule',
       Constants.TemplateProperties.Rules.Required
     );
@@ -99,7 +83,6 @@ describe('@experience Template Service -> Template Properties', () => {
   it('changePropertyRule() can change text characterCount property rule', async () => {
     let response = await properties.changePropertyRule(
       templateData,
-      templateData.templates[0],
       'textRule',
       Constants.TemplateProperties.Rules.CharacterCount
     );
@@ -109,7 +92,6 @@ describe('@experience Template Service -> Template Properties', () => {
   it('changePropertyRule() can change text regex property rule', async () => {
     let response = await properties.changePropertyRule(
       templateData,
-      templateData.templates[0],
       'textRule',
       Constants.TemplateProperties.Rules.Regex
     );
@@ -119,7 +101,6 @@ describe('@experience Template Service -> Template Properties', () => {
   it('changePropertyRule() can change text required property rule', async () => {
     let response = await properties.changePropertyRule(
       templateData,
-      templateData.templates[0],
       'textRule',
       Constants.TemplateProperties.Rules.Required
     );
@@ -127,33 +108,28 @@ describe('@experience Template Service -> Template Properties', () => {
     joi.assert(response.response, schemas.renamePropertySchema());
   });
   it('changePropertyPromptText() can change property prompt text', async () => {
-    let response = await properties.modifyProperty(templateData, templateData.templates[0], 'changePropertyPromptText');
+    let response = await properties.modifyProperty(templateData, 'changePropertyPromptText');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.renamePropertySchema());
   });
   it('changePropertyHelpText() can change property help text', async () => {
-    let response = await properties.modifyProperty(templateData, templateData.templates[0], 'changePropertyHelpText');
+    let response = await properties.modifyProperty(templateData, 'changePropertyHelpText');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.renamePropertySchema());
   });
   it('C1458969 getPropertyById() returns a template with all its properties', async () => {
-    let response = await getPropertyById(templateData, templateData.templates[0]);
+    let response = await getPropertyById(templateData);
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.getPropertyByIDSchema(templateData.templates[0], 'text'));
+    joi.assert(response.response, schemas.getPropertyByIDSchema(templateData, 'text'));
   });
   it('removePropertyDefaultValue() can remove property default value', async () => {
-    let response = await properties.removeFunction(
-      templateData,
-      templateData.templates[0],
-      'removePropertyDefaultValue'
-    );
+    let response = await properties.removeFunction(templateData, 'removePropertyDefaultValue');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.renamePropertySchema());
   });
   it('disablePropertyRule() can disable text characterCount property rule ', async () => {
     let response = await properties.modifyProperty(
       templateData,
-      templateData.templates[0],
       'disablePropertyRule',
       Constants.TemplateProperties.Rules.CharacterCount
     );
@@ -163,7 +139,6 @@ describe('@experience Template Service -> Template Properties', () => {
   it('disablePropertyRule() can disable text regex property rule ', async () => {
     let response = await properties.modifyProperty(
       templateData,
-      templateData.templates[0],
       'disablePropertyRule',
       Constants.TemplateProperties.Rules.Regex
     );
@@ -173,7 +148,6 @@ describe('@experience Template Service -> Template Properties', () => {
   it('disablePropertyRule() can disable text required property rule ', async () => {
     let response = await properties.modifyProperty(
       templateData,
-      templateData.templates[0],
       'disablePropertyRule',
       Constants.TemplateProperties.Rules.Required
     );
@@ -186,12 +160,12 @@ describe('@experience Template Service -> Template Properties', () => {
     joi.assert(response.response, schemas.getPropertySchema());
   });
   it('commitTemplate() commit a template', async () => {
-    let response = await templates.commitTemplate(templateData, templateData.templates[0]);
+    let response = await templates.commitTemplate(templateData);
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.renamePropertySchema());
   });
   it('C1458973 removeProperty() can delete a property', async () => {
-    let response = await properties.removeFunction(templateData, templateData.templates[0], 'removeProperty');
+    let response = await properties.removeFunction(templateData, 'removeProperty');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.renamePropertySchema());
   });
@@ -200,6 +174,6 @@ describe('@experience Template Service -> Template Properties', () => {
     await deleteIdentityById(templateData);
     await deleteOrganizationById(templateData);
     await deleteSpaceByOrgIdAndSpaceId(templateData);
-    await deleteExperienceTemplate(templateData, templateData.templates[0]);
+    await deleteExperienceTemplate(templateData);
   });
 });

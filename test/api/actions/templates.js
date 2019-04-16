@@ -1,27 +1,19 @@
-import { path, caller } from '../common';
+import { path, caller, context } from '../common';
 import { experience } from 'config/getEnv';
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
 const writeClient = caller(experience, PROTO_PATH, 'ExperienceTemplateWriteService');
 const readClient = caller(experience, PROTO_PATH, 'ExperienceTemplateReadService');
 
-function spaceContext(templateData) {
-  return {
-    orgId: templateData.orgID,
-    spaceId: templateData.spaceID,
-    workspaceId: templateData.spaceID
-  };
-}
-
-export function createExperienceTemplate(contextData, templateType, returnTemplates) {
+export function createExperienceTemplate(responseObject, templateType) {
   const req = new writeClient.Request('createTemplate', {
-    context: spaceContext(contextData),
+    context,
     templateType,
-    userAccountId: contextData.identityID
+    userAccountId: "abc"
   }).withResponseStatus(true);
   return req
     .exec()
     .then(response => {
-      returnTemplates.push(response.response);
+      Object.assign(responseObject, response.response);
       return response;
     })
     .catch(err => {
@@ -29,7 +21,7 @@ export function createExperienceTemplate(contextData, templateType, returnTempla
     });
 }
 
-export function changeTemplate(contextData, templateObject, type, value) {
+export function changeTemplate(templateObject, type, value) {
   let reqName;
   switch (type) {
     case 'name':
@@ -46,10 +38,10 @@ export function changeTemplate(contextData, templateObject, type, value) {
       break;
   }
   const req = new writeClient.Request(reqName, {
-    context: spaceContext(contextData),
+    context,
     templateId: templateObject.templateId,
     [type]: value,
-    userAccountId: contextData.identityID,
+    userAccountId: "abc",
     rowVersion: templateObject.rowVersion,
     templateVersionId: templateObject.templateVersionId
   }).withResponseStatus(true);
@@ -65,27 +57,27 @@ export function changeTemplate(contextData, templateObject, type, value) {
     });
 }
 
-export function getTemplates(contextData, keyword) {
+export function getTemplates(keyword) {
   const req = new readClient.Request('getTemplates', {
-    context: spaceContext(contextData),
+    context,
     keyword
   }).withResponseStatus(true);
   return req.exec();
 }
 
-export function deleteExperienceTemplate(contextData, templateObject) {
+export function deleteExperienceTemplate(templateObject) {
   const req = new writeClient.Request('deleteTemplate', {
-    context: spaceContext(contextData),
+    context,
     templateId: templateObject.templateId,
     rowVersion: templateObject.rowVersion,
-    userAccountId: contextData.identityID
+    userAccountId: "abc"
   }).withResponseStatus(true);
   return req.exec();
 }
 
-export function getPropertyById(contextData, templateObject) {
+export function getPropertyById(templateObject) {
   const req = new readClient.Request('getPropertyById', {
-    context: spaceContext(contextData),
+    context,
     templateId: templateObject.templateId,
     propertyId: templateObject.propertyId,
     templateVersionId: templateObject.templateVersionId
@@ -93,9 +85,9 @@ export function getPropertyById(contextData, templateObject) {
   return req.exec();
 }
 
-export function getTemplateById(contextData, templateObject) {
+export function getTemplateById(templateObject) {
   const req = new readClient.Request('getTemplateById', {
-    context: spaceContext(contextData),
+    context,
     templateId: templateObject.templateId
   }).withResponseStatus(true);
   return req.exec().then(response => {
@@ -109,12 +101,12 @@ export function getConfiguration() {
   return req.exec();
 }
 
-export function commitTemplate(contextData, templateObject) {
+export function commitTemplate(templateObject) {
   const req = new writeClient.Request('commitTemplate', {
-    context: spaceContext(contextData),
+    context,
     templateId: templateObject.templateId,
     rowVersion: templateObject.rowVersion,
-    accountId: contextData.identityID,
+    accountId: "abc",
     templateVersionId: templateObject.templateVersionId
   }).withResponseStatus(true);
   return req.exec().then(response => {
@@ -123,15 +115,14 @@ export function commitTemplate(contextData, templateObject) {
   });
 }
 
-export function addTemplateToCollection(contextData, parentObject, childObject, sortIndex) {
+export function addTemplateToCollection(parentObject, childObject, sortIndex) {
   const req = new writeClient.Request('addTemplateToCollection', {
-    context: spaceContext(contextData),
+    context,
     templateVersionId: parentObject.templateVersionId,
     rowVersion: parentObject.rowVersion,
     childTemplateId: childObject.templateId,
     sortIndex
   }).withResponseStatus(true);
-
   return req.exec().then(response => {
     parentObject.rowVersion = response.response.rowVersion;
     return response;
