@@ -1,25 +1,17 @@
-import { path, caller, randomString } from '../common';
+import { path, caller, randomString, context } from '../common';
 import { experience } from 'config/getEnv';
 import Constants from 'constants.json';
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
 const writeClient = caller(experience, PROTO_PATH, 'ExperienceTemplateWriteService');
 
-function spaceContext(contextData) {
-  return {
-    orgId: contextData.orgID,
-    spaceId: contextData.spaceID,
-    workspaceId: contextData.spaceID
-  };
-}
-
-export function addProperty(contextData, templateObject, type) {
+export function addProperty(templateObject, type) {
   const req = new writeClient.Request('addProperty', {
-    context: spaceContext(contextData),
+    context,
     propertyType: type,
     templateId: templateObject.templateId,
     rowVersion: templateObject.rowVersion,
     templateVersionId: templateObject.templateVersionId,
-    userAccountId: contextData.identityID
+    userAccountId: 'abc'
   }).withResponseStatus(true);
   return req
     .exec()
@@ -48,7 +40,7 @@ function defaultValue(valueType) {
   return value;
 }
 
-export function modifyProperty(contextData, templateObject, reqName, ruleValue) {
+export function modifyProperty(templateObject, reqName, ruleValue) {
   let type, value;
   switch (reqName) {
     case 'renameProperty':
@@ -85,13 +77,13 @@ export function modifyProperty(contextData, templateObject, reqName, ruleValue) 
   }
 
   const req = new writeClient.Request(reqName, {
-    context: spaceContext(contextData),
+    context,
     [type]: value,
     propertyId: templateObject.propertyId,
     templateId: templateObject.templateId,
     rowVersion: templateObject.rowVersion,
     templateVersionId: templateObject.templateVersionId,
-    userAccountId: contextData.identityID
+    userAccountId: 'abc'
   }).withResponseStatus(true);
   return req
     .exec()
@@ -104,14 +96,14 @@ export function modifyProperty(contextData, templateObject, reqName, ruleValue) 
     });
 }
 
-export function removeFunction(contextData, templateObject, reqName) {
+export function removeFunction(templateObject, reqName) {
   const req = new writeClient.Request(reqName, {
-    context: spaceContext(contextData),
+    context,
     propertyId: templateObject.propertyId,
     templateId: templateObject.templateId,
     rowVersion: templateObject.rowVersion,
     templateVersionId: templateObject.templateVersionId,
-    userAccountId: contextData.identityID
+    userAccountId: 'abc'
   }).withResponseStatus(true);
   return req
     .exec()
@@ -124,7 +116,7 @@ export function removeFunction(contextData, templateObject, reqName) {
     });
 }
 
-export function changePropertyRule(contextData, templateObject, ruleType, ruleName) {
+export function changePropertyRule(templateObject, ruleType, ruleName) {
   let val;
   switch (ruleName) {
     case Constants.TemplateProperties.Rules.NumberRange:
@@ -153,7 +145,7 @@ export function changePropertyRule(contextData, templateObject, ruleType, ruleNa
       break;
   }
   const req = new writeClient.Request('changePropertyRule', {
-    context: spaceContext(contextData),
+    context,
     propertyId: templateObject.propertyId,
     templateId: templateObject.templateId,
     rowVersion: templateObject.rowVersion,

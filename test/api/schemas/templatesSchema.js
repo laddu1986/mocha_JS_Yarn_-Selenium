@@ -135,7 +135,7 @@ export function templatesSchema(templateObject) {
     .required();
 }
 
-export function templateByIDSchema(contextObject, templateObject) {
+export function templateByIDSchema(templateObject) {
   return joi
     .object()
     .keys({
@@ -147,7 +147,7 @@ export function templateByIDSchema(contextObject, templateObject) {
         rowVersion: protoTimeStamp,
         templateVersionId: protoLong,
         modifiedAt: protoTimeStamp,
-        modifiedBy: joi.valid(contextObject.identityID).required()
+        modifiedBy: joi.valid('abc').required()
       })
     })
     .required();
