@@ -31,17 +31,17 @@ describe('@experience Template Service -> Template Properties', () => {
   it('renameProperty() can rename a integer property', async () => {
     let response = await properties.modifyProperty(templateData, 'renameProperty');
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.renamePropertySchema());
+    joi.assert(response.response, schemas.commonExperiencesSchema());
   });
   it('changePropertyKey() can change property key of a integer property', async () => {
     let response = await properties.modifyProperty(templateData, 'changePropertyKey');
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.renamePropertySchema());
+    joi.assert(response.response, schemas.commonExperiencesSchema());
   });
   it('changePropertyDefaultValue() can change property default value', async () => {
     let response = await properties.modifyProperty(templateData, 'changePropertyDefaultValue', 'intValue');
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.renamePropertySchema());
+    joi.assert(response.response, schemas.commonExperiencesSchema());
   });
   it('enablePropertyRule() can enable numberRange property rule', async () => {
     let response = await properties.modifyProperty(
@@ -50,7 +50,7 @@ describe('@experience Template Service -> Template Properties', () => {
       Constants.TemplateProperties.Rules.NumberRange
     );
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.renamePropertySchema());
+    joi.assert(response.response, schemas.commonExperiencesSchema());
   });
   it('changePropertyRule() can change numberRange property rule', async () => {
     let response = await properties.changePropertyRule(
@@ -59,22 +59,22 @@ describe('@experience Template Service -> Template Properties', () => {
       Constants.TemplateProperties.Rules.NumberRange
     );
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.renamePropertySchema());
+    joi.assert(response.response, schemas.commonExperiencesSchema());
   });
   it('changePropertyLocalizable() can change property localizable value', async () => {
     let response = await properties.modifyProperty(templateData, 'changePropertyLocalizable');
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.renamePropertySchema());
+    joi.assert(response.response, schemas.commonExperiencesSchema());
   });
   it('changePropertyPromptText() can change property prompt text', async () => {
     let response = await properties.modifyProperty(templateData, 'changePropertyPromptText');
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.renamePropertySchema());
+    joi.assert(response.response, schemas.commonExperiencesSchema());
   });
   it('changePropertyHelpText() can change property help text', async () => {
     let response = await properties.modifyProperty(templateData, 'changePropertyHelpText');
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.renamePropertySchema());
+    joi.assert(response.response, schemas.commonExperiencesSchema());
   });
   it('getPropertyById() returns a template with all its properties and rules', async () => {
     let response = await getPropertyById(templateData);
@@ -84,7 +84,7 @@ describe('@experience Template Service -> Template Properties', () => {
   it('removePropertyDefaultValue() can remove property default value', async () => {
     let response = await properties.removeFunction(templateData, 'removePropertyDefaultValue');
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.renamePropertySchema());
+    joi.assert(response.response, schemas.commonExperiencesSchema());
   });
   it('disablePropertyRule() can disable numberRange property rule ', async () => {
     let response = await properties.modifyProperty(
@@ -93,17 +93,17 @@ describe('@experience Template Service -> Template Properties', () => {
       Constants.TemplateProperties.Rules.NumberRange
     );
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.renamePropertySchema());
+    joi.assert(response.response, schemas.commonExperiencesSchema());
   });
   it('commitTemplate() commit a template', async () => {
     let response = await templates.commitTemplate(templateData);
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.renamePropertySchema());
+    joi.assert(response.response, schemas.commonExperiencesSchema());
   });
   it('removeProperty() can delete property', async () => {
     let response = await properties.removeFunction(templateData, 'removeProperty');
     expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.renamePropertySchema());
+    joi.assert(response.response, schemas.commonExperiencesSchema());
   });
 
   after(async () => {

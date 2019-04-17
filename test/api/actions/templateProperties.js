@@ -25,6 +25,27 @@ export function addProperty(templateObject, type) {
     });
 }
 
+export function moveProperty(templateObject) {
+  const req = new writeClient.Request('moveProperty', {
+    context,
+    propertyId: templateObject.propertyId,
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    templateVersionId: templateObject.templateVersionId,
+    userAccountId: 'abc',
+    newIndex: 0
+  }).withResponseStatus(true);
+  return req
+    .exec()
+    .then(response => {
+      templateObject.rowVersion = response.response.rowVersion;
+      return response;
+    })
+    .catch(err => {
+      return err;
+    });
+}
+
 function defaultValue(valueType) {
   let value;
   switch (valueType) {
