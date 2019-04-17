@@ -8,7 +8,7 @@ export function createExperienceTemplate(responseObject, templateType) {
   const req = new writeClient.Request('createTemplate', {
     context,
     templateType,
-    userAccountId: "abc"
+    userAccountId: 'abc'
   }).withResponseStatus(true);
   return req
     .exec()
@@ -41,7 +41,7 @@ export function changeTemplate(templateObject, type, value) {
     context,
     templateId: templateObject.templateId,
     [type]: value,
-    userAccountId: "abc",
+    userAccountId: 'abc',
     rowVersion: templateObject.rowVersion,
     templateVersionId: templateObject.templateVersionId
   }).withResponseStatus(true);
@@ -70,7 +70,7 @@ export function deleteExperienceTemplate(templateObject) {
     context,
     templateId: templateObject.templateId,
     rowVersion: templateObject.rowVersion,
-    userAccountId: "abc"
+    userAccountId: 'abc'
   }).withResponseStatus(true);
   return req.exec();
 }
@@ -90,10 +90,26 @@ export function getTemplateById(templateObject) {
     context,
     templateId: templateObject.templateId
   }).withResponseStatus(true);
-  return req.exec().then(response => {
-    Object.assign(templateObject, response.response.template);
-    return response;
-  });
+  return req.exec();
+}
+
+export function getTemplateByVersionId(templateObject) {
+  const req = new readClient.Request('getTemplateByVersionId', {
+    context,
+    templateId: templateObject.templateId,
+    templateVersionId: templateObject.templateVersionId
+  }).withResponseStatus(true);
+  return req.exec();
+}
+
+export function searchTemplates(type, searchKeyword, mode) {
+  const req = new readClient.Request('searchTemplates', {
+    context,
+    templateType: type,
+    keyword: searchKeyword,
+    searchMode: mode
+  }).withResponseStatus(true);
+  return req.exec();
 }
 
 export function getConfiguration() {
@@ -106,7 +122,7 @@ export function commitTemplate(templateObject) {
     context,
     templateId: templateObject.templateId,
     rowVersion: templateObject.rowVersion,
-    accountId: "abc",
+    accountId: 'abc',
     templateVersionId: templateObject.templateVersionId
   }).withResponseStatus(true);
   return req.exec().then(response => {
@@ -123,6 +139,61 @@ export function addTemplateToCollection(parentObject, childObject, sortIndex) {
     childTemplateId: childObject.templateId,
     sortIndex
   }).withResponseStatus(true);
+  return req.exec().then(response => {
+    parentObject.childReferenceId = response.response.childReferenceId;
+    parentObject.rowVersion = response.response.rowVersion;
+    return response;
+  });
+}
+
+function commonCollectionRequest(parentObject) {
+  return {
+    context,
+    templateVersionId: parentObject.templateVersionId,
+    templateId: parentObject.templateId,
+    rowVersion: parentObject.rowVersion,
+    userAccountId: 'abc'
+  };
+}
+
+export function removeTemplateFromCollection(parentObject, childObject) {
+  let commonRequest = commonCollectionRequest(parentObject);
+  commonRequest.childTemplateId = childObject.templateId;
+  commonRequest.childReferenceId = parentObject.childReferenceId;
+  const req = new writeClient.Request('removeTemplateFromCollection', commonRequest).withResponseStatus(true);
+  return req.exec().then(response => {
+    parentObject.rowVersion = response.response.rowVersion;
+    return response;
+  });
+}
+
+export function renameTemplateReference(parentObject, newName) {
+  let commonRequest = commonCollectionRequest(parentObject);
+  commonRequest.childReferenceId = parentObject.childReferenceId;
+  commonRequest.name = newName;
+  const req = new writeClient.Request('renameTemplateReference', commonRequest).withResponseStatus(true);
+  return req.exec().then(response => {
+    parentObject.rowVersion = response.response.rowVersion;
+    return response;
+  });
+}
+
+export function changeTemplateReferenceKey(parentObject, newKeyName) {
+  let commonRequest = commonCollectionRequest(parentObject);
+  commonRequest.childReferenceId = parentObject.childReferenceId;
+  commonRequest.key = newKeyName;
+  const req = new writeClient.Request('changeTemplateReferenceKey', commonRequest).withResponseStatus(true);
+  return req.exec().then(response => {
+    parentObject.rowVersion = response.response.rowVersion;
+    return response;
+  });
+}
+
+export function moveTemplateWithinCollection(parentObject) {
+  let commonRequest = commonCollectionRequest(parentObject);
+  commonRequest.templateReferenceId = parentObject.childReferenceId;
+  commonRequest.newIndex = '10';
+  const req = new writeClient.Request('moveTemplateWithinCollection', commonRequest).withResponseStatus(true);
   return req.exec().then(response => {
     parentObject.rowVersion = response.response.rowVersion;
     return response;
