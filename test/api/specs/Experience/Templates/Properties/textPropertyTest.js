@@ -1,12 +1,12 @@
-import { randomString, joi, assignWorkSpaceContext } from '../../../../common';
+import { joi, assignWorkSpaceContext } from '../../../../common';
 import { postIdentity, deleteIdentityById } from 'actions/identity';
 import { postOrganization, deleteOrganizationById } from 'actions/organization';
 import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions/spaces';
 import {
-  createExperienceTemplate,
   getConfiguration,
   getPropertyById,
-  deleteExperienceTemplate
+  deleteExperienceTemplate,
+  getCommittedFixedTemplate
 } from 'actions/templates';
 import Constants from 'constants.json';
 import * as templates from 'actions/templates';
@@ -20,16 +20,10 @@ describe('@experience Template Service -> Template Properties', () => {
     await postOrganization(templateData);
     await postSpaceByOrganizationId(templateData);
     assignWorkSpaceContext(templateData);
-    await createExperienceTemplate(templateData, Constants.Experience.Types.Fixed);
-    await templates.changeTemplate(templateData, 'name', randomString(12));
-    await templates.changeTemplate(
-      templateData,
-      'key',
-      randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
-    );
+    await getCommittedFixedTemplate(templateData);
   });
   it('C1458966 addProperty() can create a text property', async () => {
-    let response = await properties.addProperty(templateData, Constants.TemplateProperties.Types.Text);
+    let response = await properties.addProperty(templateData, Constants.TemplateProperties.Types.Text, '0');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.addPropertySchema(templateData));
   });
@@ -40,11 +34,6 @@ describe('@experience Template Service -> Template Properties', () => {
   });
   it('changePropertyKey() can change property key of a text property', async () => {
     let response = await properties.modifyProperty(templateData, 'changePropertyKey');
-    expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.commonExperiencesSchema());
-  });
-  it('moveProperty() move the property', async () => {
-    let response = await properties.moveProperty(templateData);
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
@@ -167,6 +156,16 @@ describe('@experience Template Service -> Template Properties', () => {
   it('commitTemplate() commit a template', async () => {
     let response = await templates.commitTemplate(templateData);
     expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.commonExperiencesSchema());
+  });
+  it('moveProperty() move the property', async () => {
+    await properties.addProperty(templateData, Constants.TemplateProperties.Types.Text, '1');
+    let getByID = await templates.getTemplateById(templateData);
+    expect(getByID.response.template.properties[1].id).to.equal(templateData.propertyId);
+    let response = await properties.moveProperty(templateData, '0');
+    getByID = await templates.getTemplateById(templateData);
+    expect(response.status.code).to.equal(0);
+    expect(getByID.response.template.properties[0].id).to.equal(templateData.propertyId);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
   it('C1458973 removeProperty() can delete a property', async () => {

@@ -5,7 +5,7 @@ import * as Constants from 'constants.json';
 import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions/spaces';
 import * as templates from 'actions/templates';
 import * as schemas from 'schemas/templatesSchema.js';
-var fixedTemplateData = new Object();
+const fixedTemplateData = new Object();
 const collectionTemplateData = new Object();
 
 describe('@experience Experience Template Service --> Collection Templates', () => {
@@ -14,14 +14,7 @@ describe('@experience Experience Template Service --> Collection Templates', () 
     await postOrganization(collectionTemplateData);
     await postSpaceByOrganizationId(collectionTemplateData);
     assignWorkSpaceContext(collectionTemplateData);
-    await templates.createExperienceTemplate(fixedTemplateData, Constants.Experience.Types.Fixed);
-    await templates.changeTemplate(fixedTemplateData, 'name', randomString(12));
-    await templates.changeTemplate(
-      fixedTemplateData,
-      'key',
-      randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
-    );
-    await templates.commitTemplate(fixedTemplateData);
+    await templates.getCommittedFixedTemplate(fixedTemplateData);
   });
   it('createTemplate() creates a Collection Template', async () => {
     let response = await templates.createExperienceTemplate(
@@ -49,11 +42,6 @@ describe('@experience Experience Template Service --> Collection Templates', () 
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('moveTemplateWithinCollection() moves template within collection', async () => {
-    let response = await templates.moveTemplateWithinCollection(collectionTemplateData);
-    expect(response.status.code).to.equal(0);
-    joi.assert(response.response, schemas.commonExperiencesSchema());
-  });
   it('searchTemplates() search a template', async () => {
     let response = await templates.searchTemplates('0', 'qa', 'LAST_COMMITTED');
     expect(response.status.code).to.equal(0);
@@ -70,6 +58,17 @@ describe('@experience Experience Template Service --> Collection Templates', () 
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
+  it('moveTemplateWithinCollection() moves template within collection', async () => {
+    await templates.getCommittedFixedTemplate(fixedTemplateData);
+    await templates.addTemplateToCollection(collectionTemplateData, fixedTemplateData, 1);
+    let getByID = await templates.getTemplateById(collectionTemplateData);
+    expect(getByID.response.template.childTemplateReferences[1].id).to.equal(collectionTemplateData.childReferenceId);
+    let response = await templates.moveTemplateWithinCollection(collectionTemplateData, 0);
+    getByID = await templates.getTemplateById(collectionTemplateData);
+    expect(getByID.response.template.childTemplateReferences[0].id).to.equal(collectionTemplateData.childReferenceId);
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.commonExperiencesSchema());
+  });
   it('removeTemplateFromCollection() remove a fixed template from the collection', async () => {
     let response = await templates.removeTemplateFromCollection(collectionTemplateData, fixedTemplateData);
     expect(response.status.code).to.equal(0);
@@ -81,7 +80,6 @@ describe('@experience Experience Template Service --> Collection Templates', () 
     await deleteOrganizationById(collectionTemplateData);
     await deleteSpaceByOrgIdAndSpaceId(collectionTemplateData);
     await templates.deleteExperienceTemplate(fixedTemplateData);
-    await templates.getTemplateById(collectionTemplateData);
     await templates.deleteExperienceTemplate(collectionTemplateData);
   });
 });
