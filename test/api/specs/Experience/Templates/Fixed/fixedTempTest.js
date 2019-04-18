@@ -49,10 +49,22 @@ describe('@experience Experience Template Service', () => {
     joi.assert(getAllTemplates.response, schemas.templatesSchema(templateData));
   });
 
-  it('C1458995 getExperienceTemplatebyId returns a template by ID', async () => {
+  it('C1458995 getTemplatebyId returns a template by ID', async () => {
     let getByID = await templates.getTemplateById(templateData);
     expect(getByID.status.code).to.equal(0);
     joi.assert(getByID.response, schemas.templateByIDSchema(templateData));
+  });
+
+  it('getTemplateByVersionId() get a template by version id', async () => {
+    let response = await templates.getTemplateByVersionId(templateData);
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.templateByIDSchema(templateData));
+  });
+
+  it('commitTemplate() commit template', async () => {
+    let response = await templates.commitTemplate(templateData);
+    expect(response.status.code).to.equal(0);
+    joi.assert(response.response, schemas.commonExperiencesSchema());
   });
 
   it('C1458997 deleteTemplate() delete a template', async () => {
