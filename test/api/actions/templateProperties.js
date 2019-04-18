@@ -4,20 +4,22 @@ import Constants from 'constants.json';
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
 const writeClient = caller(experience, PROTO_PATH, 'ExperienceTemplateWriteService');
 
-export function addProperty(templateObject, type) {
+export function addProperty(templateObject, type, index) {
   const req = new writeClient.Request('addProperty', {
     context,
     propertyType: type,
     templateId: templateObject.templateId,
     rowVersion: templateObject.rowVersion,
     templateVersionId: templateObject.templateVersionId,
-    userAccountId: 'abc'
+    userAccountId: 'abc',
+    sortIndex: index
   }).withResponseStatus(true);
   return req
     .exec()
     .then(response => {
       templateObject.propertyId = response.response.propertyId;
       templateObject.rowVersion = response.response.rowVersion;
+      templateObject.templateVersionId = response.response.templateVersionId;
       return response;
     })
     .catch(err => {
@@ -25,7 +27,7 @@ export function addProperty(templateObject, type) {
     });
 }
 
-export function moveProperty(templateObject) {
+export function moveProperty(templateObject, newIndex) {
   const req = new writeClient.Request('moveProperty', {
     context,
     propertyId: templateObject.propertyId,
@@ -33,7 +35,7 @@ export function moveProperty(templateObject) {
     rowVersion: templateObject.rowVersion,
     templateVersionId: templateObject.templateVersionId,
     userAccountId: 'abc',
-    newIndex: 0
+    newIndex
   }).withResponseStatus(true);
   return req
     .exec()

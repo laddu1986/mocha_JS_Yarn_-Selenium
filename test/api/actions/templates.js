@@ -1,8 +1,9 @@
-import { path, caller, context } from '../common';
+import { path, caller, context, randomString } from '../common';
 import { experience } from 'config/getEnv';
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
 const writeClient = caller(experience, PROTO_PATH, 'ExperienceTemplateWriteService');
 const readClient = caller(experience, PROTO_PATH, 'ExperienceTemplateReadService');
+import * as Constants from 'constants.json';
 
 export function createExperienceTemplate(responseObject, templateType) {
   const req = new writeClient.Request('createTemplate', {
@@ -142,6 +143,7 @@ export function addTemplateToCollection(parentObject, childObject, sortIndex) {
   return req.exec().then(response => {
     parentObject.childReferenceId = response.response.childReferenceId;
     parentObject.rowVersion = response.response.rowVersion;
+    parentObject.templateVersionId = response.response.templateVersionId;
     return response;
   });
 }
@@ -189,13 +191,24 @@ export function changeTemplateReferenceKey(parentObject, newKeyName) {
   });
 }
 
-export function moveTemplateWithinCollection(parentObject) {
+export function moveTemplateWithinCollection(parentObject, index) {
   let commonRequest = commonCollectionRequest(parentObject);
   commonRequest.templateReferenceId = parentObject.childReferenceId;
-  commonRequest.newIndex = '10';
+  commonRequest.newIndex = index;
   const req = new writeClient.Request('moveTemplateWithinCollection', commonRequest).withResponseStatus(true);
   return req.exec().then(response => {
     parentObject.rowVersion = response.response.rowVersion;
     return response;
   });
+}
+
+export async function getCommittedFixedTemplate(fixedTemplateData) {
+  await createExperienceTemplate(fixedTemplateData, Constants.Experience.Types.Fixed);
+  await changeTemplate(fixedTemplateData, 'name', randomString(12));
+  await changeTemplate(
+    fixedTemplateData,
+    'key',
+    randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
+  );
+  await commitTemplate(fixedTemplateData);
 }

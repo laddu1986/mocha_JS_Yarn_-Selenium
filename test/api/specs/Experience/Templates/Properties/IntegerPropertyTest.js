@@ -1,8 +1,8 @@
-import { randomString, joi, assignWorkSpaceContext } from '../../../../common';
+import { joi, assignWorkSpaceContext } from '../../../../common';
 import { postIdentity, deleteIdentityById } from 'actions/identity';
 import { postOrganization, deleteOrganizationById } from 'actions/organization';
 import { postSpaceByOrganizationId, deleteSpaceByOrgIdAndSpaceId } from 'actions/spaces';
-import { createExperienceTemplate, deleteExperienceTemplate, getPropertyById } from 'actions/templates';
+import { deleteExperienceTemplate, getPropertyById, getCommittedFixedTemplate } from 'actions/templates';
 import Constants from 'constants.json';
 import * as templates from 'actions/templates';
 import * as properties from 'actions/templateProperties';
@@ -15,13 +15,7 @@ describe('@experience Template Service -> Template Properties', () => {
     await postOrganization(templateData);
     await postSpaceByOrganizationId(templateData);
     assignWorkSpaceContext(templateData);
-    await createExperienceTemplate(templateData, Constants.Experience.Types.Fixed);
-    await templates.changeTemplate(templateData, 'name', randomString(12));
-    await templates.changeTemplate(
-      templateData,
-      'key',
-      randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
-    );
+    await getCommittedFixedTemplate(templateData);
   });
   it('addProperty() can create a integer property', async () => {
     let response = await properties.addProperty(templateData, Constants.TemplateProperties.Types.Integer);
