@@ -4,7 +4,7 @@ import Constants from 'constants.json';
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
 const writeClient = caller(experience, PROTO_PATH, 'ExperienceTemplateWriteService');
 
-export function addProperty(templateObject, type, index) {
+export function addProperty(templateObject, type, sortIndex) {
   const req = new writeClient.Request('addProperty', {
     context,
     propertyType: type,
@@ -12,7 +12,7 @@ export function addProperty(templateObject, type, index) {
     rowVersion: templateObject.rowVersion,
     templateVersionId: templateObject.templateVersionId,
     userAccountId: 'abc',
-    sortIndex: index
+    sortIndex
   }).withResponseStatus(true);
   return req
     .exec()
