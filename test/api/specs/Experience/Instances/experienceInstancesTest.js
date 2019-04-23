@@ -7,8 +7,8 @@ import { deleteExperienceTemplate, getTemplateById } from 'actions/templates';
 const instanceData = new Object();
 const fixedTemplateData = new Object();
 const collectionTemplateData = new Object();
-const fixedInstanceData = {};
-const collectionInstanceData = {};
+var fixedInstanceData = {};
+var collectionInstanceData = {};
 
 describe('@experience Experience Instances Tests', () => {
   let getExperienceInstanceId;
@@ -23,8 +23,7 @@ describe('@experience Experience Instances Tests', () => {
       [fixedTemplateData.templateId, collectionTemplateData.templateId],
       instanceIds
     );
-    fixedInstanceData.id = instanceIds[0].id;
-    collectionInstanceData.id = instanceIds[1].id;
+    [fixedInstanceData, collectionInstanceData] = instanceIds;
   });
   it('getExperienceInstanceId() returns the instance ids for the experience templates provided', async () => {
     expect(getExperienceInstanceId.status.code).to.equal(0);

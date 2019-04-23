@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "spaceUserSummary.proto";
+import "audienceType.proto";
 
 package user;
 
@@ -10,6 +11,7 @@ message ListSpaceUsersRequest {
     string space_id = 1;
     string keyword = 2;
     int32 limit = 3;
+    common.AudienceType audience_type = 4;
 }
 
 message ListSpaceUsersResponse {

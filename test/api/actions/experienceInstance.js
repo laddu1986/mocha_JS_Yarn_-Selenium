@@ -66,6 +66,11 @@ export function renameExperience(instanceObject, name) {
     name
   }).withResponseStatus(true);
   return req.exec().then(response => {
+    response.response.updates.experiences.forEach(experience => {
+      if (experience.experienceId == instanceObject.id) {
+        instanceObject.rowVersion = experience.rowVersion;
+      }
+    });
     return response;
   });
 }
@@ -84,17 +89,17 @@ export function changeExperienceEnabled(instanceObject, enabled) {
   });
 }
 
-export function publishExperience(instanceData, instanceObject) {
+export function publishExperience(instanceObject) {
   const req = new writeClient.Request('publishExperience', {
     context,
-    experienceId: instanceObject,
+    experienceId: instanceObject.id,
     accountId: 'abc',
-    rowVersion: instanceData.experience.versionRowVersion
+    rowVersion: instanceObject.versionRowVersion
   }).withResponseStatus(true);
   return req.exec().then(response => {
     if (Object.keys(response.response.updates).length > 0) {
       // Do not update row version when already published
-      instanceData.experience.versionRowVersion = response.response.updates.experiences[0].rowVersion;
+      instanceObject.versionRowVersion = response.response.updates.experiences[0].rowVersion;
     }
     return response;
   });
