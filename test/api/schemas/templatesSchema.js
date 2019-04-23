@@ -135,7 +135,25 @@ export function templatesSchema(templateObject) {
     .required();
 }
 
-export function templateByIDSchema(contextObject, templateObject) {
+export function searchTemplatesSchema(templateObject) {
+  return joi
+    .object()
+    .keys({
+      templates: joi.array().items(
+        joi.object().keys({
+          id: joi.valid(templateObject.templateId).required(),
+          key: joi.only(templateObject.key).required(),
+          name: joi.only(templateObject.name).required(),
+          status: joi.valid(1).required(),
+          rowVersion: protoTimeStamp,
+          templateVersionId: protoLong
+        })
+      )
+    })
+    .required();
+}
+
+export function templateByIDSchema(templateObject) {
   return joi
     .object()
     .keys({
@@ -147,7 +165,7 @@ export function templateByIDSchema(contextObject, templateObject) {
         rowVersion: protoTimeStamp,
         templateVersionId: protoLong,
         modifiedAt: protoTimeStamp,
-        modifiedBy: joi.valid(contextObject.identityID).required()
+        modifiedBy: joi.valid('abc').required()
       })
     })
     .required();
@@ -461,9 +479,17 @@ export function addPropertySchema(templateObject) {
   });
 }
 
-export function renamePropertySchema() {
+export function commonExperiencesSchema() {
   return joi.object().keys({
     templateVersionId: protoLong,
     rowVersion: protoTimeStamp
+  });
+}
+
+export function addTemplateToCollectionSchema(templateObject) {
+  return joi.object().keys({
+    templateVersionId: protoLong,
+    rowVersion: protoTimeStamp,
+    childReferenceId: joi.only(templateObject.childReferenceId).required()
   });
 }

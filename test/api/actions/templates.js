@@ -1,27 +1,20 @@
-import { path, caller } from '../common';
+import { path, caller, context, randomString } from '../common';
 import { experience } from 'config/getEnv';
 const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
 const writeClient = caller(experience, PROTO_PATH, 'ExperienceTemplateWriteService');
 const readClient = caller(experience, PROTO_PATH, 'ExperienceTemplateReadService');
+import * as Constants from 'constants.json';
 
-function spaceContext(templateData) {
-  return {
-    orgId: templateData.orgID,
-    spaceId: templateData.spaceID,
-    workspaceId: templateData.spaceID
-  };
-}
-
-export function createExperienceTemplate(contextData, templateType, returnTemplates) {
+export function createExperienceTemplate(responseObject, templateType) {
   const req = new writeClient.Request('createTemplate', {
-    context: spaceContext(contextData),
+    context,
     templateType,
-    userAccountId: contextData.identityID
+    userAccountId: 'abc'
   }).withResponseStatus(true);
   return req
     .exec()
     .then(response => {
-      returnTemplates.push(response.response);
+      Object.assign(responseObject, response.response);
       return response;
     })
     .catch(err => {
@@ -29,7 +22,7 @@ export function createExperienceTemplate(contextData, templateType, returnTempla
     });
 }
 
-export function changeTemplate(contextData, templateObject, type, value) {
+export function changeTemplate(templateObject, type, value) {
   let reqName;
   switch (type) {
     case 'name':
@@ -46,10 +39,10 @@ export function changeTemplate(contextData, templateObject, type, value) {
       break;
   }
   const req = new writeClient.Request(reqName, {
-    context: spaceContext(contextData),
+    context,
     templateId: templateObject.templateId,
     [type]: value,
-    userAccountId: contextData.identityID,
+    userAccountId: 'abc',
     rowVersion: templateObject.rowVersion,
     templateVersionId: templateObject.templateVersionId
   }).withResponseStatus(true);
@@ -65,27 +58,27 @@ export function changeTemplate(contextData, templateObject, type, value) {
     });
 }
 
-export function getTemplates(contextData, keyword) {
+export function getTemplates(keyword) {
   const req = new readClient.Request('getTemplates', {
-    context: spaceContext(contextData),
+    context,
     keyword
   }).withResponseStatus(true);
   return req.exec();
 }
 
-export function deleteExperienceTemplate(contextData, templateObject) {
+export function deleteExperienceTemplate(templateObject) {
   const req = new writeClient.Request('deleteTemplate', {
-    context: spaceContext(contextData),
+    context,
     templateId: templateObject.templateId,
     rowVersion: templateObject.rowVersion,
-    userAccountId: contextData.identityID
+    userAccountId: 'abc'
   }).withResponseStatus(true);
   return req.exec();
 }
 
-export function getPropertyById(contextData, templateObject) {
+export function getPropertyById(templateObject) {
   const req = new readClient.Request('getPropertyById', {
-    context: spaceContext(contextData),
+    context,
     templateId: templateObject.templateId,
     propertyId: templateObject.propertyId,
     templateVersionId: templateObject.templateVersionId
@@ -93,15 +86,31 @@ export function getPropertyById(contextData, templateObject) {
   return req.exec();
 }
 
-export function getTemplateById(contextData, templateObject) {
+export function getTemplateById(templateObject) {
   const req = new readClient.Request('getTemplateById', {
-    context: spaceContext(contextData),
+    context,
     templateId: templateObject.templateId
   }).withResponseStatus(true);
-  return req.exec().then(response => {
-    Object.assign(templateObject, response.response.template);
-    return response;
-  });
+  return req.exec();
+}
+
+export function getTemplateByVersionId(templateObject) {
+  const req = new readClient.Request('getTemplateByVersionId', {
+    context,
+    templateId: templateObject.templateId,
+    templateVersionId: templateObject.templateVersionId
+  }).withResponseStatus(true);
+  return req.exec();
+}
+
+export function searchTemplates(type, searchKeyword, mode) {
+  const req = new readClient.Request('searchTemplates', {
+    context,
+    templateType: type,
+    keyword: searchKeyword,
+    searchMode: mode
+  }).withResponseStatus(true);
+  return req.exec();
 }
 
 export function getConfiguration() {
@@ -109,12 +118,12 @@ export function getConfiguration() {
   return req.exec();
 }
 
-export function commitTemplate(contextData, templateObject) {
+export function commitTemplate(templateObject) {
   const req = new writeClient.Request('commitTemplate', {
-    context: spaceContext(contextData),
+    context,
     templateId: templateObject.templateId,
     rowVersion: templateObject.rowVersion,
-    accountId: contextData.identityID,
+    accountId: 'abc',
     templateVersionId: templateObject.templateVersionId
   }).withResponseStatus(true);
   return req.exec().then(response => {
@@ -123,17 +132,83 @@ export function commitTemplate(contextData, templateObject) {
   });
 }
 
-export function addTemplateToCollection(contextData, parentObject, childObject, sortIndex) {
+export function addTemplateToCollection(parentObject, childObject, sortIndex) {
   const req = new writeClient.Request('addTemplateToCollection', {
-    context: spaceContext(contextData),
+    context,
     templateVersionId: parentObject.templateVersionId,
     rowVersion: parentObject.rowVersion,
     childTemplateId: childObject.templateId,
     sortIndex
   }).withResponseStatus(true);
+  return req.exec().then(response => {
+    parentObject.childReferenceId = response.response.childReferenceId;
+    parentObject.rowVersion = response.response.rowVersion;
+    parentObject.templateVersionId = response.response.templateVersionId;
+    return response;
+  });
+}
 
+function commonCollectionRequest(parentObject) {
+  return {
+    context,
+    templateVersionId: parentObject.templateVersionId,
+    templateId: parentObject.templateId,
+    rowVersion: parentObject.rowVersion,
+    userAccountId: 'abc'
+  };
+}
+
+export function removeTemplateFromCollection(parentObject, childObject) {
+  let commonRequest = commonCollectionRequest(parentObject);
+  commonRequest.childTemplateId = childObject.templateId;
+  commonRequest.childReferenceId = parentObject.childReferenceId;
+  const req = new writeClient.Request('removeTemplateFromCollection', commonRequest).withResponseStatus(true);
   return req.exec().then(response => {
     parentObject.rowVersion = response.response.rowVersion;
     return response;
   });
+}
+
+export function renameTemplateReference(parentObject, newName) {
+  let commonRequest = commonCollectionRequest(parentObject);
+  commonRequest.childReferenceId = parentObject.childReferenceId;
+  commonRequest.name = newName;
+  const req = new writeClient.Request('renameTemplateReference', commonRequest).withResponseStatus(true);
+  return req.exec().then(response => {
+    parentObject.rowVersion = response.response.rowVersion;
+    return response;
+  });
+}
+
+export function changeTemplateReferenceKey(parentObject, newKeyName) {
+  let commonRequest = commonCollectionRequest(parentObject);
+  commonRequest.childReferenceId = parentObject.childReferenceId;
+  commonRequest.key = newKeyName;
+  const req = new writeClient.Request('changeTemplateReferenceKey', commonRequest).withResponseStatus(true);
+  return req.exec().then(response => {
+    parentObject.rowVersion = response.response.rowVersion;
+    return response;
+  });
+}
+
+export function moveTemplateWithinCollection(parentObject, index) {
+  let commonRequest = commonCollectionRequest(parentObject);
+  commonRequest.templateReferenceId = parentObject.childReferenceId;
+  commonRequest.newIndex = index;
+  const req = new writeClient.Request('moveTemplateWithinCollection', commonRequest).withResponseStatus(true);
+  return req.exec().then(response => {
+    parentObject.rowVersion = response.response.rowVersion;
+    return response;
+  });
+}
+
+export async function getCommittedFixedTemplate(fixedTemplateData) {
+  await createExperienceTemplate(fixedTemplateData, Constants.Experience.Types.Fixed);
+  await changeTemplate(fixedTemplateData, 'name', randomString(12));
+  await changeTemplate(
+    fixedTemplateData,
+    'key',
+    randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
+  );
+  await commitTemplate(fixedTemplateData);
 }
