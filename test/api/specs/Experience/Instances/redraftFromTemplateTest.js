@@ -23,7 +23,7 @@ const collectionTemplate = { templateId: '4nwr3Qm' };
 const collectionInstance = {};
 const fixedInstance = {};
 
-describe('@experience Experience Instance Redraft from Template Tests', () => {
+xdescribe('@experience Experience Instance Redraft from Template Tests', () => {
   before('Setup the testing environment', async () => {
     await templates.getTemplateById(instanceData, fixedTemplate);
     await templates.getTemplateById(instanceData, collectionTemplate);
