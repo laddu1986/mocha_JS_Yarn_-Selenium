@@ -56,7 +56,7 @@ describe('@experience Experience Scenarios Tests', () => {
     expect(disableScenario.status.code).to.equal(0);
     expect(disableConfirm.response.scenario).to.not.have.keys('isEnabled');
   });
-  it('setScenarioSchedule() sends a request to set the schedule of a scenario', async () => {
+  it('C2074255 setScenarioSchedule() sends a request to set the schedule of a scenario', async () => {
     let schedule = {
       start: fixedInstanceData.createdAt,
       end: fixedInstanceData.versionRowVersion,
@@ -67,7 +67,7 @@ describe('@experience Experience Scenarios Tests', () => {
     expect(setSchedule.status.code).to.equal(0);
     expect(scheduleConfirm.response.scenario.schedule).to.not.equal(null);
   });
-  it('setScenarioSchedule() sends a request to remove the schedule of a scenario', async () => {
+  it('C2074256 setScenarioSchedule() sends a request to remove the schedule of a scenario', async () => {
     let schedule = null;
     let removeSchedule = await instances.setScenarioSchedule(fixedInstanceData, 1, schedule);
     let scheduleConfirm = await instances.getScenario(fixedInstanceData, 1);
