@@ -25,7 +25,7 @@ describe('@experience Experience Instances Tests', () => {
     );
     [fixedInstanceData, collectionInstanceData] = instanceIds;
   });
-  it('getExperienceInstanceId() returns the instance ids for the experience templates provided', async () => {
+  it('C2074250 getExperienceInstanceId() returns the instance ids for the experience templates provided', async () => {
     expect(getExperienceInstanceId.status.code).to.equal(0);
   });
   it('C1857180 getExperience() gets the collection instance', async () => {
