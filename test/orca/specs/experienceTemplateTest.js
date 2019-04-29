@@ -39,17 +39,17 @@ describe('Tests for experience templates for a space', () => {
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it('Mutation - addExperienceProperty', async () => {
+  it('C2074303 Mutation - addExperienceProperty', async () => {
     let response = await addExperienceProperty(experienceTemplateObject);
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it('Query - experienceProperty', async () => {
+  it('C2074304 Query - experienceProperty', async () => {
     let response = await getExperienceProperty(experienceTemplateObject);
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it('Query - updateExperienceProperty', async () => {
+  it('C2074305 Query - updateExperienceProperty', async () => {
     let response = await updateExperienceProperty(experienceTemplateObject);
     expect(response.response.statusCode).to.equal(200);
   });
@@ -64,7 +64,7 @@ describe('Tests for experience templates for a space', () => {
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it('Mutation - commitExperienceTemplate', async () => {
+  it('C2074306 Mutation - commitExperienceTemplate', async () => {
     let response = await commitExperienceTemplate(experienceTemplateObject);
     expect(response.response.statusCode).to.equal(200);
   });

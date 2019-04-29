@@ -62,13 +62,13 @@ xdescribe('@experience Experience Basic Redrafting Tests', () => {
     let redraftCollection = await instances.getExperience(instanceData, instanceData.instances[1]);
     expect(redraftCollection.response.experience).to.not.have.keys('state');
   });
-  it('Updating a collection redrafts the collection', async () => {
+  it('C2074248 Updating a collection redrafts the collection', async () => {
     await instances.publishExperience(instanceData, instanceData.instances[1]);
     await instances.renameExperience(instanceData, instanceData.instances[1], randomString());
     let redraftCollection = await instances.getExperience(instanceData, instanceData.instances[1]);
     expect(redraftCollection.response.experience).to.not.have.keys('state');
   });
-  it('Updating a collection does not redraft the experience', async () => {
+  it('C2074249 Updating a collection does not redraft the experience', async () => {
     let noExperienceRedraft = await instances.getExperience(instanceData, instanceData.instances[0]);
     expect(noExperienceRedraft.response.experience.state).to.equal(Constants.Experience.State.COMMITTED);
   });

@@ -27,7 +27,7 @@ describe('@experience Experience Template Service', () => {
     joi.assert(renameTemplate.response, schemas.templateSchema());
   });
 
-  it('changeTemplateKey() change template key', async () => {
+  it('C2074265 changeTemplateKey() change template key', async () => {
     let changeTemplateKey = await templates.changeTemplate(
       templateData,
       'key',
@@ -37,7 +37,7 @@ describe('@experience Experience Template Service', () => {
     joi.assert(changeTemplateKey.response, schemas.templateSchema());
   });
 
-  it('changeTemplateThumbnail() change template thumbnail', async () => {
+  it('C2074266 changeTemplateThumbnail() change template thumbnail', async () => {
     let changeTemplateThumbnail = await templates.changeTemplate(templateData, 'thumbnailUrl', 'thumbnail_url');
     expect(changeTemplateThumbnail.status.code).to.equal(0);
     joi.assert(changeTemplateThumbnail.response, schemas.templateSchema());
@@ -55,13 +55,13 @@ describe('@experience Experience Template Service', () => {
     joi.assert(getByID.response, schemas.templateByIDSchema(templateData));
   });
 
-  it('getTemplateByVersionId() get a template by version id', async () => {
+  it('C2074267 getTemplateByVersionId() get a template by version id', async () => {
     let response = await templates.getTemplateByVersionId(templateData);
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.templateByIDSchema(templateData));
   });
 
-  it('commitTemplate() commit template', async () => {
+  it('C2074268 commitTemplate() commit template', async () => {
     let response = await templates.commitTemplate(templateData);
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());

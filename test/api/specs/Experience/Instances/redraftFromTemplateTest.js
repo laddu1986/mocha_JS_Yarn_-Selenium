@@ -23,12 +23,12 @@ const collectionTemplate = { templateId: '4nwr3Qm' };
 const collectionInstance = {};
 const fixedInstance = {};
 
+//Skipping due to recursive instance publishing WIP
 xdescribe('@experience Experience Instance Redraft from Template Tests', () => {
   before('Setup the testing environment', async () => {
     await templates.getTemplateById(instanceData, fixedTemplate);
     await templates.getTemplateById(instanceData, collectionTemplate);
     await instances.getTemplateInstanceIds(
-      instanceData,
       [fixedTemplate.templateId, collectionTemplate.templateId],
       instanceData.instances
     );
@@ -44,13 +44,13 @@ xdescribe('@experience Experience Instance Redraft from Template Tests', () => {
     await instances.publishExperience(instanceData, fixedInstance);
     await instances.publishExperience(instanceData, collectionInstance);
   });
-  it('When a collection template is committed, the corresponding instance is redrafted', async () => {
+  it('C2074251 When a collection template is committed, the corresponding instance is redrafted', async () => {
     await templates.changeTemplate(instanceData, collectionTemplate, 'name', randomString());
     await templates.commitTemplate(instanceData, collectionTemplate);
     let redraftConfirm = await instances.getExperience(instanceData, collectionInstance);
     expect(redraftConfirm.response.experience).to.not.have.key('state');
   });
-  it('When a fixed template has adds a properties (with default), changes are reflected on fixed instance', async () => {
+  it('C2074252 When a fixed template has adds a properties (with default), changes are reflected on fixed instance', async () => {
     await templateProperties.addProperty(instanceData, fixedTemplate, 'text');
     await templateProperties.modifyProperty(instanceData, fixedTemplate, 'renameProperty');
     await templateProperties.modifyProperty(instanceData, fixedTemplate, 'changePropertyKey');
@@ -64,7 +64,7 @@ xdescribe('@experience Experience Instance Redraft from Template Tests', () => {
     expect(redraftCollection.response.experience).to.not.have.key('state');
     expect(redraftFixed.response.experience.scenarios[0].localizedProperties).to.not.be.empty;
   });
-  xit('When a fixed template is updated, existing localised properties are not overwritten', async () => {
+  xit('C2074253 When a fixed template is updated, existing localised properties are not overwritten', async () => {
     let initialPropertiesState = fixedInstance.scenarios[0].localizedProperties;
     await templateProperties.modifyProperty(
       instanceData,
@@ -79,7 +79,7 @@ xdescribe('@experience Experience Instance Redraft from Template Tests', () => {
     expect(redraftFixed.response.experience).to.not.have.key('state');
     expect(redraftFixed.response.eperience.scenarios[0].localizedProperties).to.deep.equal(initialPropertiesState);
   });
-  it('When a fixed template removes a property, the property is removed from the instance', async () => {
+  it('C2074254 When a fixed template removes a property, the property is removed from the instance', async () => {
     await templateProperties.removeFunction(instanceData, fixedTemplate, 'removeProperty');
     await templates.commitTemplate(instanceData, fixedTemplate);
     await templates.getTemplateById(instanceData, collectionTemplate);
