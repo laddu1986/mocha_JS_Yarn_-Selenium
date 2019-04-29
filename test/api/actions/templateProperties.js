@@ -98,7 +98,6 @@ export function modifyProperty(templateObject, reqName, ruleValue) {
       value = 'help_text';
       break;
   }
-
   const req = new writeClient.Request(reqName, {
     context,
     [type]: value,
@@ -108,15 +107,11 @@ export function modifyProperty(templateObject, reqName, ruleValue) {
     templateVersionId: templateObject.templateVersionId,
     userAccountId: 'abc'
   }).withResponseStatus(true);
-  return req
-    .exec()
-    .then(response => {
-      templateObject.rowVersion = response.response.rowVersion;
-      return response;
-    })
-    .catch(err => {
-      return err;
-    });
+  return req.exec().then(response => {
+    templateObject.rowVersion = response.response.rowVersion;
+    templateObject.templateVersionId = response.response.templateVersionId;
+    return response;
+  });
 }
 
 export function removeFunction(templateObject, reqName) {
@@ -132,6 +127,7 @@ export function removeFunction(templateObject, reqName) {
     .exec()
     .then(response => {
       templateObject.rowVersion = response.response.rowVersion;
+      templateObject.templateVersionId = response.response.templateVersionId;
       return response;
     })
     .catch(err => {
