@@ -23,12 +23,12 @@ const collectionTemplate = { templateId: '4nwr3Qm' };
 const collectionInstance = {};
 const fixedInstance = {};
 
+//Skipping due to recursive instance publishing WIP
 xdescribe('@experience Experience Instance Redraft from Template Tests', () => {
   before('Setup the testing environment', async () => {
     await templates.getTemplateById(instanceData, fixedTemplate);
     await templates.getTemplateById(instanceData, collectionTemplate);
     await instances.getTemplateInstanceIds(
-      instanceData,
       [fixedTemplate.templateId, collectionTemplate.templateId],
       instanceData.instances
     );
