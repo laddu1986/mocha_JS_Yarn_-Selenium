@@ -24,17 +24,17 @@ describe('Tests for experience templates for a space', () => {
     await updateExperienceTemplate(experienceTemplateObject);
   });
 
-  it('Mutation - addExperienceProperty', async () => {
+  it('C2074303 - Mutation - addExperienceProperty', async () => {
     let response = await addExperienceProperty(experienceTemplateObject);
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it('Query - experienceProperty', async () => {
+  it('C2074304 - Query - experienceProperty', async () => {
     let response = await getExperienceProperty(experienceTemplateObject);
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it('Mutation - updateExperienceProperty', async () => {
+  it('C2074305 - Mutation - updateExperienceProperty', async () => {
     let response = await updateExperienceProperty(experienceTemplateObject);
     expect(response.response.statusCode).to.equal(200);
   });

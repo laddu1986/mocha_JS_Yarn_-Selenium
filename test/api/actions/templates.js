@@ -91,7 +91,10 @@ export function getTemplateById(templateObject) {
     context,
     templateId: templateObject.templateId
   }).withResponseStatus(true);
-  return req.exec();
+  return req.exec().then(response => {
+    Object.assign(templateObject, response.response.template);
+    return response;
+  });
 }
 
 export function getTemplateByVersionId(templateObject) {

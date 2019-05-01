@@ -16,7 +16,7 @@ describe('@experience Experience Template Service --> Collection Templates', () 
     assignWorkSpaceContext(collectionTemplateData);
     await templates.getCommittedFixedTemplate(fixedTemplateData);
   });
-  it('createTemplate() creates a Collection Template', async () => {
+  it('C2074257 createTemplate() creates a Collection Template', async () => {
     let response = await templates.createExperienceTemplate(
       collectionTemplateData,
       Constants.Experience.Types.Collection
@@ -24,17 +24,17 @@ describe('@experience Experience Template Service --> Collection Templates', () 
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.createTemplateSchema());
   });
-  it('addTemplateToCollection() adds a fixed template to collection', async () => {
+  it('C2074258 addTemplateToCollection() adds a fixed template to collection', async () => {
     let response = await templates.addTemplateToCollection(collectionTemplateData, fixedTemplateData, 0);
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.addTemplateToCollectionSchema(collectionTemplateData));
   });
-  it('renameTemplateReference() rename child template name in the collection', async () => {
+  it('C2074259 renameTemplateReference() rename child template name in the collection', async () => {
     let response = await templates.renameTemplateReference(collectionTemplateData, randomString(12));
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('changeTemplateReferenceKey() change child template key in the collection', async () => {
+  it('C2074260 changeTemplateReferenceKey() change child template key in the collection', async () => {
     let response = await templates.changeTemplateReferenceKey(
       collectionTemplateData,
       randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' })
@@ -42,12 +42,12 @@ describe('@experience Experience Template Service --> Collection Templates', () 
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('searchTemplates() search a template', async () => {
+  it('C2074261 searchTemplates() search a template', async () => {
     let response = await templates.searchTemplates('0', 'qa', 'LAST_COMMITTED');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.searchTemplatesSchema(fixedTemplateData));
   });
-  it('commitTemplate() commit a collection template', async () => {
+  it('C2074262 commitTemplate() commit a collection template', async () => {
     await templates.changeTemplate(collectionTemplateData, 'name', randomString(12));
     await templates.changeTemplate(
       collectionTemplateData,
@@ -58,7 +58,7 @@ describe('@experience Experience Template Service --> Collection Templates', () 
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('moveTemplateWithinCollection() moves template within collection', async () => {
+  it('C2074263 moveTemplateWithinCollection() moves template within collection', async () => {
     await templates.getCommittedFixedTemplate(fixedTemplateData);
     await templates.addTemplateToCollection(collectionTemplateData, fixedTemplateData, 1);
     let getByID = await templates.getTemplateById(collectionTemplateData);
@@ -69,7 +69,7 @@ describe('@experience Experience Template Service --> Collection Templates', () 
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('removeTemplateFromCollection() remove a fixed template from the collection', async () => {
+  it('C2074264 removeTemplateFromCollection() remove a fixed template from the collection', async () => {
     let response = await templates.removeTemplateFromCollection(collectionTemplateData, fixedTemplateData);
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());

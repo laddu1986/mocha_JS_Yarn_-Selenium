@@ -40,7 +40,7 @@ describe('Tests for experience templates for a space', () => {
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it('Mutation - commitExperienceTemplate', async () => {
+  it('C2074306 - Mutation - commitExperienceTemplate', async () => {
     let response = await commitExperienceTemplate(experienceTemplateObject);
     expect(response.response.statusCode).to.equal(200);
   });

@@ -32,22 +32,22 @@ describe('@experience Template Service -> Template Properties', () => {
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('changePropertyKey() can change property key of a text property', async () => {
+  it('C2074283 changePropertyKey() can change property key of a text property', async () => {
     let response = await properties.modifyProperty(templateData, 'changePropertyKey');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('changePropertyLocalizable() can change property localizable value', async () => {
+  it('C2074284 changePropertyLocalizable() can change property localizable value', async () => {
     let response = await properties.modifyProperty(templateData, 'changePropertyLocalizable');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('changePropertyDefaultValue() can change property default value', async () => {
+  it('C2074285 changePropertyDefaultValue() can change property default value', async () => {
     let response = await properties.modifyProperty(templateData, 'changePropertyDefaultValue', 'stringValue');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('enablePropertyRule() can enable text characterCount property rule', async () => {
+  it('C2074286 enablePropertyRule() can enable text characterCount property rule', async () => {
     let response = await properties.modifyProperty(
       templateData,
       'enablePropertyRule',
@@ -56,7 +56,7 @@ describe('@experience Template Service -> Template Properties', () => {
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('enablePropertyRule() can enable text regex property rule', async () => {
+  it('C2074287 enablePropertyRule() can enable text regex property rule', async () => {
     let response = await properties.modifyProperty(
       templateData,
       'enablePropertyRule',
@@ -65,7 +65,7 @@ describe('@experience Template Service -> Template Properties', () => {
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('enablePropertyRule() can enable text required property rule', async () => {
+  it('C2074288 enablePropertyRule() can enable text required property rule', async () => {
     let response = await properties.modifyProperty(
       templateData,
       'enablePropertyRule',
@@ -74,7 +74,7 @@ describe('@experience Template Service -> Template Properties', () => {
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('changePropertyRule() can change text characterCount property rule', async () => {
+  it('C2074289 changePropertyRule() can change text characterCount property rule', async () => {
     let response = await properties.changePropertyRule(
       templateData,
       'textRule',
@@ -83,7 +83,7 @@ describe('@experience Template Service -> Template Properties', () => {
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('changePropertyRule() can change text regex property rule', async () => {
+  it('C2074290 changePropertyRule() can change text regex property rule', async () => {
     let response = await properties.changePropertyRule(
       templateData,
       'textRule',
@@ -92,7 +92,7 @@ describe('@experience Template Service -> Template Properties', () => {
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('changePropertyRule() can change text required property rule', async () => {
+  it('C2074291 changePropertyRule() can change text required property rule', async () => {
     let response = await properties.changePropertyRule(
       templateData,
       'textRule',
@@ -101,12 +101,12 @@ describe('@experience Template Service -> Template Properties', () => {
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('changePropertyPromptText() can change property prompt text', async () => {
+  it('C2074292 changePropertyPromptText() can change property prompt text', async () => {
     let response = await properties.modifyProperty(templateData, 'changePropertyPromptText');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('changePropertyHelpText() can change property help text', async () => {
+  it('C2074293 changePropertyHelpText() can change property help text', async () => {
     let response = await properties.modifyProperty(templateData, 'changePropertyHelpText');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
@@ -116,12 +116,12 @@ describe('@experience Template Service -> Template Properties', () => {
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.getPropertyByIDSchema(templateData, 'text'));
   });
-  it('removePropertyDefaultValue() can remove property default value', async () => {
+  it('C2074294 removePropertyDefaultValue() can remove property default value', async () => {
     let response = await properties.removeFunction(templateData, 'removePropertyDefaultValue');
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('disablePropertyRule() can disable text characterCount property rule ', async () => {
+  it('C2074295 disablePropertyRule() can disable text characterCount property rule ', async () => {
     let response = await properties.modifyProperty(
       templateData,
       'disablePropertyRule',
@@ -130,7 +130,7 @@ describe('@experience Template Service -> Template Properties', () => {
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('disablePropertyRule() can disable text regex property rule ', async () => {
+  it('C2074296 disablePropertyRule() can disable text regex property rule ', async () => {
     let response = await properties.modifyProperty(
       templateData,
       'disablePropertyRule',
@@ -139,7 +139,7 @@ describe('@experience Template Service -> Template Properties', () => {
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('disablePropertyRule() can disable text required property rule ', async () => {
+  it('C2074297 disablePropertyRule() can disable text required property rule ', async () => {
     let response = await properties.modifyProperty(
       templateData,
       'disablePropertyRule',
@@ -148,17 +148,17 @@ describe('@experience Template Service -> Template Properties', () => {
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('getConfiguration() returns the available property types', async () => {
+  it('C2074298 getConfiguration() returns the available property types', async () => {
     let response = await getConfiguration();
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.getPropertySchema());
   });
-  it('commitTemplate() commit a template', async () => {
+  it('C2074299 commitTemplate() commit a template', async () => {
     let response = await templates.commitTemplate(templateData);
     expect(response.status.code).to.equal(0);
     joi.assert(response.response, schemas.commonExperiencesSchema());
   });
-  it('moveProperty() move the property', async () => {
+  it('C2074300 moveProperty() move the property', async () => {
     await properties.addProperty(templateData, Constants.TemplateProperties.Types.Text, '1');
     let getByID = await templates.getTemplateById(templateData);
     expect(getByID.response.template.properties[1].id).to.equal(templateData.propertyId);

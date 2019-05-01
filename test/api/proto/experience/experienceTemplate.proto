@@ -40,6 +40,7 @@ message ExperienceTemplate{
     google.protobuf.Timestamp row_version = 5;
     ExperienceTemplateType template_type = 6;
     int64 template_version_id = 7;
+    ExperienceTemplateStatus status = 8;
 }
 
 enum ExperienceTemplateType {
@@ -54,8 +55,8 @@ enum ExperienceTemplateStatus {
 }
 
 enum TemplateSearchMode {
-    ALL = 0; 
-    LASTCOMMITTED = 1; 
+    ALL = 0;
+    LAST_COMMITTED = 1;
 }
 
 enum OrderDirection{

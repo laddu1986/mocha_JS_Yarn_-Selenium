@@ -42,13 +42,13 @@ describe('@segment Tribe Service', () => {
     expect(moveConfirm.response.categories[0].segments).to.equal(undefined);
   });
 
-  it('searchSegments() returns an array of tribes', async () => {
+  it('C2074301 searchSegments() returns an array of tribes', async () => {
     await tribe.createTribe(tribeData);
     let searchSegments = await tribe.searchSegments(tribeData, '', 10, 0);
     expect(searchSegments.response.segments.length).to.equal(2);
   });
 
-  it('getSegmentsById() returns an array of tribes', async () => {
+  it('C2074302 getSegmentsById() returns an array of tribes', async () => {
     let ids = tribeData.tribes.map(({ id }) => id);
     let getSegments = await tribe.getSegmentsById(tribeData, ids);
     expect(getSegments.response.segments.length).to.equal(2);

@@ -53,6 +53,8 @@ message ExperienceInstanceSummary {
 
   google.protobuf.Timestamp row_version = 11;
   google.protobuf.Timestamp version_row_version = 12;
+
+  int64 template_version_id = 13;
 }
 
 
@@ -77,14 +79,17 @@ message ExperienceInstanceDetails {
   google.protobuf.Timestamp modified_at = 15;
   google.protobuf.Timestamp row_version = 16;
   google.protobuf.Timestamp version_row_version = 17;
+
+  int64 template_version_id = 18;
 }
 
 message ExperienceInstanceChild {
   oneof child {
     ExperienceInstanceSummary summary = 1;
     ExperienceInstanceDetails details = 2;
-
   }
+
+  string template_reference_id = 3;
 }
 
 message ExperienceVersionUpdate {
