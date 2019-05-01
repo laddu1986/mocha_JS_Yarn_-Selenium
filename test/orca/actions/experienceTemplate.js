@@ -80,12 +80,10 @@ export function getExperienceTemplate(responseData) {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
-    return response;
-  });
+  return post(any, responseData);
 }
 
-export function addExperienceProperty(responseData) {
+export function addExperienceProperty(responseData, type) {
   const data = {
     query:
       'mutation addExperienceProperty($input: AddExperiencePropertyInput!) {  addExperienceProperty(input: $input) { template { rowVersion} property{id name}}}',
@@ -98,7 +96,7 @@ export function addExperienceProperty(responseData) {
         templateId: responseData.expTemplateID,
         templateVersionId: responseData.templateVersionId,
         rowVersion: responseData.expTemplateRowVersion,
-        typeKey: Constants.TemplateProperties.Types.Text
+        typeKey: type
       }
     }
   };
@@ -129,9 +127,7 @@ export function getExperienceProperty(responseData) {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
-    return response;
-  });
+  return post(any, responseData);
 }
 
 export function updateExperienceProperty(responseData) {
@@ -139,7 +135,7 @@ export function updateExperienceProperty(responseData) {
     key = `${randomString({ length: 7, charset: 'alphabetic' })}`;
   const data = {
     query:
-      'mutation updateExperienceProperty($input: UpdateExperiencePropertyInput!) { updateExperienceProperty(input: $input) {templateRowVersion templateVersionId}}',
+      'mutation updateExperienceProperty($input: UpdateExperiencePropertyInput!) { updateExperienceProperty(input: $input) {templateUpdate {rowVersion}}}',
     operationName: 'updateExperienceProperty',
     variables: {
       input: {
@@ -161,19 +157,28 @@ export function updateExperienceProperty(responseData) {
     data: data
   };
   return post(any, responseData).then(response => {
-    responseData.expTemplateRowVersion = response.response.body.data.updateExperienceProperty.templateRowVersion;
+    responseData.expTemplateRowVersion = response.response.body.data.updateExperienceProperty.templateUpdate.rowVersion;
     return response;
   });
 }
 
-export function getExperiencesTemplate(responseData) {
+export function moveExperienceProperty(responseData, index) {
   const data = {
     query:
-      'query experienceTemplates($organizationId: ID!, $spaceId: ID!) { experienceTemplates(organizationId: $organizationId , spaceId: $spaceId) { id rowVersion key name}}',
-    operationName: 'experienceTemplates',
+      'mutation moveExperienceProperty($input: MoveExperiencePropertyInput!) { moveExperienceProperty(input: $input) { template { id rowVersion}}}',
+    operationName: 'moveExperienceProperty',
     variables: {
-      organizationId: responseData.orgID,
-      spaceId: responseData.spaceID
+      input: {
+        fields: {
+          index
+        },
+        propertyId: responseData.propertyId,
+        organizationId: responseData.orgID,
+        rowVersion: responseData.expTemplateRowVersion,
+        spaceId: responseData.spaceID,
+        templateId: responseData.expTemplateID,
+        templateVersionId: responseData.templateVersionId
+      }
     }
   };
   const any = {
@@ -181,8 +186,28 @@ export function getExperiencesTemplate(responseData) {
     data: data
   };
   return post(any, responseData).then(response => {
+    responseData.expTemplateRowVersion = response.response.body.data.moveExperienceProperty.template.rowVersion;
     return response;
   });
+}
+
+export function getExperiencesTemplate(responseData) {
+  const data = {
+    query:
+      'query experienceTemplates($input: ExperienceTemplateSearchInput!) { experienceTemplates(input: $input) { id rowVersion key name}}',
+    operationName: 'experienceTemplates',
+    variables: {
+      input: {
+        organizationId: responseData.orgID,
+        spaceId: responseData.spaceID
+      }
+    }
+  };
+  const any = {
+    api: orca,
+    data: data
+  };
+  return post(any, responseData);
 }
 
 export function removeExperienceProperty(responseData) {
@@ -207,6 +232,82 @@ export function removeExperienceProperty(responseData) {
   };
   return post(any, responseData).then(response => {
     responseData.expTemplateRowVersion = response.response.body.data.removeExperienceProperty.template.rowVersion;
+    return response;
+  });
+}
+
+export function toggleExperiencePropertyRule(responseData, ruleName, type) {
+  let query;
+  if (type == 'enableExperiencePropertyRule')
+    query =
+      'mutation enableExperiencePropertyRule($input: EnableExperiencePropertyRuleInput!) { enableExperiencePropertyRule(input: $input) {templateUpdate{id rowVersion templateVersionId} property{ id rules {min max mode pattern errorMessage isRequired}}}}';
+  else
+    query =
+      'mutation disableExperiencePropertyRule($input: DisableExperiencePropertyRuleInput!) { disableExperiencePropertyRule(input: $input) {templateUpdate{id rowVersion templateVersionId} property{ id rules {min max mode pattern errorMessage isRequired}}}}';
+
+  const data = {
+    query,
+    operationName: type,
+    variables: {
+      input: {
+        propertyId: responseData.propertyId,
+        organizationId: responseData.orgID,
+        spaceId: responseData.spaceID,
+        templateId: responseData.expTemplateID,
+        templateVersionId: responseData.templateVersionId,
+        rowVersion: responseData.expTemplateRowVersion,
+        ruleKey: ruleName
+      }
+    }
+  };
+
+  const any = {
+    api: orca,
+    data: data
+  };
+  return post(any, responseData).then(response => {
+    if (type == 'enableExperiencePropertyRule') {
+      responseData.expTemplateRowVersion =
+        response.response.body.data.enableExperiencePropertyRule.templateUpdate.rowVersion;
+      responseData.templateVersionId =
+        response.response.body.data.enableExperiencePropertyRule.templateUpdate.templateVersionId;
+    } else {
+      responseData.expTemplateRowVersion =
+        response.response.body.data.disableExperiencePropertyRule.templateUpdate.rowVersion;
+      responseData.templateVersionId =
+        response.response.body.data.disableExperiencePropertyRule.templateUpdate.templateVersionId;
+    }
+
+    return response;
+  });
+}
+
+export function updateExperiencePropertyRule(responseData, propertyId, propertyType, ruleName, ruleData) {
+  const data = {
+    query:
+      'mutation updateExperiencePropertyRule($input: UpdateExperiencePropertyRuleInput!) { updateExperiencePropertyRule(input: $input) {templateUpdate{id rowVersion} property{id rules {min max mode pattern errorMessage isRequired}}}}',
+    operationName: 'updateExperiencePropertyRule',
+    variables: {
+      input: {
+        fields: ruleData,
+        propertyId,
+        organizationId: responseData.orgID,
+        spaceId: responseData.spaceID,
+        templateId: responseData.expTemplateID,
+        templateVersionId: responseData.templateVersionId,
+        rowVersion: responseData.expTemplateRowVersion,
+        ruleKey: ruleName,
+        propertyType
+      }
+    }
+  };
+  const any = {
+    api: orca,
+    data: data
+  };
+  return post(any, responseData).then(response => {
+    responseData.expTemplateRowVersion =
+      response.response.body.data.updateExperiencePropertyRule.templateUpdate.rowVersion;
     return response;
   });
 }
@@ -254,7 +355,5 @@ export function deleteExperienceTemplate(responseData) {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
-    return response;
-  });
+  return post(any, responseData);
 }
