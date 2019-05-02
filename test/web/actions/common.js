@@ -9,8 +9,9 @@ export function getNotificationMessageText() {
   return CommonPage.successMsg.getText();
 }
 
-export function clickMoreButton() {
-  CommonPage.moreButton.click();
+export function clickMoreButton(index) {
+  if (index == undefined) index = 0;
+  CommonPage.moreButton.value[index].click();
 }
 
 export function verifyMoreButton() {

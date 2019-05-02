@@ -3,6 +3,7 @@ syntax = "proto3";
 import "constraint.proto";
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 package experience;
 option go_package = "generated";
@@ -34,7 +35,7 @@ message TextProperty{
 }
 
 message IntegerProperty{    
-    int32 default_value = 1;
+    google.protobuf.Int32Value default_value = 1;
     repeated IntegerConstraint rules = 2;
     bool localizable = 3;
 }
@@ -65,7 +66,7 @@ message ListProperty{
 
 message Color{
     string value = 1;
-    uint32 opacity = 2;
+    google.protobuf.UInt32Value opacity = 2;
 }
 
 message List{

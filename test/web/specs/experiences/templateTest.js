@@ -5,10 +5,8 @@ import { createSpace } from 'actions/space';
 import {
   typeDeleteToConfirm,
   confirmDelete,
-  closeModal,
   getNotificationMessageText,
   clickMoreButton,
-  clickSettingsFromCard,
   clickDeleteFromCard
 } from 'actions/common';
 import {
@@ -17,16 +15,15 @@ import {
   verifyTemplateCard,
   verifyCreateTemplatePage,
   goToTemplateTab,
-  verifyCreateTemplateModal,
+  goToTemplateDetailPage,
   clickCreateTemplate,
   createExperienceTemplate,
-  verifyCreateButton,
   verifyTemplateIsCreated
 } from 'actions/experienceTemplates.js';
 import { goToExperiencePage } from 'actions/navBar';
 import * as PassiveNotification from 'data/passiveNotification.json';
 var name = `${lib.randomString({ length: 7, charset: 'alphabetic' })}`,
-  newName = `${lib.randomString({ length: 7, charset: 'alphabetic' })}_new`;
+  newName = `${lib.randomString({ length: 4, charset: 'alphabetic' })}_new`;
 
 describe(`Experience Template Tests`, () => {
   before(() => {
@@ -43,30 +40,17 @@ describe(`Experience Template Tests`, () => {
     expect(verifyCreateTemplatePage()).to.equal(true, 'Create Template page is not displayed');
   });
 
-  it('C1640129 Click Create Template button --> create template modal opens', () => {
-    clickCreateTemplate('button');
-    expect(verifyCreateTemplateModal()).to.equal(true, 'Create Template Modal is not displayed');
-    expect(verifyCreateButton()).to.equal(false, 'Create button is not disabled');
-  });
-
-  it(`C1640130 Click Create Template Link --> create template modal opens ${lib.Tags.smokeTest}`, () => {
-    closeModal();
-    clickCreateTemplate('link');
-    expect(verifyCreateTemplateModal()).to.equal(true, 'Create Template Modal is not displayed');
-    expect(verifyCreateButton()).to.equal(false, 'Create button is not disabled');
-  });
-
   it(`C1640131 Create Template --> verify the template is created on template(s) pages ${lib.Tags.smokeTest}`, () => {
+    clickCreateTemplate('link');
     createExperienceTemplate(name);
     expect(verifyTemplateIsCreated(name)).to.equal(true, 'The Template name is not correct on detail page');
-    goToExperiencePage();
-    goToTemplateTab();
-    verifyTemplateCard(name);
   });
 
   it('C1640132 Edit Template --> verify template(s) pages', () => {
-    clickMoreButton();
-    clickSettingsFromCard();
+    goToExperiencePage();
+    goToTemplateTab();
+    verifyTemplateCard(name);
+    goToTemplateDetailPage();
     editTemplate(newName);
     saveTemplate();
     goToExperiencePage();
@@ -80,7 +64,7 @@ describe(`Experience Template Tests`, () => {
     typeDeleteToConfirm();
     confirmDelete();
     expect(getNotificationMessageText()).to.include(
-      `${PassiveNotification.deleteTemplateMessage.text} "${newName}"`,
+      `${PassiveNotification.deleteTemplateMessage.text}`,
       'The passive notification after deleting template is not correct'
     );
   });
