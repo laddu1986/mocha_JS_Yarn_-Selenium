@@ -86,7 +86,7 @@ describe('Tests for experience templates for a space', () => {
   });
 
   it('Mutation - updateExperiencePropertyRule', async () => {
-    var count = 0;
+    let count = 0;
     for (var property in types) {
       for (var rule in types[property]['rules']) {
         let response = await updateExperiencePropertyRule(
