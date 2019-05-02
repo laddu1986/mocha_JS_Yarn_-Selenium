@@ -237,16 +237,11 @@ export function removeExperienceProperty(responseData) {
 }
 
 export function toggleExperiencePropertyRule(responseData, ruleName, type) {
-  let query;
-  if (type == 'enableExperiencePropertyRule')
-    query =
-      'mutation enableExperiencePropertyRule($input: EnableExperiencePropertyRuleInput!) { enableExperiencePropertyRule(input: $input) {templateUpdate{id rowVersion templateVersionId} property{ id rules {min max mode pattern errorMessage isRequired}}}}';
-  else
-    query =
-      'mutation disableExperiencePropertyRule($input: DisableExperiencePropertyRuleInput!) { disableExperiencePropertyRule(input: $input) {templateUpdate{id rowVersion templateVersionId} property{ id rules {min max mode pattern errorMessage isRequired}}}}';
-
   const data = {
-    query,
+    query: `mutation ${type}($input: ${type.charAt(0).toUpperCase() +
+      type.slice(
+        1
+      )}Input!) { ${type}(input: $input) {templateUpdate{id rowVersion templateVersionId} property{ id rules {min max mode pattern errorMessage isRequired}}}}`,
     operationName: type,
     variables: {
       input: {

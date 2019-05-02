@@ -13,40 +13,52 @@ import {
   toggleExperiencePropertyRule
 } from 'actions/experienceTemplate';
 
-const customPattern = { pattern: '[a-z]', errorMessage: 'Custom Error Message for custom pattern rule' };
-const required = { errorMessage: 'Custom Error Message for required field' };
-const limitRange = { min: 5, max: 22, mode: 0, errorMessage: 'Custom Error Message for limit character count rule' };
-const allowedValues = { allowedValues: ['allowedvalue1', 'allowedvalue2'] };
+const CUSTOM_PATTERN = { pattern: '[a-z]', errorMessage: 'Custom Error Message for custom pattern rule' };
+const REQUIRED = { errorMessage: 'Custom Error Message for required field' };
+const LIMIT_RANGE = { min: 5, max: 22, mode: 0, errorMessage: 'Custom Error Message for limit character count rule' };
+const ALLOWED_VALUES = { allowedValues: ['allowedvalue1', 'allowedvalue2'] };
 
 let experienceTemplateObject = new Object();
 let porpertyIds = [];
-let booleanRules,
-  dateRules,
-  booleanRuleValues,
-  dateRuleValues,
-  colorRules,
-  listRules,
-  urlRules,
-  urlRuleValues,
-  listRuleValues,
-  colorRuleValues;
-let types = Object.values(Constants.TemplateProperties.Types);
-let textRules = [
-  Constants.TemplateProperties.Rules.Required,
-  Constants.TemplateProperties.Rules.CharacterCount,
-  Constants.TemplateProperties.Rules.Regex
-];
-let integerRules = [Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.NumberRange];
-let selectRules = [Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.AllowedValues];
-urlRules = listRules = [Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.Regex];
-booleanRules = dateRules = colorRules = [Constants.TemplateProperties.Rules.Required];
-booleanRuleValues = dateRuleValues = colorRuleValues = [required];
-listRuleValues = urlRuleValues = [required, customPattern];
-let textRuleValues = [required, limitRange, customPattern];
-let integerRuleValues = [required, limitRange];
-let selectRuleValues = [required, allowedValues];
+let types = {
+  text: {
+    rules: [
+      Constants.TemplateProperties.Rules.Required,
+      Constants.TemplateProperties.Rules.CharacterCount,
+      Constants.TemplateProperties.Rules.Regex
+    ],
+    ruleValues: [REQUIRED, LIMIT_RANGE, CUSTOM_PATTERN]
+  },
+  integer: {
+    rules: [Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.NumberRange],
+    ruleValues: [REQUIRED, LIMIT_RANGE]
+  },
+  select: {
+    rules: [Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.AllowedValues],
+    ruleValues: [REQUIRED, ALLOWED_VALUES]
+  },
+  url: {
+    rules: [Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.Regex],
+    ruleValues: [REQUIRED, CUSTOM_PATTERN]
+  },
+  list: {
+    rules: [Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.Regex],
+    ruleValues: [REQUIRED, CUSTOM_PATTERN]
+  },
+  date: {
+    rules: [Constants.TemplateProperties.Rules.Required],
+    ruleValues: [REQUIRED]
+  },
+  color: {
+    rules: [Constants.TemplateProperties.Rules.Required],
+    ruleValues: [REQUIRED]
+  },
+  boolean: {
+    rules: [Constants.TemplateProperties.Rules.Required],
+    ruleValues: [REQUIRED]
+  }
+};
 
-var ruleName, ruleValue;
 describe('Tests for experience templates for a space', () => {
   before(async () => {
     await registerAndCreateOrg(experienceTemplateObject);
@@ -58,15 +70,14 @@ describe('Tests for experience templates for a space', () => {
   });
 
   it('Mutation - enableExperiencePropertyRule', async () => {
-    for (var j = 0; j < types.length; j++) {
-      await addExperienceProperty(experienceTemplateObject, types[j]);
+    for (var property in types) {
+      await addExperienceProperty(experienceTemplateObject, property);
       await updateExperienceProperty(experienceTemplateObject);
       porpertyIds.push(experienceTemplateObject.propertyId);
-      for (var i = 0; i < eval(`${types[j]}Rules`).length; i++) {
-        ruleName = eval(`${types[j]}Rules[i]`);
+      for (var rule in types[property]['rules']) {
         let response = await toggleExperiencePropertyRule(
           experienceTemplateObject,
-          ruleName,
+          types[property]['rules'][rule],
           'enableExperiencePropertyRule'
         );
         expect(response.response.statusCode).to.equal(200);
@@ -75,19 +86,19 @@ describe('Tests for experience templates for a space', () => {
   });
 
   it('Mutation - updateExperiencePropertyRule', async () => {
-    for (var j = 0; j < types.length; j++) {
-      for (var i = 0; i < eval(`${types[j]}RuleValues`).length; i++) {
-        ruleValue = eval(`${types[j]}RuleValues[i]`);
-        ruleName = eval(`${types[j]}Rules[i]`);
+    var count = 0;
+    for (var property in types) {
+      for (var rule in types[property]['rules']) {
         let response = await updateExperiencePropertyRule(
           experienceTemplateObject,
-          porpertyIds[j],
-          types[j],
-          ruleName,
-          ruleValue
+          porpertyIds[count],
+          property,
+          types[property]['rules'][rule],
+          types[property]['ruleValues'][rule]
         );
         expect(response.response.statusCode).to.equal(200);
       }
+      count++;
     }
   });
 
@@ -97,12 +108,11 @@ describe('Tests for experience templates for a space', () => {
   });
 
   it('Mutation - disableExperiencePropertyRule', async () => {
-    for (var j = 0; j < types.length; j++) {
-      for (var i = 0; i < eval(`${types[j]}Rules`).length; i++) {
-        ruleName = eval(`${types[j]}Rules[i]`);
+    for (var property in types) {
+      for (var rule in types[property]['rules']) {
         let response = await toggleExperiencePropertyRule(
           experienceTemplateObject,
-          ruleName,
+          types[property]['rules'][rule],
           'disableExperiencePropertyRule'
         );
         expect(response.response.statusCode).to.equal(200);
