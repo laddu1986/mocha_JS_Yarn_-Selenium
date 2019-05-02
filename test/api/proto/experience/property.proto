@@ -22,19 +22,21 @@ message Property{
         DateProperty date = 10;
         ColorProperty color = 11;
         ListProperty list = 12;
+        UrlProperty url = 14;
+        SelectProperty select = 15;
     }
     string id = 13;
 }
 
 // Property types
 
-message TextProperty{    
+message TextProperty{
     string default_value = 1;
     repeated TextConstraint rules = 2;
     bool localizable = 3;
 }
 
-message IntegerProperty{    
+message IntegerProperty{
     google.protobuf.Int32Value default_value = 1;
     repeated IntegerConstraint rules = 2;
     bool localizable = 3;
@@ -42,10 +44,10 @@ message IntegerProperty{
 
 message BooleanProperty{
     bool default_value = 1;
-    repeated BooleanConstraint rules = 2;    
+    repeated BooleanConstraint rules = 2;
 }
 
-message DateProperty{    
+message DateProperty{
     google.protobuf.Timestamp default_value = 1;
     repeated DateConstraint rules = 2;
     bool localizable = 3;
@@ -59,6 +61,18 @@ message ColorProperty{
 message ListProperty{
     List default_value = 1;
     repeated ListConstraint rules = 2;
+    bool localizable = 3;
+}
+
+message UrlProperty{
+    string default_value = 1;
+    repeated UrlConstraint rules = 2;
+    bool localizable = 3;
+}
+
+message SelectProperty{
+    string default_value = 1;
+    repeated SelectConstraint rules = 2;
     bool localizable = 3;
 }
 

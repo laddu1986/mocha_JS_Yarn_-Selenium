@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "contexts.proto";
+import "experienceTemplate.proto";
+
+package experience;
+
+option go_package = "generated";
+
+service CategoryReadService{
+    rpc GetCategories (GetCategoriesRequest) returns (GetCategoriesResponse);
+}
+
+//GetCategories
+//-------------------------------------
+message GetCategoriesRequest{
+    WorkspaceContext context = 1;
+}
+
+message GetCategoriesResponse{
+    repeated Category categories = 1;
+}
+
+message Category {
+    string id = 1;
+    string name = 2;
+    bool is_default = 3;
+    repeated CollectionCardSummary collections = 4;
+}
+
+message CollectionCardSummary{
+    string template_id = 1;
+    string name = 2;
+    google.protobuf.Timestamp modified_at = 3;
+    repeated string instance_ids = 4;
+    repeated string thumbnail_urls = 5;
+    ExperienceTemplateStatus status = 6;
+    google.protobuf.Timestamp row_version = 7;
+    int64 template_version_id = 8;
+}

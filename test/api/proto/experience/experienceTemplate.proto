@@ -15,7 +15,7 @@ message ExperienceTemplateDetail{
     google.protobuf.Timestamp row_version = 5;
     ExperienceTemplateType template_type = 6;
     repeated Property properties = 7;
-    repeated ExperienceTemplate templates = 8;
+    repeated ChildTemplateReference child_template_references = 8;
     int64 template_version_id = 9;
     ExperienceTemplateStatus status = 10;
     google.protobuf.Timestamp modified_at = 11;
@@ -23,6 +23,13 @@ message ExperienceTemplateDetail{
     bool has_committed_version = 13;
     google.protobuf.Timestamp committed_at = 14;
     string committed_by = 15;
+}
+
+message ChildTemplateReference{
+    string id = 1;
+    string key = 2;
+    string name = 3;
+	ExperienceTemplate template = 4;
 }
 
 message ExperienceTemplate{
@@ -33,6 +40,7 @@ message ExperienceTemplate{
     google.protobuf.Timestamp row_version = 5;
     ExperienceTemplateType template_type = 6;
     int64 template_version_id = 7;
+    ExperienceTemplateStatus status = 8;
 }
 
 enum ExperienceTemplateType {
@@ -44,4 +52,14 @@ enum ExperienceTemplateType {
 enum ExperienceTemplateStatus {
     DRAFT = 0;
     COMMITTED = 1;
+}
+
+enum TemplateSearchMode {
+    ALL = 0;
+    LAST_COMMITTED = 1;
+}
+
+enum OrderDirection{
+    ASC = 0;
+    DESC = 1;
 }

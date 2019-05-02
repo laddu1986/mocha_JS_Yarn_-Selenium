@@ -26,7 +26,14 @@ message EvaluateRuleRequest{
 message EvaluateRulesRequest{
     SpaceContext space_context = 1;
     repeated string segment_ids   = 2;
+}
 
+message EvaluateCombinedRulesRequest{
+    SpaceContext space_context   = 1;
+    repeated string segment_ids  = 2;
+    
+    // The operator between segments:
+    LogicalType logical_type     = 3;
 }
 
 message SaveRuleResponse{    
