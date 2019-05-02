@@ -6,13 +6,13 @@ import {
   createExperienceTemplate,
   updateExperienceTemplate,
   getExperienceTemplate,
-  // getExperiencesTemplate,
-  // deleteExperienceTemplate,
+  getExperienceTemplates,
+  deleteExperienceTemplate,
   addExperienceProperty,
   getExperienceProperty,
-  updateExperienceProperty
-  // removeExperienceProperty,
-  // commitExperienceTemplate
+  updateExperienceProperty,
+  removeExperienceProperty,
+  commitExperienceTemplate
 } from 'actions/experienceTemplate';
 import * as Constants from '../constants.json';
 
@@ -63,23 +63,23 @@ describe('Tests for experience templates for a space', () => {
     expect(response.response.statusCode).to.equal(200);
   });
 
-  // it('C1302060 Query - experienceTemplates', async () => {
-  //   let response = await getExperiencesTemplate(experienceTemplateObject);
-  //   expect(response.response.statusCode).to.equal(200);
-  // });
+  it('C1302060 Query - experienceTemplates', async () => {
+    let response = await getExperienceTemplates();
+    expect(response.response.statusCode).to.equal(200);
+  });
 
-  // it('C1490708 Mutation - removeExperienceProperty', async () => {
-  //   let response = await removeExperienceProperty(experienceTemplateObject);
-  //   expect(response.response.statusCode).to.equal(200);
-  // });
+  it('C1490708 Mutation - removeExperienceProperty', async () => {
+    let response = await removeExperienceProperty(fixedTemplateData, propertyData);
+    expect(response.response.statusCode).to.equal(200);
+  });
 
-  // it('C2074306 Mutation - commitExperienceTemplate', async () => {
-  //   let response = await commitExperienceTemplate(experienceTemplateObject);
-  //   expect(response.response.statusCode).to.equal(200);
-  // });
+  it('C2074306 Mutation - commitExperienceTemplate', async () => {
+    let response = await commitExperienceTemplate(fixedTemplateData);
+    expect(response.response.statusCode).to.equal(200);
+  });
 
-  // it('C1302061 Mutation - deleteExperienceTemplate', async () => {
-  //   let response = await deleteExperienceTemplate(experienceTemplateObject);
-  //   expect(response.response.statusCode).to.equal(200);
-  // });
+  it('C1302061 Mutation - deleteExperienceTemplate', async () => {
+    let response = await deleteExperienceTemplate(fixedTemplateData);
+    expect(response.response.statusCode).to.equal(200);
+  });
 });
