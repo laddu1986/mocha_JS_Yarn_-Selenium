@@ -236,7 +236,7 @@ export function removeExperienceProperty(responseData) {
   });
 }
 
-export function toggleExperiencePropertyRule(responseData, ruleName, type) {
+export function toggleExperiencePropertyRule(responseData, propertyId, ruleName, type) {
   const data = {
     query: `mutation ${type}($input: ${type.charAt(0).toUpperCase() +
       type.slice(
@@ -245,7 +245,7 @@ export function toggleExperiencePropertyRule(responseData, ruleName, type) {
     operationName: type,
     variables: {
       input: {
-        propertyId: responseData.propertyId,
+        propertyId,
         organizationId: responseData.orgID,
         spaceId: responseData.spaceID,
         templateId: responseData.expTemplateID,

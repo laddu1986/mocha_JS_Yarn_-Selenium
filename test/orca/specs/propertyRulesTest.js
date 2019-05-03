@@ -19,7 +19,7 @@ const LIMIT_RANGE = { min: 5, max: 22, mode: 0, errorMessage: 'Custom Error Mess
 const ALLOWED_VALUES = { allowedValues: ['allowedvalue1', 'allowedvalue2'] };
 
 let experienceTemplateObject = new Object();
-let porpertyIds = [];
+let propertyIds = [];
 let types = {
   text: {
     rules: [
@@ -70,18 +70,21 @@ describe('Tests for experience templates for a space', () => {
   });
 
   it('Mutation - enableExperiencePropertyRule', async () => {
+    let count = 0;
     for (var property in types) {
       await addExperienceProperty(experienceTemplateObject, property);
       await updateExperienceProperty(experienceTemplateObject);
-      porpertyIds.push(experienceTemplateObject.propertyId);
+      propertyIds.push(experienceTemplateObject.propertyId);
       for (var rule in types[property]['rules']) {
         let response = await toggleExperiencePropertyRule(
           experienceTemplateObject,
+          propertyIds[count],
           types[property]['rules'][rule],
           'enableExperiencePropertyRule'
         );
         expect(response.response.statusCode).to.equal(200);
       }
+      count++;
     }
   });
 
@@ -91,7 +94,7 @@ describe('Tests for experience templates for a space', () => {
       for (var rule in types[property]['rules']) {
         let response = await updateExperiencePropertyRule(
           experienceTemplateObject,
-          porpertyIds[count],
+          propertyIds[count],
           property,
           types[property]['rules'][rule],
           types[property]['ruleValues'][rule]
@@ -108,15 +111,18 @@ describe('Tests for experience templates for a space', () => {
   });
 
   it('Mutation - disableExperiencePropertyRule', async () => {
+    let count = 0;
     for (var property in types) {
       for (var rule in types[property]['rules']) {
         let response = await toggleExperiencePropertyRule(
           experienceTemplateObject,
+          propertyIds[count],
           types[property]['rules'][rule],
           'disableExperiencePropertyRule'
         );
         expect(response.response.statusCode).to.equal(200);
       }
+      count++;
     }
   });
 });
