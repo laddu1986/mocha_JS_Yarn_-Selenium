@@ -8,7 +8,8 @@ exports.config = {
   capabilities: helper.getBrowser(),
   updateJob: false,
   specs: [
-    'specs/**/*Test.js' //master
+    'specs/**/createAccountTest.js' //master
+    // 'specs/**/*Test.js' //master
   ],
   exclude: ['specs/support/helpPageTest.js'],
   suites: {
@@ -61,6 +62,9 @@ exports.config = {
   onPrepare() {},
   before() {
     helper.getEndPoints();
+  },
+  beforeSession(config, capabilities, specs) {
+    capabilities['zal:name'] = specs.toString().replace(/.*\/test\/specs\//gi, '');
   },
   after() {
     var connection = require('./actions/invite');
