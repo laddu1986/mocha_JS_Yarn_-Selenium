@@ -100,7 +100,20 @@
       "Integer": "integer",
       "Color": "color",
       "Date": "date",
-      "List": "list"
+      "List": "list",
+      "URL": "url",
+      "Select": "select"
+    },
+    "Rules": {
+      "DefaultValue": "defaultValue",
+      "NumberRange": "numberRange",
+      "CharacterCount": "characterCount",
+      "Regex": "regex",
+      "Required": "required",
+      "DateRange": "dateRange",
+      "ValueCount": "valueCount",
+      "AllowedValues": "allowedValues",
+      "Localizable": "localizable"
     }
   },
   "UserDetails": {
@@ -116,9 +129,9 @@
   },
   "Experience": {
     "Types": {
-      "FIXED": 0,
-      "FLEXI": 1,
-      "COLLECTION": 2
+      "Fixed": 0,
+      "Flexi": 1,
+      "Collection": 2
     },
     "State": {
       "DRAFT": 0,

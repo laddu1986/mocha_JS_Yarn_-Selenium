@@ -1,8 +1,9 @@
 import { path, caller } from '../common';
 import * as constants from 'constants.json';
+import { tribe } from 'config/getEnv';
 
 const PROTO_PATH = path.resolve(process.env.TRIBE_PROTO_DIR + 'segmentRulesService.proto');
-const client = caller(process.env.TRIBE_HOST, PROTO_PATH, 'SegmentRulesService');
+const client = caller(tribe, PROTO_PATH, 'SegmentRulesService');
 
 export function getConfiguration(responseObject) {
   const req = new client.Request('getConfiguration', {

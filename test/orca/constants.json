@@ -5,5 +5,17 @@
       "Boolean": "boolean",
       "Integer": "integer"
     }
+  },
+  "Experience": {
+    "Types": {
+      "FIXED": "Fixed",
+      "FLEXI": 1,
+      "COLLECTION": 2
+    },
+    "State": {
+      "DRAFT": 0,
+      "COMMITTED": 1
+    },
+    "Default": 0
   }
 }

@@ -1,37 +1,25 @@
-import { randomString } from '../common';
-import { updateExperienceTemplate } from 'actions/templates';
-import * as data from 'data/templateTestData';
+import { path, caller, randomString, context } from '../common';
+import { experience } from 'config/getEnv';
+import Constants from 'constants.json';
+const PROTO_PATH = path.resolve(process.env.EXPERIENCE_PROTO_DIR + 'experienceTemplateService.proto');
+const writeClient = caller(experience, PROTO_PATH, 'ExperienceTemplateWriteService');
 
-export function createProperty(templateData, propertyType, name, key) {
-  let reqName =
-    name === undefined ? randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : name;
-  let reqKey =
-    key === undefined ? randomString({ length: 12, charset: 'alphabetic', capitalization: 'lowercase' }) : key;
-  let propertiesArray = templateData.template.properties === undefined ? [] : templateData.template.properties;
-  let propertyVal = data.properties[propertyType];
-  propertiesArray.push({
-    name: reqName,
-    key: reqKey,
-    typeKey: propertyType,
-    appearanceKey: 'appearance_key_text',
-    promptText: 'prompt_text',
-    helpText: 'help_text',
-    [propertyType]: propertyVal
-  });
-
-  let templatePayload = {
-    id: templateData.template.id,
-    name: templateData.template.name,
-    key: templateData.template.key,
-    thumbnailUrl: 'thumbnail_url',
-    properties: propertiesArray,
-    rowVersion: templateData.template.rowVersion
-  };
-  return updateExperienceTemplate(templateData, templatePayload)
+export function addProperty(templateObject, type, sortIndex) {
+  const req = new writeClient.Request('addProperty', {
+    context,
+    propertyType: type,
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    templateVersionId: templateObject.templateVersionId,
+    userAccountId: 'abc',
+    sortIndex
+  }).withResponseStatus(true);
+  return req
     .exec()
     .then(response => {
-      templateData.template.rowVersion = response.response.rowVersion;
-      templateData.template.properties = propertiesArray;
+      templateObject.propertyId = response.response.propertyId;
+      templateObject.rowVersion = response.response.rowVersion;
+      templateObject.templateVersionId = response.response.templateVersionId;
       return response;
     })
     .catch(err => {
@@ -39,38 +27,162 @@ export function createProperty(templateData, propertyType, name, key) {
     });
 }
 
-export function renameProperty(templateData) {
-  let newName = randomString({ length: 40, charset: 'alphabetic', capitalization: 'lowercase' });
-  templateData.template.properties[0].name = newName;
-  let templatePayload = {
-    id: templateData.template.id,
-    name: templateData.template.name,
-    key: templateData.template.key,
-    thumbnailUrl: 'thumbnail_url',
-    properties: templateData.template.properties,
-    rowVersion: templateData.template.rowVersion
-  };
-  return updateExperienceTemplate(templateData, templatePayload)
+export function moveProperty(templateObject, newIndex) {
+  const req = new writeClient.Request('moveProperty', {
+    context,
+    propertyId: templateObject.propertyId,
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    templateVersionId: templateObject.templateVersionId,
+    userAccountId: 'abc',
+    newIndex
+  }).withResponseStatus(true);
+  return req
     .exec()
     .then(response => {
-      templateData.template.rowVersion = response.response.rowVersion;
+      templateObject.rowVersion = response.response.rowVersion;
       return response;
+    })
+    .catch(err => {
+      return err;
     });
 }
 
-export function deleteProperty(templateData) {
-  let templatePayload = {
-    id: templateData.template.id,
-    name: templateData.template.name,
-    key: templateData.template.key,
-    thumbnailUrl: 'thumbnail_url',
-    properties: [],
-    rowVersion: templateData.template.rowVersion
-  };
-  return updateExperienceTemplate(templateData, templatePayload)
+function defaultValue(valueType) {
+  let value;
+  switch (valueType) {
+    case 'stringValue':
+      value = 'string_default_value';
+      break;
+    case 'intValue':
+      value = {
+        value: 10
+      };
+      break;
+  }
+  return value;
+}
+
+export function modifyProperty(templateObject, reqName, ruleValue) {
+  let type, value;
+  switch (reqName) {
+    case 'renameProperty':
+      type = 'propertyName';
+      value = randomString(12);
+      templateObject.propertyName = value;
+      break;
+    case 'changePropertyKey':
+      type = 'propertyKey';
+      value = randomString({ length: 8, charset: 'alphabetic', capitalization: 'lowercase' });
+      templateObject.propertyKey = value;
+      break;
+    case 'changePropertyDefaultValue':
+      type = ruleValue;
+      value = defaultValue(ruleValue);
+      break;
+    case 'changePropertyLocalizable':
+      type = 'localizable';
+      value = true;
+      break;
+    case 'enablePropertyRule':
+    case 'disablePropertyRule':
+      type = 'ruleKey';
+      value = ruleValue;
+      break;
+    case 'changePropertyPromptText':
+      type = 'promptText';
+      value = 'prompt_text';
+      break;
+    case 'changePropertyHelpText':
+      type = 'helpText';
+      value = 'help_text';
+      break;
+  }
+  const req = new writeClient.Request(reqName, {
+    context,
+    [type]: value,
+    propertyId: templateObject.propertyId,
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    templateVersionId: templateObject.templateVersionId,
+    userAccountId: 'abc'
+  }).withResponseStatus(true);
+  return req.exec().then(response => {
+    templateObject.rowVersion = response.response.rowVersion;
+    templateObject.templateVersionId = response.response.templateVersionId;
+    return response;
+  });
+}
+
+export function removeFunction(templateObject, reqName) {
+  const req = new writeClient.Request(reqName, {
+    context,
+    propertyId: templateObject.propertyId,
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    templateVersionId: templateObject.templateVersionId,
+    userAccountId: 'abc'
+  }).withResponseStatus(true);
+  return req
     .exec()
     .then(response => {
-      templateData.template = response.response;
+      templateObject.rowVersion = response.response.rowVersion;
+      templateObject.templateVersionId = response.response.templateVersionId;
       return response;
+    })
+    .catch(err => {
+      return err;
+    });
+}
+
+export function changePropertyRule(templateObject, ruleType, ruleName) {
+  let val;
+  switch (ruleName) {
+    case Constants.TemplateProperties.Rules.NumberRange:
+    case Constants.TemplateProperties.Rules.CharacterCount:
+      val = {
+        min: {
+          value: 10
+        },
+        max: {
+          value: 10
+        },
+        mode: {
+          value: 10
+        }
+      };
+      break;
+    case Constants.TemplateProperties.Rules.Regex:
+      val = {
+        pattern: 'Hello'
+      };
+      break;
+    case Constants.TemplateProperties.Rules.Required:
+      val = {
+        is_required: true
+      };
+      break;
+  }
+  const req = new writeClient.Request('changePropertyRule', {
+    context,
+    propertyId: templateObject.propertyId,
+    templateId: templateObject.templateId,
+    rowVersion: templateObject.rowVersion,
+    templateVersionId: templateObject.templateVersionId,
+    ruleKey: ruleName,
+    userAccountId: 'abcd',
+    [ruleType]: {
+      [ruleName]: val,
+      errorMessage: 'error'
+    }
+  }).withResponseStatus(true);
+  return req
+    .exec()
+    .then(response => {
+      templateObject.rowVersion = response.response.rowVersion;
+      return response;
+    })
+    .catch(err => {
+      return err;
     });
 }

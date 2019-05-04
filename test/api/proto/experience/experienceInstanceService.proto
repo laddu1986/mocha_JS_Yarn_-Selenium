@@ -12,6 +12,7 @@ service ExperienceInstanceReadService {
   // Experience actions:
   rpc GetExperience(GetExperienceRequest) returns (GetExperienceResponse);
   rpc GetScenario(GetScenarioRequest) returns (GetScenarioResponse);
+  rpc GetTemplateInstanceIds(GetTemplateInstanceIdsRequest) returns (GetTemplateInstanceIdsResponse);
 }
 
 
@@ -53,6 +54,8 @@ service ExperienceInstanceWriteService {
   rpc AddSegment(AddSegmentRequest) returns (AddSegmentResponse);
   rpc RemoveSegment(RemoveSegmentRequest) returns (RemoveSegmentResponse);
   rpc ChangeSegmentLogicalOperator(ChangeSegmentLogicalOperatorRequest) returns (ChangeSegmentLogicalOperatorResponse);
+
+  rpc SetScenarioSchedule(SetScenarioScheduleRequest) returns (SetScenarioScheduleResponse);
 }
 
 message GetExperienceRequest {
@@ -82,6 +85,14 @@ message GetScenarioResponse{
   ScenarioDetails scenario = 1;
 }
 
+message GetTemplateInstanceIdsRequest {
+  WorkspaceContext context = 1;
+  repeated string template_ids = 2;
+}
+
+message GetTemplateInstanceIdsResponse {
+  repeated TemplateInstanceIds template_instance_ids = 1;
+}
 
 message RenameExperienceRequest{
   WorkspaceContext context = 1;
@@ -95,7 +106,7 @@ message RenameExperienceRequest{
 
 message RenameExperienceResponse{
   // Changes to parent experience(s) + the experience we're directly changing:
-  repeated ExperienceVersionUpdate updates = 1;
+  VersionUpdates updates = 1;
 }
 
 message ChangeExperienceEnabledRequest{
@@ -110,7 +121,7 @@ message ChangeExperienceEnabledRequest{
 
 message ChangeExperienceEnabledResponse {
   // Changes to parent experience(s) + the experience we're directly changing:
-  repeated ExperienceVersionUpdate updates = 1;
+  VersionUpdates updates = 1;
 }
 
 message PublishExperienceRequest{
@@ -124,7 +135,7 @@ message PublishExperienceRequest{
 
 message PublishExperienceResponse{
   // Changes to parent experience(s) + the experience we're directly changing:
-  repeated ExperienceVersionUpdate updates = 1;
+  VersionUpdates updates = 1;
 }
 
 
@@ -142,7 +153,7 @@ message MoveChildExperienceRequest{
 
 message MoveChildExperienceResponse {
   // Changes to parent experience(s)
-  repeated ExperienceVersionUpdate updates = 1;
+  VersionUpdates updates = 1;
 }
 
 message RemoveChildExperienceRequest{
@@ -162,8 +173,7 @@ message RemoveChildExperienceRequest{
 }
 
 message RemoveChildExperienceResponse{
-  // updated parent row_version:
-  google.protobuf.Timestamp row_version = 1;
+  VersionUpdates updates = 1;
 }
 
 message AddChildExperienceRequest {
@@ -181,11 +191,9 @@ message AddChildExperienceRequest {
 }
 
 message AddChildExperienceResponse {
-  // updated parent row_version:
-  google.protobuf.Timestamp row_version = 1;
-
   //TODO: A default scenario will be created. Need to return the details:
-  string new_child_id = 2;
+  string new_child_id = 1;
+  VersionUpdates updates = 2;
 }
 
 
@@ -199,10 +207,7 @@ message AddScenarioRequest{
 }
 message AddScenarioResponse{
   string new_scenario_id = 1;
-  google.protobuf.Timestamp row_version = 2; // this is the new scenario row version
-
-  // Changes to parent experience(s)
-  repeated ExperienceVersionUpdate updates = 3;
+  VersionUpdates updates = 2;
 }
 
 
@@ -220,10 +225,7 @@ message MoveScenarioRequest{
 
 // Note: The parent's experience row_version will be updated as a result
 message MoveScenarioResponse{
-  // We're not actually changing anything on the scenario itself.
-
-  // Changes to parent experience(s)
-  repeated ExperienceVersionUpdate updates = 1;
+  VersionUpdates updates = 1;
 }
   
 message RenameScenarioRequest{
@@ -239,8 +241,7 @@ message RenameScenarioRequest{
 }
 
 message RenameScenarioResponse{
-  google.protobuf.Timestamp row_version = 1; // Updated scenario row version
-  repeated ExperienceVersionUpdate updates = 2;
+  VersionUpdates updates = 1;
 }
 
 message ChangeScenarioEnabledRequest{
@@ -256,8 +257,7 @@ message ChangeScenarioEnabledRequest{
  }
 
 message ChangeScenarioEnabledResponse{
-  google.protobuf.Timestamp row_version = 1; // Updated scenario row version
-  repeated ExperienceVersionUpdate updates = 2;
+  VersionUpdates updates = 1;
 }
 
 // NOTE: DuplicateScenario will update the row_version of the parent exprience (similar to move scenario)
@@ -274,11 +274,7 @@ message DuplicateScenarioRequest {
 
 message DuplicateScenarioResponse {
   string new_scenario_id = 1;
-  // This is the new scenario row_version. 
-  google.protobuf.Timestamp row_version = 2;
-
-  // Changes to parent experience(s)
-  repeated ExperienceVersionUpdate updates = 3;
+  VersionUpdates updates = 2;
 }
 
 
@@ -296,7 +292,7 @@ message RemoveScenarioRequest {
 
 message RemoveScenarioResponse {
   // Changes to parent experience(s)
-  repeated ExperienceVersionUpdate updates = 1;
+  VersionUpdates updates = 1;
 }
 
 
@@ -316,11 +312,7 @@ message AddLocalizedPropertiesRequest{
 }
 
 message AddLocalizedPropertiesResponse{
-   //Scenario row_version:
-   google.protobuf.Timestamp row_version = 1;
-
-   // Changes to parent experience(s)
-  repeated ExperienceVersionUpdate updates = 2;
+   VersionUpdates updates = 1;
 }
 
 message UpdateLocalizedPropertiesRequest{
@@ -338,11 +330,7 @@ message UpdateLocalizedPropertiesRequest{
 }
 
 message UpdateLocalizedPropertiesResponse{
-  //Scenario row_version:
-  google.protobuf.Timestamp row_version = 1;
-
-  // Changes to parent experience(s)
-  repeated ExperienceVersionUpdate updates = 2;
+  VersionUpdates updates = 1;
 }
 
 message AddSegmentRequest{
@@ -358,11 +346,7 @@ message AddSegmentRequest{
 }
 
 message AddSegmentResponse{
-  // This is the new scenario row version
-  google.protobuf.Timestamp row_version = 1;
-
-  // Changes to parent experience(s)
-  repeated ExperienceVersionUpdate updates = 2;
+  VersionUpdates updates = 1;
 }
 
 message RemoveSegmentRequest{
@@ -378,11 +362,7 @@ message RemoveSegmentRequest{
 }
 
 message RemoveSegmentResponse{
-  // This is the new scenario row_version. 
-  google.protobuf.Timestamp row_version = 1;
-
-  // Changes to parent experience(s)
-  repeated ExperienceVersionUpdate updates = 2;
+  VersionUpdates updates = 1;
 }
 
 message ChangeSegmentLogicalOperatorRequest{
@@ -398,14 +378,21 @@ message ChangeSegmentLogicalOperatorRequest{
 }
 
 message ChangeSegmentLogicalOperatorResponse{
-  // This is the new scenario row_version. 
-  google.protobuf.Timestamp row_version = 1;
-
-  // Changes to parent experience(s)
-  repeated ExperienceVersionUpdate updates = 2;
+  VersionUpdates updates = 1;
 }
 
-enum ChildExpandType {
-  NONE = 0;
-  SUMMARY = 1;
+message SetScenarioScheduleRequest {
+  WorkspaceContext context = 1;
+  string experience_id = 2;
+  string account_id = 3;
+
+  string scenario_id = 4;
+  // This is the scenario row_version
+  google.protobuf.Timestamp row_version = 5;
+
+  Schedule schedule = 6;
+}
+
+message SetScenarioScheduleResponse {
+  VersionUpdates updates = 1;
 }

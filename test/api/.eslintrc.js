@@ -13,6 +13,8 @@ module.exports = {
   globals: {
     describe: false,
     xdescribe: false,
+    beforeEach: false,
+    afterEach: false,
     it: false,
     expect: false,
     browser: false,

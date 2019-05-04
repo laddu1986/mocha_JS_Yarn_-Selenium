@@ -1,8 +1,7 @@
 import { joi } from '../common';
-import constants from 'constants.json';
-const propertiesSchema = new Object();
-const types = Object.values(constants.TemplateProperties.Types);
-const typeKeys = Object.keys(constants.TemplateProperties.Types);
+import Constants from 'constants.json';
+const types = Object.values(Constants.TemplateProperties.Types);
+const typeKeys = Object.keys(Constants.TemplateProperties.Types);
 const protoLong = joi.object().keys({
   low: joi.number().required(),
   high: joi.number().required(),
@@ -14,353 +13,483 @@ const protoTimeStamp = joi.object().keys({
   nanos: joi.number()
 });
 
-propertiesSchema.text = joi.object().keys({
-  defaultValue: joi.valid('default_value_text').required(),
-  localizable: joi.valid(true).required(),
-  rules: joi.array().items(
-    joi.object().keys({
-      characterCount: joi.object().keys({
-        min: joi.valid(1).required(),
-        max: joi.valid(10).required(),
-        mode: joi.valid(10).required()
-      }),
-      errorMessage: joi.valid('text_range_error_message').required()
-    }),
-    joi.object().keys({
-      regex: joi.object().keys({
-        pattern: joi.valid('pattern_text').required()
-      }),
-      errorMessage: joi.valid('text_regex_error_message').required()
-    }),
-    joi.object().keys({
-      required: joi.object().keys({
-        isRequired: joi.valid(true).required()
-      }),
-      errorMessage: joi.valid('text_required_error_message').required()
-    })
-  )
-});
-
-propertiesSchema.boolean = joi.object().keys({
-  defaultValue: joi.valid(true).required(),
-  rules: joi.array().items(
-    joi.object().keys({
-      required: joi.object().keys({
-        isRequired: joi.valid(true).required()
-      }),
-      errorMessage: joi.valid('bool_required_error_message').required()
-    })
-  )
-});
-
-propertiesSchema.integer = joi.object().keys({
-  defaultValue: joi.valid(10).required(),
-  rules: joi.array().items(
-    joi.object().keys({
-      numberRange: joi.object().keys({
-        min: joi.valid(1).required(),
-        max: joi.valid(10).required(),
-        mode: joi.valid(10).required()
-      }),
-      errorMessage: joi.valid('int_rangeint_error_message_text').required()
-    }),
-    joi.object().keys({
-      numberRangeSlider: joi.object().keys({
-        min: joi.valid(1).required(),
-        max: joi.valid(10).required(),
-        mode: joi.valid(10).required(),
-        increment: joi.valid(5).required()
-      }),
-      errorMessage: joi.valid('int_rangeIntSlider_error_message_text').required()
-    }),
-    joi.object().keys({
-      required: joi.object().keys({
-        isRequired: joi.valid(true).required()
-      }),
-      errorMessage: joi.valid('int_required_error_message_text').required()
-    })
-  ),
-  localizable: joi.valid(true).required()
-});
-
-propertiesSchema.date = joi.object().keys({
-  defaultValue: protoTimeStamp,
-  rules: joi.array().items(
-    joi.object().keys({
-      dateRange: joi.object().keys({
-        min: protoTimeStamp,
-        max: protoTimeStamp,
-        mode: joi.valid(10).required()
-      }),
-      errorMessage: joi.valid('date_range_error_message_text').required()
-    }),
-    joi.object().keys({
-      required: joi.object().keys({
-        isRequired: joi.valid(true).required()
-      }),
-      errorMessage: joi.valid('date_req_error_message').required()
-    })
-  ),
-  localizable: joi.valid(true).required()
-});
-
-propertiesSchema.color = joi.object().keys({
-  defaultValue: joi.object().keys({
-    key: joi.valid('key_of_color').required(),
-    value: joi.valid('value_of_color').required(),
-    opacity: joi.valid(100).required()
+const regex = joi.object().keys({
+  [Constants.TemplateProperties.Rules.Regex]: joi.object().keys({
+    pattern: joi.valid('Hello').required()
   }),
-  rules: joi.array().items(
-    joi.object().keys({
-      required: joi.object().keys({
-        isRequired: joi.valid(true).required()
-      }),
-      errorMessage: joi.valid('color_error_message').required()
-    })
-  )
+  errorMessage: joi.valid('error').required()
 });
 
-propertiesSchema.list = joi.object().keys({
-  defaultValue: joi.object().keys({
-    value: joi.array().items('1st_val')
-  }),
-  localizable: joi.valid(true).required(),
-  rules: joi.array().items(
-    joi.object().keys({
-      valueCount: joi.object().keys({
-        min: joi.valid(10).required(),
-        max: joi.valid(10).required(),
-        mode: joi.valid(10).required()
-      }),
-      errorMessage: joi.valid('list_range_err_msg').required()
-    }),
-    joi.object().keys({
-      regex: joi.object().keys({
-        pattern: joi.valid('regex_pattern').required()
-      }),
-      errorMessage: joi.valid('list_regex_error_msg').required()
-    }),
-    joi.object().keys({
-      required: joi.object().keys({
-        isRequired: joi.valid(true).required()
-      }),
-      errorMessage: joi.valid('list_req_err_msg').required()
-    })
-  )
+const req = joi.object().keys({
+  [Constants.TemplateProperties.Rules.Required]: joi.object().keys({}),
+  errorMessage: joi.valid('error').required()
 });
 
-export function templatePropertySchema(templateData, type) {
-  let property = propertiesSchema[type];
-  return joi.object().keys({
-    id: protoLong,
-    key: joi.only(templateData.template.key).required(),
-    name: joi.only(templateData.template.name).required(),
-    thumbnailUrl: joi.valid('thumbnail_url').required(),
-    rowVersion: protoTimeStamp,
-    properties: joi.array().items(
-      joi.object().keys({
-        name: joi.only(templateData.template.properties[0].name).required(),
-        key: joi.only(templateData.template.properties[0].key).required(),
-        appearanceKey: joi.valid('appearance_key_text').required(),
-        promptText: joi.valid('prompt_text').required(),
-        helpText: joi.valid('help_text').required(),
-        [type]: property
+function rangeRule(type) {
+  let rulename;
+  switch (type) {
+    case Constants.TemplateProperties.Types.Text:
+      rulename = Constants.TemplateProperties.Rules.CharacterCount;
+      break;
+    case Constants.TemplateProperties.Types.Integer:
+      rulename = Constants.TemplateProperties.Rules.NumberRange;
+      break;
+  }
+  const char = joi.object().keys({
+    [rulename]: joi.object().keys({
+      min: joi.object().keys({
+        value: joi.valid(10).required()
+      }),
+      max: joi.object().keys({
+        value: joi.valid(10).required()
+      }),
+      mode: joi.object().keys({
+        value: joi.valid(10).required()
       })
-    )
+    }),
+    errorMessage: joi.valid('error').required()
+  });
+  return char;
+}
+
+function propertiesSchema(type) {
+  let defaultVal, ruleValues;
+  switch (type) {
+    case Constants.TemplateProperties.Types.Text:
+      defaultVal = joi.valid('string_default_value').required();
+      ruleValues = joi.array().items(rangeRule(type), regex, req);
+      break;
+    case Constants.TemplateProperties.Types.Integer:
+      defaultVal = joi.object().keys({
+        value: joi.valid(10).required()
+      });
+      ruleValues = joi.array().items(rangeRule(type));
+      break;
+  }
+  const properties = joi.object().keys({
+    [Constants.TemplateProperties.Rules.DefaultValue]: defaultVal,
+    rules: ruleValues,
+    [Constants.TemplateProperties.Rules.Localizable]: joi.valid(true).required()
+  });
+  return properties;
+}
+
+export function getPropertyByIDSchema(templateObject, type) {
+  return joi.object().keys({
+    id: protoLong,
+    rowVersion: protoTimeStamp,
+    templateId: joi.valid(templateObject.templateId),
+    templateVersionId: protoLong,
+    property: joi.object().keys({
+      name: joi.only(templateObject.propertyName).required(),
+      key: joi.only(templateObject.propertyKey).required(),
+      appearanceKey: joi.valid(type, 'number').required(),
+      promptText: joi.valid('prompt_text').required(),
+      helpText: joi.valid('help_text').required(),
+      [type]: propertiesSchema(type),
+      id: joi
+        .string()
+        .guid()
+        .required()
+    })
   });
 }
 
-export function deletedTemplatePropertySchema(templateData) {
-  return joi.object().keys({
-    id: protoLong,
-    key: joi.only(templateData.template.key).required(),
-    name: joi.only(templateData.template.name).required(),
-    thumbnailUrl: joi.valid('thumbnail_url').required(),
-    rowVersion: protoTimeStamp
-  });
-}
 //----------------template tests-------------------------
-export function templateSchema(templateData) {
+export function templateSchema() {
   return joi
     .object()
     .keys({
-      id: protoLong,
-      key: joi.only(templateData.template.key).required(),
-      name: joi.only(templateData.template.name).required(),
+      templateVersionId: protoLong,
       rowVersion: protoTimeStamp
     })
     .required();
 }
 
-export function templatesSchema(templateData) {
+export function createTemplateSchema() {
   return joi
     .object()
     .keys({
-      experienceTemplates: joi.array().items(
+      templateVersionId: protoLong,
+      rowVersion: protoTimeStamp,
+      templateId: joi.string().required()
+    })
+    .required();
+}
+
+export function templatesSchema(templateObject) {
+  return joi
+    .object()
+    .keys({
+      templates: joi.array().items(
         joi.object().keys({
-          id: protoLong,
-          key: joi.only(templateData.template.key).required(),
-          name: joi.only(templateData.template.name).required(),
-          rowVersion: protoTimeStamp
+          id: joi.valid(templateObject.templateId).required(),
+          key: joi.only(templateObject.key).required(),
+          name: joi.only(templateObject.name).required(),
+          thumbnailUrl: joi.valid('thumbnail_url').required(),
+          rowVersion: protoTimeStamp,
+          templateVersionId: protoLong
         })
       )
     })
     .required();
 }
 
+export function searchTemplatesSchema(templateObject) {
+  return joi
+    .object()
+    .keys({
+      templates: joi.array().items(
+        joi.object().keys({
+          id: joi.valid(templateObject.templateId).required(),
+          key: joi.only(templateObject.key).required(),
+          name: joi.only(templateObject.name).required(),
+          status: joi.valid(1).required(),
+          rowVersion: protoTimeStamp,
+          templateVersionId: protoLong
+        })
+      )
+    })
+    .required();
+}
+
+export function templateByIDSchema(templateObject) {
+  return joi
+    .object()
+    .keys({
+      template: joi.object().keys({
+        id: joi.valid(templateObject.templateId).required(),
+        key: joi.only(templateObject.key).required(),
+        name: joi.only(templateObject.name).required(),
+        thumbnailUrl: joi.valid('thumbnail_url').required(),
+        rowVersion: protoTimeStamp,
+        templateVersionId: protoLong,
+        modifiedAt: protoTimeStamp,
+        modifiedBy: joi.valid('abc').required()
+      })
+    })
+    .required();
+}
+
 const textRuleTypesObject = joi.object().keys({
-  key: joi.valid('required', 'rangeInt', 'regex').required(),
-  name: joi.valid('Required', 'Min/Max', 'Regex').required()
+  key: joi
+    .valid(
+      Constants.TemplateProperties.Rules.Required,
+      Constants.TemplateProperties.Rules.CharacterCount,
+      Constants.TemplateProperties.Rules.Regex
+    )
+    .required(),
+  type: joi
+    .valid(Constants.TemplateProperties.Rules.Required, 'rangeInt', Constants.TemplateProperties.Rules.Regex)
+    .required()
+});
+const listRuleTypesObject = joi.object().keys({
+  key: joi
+    .valid(
+      Constants.TemplateProperties.Rules.Required,
+      Constants.TemplateProperties.Rules.ValueCount,
+      Constants.TemplateProperties.Rules.Regex
+    )
+    .required(),
+  type: joi
+    .valid(Constants.TemplateProperties.Rules.Required, 'rangeInt', Constants.TemplateProperties.Rules.Regex)
+    .required()
 });
 const intRuleTypesObject = joi.object().keys({
-  key: joi.valid('required', 'rangeInt', 'rangeIntSlider').required(),
-  name: joi.valid('Required', 'Min/Max', 'Min/Max Slider').required()
+  key: joi
+    .valid(Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.NumberRange)
+    .required(),
+  type: joi.valid(Constants.TemplateProperties.Rules.Required, 'rangeInt').required()
 });
 const dateRuleTypesObject = joi.object().keys({
-  key: joi.valid('required', 'rangeDate').required(),
-  name: joi.valid('Required', 'Min/Max Date').required()
+  key: joi.valid(Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.DateRange).required(),
+  type: joi.valid(Constants.TemplateProperties.Rules.Required, 'rangeDate').required()
 });
 const reqRuleTypesObject = joi.object().keys({
-  key: joi.valid('required').required(),
-  name: joi.valid('Required').required()
+  key: joi.valid(Constants.TemplateProperties.Rules.Required).required(),
+  type: joi.valid(Constants.TemplateProperties.Rules.Required).required()
 });
+const URLRuleTypesObject = joi.object().keys({
+  key: joi.valid(Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.Regex).required(),
+  type: joi.valid(Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.Regex).required()
+});
+const SelectRuleTypesObject = joi.object().keys({
+  key: joi
+    .valid(Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.AllowedValues)
+    .required(),
+  type: joi
+    .valid(Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.AllowedValues)
+    .required()
+});
+
 function commonAppearanceObject(value) {
-  let nameVal = value[0].toUpperCase() + value.substring(1);
   const textApperanceObject = joi.object().keys({
     key: joi.valid(value.toLowerCase()).required(),
-    name: joi.valid(nameVal).required(),
+    name: joi.valid(value.toLowerCase()).required(),
     isDefault: joi.valid(true).required()
   });
   return textApperanceObject;
 }
+
 const intApperanceObject = joi.object().keys({
   key: joi.valid('number', 'slider').required(),
-  name: joi.valid('Number', 'Slider').required(),
+  name: joi.valid('number', 'Slider').required(),
   isDefault: joi
     .alternatives()
     .when('key', { is: 'number', then: joi.valid(true).required() })
     .when('key', { is: 'slider', then: joi.valid(false).required() })
 });
 
+const selectAppearanceObject = joi.object().keys({
+  key: joi.valid('dropdown', 'radio').required(),
+  name: joi.valid('dropdown', 'radio').required(),
+  isDefault: joi.alternatives().when('key', { is: 'dropdown', then: joi.valid(true).required() })
+});
+const ExperienceTemplatesKeys = Object.keys(Constants.Experience.Types);
+const ExperienceTemplatesValues = Object.values(Constants.Experience.Types);
 export function getPropertySchema() {
   return joi.object().keys({
+    templateTypes: joi
+      .array()
+      .length(3)
+      .items(
+        joi.object().keys({
+          ruleTypes: joi.array(),
+          key: joi.valid(ExperienceTemplatesValues),
+          name: joi.valid(ExperienceTemplatesKeys),
+          iconUrl: joi.valid('FixedIcon', 'FlexiIcon', 'CollectionIcon')
+        })
+      ),
     propertyTypes: joi
       .array()
-      .length(6)
+      .length(8)
       .items(
         joi.object().keys({
           key: joi.valid(types),
           name: joi.valid(typeKeys),
+          showHelpText: joi.valid(true),
+          showPromptText: joi
+            .alternatives()
+            .when('key', {
+              is: Constants.TemplateProperties.Types.Text,
+              then: joi.valid(true).required()
+            })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.Integer,
+              then: joi.valid(true).required()
+            })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.Switch,
+              then: joi.valid(false).required()
+            })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.Date,
+              then: joi.valid(false).required()
+            })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.List,
+              then: joi.valid(false).required()
+            })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.Color,
+              then: joi.valid(false).required()
+            })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.URL,
+              then: joi.valid(true).required()
+            })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.Select,
+              then: joi.valid(true).required()
+            }),
           showLocalizable: joi
             .alternatives()
             .when('key', {
-              is: constants.TemplateProperties.Types.Text,
+              is: Constants.TemplateProperties.Types.Text,
               then: joi.valid(true).required()
             })
             .when('key', {
-              is: constants.TemplateProperties.Types.Integer,
+              is: Constants.TemplateProperties.Types.Integer,
+              then: joi.valid(false).required()
+            })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.Date,
               then: joi.valid(true).required()
             })
             .when('key', {
-              is: constants.TemplateProperties.Types.Date,
+              is: Constants.TemplateProperties.Types.List,
               then: joi.valid(true).required()
             })
             .when('key', {
-              is: constants.TemplateProperties.Types.List,
+              is: Constants.TemplateProperties.Types.URL,
               then: joi.valid(true).required()
+            })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.Color,
+              then: joi.valid(false).required()
+            })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.Switch,
+              then: joi.valid(false).required()
+            })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.Select,
+              then: joi.valid(false).required()
             }),
           iconUrl: joi
-            .valid('TextIcon', 'IntegerIcon', 'ToggleIcon', 'ColorIcon', 'CalendarIcon', 'ListIcon')
+            .valid(
+              'TextIcon',
+              'IntegerIcon',
+              'ToggleIcon',
+              'ColorIcon',
+              'CalendarIcon',
+              'TagIcon',
+              'UrlIcon',
+              'ListIcon'
+            )
             .required(),
           appearances: joi
             .alternatives()
             .when('key', {
-              is: constants.TemplateProperties.Types.Text,
+              is: Constants.TemplateProperties.Types.Text,
               then: joi
                 .array()
-                .items(commonAppearanceObject(constants.TemplateProperties.Types.Text))
+                .items(commonAppearanceObject(Constants.TemplateProperties.Types.Text))
                 .required()
             })
             .when('key', {
-              is: constants.TemplateProperties.Types.Switch,
+              is: Constants.TemplateProperties.Types.Switch,
               then: joi
                 .array()
-                .items(commonAppearanceObject(Object.keys(constants.TemplateProperties.Types)[1]))
+                .items(commonAppearanceObject(Object.keys(Constants.TemplateProperties.Types)[1]))
                 .required()
             })
             .when('key', {
-              is: constants.TemplateProperties.Types.Integer,
+              is: Constants.TemplateProperties.Types.Integer,
               then: joi
                 .array()
                 .items(intApperanceObject)
                 .required()
             })
             .when('key', {
-              is: constants.TemplateProperties.Types.Color,
+              is: Constants.TemplateProperties.Types.Color,
               then: joi
                 .array()
-                .items(commonAppearanceObject(constants.TemplateProperties.Types.Color))
+                .items(commonAppearanceObject(Constants.TemplateProperties.Types.Color))
                 .required()
             })
             .when('key', {
-              is: constants.TemplateProperties.Types.List,
+              is: Constants.TemplateProperties.Types.List,
               then: joi
                 .array()
-                .items(commonAppearanceObject(constants.TemplateProperties.Types.List))
+                .items(commonAppearanceObject(Constants.TemplateProperties.Types.List))
                 .required()
             })
             .when('key', {
-              is: constants.TemplateProperties.Types.Date,
+              is: Constants.TemplateProperties.Types.Date,
               then: joi
                 .array()
-                .items(commonAppearanceObject(constants.TemplateProperties.Types.Date))
+                .items(commonAppearanceObject(Constants.TemplateProperties.Types.Date))
+                .required()
+            })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.URL,
+              then: joi
+                .array()
+                .items(commonAppearanceObject(Constants.TemplateProperties.Types.URL))
+                .required()
+            })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.Select,
+              then: joi
+                .array()
+                .items(selectAppearanceObject)
                 .required()
             }),
           ruleTypes: joi
             .alternatives()
             .when('key', {
-              is: constants.TemplateProperties.Types.Text,
+              is: Constants.TemplateProperties.Types.Text,
               then: joi
                 .array()
                 .items(textRuleTypesObject)
                 .required()
             })
             .when('key', {
-              is: constants.TemplateProperties.Types.List,
+              is: Constants.TemplateProperties.Types.List,
               then: joi
                 .array()
-                .items(textRuleTypesObject)
+                .items(listRuleTypesObject)
                 .required()
             })
             .when('key', {
-              is: constants.TemplateProperties.Types.Integer,
+              is: Constants.TemplateProperties.Types.Integer,
               then: joi
                 .array()
                 .items(intRuleTypesObject)
                 .required()
             })
             .when('key', {
-              is: constants.TemplateProperties.Types.Color,
+              is: Constants.TemplateProperties.Types.Color,
               then: joi
                 .array()
                 .items(reqRuleTypesObject)
                 .required()
             })
             .when('key', {
-              is: constants.TemplateProperties.Types.Switch,
+              is: Constants.TemplateProperties.Types.Switch,
               then: joi
                 .array()
                 .items(reqRuleTypesObject)
                 .required()
             })
             .when('key', {
-              is: constants.TemplateProperties.Types.Date,
+              is: Constants.TemplateProperties.Types.Date,
               then: joi
                 .array()
                 .items(dateRuleTypesObject)
                 .required()
             })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.URL,
+              then: joi
+                .array()
+                .items(URLRuleTypesObject)
+                .required()
+            })
+            .when('key', {
+              is: Constants.TemplateProperties.Types.Select,
+              then: joi
+                .array()
+                .items(SelectRuleTypesObject)
+                .required()
+            })
         })
       )
+  });
+}
+
+//********************* new ********************* */
+
+export function addPropertySchema(templateObject) {
+  return joi.object().keys({
+    propertyId: joi.only(templateObject.propertyId).required(),
+    templateVersionId: protoLong,
+    rowVersion: protoTimeStamp
+  });
+}
+
+export function commonExperiencesSchema() {
+  return joi.object().keys({
+    templateVersionId: protoLong,
+    rowVersion: protoTimeStamp
+  });
+}
+
+export function addTemplateToCollectionSchema(templateObject) {
+  return joi.object().keys({
+    templateVersionId: protoLong,
+    rowVersion: protoTimeStamp,
+    childReferenceId: joi.only(templateObject.childReferenceId).required()
   });
 }

@@ -56,6 +56,22 @@ message ListConstraint{
     string error_message = 4;
 }
 
+message UrlConstraint{
+    oneof constraint {
+        Regex regex = 1;
+        Required required = 2;
+    }
+    string error_message = 3;
+}
+
+message SelectConstraint{
+    oneof constraint {
+        Required required = 1;
+        AllowedValues allowed_values = 2;
+    }
+    string error_message = 3;
+}
+
 // Constraints
 
 message RangeInt{
@@ -83,4 +99,8 @@ message Regex{
 
 message Required{
     bool is_required = 1;
+}
+
+message AllowedValues{
+    repeated string values = 1;
 }

@@ -34,6 +34,8 @@ message ScenarioDetails {
   // The following fields are for targeting
   LogicalType segment_logical_operator = 12;
   repeated string segment_ids = 13;
+
+  Schedule schedule = 14;
 }
 
 message ExperienceInstanceSummary {
@@ -51,6 +53,8 @@ message ExperienceInstanceSummary {
 
   google.protobuf.Timestamp row_version = 11;
   google.protobuf.Timestamp version_row_version = 12;
+
+  int64 template_version_id = 13;
 }
 
 
@@ -75,20 +79,48 @@ message ExperienceInstanceDetails {
   google.protobuf.Timestamp modified_at = 15;
   google.protobuf.Timestamp row_version = 16;
   google.protobuf.Timestamp version_row_version = 17;
+
+  int64 template_version_id = 18;
 }
 
 message ExperienceInstanceChild {
   oneof child {
     ExperienceInstanceSummary summary = 1;
     ExperienceInstanceDetails details = 2;
-
   }
+
+  string template_reference_id = 3;
 }
 
 message ExperienceVersionUpdate {
   string experience_id = 1; // experience_instance_id
   google.protobuf.Timestamp row_version = 2; // version_row_version
- }
+}
+
+message ScenarioVersionUpdate {
+  string experience_id = 1;
+  string scenario_id = 2; // scenario short ID
+  google.protobuf.Timestamp row_version = 3; // scenario_row_version
+}
+
+message VersionUpdates {
+  repeated ExperienceVersionUpdate experiences = 1;
+  repeated ScenarioVersionUpdate scenarios = 2;
+}
+
+message Schedule {
+  reserved 1;
+  reserved "id";
+
+  google.protobuf.Timestamp start = 2;
+  google.protobuf.Timestamp end = 3;
+  string timezone = 4;
+}
+
+message TemplateInstanceIds {
+  string id = 1;
+  repeated string instance_ids = 2;
+}
 
 // Instance Type enumeration
 enum InstanceType {
@@ -106,4 +138,9 @@ enum InstanceState {
 enum LogicalType{
   AND = 0;
   OR  = 1;
+}
+
+enum ChildExpandType {
+  NONE = 0;
+  SUMMARY = 1;
 }
