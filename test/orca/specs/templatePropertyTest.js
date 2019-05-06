@@ -2,6 +2,7 @@ import '../common';
 import { registerAndCreateOrg, login } from 'actions/common';
 import { getOrganizations } from 'actions/organization';
 import { createSpace } from 'actions/space';
+import * as Constants from '../constants.json';
 import {
   createExperienceTemplate,
   updateExperienceTemplate,
@@ -25,7 +26,7 @@ describe('Tests for experience templates for a space', () => {
   });
 
   it('C2074303 - Mutation - addExperienceProperty', async () => {
-    let response = await addExperienceProperty(experienceTemplateObject);
+    let response = await addExperienceProperty(experienceTemplateObject, Constants.TemplateProperties.Types.Text);
     expect(response.response.statusCode).to.equal(200);
   });
 
@@ -40,7 +41,7 @@ describe('Tests for experience templates for a space', () => {
   });
 
   it('Mutation - moveExperienceProperty', async () => {
-    await addExperienceProperty(experienceTemplateObject);
+    await addExperienceProperty(experienceTemplateObject, Constants.TemplateProperties.Types.Text);
     let response = await moveExperienceProperty(experienceTemplateObject, 0);
     expect(response.response.statusCode).to.equal(200);
   });

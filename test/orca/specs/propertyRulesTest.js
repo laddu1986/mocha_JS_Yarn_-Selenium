@@ -19,9 +19,8 @@ const LIMIT_RANGE = { min: 5, max: 22, mode: 0, errorMessage: 'Custom Error Mess
 const ALLOWED_VALUES = { allowedValues: ['allowedvalue1', 'allowedvalue2'] };
 
 let experienceTemplateObject = new Object();
-let propertyIds = [];
 let types = {
-  text: {
+  [Constants.TemplateProperties.Types.Text]: {
     rules: [
       Constants.TemplateProperties.Rules.Required,
       Constants.TemplateProperties.Rules.CharacterCount,
@@ -29,31 +28,31 @@ let types = {
     ],
     ruleValues: [REQUIRED, LIMIT_RANGE, CUSTOM_PATTERN]
   },
-  integer: {
+  [Constants.TemplateProperties.Types.Integer]: {
     rules: [Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.NumberRange],
     ruleValues: [REQUIRED, LIMIT_RANGE]
   },
-  select: {
+  [Constants.TemplateProperties.Types.Select]: {
     rules: [Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.AllowedValues],
     ruleValues: [REQUIRED, ALLOWED_VALUES]
   },
-  url: {
+  [Constants.TemplateProperties.Types.URL]: {
     rules: [Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.Regex],
     ruleValues: [REQUIRED, CUSTOM_PATTERN]
   },
-  list: {
+  [Constants.TemplateProperties.Types.List]: {
     rules: [Constants.TemplateProperties.Rules.Required, Constants.TemplateProperties.Rules.Regex],
     ruleValues: [REQUIRED, CUSTOM_PATTERN]
   },
-  date: {
+  [Constants.TemplateProperties.Types.Date]: {
     rules: [Constants.TemplateProperties.Rules.Required],
     ruleValues: [REQUIRED]
   },
-  color: {
+  [Constants.TemplateProperties.Types.Color]: {
     rules: [Constants.TemplateProperties.Rules.Required],
     ruleValues: [REQUIRED]
   },
-  boolean: {
+  [Constants.TemplateProperties.Types.Switch]: {
     rules: [Constants.TemplateProperties.Rules.Required],
     ruleValues: [REQUIRED]
   }
@@ -70,38 +69,34 @@ describe('Tests for experience templates for a space', () => {
   });
 
   it('Mutation - enableExperiencePropertyRule', async () => {
-    let count = 0;
-    for (var property in types) {
-      await addExperienceProperty(experienceTemplateObject, property);
+    for (var propertyName in types) {
+      await addExperienceProperty(experienceTemplateObject, propertyName);
       await updateExperienceProperty(experienceTemplateObject);
-      propertyIds.push(experienceTemplateObject.propertyId);
-      for (var rule in types[property]['rules']) {
+      types[propertyName].id = experienceTemplateObject.propertyId;
+      for (var rule in types[propertyName].rules) {
         let response = await toggleExperiencePropertyRule(
           experienceTemplateObject,
-          propertyIds[count],
-          types[property]['rules'][rule],
+          types[propertyName].id,
+          types[propertyName].rules[rule],
           'enableExperiencePropertyRule'
         );
         expect(response.response.statusCode).to.equal(200);
       }
-      count++;
     }
   });
 
   it('Mutation - updateExperiencePropertyRule', async () => {
-    let count = 0;
-    for (var property in types) {
-      for (var rule in types[property]['rules']) {
+    for (var propertyName in types) {
+      for (var rule in types[propertyName].rules) {
         let response = await updateExperiencePropertyRule(
           experienceTemplateObject,
-          propertyIds[count],
-          property,
-          types[property]['rules'][rule],
-          types[property]['ruleValues'][rule]
+          types[propertyName].id,
+          propertyName,
+          types[propertyName].rules[rule],
+          types[propertyName].ruleValues[rule]
         );
         expect(response.response.statusCode).to.equal(200);
       }
-      count++;
     }
   });
 
@@ -111,18 +106,16 @@ describe('Tests for experience templates for a space', () => {
   });
 
   it('Mutation - disableExperiencePropertyRule', async () => {
-    let count = 0;
-    for (var property in types) {
-      for (var rule in types[property]['rules']) {
+    for (var propertyName in types) {
+      for (var rule in types[propertyName].rules) {
         let response = await toggleExperiencePropertyRule(
           experienceTemplateObject,
-          propertyIds[count],
-          types[property]['rules'][rule],
+          types[propertyName].id,
+          types[propertyName].rules[rule],
           'disableExperiencePropertyRule'
         );
         expect(response.response.statusCode).to.equal(200);
       }
-      count++;
     }
   });
 });

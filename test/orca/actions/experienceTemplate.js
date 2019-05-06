@@ -2,8 +2,6 @@ import { randomString, post, orca } from '../common';
 import * as Constants from '../constants.json';
 
 export function createExperienceTemplate(responseData) {
-  let name = `${randomString(8)}`,
-    key = `${randomString({ length: 7, charset: 'alphabetic' })}`;
   const data = {
     query:
       'mutation createExperienceTemplate($input: CreateExperienceTemplateInput!) { createExperienceTemplate(input: $input) { template { id key type name rowVersion templateVersionId}}}',
@@ -11,8 +9,6 @@ export function createExperienceTemplate(responseData) {
     variables: {
       input: {
         fields: {
-          key: key,
-          name: name,
           thumbnailUrl: 'SchemDefault'
         },
         organizationId: responseData.orgID,
@@ -26,8 +22,6 @@ export function createExperienceTemplate(responseData) {
     data: data
   };
   return post(any, responseData).then(response => {
-    responseData.experienceName = name;
-    responseData.experienceKey = key;
     responseData.expTemplateID = response.response.body.data.createExperienceTemplate.template.id;
     responseData.templateVersionId = response.response.body.data.createExperienceTemplate.template.templateVersionId;
     responseData.expTemplateRowVersion = response.response.body.data.createExperienceTemplate.template.rowVersion;
@@ -36,7 +30,8 @@ export function createExperienceTemplate(responseData) {
 }
 
 export function updateExperienceTemplate(responseData) {
-  var newName = `${randomString(8)}_new`;
+  var newName = `${randomString(8)}_new`,
+    newKey = `${randomString({ length: 7, charset: 'alphabetic' })}`;
   const data = {
     query:
       'mutation updateExperienceTemplate($input: UpdateExperienceTemplateInput!) { updateExperienceTemplate(input: $input) { template { id name key thumbnailUrl rowVersion properties{key typeKey name defaultValue appearanceKey promptText helpText localizable rules{constraint}}}}}',
@@ -44,7 +39,8 @@ export function updateExperienceTemplate(responseData) {
     variables: {
       input: {
         fields: {
-          name: newName
+          name: newName,
+          key: newKey
         },
         organizationId: responseData.orgID,
         spaceId: responseData.spaceID,
