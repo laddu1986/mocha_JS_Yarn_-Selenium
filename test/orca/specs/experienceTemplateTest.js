@@ -8,10 +8,6 @@ import {
   getExperienceTemplate,
   getExperiencesTemplate,
   deleteExperienceTemplate,
-  addExperienceProperty,
-  getExperienceProperty,
-  updateExperienceProperty,
-  removeExperienceProperty,
   commitExperienceTemplate
 } from 'actions/experienceTemplate';
 var experienceTemplateObject = new Object();
@@ -39,32 +35,12 @@ describe('Tests for experience templates for a space', () => {
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it('C2074303 Mutation - addExperienceProperty', async () => {
-    let response = await addExperienceProperty(experienceTemplateObject);
-    expect(response.response.statusCode).to.equal(200);
-  });
-
-  it('C2074304 Query - experienceProperty', async () => {
-    let response = await getExperienceProperty(experienceTemplateObject);
-    expect(response.response.statusCode).to.equal(200);
-  });
-
-  it('C2074305 Query - updateExperienceProperty', async () => {
-    let response = await updateExperienceProperty(experienceTemplateObject);
-    expect(response.response.statusCode).to.equal(200);
-  });
-
   it('C1302060 Query - experienceTemplates', async () => {
     let response = await getExperiencesTemplate(experienceTemplateObject);
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it('C1490708 Mutation - removeExperienceProperty', async () => {
-    let response = await removeExperienceProperty(experienceTemplateObject);
-    expect(response.response.statusCode).to.equal(200);
-  });
-
-  it('C2074306 Mutation - commitExperienceTemplate', async () => {
+  it('C2074306 - Mutation - commitExperienceTemplate', async () => {
     let response = await commitExperienceTemplate(experienceTemplateObject);
     expect(response.response.statusCode).to.equal(200);
   });
