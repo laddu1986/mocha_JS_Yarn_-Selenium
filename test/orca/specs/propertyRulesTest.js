@@ -1,11 +1,10 @@
-import '../common';
-import { registerAndCreateOrg, login } from 'actions/common';
+import { Context } from '../common';
+import { registerAndCreateOrg, login } from 'actions/account';
 import { getOrganizations } from 'actions/organization';
 import * as Constants from '../constants.json';
 import { createSpace } from 'actions/space';
 import {
   createExperienceTemplate,
-  updateExperienceTemplate,
   addExperienceProperty,
   updateExperienceProperty,
   commitExperienceTemplate,
@@ -18,7 +17,8 @@ const REQUIRED = { errorMessage: 'Custom Error Message for required field' };
 const LIMIT_RANGE = { min: 5, max: 22, mode: 0, errorMessage: 'Custom Error Message for limit character count rule' };
 const ALLOWED_VALUES = { allowedValues: ['allowedvalue1', 'allowedvalue2'] };
 
-let experienceTemplateObject = new Object();
+const contextData = {};
+const fixedTemplate = {};
 let types = {
   [Constants.TemplateProperties.Types.Text]: {
     rules: [
@@ -58,25 +58,24 @@ let types = {
   }
 };
 
-describe('Tests for experience templates for a space', () => {
+describe('@experience Property Rules CRUD', () => {
   before(async () => {
-    await registerAndCreateOrg(experienceTemplateObject);
-    await login(experienceTemplateObject);
-    await getOrganizations(experienceTemplateObject);
-    await createSpace(experienceTemplateObject);
-    await createExperienceTemplate(experienceTemplateObject);
-    await updateExperienceTemplate(experienceTemplateObject);
+    await registerAndCreateOrg(contextData);
+    await login(contextData);
+    await getOrganizations(contextData);
+    await createSpace(contextData);
+    Context.context = contextData;
+    await createExperienceTemplate(fixedTemplate, Constants.Experience.Types.FIXED);
   });
 
   it('Mutation - enableExperiencePropertyRule', async () => {
     for (var propertyName in types) {
-      await addExperienceProperty(experienceTemplateObject, propertyName);
-      await updateExperienceProperty(experienceTemplateObject);
-      types[propertyName].id = experienceTemplateObject.propertyId;
+      await addExperienceProperty(fixedTemplate, (types[propertyName].data = {}), propertyName);
+      await updateExperienceProperty(fixedTemplate, types[propertyName].data);
       for (var rule in types[propertyName].rules) {
         let response = await toggleExperiencePropertyRule(
-          experienceTemplateObject,
-          types[propertyName].id,
+          fixedTemplate,
+          types[propertyName].data,
           types[propertyName].rules[rule],
           'enableExperiencePropertyRule'
         );
@@ -89,9 +88,8 @@ describe('Tests for experience templates for a space', () => {
     for (var propertyName in types) {
       for (var rule in types[propertyName].rules) {
         let response = await updateExperiencePropertyRule(
-          experienceTemplateObject,
-          types[propertyName].id,
-          propertyName,
+          fixedTemplate,
+          types[propertyName].data,
           types[propertyName].rules[rule],
           types[propertyName].ruleValues[rule]
         );
@@ -101,7 +99,7 @@ describe('Tests for experience templates for a space', () => {
   });
 
   it('Mutation - commitExperienceTemplate', async () => {
-    let response = await commitExperienceTemplate(experienceTemplateObject);
+    let response = await commitExperienceTemplate(fixedTemplate);
     expect(response.response.statusCode).to.equal(200);
   });
 
@@ -109,8 +107,8 @@ describe('Tests for experience templates for a space', () => {
     for (var propertyName in types) {
       for (var rule in types[propertyName].rules) {
         let response = await toggleExperiencePropertyRule(
-          experienceTemplateObject,
-          types[propertyName].id,
+          fixedTemplate,
+          types[propertyName].data,
           types[propertyName].rules[rule],
           'disableExperiencePropertyRule'
         );

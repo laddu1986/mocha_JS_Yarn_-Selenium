@@ -100,7 +100,7 @@ export function getOrganizations(responseData) {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
+  return post(any).then(response => {
     responseData.orgRowVersion = response.response.body.data.organizations[0].rowVersion;
     responseData.orgID = response.response.body.data.organizations[0].id;
     responseData.orgName = response.response.body.data.organizations[0].name;

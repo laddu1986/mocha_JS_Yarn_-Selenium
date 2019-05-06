@@ -2,8 +2,8 @@ import { randomString, post, orca, Context } from '../common';
 //import * as Constants from '../constants.json';
 
 export function createExperienceTemplate(returnTemplate, templateType, name, key) {
-  (name = name === undefined ? `${randomString(8)}` : name),
-    (key = key === undefined ? `${randomString({ length: 7, charset: 'alphabetic' })}` : key);
+  name = name === undefined ? `${randomString(8)}` : name;
+  key = key === undefined ? `${randomString({ length: 7, charset: 'alphabetic' })}` : key;
   const data = {
     query: `mutation createExperienceTemplate($input: CreateExperienceTemplateInput!) { 
         createExperienceTemplate(input: $input) { 
@@ -14,6 +14,8 @@ export function createExperienceTemplate(returnTemplate, templateType, name, key
     variables: {
       input: {
         fields: {
+          name,
+          key,
           thumbnailUrl: 'SchemDefault'
         },
         organizationId: Context.organizationId,
@@ -183,22 +185,27 @@ export function updateExperienceProperty(returnTemplate, returnProperty, name, k
 }
 
 //TODO: Return full details here
-export function moveExperienceProperty(responseData, index) {
+export function moveExperienceProperty(returnTemplate, propertyToMove, index) {
   const data = {
-    query:
-      'mutation moveExperienceProperty($input: MoveExperiencePropertyInput!) { moveExperienceProperty(input: $input) { template { id rowVersion}}}',
+    query: `mutation moveExperienceProperty($input: MoveExperiencePropertyInput!) { 
+        moveExperienceProperty(input: $input) { 
+          template { 
+            id rowVersion
+          }
+        }
+      }`,
     operationName: 'moveExperienceProperty',
     variables: {
       input: {
         fields: {
           index
         },
-        propertyId: responseData.propertyId,
-        organizationId: responseData.orgID,
-        rowVersion: responseData.expTemplateRowVersion,
-        spaceId: responseData.spaceID,
-        templateId: responseData.expTemplateID,
-        templateVersionId: responseData.templateVersionId
+        propertyId: propertyToMove.id,
+        organizationId: Context.organizationId,
+        rowVersion: returnTemplate.rowVersion,
+        spaceId: Context.spaceId,
+        templateId: returnTemplate.id,
+        templateVersionId: returnTemplate.templateVersionId
       }
     }
   };
@@ -206,8 +213,8 @@ export function moveExperienceProperty(responseData, index) {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
-    responseData.expTemplateRowVersion = response.response.body.data.moveExperienceProperty.template.rowVersion;
+  return post(any).then(response => {
+    Object.assign(returnTemplate, response.response.body.data.moveExperienceProperty.template);
     return response;
   });
 }
@@ -261,12 +268,15 @@ export function removeExperienceProperty(returnTemplate, propertyData) {
   };
   return post(any).then(response => {
     Object.assign(returnTemplate, response.response.body.data.removeExperienceProperty.template);
+    for (var key in propertyData) {
+      delete propertyData[key];
+    } // Empty the property data object
     return response;
   });
 }
 
 //TODO: this
-export function toggleExperiencePropertyRule(responseData, propertyId, ruleName, type) {
+export function toggleExperiencePropertyRule(returnTemplate, returnProperty, ruleName, type) {
   const data = {
     query: `mutation ${type}($input: ${type.charAt(0).toUpperCase() + type.slice(1)}Input!) { 
       ${type}(input: $input) {
@@ -280,12 +290,12 @@ export function toggleExperiencePropertyRule(responseData, propertyId, ruleName,
     operationName: type,
     variables: {
       input: {
-        propertyId,
-        organizationId: responseData.orgID,
-        spaceId: responseData.spaceID,
-        templateId: responseData.expTemplateID,
-        templateVersionId: responseData.templateVersionId,
-        rowVersion: responseData.expTemplateRowVersion,
+        propertyId: returnProperty.id,
+        organizationId: Context.organizationId,
+        spaceId: Context.spaceId,
+        templateId: returnTemplate.id,
+        templateVersionId: returnTemplate.templateVersionId,
+        rowVersion: returnTemplate.rowVersion,
         ruleKey: ruleName
       }
     }
@@ -296,39 +306,37 @@ export function toggleExperiencePropertyRule(responseData, propertyId, ruleName,
     data: data
   };
 
-  return post(any, responseData).then(response => {
-    if (type == 'enableExperiencePropertyRule') {
-      responseData.expTemplateRowVersion =
-        response.response.body.data.enableExperiencePropertyRule.templateUpdate.rowVersion;
-      responseData.templateVersionId =
-        response.response.body.data.enableExperiencePropertyRule.templateUpdate.templateVersionId;
-    } else {
-      responseData.expTemplateRowVersion =
-        response.response.body.data.disableExperiencePropertyRule.templateUpdate.rowVersion;
-      responseData.templateVersionId =
-        response.response.body.data.disableExperiencePropertyRule.templateUpdate.templateVersionId;
-    }
-
+  return post(any).then(response => {
+    Object.assign(returnTemplate, response.response.body.data[type].templateUpdate);
+    Object.assign(returnProperty, response.response.body.data[type].property);
     return response;
   });
 }
 
-export function updateExperiencePropertyRule(responseData, propertyId, propertyType, ruleName, ruleData) {
+export function updateExperiencePropertyRule(returnTemplate, returnProperty, ruleKey, ruleData) {
   const data = {
-    query:
-      'mutation updateExperiencePropertyRule($input: UpdateExperiencePropertyRuleInput!) { updateExperiencePropertyRule(input: $input) {templateUpdate{id rowVersion} property{id rules {min max mode pattern errorMessage isRequired}}}}',
+    query: `mutation updateExperiencePropertyRule($input: UpdateExperiencePropertyRuleInput!) { 
+        updateExperiencePropertyRule(input: $input) {
+          templateUpdate {
+            id rowVersion 
+          } 
+          property {
+            id rules {min max mode pattern errorMessage isRequired}
+          }
+        }
+      }`,
     operationName: 'updateExperiencePropertyRule',
     variables: {
       input: {
         fields: ruleData,
-        propertyId,
-        organizationId: responseData.orgID,
-        spaceId: responseData.spaceID,
-        templateId: responseData.expTemplateID,
-        templateVersionId: responseData.templateVersionId,
-        rowVersion: responseData.expTemplateRowVersion,
-        ruleKey: ruleName,
-        propertyType
+        propertyId: returnProperty.id,
+        organizationId: Context.organizationId,
+        spaceId: Context.spaceId,
+        templateId: returnTemplate.id,
+        templateVersionId: returnTemplate.templateVersionId,
+        rowVersion: returnTemplate.rowVersion,
+        ruleKey,
+        propertyType: returnProperty.typeKey
       }
     }
   };
@@ -336,9 +344,9 @@ export function updateExperiencePropertyRule(responseData, propertyId, propertyT
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
-    responseData.expTemplateRowVersion =
-      response.response.body.data.updateExperiencePropertyRule.templateUpdate.rowVersion;
+  return post(any).then(response => {
+    Object.assign(returnTemplate, response.response.body.data.updateExperiencePropertyRule.templateUpdate);
+    Object.assign(returnProperty);
     return response;
   });
 }
