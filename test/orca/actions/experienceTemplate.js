@@ -1,5 +1,4 @@
 import { randomString, post, orca, Context } from '../common';
-//import * as Constants from '../constants.json';
 
 export function createExperienceTemplate(returnTemplate, templateType, name, key) {
   name = name === undefined ? `${randomString(8)}` : name;
@@ -184,7 +183,6 @@ export function updateExperienceProperty(returnTemplate, returnProperty, name, k
   });
 }
 
-//TODO: Return full details here
 export function moveExperienceProperty(returnTemplate, propertyToMove, index) {
   const data = {
     query: `mutation moveExperienceProperty($input: MoveExperiencePropertyInput!) { 
@@ -275,7 +273,6 @@ export function removeExperienceProperty(returnTemplate, propertyData) {
   });
 }
 
-//TODO: this
 export function toggleExperiencePropertyRule(returnTemplate, returnProperty, ruleName, type) {
   const data = {
     query: `mutation ${type}($input: ${type.charAt(0).toUpperCase() + type.slice(1)}Input!) { 
