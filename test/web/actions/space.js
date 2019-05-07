@@ -23,7 +23,6 @@ export function changeSpace(type) {
 }
 
 export function verifyNewSpaceName() {
-  NavBarPage.backToOrgDashboardLink.click();
   return OrgDashboardPage.spaceCards.getText();
 }
 
@@ -116,7 +115,6 @@ export function selectSpace() {
 }
 export function goToSpaceSettings() {
   NavBar.spaceSettings.click();
-  NavBar.generalSpaceSettings.click();
 }
 export function verifySpaceSettingsPage() {
   return SpaceSettingsPage.spaceName.isVisible() && SpaceSettingsPage.spaceSlug.isVisible();

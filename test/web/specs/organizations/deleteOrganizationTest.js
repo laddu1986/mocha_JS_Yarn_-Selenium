@@ -1,4 +1,4 @@
-import '../../common';
+import * as lib from '../../common';
 import SignInPage from 'page_objects/signInPage';
 import {
   getNotificationMessageText,
@@ -25,7 +25,7 @@ import {
 import orgNotificationData from 'data/passiveNotification.json';
 import { signIn } from 'actions/common';
 import { signOut } from 'actions/navBar';
-var newOrgName;
+var newOrgName = lib.randomString();
 const accountData = new Object();
 describe('Delete organization Tests', () => {
   before(async () => {
@@ -42,7 +42,6 @@ describe('Delete organization Tests', () => {
   });
 
   it('C1295702 Delete Org --> verify Cancel action on Delete modal', () => {
-    // Blocked by https://app.clickup.com/t/czw98
     gotoOrgSettings();
     clickDeleteOrgButton();
     expect(cancelDeleteOrg()).to.equal(true);

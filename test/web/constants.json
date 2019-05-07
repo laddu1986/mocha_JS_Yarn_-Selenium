@@ -50,7 +50,11 @@
       "Created": "Created",
       "Known": "Known",
       "FirstSeen": "First Seen",
-      "Joined": "Joined"
+      "Joined": "Joined",
+      "Location": "Location",
+      "UserAgent": "User agent",
+      "DeviceType": "Device type",
+      "Label": "Label"
     },
     "OtherOperators": {
       "MoreThan": "more than",
@@ -61,6 +65,22 @@
       "Before": "before",
       "IsUnknown": "is unknown",
       "HasAnyValue": "has any value"
+    },
+    "LabelUserLocationOperators": {
+      "Is": "is",
+      "IsNot": "is not",
+      "IsUnknown": "is unknown",
+      "HasAnyValue": "has any value",
+      "StartsWith": "starts with",
+      "EndsWith": "ends with",
+      "Contains": "contains",
+      "DoesNotContain": "does not contain",
+      "DoesNotStartWith": "does not start with",
+      "DoesNotEndWith": "does not end with"
+    },
+    "DeviceOperators": {
+      "Is": "is",
+      "IsNot": "is not"
     },
     "ActiveAverageOperators": {
       "GreaterThan": "greater than",

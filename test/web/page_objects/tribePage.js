@@ -8,7 +8,7 @@ class TribePage extends Page {
     return browser.element("//button[@data-qa='btn:create-segment']");
   }
   get createTribeLink() {
-    return browser.element("//button[@data-qa='btn:card:create-segment']");
+    return browser.element("//button[@data-qa='empty-tribe-card']");
   }
   get titleField() {
     return browser.element("//input[@data-qa='input:segment-title']");
