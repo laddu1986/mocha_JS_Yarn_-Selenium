@@ -44,7 +44,7 @@ describe('Tribe Rule Filter Tests', () => {
     );
   });
 
-  xit('C1295762 Verify the Property filter', () => {
+  it('C1295762 Verify the Property filter', () => {
     clickFilter(Constants.TribeFilterTypes.Property);
     expect(verifyFilterOptions(Constants.TribeFilterTypes.Property)).to.equal(
       true,
@@ -54,7 +54,7 @@ describe('Tribe Rule Filter Tests', () => {
 
   xit('C1295763 Verify the Operator filter', () => {
     var type, name;
-    for (var i = 0; i < 8; i++) {
+    for (var i = 0; i < 12; i++) {
       name = selectProperty(i);
       if (
         name == Constants.TribeRulesFilters.Properties.AvgSessionTime ||
@@ -62,6 +62,13 @@ describe('Tribe Rule Filter Tests', () => {
         name == Constants.TribeRulesFilters.Properties.ActiveDays
       )
         type = 'Avg';
+      else if (
+        name == Constants.TribeRulesFilters.Properties.Location ||
+        name == Constants.TribeRulesFilters.Properties.UserAgent ||
+        name == Constants.TribeRulesFilters.Properties.Label
+      )
+        type = 'LabelUserLocation';
+      else if (name == Constants.TribeRulesFilters.Properties.DeviceType) type = 'Device';
       else type = 'NotAvg';
       expect(verifyOperators(type)).to.equal(true, 'All operators for property ' + i + ' are not shown');
       removeRuleFilter();
@@ -69,7 +76,7 @@ describe('Tribe Rule Filter Tests', () => {
     }
   });
 
-  it('C1295764 Verify date filter can be added', () => {
+  xit('C1295764 Verify date filter can be added', () => {
     clickFilter(Constants.TribeFilterTypes.Property);
     browser.pause(1000);
     selectProperty('0');
@@ -80,17 +87,17 @@ describe('Tribe Rule Filter Tests', () => {
     expect(verifyFilterExists()).to.equal('>', 'The filter is not added');
   });
 
-  it('C1640178 Verify date in added date filter text', () => {
+  xit('C1640178 Verify date in added date filter text', () => {
     let today = new Date();
     expect(verifyFilterValue('0')).to.include(lib.dateFormat(today, 'mmm dd yyyy'), 'The date filter is not added');
   });
 
-  it('C1295765 Verify filter can be deleted', () => {
+  xit('C1295765 Verify filter can be deleted', () => {
     removeRuleFilter();
     expect(verifyFilterExists()).to.include('Add Filter', 'The filter is not deleted');
   });
 
-  it('C1295766 Adding filter with number property for Visitor', () => {
+  xit('C1295766 Adding filter with number property for Visitor', () => {
     clickFilter(Constants.TribeFilterTypes.AudienceType);
     selectAudienceType('1');
     clickFilter(Constants.TribeFilterTypes.LogicalType);

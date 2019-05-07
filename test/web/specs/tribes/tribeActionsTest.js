@@ -47,7 +47,7 @@ describe('Tribe Actions Tests', () => {
   it('C1295743 Delete Tribe --> verify the passive notification', () => {
     goToTribeDetailPage();
     deleteTribe();
-    expect(getNotificationMessageText()).to.include(`${PassiveNotification.deleteMessage.text}'${newName}'.`);
+    expect(getNotificationMessageText()).to.include(`${PassiveNotification.deleteTribe.text}.`);
   });
 
   it('C1640171 Verify redirection to all tribes page', () => {

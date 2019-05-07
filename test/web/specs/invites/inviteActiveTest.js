@@ -37,7 +37,7 @@ describe(`New User Joins an Organization via ACTIVE invitation`, () => {
   });
 
   it('C1640140 Verify the submit button text on join new org page', () => {
-    expect(submitButtonText()).to.include('Create Account', 'Submit button does not have create account text');
+    expect(submitButtonText()).to.include('Create account', 'Submit button does not have create account text');
   });
 
   it('C1295643 User email field is disabled', () => {
