@@ -221,3 +221,12 @@ export function closeSidePanel() {
 export function search(value) {
   UsersPage.searchTextField.setValue(value);
 }
+export function filterForVisitors() {
+  UsersPage.filterDropdown.click();
+  UsersPage.filterMenu[1].click();
+}
+
+export function filterForUsers() {
+  UsersPage.filterDropdown.click();
+  UsersPage.filterMenu[0].click();
+}

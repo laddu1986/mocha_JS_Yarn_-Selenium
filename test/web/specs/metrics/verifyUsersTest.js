@@ -5,18 +5,22 @@ import { createSpace, goToDeveloperPortal, getAPIKey } from 'actions/space';
 import { clickOnAudienceLink, clickOnSpaceDashboardLink } from 'actions/navBar';
 import { addUsers, getCount, addVisitor, verifyUsersAreAdded, refreshSpaceToViewMetrics } from 'actions/metrics';
 import Constants from 'constants.json';
-import { clickOnUsersTab, getRecentUsersRows, verifyUsersDetails, clickUserRow, verifySideBar } from 'actions/users';
+import {
+  clickOnUsersTab,
+  getRecentUsersRows,
+  verifyUsersDetails,
+  clickUserRow,
+  verifySideBar,
+  filterForVisitors
+} from 'actions/users';
 var apiKey;
 describe(`User Metrics Tests`, () => {
-  before(() => {
+  before(async () => {
     AccountPage.open();
     createAccount();
     createSpace();
     goToDeveloperPortal();
     apiKey = getAPIKey();
-  });
-
-  before(async () => {
     await addUsers(5, apiKey);
   });
 
@@ -30,11 +34,13 @@ describe(`User Metrics Tests`, () => {
     expect(getRecentUsersRows()).to.equal(5);
   });
 
-  it('C1295678 Verify the details of users', () => {
+  //TODO: Information removed due to GDPR
+  xit('C1295678 Verify the details of users', () => {
     expect(verifyUsersDetails(lib.responseData.users)).to.equal(true);
   });
 
-  it('C1295679 For First User --> Verify email, UID and name in side bar', () => {
+  //TODO: Information removed due to GDPR
+  xit('C1295679 For First User --> Verify email, UID and name in side bar', () => {
     clickUserRow();
     browser.pause(1000);
     expect(verifySideBar(Constants.UserType.User)).to.equal(true);
@@ -46,6 +52,7 @@ describe(`User Metrics Tests`, () => {
 
   it('C1295681 Verify Visitor on side bar', () => {
     browser.refresh();
+    filterForVisitors();
     clickUserRow(undefined, Constants.UserType.Visitor);
     browser.pause(1000);
     expect(verifySideBar(Constants.UserType.Visitor)).to.equal(true);
