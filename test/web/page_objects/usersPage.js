@@ -1,5 +1,11 @@
 class UsersPage {
   //Users landing page
+  get filterDropdown() {
+    return $("//button[@data-qa='select:menu:button']");
+  }
+  get filterMenu() {
+    return $$("//li[@data-qa='select:menu:item']");
+  }
   get usersTab() {
     return browser.element("//a[@data-qa='tab:users']");
   }
@@ -21,7 +27,6 @@ class UsersPage {
   get userEmailRow() {
     return browser.elements("//td[@data-qa='row:email']");
   }
-
   get searchTextField() {
     return browser.element("//input[@id='user-search']");
   }
