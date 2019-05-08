@@ -62,6 +62,23 @@ exports.config = {
   before() {
     helper.getEndPoints();
   },
+  beforeSession(config, capabilities, specs) {
+    capabilities['zal:name'] = specs
+      .toString()
+      .split('/')
+      .pop()
+      .replace(`Test.js`, ``);
+  },
+  afterTest(test) {
+    browser.setCookie({
+      name: 'zaleniumMessage',
+      value: `${test.title}`
+    });
+    browser.setCookie({
+      name: 'zaleniumTestPassed',
+      value: `${test.passed}`
+    });
+  },
   after() {
     var connection = require('./actions/invite');
     connection.mysql.close();

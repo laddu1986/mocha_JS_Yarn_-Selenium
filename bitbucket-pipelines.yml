@@ -36,11 +36,11 @@ pipelines:
             #build and push image with above version
             - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/web
             - docker push $IMAGE_NAME
-      - step: 
+      - step:
           name: Build and Push API Test Image to DockerHub
-          services: 
+          services:
             - docker
-          caches: 
+          caches:
             - docker
           script:
             #define custom date-time version
@@ -53,9 +53,9 @@ pipelines:
             - docker push $IMAGE_NAME
       - step:
           name: Build and Push Orca Test Image to Dockerhub
-          services: 
+          services:
             - docker
-          caches: 
+          caches:
             - docker
           script:
             #define custom date-time version
