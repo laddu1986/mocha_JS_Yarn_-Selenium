@@ -14,7 +14,7 @@ import SignInPage from 'page_objects/signInPage';
 import { signIn } from 'actions/common';
 var orgName = lib.randomString(10), newOrgName = `${lib.randomString(10)}_newname`;
 
-describe('Organization Tests', () => {
+xdescribe('Organization Tests', () => {
     before('Open App URL', () => {
         SignInPage.open();
         signIn(process.env.PROD_LOGIN_EMAIL, process.env.PROD_LOGIN_PASSWORD);

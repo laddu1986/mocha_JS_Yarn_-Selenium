@@ -9,14 +9,14 @@ import {
     spaceIsDeleted
 } from 'actions/space';
 import SignInPage from 'page_objects/signInPage';
-import { selectOrg } from 'actions/organization';
+//import { selectOrg } from 'actions/organization';
 import { signIn, closePassiveNotification, clickMoreButton, typeDeleteToConfirm, confirmDelete, clickDeleteFromCard } from 'actions/common';
 var newSpacename, spaceName;
 describe('Space Tests', () => {
     before('Open App URL', () => {
         SignInPage.open();
         signIn(process.env.PROD_LOGIN_EMAIL, process.env.PROD_LOGIN_PASSWORD);
-        selectOrg();
+        //selectOrg();
     });
 
     it('Create Space', () => {
