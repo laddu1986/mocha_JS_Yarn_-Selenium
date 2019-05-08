@@ -1,4 +1,4 @@
-import * as lib from '../../../common';
+import * as lib from '../../../../common';
 import SignInPage from 'page_objects/signInPage.js';
 import { selectOrg } from 'actions/organization.js';
 import { signOut } from 'actions/navBar.js';

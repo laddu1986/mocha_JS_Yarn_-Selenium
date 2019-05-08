@@ -1,4 +1,4 @@
-import * as lib from '../../common';
+import * as lib from '../../../common';
 import { createAccount } from 'actions/account';
 import {
   sendInviteButtonEnabled,

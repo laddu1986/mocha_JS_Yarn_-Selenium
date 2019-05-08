@@ -1,4 +1,4 @@
-import '../../common';
+import '../../../common';
 import accountPage from 'page_objects/accountPage';
 import { createAccount } from 'actions/account';
 import { createSpace, goToDeveloperPortal, getAPIKey } from 'actions/space';

@@ -16,9 +16,8 @@ class NavBar extends Page {
     return browser.element("//a[@data-qa='mi:org']");
   }
   //org
-  get orgSettingsAnchor() {
-    return browser.element("//ul[@data-qa='submenu:profile']//div[contains(text(),'Org Settings')]");
-  }
+  get orgSettingsAnchor() { return browser.element("//div[@data-qa='menu:profile']//*[contains(text(),'Settings')]"); }
+
   get general() {
     return browser.element("//ul[@data-qa='submenu:org-settings']//div[contains(text(),'General')]");
   }
@@ -34,10 +33,7 @@ class NavBar extends Page {
     return browser.element("//a[@data-qa='nav:audience']");
   }
   get spaceSettings() {
-    return browser.element("//div[@data-qa='menu:settings']");
-  }
-  get generalSpaceSettings() {
-    return browser.element("//ul[@data-qa='submenu:settings']//div[contains(text(),'General')]");
+    return browser.element("//a[@data-qa='nav:settings']");
   }
   get backToSpaceDashboardLink() {
     return browser.element("//a[@data-qa='link:space-ctx']");

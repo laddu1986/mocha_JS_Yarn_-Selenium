@@ -1,4 +1,4 @@
-import '../../common';
+import '../../../common';
 import SignInPage from 'page_objects/signInPage';
 import {
   emailInputValue,

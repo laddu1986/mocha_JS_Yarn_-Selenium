@@ -9,7 +9,7 @@ describe('Sign In/Out Test', () => {
         SignInPage.open();
     });
 
-    it('Sign In with correct credentials --> successful', () => {
+    it('Sign In', () => {
         signIn(process.env.PROD_LOGIN_EMAIL, process.env.PROD_LOGIN_PASSWORD);
         expect(verifySignIn()).to.equal(true);
     });

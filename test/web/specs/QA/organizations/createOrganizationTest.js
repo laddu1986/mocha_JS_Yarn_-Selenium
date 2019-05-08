@@ -1,5 +1,5 @@
 // Create Organization, sign out, sign back in to validate user lands in the created Org
-import * as lib from '../../common';
+import * as lib from '../../../common';
 import { signIn, postIdentity, postOrganization, postMembership } from 'actions/common';
 import { signOut } from 'actions/navBar';
 import {
@@ -42,7 +42,7 @@ describe('Tests for Create Organization', () => {
   it('C1295700 Sign out and back in -->Should show last accessed Org dashboard', () => {
     signOut();
     signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
-    expect(verifyOrgNameOnDashBoard()).to.equal(orgName);
+    verifyOrgNameOnDashBoard(orgName);
   });
 
   it('C1295701 Checking Org Count in Navbar', () => {

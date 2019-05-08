@@ -1,4 +1,4 @@
-import '../../common';
+import '../../../common';
 import SignInPage from 'page_objects/signInPage';
 import { selectOrg } from 'actions/organization';
 import { goBackToOrgDashboard, verifySpaceSettingsPage, verifyCreateFirstSpacePage } from 'actions/space';

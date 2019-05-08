@@ -1,4 +1,4 @@
-import * as lib from '../../common';
+import * as lib from '../../../common';
 import * as Constants from 'constants.json';
 import accountPage from 'page_objects/accountPage';
 import { createAccount } from 'actions/account';

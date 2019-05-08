@@ -1,4 +1,4 @@
-import '../../common';
+import '../../../common';
 import { selectOrg } from 'actions/organization';
 import {
   invalidInvitationText,

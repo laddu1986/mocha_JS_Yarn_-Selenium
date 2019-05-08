@@ -1,4 +1,4 @@
-import * as lib from '../../common';
+import * as lib from '../../../common';
 import AccountPage from 'page_objects/accountPage';
 import { createAccount } from 'actions/account';
 import { createSpace, goToDeveloperPortal, getAPIKey } from 'actions/space';

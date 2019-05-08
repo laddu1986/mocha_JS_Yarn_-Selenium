@@ -7,7 +7,7 @@ After confirming to delete the account, member should be redirected to 'Sign in'
 Attempt to sign in should fail for deleted account
 */
 
-import '../../common';
+import '../../../common';
 import { errorSignIn } from 'actions/login';
 import SignInPage from 'page_objects/signInPage';
 import { createAccount } from 'actions/account';

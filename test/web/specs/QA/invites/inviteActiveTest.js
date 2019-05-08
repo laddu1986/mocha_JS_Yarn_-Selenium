@@ -1,4 +1,4 @@
-import '../../common';
+import '../../../common';
 import SignInPage from 'page_objects/signInPage';
 import { createAccountToJoinInvitedOrg } from 'actions/account';
 import { invitationLink } from 'actions/invite';

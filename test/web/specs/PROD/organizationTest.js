@@ -3,32 +3,44 @@ import {
     goToCreateOrgPageFromNavbar,
     createNewOrg,
     verifyWecomeOrgPage,
-    verifyOrgNameOnDashBoard
+    verifyOrgNameOnDashBoard,
+    updateOrgName,
+    gotoOrgSettings,
+    deleteOrganization,
+    verifyChooseOrgspage,
 } from 'actions/organization';
 import { getnavOrgCount, verifySelectedOrgMenu, goToOrgPageFromNavMenu } from 'actions/navBar';
 import SignInPage from 'page_objects/signInPage';
-import { signIn, closePassiveNotification, clickMoreButton, typeDeleteToConfirm, confirmDelete, clickDeleteFromCard } from 'actions/common';
-var orgName = lib.randomString(10), updatedOrgName = `${lib.randomString(10)}_newname`;
+import { signIn } from 'actions/common';
+var orgName = lib.randomString(10), newOrgName = `${lib.randomString(10)}_newname`;
+
 describe('Organization Tests', () => {
     before('Open App URL', () => {
         SignInPage.open();
-        signIn("balpreet111@beatles.com", process.env.PROD_LOGIN_PASSWORD);
+        signIn(process.env.PROD_LOGIN_EMAIL, process.env.PROD_LOGIN_PASSWORD);
     });
     it('Create new organization', () => {
         goToCreateOrgPageFromNavbar();
         createNewOrg(orgName);
         expect(verifyWecomeOrgPage()).to.equal(true);
     });
-    it('Checking Org Count in submenu', () => {
+    it('Org Count in submenu changes', () => {
         expect(getnavOrgCount()).to.equal(2);
     });
-    it('Update org name --> verify new name appears in url', () => {
-        updateOrgName(updatedOrgName);
-        goToOrgPageFromNavMenu();
-        expect(verifyOrgNameOnDashBoard()).to.equal(updatedOrgName, 'The updated org name is not shown on dashboard');
-    });
-    it('Validate left menu bar has the updated org name', () => {
-        expect(verifySelectedOrgMenu()).to.include(updatedOrgName, 'The updated org name is not shown on left menu bar');
+    it('Update org name --> verify new name appears in left menu bar', () => {
+        gotoOrgSettings();
+        updateOrgName(newOrgName);
+        expect(verifySelectedOrgMenu()).to.include(newOrgName, 'The updated org name is not shown on left menu bar');
     });
 
+    it('Validate dashboard has the updated org name', () => {
+        goToOrgPageFromNavMenu();
+        verifyOrgNameOnDashBoard(newOrgName);
+    });
+
+    it('Delete Org --> verify choose orgs page', () => {
+        gotoOrgSettings();
+        deleteOrganization();
+        expect(verifyChooseOrgspage()).to.equal(true);
+    });
 });
