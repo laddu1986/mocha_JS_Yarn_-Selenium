@@ -30,7 +30,8 @@ exports.config = {
     tribes: ['specs/tribes/*Test.js'],
     metrics: ['specs/metrics/*Test.js'],
     experiences: ['specs/experiences/*Test.js'],
-    negative: ['specs/negativeSpecs/*/*Test.js']
+    negative: ['specs/negativeSpecs/*/*Test.js'],
+    PROD: ['specs/PROD/*Test.js']
   },
   logLevel: 'silent',
   bail: 0,
@@ -58,7 +59,7 @@ exports.config = {
   },
   debug: false,
   execArgv: [],
-  onPrepare() {},
+  onPrepare() { },
   before() {
     helper.getEndPoints();
   },
@@ -66,5 +67,5 @@ exports.config = {
     var connection = require('./actions/invite');
     connection.mysql.close();
   },
-  onComplete() {}
+  onComplete() { }
 };
