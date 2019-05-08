@@ -3,7 +3,7 @@ import NavBar from 'page_objects/navBar';
 import TeamPage from 'page_objects/teamPage';
 import Common from 'page_objects/common';
 import OrgDashboardPage from 'page_objects/orgDashboardPage';
-import { closePassiveNotification, clickSureButton } from 'actions/common';
+import { closePassiveNotification } from 'actions/common';
 
 var id;
 var createdTime;
@@ -75,7 +75,7 @@ export function goToOrganisationDashboard() {
 
 export function revokeInvite() {
   TeamPage.revokeButton.click();
-  clickSureButton();
+  TeamPage.removeButton.click();
 }
 
 export function resendInvite() {

@@ -9,7 +9,7 @@ export function createCategory() {
 export function verifyCategoryOptions() {
   browser.waitUntil(
     () => {
-      return commonPage.moreButton.isVisible() && tribePage.categoryTitle.value[0].isVisible();
+      return tribePage.categoryTitle.value[0].isVisible();
     },
     3000,
     'Category took too long to create'
@@ -17,7 +17,7 @@ export function verifyCategoryOptions() {
 }
 
 export function renameCategory(newTitle) {
-  commonPage.moreButton.click();
+  commonPage.moreButton.value[0].click();
   tribePage.categoryMoreRename.click();
   tribePage.categoryTitle.value[0].setValue(newTitle);
   browser.keys('\uE007');
@@ -35,7 +35,7 @@ export function verifyRenamedTitle(title, index) {
 
 export function deleteCategory() {
   do {
-    commonPage.moreButton.click();
+    commonPage.moreButton.value[0].click();
   } while (!tribePage.categoryMoreDelete.isVisible());
   tribePage.categoryMoreDelete.click();
 }

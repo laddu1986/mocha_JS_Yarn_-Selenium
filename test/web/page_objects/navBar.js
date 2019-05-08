@@ -17,7 +17,7 @@ class NavBar extends Page {
   }
   //org
   get orgSettingsAnchor() {
-    return browser.element("//ul[@data-qa='submenu:profile']//div[contains(text(),'Org Settings')]");
+    return browser.element("//ul[@data-qa='submenu:profile']//div[contains(text(),'Settings')]");
   }
   get general() {
     return browser.element("//ul[@data-qa='submenu:org-settings']//div[contains(text(),'General')]");
@@ -34,7 +34,7 @@ class NavBar extends Page {
     return browser.element("//a[@data-qa='nav:audience']");
   }
   get spaceSettings() {
-    return browser.element("//div[@data-qa='menu:settings']");
+    return browser.element("//a[@data-qa='nav:settings']");
   }
   get generalSpaceSettings() {
     return browser.element("//ul[@data-qa='submenu:settings']//div[contains(text(),'General')]");
