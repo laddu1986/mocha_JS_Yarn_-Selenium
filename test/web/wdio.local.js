@@ -11,7 +11,7 @@ var overrides = {
     'specs/**/*Test.js' //master
   ],
   // // Patterns to exclude.
-  exclude: ['specs/support/helpPageTest.js', 'specs/experiences/*Test.js']
+  exclude: ['specs/**/helpPageTest.js']
 };
 
 exports.config = _.defaultsDeep(overrides, defaults);
