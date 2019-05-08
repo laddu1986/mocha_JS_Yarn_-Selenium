@@ -3,9 +3,9 @@ import AccountPage from 'page_objects/accountPage';
 import { createAccount } from 'actions/account';
 import { createSpace, goToDeveloperPortal, getAPIKey } from 'actions/space';
 import { clickOnAudienceLink, clickOnSpaceDashboardLink } from 'actions/navBar';
-import { addUsers, addVisitor, getCount, verifyUsersAreAdded } from 'actions/metrics';
+import { addUsers, addVisitor, getCount, verifyUsersAreAdded, refreshSpaceToViewMetrics } from 'actions/metrics';
 import NotificationData from 'data/passiveNotification.json';
-import { clickOnUsersTab, clickUserRow, deleteUser, getFirstRowDetails, filterForVisitors } from 'actions/users';
+import { clickOnUsersTab, clickUserRow, deleteUser, getFirstRowDetails, filterAudience } from 'actions/users';
 import { getNotificationMessageText } from 'actions/common';
 import Constants from 'constants.json';
 
@@ -44,21 +44,20 @@ describe('Delete User Test', () => {
 
   it('C1295664 Delete Visitor --> Verify passive notification shows', () => {
     browser.refresh();
-    filterForVisitors();
+    filterAudience(Constants.UserType.Visitor);
     clickUserRow(undefined, Constants.UserType.Visitor);
     browser.pause(1000);
     deleteUser();
     expect(getNotificationMessageText()).to.include(`${NotificationData.deleteMessage.text}'Visitor'`);
   });
 
-  //TODO: Skipping these due to bug where these stats don't show, may be due to frequency of metrics batcher?
-  xit('C1295665 Verify the user count on Space Dashboard', () => {
+  it('C1295665 Verify the user count on Space Dashboard', () => {
     clickOnSpaceDashboardLink();
-    browser.pause(1500);
+    refreshSpaceToViewMetrics();
     expect(getCount(Constants.UserType.User)).to.include(1);
   });
 
-  xit('C1640146 Verify the visitor count on Space Dashboard', () => {
+  it('C1640146 Verify the visitor count on Space Dashboard', () => {
     expect(getCount(Constants.UserType.Visitor)).to.include(2);
   });
 });

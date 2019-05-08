@@ -11,7 +11,7 @@ import {
   verifyUsersDetails,
   clickUserRow,
   verifySideBar,
-  filterForVisitors
+  filterAudience
 } from 'actions/users';
 var apiKey;
 describe(`User Metrics Tests`, () => {
@@ -49,10 +49,11 @@ describe(`User Metrics Tests`, () => {
   it('C1295680 Adding the visitor ', async () => {
     await addVisitor(1, apiKey);
   });
-
+  //TODO: Currently failing due to data display bug, vid will always display as Unknown
+  // https://app.clickup.com/t/r8cme
   it('C1295681 Verify Visitor on side bar', () => {
     browser.refresh();
-    filterForVisitors();
+    filterAudience(Constants.UserType.Visitor);
     clickUserRow(undefined, Constants.UserType.Visitor);
     browser.pause(1000);
     expect(verifySideBar(Constants.UserType.Visitor)).to.equal(true);
