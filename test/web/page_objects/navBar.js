@@ -36,9 +36,6 @@ class NavBar extends Page {
   get spaceSettings() {
     return browser.element("//a[@data-qa='nav:settings']");
   }
-  get generalSpaceSettings() {
-    return browser.element("//ul[@data-qa='submenu:settings']//div[contains(text(),'General')]");
-  }
   get backToSpaceDashboardLink() {
     return browser.element("//a[@data-qa='link:space-ctx']");
   }

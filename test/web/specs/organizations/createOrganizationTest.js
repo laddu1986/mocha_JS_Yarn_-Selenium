@@ -42,7 +42,7 @@ describe('Tests for Create Organization', () => {
   it('C1295700 Sign out and back in -->Should show last accessed Org dashboard', () => {
     signOut();
     signIn(accountData.identityEmail, process.env.ACCOUNT_PASS);
-    expect(verifyOrgNameOnDashBoard()).to.equal(orgName);
+    verifyOrgNameOnDashBoard(orgName);
   });
 
   it('C1295701 Checking Org Count in Navbar', () => {

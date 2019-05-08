@@ -43,8 +43,15 @@ export function closePassiveNotification() {
 }
 
 export function signIn(email, password) {
-  SignInPage.emailInput.setValue(email);
-  SignInPage.passwordInput.setValue(password);
+  //TODO: Had to disable this flow due to bug in sign in page https://app.clickup.com/t/nd96p
+  //SignInPage.emailInput.setValue(email);
+  //SignInPage.passwordInput.setValue(password);
+  SignInPage.emailInput.click();
+  SignInPage.emailInput.click();
+  browser.keys(email);
+  SignInPage.passwordInput.click();
+  SignInPage.passwordInput.click();
+  browser.keys(password);
   submit();
   NavBar.profileMenu.waitForVisible();
   hideIntercom();
