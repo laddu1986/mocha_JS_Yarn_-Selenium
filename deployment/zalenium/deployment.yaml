@@ -17,7 +17,7 @@ metadata:
     heritage: Tiller
     release: zalenium
     role: grid
-  name: zalenium-yaml
+  name: zalenium
   selfLink: /apis/extensions/v1beta1/namespaces/moon/deployments/zalenium
 spec:
   progressDeadlineSeconds: 600
