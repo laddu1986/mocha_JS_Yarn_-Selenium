@@ -14,16 +14,15 @@ import {
   clearText
 } from 'actions/users';
 var apiKey;
-describe('Search User Test', () => {
-  before(() => {
+
+//TODO: Need to reassess whether this is useful - GDPR has removed all this info
+xdescribe('Search User Test', () => {
+  before(async () => {
     AccountPage.open();
     createAccount();
     createSpace();
     goToDeveloperPortal();
     apiKey = getAPIKey();
-  });
-
-  before(async () => {
     await addUsers(2, apiKey);
   });
 

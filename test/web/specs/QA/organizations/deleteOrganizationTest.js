@@ -25,7 +25,6 @@ import {
 import orgNotificationData from 'data/passiveNotification.json';
 import { signIn } from 'actions/common';
 import { signOut } from 'actions/navBar';
-var newOrgName = lib.randomString();
 const accountData = new Object();
 describe('Delete organization Tests', () => {
   before(async () => {
@@ -87,7 +86,7 @@ describe('Delete organization Tests', () => {
 
   it('C1295706 Create new Org from No - Orgs Page', () => {
     clickCreateOrgFromNoOrgPage();
-    createNewOrg(newOrgName);
+    createNewOrg(lib.randomString());
     expect(verifyWecomeOrgPage()).to.equal(true);
   });
 });

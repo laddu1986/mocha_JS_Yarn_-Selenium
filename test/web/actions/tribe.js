@@ -158,8 +158,11 @@ export function verifyFilterOptions(type) {
 }
 
 var ActiveAverageOperators = Object.values(Constants.TribeRulesFilters.ActiveAverageOperators);
+var LabelUserLocationOperators = Object.values(Constants.TribeRulesFilters.LabelUserLocationOperators);
 var OtherOperators = Object.values(Constants.TribeRulesFilters.OtherOperators);
+var DeviceOperators = Object.values(Constants.TribeRulesFilters.DeviceOperators);
 var actualOperatorFilters = [];
+
 export function verifyOperators(type) {
   actualOperatorFilters.length = 0;
   if (type == 'Avg') {
@@ -169,6 +172,20 @@ export function verifyOperators(type) {
     ActiveAverageOperators.sort();
     actualOperatorFilters.sort();
     return JSON.stringify(actualOperatorFilters) == JSON.stringify(ActiveAverageOperators);
+  } else if (type == 'LabelUserLocation') {
+    for (var i = 0; i < LabelUserLocationOperators.length; i++) {
+      actualOperatorFilters.push(TribePage.operators.value[i].getText());
+    }
+    LabelUserLocationOperators.sort();
+    actualOperatorFilters.sort();
+    return JSON.stringify(actualOperatorFilters) == JSON.stringify(LabelUserLocationOperators);
+  } else if (type == 'Device') {
+    for (var i = 0; i < DeviceOperators.length; i++) {
+      actualOperatorFilters.push(TribePage.operators.value[i].getText());
+    }
+    DeviceOperators.sort();
+    actualOperatorFilters.sort();
+    return JSON.stringify(actualOperatorFilters) == JSON.stringify(DeviceOperators);
   } else {
     for (i = 0; i < OtherOperators.length; i++) {
       actualOperatorFilters.push(TribePage.operators.value[i].getText());

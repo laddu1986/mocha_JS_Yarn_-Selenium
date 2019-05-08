@@ -16,8 +16,9 @@ class NavBar extends Page {
     return browser.element("//a[@data-qa='mi:org']");
   }
   //org
-  get orgSettingsAnchor() { return browser.element("//div[@data-qa='menu:profile']//*[contains(text(),'Settings')]"); }
-
+  get orgSettingsAnchor() {
+    return browser.element("//ul[@data-qa='submenu:profile']//div[contains(text(),'Settings')]");
+  }
   get general() {
     return browser.element("//ul[@data-qa='submenu:org-settings']//div[contains(text(),'General')]");
   }
