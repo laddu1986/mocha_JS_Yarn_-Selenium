@@ -46,7 +46,7 @@ describe('Space Users Tests', () => {
   it('C1295786 Query- Space labels', async () => {
     getSpaceLabelsResponse = await getSpaceLabels(userMetricsObject);
     expect(getSpaceLabelsResponse.response.statusCode).to.equal(200);
-    expect(getSpaceLabelsResponse.response.body.data.getSpaceLabels).to.equal(null);
+    expect(getSpaceLabelsResponse.response.body.data.getSpaceLabels).to.be.an('array').that.is.empty;
   });
 
   it('C1295787 Query- Space access tokens', async () => {

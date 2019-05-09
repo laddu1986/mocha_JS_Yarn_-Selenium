@@ -37,15 +37,7 @@ export function updateExperienceTemplate(returnTemplate, name, key) {
   (name = name === undefined ? `${randomString(8)}_new` : name),
     (key = key === undefined ? `${randomString({ length: 7, charset: 'alphabetic' })}` : key);
   const data = {
-    query: `mutation updateExperienceTemplate($input: UpdateExperienceTemplateInput!) { 
-        updateExperienceTemplate(input: $input) { 
-          template { 
-            id name key thumbnailUrl rowVersion 
-            properties{
-              key typeKey name defaultValue appearanceKey promptText helpText localizable 
-              rules{
-                constraint
-      }}}}}`,
+    query: `mutation updateExperienceTemplate($input: UpdateExperienceTemplateInput!) { updateExperienceTemplate(input: $input) { templateUpdate { id rowVersion } } }`,
     operationName: 'updateExperienceTemplate',
     variables: {
       input: {
@@ -187,7 +179,7 @@ export function moveExperienceProperty(returnTemplate, propertyToMove, index) {
   const data = {
     query: `mutation moveExperienceProperty($input: MoveExperiencePropertyInput!) { 
         moveExperienceProperty(input: $input) { 
-          template { 
+          templateUpdate { 
             id rowVersion
           }
         }
@@ -212,7 +204,7 @@ export function moveExperienceProperty(returnTemplate, propertyToMove, index) {
     data: data
   };
   return post(any).then(response => {
-    Object.assign(returnTemplate, response.response.body.data.moveExperienceProperty.template);
+    Object.assign(returnTemplate, response.response.body.data.moveExperienceProperty.templateUpdate);
     return response;
   });
 }
@@ -243,8 +235,8 @@ export function removeExperienceProperty(returnTemplate, propertyData) {
   const data = {
     query: `mutation removeExperienceProperty($input: RemoveExperiencePropertyInput!) { 
         removeExperienceProperty(input: $input) { 
-          template { 
-            id rowVersion templateVersionId modifiedAt modifiedBy type key name thumbnailUrl rowVersion status
+          templateUpdate { 
+            id rowVersion templateVersionId rowVersion 
           }
         }
       }`,
@@ -265,7 +257,7 @@ export function removeExperienceProperty(returnTemplate, propertyData) {
     data: data
   };
   return post(any).then(response => {
-    Object.assign(returnTemplate, response.response.body.data.removeExperienceProperty.template);
+    Object.assign(returnTemplate, response.response.body.data.removeExperienceProperty.templateUpdate);
     for (var key in propertyData) {
       delete propertyData[key];
     } // Empty the property data object
@@ -352,8 +344,8 @@ export function commitExperienceTemplate(returnTemplate) {
   const data = {
     query: `mutation commitExperienceTemplate($input: CommitExperienceTemplateInput!) { 
         commitExperienceTemplate(input: $input) {
-          template { 
-            id templateVersionId modifiedAt modifiedBy type key name thumbnailUrl rowVersion status
+          templateUpdate { 
+            id templateVersionId rowVersion 
           }
           instanceIds
         }
@@ -374,7 +366,7 @@ export function commitExperienceTemplate(returnTemplate) {
     data: data
   };
   return post(any).then(response => {
-    Object.assign(returnTemplate, response.response.body.data.commitExperienceTemplate.template);
+    Object.assign(returnTemplate, response.response.body.data.commitExperienceTemplate.templateUpdate);
     return response;
   });
 }

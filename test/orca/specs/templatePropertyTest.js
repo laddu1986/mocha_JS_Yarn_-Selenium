@@ -1,11 +1,10 @@
-import '../common';
+import { Context } from '../common';
 import { registerAndCreateOrg, login, deleteAccount } from 'actions/account';
 import { getOrganizations, leaveOrganization } from 'actions/organization';
 import { createSpace, deleteSpace } from 'actions/space';
 import * as Constants from '../constants.json';
 import {
   createExperienceTemplate,
-  updateExperienceTemplate,
   addExperienceProperty,
   getExperienceProperty,
   updateExperienceProperty,
@@ -14,7 +13,6 @@ import {
   moveExperienceProperty,
   deleteExperienceTemplate
 } from 'actions/experienceTemplate';
-import { Context } from 'mocha';
 
 const contextData = {};
 const fixedTemplate = {};
@@ -29,7 +27,6 @@ describe('@experience Experience Property CRUD', () => {
     await createSpace(contextData);
     Context.context = contextData;
     await createExperienceTemplate(fixedTemplate, Constants.Experience.Types.FIXED);
-    await updateExperienceTemplate(fixedTemplate);
   });
 
   it('C2074303 Mutation - addExperienceProperty', async () => {
