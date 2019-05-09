@@ -117,6 +117,13 @@ If you use vscode, heres some debugger configurations you can use out of the box
 }
 ```
 
+### Test Architecture Setup
+
+Front-End Tests: WebdriverIO UI Tests run against a Selenium Server.
+Zalenium is an open-source implementation of Selenium Server with other userful features like Live View, Video Recording, Autoscaling browser instances(parallel execution) and Multi-browser support.
+Zalenium is deployed within the Kubernetes cluster and runs 24x7.
+[Follow this doc to know more about Zalenium deployment](https://appcurator.atlassian.net/wiki/spaces/QA/pages/239992840/Setup+Zalenium+Selenium+server+on+Cloud)
+
 ### Help !
 
-For any queries contact [Balpreet](balpreet.kaur@massive.co) or [Abhi](abhijeet.daspatnaik@massive.co) or [Paul](paul.sanchez@massive.co)
+For any queries contact [Balpreet](balpreet.kaur@massive.co) or [Paul](paul.sanchez@massive.co)
