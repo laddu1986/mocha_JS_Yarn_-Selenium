@@ -8,37 +8,38 @@ pipelines:
           script:
             #define custom date-time version
             - export VERSION="v$(date "+%y%m%d-%H%M%S")"
+            - echo $VERSION
             - echo ${VERSION} > version.txt
           artifacts:
             - version.txt
-      # - step:
-      #     name: Build and Push Web Test Image to DockerHub
-      #     services:
-      #       - docker
-      #     caches:
-      #       - docker
-      #     script:
-      #       - export VERSION="$(cat version.txt)"
-      #       - echo "VERSION - ${VERSION}"
-      #       - export IMAGE_NAME="massiveinteractive/qa-web:$VERSION"
-      #       - docker login -u $docker_user -p $docker_user_pwd
-      #       #build and push image with above version
-      #       - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/web
-      #       - docker push $IMAGE_NAME
-      # - step:
-      #     name: Build and Push API Test Image to DockerHub
-      #     services:
-      #       - docker
-      #     caches:
-      #       - docker
-      #     script:
-      #       - export VERSION="$(cat version.txt)"
-      #       - echo "VERSION - ${VERSION}"
-      #       - export IMAGE_NAME="massiveinteractive/qa-api:$VERSION"
-      #       - docker login -u $docker_user -p $docker_user_pwd
-      #       #build and push image with above version
-      #       - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/api
-      #       - docker push $IMAGE_NAME
+      - step:
+          name: Build and Push Web Test Image to DockerHub
+          services:
+            - docker
+          caches:
+            - docker
+          script:
+            - export VERSION="$(cat version.txt)"
+            - echo "VERSION - ${VERSION}"
+            - export IMAGE_NAME="massiveinteractive/qa-web:$VERSION"
+            - docker login -u $docker_user -p $docker_user_pwd
+            #build and push image with above version
+            - docker build -t $IMAGE_NAME test/web
+            - docker push $IMAGE_NAME
+      - step:
+          name: Build and Push API Test Image to DockerHub
+          services:
+            - docker
+          caches:
+            - docker
+          script:
+            - export VERSION="$(cat version.txt)"
+            - echo "VERSION - ${VERSION}"
+            - export IMAGE_NAME="massiveinteractive/qa-api:$VERSION"
+            - docker login -u $docker_user -p $docker_user_pwd
+            #build and push image with above version
+            - docker build -t $IMAGE_NAME test/api
+            - docker push $IMAGE_NAME
       - step:
           name: Build and Push Orca Test Image to Dockerhub
           services:
@@ -52,5 +53,4 @@ pipelines:
             - docker login -u $docker_user -p $docker_user_pwd
             #build and push image with above version
             - docker build -t $IMAGE_NAME test/orca
-            # - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/orca
             - docker push $IMAGE_NAME
