@@ -8,6 +8,7 @@
     "web-local": "node_modules/.bin/wdio wdio.local.js",
     "web-debug": "node_modules/.bin/wdio wdio.debug.js",
     "web-smoke-tests": "node_modules/.bin/wdio wdio.mtribes.js --suite smoke --mochaOpts.grep=@smoke",
+    "web-bot": "node_modules/.bin/wdio wdio.slack.js",
     "orca": "mocha test/orca/specs/loginTest.js --require babel-register",
     "clean": "eslint '**/*.js' --fix",
     "lint": "eslint '**/*.js'",

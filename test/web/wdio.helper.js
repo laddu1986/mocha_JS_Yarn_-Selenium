@@ -108,6 +108,8 @@ function getEndPoints() {
   users = process.env[`API_USER_${environment}`];
   demospace = process.env[`SPARK_${environment}`];
   userHost = process.env[`USER_HOST_${environment}`];
+  smokeEmail = process.env[`${environment}_LOGIN_EMAIL`];
+  smokePassword = process.env[`${environment}_LOGIN_PASSWORD`];
   return baseURL;
   /* eslint-enable no-undef */
 }

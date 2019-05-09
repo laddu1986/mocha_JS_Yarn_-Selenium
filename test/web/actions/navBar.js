@@ -21,6 +21,10 @@ export function backToSpaceDashboard() {
   return NavBar.backToSpaceDashboardLink.click();
 }
 
+export function backToOrgDashboard() {
+  return NavBar.backToOrgDashboardLink.click();
+}
+
 export function clickOnAudienceLink() {
   NavBar.audienceLink.click();
 }
