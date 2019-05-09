@@ -2,55 +2,43 @@ options:
   docker: true
 pipelines:
   branches:
-    master:
+    removeHelmS3PushFromPipelines:
       - step:
-          name: Package HelmChart and Push to S3
-          image:
-            name: massiveinteractive/k8-cd:1.1
-            username: $docker_user
-            password: $docker_user_pwd
-          caches:
-            - docker
+          name: Create Version Tag
           script:
+            #define custom date-time version
             - export VERSION="v$(date "+%y%m%d-%H%M%S")"
             - echo ${VERSION} > version.txt
-            - sed -i -e "s/latest/$VERSION/g" deployment/web-regression-test/values.yaml
-            - sed -i -e "s/latest/$VERSION/g" deployment/orca-regression-test/values.yaml
-            - sed -i -e "s/latest/$VERSION/g" deployment/api-regression-test/values.yaml
-            - sh deployment/scripts/aws-config.sh
-            - sh deployment/scripts/helm-s3-push.sh
           artifacts:
             - version.txt
-      - step:
-          name: Build and Push Web Test Image to DockerHub
-          services:
-            - docker
-          caches:
-            - docker
-          script:
-            #define custom date-time version
-            - export VERSION="$(cat version.txt)"
-            - echo "VERSION - ${VERSION}"
-            - export IMAGE_NAME="massiveinteractive/qa-web:$VERSION"
-            - docker login -u $docker_user -p $docker_user_pwd
-            #build and push image with above version
-            - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/web
-            - docker push $IMAGE_NAME
-      - step:
-          name: Build and Push API Test Image to DockerHub
-          services:
-            - docker
-          caches:
-            - docker
-          script:
-            #define custom date-time version
-            - export VERSION="$(cat version.txt)"
-            - echo "VERSION - ${VERSION}"
-            - export IMAGE_NAME="massiveinteractive/qa-api:$VERSION"
-            - docker login -u $docker_user -p $docker_user_pwd
-            #build and push image with above version
-            - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/api
-            - docker push $IMAGE_NAME
+      # - step:
+      #     name: Build and Push Web Test Image to DockerHub
+      #     services:
+      #       - docker
+      #     caches:
+      #       - docker
+      #     script:
+      #       - export VERSION="$(cat version.txt)"
+      #       - echo "VERSION - ${VERSION}"
+      #       - export IMAGE_NAME="massiveinteractive/qa-web:$VERSION"
+      #       - docker login -u $docker_user -p $docker_user_pwd
+      #       #build and push image with above version
+      #       - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/web
+      #       - docker push $IMAGE_NAME
+      # - step:
+      #     name: Build and Push API Test Image to DockerHub
+      #     services:
+      #       - docker
+      #     caches:
+      #       - docker
+      #     script:
+      #       - export VERSION="$(cat version.txt)"
+      #       - echo "VERSION - ${VERSION}"
+      #       - export IMAGE_NAME="massiveinteractive/qa-api:$VERSION"
+      #       - docker login -u $docker_user -p $docker_user_pwd
+      #       #build and push image with above version
+      #       - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/api
+      #       - docker push $IMAGE_NAME
       - step:
           name: Build and Push Orca Test Image to Dockerhub
           services:
@@ -58,11 +46,11 @@ pipelines:
           caches:
             - docker
           script:
-            #define custom date-time version
             - export VERSION="$(cat version.txt)"
             - echo "VERSION - ${VERSION}"
             - export IMAGE_NAME="massiveinteractive/qa-orca:$VERSION"
             - docker login -u $docker_user -p $docker_user_pwd
             #build and push image with above version
-            - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/orca
+            - docker build -t $IMAGE_NAME test/orca
+            # - docker build --build-arg Version=$VERSION -t $IMAGE_NAME test/orca
             - docker push $IMAGE_NAME
