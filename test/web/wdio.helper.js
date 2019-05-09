@@ -116,5 +116,6 @@ function getEndPoints() {
 
 module.exports = {
   getEndPoints,
-  getBrowser
+  getBrowser,
+  getArg
 };
