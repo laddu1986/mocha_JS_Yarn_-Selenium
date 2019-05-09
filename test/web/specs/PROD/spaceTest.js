@@ -8,6 +8,7 @@ import {
   verifyNewSpaceName,
   spaceIsDeleted
 } from 'actions/space';
+import { backToOrgDashboard } from 'actions/navBar'
 import SignInPage from 'page_objects/signInPage';
 //import { selectOrg } from 'actions/organization';
 import {
@@ -23,7 +24,7 @@ describe('Space Tests', () => {
   before('Open App URL', () => {
     SignInPage.open();
     signIn(smokeEmail, smokePassword); // eslint-disable-line
-    browser.url('/massive'); //Hardcoded for now to avoid deleted space being the landing page
+    backToOrgDashboard();
     //selectOrg();
   });
 
