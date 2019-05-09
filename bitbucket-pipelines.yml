@@ -2,7 +2,7 @@ options:
   docker: true
 pipelines:
   branches:
-    removeHelmS3PushFromPipelines:
+    master:
       - step:
           name: Create Version Tag
           script:
