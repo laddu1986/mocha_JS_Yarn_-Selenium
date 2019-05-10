@@ -221,3 +221,9 @@ export function closeSidePanel() {
 export function search(value) {
   UsersPage.searchTextField.setValue(value);
 }
+
+export function filterAudience(audienceType) {
+  let menuItem = audienceType == Constants.UserType.User ? 0 : 1;
+  UsersPage.filterDropdown.click();
+  UsersPage.filterMenu[menuItem].click();
+}

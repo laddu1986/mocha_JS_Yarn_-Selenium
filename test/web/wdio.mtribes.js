@@ -10,7 +10,7 @@ exports.config = {
   specs: [
     'specs/**/*Test.js' //master
   ],
-  exclude: ['specs/support/helpPageTest.js'],
+  exclude: ['specs/support/helpPageTest.js', 'specs/experiences/*Test.js'],
   suites: {
     smoke: [
       'specs/accounts/createAccountTest.js',
@@ -30,7 +30,8 @@ exports.config = {
     tribes: ['specs/tribes/*Test.js'],
     metrics: ['specs/metrics/*Test.js'],
     experiences: ['specs/experiences/*Test.js'],
-    negative: ['specs/negativeSpecs/*/*Test.js']
+    negative: ['specs/negativeSpecs/*/*Test.js'],
+    PROD: ['specs/PROD/*Test.js']
   },
   logLevel: 'silent',
   bail: 0,
@@ -58,13 +59,30 @@ exports.config = {
   },
   debug: false,
   execArgv: [],
-  onPrepare() {},
+  onPrepare() { },
   before() {
     helper.getEndPoints();
+  },
+  beforeSession(config, capabilities, specs) {
+    capabilities['zal:name'] = specs
+      .toString()
+      .split('/')
+      .pop()
+      .replace(`Test.js`, ``);
+  },
+  afterTest(test) {
+    browser.setCookie({
+      name: 'zaleniumMessage',
+      value: `${test.title}`
+    });
+    browser.setCookie({
+      name: 'zaleniumTestPassed',
+      value: `${test.passed}`
+    });
   },
   after() {
     var connection = require('./actions/invite');
     connection.mysql.close();
   },
-  onComplete() {}
+  onComplete() { }
 };

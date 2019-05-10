@@ -1,4 +1,4 @@
-import { randomString, post, orca } from '../common';
+import { randomString, post, orca, Context } from '../common';
 
 export function registerAndCreateOrg(responseData) {
   var email_account = `${randomString(10)}@test.co`;
@@ -57,15 +57,7 @@ export function login(responseData, emailValue) {
     headers: { 'Content-Type': 'application/json' }
   };
   return post(any).then(res => {
-    responseData.ccookie = JSON.stringify(res.response.headers['set-cookie'][2])
-      .split(';')[0]
-      .split('=')[1];
-    responseData.token = JSON.stringify(res.response.headers['set-cookie'][1])
-      .split(';')[0]
-      .split('=')[1];
-    responseData.pcookie = JSON.stringify(res.response.headers['set-cookie'])
-      .split(';')[0]
-      .split('=')[1];
+    Context.cookies = res;
     return res;
   });
 }

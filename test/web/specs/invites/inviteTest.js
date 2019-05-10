@@ -17,7 +17,7 @@ const invite_email2 = `invite_2${lib.randomString(5)}@test.co`;
 const invite_email3 = `invite_3${lib.randomString(5)}@test.co`;
 
 describe('Invite Tests', () => {
-  before('Open App URL', () => {
+  before('Open App URL, Create Admin Account and Land on Org Dashboard', () => {
     accountPage.open();
     createAccount();
     browser.pause(1000);

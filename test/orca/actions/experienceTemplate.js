@@ -1,23 +1,25 @@
-import { randomString, post, orca } from '../common';
-import * as Constants from '../constants.json';
+import { randomString, post, orca, Context } from '../common';
 
-export function createExperienceTemplate(responseData) {
-  let name = `${randomString(8)}`,
-    key = `${randomString({ length: 7, charset: 'alphabetic' })}`;
+export function createExperienceTemplate(returnTemplate, templateType, name, key) {
+  name = name === undefined ? `${randomString(8)}` : name;
+  key = key === undefined ? `${randomString({ length: 7, charset: 'alphabetic' })}` : key;
   const data = {
-    query:
-      'mutation createExperienceTemplate($input: CreateExperienceTemplateInput!) { createExperienceTemplate(input: $input) { template { id key type name rowVersion templateVersionId}}}',
+    query: `mutation createExperienceTemplate($input: CreateExperienceTemplateInput!) { 
+        createExperienceTemplate(input: $input) { 
+          template { id key type name rowVersion templateVersionId}
+        }
+      }`,
     operationName: 'createExperienceTemplate',
     variables: {
       input: {
         fields: {
-          key: key,
-          name: name,
+          name,
+          key,
           thumbnailUrl: 'SchemDefault'
         },
-        organizationId: responseData.orgID,
-        spaceId: responseData.spaceID,
-        templateType: Constants.Experience.Types.FIXED
+        organizationId: Context.organizationId,
+        spaceId: Context.spaceId,
+        templateType
       }
     }
   };
@@ -25,32 +27,29 @@ export function createExperienceTemplate(responseData) {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
-    responseData.experienceName = name;
-    responseData.experienceKey = key;
-    responseData.expTemplateID = response.response.body.data.createExperienceTemplate.template.id;
-    responseData.templateVersionId = response.response.body.data.createExperienceTemplate.template.templateVersionId;
-    responseData.expTemplateRowVersion = response.response.body.data.createExperienceTemplate.template.rowVersion;
+  return post(any).then(response => {
+    Object.assign(returnTemplate, response.response.body.data.createExperienceTemplate.template);
     return response;
   });
 }
 
-export function updateExperienceTemplate(responseData) {
-  var newName = `${randomString(8)}_new`;
+export function updateExperienceTemplate(returnTemplate, name, key) {
+  (name = name === undefined ? `${randomString(8)}_new` : name),
+    (key = key === undefined ? `${randomString({ length: 7, charset: 'alphabetic' })}` : key);
   const data = {
-    query:
-      'mutation updateExperienceTemplate($input: UpdateExperienceTemplateInput!) { updateExperienceTemplate(input: $input) { template { id name key thumbnailUrl rowVersion properties{key typeKey name defaultValue appearanceKey promptText helpText localizable rules{constraint}}}}}',
+    query: `mutation updateExperienceTemplate($input: UpdateExperienceTemplateInput!) { updateExperienceTemplate(input: $input) { templateUpdate { id rowVersion } } }`,
     operationName: 'updateExperienceTemplate',
     variables: {
       input: {
         fields: {
-          name: newName
+          name,
+          key
         },
-        organizationId: responseData.orgID,
-        spaceId: responseData.spaceID,
-        templateId: responseData.expTemplateID,
-        rowVersion: responseData.expTemplateRowVersion,
-        templateVersionId: responseData.templateVersionId
+        organizationId: Context.organizationId,
+        spaceId: Context.spaceId,
+        templateId: returnTemplate.id,
+        rowVersion: returnTemplate.rowVersion,
+        templateVersionId: returnTemplate.templateVersionId
       }
     }
   };
@@ -58,34 +57,38 @@ export function updateExperienceTemplate(responseData) {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
-    responseData.experienceNewName = newName;
-    responseData.expTemplateRowVersion = response.response.body.data.updateExperienceTemplate.template.rowVersion;
+  return post(any).then(response => {
+    Object.assign(returnTemplate, response.response.body.data.updateExperienceTemplate.template);
     return response;
   });
 }
 
-export function getExperienceTemplate(responseData) {
+export function getExperienceTemplate(returnTemplate) {
   const data = {
-    query:
-      'query experienceTemplate($organizationId: ID!, $spaceId: ID!, $templateId: ID!) { experienceTemplate(organizationId: $organizationId , spaceId: $spaceId, templateId: $templateId) { id name key thumbnailUrl rowVersion properties{key typeKey name defaultValue appearanceKey promptText helpText localizable rules{constraint}}}}',
+    query: `query experienceTemplate($organizationId: ID!, $spaceId: ID!, $templateId: ID!) { 
+        experienceTemplate(organizationId: $organizationId , spaceId: $spaceId, templateId: $templateId) { 
+          id name key thumbnailUrl rowVersion properties{key typeKey name defaultValue appearanceKey promptText helpText localizable rules{constraint}
+        }
+      }
+    }`,
     operationName: 'experienceTemplate',
     variables: {
-      organizationId: responseData.orgID,
-      spaceId: responseData.spaceID,
-      templateId: responseData.expTemplateID
+      organizationId: Context.organizationId,
+      spaceId: Context.spaceId,
+      templateId: returnTemplate.id
     }
   };
   const any = {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
+  return post(any).then(response => {
+    Object.assign(returnTemplate, response.response.body.data.experienceTemplate);
     return response;
   });
 }
 
-export function addExperienceProperty(responseData) {
+export function addExperienceProperty(returnTemplate, returnProperty, typeKey) {
   const data = {
     query:
       'mutation addExperienceProperty($input: AddExperiencePropertyInput!) {  addExperienceProperty(input: $input) { template { rowVersion} property{id name}}}',
@@ -93,12 +96,12 @@ export function addExperienceProperty(responseData) {
     variables: {
       input: {
         index: 0,
-        organizationId: responseData.orgID,
-        spaceId: responseData.spaceID,
-        templateId: responseData.expTemplateID,
-        templateVersionId: responseData.templateVersionId,
-        rowVersion: responseData.expTemplateRowVersion,
-        typeKey: Constants.TemplateProperties.Types.Text
+        organizationId: Context.organizationId,
+        spaceId: Context.spaceId,
+        templateId: returnTemplate.id,
+        templateVersionId: returnTemplate.templateVersionId,
+        rowVersion: returnTemplate.rowVersion,
+        typeKey
       }
     }
   };
@@ -106,53 +109,58 @@ export function addExperienceProperty(responseData) {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
-    responseData.expTemplateRowVersion = response.response.body.data.addExperienceProperty.template.rowVersion;
-    responseData.propertyId = response.response.body.data.addExperienceProperty.property.id;
+  return post(any).then(response => {
+    Object.assign(returnTemplate, response.response.body.data.addExperienceProperty.template);
+    Object.assign(returnProperty, response.response.body.data.addExperienceProperty.property);
     return response;
   });
 }
 
-export function getExperienceProperty(responseData) {
+export function getExperienceProperty(templateData, returnProperty) {
   const data = {
     query:
       'query experienceProperty($organizationId: ID!, $spaceId: ID!, $templateId: ID!, $propertyId: ID!) {  experienceProperty(organizationId: $organizationId, spaceId: $spaceId, templateId: $templateId, propertyId: $propertyId){ id name key}}',
     operationName: 'experienceProperty',
     variables: {
-      organizationId: responseData.orgID,
-      propertyId: responseData.propertyId,
-      spaceId: responseData.spaceID,
-      templateId: responseData.expTemplateID
+      organizationId: Context.organizationId,
+      propertyId: returnProperty.id,
+      spaceId: Context.spaceId,
+      templateId: templateData.id
     }
   };
   const any = {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
+  return post(any).then(response => {
+    Object.assign(returnProperty, response.response.body.data.experienceProperty);
     return response;
   });
 }
 
-export function updateExperienceProperty(responseData) {
-  let name = `${randomString(8)}`,
-    key = `${randomString({ length: 7, charset: 'alphabetic' })}`;
+export function updateExperienceProperty(returnTemplate, returnProperty, name, key) {
+  name = name === undefined ? `${randomString(8)}` : name;
+  key = key === undefined ? `${randomString({ length: 7, charset: 'alphabetic' })}` : key;
   const data = {
-    query:
-      'mutation updateExperienceProperty($input: UpdateExperiencePropertyInput!) { updateExperienceProperty(input: $input) {templateRowVersion templateVersionId}}',
+    query: `mutation updateExperienceProperty($input: UpdateExperiencePropertyInput!) { 
+        updateExperienceProperty(input: $input) {
+          templateUpdate { id rowVersion templateVersionId modifiedAt modifiedBy status }
+          property { id name key appearanceKey promptText helpText localizable typeKey defaultValue }
+        }
+      }`,
     operationName: 'updateExperienceProperty',
     variables: {
       input: {
         fields: {
-          key: key,
-          name: name
+          key,
+          name
         },
-        propertyId: responseData.propertyId,
-        organizationId: responseData.orgID,
-        spaceId: responseData.spaceID,
-        templateId: responseData.expTemplateID,
-        templateVersionId: responseData.templateVersionId,
-        rowVersion: responseData.expTemplateRowVersion
+        propertyId: returnProperty.id,
+        organizationId: Context.organizationId,
+        spaceId: Context.spaceId,
+        templateId: returnTemplate.id,
+        templateVersionId: returnTemplate.templateVersionId,
+        rowVersion: returnTemplate.rowVersion
       }
     }
   };
@@ -160,44 +168,87 @@ export function updateExperienceProperty(responseData) {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
-    responseData.expTemplateRowVersion = response.response.body.data.updateExperienceProperty.templateRowVersion;
+  return post(any).then(response => {
+    Object.assign(returnTemplate, response.response.body.data.updateExperienceProperty.templateUpdate);
+    Object.assign(returnProperty, response.response.body.data.updateExperienceProperty.property);
     return response;
   });
 }
 
-export function getExperiencesTemplate(responseData) {
+export function moveExperienceProperty(returnTemplate, propertyToMove, index) {
   const data = {
-    query:
-      'query experienceTemplates($organizationId: ID!, $spaceId: ID!) { experienceTemplates(organizationId: $organizationId , spaceId: $spaceId) { id rowVersion key name}}',
-    operationName: 'experienceTemplates',
+    query: `mutation moveExperienceProperty($input: MoveExperiencePropertyInput!) { 
+        moveExperienceProperty(input: $input) { 
+          templateUpdate { 
+            id rowVersion
+          }
+        }
+      }`,
+    operationName: 'moveExperienceProperty',
     variables: {
-      organizationId: responseData.orgID,
-      spaceId: responseData.spaceID
+      input: {
+        fields: {
+          index
+        },
+        propertyId: propertyToMove.id,
+        organizationId: Context.organizationId,
+        rowVersion: returnTemplate.rowVersion,
+        spaceId: Context.spaceId,
+        templateId: returnTemplate.id,
+        templateVersionId: returnTemplate.templateVersionId
+      }
     }
   };
   const any = {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
+  return post(any).then(response => {
+    Object.assign(returnTemplate, response.response.body.data.moveExperienceProperty.templateUpdate);
     return response;
   });
 }
 
-export function removeExperienceProperty(responseData) {
+export function getExperienceTemplates() {
   const data = {
-    query:
-      'mutation removeExperienceProperty($input: RemoveExperiencePropertyInput!) { removeExperienceProperty(input: $input) { template { id rowVersion}}}',
+    query: `query experienceTemplates($input: ExperienceTemplateSearchInput!) { 
+        experienceTemplates(input: $input) { 
+          id templateVersionId modifiedAt modifiedBy type key name thumbnailUrl rowVersion status
+        }
+      }`,
+    operationName: 'experienceTemplates',
+    variables: {
+      input: {
+        organizationId: Context.organizationId,
+        spaceId: Context.spaceId
+      }
+    }
+  };
+  const any = {
+    api: orca,
+    data: data
+  };
+  return post(any);
+}
+
+export function removeExperienceProperty(returnTemplate, propertyData) {
+  const data = {
+    query: `mutation removeExperienceProperty($input: RemoveExperiencePropertyInput!) { 
+        removeExperienceProperty(input: $input) { 
+          templateUpdate { 
+            id rowVersion templateVersionId rowVersion 
+          }
+        }
+      }`,
     operationName: 'removeExperienceProperty',
     variables: {
       input: {
-        propertyId: responseData.propertyId,
-        organizationId: responseData.orgID,
-        rowVersion: responseData.expTemplateRowVersion,
-        spaceId: responseData.spaceID,
-        templateId: responseData.expTemplateID,
-        templateVersionId: responseData.templateVersionId
+        propertyId: propertyData.id,
+        organizationId: Context.organizationId,
+        rowVersion: returnTemplate.rowVersion,
+        spaceId: Context.spaceId,
+        templateId: returnTemplate.id,
+        templateVersionId: returnTemplate.templateVersionId
       }
     }
   };
@@ -205,24 +256,108 @@ export function removeExperienceProperty(responseData) {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
-    responseData.expTemplateRowVersion = response.response.body.data.removeExperienceProperty.template.rowVersion;
+  return post(any).then(response => {
+    Object.assign(returnTemplate, response.response.body.data.removeExperienceProperty.templateUpdate);
+    for (var key in propertyData) {
+      delete propertyData[key];
+    } // Empty the property data object
     return response;
   });
 }
 
-export function commitExperienceTemplate(responseData) {
+export function toggleExperiencePropertyRule(returnTemplate, returnProperty, ruleName, type) {
   const data = {
-    query:
-      'mutation commitExperienceTemplate($input: CommitExperienceTemplateInput!) { commitExperienceTemplate(input: $input) { template { rowVersion templateVersionId}}}',
+    query: `mutation ${type}($input: ${type.charAt(0).toUpperCase() + type.slice(1)}Input!) { 
+      ${type}(input: $input) {
+        templateUpdate{id rowVersion templateVersionId
+        } 
+        property { 
+          id rules { min max mode pattern errorMessage isRequired }
+        }
+      }
+    }`,
+    operationName: type,
+    variables: {
+      input: {
+        propertyId: returnProperty.id,
+        organizationId: Context.organizationId,
+        spaceId: Context.spaceId,
+        templateId: returnTemplate.id,
+        templateVersionId: returnTemplate.templateVersionId,
+        rowVersion: returnTemplate.rowVersion,
+        ruleKey: ruleName
+      }
+    }
+  };
+
+  const any = {
+    api: orca,
+    data: data
+  };
+
+  return post(any).then(response => {
+    Object.assign(returnTemplate, response.response.body.data[type].templateUpdate);
+    Object.assign(returnProperty, response.response.body.data[type].property);
+    return response;
+  });
+}
+
+export function updateExperiencePropertyRule(returnTemplate, returnProperty, ruleKey, ruleData) {
+  const data = {
+    query: `mutation updateExperiencePropertyRule($input: UpdateExperiencePropertyRuleInput!) { 
+        updateExperiencePropertyRule(input: $input) {
+          templateUpdate {
+            id rowVersion 
+          } 
+          property {
+            id rules {min max mode pattern errorMessage isRequired}
+          }
+        }
+      }`,
+    operationName: 'updateExperiencePropertyRule',
+    variables: {
+      input: {
+        fields: ruleData,
+        propertyId: returnProperty.id,
+        organizationId: Context.organizationId,
+        spaceId: Context.spaceId,
+        templateId: returnTemplate.id,
+        templateVersionId: returnTemplate.templateVersionId,
+        rowVersion: returnTemplate.rowVersion,
+        ruleKey,
+        propertyType: returnProperty.typeKey
+      }
+    }
+  };
+  const any = {
+    api: orca,
+    data: data
+  };
+  return post(any).then(response => {
+    Object.assign(returnTemplate, response.response.body.data.updateExperiencePropertyRule.templateUpdate);
+    Object.assign(returnProperty);
+    return response;
+  });
+}
+
+export function commitExperienceTemplate(returnTemplate) {
+  const data = {
+    query: `mutation commitExperienceTemplate($input: CommitExperienceTemplateInput!) { 
+        commitExperienceTemplate(input: $input) {
+          templateUpdate { 
+            id templateVersionId rowVersion 
+          }
+          instanceIds
+        }
+      }`,
     operationName: 'commitExperienceTemplate',
     variables: {
       input: {
-        organizationId: responseData.orgID,
-        spaceId: responseData.spaceID,
-        templateId: responseData.expTemplateID,
-        rowVersion: responseData.expTemplateRowVersion,
-        templateVersionId: responseData.templateVersionId
+        organizationId: Context.organizationId,
+        spaceId: Context.spaceId,
+        templateId: returnTemplate.id,
+        rowVersion: returnTemplate.rowVersion,
+        templateVersionId: returnTemplate.templateVersionId
       }
     }
   };
@@ -230,23 +365,24 @@ export function commitExperienceTemplate(responseData) {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
-    responseData.expTemplateRowVersion = response.response.body.data.commitExperienceTemplate.template.rowVersion;
+  return post(any).then(response => {
+    Object.assign(returnTemplate, response.response.body.data.commitExperienceTemplate.templateUpdate);
     return response;
   });
 }
 
-export function deleteExperienceTemplate(responseData) {
+export function deleteExperienceTemplate(returnTemplate) {
   const data = {
-    query:
-      'mutation deleteExperienceTemplate($input: DeleteExperienceTemplateInput!) { deleteExperienceTemplate(input: $input) }',
+    query: `mutation deleteExperienceTemplate($input: DeleteExperienceTemplateInput!) { 
+        deleteExperienceTemplate(input: $input) 
+      }`,
     operationName: 'deleteExperienceTemplate',
     variables: {
       input: {
-        organizationId: responseData.orgID,
-        spaceId: responseData.spaceID,
-        templateId: responseData.expTemplateID,
-        rowVersion: responseData.expTemplateRowVersion
+        organizationId: Context.organizationId,
+        spaceId: Context.spaceId,
+        templateId: returnTemplate.id,
+        rowVersion: returnTemplate.rowVersion
       }
     }
   };
@@ -254,7 +390,5 @@ export function deleteExperienceTemplate(responseData) {
     api: orca,
     data: data
   };
-  return post(any, responseData).then(response => {
-    return response;
-  });
+  return post(any);
 }

@@ -42,11 +42,11 @@ describe('Tribe Card Tests', () => {
   it('C1295745 Choose color for tribe --> verify card color on tribe details page', () => {
     selectColour();
     submit();
+    browser.pause(1000);
     verifyTribeCardColour('0');
   });
 
   it('C1640172 Verify card color on audience page', () => {
-    //will fail due to https://app.clickup.com/t/ab7gu
     clickOnAudienceLink();
     verifyTribeCardColour('0');
   });
@@ -66,6 +66,7 @@ describe('Tribe Card Tests', () => {
 
   it('C1640173 Verify wallpaper on tribe detail page', () => {
     submit();
+    browser.pause(2000);
     expect(verifyTribeCardWallpaper()).to.equal(true, 'Uploaded wallpaper does not show up on tribe card');
   });
 
@@ -83,11 +84,11 @@ describe('Tribe Card Tests', () => {
 
   it('C1640174 Verify logo shows on tribe card details page', () => {
     submit();
+    browser.pause(2000);
     expect(verifyTribeCardLogo()).to.equal(true, 'Uploaded logo does not show up on tribe card');
   });
 
   it('C1295750 Verify Logo on all tribes page', () => {
-    //will fail due to https://app.clickup.com/t/ab7gu
     clickOnAudienceLink();
     browser.pause(1000);
     expect(verifyTribeCardLogo()).to.equal(true, 'Tribe logo does not show on all tribes page');
@@ -102,6 +103,7 @@ describe('Tribe Card Tests', () => {
     clickCustomizeButton();
     clickWallpaperTab();
     removeImage();
+    browser.pause(2000);
     expect(verifyBrowseLink()).to.equal(true, 'Tribe wallpaper browse link is not shown on tribe detail page');
   });
 
@@ -117,7 +119,6 @@ describe('Tribe Card Tests', () => {
   });
 
   it('C1295753 Remove Logo --> Verify preview area', () => {
-    //will fail due to https://app.clickup.com/t/ab7gu
     goToTribeDetailPage();
     clickCustomizeButton();
     clickLogoTab();
@@ -128,6 +129,7 @@ describe('Tribe Card Tests', () => {
 
   it('C1295754 Remove Logo and submit --> Verify preview area', () => {
     submit();
+    browser.pause(2000);
     clickCustomizeButton();
     clickLogoTab();
     expect(verifyBrowseLink()).to.equal(true, 'Tribe logo browse link is not shown on customize tribe modal');
@@ -137,6 +139,7 @@ describe('Tribe Card Tests', () => {
     closeModal();
     clickCustomizeButton();
     clickWallpaperTab();
+    browser.pause(2000);
     uploadImage();
     waitForWallpaperPreview();
     closeModal();

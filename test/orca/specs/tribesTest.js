@@ -1,5 +1,5 @@
 import { joi } from '../common';
-import { registerAndCreateOrg, login } from 'actions/common';
+import { registerAndCreateOrg, login } from 'actions/account';
 import { getOrganizations } from 'actions/organization';
 import { createSpace } from 'actions/space';
 import { createTribe, updateTribe, deleteTribe, getTribe } from 'actions/tribe';

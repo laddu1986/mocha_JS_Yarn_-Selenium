@@ -2,8 +2,24 @@
   "TemplateProperties": {
     "Types": {
       "Text": "text",
-      "Boolean": "boolean",
-      "Integer": "integer"
+      "Integer": "integer",
+      "Switch": "boolean",
+      "Date": "date",
+      "Color": "color",
+      "List": "list",
+      "URL": "url",
+      "Select": "select"
+    },
+    "Rules": {
+      "DefaultValue": "defaultValue",
+      "NumberRange": "numberRange",
+      "CharacterCount": "characterCount",
+      "Regex": "regex",
+      "Required": "required",
+      "DateRange": "dateRange",
+      "ValueCount": "valueCount",
+      "AllowedValues": "allowedValues",
+      "Localizable": "localizable"
     }
   },
   "Experience": {

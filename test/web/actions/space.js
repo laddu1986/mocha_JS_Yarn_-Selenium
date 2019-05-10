@@ -10,11 +10,13 @@ import { confirmDelete, cancelDelete, typeDeleteToConfirm } from 'actions/common
 const clipboardy = require('clipboardy');
 
 export function changeSpace(type) {
-  var webElement = SpaceSettingsPage.spaceName;
-  var name = `${lib.randomString(10)}_Space`;
+  var webElement, name;
   if (type == 'slug') {
     webElement = SpaceSettingsPage.spaceSlug;
-    name = `${lib.randomString(10)}_Slug`;
+    name = `${lib.randomString(10)}_newSlug`;
+  } else {
+    webElement = SpaceSettingsPage.spaceName;
+    name = `${lib.randomString(10)}_newSpace`;
   }
   webElement.clearElement();
   webElement.setValue(name);
@@ -23,7 +25,6 @@ export function changeSpace(type) {
 }
 
 export function verifyNewSpaceName() {
-  NavBarPage.backToOrgDashboardLink.click();
   return OrgDashboardPage.spaceCards.getText();
 }
 
@@ -99,7 +100,7 @@ export function getAPIKey() {
 
 export function verifyNewSpaceUrl(newSlugName) {
   return browser.waitUntil(
-    function() {
+    function () {
       return browser.getUrl().includes(newSlugName.toLowerCase());
     },
     5000,
@@ -116,7 +117,6 @@ export function selectSpace() {
 }
 export function goToSpaceSettings() {
   NavBar.spaceSettings.click();
-  NavBar.generalSpaceSettings.click();
 }
 export function verifySpaceSettingsPage() {
   return SpaceSettingsPage.spaceName.isVisible() && SpaceSettingsPage.spaceSlug.isVisible();
