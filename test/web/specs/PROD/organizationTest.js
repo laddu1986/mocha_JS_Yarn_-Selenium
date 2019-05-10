@@ -20,26 +20,26 @@ xdescribe('Organization Tests', () => {
     SignInPage.open();
     signIn(smokeEmail, smokePassword); // eslint-disable-line
   });
-  it('Create new organization', () => {
+  it('C2133659 Create new organization', () => {
     goToCreateOrgPageFromNavbar();
     createNewOrg(orgName);
     expect(verifyWecomeOrgPage()).to.equal(true);
   });
-  it('Org Count in submenu changes', () => {
+  it('C2133660 Org Count in submenu changes', () => {
     expect(getnavOrgCount()).to.equal(2);
   });
-  it('Update org name --> verify new name appears in left menu bar', () => {
+  it('C2133661 Update org name --> verify new name appears in left menu bar', () => {
     gotoOrgSettings();
     updateOrgName(newOrgName);
     expect(verifySelectedOrgMenu()).to.include(newOrgName, 'The updated org name is not shown on left menu bar');
   });
 
-  it('Validate dashboard has the updated org name', () => {
+  it('C2133662 Validate dashboard has the updated org name', () => {
     goToOrgPageFromNavMenu();
     verifyOrgNameOnDashBoard(newOrgName);
   });
 
-  it('Delete Org --> verify choose orgs page', () => {
+  it('C2133663 Delete Org --> verify choose orgs page', () => {
     gotoOrgSettings();
     deleteOrganization();
     expect(verifyChooseOrgspage()).to.equal(true);

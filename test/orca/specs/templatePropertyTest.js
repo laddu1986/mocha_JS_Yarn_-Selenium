@@ -44,7 +44,7 @@ describe('@experience Experience Property CRUD', () => {
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it('Mutation - moveExperienceProperty', async () => {
+  it('C2133675 Mutation - moveExperienceProperty', async () => {
     await addExperienceProperty(fixedTemplate, propertyTwo, Constants.TemplateProperties.Types.Text);
     let response = await moveExperienceProperty(fixedTemplate, propertyTwo, 0);
     expect(response.response.statusCode).to.equal(200);
@@ -55,7 +55,7 @@ describe('@experience Experience Property CRUD', () => {
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it('Mutation - commitExperienceTemplate', async () => {
+  it('C2133676 Mutation - commitExperienceTemplate', async () => {
     let response = await commitExperienceTemplate(fixedTemplate);
     expect(response.response.statusCode).to.equal(200);
   });

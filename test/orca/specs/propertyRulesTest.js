@@ -68,7 +68,7 @@ describe('@experience Property Rules CRUD', () => {
     await createExperienceTemplate(fixedTemplate, Constants.Experience.Types.FIXED);
   });
 
-  it('Mutation - enableExperiencePropertyRule', async () => {
+  it('C2133671 Mutation - enableExperiencePropertyRule', async () => {
     for (var propertyName in types) {
       await addExperienceProperty(fixedTemplate, (types[propertyName].data = {}), propertyName);
       await updateExperienceProperty(fixedTemplate, types[propertyName].data);
@@ -84,7 +84,7 @@ describe('@experience Property Rules CRUD', () => {
     }
   });
 
-  it('Mutation - updateExperiencePropertyRule', async () => {
+  it('C2133672 Mutation - updateExperiencePropertyRule', async () => {
     for (var propertyName in types) {
       for (var rule in types[propertyName].rules) {
         let response = await updateExperiencePropertyRule(
@@ -98,12 +98,12 @@ describe('@experience Property Rules CRUD', () => {
     }
   });
 
-  it('Mutation - commitExperienceTemplate', async () => {
+  it('C2133673 Mutation - commitExperienceTemplate', async () => {
     let response = await commitExperienceTemplate(fixedTemplate);
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it('Mutation - disableExperiencePropertyRule', async () => {
+  it('C2133674 Mutation - disableExperiencePropertyRule', async () => {
     for (var propertyName in types) {
       for (var rule in types[propertyName].rules) {
         let response = await toggleExperiencePropertyRule(

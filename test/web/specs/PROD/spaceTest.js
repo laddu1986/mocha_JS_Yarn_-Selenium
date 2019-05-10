@@ -8,7 +8,7 @@ import {
   verifyNewSpaceName,
   spaceIsDeleted
 } from 'actions/space';
-import { backToOrgDashboard } from 'actions/navBar'
+import { backToOrgDashboard } from 'actions/navBar';
 import SignInPage from 'page_objects/signInPage';
 //import { selectOrg } from 'actions/organization';
 import {
@@ -28,12 +28,12 @@ describe('Space Tests', () => {
     //selectOrg();
   });
 
-  it('Create Space', () => {
+  it('C2133664 Create Space', () => {
     spaceName = createSpace();
     expect(verifySpacePage(spaceName.toLowerCase())).to.equal(true);
   });
 
-  it('Edit Space name --> verify new space name on space dashboard', () => {
+  it('C2133665 Edit Space name --> verify new space name on space dashboard', () => {
     goToSpaceSettings();
     newSpacename = changeSpace();
     closePassiveNotification();
@@ -41,7 +41,7 @@ describe('Space Tests', () => {
     expect(verifyNewSpaceName()).to.contain(newSpacename);
   });
 
-  it('Verify Delete Space', () => {
+  it('C2133666 Verify Delete Space', () => {
     clickMoreButton();
     clickDeleteFromCard();
     typeDeleteToConfirm();
