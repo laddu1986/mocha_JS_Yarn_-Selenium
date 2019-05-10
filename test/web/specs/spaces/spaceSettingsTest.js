@@ -5,6 +5,7 @@ import {
   spaceIsDeleted,
   verifyCreateFirstSpacePage,
   selectSpace,
+  goBackToOrgDashboard,
   verifyNewSpaceUrl,
   verifyNewSpaceName,
   goToSpaceSettings,
@@ -32,7 +33,7 @@ describe('Space Settings', () => {
     accountData = createAccount();
     createSpace();
   });
-  it('C1295717 Edit Space name --> verify passive notfication and new space name on dashboard', () => {
+  it('C1295717 Edit Space name --> verify passive notfication and new space name on space settings page', () => {
     goToSpaceSettings();
     newSpacename = changeSpace();
     expect(getNotificationMessageText()).to.contain(spaceData.spaceDetailsSaved.text);
@@ -40,6 +41,7 @@ describe('Space Settings', () => {
   });
 
   it('C1640165 Edit Space name --> verify new space name on dashboard', () => {
+    goBackToOrgDashboard();
     expect(verifyNewSpaceName()).to.contain(newSpacename);
   });
 

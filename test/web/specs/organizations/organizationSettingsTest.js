@@ -50,7 +50,7 @@ describe('Update Organization name', () => {
 
   it('C1295709 Validate Org dashboard has the updated org name', () => {
     goToOrgPageFromNavMenu();
-    expect(verifyOrgNameOnDashBoard()).to.equal(updatedOrgName, 'The updated org name is not shown on dashboard'); //This will fail due to https://app.clickup.com/301733/t/84t88
+    verifyOrgNameOnDashBoard(updatedOrgName); //This will fail due to https://app.clickup.com/301733/t/84t88
   });
 
   it('C1295710 Choose org page has updated Org at top of org cards', () => {

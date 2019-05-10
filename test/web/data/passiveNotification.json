@@ -22,5 +22,8 @@
   },
   "deleteTemplateMessage": {
     "text": "Delete successful."
+  },
+  "deleteTribe": {
+    "text": "Tribe successfully deleted"
   }
 }

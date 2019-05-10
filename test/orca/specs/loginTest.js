@@ -1,5 +1,5 @@
 import { joi } from '../common';
-import { registerAndCreateOrg, login, logout, deleteAccount } from 'actions/common';
+import { registerAndCreateOrg, login, logout, deleteAccount } from 'actions/account';
 import { leaveOrganization, getOrganizations } from 'actions/organization';
 import { registerAndCreateOrgSchema } from 'data/organizationSchema';
 var createResponse, loginResponse, logoutResponse, leaveOrgResponse, deleteAccountResponse;
