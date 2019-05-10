@@ -16,21 +16,39 @@ export const Tags = {
   smokeTest: '@smoke'
 };
 
+// Context Data
+export const Context = new Object({
+  set context(contextData) {
+    (this.spaceId = contextData.spaceID), (this.organizationId = contextData.orgID);
+  },
+  set cookies(res) {
+    this.ccookie = JSON.stringify(res.response.headers['set-cookie'][2])
+      .split(';')[0]
+      .split('=')[1];
+    this.token = JSON.stringify(res.response.headers['set-cookie'][1])
+      .split(';')[0]
+      .split('=')[1];
+    this.pcookie = JSON.stringify(res.response.headers['set-cookie'])
+      .split(';')[0]
+      .split('=')[1];
+  }
+});
+
 // Functions
-export async function post(any, responseData) {
+export async function post(any) {
   if (any.headers == undefined) {
     any.headers = {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      cookie: `cid=${responseData.ccookie}; aid= ${responseData.token}; pid=${responseData.pcookie}`
+      cookie: `cid=${Context.ccookie}; aid= ${Context.token}; pid=${Context.pcookie}`
     };
   }
   var response = await server.post(any.api, any.data, any);
   if (response.response.statusCode == 200) return response;
   else {
-    throw `${any.data.operationName} POST request failed with Errorcode- ${response.response.statusCode} and Message- ${
-      response.response.body.message
-    }`;
+    throw `${any.data.operationName} POST request failed with Errorcode- ${
+      response.response.statusCode
+    } and Message- ${JSON.stringify(response.response.body.errors)}`;
   }
 }
 

@@ -33,13 +33,15 @@ export function getUserMetrics(responseData) {
 
 export function getSpaceUsers(responseData) {
   const data = {
-    query:
-      'query getSpaceUsers($spaceId: ID!, $searchTerm: String, $limit: Int) { spaceUsers(spaceId: $spaceId, searchTerm: $searchTerm, limit: $limit) {users{id}}}',
+    query: 'query getSpaceUsers($input: SpaceUsersInput!) { spaceUsers(input: $input) { users{id} } }',
     operationName: 'getSpaceUsers',
     variables: {
-      limit: 5,
-      searchTerm: 'a',
-      spaceId: responseData.spaceID
+      input: {
+        spaceId: responseData.spaceID,
+        limit: 5,
+        searchTerm: 'a',
+        audienceType: 'User'
+      }
     }
   };
   const any = {

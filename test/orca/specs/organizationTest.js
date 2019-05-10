@@ -1,5 +1,5 @@
 import { joi } from '../common';
-import { registerAndCreateOrg, login } from 'actions/common';
+import { registerAndCreateOrg, login } from 'actions/account';
 import { organizationSchema } from 'data/organizationSchema';
 import {
   createOrganization,

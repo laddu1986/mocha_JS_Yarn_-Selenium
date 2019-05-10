@@ -1,58 +1,69 @@
-import '../common';
-import { registerAndCreateOrg, login } from 'actions/common';
-import { getOrganizations } from 'actions/organization';
-import { createSpace } from 'actions/space';
+import { Context } from '../common';
+import { registerAndCreateOrg, login, deleteAccount } from 'actions/account';
+import { getOrganizations, leaveOrganization } from 'actions/organization';
+import { createSpace, deleteSpace } from 'actions/space';
 import * as Constants from '../constants.json';
 import {
   createExperienceTemplate,
-  updateExperienceTemplate,
   addExperienceProperty,
   getExperienceProperty,
   updateExperienceProperty,
   removeExperienceProperty,
   commitExperienceTemplate,
-  moveExperienceProperty
+  moveExperienceProperty,
+  deleteExperienceTemplate
 } from 'actions/experienceTemplate';
-var experienceTemplateObject = new Object();
 
-describe('Tests for experience templates for a space', () => {
+const contextData = {};
+const fixedTemplate = {};
+const propertyOne = {};
+const propertyTwo = {};
+
+describe('@experience Experience Property CRUD', () => {
   before(async () => {
-    await registerAndCreateOrg(experienceTemplateObject);
-    await login(experienceTemplateObject);
-    await getOrganizations(experienceTemplateObject);
-    await createSpace(experienceTemplateObject);
-    await createExperienceTemplate(experienceTemplateObject);
-    await updateExperienceTemplate(experienceTemplateObject);
+    await registerAndCreateOrg(contextData);
+    await login(contextData);
+    await getOrganizations(contextData);
+    await createSpace(contextData);
+    Context.context = contextData;
+    await createExperienceTemplate(fixedTemplate, Constants.Experience.Types.FIXED);
   });
 
-  it('C2074303 - Mutation - addExperienceProperty', async () => {
-    let response = await addExperienceProperty(experienceTemplateObject, Constants.TemplateProperties.Types.Text);
+  it('C2074303 Mutation - addExperienceProperty', async () => {
+    let response = await addExperienceProperty(fixedTemplate, propertyOne, Constants.TemplateProperties.Types.Text);
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it('C2074304 - Query - experienceProperty', async () => {
-    let response = await getExperienceProperty(experienceTemplateObject);
+  it('C2074304 Query - experienceProperty', async () => {
+    let response = await getExperienceProperty(fixedTemplate, propertyOne);
     expect(response.response.statusCode).to.equal(200);
   });
 
-  it('C2074305 - Mutation - updateExperienceProperty', async () => {
-    let response = await updateExperienceProperty(experienceTemplateObject);
+  it('C2074305 Mutation - updateExperienceProperty', async () => {
+    let response = await updateExperienceProperty(fixedTemplate, propertyOne);
     expect(response.response.statusCode).to.equal(200);
   });
 
   it('Mutation - moveExperienceProperty', async () => {
-    await addExperienceProperty(experienceTemplateObject, Constants.TemplateProperties.Types.Text);
-    let response = await moveExperienceProperty(experienceTemplateObject, 0);
+    await addExperienceProperty(fixedTemplate, propertyTwo, Constants.TemplateProperties.Types.Text);
+    let response = await moveExperienceProperty(fixedTemplate, propertyTwo, 0);
     expect(response.response.statusCode).to.equal(200);
   });
 
   it('C1490708 Mutation - removeExperienceProperty', async () => {
-    let response = await removeExperienceProperty(experienceTemplateObject);
+    let response = await removeExperienceProperty(fixedTemplate, propertyTwo);
     expect(response.response.statusCode).to.equal(200);
   });
 
   it('Mutation - commitExperienceTemplate', async () => {
-    let response = await commitExperienceTemplate(experienceTemplateObject);
+    let response = await commitExperienceTemplate(fixedTemplate);
     expect(response.response.statusCode).to.equal(200);
+  });
+
+  after('Clean up the testing environment', async () => {
+    await deleteExperienceTemplate(fixedTemplate);
+    await deleteSpace(contextData);
+    await leaveOrganization(contextData);
+    await deleteAccount(contextData);
   });
 });
