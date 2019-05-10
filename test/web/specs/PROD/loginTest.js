@@ -9,12 +9,12 @@ describe('Sign In/Out Test', () => {
     SignInPage.open();
   });
 
-  it('Sign In', () => {
+  it('C2133657 Sign In', () => {
     signIn(smokeEmail, smokePassword); // eslint-disable-line
     expect(verifySignIn()).to.equal(true);
   });
 
-  it('Sign out', () => {
+  it('C2133658 Sign out', () => {
     signOut();
     expect(verifySignOut()).to.equal(true);
   });
